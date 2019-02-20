@@ -1,0 +1,37 @@
+{
+    "files.autoSave": "onFocusChange",
+    "extensions.ignoreRecommendations": false,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": "words",
+    "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 1,
+    "importSorter.importStringConfiguration.trailingComma": "multiLine",
+    "importSorter.generalConfiguration.sortOnBeforeSave": true,
+    "importSorter.sortConfiguration.customOrderingRules.rules": [
+        {
+            "type": "importMember",
+            "regex": "^$",
+            "orderLevel": 5,
+            "disableSort": true
+        },
+        {
+            "regex": "^[@]",
+            "orderLevel": 10
+        },
+        {
+            "regex": "^[^.@]",
+            "orderLevel": 15
+        },
+        {
+            "regex": "^[.]",
+            "orderLevel": 30
+        }
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.tslint": true,
+    },
+    "javascript.preferences.importModuleSpecifier": "non-relative",
+    "javascript.preferences.quoteStyle": "single",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "typescript.preferences.quoteStyle": "single",
+    "html.format.wrapAttributes": "force-aligned",
+}
