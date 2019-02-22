@@ -52,3 +52,28 @@ TBD
 ### Services
 
 TBD
+
+### RXJS
+
+#### `asyncOf`
+
+Static operator to avoid breaking the stream when using catchError and `| async`.
+
+Usage example:
+
+```javascript
+import { asyncOf } from "@uipath/angular-components";
+
+const result$ = someStream$.pipe(
+  catchError(error => asyncOf(error)),
+  tap(result => console.log("The stream doesn't break.:)"))
+);
+```
+
+later the result can be used in the template with `pipe async` and in case of error the UI is rendered correctly
+
+```html
+<ng-content *ngLet="result$ | async as result">
+  ...
+</ng-content>
+```
