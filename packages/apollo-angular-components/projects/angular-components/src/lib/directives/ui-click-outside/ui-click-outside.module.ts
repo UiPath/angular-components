@@ -13,12 +13,13 @@ import {
     exports: [UiClickOutsideDirective]
 })
 export class UiClickOutsideModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<UiClickOutsideModule> {
         return {
             ngModule: UiClickOutsideModule,
-            providers: [
-                UiClickOutsideService
-            ],
+            providers: [{
+                provide: UiClickOutsideService,
+                useClass: UiClickOutsideService,
+            }],
         };
     }
 }

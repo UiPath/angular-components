@@ -9,8 +9,7 @@ import {
   EventGenerator,
   FakeFileList,
   IDropEvent,
-} from 'projects/angular-components/src/test/utilities';
-
+} from '../../../test/utilities';
 import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
 
 @Component({
