@@ -77,3 +77,44 @@ later the result can be used in the template with `pipe async` and in case of er
   ...
 </ng-content>
 ```
+
+#### `repeatStream`
+
+Static operator that repeats the requested stream indefinately
+
+Usage example:
+
+```javascript
+import { repeatStream } from "@uipath/angular-components";
+
+
+const result$ = repeatStream(
+    () => of(Math.random()), 
+    1337
+  );
+ 
+result$.subscribe(console.log);
+
+// Output: RND --1337ms-- RND --1337ms-- RND --1337ms-- RND ... 1
+```
+
+#### `concatJoin`
+
+Static operator that repeats the requested stream indefinately
+
+Usage example:
+
+```javascript
+import { concatJoin } from "@uipath/angular-components";
+
+
+const result$ = concatJoin(
+    of(10),
+    _myHttpService.get(),
+    of(10),
+  );
+ 
+result$.subscribe(console.log);
+
+// Output: [10, {Object}, 10]
+```
