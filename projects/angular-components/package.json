@@ -1,9 +1,14 @@
 {
   "name": "@uipath/angular-components",
-  "version": "0.0.7",
+  "version": "0.0.13",
   "peerDependencies": {
     "@angular/common": "^7.2.0",
     "@angular/core": "^7.2.0",
     "@angular/cdk": "^7.3.3"
-  }
+  },
+  "bundledDependencies": [
+    "@types/clipboard",
+    "clipboard",
+    "scroll-into-view-if-needed"
+  ]
 }
