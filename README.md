@@ -24,11 +24,11 @@ TBD
 
 ### Directives
 
-#### `ngLet`
+#### `ngLet` - enables stream value assignment within the template
 
-Import it's module and add it to the imports:
+Import its module and add it to the imports:
 
-```javascript
+```typescript
 import { UiNgLetModule } from "@uipath/angular-components";
 
 @NgModule({
@@ -39,10 +39,146 @@ export class YourModule {}
 
 Use it in your templates:
 
-```
+```html
 <ng-container *ngLet="document$ | async as document">
     ...
 </ng-container>
+```
+
+#### `uiAutofocus` - autofocuses the marked element
+
+Import its module and add it to the imports:
+
+```typescript
+import { UiAutofocusModule } from "@uipath/angular-components";
+
+@NgModule({
+  imports: [UiAutofocusModule]
+})
+export class YourModule {}
+```
+
+Use it in your templates:
+
+```html
+<input [uiAutofocus] class="form-control" />
+```
+
+API:
+
+``` typescript
+@Input()
+uiAutofocus: boolean;
+
+@Input()
+refocus: boolean;
+
+@Input()
+selectionLocation: 'start' | 'end';
+```
+
+#### `uiClickOutside` - emits when a click occurs outside of the marked element
+
+Import its module and add it to the imports:
+
+```typescript
+import { UiClickOutsideModule } from "@uipath/angular-components";
+
+@NgModule({
+  imports: [UiClickOutsideModule]
+})
+export class YourModule {}
+```
+
+Use it in your templates:
+
+```html
+<input (uiClickOutside)="outsideClickCallback($event)" class="form-control" />
+```
+
+API:
+
+``` typescript
+@Output()
+uiClickOutside: Observable<MouseEvent>;
+```
+
+#### `uiDragAndDropFile` - enables a drag and drop area and associates it to a file input
+
+Import its module and add it to the imports:
+
+```typescript
+import { UiDragAndDropModule } from "@uipath/angular-components";
+
+@NgModule({
+  imports: [UiDragAndDropModule]
+})
+export class YourModule {}
+```
+
+Use it in your templates:
+
+```html
+<div uiDragAndDropFile
+      [fileBrowseRef]="browseTrigger._getHostElement()"
+      (fileChange)="onFileChangeCallback($event)">
+    <button #browseTrigger>
+      Browse
+    </button>
+</div>
+```
+
+API:
+
+```typescript
+@Input()
+fileType: string;
+
+@Input()
+fileBrowseRef: Element;
+
+@Input()
+fileClearRef: Element;
+
+@Input()
+multiple: boolean;
+
+@Output()
+fileChange: EventEmitter<File[]>;
+
+@Output()
+fileClear: EventEmitter;
+```
+
+#### `uiScrollIntoView` - scrolls the element into view
+
+Import its module and add it to the imports:
+
+```typescript
+import { UiScrollIntoViewModule } from "@uipath/angular-components";
+
+@NgModule({
+  imports: [UiScrollIntoViewModule]
+})
+export class YourModule {}
+```
+
+Use it in your templates:
+
+```html
+<mat-card [uiScrollIntoView]="myCondition">
+    <p>Some warning message!</p>
+</mat-card>
+```
+
+API:
+
+```typescript
+@Input()
+boundary: 'parent' | Element;
+
+@Input()
+uiScrollIntoView: boolean;
 ```
 
 ### Pipes
@@ -61,7 +197,7 @@ Static operator to avoid breaking the stream when using catchError and `| async`
 
 Usage example:
 
-```javascript
+```typescript
 import { asyncOf } from "@uipath/angular-components";
 
 const result$ = someStream$.pipe(
@@ -84,15 +220,15 @@ Static operator that repeats the requested stream indefinately
 
 Usage example:
 
-```javascript
+```typescript
 import { repeatStream } from "@uipath/angular-components";
 
 
 const result$ = repeatStream(
-    () => of(Math.random()), 
+    () => of(Math.random()),
     1337
   );
- 
+
 result$.subscribe(console.log);
 
 // Output: RND --1337ms-- RND --1337ms-- RND --1337ms-- RND ... 1
@@ -104,7 +240,7 @@ Static operator that repeats the requested stream indefinately
 
 Usage example:
 
-```javascript
+```typescript
 import { concatJoin } from "@uipath/angular-components";
 
 
@@ -113,7 +249,7 @@ const result$ = concatJoin(
     _myHttpService.get(),
     of(10),
   );
- 
+
 result$.subscribe(console.log);
 
 // Output: [10, {Object}, 10]
