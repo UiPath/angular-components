@@ -11,16 +11,12 @@ import {
   Renderer2,
 } from '@angular/core';
 
-import { isInternetExplorer } from 'projects/angular-components/src/lib/utilities';
+import { isInternetExplorer } from '../../../lib/utilities/browser/is-internet-explorer';
 
 @Directive({
   selector: '[uiDragAndDropFile]',
 })
-export class UiDragAndDropFileDirective
-  implements 
-  AfterViewInit,
-  OnDestroy {
-
+export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
   @Input()
   public fileType: string;
 
