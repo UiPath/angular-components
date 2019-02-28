@@ -1,11 +1,15 @@
 {
     "files.autoSave": "onFocusChange",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "breadcrumbs.enabled": true,
     "extensions.ignoreRecommendations": false,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": "words",
     "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 1,
     "importSorter.importStringConfiguration.trailingComma": "multiLine",
     "importSorter.generalConfiguration.sortOnBeforeSave": true,
+    "importSorter.importStringConfiguration.tabSize": 2,
     "importSorter.sortConfiguration.customOrderingRules.rules": [
         {
             "type": "importMember",
@@ -33,5 +37,5 @@
     "javascript.preferences.quoteStyle": "single",
     "typescript.preferences.importModuleSpecifier": "non-relative",
     "typescript.preferences.quoteStyle": "single",
-    "html.format.wrapAttributes": "force-aligned",
+    "html.format.wrapAttributes": "force-aligned"
 }
