@@ -19,11 +19,11 @@
       "dom"
     ],
     "paths": {
-      "angular-components": [
-        "dist/angular-components"
+      "angular": [
+        "dist/angular"
       ],
-      "angular-components/*": [
-        "dist/angular-components/*"
+      "angular/*": [
+        "dist/angular/*"
       ]
     }
   }
