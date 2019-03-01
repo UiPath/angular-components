@@ -9,7 +9,7 @@ import {
   EventGenerator,
   FakeFileList,
   IDropEvent,
-} from '../../../test/utilities';
+} from '../../../../testing/utilities';
 import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
 
 @Component({
