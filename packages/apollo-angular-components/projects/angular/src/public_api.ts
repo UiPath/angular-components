@@ -1,5 +1,5 @@
 /*
- * Public API Surface of angular-components
+ * Public API Surface of angular
  */
 
 export { UiAutofocusDirective } from './lib/directives/ui-autofocus/ui-autofocus.directive';
