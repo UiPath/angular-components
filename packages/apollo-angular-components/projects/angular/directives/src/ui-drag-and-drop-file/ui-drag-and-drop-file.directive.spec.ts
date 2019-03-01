@@ -4,12 +4,12 @@ import {
   TestBed,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
 import {
   EventGenerator,
   FakeFileList,
   IDropEvent,
-} from '../../../test/utilities';
+} from '@uipath/angular/testing';
+
 import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
 
 @Component({
