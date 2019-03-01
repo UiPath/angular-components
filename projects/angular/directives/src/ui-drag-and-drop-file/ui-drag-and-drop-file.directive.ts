@@ -10,8 +10,7 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
-
-import { isInternetExplorer } from '../../../lib/utilities/browser/is-internet-explorer';
+import { isInternetExplorer } from '@uipath/angular/utilities';
 
 @Directive({
   selector: '[uiDragAndDropFile]',
