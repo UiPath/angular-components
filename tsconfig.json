@@ -19,12 +19,15 @@
       "dom"
     ],
     "paths": {
-      "angular-components": [
-        "dist/angular-components"
+      "@uipath/angular/utilities": [
+        "./projects/angular/utilities/src/public_api.ts"
       ],
-      "angular-components/*": [
-        "dist/angular-components/*"
-      ]
+      "@uipath/angular/directives": [
+        "./projects/angular/directives/src/public_api.ts"
+      ],
+      "@uipath/angular/testing": [
+        "./projects/angular/testing/src/public_api.ts"
+      ],
     }
   }
 }

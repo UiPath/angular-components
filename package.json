@@ -1,6 +1,6 @@
 {
-  "name": "angular-components",
-  "version": "0.0.13",
+  "name": "angular",
+  "version": "0.0.14",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,8 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "copy-readme": "cpx .\\README.md .\\dist\\angular-components",
-    "pack-lib": "cd dist/angular-components && npm pack",
+    "copy-readme": "cpx .\\README.md .\\dist\\angular",
+    "pack-lib": "cd dist/angular && npm pack",
     "package": "npm-run-all build copy-readme pack-lib"
   },
   "private": true,

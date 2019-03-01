@@ -7,14 +7,14 @@ Library of Angular components, directives, pipes, services or any other common s
 ### Install
 
 ```
-$ npm install @uipath/angular-components
+$ npm install @uipath/angular
 ```
 
 ### Publish a new version
 
-1. set new version in `projects/angular-components/package.json`
-2. run `npm run package` - this will create a new `tgz` bundle in `dist/angular-components/` folder
-3. run `npm publish ./dist/angular-components/uipath-angular-components-<new package version>.tgz`
+1. set new version in `projects/angular/package.json`
+2. run `npm run package` - this will create a new `tgz` bundle in `dist/angular/` folder
+3. run `npm publish ./dist/angular/uipath-angular-<new package version>.tgz`
 
 This will publish the new version in our private NPM registry: https://uipath.pkgs.visualstudio.com/_packaging/npm-packages/npm/registry/
 
@@ -29,7 +29,7 @@ TBD
 Import its module and add it to the imports:
 
 ```typescript
-import { UiNgLetModule } from "@uipath/angular-components";
+import { UiNgLetModule } from "@uipath/angular";
 
 @NgModule({
   imports: [UiNgLetModule]
@@ -50,7 +50,7 @@ Use it in your templates:
 Import its module and add it to the imports:
 
 ```typescript
-import { UiAutofocusModule } from "@uipath/angular-components";
+import { UiAutofocusModule } from "@uipath/angular";
 
 @NgModule({
   imports: [UiAutofocusModule]
@@ -82,7 +82,7 @@ selectionLocation: 'start' | 'end';
 Import its module and add it to the imports:
 
 ```typescript
-import { UiClickOutsideModule } from "@uipath/angular-components";
+import { UiClickOutsideModule } from "@uipath/angular";
 
 @NgModule({
   imports: [UiClickOutsideModule]
@@ -108,7 +108,7 @@ uiClickOutside: Observable<MouseEvent>;
 Import its module and add it to the imports:
 
 ```typescript
-import { UiDragAndDropModule } from "@uipath/angular-components";
+import { UiDragAndDropModule } from "@uipath/angular";
 
 @NgModule({
   imports: [UiDragAndDropModule]
@@ -155,7 +155,7 @@ fileClear: EventEmitter;
 Import its module and add it to the imports:
 
 ```typescript
-import { UiScrollIntoViewModule } from "@uipath/angular-components";
+import { UiScrollIntoViewModule } from "@uipath/angular";
 
 @NgModule({
   imports: [UiScrollIntoViewModule]
@@ -198,7 +198,7 @@ Static operator to avoid breaking the stream when using catchError and `| async`
 Usage example:
 
 ```typescript
-import { asyncOf } from "@uipath/angular-components";
+import { asyncOf } from "@uipath/angular";
 
 const result$ = someStream$.pipe(
   catchError(error => asyncOf(error)),
@@ -221,7 +221,7 @@ Static operator that repeats the requested stream indefinately
 Usage example:
 
 ```typescript
-import { repeatStream } from "@uipath/angular-components";
+import { repeatStream } from "@uipath/angular";
 
 
 const result$ = repeatStream(
@@ -241,7 +241,7 @@ Static operator that repeats the requested stream indefinately
 Usage example:
 
 ```typescript
-import { concatJoin } from "@uipath/angular-components";
+import { concatJoin } from "@uipath/angular";
 
 
 const result$ = concatJoin(
