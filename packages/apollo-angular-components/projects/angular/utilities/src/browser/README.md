@@ -25,3 +25,17 @@ if (isInternetExplorer()) {
   */
 }
 ```
+
+## `isInternetExplorer`
+
+Returns `true` if the current `user-agent` is Edge.
+
+```typescript
+import { isInternetExplorer } from '@uipath/angular/utilities';
+
+if (isEdge()) {
+  /*
+    DISABLE ANIMATIONS...
+  */
+}
+```
