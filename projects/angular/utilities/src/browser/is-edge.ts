@@ -1,5 +1,5 @@
 export /**
- * Determines if the current agent is Internet Explorer.
+ * Determines if the current agent is Edge.
  *
  * @returns {boolean}
  */
