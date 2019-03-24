@@ -1,7 +1,18 @@
 {
   "rulesDirectory": [
-    "codelyzer"
+    "codelyzer",
+    "tslint-consistent-codestyle",
+    "tslint-jasmine-rules",
+    "rxjs-tslint"
   ],
+  "extends": [
+    "rxjs-tslint-rules"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "./projects/angular/test.ts"
+    ]
+  },
   "rules": {
     "arrow-return-shorthand": true,
     "callable-types": true,
@@ -10,10 +21,12 @@
       true,
       "check-space"
     ],
+    "component-class-suffix": true,
     "curly": true,
     "deprecation": {
       "severity": "warn"
     },
+    "directive-class-suffix": true,
     "eofline": true,
     "forin": true,
     "import-blacklist": [
@@ -43,8 +56,59 @@
         ]
       }
     ],
+    "naming-convention": [
+      true,
+      {
+        "type": "member",
+        "modifiers": "private",
+        "leadingUnderscore": "require",
+        "format": "camelCase"
+      },
+      {
+        "type": "member",
+        "modifiers": "protected",
+        "leadingUnderscore": "require",
+        "format": "camelCase"
+      },
+      {
+        "type": "member",
+        "modifiers": "public",
+        "leadingUnderscore": "forbid",
+        "format": [
+          "PascalCase",
+          "camelCase"
+        ]
+      },
+      {
+        "type": "enumMember",
+        "format": [
+          "PascalCase",
+          "camelCase"
+        ]
+      },
+      {
+        "type": "variable",
+        "modifiers": [
+          "export",
+          "const"
+        ],
+        "format": "UPPER_CASE"
+      },
+      {
+        "type": "functionVariable",
+        "modifiers": [
+          "export",
+          "const"
+        ],
+        "format": [
+          "PascalCase",
+          "camelCase"
+        ]
+      }
+    ],
     "no-arg": true,
     "no-bitwise": true,
+    "no-collapsible-if": true,
     "no-console": [
       true,
       "debug",
@@ -55,22 +119,31 @@
     ],
     "no-construct": true,
     "no-debugger": true,
+    "no-disabled-tests": true,
     "no-duplicate-super": true,
     "no-empty": false,
     "no-empty-interface": true,
     "no-eval": true,
+    "no-focused-tests": true,
+    "no-host-metadata-property": true,
     "no-inferrable-types": [
       true,
       "ignore-params"
     ],
+    "no-input-rename": true,
+    "no-inputs-metadata-property": true,
     "no-misused-new": true,
     "no-non-null-assertion": true,
+    "no-output-on-prefix": true,
+    "no-output-rename": true,
+    "no-outputs-metadata-property": true,
     "no-redundant-jsdoc": true,
     "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-string-throw": true,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
+    "no-unnecessary-else": true,
     "no-unnecessary-initializer": true,
     "no-unused-expression": true,
     "no-use-before-declare": true,
@@ -83,12 +156,23 @@
       "check-else",
       "check-whitespace"
     ],
+    "ordered-imports": true,
     "prefer-const": true,
+    "prefer-const-enum": true,
     "quotemark": [
       true,
       "single"
     ],
     "radix": true,
+    "rxjs-collapse-imports": true,
+    "rxjs-no-compat": true,
+    "rxjs-no-nested-subscribe": true,
+    "rxjs-no-static-observable-methods": true,
+    "rxjs-no-subject-unsubscribe": true,
+    "rxjs-no-unsafe-switchmap": true,
+    "rxjs-no-unsafe-takeuntil": true,
+    "rxjs-pipeable-operators-only": true,
+    "rxjs-proper-imports": true,
     "semicolon": [
       true,
       "always"
@@ -108,6 +192,8 @@
       }
     ],
     "unified-signatures": true,
+    "use-life-cycle-interface": true,
+    "use-pipe-transform-interface": true,
     "variable-name": false,
     "whitespace": [
       true,
@@ -116,16 +202,6 @@
       "check-operator",
       "check-separator",
       "check-type"
-    ],
-    "no-output-on-prefix": true,
-    "use-input-property-decorator": true,
-    "use-output-property-decorator": true,
-    "use-host-property-decorator": true,
-    "no-input-rename": true,
-    "no-output-rename": true,
-    "use-life-cycle-interface": true,
-    "use-pipe-transform-interface": true,
-    "component-class-suffix": true,
-    "directive-class-suffix": true
+    ]
   }
 }
