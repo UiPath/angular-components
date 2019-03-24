@@ -15,7 +15,7 @@ export interface IDropEvent extends Event {
 // @dynamic
 export class EventGenerator {
     static cursor = {
-        ref: null as HTMLElement,
+        ref: {} as HTMLElement,
         initialize: (parent?: HTMLElement) => {
             if (!parent) { return; }
             EventGenerator.cursor.ref = document.createElement('div') as HTMLElement;
@@ -32,6 +32,8 @@ export class EventGenerator {
             parent.appendChild(EventGenerator.cursor.ref);
         },
         destroy: (parent?: HTMLElement) => {
+            if (!parent) { return; }
+
             parent.removeChild(EventGenerator.cursor.ref);
         },
         update: (x: number, y: number) => {
@@ -64,11 +66,11 @@ export class EventGenerator {
         return event;
     }
 
-    static keyDown(key: IKey | string, modifier?: IKeyModifier): KeyboardEvent {
+    static keyDown(key: IKey | keyof Key, modifier?: IKeyModifier): KeyboardEvent {
         return EventGenerator._key('keydown', key, modifier);
     }
 
-    static keyUp(key: IKey | string, modifier?: IKeyModifier): KeyboardEvent {
+    static keyUp(key: IKey | keyof Key, modifier?: IKeyModifier): KeyboardEvent {
         return EventGenerator._key('keyup', key, modifier);
     }
 
@@ -153,7 +155,7 @@ export class EventGenerator {
         return dragOverEvent;
     }
 
-    private static _key(type: string, key: IKey | string, modifier = {} as IKeyModifier) {
+    private static _key(type: string, key: IKey | keyof Key, modifier = {} as IKeyModifier) {
         const safeKey = EventGenerator._getKey(key) as IKey;
         const options: KeyboardEventInit = {
             code: `${safeKey.code}`,
@@ -165,7 +167,7 @@ export class EventGenerator {
         return new KeyboardEvent(type, options);
     }
 
-    private static _getKey(key: IKey | string): IKey {
+    private static _getKey(key: IKey | keyof Key): IKey {
         if (typeof key === 'string') {
             const internalKey: IKey = Key[key];
             if (!internalKey) {
