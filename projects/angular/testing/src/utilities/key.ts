@@ -8,7 +8,7 @@ export interface IKeyModifier extends IKey {
     name: 'Shift' | 'Control' | 'Alt';
 }
 
-export class Key {
+export class Key implements Record<keyof Key, IKey> {
     public static q: IKey = {
         name: 'q',
         code: 81,
