@@ -94,31 +94,31 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
   }
 
   @HostListener('drop', ['$event'])
-  protected onDrop(ev: DragEvent) {
+  protected _onDrop(ev: DragEvent) {
     this._preventAll(ev);
     this._isDragging = false;
     this._emitFiles(ev.dataTransfer.files);
   }
 
   @HostListener('dragover', ['$event'])
-  protected onDragOver(ev: DragEvent) {
+  protected _onDragOver(ev: DragEvent) {
     this._preventAll(ev);
     this._isDragging = true;
   }
 
   @HostListener('dragleave', ['$event'])
-  protected onDragLeave(ev: DragEvent) {
+  protected _onDragLeave(ev: DragEvent) {
     this._preventAll(ev);
     this._isDragging = false;
   }
 
   @HostListener('dragend')
-  protected onDragEnd() {
+  protected _onDragEnd() {
     this._isDragging = false;
   }
 
   @HostListener('dragenter', ['$event'])
-  protected onDragEnter(ev: DragEvent) {
+  protected _onDragEnter(ev: DragEvent) {
     this._preventAll(ev);
   }
 

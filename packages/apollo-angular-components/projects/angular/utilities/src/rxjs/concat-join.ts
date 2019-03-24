@@ -1,12 +1,11 @@
 import {
-    concat,
-    Observable,
-    ObservableInput,
-    Subject,
+  concat,
+  Observable,
+  ObservableInput,
 } from 'rxjs';
 import {
-    take,
-    takeUntil,
+  take,
+  toArray,
 } from 'rxjs/operators';
 
 import { ObservedValueOf } from './internal/observed-value-of';
@@ -28,24 +27,10 @@ export function concatJoin<O1 extends ObservableInput<any>, O2 extends Observabl
  * @returns An array with the emitted values.
  */
 export function concatJoin(...inputs: Observable<any>[]): Observable<any[]> {
-    return Observable.create((observer: any) => {
-        const result: any[] = [];
-        const destroy = new Subject();
-        const streams = inputs.map(input => input.pipe(take(1)));
+    const streams = inputs.map(input => input.pipe(take(1)));
 
-        concat(...streams)
-            .pipe(
-                takeUntil(destroy),
-            )
-            .subscribe((val) => {
-                result.push(val);
-
-                if (result.length === streams.length) {
-                    observer.next(result);
-                    observer.complete();
-                }
-            });
-
-        return () => destroy.next();
-    });
+    return concat(...streams)
+        .pipe(
+            toArray(),
+        );
 }

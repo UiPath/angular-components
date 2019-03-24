@@ -174,8 +174,8 @@ export class EventGenerator {
                 throw new Error(`Key definition for ${key} does not exist!`);
             }
             return internalKey;
-        } else {
-            return key as IKey;
         }
+
+        return key as IKey;
     }
 }
