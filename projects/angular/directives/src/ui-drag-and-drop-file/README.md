@@ -16,6 +16,7 @@ export class YourModule {}
 ```html
 <div uiDragAndDropFile
       [fileBrowseRef]="browseTrigger._getHostElement()"
+      [disabled]="loading$ | async"
       (fileChange)="onFileChangeCallback($event)">
     <button #browseTrigger>
       Browse
@@ -37,6 +38,9 @@ fileClearRef: Element;
 
 @Input()
 multiple: boolean;
+
+@Input()
+disabled: boolean;
 
 @Output()
 fileChange: EventEmitter<File[]>;
