@@ -62,7 +62,7 @@ describe('Directive: Autofocus', () => {
       expect(directive.ngOnInit).toHaveBeenCalledTimes(1);
       expect(directive.queueFocus).toHaveBeenCalledTimes(1);
       expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
-      expect(directive.element).toBeNull();
+      expect(directive.element).toBeUndefined();
       expect(directive.focus).toHaveBeenCalledTimes(0);
 
       tick();
@@ -88,7 +88,7 @@ describe('Directive: Autofocus', () => {
       tick();
 
       expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
-      expect(directive.element).toBeNull();
+      expect(directive.element).toBeUndefined();
       expect(directive.focus).toHaveBeenCalledTimes(0);
   }));
 
@@ -104,7 +104,7 @@ describe('Directive: Autofocus', () => {
       fixture.detectChanges();
       expect(directive.ngOnInit).toHaveBeenCalledTimes(1);
       expect(directive.queueFocus).toHaveBeenCalledTimes(1);
-      expect(directive.element).toBeNull();
+      expect(directive.element).toBeUndefined();
       expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
       expect(directive.focus).toHaveBeenCalledTimes(0);
 
@@ -115,21 +115,21 @@ describe('Directive: Autofocus', () => {
       expect(directive.element).not.toBeNull();
       expect(directive.focus).toHaveBeenCalledTimes(1);
 
-      spyOn(directive.element, 'focus');
+      spyOn(directive.element!, 'focus');
       component.refocusFlag = true;
 
       // a new 'focus' should be queued after the refocusFlag becomes true
       fixture.detectChanges();
       expect(directive.queueFocus).toHaveBeenCalledTimes(2);
       expect(directive.focus).toHaveBeenCalledTimes(1);
-      expect(directive.element.focus).toHaveBeenCalledTimes(0);
+      expect(directive.element!.focus).toHaveBeenCalledTimes(0);
 
       tick();
 
       // _getFocusableNode should not have been called again, only the 'focus' methods
       expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(1);
       expect(directive.focus).toHaveBeenCalledTimes(2);
-      expect(directive.element.focus).toHaveBeenCalledTimes(1);
+      expect(directive.element!.focus).toHaveBeenCalledTimes(1);
   }));
 
   it('should not call the focus event when refocus flag is set but autofocus is not', fakeAsync(() => {
@@ -141,13 +141,13 @@ describe('Directive: Autofocus', () => {
       spyOn<any>(directive, '_getFocusableNode').and.callThrough();
 
       fixture.detectChanges();
-      expect(directive.element).toBeNull();
+      expect(directive.element).toBeUndefined();
       expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
       expect(directive.focus).toHaveBeenCalledTimes(0);
 
       tick();
 
-      expect(directive.element).toBeNull();
+      expect(directive.element).toBeUndefined();
       expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
       expect(directive.focus).toHaveBeenCalledTimes(0);
   }));

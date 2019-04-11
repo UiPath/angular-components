@@ -16,7 +16,7 @@ import { UiScrollIntoViewDirective } from './ui-scroll-into-view.directive';
 })
 class TestScrollIntoViewComponent {
   @ViewChild(UiScrollIntoViewDirective)
-  public directive: UiScrollIntoViewDirective;
+  public directive!: UiScrollIntoViewDirective;
 
   public editing = false;
 }
