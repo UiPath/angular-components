@@ -28,6 +28,9 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
   @Input()
   public multiple = false;
 
+  @Input()
+  public disabled = false;
+
   @Output()
   public fileChange = new EventEmitter<File[]>();
 
@@ -65,12 +68,17 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
     }
 
     this._renderer.setStyle(this.fileBrowseRef, 'cursor', 'pointer');
+
     const browse = this._renderer
-      .listen(this.fileBrowseRef, 'click', () => this._fileInput.click());
+      .listen(this.fileBrowseRef, 'click', () => {
+        if (this.disabled) { return; }
+        this._fileInput.click();
+      });
     this._disposalCallbacks.push(browse);
 
     const change = this._renderer.listen(this._fileInput, 'change', (ev) => {
       this._preventAll(ev);
+      if (this.disabled) { return; }
       const target = ev.target as HTMLInputElement;
       if (target.files) {
         this._emitFiles(target.files);
@@ -82,6 +90,7 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
     if (this.fileClearRef) {
       const clear = this._renderer
         .listen(this.fileClearRef, 'click', () => {
+          if (this.disabled) { return; }
           this._renderer.setProperty(this._fileInput, 'value', null);
           this.fileClear.emit();
         });
@@ -98,6 +107,7 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
   @HostListener('drop', ['$event'])
   protected _onDrop(ev: DragEvent) {
     this._preventAll(ev);
+    if (this.disabled) { return; }
     this._isDragging = false;
     this._emitFiles(ev.dataTransfer!.files);
   }
@@ -105,29 +115,34 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
   @HostListener('dragover', ['$event'])
   protected _onDragOver(ev: DragEvent) {
     this._preventAll(ev);
+    if (this.disabled) { return; }
     this._isDragging = true;
   }
 
   @HostListener('dragleave', ['$event'])
   protected _onDragLeave(ev: DragEvent) {
     this._preventAll(ev);
+    if (this.disabled) { return; }
     this._isDragging = false;
   }
 
   @HostListener('dragend')
   protected _onDragEnd() {
+    if (this.disabled) { return; }
     this._isDragging = false;
   }
 
   @HostListener('dragenter', ['$event'])
   protected _onDragEnter(ev: DragEvent) {
     this._preventAll(ev);
+    if (this.disabled) { return; }
   }
 
   private _emitFiles(files: FileList) {
     if (
       !files ||
-      !files.length
+      !files.length ||
+      this.disabled
     ) { return; }
 
     const emittedFiles = Array.from(files).filter(file =>

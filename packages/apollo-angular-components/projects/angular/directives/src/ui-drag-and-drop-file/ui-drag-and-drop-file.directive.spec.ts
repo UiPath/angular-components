@@ -17,6 +17,7 @@ import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
     <div uiDragAndDropFile
         [fileType]="fileType"
         [fileClearRef]="clearRef"
+        [disabled]="disabled"
         (fileClear)="onFileClear()"
         (fileChange)="onFileChange($event)">
         Test
@@ -28,6 +29,7 @@ import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
 class TestDragAndDropFileComponent {
   public fileType = '.txt';
   public files?: File[];
+  public disabled = false;
 
   onFileChange(files: FileList) {
     this.files = Array.from(files);
@@ -101,6 +103,17 @@ describe('Directive: UiDragAndDropFileDirective', () => {
 
       expect(component.files).toBeUndefined();
     });
+    it('should not remove value after clicking clear element while disabled', () => {
+      component.files = [fakeFile(component.fileType)];
+      component.disabled = true;
+      fixture.detectChanges();
+
+      const fileClear = fixture.debugElement.query(By.css('.clear')).nativeElement as HTMLDivElement;
+      fileClear.dispatchEvent(EventGenerator.click);
+      fixture.detectChanges();
+
+      expect(component.files).toBeTruthy();
+    });
 
     describe('via drop', () => {
       let dropEvent: IDropEvent;
@@ -120,6 +133,19 @@ describe('Directive: UiDragAndDropFileDirective', () => {
 
         expect(component.files).toBeDefined();
         expect(component.files!.length).toBe(1);
+      });
+
+      it('should not emit files the accepted type if disabled', () => {
+        component.disabled = true;
+        fixture.detectChanges();
+
+        dropEvent.dataTransfer.files.add(
+          fakeFile(component.fileType),
+        );
+
+        container.dispatchEvent(dropEvent);
+
+        expect(component.files).toBeUndefined();
       });
 
       it('should NOT emit files of different types', () => {
@@ -212,6 +238,16 @@ describe('Directive: UiDragAndDropFileDirective', () => {
       fixture.detectChanges();
 
       expect(container.classList.contains(appliedClass)).toBeTruthy();
+    });
+    it('should not apply class on drag-over if disabled', () => {
+      component.disabled = true;
+      fixture.detectChanges();
+
+      container.dispatchEvent(EventGenerator.dragOver);
+
+      fixture.detectChanges();
+
+      expect(container.classList.contains(appliedClass)).toBeFalsy();
     });
 
     it('should remove class on drag-leave', () => {
