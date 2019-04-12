@@ -35,7 +35,7 @@ export class UiAutofocusDirective implements OnInit {
     @Input()
     public selectionLocation: 'start' | 'end' = 'start';
 
-    public element: HTMLElement = null;
+    public element?: HTMLElement;
 
     private _autofocus = true;
 
@@ -73,26 +73,25 @@ export class UiAutofocusDirective implements OnInit {
         }
     }
 
-    public focus(element: HTMLElement) {
-        if (element) {
-            element.focus();
+    public focus(element?: HTMLElement) {
+        if (!element) { return; }
+        element.focus();
 
-            if (this._el.nativeElement instanceof HTMLInputElement) {
-                const position = this.selectionLocation === 'start' ?
-                    0 :
-                    this._el.nativeElement.value.length;
+        if (this._el.nativeElement instanceof HTMLInputElement) {
+            const position = this.selectionLocation === 'start' ?
+                0 :
+                this._el.nativeElement.value.length;
 
-                this._el.nativeElement.setSelectionRange(
-                    position,
-                    position,
-                );
-            }
-
-            this._cd.detectChanges();
+            this._el.nativeElement.setSelectionRange(
+                position,
+                position,
+            );
         }
+
+        this._cd.detectChanges();
     }
 
-    private _getFocusableNode(el: HTMLElement): HTMLElement {
+    private _getFocusableNode(el: HTMLElement): HTMLElement | undefined {
         if (this._checker.isFocusable(el)) {
             return el;
         }
@@ -108,7 +107,5 @@ export class UiAutofocusDirective implements OnInit {
                 return focusable;
             }
         }
-
-        return null;
     }
 }

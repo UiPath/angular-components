@@ -15,7 +15,7 @@ import * as Clipboard from 'clipboard';
 })
 export class UiClipboardDirective implements OnInit, OnDestroy {
   @Input()
-  public uiClipboard: Element;
+  public uiClipboard?: Element;
 
   @Output()
   public clipboardSuccess: EventEmitter<Clipboard.Event> = new EventEmitter();
@@ -23,14 +23,18 @@ export class UiClipboardDirective implements OnInit, OnDestroy {
   @Output()
   public clipboardError: EventEmitter<Clipboard.Event> = new EventEmitter();
 
-  private _clipboard: Clipboard;
+  private _clipboard!: Clipboard;
 
   constructor(private _eltRef: ElementRef) { }
 
   ngOnInit() {
+      if (!this.uiClipboard) {
+        throw new Error('Missing uiClipboard reference');
+      }
+
       this._clipboard = new Clipboard(this._eltRef.nativeElement, {
           target: () => {
-              return this.uiClipboard;
+              return this.uiClipboard!;
           },
       });
 

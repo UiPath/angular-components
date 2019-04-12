@@ -17,13 +17,13 @@ import { isInternetExplorer } from '@uipath/angular/utilities';
 })
 export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
   @Input()
-  public fileType: string;
+  public fileType?: string;
 
   @Input()
-  public fileBrowseRef: Element;
+  public fileBrowseRef?: Element;
 
   @Input()
-  public fileClearRef: Element;
+  public fileClearRef?: Element;
 
   @Input()
   public multiple = false;
@@ -72,8 +72,10 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
     const change = this._renderer.listen(this._fileInput, 'change', (ev) => {
       this._preventAll(ev);
       const target = ev.target as HTMLInputElement;
-      this._emitFiles(target.files);
-      this._renderer.setProperty(this._fileInput, 'value', null);
+      if (target.files) {
+        this._emitFiles(target.files);
+        this._renderer.setProperty(this._fileInput, 'value', null);
+      }
     });
     this._disposalCallbacks.push(change);
 
@@ -97,7 +99,7 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
   protected _onDrop(ev: DragEvent) {
     this._preventAll(ev);
     this._isDragging = false;
-    this._emitFiles(ev.dataTransfer.files);
+    this._emitFiles(ev.dataTransfer!.files);
   }
 
   @HostListener('dragover', ['$event'])
