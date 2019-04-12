@@ -27,14 +27,14 @@ import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
 })
 class TestDragAndDropFileComponent {
   public fileType = '.txt';
-  public files: File[];
+  public files?: File[];
 
   onFileChange(files: FileList) {
     this.files = Array.from(files);
   }
 
   onFileClear() {
-    this.files = null;
+    this.files = undefined;
   }
 }
 
@@ -99,7 +99,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
       fileClear.dispatchEvent(EventGenerator.click);
       fixture.detectChanges();
 
-      expect(component.files).toBeNull();
+      expect(component.files).toBeUndefined();
     });
 
     describe('via drop', () => {
@@ -119,7 +119,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
         container.dispatchEvent(dropEvent);
 
         expect(component.files).toBeDefined();
-        expect(component.files.length).toBe(1);
+        expect(component.files!.length).toBe(1);
       });
 
       it('should NOT emit files of different types', () => {
@@ -145,7 +145,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
         container.dispatchEvent(dropEvent);
 
         expect(component.files).toBeDefined();
-        expect(component.files.length).toBe(3);
+        expect(component.files!.length).toBe(3);
       });
     });
 
@@ -169,7 +169,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
         fileInput.dispatchEvent(changeEvent);
 
         expect(component.files).toBeDefined();
-        expect(component.files.length).toBe(1);
+        expect(component.files!.length).toBe(1);
       });
 
       it('should NOT emit files of different types', () => {
@@ -195,7 +195,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
         fileInput.dispatchEvent(changeEvent);
 
         expect(component.files).toBeDefined();
-        expect(component.files.length).toBe(3);
+        expect(component.files!.length).toBe(3);
       });
     });
   });

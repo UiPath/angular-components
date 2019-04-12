@@ -133,7 +133,7 @@
     "no-input-rename": true,
     "no-inputs-metadata-property": true,
     "no-misused-new": true,
-    "no-non-null-assertion": true,
+    "no-non-null-assertion": false,
     "no-output-on-prefix": true,
     "no-output-rename": true,
     "no-outputs-metadata-property": true,
