@@ -41,11 +41,10 @@ export class UiScrollIntoViewDirective {
     });
   }
 
+  public scrollIntoViewIfNeeded = scrollIntoViewIfNeeded;
 
   constructor(
     private _element: ElementRef,
     private _zone: NgZone,
   ) { }
-
-  public scrollIntoViewIfNeeded = (...args: any) => scrollIntoViewIfNeeded.apply(null, args);
 }

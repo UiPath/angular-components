@@ -107,6 +107,12 @@ export class EventGenerator {
         return changeEvent;
     }
 
+    static input() {
+        const event = document.createEvent('Event');
+        event.initEvent('input', true, true);
+        return event;
+    }
+
     static clickXY(offsetX: number, offsetY: number) {
         const event = this.click;
 
