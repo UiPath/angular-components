@@ -12,7 +12,9 @@
     "copy-readme": "cpx .\\README.md .\\dist\\angular",
     "pack-lib": "cd dist/angular && npm pack",
     "package": "npm-run-all build:prod copy-readme pack-lib",
-    "docs": "compodoc"
+    "docs": "compodoc",
+    "predocs:publish": "npm run docs",
+    "docs:publish": "node ./.build/publish-gh-pages.js"
   },
   "private": true,
   "dependencies": {
@@ -45,6 +47,7 @@
     "@types/node": "~11.11.6",
     "codelyzer": "~5.0.0-beta.1",
     "cpx": "^1.5.0",
+    "gh-pages": "^2.0.1",
     "jasmine-core": "~3.3.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.0.1",
