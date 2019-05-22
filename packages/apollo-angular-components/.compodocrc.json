@@ -1,0 +1,9 @@
+{
+    "$schema": "./node_modules/@compodoc/compodoc/src/config/schema.json",
+    "tsconfig": "./projects/angular/tsconfig.lib.json",
+    "name": "UiPath Angular Components",
+    "customFavicon": "./favicon.ico",
+    "customLogo": "./logo.png",
+    "disablePrivate": true,
+    "disableProtected": true
+}
