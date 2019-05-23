@@ -4,11 +4,12 @@ import {
 } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-export /**
+/**
  * Static operator to avoid breaking the stream when using catchError.
  *
- * @template T
- * @param {T} obj  Object to be asynchronously returned.
- * @returns {Observable<T>} The delay stream.
+ * @param obj  Object that will be asynchronously returned.
+ * @returns The delayed stream.
  */
-const asyncOf = <T>(obj: T): Observable<T> => of(obj).pipe(delay(0));
+export function asyncOf<T>(obj: T): Observable<T> {
+  return of(obj).pipe(delay(0));
+}
