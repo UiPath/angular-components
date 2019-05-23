@@ -4,14 +4,19 @@ import {
 } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-export    /**
- * Repeats the requested stream indefinately.
+type StreamFactory<T> = () => Observable<T>;
+
+/**
+ * Repeats the requested stream indefinitely.
  *
- * @template T
- * @param {() => Observable<T>} stream The stream factory.
- * @param {number} [interval=5000] The interval at which to repeat the stream.
+ * @export
+ * @param stream The stream factory.
+ * @param [interval=5000] The interval at which to repeat the stream.
+ * @returns A hot observable that switches to the provided factory at the requested interval.
  */
-    const repeatStream = <T>(stream: () => Observable<T>, interval = 5000) => timer(0, interval)
-        .pipe(
-            switchMap(() => stream()),
-        );
+export function repeatStream<T>(stream: StreamFactory<T>, interval = 5000) {
+  return timer(0, interval)
+    .pipe(
+      switchMap(() => stream()),
+    );
+}
