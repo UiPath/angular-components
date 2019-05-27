@@ -1,10 +1,15 @@
-export /**
+import { isBrowserPlatform } from './is-browser-platform';
+
+/**
  * Determines if the current agent is Edge.
  *
- * @returns {boolean}
+ * @export
+ * @returns Returns `true` if the current browser is `Edge`.
  */
-    const isEdge = (): boolean => {
-        const userAgent = window.navigator.userAgent;
+export function isEdge(): boolean {
+    if (!isBrowserPlatform()) { return false; }
 
-        return userAgent.indexOf('Edge') > -1;
-    };
+    const userAgent = window.navigator.userAgent;
+
+    return userAgent.indexOf('Edge') > -1;
+}
