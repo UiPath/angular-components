@@ -14,31 +14,60 @@ import {
   take,
 } from 'rxjs/operators';
 
+/**
+ * @ignore
+ */
 const ELEMENT_NODE = 1;
 
+/**
+ * A directive that autofocuses the decorated element OR the first focusable element inside the decorated element.
+ *
+ * @export
+ */
 @Directive({
     selector: '[uiAutofocus]',
 })
 export class UiAutofocusDirective implements OnInit {
+    /**
+     * Configure if the element should be focused.
+     * Defaults to: `true`
+     *
+     */
     @Input()
     set uiAutofocus(condition: boolean) {
         this._autofocus = condition;
     }
 
+    /**
+     * Set to `true` if the element needs to be refocused.
+     * eg: `[refocus]="refocu$ | async"`
+     *
+     */
     @Input()
     set refocus(condition: boolean) {
         if (condition) {
-            this.queueFocus();
+            this.enqueueFocus();
         }
     }
 
+    /**
+     * Where the selection location should be after the element is focused.
+     *
+     */
     @Input()
     public selectionLocation: 'start' | 'end' = 'start';
 
+    /**
+     * The decorated `HTMLElement` reference.
+     *
+     */
     public element?: HTMLElement;
 
     private _autofocus = true;
 
+    /**
+    * @ignore
+    */
     constructor(
         private _el: ElementRef,
         private _zone: NgZone,
@@ -46,11 +75,18 @@ export class UiAutofocusDirective implements OnInit {
         private _checker: InteractivityChecker,
     ) { }
 
+    /**
+     * @ignore
+     */
     ngOnInit() {
-        this.queueFocus();
+        this.enqueueFocus();
     }
 
-    public queueFocus() {
+    /**
+     * Enqueues a focus event.
+     *
+     */
+    public enqueueFocus() {
         if (this._autofocus) {
             this._zone.runOutsideAngular(() => {
                 merge(
@@ -73,6 +109,10 @@ export class UiAutofocusDirective implements OnInit {
         }
     }
 
+    /**
+     * Focus the `element`.
+     *
+     */
     public focus(element?: HTMLElement) {
         if (!element) { return; }
         element.focus();
