@@ -1,12 +1,18 @@
-export /**
- * Returns a map with all the cookie KV pairs.
+import { isBrowserPlatform } from './is-browser-platform';
+
+/**
+ * Reads the current application cookies.
  *
- * @returns {Record<string, string>}
+ * @export
+ * @returns A map with all the cookie KV pairs.
  */
-    const extractCookies = () =>
-        document.cookie.split('; ')
-            .reduce((cookieMap, cookie) => {
-                const [key, value] = cookie.split('=');
-                cookieMap[key] = value;
-                return cookieMap;
-            }, {} as Record<string, string>);
+export function extractCookies(): Record<string, string> {
+    if (!isBrowserPlatform()) { return {}; }
+
+    return document.cookie.split('; ')
+        .reduce((cookieMap, cookie) => {
+            const [key, value] = cookie.split('=');
+            cookieMap[key] = value;
+            return cookieMap;
+        }, {} as Record<string, string>);
+}
