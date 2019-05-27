@@ -1,18 +1,23 @@
-export /**
+import { isBrowserPlatform } from './is-browser-platform';
+
+/**
  * Determines if the current agent is Internet Explorer.
  *
- * @returns {boolean}
+ * @export
+ * @returns Returns `true` if the current browser is `Internet Explorer`.
  */
-    const isInternetExplorer = (): boolean => {
-        const userAgent = window.navigator.userAgent;
+export function isInternetExplorer(): boolean {
+    if (!isBrowserPlatform()) { return false; }
 
-        // IE 10 or older => return version number
-        const msie = userAgent.indexOf('MSIE ');
-        if (msie > -1) { return true; }
+    const userAgent = window.navigator.userAgent;
 
-        // IE 11 => return version number
-        const trident = userAgent.indexOf('Trident/');
-        if (trident > -1) { return true; }
+    // IE 10 or older => return version number
+    const msie = userAgent.indexOf('MSIE ');
+    if (msie > -1) { return true; }
 
-        return false;
-    };
+    // IE 11 => return version number
+    const trident = userAgent.indexOf('Trident/');
+    if (trident > -1) { return true; }
+
+    return false;
+}
