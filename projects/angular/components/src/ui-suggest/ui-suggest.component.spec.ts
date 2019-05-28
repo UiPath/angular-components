@@ -184,7 +184,6 @@ const sharedSpecifications = (
 
             expect(clearIcon).toBeDefined();
             expect(clearIcon.nativeElement).toBeDefined();
-            expect(clearIcon.nativeElement.getAttribute('svgicon')).toEqual('uipath:cancel');
             expect(displayIcon).toBeNull();
         });
 
