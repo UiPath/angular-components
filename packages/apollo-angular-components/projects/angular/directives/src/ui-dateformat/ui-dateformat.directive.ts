@@ -53,10 +53,10 @@ export interface IDateFormatOptions {
 }
 
 /**
- * `ui-date-format` injection token for the `options`.
+ * `ui-dateformat` injection token for the `options`.
  *
  */
-export const UI_DATEFORMAT_OPTIONS = new InjectionToken<Observable<void>>('UiDateFormat options.');
+export const UI_DATEFORMAT_OPTIONS = new InjectionToken<IDateFormatOptions>('UiDateFormat options.');
 
 /**
  * @ignore
