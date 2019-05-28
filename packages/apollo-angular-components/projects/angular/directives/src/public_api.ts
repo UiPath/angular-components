@@ -21,3 +21,10 @@ export { UiDateFormatModule } from './ui-dateformat/ui-dateformat.module';
 
 export { ISecondFormatOptions, UiSecondFormatDirective, UI_SECONDFORMAT_OPTIONS } from './ui-secondformat/ui-secondformat.directive';
 export { UiSecondFormatModule } from './ui-secondformat/ui-secondformat.module';
+
+export {
+    UiVirtualScrollRangeLoaderDirective,
+    VirtualScrollItem,
+    VirtualScrollItemStatus,
+} from './ui-virtual-scroll-range-loader/ui-virtual-scroll-range-loader.directive';
+export { UiVirtualScrollRangeLoaderModule } from './ui-virtual-scroll-range-loader/ui-virtual-scroll-range-loader.module';
