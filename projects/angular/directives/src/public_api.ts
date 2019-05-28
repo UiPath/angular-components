@@ -18,3 +18,6 @@ export { UiScrollIntoViewModule } from './ui-scroll-into-view/ui-scroll-into-vie
 
 export { DisplayType, UiDateFormatDirective, UI_DATEFORMAT_OPTIONS, IDateFormatOptions } from './ui-dateformat/ui-dateformat.directive';
 export { UiDateFormatModule } from './ui-dateformat/ui-dateformat.module';
+
+export { ISecondFormatOptions, UiSecondFormatDirective, UI_SECONDFORMAT_OPTIONS } from './ui-secondformat/ui-secondformat.directive';
+export { UiSecondFormatModule } from './ui-secondformat/ui-secondformat.module';
