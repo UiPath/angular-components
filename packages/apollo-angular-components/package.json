@@ -10,9 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "copy-readme": "cpx .\\README.md .\\dist\\angular",
-    "pack-lib": "cd dist/angular && npm pack",
-    "package": "npm-run-all build:prod copy-readme pack-lib",
+    "package": "npm-run-all build:prod",
     "docs": "compodoc",
     "predocs:publish": "npm run docs",
     "docs:publish": "node ./.build/publish-gh-pages.js"
