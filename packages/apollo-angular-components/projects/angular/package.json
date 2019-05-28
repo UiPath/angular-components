@@ -4,13 +4,10 @@
   "peerDependencies": {
     "@angular/common": "^7.2.0",
     "@angular/core": "^7.2.0",
-    "@angular/cdk": "^7.3.3"
-  },
-  "bundledDependencies": [
-    "@types/clipboard",
-    "clipboard",
-    "scroll-into-view-if-needed",
-    "moment",
-    "moment-timezone"
-  ]
+    "@angular/cdk": "^7.3.3",
+    "clipboard": "2.0.4",
+    "scroll-into-view-if-needed": "2.2.20",
+    "moment": "2.24.0",
+    "moment-timezone": "0.5.25"
+  }
 }
