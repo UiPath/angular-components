@@ -21,7 +21,12 @@
           "options": {
             "main": "projects/angular/test.ts",
             "tsConfig": "projects/angular/tsconfig.spec.json",
-            "karmaConfig": "projects/angular/karma.conf.js"
+            "karmaConfig": "projects/angular/karma.conf.js",
+            "codeCoverageExclude": [
+              "**/test/**/*",
+              "**/testing/**/*",
+              "**/internal/**/*"
+            ]
           }
         },
         "lint": {
