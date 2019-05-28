@@ -1,62 +1,66 @@
-@import 'globals/colors';
+@mixin ui-suggest-theme($theme) {
+  $foreground: map-get($theme, "foreground");
+  $background: map-get($theme, "background");
+  $is-dark: map-get($theme, "is-dark");
+  $primary-palette: map-get($theme, "primary");
+  $warn-palette: map-get($theme, "warn");
 
-@mixin suggest-theme($theme, $uipath-theme) {
-    $foreground: map-get($theme, 'foreground');
-    $background: map-get($theme, 'background');
-    $is-dark: map-get($theme, 'is-dark');
-    $primary-palette: map-get($theme, 'primary');
-    $warn-palette: map-get($theme, 'warn');
+  $ui-focus-overlay: rgba(map-get($foreground, "base"), 0.12);
+  $ui-hover-overlay: rgba(map-get($foreground, "base"), 0.04);
 
-    $componentName: 'ui-suggest';
+  $componentName: "ui-suggest";
 
-    .mat-toolbar #{$componentName} {
-        .mat-focused .mat-form-field-ripple,
-        .mat-form-field-ripple {
-            background-color: map-get($primary-palette, 'default');
-        }
-
-        .mat-input-element {
-            color: map-get($foreground, 'text');
-        }
+  .mat-toolbar #{$componentName} {
+    .mat-focused .mat-form-field-ripple,
+    .mat-form-field-ripple {
+      background-color: map-get($primary-palette, "default");
     }
 
-    #{$componentName} {
-        .item-list-container {
-            background-color: map-get($background, 'dialog');
-            .mat-list {
-                &-item {
-                    &.selected {
-                        background-color: map-get($background, 'disabled-button');
-                    }
+    .mat-input-element {
+      color: map-get($foreground, "text");
+    }
+  }
 
-                    &.selected.active, &.active, &:hover, &.selected:hover {
-                        background-color: map-get($background, 'hover');
-                    }
-                }
-            }
+  #{$componentName} {
+    .item-list-container {
+      background-color: map-get($background, "dialog");
+      .mat-list {
+        &-item {
+          &.selected {
+            background-color: map-get($background, "disabled-button");
+          }
+
+          &.selected.active,
+          &.active,
+          &:hover,
+          &.selected:hover {
+            background-color: map-get($background, "hover");
+          }
         }
-
-        .display {
-            mat-icon {
-                color: inherit;
-            }
-
-            mat-icon.clear:hover,
-            mat-icon.clear:focus {
-                color: map-get($warn-palette, 'default');
-            }
-        }
+      }
     }
 
-    #{$componentName}:not(.form-control) {
-        .display {
-            &:focus {
-                background-color: map-get($uipath-theme, 'focus-overlay');
-            }
+    .display {
+      mat-icon {
+        color: inherit;
+      }
 
-            &:hover {
-                background-color: map-get($uipath-theme, 'hover-overlay');
-            }
-        }
+      mat-icon.clear:hover,
+      mat-icon.clear:focus {
+        color: map-get($warn-palette, "default");
+      }
     }
+  }
+
+  #{$componentName}:not(.form-control) {
+    .display {
+      &:focus {
+        background-color: $ui-focus-overlay;
+      }
+
+      &:hover {
+        background-color: $ui-hover-overlay;
+      }
+    }
+  }
 }
