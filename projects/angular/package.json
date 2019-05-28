@@ -8,6 +8,7 @@
     "clipboard": "2.0.4",
     "scroll-into-view-if-needed": "2.2.20",
     "moment": "2.24.0",
-    "moment-timezone": "0.5.25"
+    "moment-timezone": "0.5.25",
+    "lodash-es": "4.17.11"
   }
 }
