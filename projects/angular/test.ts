@@ -15,7 +15,7 @@ declare const require: any;
 
 const SEED = 1337;
 
-function reseed() {
+const reseed = () => {
   faker.seed(SEED);
   // overwrite Math.radom again in each global context
   Math.random = () => faker.random.number({ min: 0, max: 100000 }) / 100000;
