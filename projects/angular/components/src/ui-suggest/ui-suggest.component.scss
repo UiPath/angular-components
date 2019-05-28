@@ -1,0 +1,292 @@
+@import "~@angular/material/theming";
+@import "../styles/ellipse";
+
+$height: 40px;
+$item-height: 32px;
+$form-control-height: 18px;
+$display-padding: 15px;
+$icon-size: 18px;
+$default-border-radius: 4px;
+/* https://github.com/angular/material2/blob/master/src/lib/button/_button-base.scss */
+$ui-suggest-focus-transition: background-color 200ms $swift-ease-in-out-timing-function;
+
+$componentName: "ui-suggest";
+
+#{$componentName} {
+    position: relative;
+    display: block;
+
+    .text-ellipsis {
+        @extend %ellipse;
+    }
+
+    &.disabled {
+        opacity: 0.38;
+    }
+
+    &,
+    .item-list-container .mat-list-item {
+        .readonly,
+        &.disabled {
+            pointer-events: none;
+        }
+        &.is-loading {
+            font-style: italic;
+            opacity: 0.8;
+        }
+    }
+
+    .display-title {
+        font-weight: 700;
+    }
+
+    .item-list-container {
+        display: block;
+        position: absolute;
+        z-index: 5;
+        border-radius: $default-border-radius;
+        width: 100%;
+
+        .ui-suggest-item {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        &:focus,
+        &:hover {
+            outline: none;
+        }
+
+        .mat-form-field {
+            $field-padding: 16px;
+
+            padding: 0 $field-padding;
+            width: calc(100% - #{$field-padding * 2}) !important;
+            margin-bottom: 0 !important;
+            height: $height;
+            &-infix {
+                border: 7px solid transparent;
+                border-left: none;
+                border-right: none;
+                padding: 0 0 5px 0;
+                border-left: 0;
+                border-right: 0;
+            }
+            &-suffix {
+                align-self: center;
+                margin-bottom: 5px;
+
+                mat-icon {
+                    font-size: 24px;
+                }
+            }
+            &-wrapper {
+                padding-bottom: 0;
+            }
+            &-underline {
+                bottom: 7px;
+            }
+        }
+
+        .mat-list {
+            overflow-y: auto;
+            padding-top: 0;
+
+            &-item {
+                cursor: pointer;
+
+                &.text-ellipsis .mat-list-item-content {
+                    display: block;
+                }
+
+                mat-progress-spinner {
+                    margin: 0 auto;
+                }
+
+                .mat-icon {
+                    vertical-align: middle;
+                    padding-right: 5px;
+                    margin-top: -3px;
+                }
+
+                .text-label {
+                    outline: none;
+                    margin-left: 5px;
+                    user-select: none;
+                    font-weight: normal;
+                }
+            }
+        }
+
+        &-state-closed {
+            display: none;
+        }
+
+        cdk-virtual-scroll-viewport {
+            height: 100vh;
+            overflow-x: hidden;
+
+            .cdk-virtual-scroll-content-wrapper {
+                width: 100%;
+                overflow: hidden;
+            }
+        }
+    }
+
+    .display {
+        cursor: pointer;
+        user-select: none;
+        border-radius: $default-border-radius;
+
+        &:hover,
+        &:focus {
+            outline: none;
+        }
+
+        mat-icon {
+            outline: none;
+            position: absolute;
+            right: 5px;
+        }
+    }
+}
+
+#{$componentName}:not(.form-control) {
+    $searchUpDown: 3px;
+    $searchLeft: -1px;
+
+    .display,
+    .mat-form-field-label {
+        font-size: 0.8rem;
+    }
+
+    .display {
+        height: $height;
+        line-height: $height;
+        padding: 0 2 * $display-padding 0 $display-padding;
+        transition: $ui-suggest-focus-transition;
+
+        &-container {
+            max-width: 200px;
+        }
+
+        mat-icon {
+            &.clear,
+            &.arrow-down {
+                bottom: 8px;
+            }
+        }
+    }
+
+    .item-list-container {
+        left: $searchLeft;
+        &-direction {
+            &-down {
+                top: $searchUpDown;
+                transform-origin: top left;
+
+                .mat-list-item:last-child {
+                    border-bottom-left-radius: $default-border-radius;
+                    border-bottom-right-radius: $default-border-radius;
+                }
+            }
+            &-up {
+                bottom: -$searchUpDown;
+                transform-origin: bottom left;
+
+                .mat-list-item:first-child {
+                    border-top-left-radius: $default-border-radius;
+                    border-top-right-radius: $default-border-radius;
+                }
+            }
+        }
+
+        .mat-list {
+            &-item {
+                height: $height;
+
+                &.text-ellipsis .mat-list-item-content {
+                    line-height: $height;
+                }
+
+                &.no-results-text .mat-list-item-content {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+#{$componentName}.form-control {
+    .display {
+        font-size: 14px;
+        height: $form-control-height;
+        line-height: $form-control-height;
+        padding: 0 2 * $display-padding 0 0;
+
+        mat-icon {
+            &.clear,
+            &.arrow-down {
+                bottom: 0;
+            }
+
+            &.arrow-down {
+                top: -4px;
+            }
+        }
+    }
+
+    .item-list-container {
+        &-direction {
+            &-down {
+                top: -7px;
+
+                .mat-list-item:last-child {
+                    border-bottom-left-radius: $default-border-radius;
+                    border-bottom-right-radius: $default-border-radius;
+                }
+                &.searchable {
+                    top: -5px;
+                }
+            }
+            &-up {
+                bottom: -5px;
+
+                .mat-list-item:first-child {
+                    border-top-left-radius: $default-border-radius;
+                    border-top-right-radius: $default-border-radius;
+                }
+
+                &.searchable {
+                    bottom: -17px;
+                }
+            }
+        }
+
+        .mat-list {
+            .mat-icon {
+                height: $icon-size;
+                font-size: $icon-size;
+                padding-right: 0;
+            }
+
+            &-item {
+                height: $item-height;
+                font-size: 14px;
+
+                &.text-ellipsis .mat-list-item-content {
+                    line-height: $item-height;
+                }
+            }
+
+            .mat-checkbox-ripple.mat-ripple {
+                height: 33px;
+                width: 33px;
+                left: -7px;
+                top: -7px;
+            }
+        }
+    }
+}

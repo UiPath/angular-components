@@ -1,0 +1,190 @@
+<div *ngLet="focus$ | async as focus"
+     [attr.aria-label]="placeholder"
+     (uiClickOutside)="focused &&
+                    close(false)"
+     class="ui-suggest-container"
+     role="application">
+    <!-- role application to force up & down arrow to generate browser (not screen reader) events -->
+    <div [attr.tabindex]="!disabled &&
+                        !readonly ?
+                        0 : null"
+         [matTooltip]="tooltip"
+         [uiAutofocus]="!isOpen && focus"
+         [refocus]="!isOpen && focus"
+         (click)="toggle()"
+         (keyup.enter)="preventDefault($event);"
+         (keydown.enter)="preventDefault($event);
+                          open();"
+         (keyup.space)="open()"
+         (keyup.esc)="removeSelection($event)"
+         (keydown.esc)="isOpen &&
+                        preventDefault($event)"
+         (keydown.space)="preventDefault($event)"
+         (focus)="onFocus();"
+         (blur)="onBlur()"
+         matRipple
+         class="display">
+        <div class="display-container text-ellipsis">
+            <span *ngIf="!isFormControl && placeholder"
+                  class="display-title">
+                {{ placeholder }}:
+            </span>
+            <span class="display-value">
+                <ng-container *ngIf="!!value.length; else allLabel">
+                    <ng-container *ngFor="let option of value; let i = index">
+                        {{ option.text + (i === value.length - 1 ? '' : ', ') }}
+                    </ng-container>
+                </ng-container>
+                <ng-template #allLabel>
+                    {{ defaultValue }}
+                </ng-template>
+            </span>
+        </div>
+        <ng-container *ngIf="!readonly">
+            <!-- aria-hidden will override the default from mat-icon -->
+            <mat-icon *ngIf="value.length && clearable"
+                      [matTooltip]="intl.clearSelectionLabel"
+                      (keydown.space)="removeSelection($event)"
+                      (keydown.enter)="removeSelection($event)"
+                      (click)="removeSelection($event)"
+                      tabindex="0"
+                      role="button"
+                      aria-hidden="false"
+                      class="clear">
+                <svg width="100%"
+                     height="100%"
+                     viewBox="0 0 20 20"
+                     style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
+                    <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.0011213" />
+                </svg>
+            </mat-icon>
+            <mat-icon *ngIf="!value.length ||
+                         !clearable"
+                      class="arrow-down">keyboard_arrow_down</mat-icon>
+        </ng-container>
+    </div>
+    <div [style.width]="isFormControl ? null : width"
+         [class.item-list-container-state-open]="isOpen"
+         [class.item-list-container-state-closed]="!isOpen"
+         [class.item-list-container-direction-down]="isDown"
+         [class.item-list-container-direction-up]="!isDown"
+         [class.searchable]="searchable"
+         [uiAutofocus]="!searchable"
+         [refocus]="isOpen"
+         [@displayState]="isOpen ? 'open' : 'closed'"
+         (keydown.arrowup)="navigate(-1, $event)"
+         (keydown.arrowdown)="navigate(1, $event)"
+         (keyup.esc)="preventDefault($event);
+                      close();"
+         (keyup.enter)="preventDefault($event);"
+         (keydown.enter)="preventDefault($event);
+                        setSelectedItem();"
+         (keydown.esc)="preventDefault($event)"
+         (keydown.tab)="close(false)"
+         (keydown.shift.tab)="close()"
+         tabindex="-1"
+         class="item-list-container mat-elevation-z4">
+        <ng-container *ngIf="!isDown">
+            <ng-container *ngTemplateOutlet="resultList">
+            </ng-container>
+        </ng-container>
+        <mat-form-field *ngIf="searchable"
+                        floatLabel="never">
+            <input [placeholder]="this.isFormControl ? null : placeholder"
+                   [formControl]="inputControl"
+                   [uiAutofocus]="isOpen &&
+                                  searchable"
+                   [attr.maxlength]="maxLength"
+                   [refocus]="isOpen"
+                   selectionLocation="end"
+                   autocomplete="off"
+                   matInput>
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <ng-container *ngIf="isDown">
+            <ng-container *ngTemplateOutlet="resultList">
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #resultList>
+    <mat-list>
+        <cdk-virtual-scroll-viewport [isDown]="isDown"
+                                     [itemSize]="itemSize"
+                                     [style.max-height.px]="viewportMaxHeight"
+                                     [minBufferPx]="viewportMaxHeight * 1.2"
+                                     [maxBufferPx]="viewportMaxHeight * 1.4"
+                                     (rangeLoad)="rangeLoad($event)"
+                                     uiVirtualScrollRangeLoader>
+            <ng-container *ngTemplateOutlet="customValueTemplate; context: { $implicit: 'down' }">
+            </ng-container>
+
+            <ng-container *cdkVirtualFor="let item of renderItems; let index = index; trackBy: trackById">
+                <mat-list-item *ngIf="!!item"
+                               [class.active]="index === activeIndex"
+                               [class.is-loading]="item.loading !== VirtualScrollItemStatus.loaded"
+                               [class.readonly]="item.loading !== VirtualScrollItemStatus.loaded"
+                               [class.selected]="!multiple &&
+                                                 isItemSelected(item)"
+                               (click)="preventDefault($event);
+                                        updateValue(item, !multiple, true);"
+                               matRipple>
+                    <div [matTooltip]="disableTooltip ? null : item.text"
+                         matTooltipPosition="right"
+                         class="ui-suggest-item">
+                        <mat-checkbox *ngIf="multiple"
+                                      [checked]="isItemSelected(item)"
+                                      [indeterminate]="false">
+                        </mat-checkbox>
+                        <div [attr.aria-label]="item.text"
+                             class="text-label text-ellipsis"
+                             tabindex="-1">
+                            <mat-icon *ngIf="!!item?.icon?.svgIcon"
+                                      [svgIcon]="item?.icon.svgIcon"></mat-icon>
+                            <mat-icon *ngIf="!!item?.icon?.matIcon">{{item?.icon.matIcon}}</mat-icon>
+                            {{ item?.icon?.iconOnly ? null : item.text }}
+                        </div>
+                    </div>
+                </mat-list-item>
+            </ng-container>
+
+            <ng-container *ngTemplateOutlet="customValueTemplate; context: { $implicit: 'up' }">
+            </ng-container>
+
+            <mat-list-item *ngIf="loading$ | async">
+                <mat-progress-spinner color="primary"
+                                      mode="indeterminate"
+                                      diameter="20">
+                </mat-progress-spinner>
+            </mat-list-item>
+
+            <mat-list-item *ngIf="hasNoResults &&
+                                  !isCustomValueVisible &&
+                                  !(loading$ | async)"
+                           [matTooltip]="intl.noResultsLabel"
+                           matTooltipPosition="right"
+                           class="text-ellipsis no-results-text">
+                <em>{{intl.noResultsLabel}}</em>
+            </mat-list-item>
+        </cdk-virtual-scroll-viewport>
+    </mat-list>
+</ng-template>
+
+<ng-template #customValueTemplate
+             let-renderDirection>
+    <mat-list-item *ngIf="isCustomValueVisible && direction === renderDirection"
+                   [class.active]="(renderDirection === 'down' ? -1 : items.length) === activeIndex"
+                   [matTooltip]="customValueLabelTranslator(inputControl.value)"
+                   (click)="preventDefault($event); updateValue(inputControl.value, !multiple, true);"
+                   matTooltipPosition="right"
+                   class="text-ellipsis custom-item">
+        <div class="text-label text-ellipsis">
+            <mat-icon>add</mat-icon>
+            {{ customValueLabelTranslator(inputControl.value) }}
+        </div>
+    </mat-list-item>
+</ng-template>
