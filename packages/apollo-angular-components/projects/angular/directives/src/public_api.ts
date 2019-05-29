@@ -28,3 +28,6 @@ export {
     VirtualScrollItemStatus,
 } from './ui-virtual-scroll-range-loader/ui-virtual-scroll-range-loader.directive';
 export { UiVirtualScrollRangeLoaderModule } from './ui-virtual-scroll-range-loader/ui-virtual-scroll-range-loader.module';
+
+export { UiVirtualScrollViewportResizeDirective } from './ui-virtual-scroll-viewport-resize/ui-virtual-scroll-viewport-resize.directive';
+export { UiVirtualScrollViewportResizeModule } from './ui-virtual-scroll-viewport-resize/ui-virtual-scroll-viewport-resize.module';
