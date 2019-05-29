@@ -31,7 +31,8 @@ steps:
   inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: '**/*.test.xml'
-  displayName: 'Publish Test Reports'
+    failTaskOnFailedTests: true
+    testRunTitle: 'Publish Test Results'
 
 - script: |
     npm run build:prod
