@@ -27,24 +27,74 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
+/**
+ * Used for marking the loading state of items
+ * within a lazily loaded collection
+ *
+ * @export
+ * @enum {string}
+ */
 export enum VirtualScrollItemStatus {
+    /**
+     * Initial status of an item within the collection,
+     * a placeholder with no content
+     */
     initial = 'initial',
+    /**
+     * Item marked as pending to be loaded, a request was sent out,
+     * but still no content, item data was not yet received
+     */
     pending = 'pending',
+    /**
+     * Item with content, data of item has been loaded
+     */
     loaded = 'loaded',
 }
+
+/**
+ * Item with loading state to be used
+ * if lazily loading results to reduce events emitted
+ * and intervals emitted within events on `rangeLoad` Output
+ * @export
+ */
 export interface VirtualScrollItem {
     loading?: VirtualScrollItemStatus;
 }
 
+/**
+ * A directive that is designed to work alongside CdkVirtualScrollViewport
+ * which can be used to lazy load in chunks depending on what is in view
+ * @export
+ */
 @Directive({
     selector: '[uiVirtualScrollRangeLoader], ui-virtual-scroll-range-loader',
 })
 export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
+
+    /**
+     * Used to extend the ListRange interval emmited by rangeLoad Output
+     * this will expand at both ends with the specified number,
+     * taking into account the status of the loading items
+     * available
+     *
+     */
     @Input()
     public buffer = 10;
+
+    /**
+     * Flag used to indicate the direction of items
+     * set to `false` if virtual scroll events indexes need to be reversed
+     */
     @Input()
     public isDown = true;
 
+    /**
+     * Output of `ListRange` events based on renderedRangeStream from
+     * CdkVirtualScrollViewport which takes into account
+     * direction of list (`isDown`), `buffer`
+     * and reduces interval to untouched indexes (items with `loading: "initial"`)
+     *
+     */
     @Output()
     public rangeLoad = new EventEmitter<ListRange>();
 
@@ -53,12 +103,18 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
 
     private readonly _destroyed$ = new Subject();
 
+    /**
+     * @ignore
+     */
     constructor(
         @Self()
         @Inject(CdkVirtualScrollViewport)
         private readonly _viewport: CdkVirtualScrollViewport,
     ) { }
 
+    /**
+     * @ignore
+     */
     ngOnInit() {
         this._viewport.renderedRangeStream
             .pipe(
@@ -84,12 +140,16 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
                         this._reverseIndex({ start, end }, items.length),
                 ),
                 filter(this._isValidRange),
+                tap(_ => console.warn(this.buffer)),
                 tap(range => this.rangeLoad.emit(range)),
             )
             .pipe(takeUntil(this._destroyed$))
             .subscribe();
     }
 
+    /**
+     * @ignore
+     */
     ngOnDestroy() {
         this._destroyed$.next();
         this._destroyed$.complete();
