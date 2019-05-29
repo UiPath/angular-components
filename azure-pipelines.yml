@@ -18,6 +18,8 @@ steps:
 - script: |
     npm i -g @angular/cli
     npm i
+  env:
+    VSTS_REGISTRY_TOKEN: $(system.registryToken)
   displayName: 'install dependencies'
 
 - script: |
