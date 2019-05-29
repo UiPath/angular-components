@@ -24,6 +24,9 @@
       "dom"
     ],
     "paths": {
+      "@uipath/angular/a11y": [
+        "./projects/angular/a11y/src/public_api.ts"
+      ],
       "@uipath/angular/utilities": [
         "./projects/angular/utilities/src/public_api.ts"
       ],
