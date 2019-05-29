@@ -39,7 +39,9 @@ const MAX_CLICKS_PER_SECOND = 3;
  *
  * @export
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UiClickOutsideService implements OnDestroy {
   /**
    * The `global` event handler for `click` events.
