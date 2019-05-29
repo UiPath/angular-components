@@ -19,17 +19,23 @@ steps:
     npm i
   env:
     VSTS_REGISTRY_TOKEN: $(system.registryToken)
-  displayName: 'install dependencies'
+  displayName: 'Install NPM Dependencies'
 
 - script: |
     npm run test:coverage
   env:
     VSTS_REGISTRY_TOKEN: $(system.registryToken)
-  displayName: 'test lib with coverage output'
+  displayName: 'Run Tests and Generate Coverage Report'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/*.test.xml'
+  displayName: 'Publish Test Reports'
 
 - script: |
     npm run build:prod
     npm run build:theme
   env:
     VSTS_REGISTRY_TOKEN: $(system.registryToken)
-  displayName: 'build lib'
+  displayName: 'Bundle Library'
