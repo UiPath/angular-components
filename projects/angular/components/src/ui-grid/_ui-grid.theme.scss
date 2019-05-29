@@ -1,0 +1,182 @@
+@import "./components/ui-grid-search/ui-grid-search.theme";
+
+@import "~@angular/material/theming";
+
+/* https://github.com/angular/material2/blob/master/src/lib/button/_button-base.scss */
+$ui-grid-default-transition: 200ms $swift-ease-in-out-timing-function;
+$ui-grid-background-transition: background-color $ui-grid-default-transition;
+$ui-grid-opacity-transition: opacity $ui-grid-default-transition;
+
+%resize-anchor-hover {
+    opacity: 0.9;
+}
+
+%resize-anchor-default {
+    opacity: 0.1;
+}
+
+@mixin ui-grid-theme($theme) {
+    $is-dark: map-get($theme, "is-dark");
+    $foreground: map-get($theme, "foreground");
+    $background: map-get($theme, "background");
+    $accent-palette: map-get($theme, "accent");
+
+    $ui-grid-primary-text-color: map-get($foreground, "text");
+    $ui-grid-secondary-text-color: map-get($foreground, "secondary-text");
+
+    $ui-grid-accent-color: map-get($accent-palette, "default");
+
+    $ui-grid-background: map-get($background, "card");
+    $ui-grid-border-color: mat-color($foreground, "divider");
+    $ui-grid-elevation-color: rgb(0, 0, 0);
+
+    $_hover-base: mix($ui-grid-background, invert($ui-grid-background), 97%);
+
+    $ui-grid-hover-background: mix($_hover-base, map-get($accent-palette, "default"), if($is-dark, 97, 95));
+
+    ui-grid {
+        &.ui-grid-elevation-z0 {
+            box-shadow: none;
+        }
+
+        @for $i from 1 through 24 {
+            &.ui-grid-elevation-z#{$i} {
+                .ui-grid-container {
+                    @include mat-elevation($i, $ui-grid-elevation-color, 0.5);
+                }
+            }
+        }
+
+        &:not([class*="ui-grid-elevation-z"]) {
+            .ui-grid-container {
+                @include mat-elevation(4, $ui-grid-elevation-color, 0.5);
+            }
+        }
+
+        &.ui-grid-state-loading {
+            .ui-grid-row {
+                pointer-events: none;
+                opacity: 0.5;
+            }
+        }
+
+        &.ui-grid-state-resizing {
+            .ui-grid-header-cell:not(.ui-grid-state-resizing) {
+                .ui-grid-resize-anchor {
+                    @extend %resize-anchor-default;
+                }
+            }
+        }
+
+        &.ui-grid-state-projected {
+            .ui-grid-row {
+                &:hover,
+                &:focus,
+                &.cdk-focused {
+                    &:not(.ui-grid-row-state-expanded) {
+                        background-color: inherit;
+                    }
+                    outline: none;
+                }
+            }
+        }
+
+        .ui-grid {
+            &-container {
+                background: $ui-grid-background;
+            }
+
+            &-container mat-paginator.mat-paginator {
+                background: transparent;
+            }
+
+            &-primary {
+                color: $ui-grid-primary-text-color;
+            }
+
+            &-secondary {
+                color: $ui-grid-secondary-text-color;
+            }
+
+            &-header-title {
+                &-filtered {
+                    color: $ui-grid-accent-color;
+                }
+            }
+
+            &-cell,
+            &-header-cell {
+                background-color: transparent;
+                transition: $ui-grid-background-transition;
+            }
+
+            &-resize-anchor {
+                @extend %resize-anchor-default;
+                transition: $ui-grid-opacity-transition;
+
+                &:hover {
+                    @extend %resize-anchor-hover;
+                }
+            }
+
+            &-header-cell:not(.ui-grid-feature-cell):focus {
+                background-color: rgba($ui-grid-hover-background, 0.5);
+                outline: none;
+            }
+
+            &-state-resizing {
+                background-color: $ui-grid-hover-background;
+                outline: none;
+            }
+
+            &-header-cell:focus {
+                .ui-grid-resize-anchor {
+                    opacity: 0.5;
+                }
+            }
+
+            &-header-cell:hover,
+            &-state-resizing {
+                .ui-grid-resize-anchor {
+                    @extend %resize-anchor-hover;
+                }
+            }
+
+            &-header-cell.ui-grid-primary {
+                color: $ui-grid-primary-text-color;
+            }
+
+            &-header-row,
+            &-row {
+                border-bottom-color: $ui-grid-border-color;
+                transition: $ui-grid-opacity-transition;
+            }
+        }
+
+        .ui-grid-row {
+            &:focus,
+            &.cdk-focused {
+                &:not(.ui-grid-row-state-expanded) {
+                    background-color: rgba($ui-grid-hover-background, 0.5);
+                }
+                outline: none;
+            }
+
+            &:hover {
+                &:not(.ui-grid-row-state-expanded) {
+                    background-color: $ui-grid-hover-background;
+                }
+                outline: none;
+            }
+        }
+
+        .ui-grid-sort-icon {
+            .path-asc,
+            .path-desc {
+                transition: $ui-grid-default-transition;
+            }
+        }
+    }
+
+    @include ui-grid-search-theme($theme);
+}

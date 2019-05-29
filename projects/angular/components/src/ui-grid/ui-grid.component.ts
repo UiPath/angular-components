@@ -1,0 +1,395 @@
+import {
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  Optional,
+  Output,
+  QueryList,
+  SimpleChanges,
+  ViewEncapsulation,
+} from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { QueuedAnnouncer } from '@uipath/angular/a11y';
+
+import range from 'lodash-es/range';
+import {
+  BehaviorSubject,
+  merge,
+  Observable,
+  Subject,
+} from 'rxjs';
+import {
+  debounceTime,
+  map,
+  skip,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
+
+import {
+  UiGridColumnDirective,
+  UiGridExpandedRowDirective,
+  UiGridRowActionDirective,
+  UiGridRowConfigDirective,
+} from './body';
+import { UiGridFooterDirective } from './footer';
+import { UiGridHeaderDirective } from './header';
+import {
+  DataManager,
+  FilterManager,
+  LiveAnnouncerManager,
+  PerformanceMonitor,
+  ResizeManager,
+  ResizeManagerFactory,
+  ResizeStrategy,
+  SelectionManager,
+  SortManager,
+} from './managers';
+import { ResizableGrid } from './managers/resize/types';
+import {
+  IGridDataEntry,
+  ISortModel,
+} from './models';
+import { UiGridIntl } from './ui-grid.intl';
+
+@Component({
+    selector: 'ui-grid',
+    templateUrl: './ui-grid.component.html',
+    styleUrls: [
+        './ui-grid.component.scss',
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+})
+export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> implements AfterContentInit, OnChanges, OnDestroy {
+    @Input()
+    public set data(value: T[]) {
+        this._performanceMonitor.reset();
+        this.dataManager.update(value);
+    }
+
+    @HostBinding('class.ui-grid-state-resizing')
+    @Input()
+    public get isResizing() {
+        return this.resizeManager.isResizing;
+    }
+
+    @HostBinding('class.ui-grid-state-projected')
+    @Input()
+    public isProjected: boolean;
+
+    public get isEveryVisibleRowChecked() {
+        return this.dataManager.length &&
+            this.dataManager.every(row => this.selectionManager.isSelected(row!));
+    }
+
+    public get hasValueOnVisiblePage() {
+        return this.dataManager.some(row => this.selectionManager.isSelected(row!));
+    }
+
+    @Input()
+    public set resizeStrategy(value: ResizeStrategy) {
+        if (value === this._resizeStrategy) { return; }
+
+        this._resizeStrategy = value;
+
+        if (this.resizeManager != null) {
+            this.resizeManager.destroy();
+        }
+
+        this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
+    }
+
+    @HostBinding('class.ui-grid-state-loading')
+    @Input()
+    public loading = false;
+
+    @HostBinding('class.ui-grid-state-disabled')
+    @Input()
+    public disabled = false;
+
+    @Input()
+    public selectable = true;
+
+    @HostBinding('class.ui-grid-mode-multi-select')
+    @Input()
+    public multiPageSelect = false;
+
+    @Input()
+    public refreshable = true;
+
+    @Input()
+    public virtualScroll = false;
+
+    @Input()
+    public noDataMessage?: string;
+
+    @Input()
+    public expandedEntry?: T;
+
+    @Input()
+    public expandMode: 'preserve' | 'collapse' = 'collapse';
+
+    @Output()
+    public sortChange = new EventEmitter<ISortModel<T>>();
+
+    @Output()
+    public refresh = new EventEmitter<void>();
+
+    @Output()
+    public rendered = new EventEmitter<void>();
+
+    public columns$ = new BehaviorSubject<UiGridColumnDirective<T>[]>([]);
+
+    public visible$ = new BehaviorSubject<UiGridColumnDirective<T>[]>([]);
+
+    @ContentChild(UiGridRowConfigDirective)
+    public rowConfig?: UiGridRowConfigDirective<T>;
+
+    @ContentChild(UiGridRowActionDirective)
+    public actions?: UiGridRowActionDirective;
+
+    @ContentChild(UiGridFooterDirective)
+    public footer?: UiGridFooterDirective;
+
+    @ContentChild(UiGridHeaderDirective)
+    public header?: UiGridHeaderDirective<T>;
+
+    @ContentChildren(UiGridColumnDirective)
+    public columns!: QueryList<UiGridColumnDirective<T>>;
+
+    @ContentChild(UiGridExpandedRowDirective)
+    public expandedRow?: UiGridExpandedRowDirective;
+
+    public liveAnnouncerManager?: LiveAnnouncerManager<T>;
+    public selectionManager = new SelectionManager<T>();
+    public dataManager = new DataManager<T>();
+    public filterManager = new FilterManager<T>();
+    public sortManager = new SortManager<T>();
+    public resizeManager: ResizeManager<T>;
+    public paintTime$: Observable<string>;
+    public isAnyFilterDefined$ = new BehaviorSubject<boolean>(false);
+
+    public get scrollCompensationWidth() {
+        if (!this.virtualScroll) { return 0; }
+
+        const viewport: HTMLElement = this._ref.nativeElement.querySelector('.ui-grid-viewport');
+
+        if (!viewport) { return 0; }
+
+        return viewport.offsetWidth - viewport.clientWidth;
+    }
+
+    public get showMultiPageSelectionInfo() {
+        return this.multiPageSelect &&
+            !this.dataManager.pristine &&
+            (
+                this.dataManager.length ||
+                this.selectionManager.selected.length
+            );
+    }
+
+    protected _destroyed$ = new Subject<void>();
+    protected _columnChanges$: Observable<SimpleChanges>;
+
+    private _resizeStrategy = ResizeStrategy.ImmediateNeighbourHalt;
+    private _performanceMonitor: PerformanceMonitor;
+    private _configure$ = new Subject();
+    private _isShiftPressed = false;
+    private _lastCheckboxIdx = 0;
+
+    constructor(
+        @Optional()
+        public intl: UiGridIntl,
+        protected _ref: ElementRef,
+        protected _cd: ChangeDetectorRef,
+        private _zone: NgZone,
+        private _queuedAnnouncer: QueuedAnnouncer,
+    ) {
+        super();
+
+        this.isProjected = this._ref.nativeElement.classList.contains('ui-grid-state-responsive');
+
+        this.intl = intl || new UiGridIntl();
+
+        this._columnChanges$ =
+            this.rendered.pipe(
+                switchMap(() => merge(
+                    ...this.columns.map(column => column.change$)),
+                ),
+                debounceTime(150),
+                tap(() => this.isResizing && this.resizeManager.stop()),
+            );
+
+        const sort$ = this.sortManager
+            .sort$
+            .pipe(
+                tap(ev => this.sortChange.emit(ev)),
+            );
+
+        const inputChanges$ = merge(
+            this.intl.changes,
+            this._configure$,
+            this._columnChanges$,
+        ).pipe(
+            map(() => this.columns.toArray()),
+            tap(columns => this.filterManager.columns = columns),
+            tap(columns => this.sortManager.columns = columns),
+            tap(columns => this.columns$.next(columns)),
+            tap(columns => this.isAnyFilterDefined$.next(
+                columns.some(c => !!c.dropdown || !!c.searchableDropdown),
+            )),
+            map((columns) => columns.filter(c => !!c.visible)),
+            tap(visible => this.visible$.next(visible)),
+        );
+
+        const data$ = this.dataManager.data$.pipe(
+            tap(_ => this._lastCheckboxIdx = 0),
+        );
+
+        const selection$ = this.selectionManager.changed$.pipe(
+            tap(_ => this._cd.markForCheck()),
+        );
+
+        merge(
+            sort$,
+            inputChanges$,
+            data$,
+            selection$,
+        ).pipe(
+            takeUntil(this._destroyed$),
+        ).subscribe();
+
+        this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
+        this._performanceMonitor = new PerformanceMonitor(_ref.nativeElement);
+        this.paintTime$ = this._performanceMonitor.paintTime$;
+    }
+
+    ngAfterContentInit() {
+        this.liveAnnouncerManager = new LiveAnnouncerManager(
+            msg => this._queuedAnnouncer.enqueue(msg),
+            this.intl,
+            this.dataManager.data$,
+            this.sortManager.sort$.pipe(skip(1)),
+            this.refresh,
+            this.footer && this.footer.pageChange,
+        );
+
+        this._configure$.next();
+
+        this._zone.onStable.pipe(
+            take(1),
+        ).subscribe(() => {
+            // ensure everything is painted once initial rendering is done
+            // a lot of templates loaded lazily, this is required
+            // to ensure everything is drawn once the grid is initalized
+            this._cd.markForCheck();
+
+            this.rendered.next();
+        });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        const selectableChange = changes['selectable'];
+        if (
+            selectableChange &&
+            !selectableChange.firstChange &&
+            selectableChange.previousValue !== selectableChange.currentValue
+        ) {
+            this.selectionManager.clear();
+            this._configure$.next();
+        }
+
+        const dataChange = changes['data'];
+
+        if (
+            dataChange &&
+            !dataChange.firstChange &&
+            !this.multiPageSelect
+        ) {
+            this._performanceMonitor.reset();
+            this.selectionManager.clear();
+        }
+    }
+
+    ngOnDestroy() {
+        this.sortChange.complete();
+        this.rendered.complete();
+        this.columns$.complete();
+        this.isAnyFilterDefined$.complete();
+
+        this.dataManager.destroy();
+        this.resizeManager.destroy();
+        this.sortManager.destroy();
+        this.selectionManager.destroy();
+        this.filterManager.destroy();
+
+        if (this.liveAnnouncerManager) {
+            this.liveAnnouncerManager.destroy();
+        }
+
+        this._performanceMonitor.destroy();
+
+        this._destroyed$.next();
+        this._destroyed$.complete();
+        this._configure$.complete();
+    }
+
+    @HostListener('document:keydown.shift', ['$event'])
+    @HostListener('document:keyup.shift', ['$event'])
+    public toggleShift(ev: MouseEvent) {
+        this._isShiftPressed = ev.shiftKey;
+    }
+
+    public handleSelection(idx: number, entry: T) {
+        if (!this._isShiftPressed) {
+            this._lastCheckboxIdx = idx;
+            this.selectionManager.toggle(entry);
+            return;
+        }
+
+        const min = Math.min(this._lastCheckboxIdx, idx);
+        const max = Math.max(idx, this._lastCheckboxIdx);
+
+        this.selectionManager.deselect(...this.dataManager.data$.getValue());
+        /**
+         * If min = max, the checkbox will be deselected as a consequence of clicking
+         * and will remain rendered as unchecked, even though we selected it
+         * to prevent this invalid render state, we check for changes after deselecting the rows
+         */
+
+        const rows = range(min, max + 1)
+            .map(this.dataManager.get);
+        this.selectionManager.select(...rows);
+        this._cd.detectChanges();
+    }
+
+    public toggle(ev: MatCheckboxChange) {
+        if (ev.checked) {
+            this.dataManager.forEach(row => this.selectionManager.select(row!));
+        } else {
+            this._lastCheckboxIdx = 0;
+            this.dataManager.forEach(row => this.selectionManager.deselect(row!));
+        }
+    }
+
+    public checkboxLabel(row?: T): string {
+        if (!row) {
+            return `${this.isEveryVisibleRowChecked ? 'select' : 'deselect'} all`;
+        }
+        return `${this.selectionManager.isSelected(row) ? 'deselect' : 'select'} row ${this.dataManager.indexOf(row)}`;
+    }
+}
