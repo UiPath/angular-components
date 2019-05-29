@@ -32,7 +32,6 @@ import {
  * within a lazily loaded collection
  *
  * @export
- * @enum {string}
  */
 export enum VirtualScrollItemStatus {
     /**
