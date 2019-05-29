@@ -18,6 +18,7 @@ import {
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
+import { identifier } from '@uipath/angular/utilities';
 
 import isEqual from 'lodash-es/isEqual';
 import { Subject } from 'rxjs';
@@ -36,8 +37,6 @@ export abstract class UiSuggestMatFormField implements
     DoCheck,
     MatFormFieldControl<ISuggestValue[]>,
     ControlValueAccessor {
-
-    private static _instanceCount = 0;
 
     public abstract disabled: boolean;
 
@@ -175,7 +174,7 @@ export abstract class UiSuggestMatFormField implements
      * @ignore
      */
     @HostBinding()
-    public id = `ui-suggest-${UiSuggestMatFormField._instanceCount}`;
+    public id = `ui-suggest-${identifier()}`;
 
     /**
      * @ignore
@@ -233,8 +232,6 @@ export abstract class UiSuggestMatFormField implements
         @Self()
         public ngControl: NgControl,
     ) {
-        UiSuggestMatFormField._instanceCount++;
-
         this.isFormControl = this.isFormControl || !!this.ngControl;
 
         // prevent cyclic dependency
