@@ -26,6 +26,9 @@
               "**/test/**/*",
               "**/testing/**/*",
               "**/internal/**/*"
+            ],
+            "styles": [
+              "test.theme.scss"
             ]
           }
         },

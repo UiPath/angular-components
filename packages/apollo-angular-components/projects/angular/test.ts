@@ -35,6 +35,19 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting()
 );
 
+const materialIconsLink = document.createElement('link');
+materialIconsLink.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+materialIconsLink.rel = 'stylesheet';
+document.head.appendChild(materialIconsLink);
+
+const customStyle = document.createElement('style');
+customStyle.innerHTML = `
+  input[id^='root*'] {
+    margin-top: 20px;
+  }
+`;
+document.head.appendChild(customStyle);
+
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);
 
