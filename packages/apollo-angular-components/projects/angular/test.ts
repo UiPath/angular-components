@@ -1,3 +1,4 @@
+
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
@@ -11,9 +12,21 @@ import {
 
 import * as faker from 'faker';
 
+import { JASMINE_STYLES } from './test.theme';
+
 declare const require: any;
 
 const SEED = 1337;
+
+const materialIconsLink = document.createElement('link');
+materialIconsLink.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+materialIconsLink.rel = 'stylesheet';
+document.head.appendChild(materialIconsLink);
+
+const customStyle = document.createElement('style');
+customStyle.innerHTML = JASMINE_STYLES;
+document.head.appendChild(customStyle);
+
 
 const reseed = () => {
   faker.seed(SEED);
@@ -34,19 +47,6 @@ getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting()
 );
-
-const materialIconsLink = document.createElement('link');
-materialIconsLink.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
-materialIconsLink.rel = 'stylesheet';
-document.head.appendChild(materialIconsLink);
-
-const customStyle = document.createElement('style');
-customStyle.innerHTML = `
-  input[id^='root*'] {
-    margin-top: 20px;
-  }
-`;
-document.head.appendChild(customStyle);
 
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);
