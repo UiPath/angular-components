@@ -2,7 +2,7 @@
 
 Library of Angular components, directives, pipes, services or any other common stuff accros Angular apps in UiPath.
 
-[![Documentation](http://uipath.github.io/angular-components/images/coverage-badge-documentation.svg)](https://uipath.github.io/angular-components/)
+[![Documentation](https://uipath.github.io/angular-components/images/coverage-badge-documentation.svg)](https://uipath.github.io/angular-components/)
 [![Build Status](https://uipath.visualstudio.com/angular-components/_apis/build/status/UiPath.angular-components?branchName=master)](https://uipath.visualstudio.com/angular-components/_build/latest?definitionId=387&branchName=master)
 
 ## Documentation
