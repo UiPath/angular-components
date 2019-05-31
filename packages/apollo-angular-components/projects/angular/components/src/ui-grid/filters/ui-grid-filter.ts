@@ -7,6 +7,13 @@ import {
 
 import { IFilterModel } from '../models';
 
+/**
+ * Filter definition directive.
+ *
+ * @export
+ * @internal
+ * @ignore
+ */
 export abstract class UiGridFilter<T> implements OnDestroy {
     @Input()
     public disabled?: boolean;

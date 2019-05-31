@@ -2,6 +2,10 @@ import { isDevMode } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
+/**
+ * @internal
+ * @ignore
+ */
 export class PerformanceMonitor {
     public paintTime$ = new Subject<string>();
 

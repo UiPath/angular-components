@@ -1,14 +1,18 @@
 import { IGridDataEntry } from '../../models';
 import { ResizeManager } from './resize-manager';
 import {
-    AggresiveNeighbourPushResizer,
-    ImmediateNeighbourHaltResizer,
+  AggresiveNeighbourPushResizer,
+  ImmediateNeighbourHaltResizer,
 } from './strategies';
 import {
-    ResizableGrid,
-    ResizeStrategy,
+  ResizableGrid,
+  ResizeStrategy,
 } from './types';
 
+/**
+ * @internal
+ * @ignore
+ */
 export const ResizeManagerFactory =
     <T extends IGridDataEntry>(type: ResizeStrategy, grid: ResizableGrid<T>): ResizeManager<T> => {
         switch (type) {

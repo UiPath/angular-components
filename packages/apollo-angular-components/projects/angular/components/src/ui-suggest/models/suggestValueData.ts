@@ -7,7 +7,7 @@ import { ISuggestValue } from './suggestValue';
  */
 export interface ISuggestValueData<T> extends ISuggestValue {
     /**
-     * Data associtaed to the entry item.
+     * Data associated to the entry item.
      *
      */
     data?: T;

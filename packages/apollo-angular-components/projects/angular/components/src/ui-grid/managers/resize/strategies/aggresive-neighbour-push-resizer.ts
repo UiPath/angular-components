@@ -11,6 +11,10 @@ import {
   ResizeDirection,
 } from '../types';
 
+/**
+ * @internal
+ * @ignore
+ */
 export class AggresiveNeighbourPushResizer<T extends IGridDataEntry> extends ResizeManager<T> {
     private _isWidthLimitReached = false;
 

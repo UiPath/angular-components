@@ -18,6 +18,11 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 
+/**
+ * The grid search component.
+ *
+ * @export
+ */
 @Component({
     selector: 'ui-grid-search',
     templateUrl: './ui-grid-search.component.html',
@@ -26,18 +31,47 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiGridSearchComponent implements OnInit, OnDestroy {
+    /**
+     * The search debounce time (ms).
+     *
+     */
     @Input()
     public debounce = 0;
+    /**
+     * The search input placeholder.
+     *
+     */
     @Input()
     public placeholder?: string;
+    /**
+     * The max-length allowed in the search input.
+     *
+     */
     @Input()
     public maxLength?: number;
+    /**
+     * The search tooltip text.
+     *
+     */
     @Input()
     public searchTooltip?: string;
+    /**
+     * The clear search tooltip text.
+     *
+     */
     @Input()
     public clearTooltip?: string;
+    /**
+     * Configure if the search tooltip is disabled.
+     *
+     */
     @Input()
-    public toolipDisabled?: boolean;
+    public tooltipDisabled?: boolean;
+
+    /**
+     * The search value.
+     *
+     */
     @Input()
     public get value() {
         return this.search.value;
@@ -46,13 +80,23 @@ export class UiGridSearchComponent implements OnInit, OnDestroy {
         this.search.setValue(value);
     }
 
+    /**
+     * @ignore
+     */
     public search = new FormControl('');
 
+    /**
+     * The search event.
+     *
+     */
     @Output()
     public searchChange = new EventEmitter<string>();
 
     private _destroyed$ = new Subject();
 
+    /**
+     * @ignore
+     */
     ngOnInit() {
         this.search.valueChanges.pipe(
             debounceTime(this.debounce),
@@ -62,6 +106,9 @@ export class UiGridSearchComponent implements OnInit, OnDestroy {
         ).subscribe(value => this.searchChange.emit(value));
     }
 
+    /**
+     * @ignore
+     */
     ngOnDestroy() {
         this.searchChange.complete();
 
@@ -69,6 +116,10 @@ export class UiGridSearchComponent implements OnInit, OnDestroy {
         this._destroyed$.complete();
     }
 
+    /**
+     * Clears the search input value.
+     *
+     */
     public clear() {
         this.search.setValue('');
     }
