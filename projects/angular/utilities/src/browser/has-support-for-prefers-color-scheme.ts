@@ -9,7 +9,7 @@ import { isBrowserPlatform } from './is-browser-platform';
 export function hasSupportForPrefersColorScheme() {
     if (!isBrowserPlatform()) { return false; }
 
-    return window.matchMedia && (
+    return !!window.matchMedia && (
         window.matchMedia('(prefers-color-scheme: light)').matches ||
         window.matchMedia('(prefers-color-scheme: dark)').matches
     );

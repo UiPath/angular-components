@@ -12,6 +12,9 @@ export function extractCookies(): Record<string, string> {
     return document.cookie.split('; ')
         .reduce((cookieMap, cookie) => {
             const [key, value] = cookie.split('=');
+
+            if (!key) { return cookieMap; }
+
             cookieMap[key] = value;
             return cookieMap;
         }, {} as Record<string, string>);
