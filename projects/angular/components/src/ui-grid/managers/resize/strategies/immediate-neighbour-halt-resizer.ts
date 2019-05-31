@@ -1,15 +1,19 @@
 import { IGridDataEntry } from '../../../models';
 import { ResizeManager } from '../resize-manager';
 import {
-    clampOffset,
-    isDirectionChanged,
-    isMinWidth,
+  clampOffset,
+  isDirectionChanged,
+  isMinWidth,
 } from '../resize-manager.constants';
 import {
-    IResizeEvent,
-    ResizeDirection,
+  IResizeEvent,
+  ResizeDirection,
 } from '../types';
 
+/**
+ * @internal
+ * @ignore
+ */
 export class ImmediateNeighbourHaltResizer<T extends IGridDataEntry> extends ResizeManager<T> {
     protected _stateFilter = (state: IResizeEvent<T>) => {
         if (isDirectionChanged(state)) {

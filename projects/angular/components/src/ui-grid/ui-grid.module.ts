@@ -31,7 +31,24 @@ import {
 } from './header';
 import { UiGridComponent } from './ui-grid.component';
 
-const EXPORTS = [
+@NgModule({
+  imports: [
+    CommonModule,
+    MatPaginatorModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTooltipModule,
+    MatProgressBarModule,
+    ScrollingModule,
+    XScrollingModule,
+    UiGridSearchModule,
+    UiSuggestModule,
+    A11yModule,
+    UiVirtualScrollViewportResizeModule,
+  ],
+  declarations: [
     UiGridComponent,
     UiGridRowActionDirective,
     UiGridColumnDirective,
@@ -42,30 +59,18 @@ const EXPORTS = [
     UiGridDropdownFilterDirective,
     UiGridRowConfigDirective,
     UiGridExpandedRowDirective,
-];
-
-@NgModule({
-    imports: [
-        CommonModule,
-        MatPaginatorModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        MatIconModule,
-        MatMenuModule,
-        MatTooltipModule,
-        MatProgressBarModule,
-        ScrollingModule,
-        XScrollingModule,
-        UiGridSearchModule,
-        UiSuggestModule,
-        A11yModule,
-        UiVirtualScrollViewportResizeModule,
-    ],
-    declarations: [
-        ...EXPORTS,
-    ],
-    exports: [
-        ...EXPORTS,
-    ],
+  ],
+  exports: [
+    UiGridComponent,
+    UiGridRowActionDirective,
+    UiGridColumnDirective,
+    UiGridHeaderDirective,
+    UiGridHeaderButtonDirective,
+    UiGridFooterDirective,
+    UiGridSearchFilterDirective,
+    UiGridDropdownFilterDirective,
+    UiGridRowConfigDirective,
+    UiGridExpandedRowDirective,
+  ],
 })
 export class UiGridModule { }

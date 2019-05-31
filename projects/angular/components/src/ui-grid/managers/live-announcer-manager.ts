@@ -10,6 +10,10 @@ import { takeUntil } from 'rxjs/operators';
 import { ISortModel } from '../models';
 import { UiGridIntl } from '../ui-grid.intl';
 
+/**
+ * @internal
+ * @ignore
+ */
 export class LiveAnnouncerManager<T> {
     private _destroyed$ = new Subject<void>();
 

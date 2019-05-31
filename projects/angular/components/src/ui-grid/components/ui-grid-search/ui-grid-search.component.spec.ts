@@ -29,7 +29,7 @@ import { UiGridSearchModule } from './ui-grid-search.module';
                     [maxLength]="maxLength"
                     [searchTooltip]="searchTooltip"
                     [clearTooltip]="clearTooltip"
-                    [toolipDisabled]="toolipDisabled"
+                    [tooltipDisabled]="tooltipDisabled"
                     [value]="value">
     </ui-grid-search>
     `,
@@ -43,7 +43,7 @@ class TestFixtureComponent {
     public maxLength?: number;
     public searchTooltip?: string;
     public clearTooltip?: string;
-    public toolipDisabled?: string;
+    public tooltipDisabled?: string;
     public value?: string;
 }
 
@@ -79,7 +79,7 @@ describe('Component: UiGrid', () => {
                 expect(search.maxLength).toBeUndefined();
                 expect(search.searchTooltip).toBeUndefined();
                 expect(search.clearTooltip).toBeUndefined();
-                expect(search.toolipDisabled).toBeUndefined();
+                expect(search.tooltipDisabled).toBeUndefined();
                 expect(search.value).toBeUndefined();
             });
         });

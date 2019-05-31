@@ -4,9 +4,16 @@ import {
   TemplateRef,
 } from '@angular/core';
 
+/**
+ * The row action definition directive.
+ *
+ */
 @Directive({
-    selector: '[uiGridRowAction], ui-grid-row-action',
+  selector: '[uiGridRowAction], ui-grid-row-action',
 })
 export class UiGridRowActionDirective {
-    @ContentChild(TemplateRef) html?: TemplateRef<any>;
+  /**
+   * @ignore
+   */
+  @ContentChild(TemplateRef) html?: TemplateRef<any>;
 }

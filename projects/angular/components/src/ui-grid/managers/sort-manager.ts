@@ -6,6 +6,10 @@ import { BehaviorSubject } from 'rxjs';
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import { ISortModel } from '../models';
 
+/**
+ * @internal
+ * @ignore
+ */
 const SORT_CYCLE_MAP: Record<SortDirection, SortDirection> = {
     '': 'asc',
     'asc': 'desc',
@@ -16,6 +20,8 @@ const SORT_CYCLE_MAP: Record<SortDirection, SortDirection> = {
  * Handles the sort state of every grid column.
  *
  * @export
+ * @ignore
+ * @internal
  */
 export class SortManager<T> {
     public sort$ = new BehaviorSubject<ISortModel<T>>({} as ISortModel<T>);

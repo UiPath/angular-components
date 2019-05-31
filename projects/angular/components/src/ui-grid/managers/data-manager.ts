@@ -12,6 +12,10 @@ import { BehaviorSubject } from 'rxjs';
 
 import { IGridDataEntry } from '../models';
 
+/**
+ * @ignore
+ * @internal
+ */
 const customPatch = (left: any, right: any): any => {
     if (
         !isArray(left) && !isArray(right) &&
@@ -22,6 +26,10 @@ const customPatch = (left: any, right: any): any => {
     }
 };
 
+/**
+ * @ignore
+ * @internal
+ */
 type PropertyMap<T> = { [Key in keyof T]?: PropertyMap<T[Key]> };
 
 /**
@@ -31,6 +39,8 @@ type PropertyMap<T> = { [Key in keyof T]?: PropertyMap<T[Key]> };
  * * increasing / decreasing data count will result in less node insertion / removal
  *
  * @export
+ * @ignore
+ * @internal
  */
 export class DataManager<T extends IGridDataEntry> {
     public get length() {

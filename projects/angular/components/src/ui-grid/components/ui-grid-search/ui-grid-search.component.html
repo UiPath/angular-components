@@ -10,7 +10,7 @@
                  (keyup.space)="clear()"
                  [hidden]="!search.value"
                  [matTooltip]="clearTooltip"
-                 [matTooltipDisabled]="toolipDisabled"
+                 [matTooltipDisabled]="tooltipDisabled"
                  [attr.aria-label]="clearTooltip"
                  matSuffix
                  class="ui-grid-search-cancel"
@@ -27,7 +27,7 @@
        </mat-icon>
        <mat-icon *ngIf="!search.value"
                  [matTooltip]="searchTooltip"
-                 [matTooltipDisabled]="toolipDisabled"
+                 [matTooltipDisabled]="tooltipDisabled"
                  svgIcon="uipath:search"
                  matSuffix
                  class="svg-icon">

@@ -11,6 +11,8 @@ import { IFilterModel } from '../models';
  * Handles and aggregates all filters with the latest values.
  *
  * @export
+ * @ignore
+ * @internal
  */
 export class FilterManager<T> {
     public filter$ = new BehaviorSubject<IFilterModel<T>[]>([]);
@@ -50,7 +52,7 @@ export class FilterManager<T> {
         this._filterUpdate();
     }
 
-    public searchChange(term: string, header: UiGridHeaderDirective<T>) {
+    public searchChange(term: string | undefined, header: UiGridHeaderDirective<T>) {
         const searchFilterCollection: IFilterModel<T>[] = !!term ?
             this._columns
                 .filter(column => column.searchable)

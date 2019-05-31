@@ -12,27 +12,57 @@ import {
 } from '../../ui-suggest/models';
 import { UiGridFilter } from './ui-grid-filter';
 
+/**
+ * The searchable dropdown definition directive.
+ *
+ * @export
+ */
 @Directive({
-    selector: '[uiGridSearchFilter], ui-grid-search-filter',
+  selector: '[uiGridSearchFilter], ui-grid-search-filter',
 })
 export class UiGridSearchFilterDirective<T> extends UiGridFilter<T> implements OnDestroy {
-    @Input()
-    public property?: string;
+  /**
+   * The property associated to the dropdown search.
+   *
+   */
+  @Input()
+  public property?: string;
 
-    @Input()
-    public noFilterPlaceholder?: string;
+  /**
+   * The no selection placeholder.
+   *
+   */
+  @Input()
+  public noFilterPlaceholder?: string;
 
-    @Input()
-    public searchSourceFactory?: (searchTerm?: string, fetchSize?: number) => Observable<ISuggestValues<any>>;
+  /**
+   * Stream factory, used to resolve a stream for the provided options.
+   *
+   * @param searchTerm The current searched term.
+   * @param fetchSize The next chunk size that needs to be loaded.
+   */
+  @Input()
+  public searchSourceFactory?: (searchTerm?: string, fetchSize?: number) => Observable<ISuggestValues<any>>;
 
-    @Input()
-    public value?: ISuggestValue;
+  /**
+   * The current dropdown options.
+   *
+   */
+  @Input()
+  public value?: ISuggestValue;
 
-    public updateValue(value?: ISuggestValue) {
-        this.value = value;
-    }
+  /**
+   * Updates the dropdown option.
+   *
+   */
+  public updateValue(value?: ISuggestValue) {
+    this.value = value;
+  }
 
-    ngOnDestroy() {
-        this.filterChange.complete();
-    }
+  /**
+   * @ignore
+   */
+  ngOnDestroy() {
+    this.filterChange.complete();
+  }
 }

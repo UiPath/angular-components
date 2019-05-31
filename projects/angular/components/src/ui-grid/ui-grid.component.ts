@@ -75,31 +75,60 @@ import { UiGridIntl } from './ui-grid.intl';
     encapsulation: ViewEncapsulation.None,
 })
 export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> implements AfterContentInit, OnChanges, OnDestroy {
+    /**
+     * The data list that needs to be rendered within the grid.
+     *
+     * NOTE: to have access to all functionality, we recommend that entities display in the grid implement the IGridDataEntry interface.
+     *
+     * @param value The list that needs to rendered.
+     */
     @Input()
     public set data(value: T[]) {
         this._performanceMonitor.reset();
         this.dataManager.update(value);
     }
 
+    /**
+     * Marks the grid resizing state.
+     *
+     */
     @HostBinding('class.ui-grid-state-resizing')
     @Input()
     public get isResizing() {
         return this.resizeManager.isResizing;
     }
 
+    /**
+     * Marks the grid projected state.
+     *
+     */
     @HostBinding('class.ui-grid-state-projected')
     @Input()
     public isProjected: boolean;
 
+    /**
+     * Determines if all of the items are currently checked.
+     *
+     */
     public get isEveryVisibleRowChecked() {
         return this.dataManager.length &&
             this.dataManager.every(row => this.selectionManager.isSelected(row!));
     }
 
+    /**
+     * Determines if there's a value selected within the currently rendered items (used for multi-page selection).
+     *
+     */
     public get hasValueOnVisiblePage() {
         return this.dataManager.some(row => this.selectionManager.isSelected(row!));
     }
 
+    /**
+     * The desired resize strategy.
+     *
+     * FIXME: Currently only `ImmediateNeighbourHalt` is stable.
+     *
+     */
     @Input()
     public set resizeStrategy(value: ResizeStrategy) {
         if (value === this._resizeStrategy) { return; }
@@ -113,76 +142,197 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
     }
 
+    /**
+     * Marks the grid loading state.
+     *
+     */
     @HostBinding('class.ui-grid-state-loading')
     @Input()
     public loading = false;
 
+    /**
+     * Marks the grid enabled state.
+     *
+     */
     @HostBinding('class.ui-grid-state-disabled')
     @Input()
     public disabled = false;
 
+    /**
+     * Configure if the grid allows item selection.
+     *
+     */
     @Input()
     public selectable = true;
 
+    /**
+     * Configure if the grid allows multi-page selection.
+     *
+     */
     @HostBinding('class.ui-grid-mode-multi-select')
     @Input()
     public multiPageSelect = false;
 
+    /**
+     * Configure if the grid is refreshable.
+     *
+     */
     @Input()
     public refreshable = true;
 
+    /**
+     * Configure if `virtualScroll` is enabled.
+     *
+     */
     @Input()
     public virtualScroll = false;
 
+    /**
+     * Provide a custom `noDataMessage`.
+     *
+     */
     @Input()
     public noDataMessage?: string;
 
+    /**
+     * Set the expanded entry.
+     *
+     */
     @Input()
     public expandedEntry?: T;
 
+    /**
+     * Configure if the expanded entry should replace the active row, or add a new row with the expanded view.
+     *
+     */
     @Input()
     public expandMode: 'preserve' | 'collapse' = 'collapse';
 
+    /**
+     * Emits an event with the sort model when a column sort changes.
+     *
+     */
     @Output()
     public sortChange = new EventEmitter<ISortModel<T>>();
 
+    /**
+     * Emits an event when user click the refresh button.
+     *
+     */
     @Output()
     public refresh = new EventEmitter<void>();
 
+    /**
+     * Emits an event once the grid has been rendered.
+     *
+     */
     @Output()
     public rendered = new EventEmitter<void>();
 
+    /**
+     * Emits the column definitions when their definition changes.
+     *
+     */
     public columns$ = new BehaviorSubject<UiGridColumnDirective<T>[]>([]);
 
+    /**
+     * Emits the visible column definitions when their definition changes.
+     *
+     */
     public visible$ = new BehaviorSubject<UiGridColumnDirective<T>[]>([]);
 
+    /**
+     * Row configuration directive reference.
+     *
+     * @ignore
+     */
     @ContentChild(UiGridRowConfigDirective)
     public rowConfig?: UiGridRowConfigDirective<T>;
 
+    /**
+     * Row action directive reference.
+     *
+     * @ignore
+     */
     @ContentChild(UiGridRowActionDirective)
     public actions?: UiGridRowActionDirective;
 
+    /**
+     * Footer directive reference.
+     *
+     * @ignore
+     */
     @ContentChild(UiGridFooterDirective)
     public footer?: UiGridFooterDirective;
 
+    /**
+     * Header directive reference.
+     *
+     * @ignore
+     */
     @ContentChild(UiGridHeaderDirective)
     public header?: UiGridHeaderDirective<T>;
 
+    /**
+     * Column directive reference list.
+     *
+     * @ignore
+     */
     @ContentChildren(UiGridColumnDirective)
     public columns!: QueryList<UiGridColumnDirective<T>>;
 
+    /**
+     * Expanded row template reference.
+     *
+     * @ignore
+     */
     @ContentChild(UiGridExpandedRowDirective)
     public expandedRow?: UiGridExpandedRowDirective;
 
+    /**
+     * Live announcer manager, used to emit notification via `aria-live`.
+     *
+     */
     public liveAnnouncerManager?: LiveAnnouncerManager<T>;
+    /**
+     * Selection manager, used to manage grid selection states.
+     *
+     */
     public selectionManager = new SelectionManager<T>();
+    /**
+     * Data manager, used to optimize row rendering.
+     *
+     */
     public dataManager = new DataManager<T>();
+    /**
+     * Filter manager, used to manage filter state changes.
+     *
+     */
     public filterManager = new FilterManager<T>();
+    /**
+     * Sort manager, used to manage sort state changes.
+     *
+     */
     public sortManager = new SortManager<T>();
+    /**
+     * Resize manager, used to compute resized column states.
+     *
+     */
     public resizeManager: ResizeManager<T>;
+    /**
+     * @ignore
+     */
     public paintTime$: Observable<string>;
+    /**
+     * Emits with information wether filters are defined.
+     *
+     */
     public isAnyFilterDefined$ = new BehaviorSubject<boolean>(false);
 
+    /**
+     * Returns the scroll size, in order to compensate for the scrollbar.
+     *
+     */
     public get scrollCompensationWidth() {
         if (!this.virtualScroll) { return 0; }
 
@@ -193,6 +343,10 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         return viewport.offsetWidth - viewport.clientWidth;
     }
 
+    /**
+     * Determines if the multi-page selection row should be displayed.
+     *
+     */
     public get showMultiPageSelectionInfo() {
         return this.multiPageSelect &&
             !this.dataManager.pristine &&
@@ -211,6 +365,9 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     private _isShiftPressed = false;
     private _lastCheckboxIdx = 0;
 
+    /**
+     * @ignore
+     */
     constructor(
         @Optional()
         public intl: UiGridIntl,
@@ -278,6 +435,9 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this.paintTime$ = this._performanceMonitor.paintTime$;
     }
 
+    /**
+     * @ignore
+     */
     ngAfterContentInit() {
         this.liveAnnouncerManager = new LiveAnnouncerManager(
             msg => this._queuedAnnouncer.enqueue(msg),
@@ -302,6 +462,9 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         });
     }
 
+    /**
+     * @ignore
+     */
     ngOnChanges(changes: SimpleChanges) {
         const selectableChange = changes['selectable'];
         if (
@@ -325,6 +488,9 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         }
     }
 
+    /**
+     * @ignore
+     */
     ngOnDestroy() {
         this.sortChange.complete();
         this.rendered.complete();
@@ -348,12 +514,21 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this._configure$.complete();
     }
 
+    /**
+     * Marks if the `Shift` key is pressed.
+     */
     @HostListener('document:keydown.shift', ['$event'])
     @HostListener('document:keyup.shift', ['$event'])
     public toggleShift(ev: MouseEvent) {
         this._isShiftPressed = ev.shiftKey;
     }
 
+    /**
+     * Handles row selection, and reacts if the `Shift` key is pressed.
+     *
+     * @param idx The clicked row index.
+     * @param entry The entry associated to the selected row.
+     */
     public handleSelection(idx: number, entry: T) {
         if (!this._isShiftPressed) {
             this._lastCheckboxIdx = idx;
@@ -377,6 +552,10 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this._cd.detectChanges();
     }
 
+    /**
+     * Toggles the row selection state.
+     *
+     */
     public toggle(ev: MatCheckboxChange) {
         if (ev.checked) {
             this.dataManager.forEach(row => this.selectionManager.select(row!));
@@ -386,6 +565,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         }
     }
 
+    /**
+     * Determines the `checkbox` `aria-label`.
+     *
+     * @param [row] The row for which the label is computed.
+     */
     public checkboxLabel(row?: T): string {
         if (!row) {
             return `${this.isEveryVisibleRowChecked ? 'select' : 'deselect'} all`;

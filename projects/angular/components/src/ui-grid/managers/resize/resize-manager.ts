@@ -30,6 +30,10 @@ import {
   ResizeDirection,
 } from './types';
 
+/**
+ * @internal
+ * @ignore
+ */
 export abstract class ResizeManager<T extends IGridDataEntry> {
     public isResizing = false;
     public current?: IResizeInfo<T>;

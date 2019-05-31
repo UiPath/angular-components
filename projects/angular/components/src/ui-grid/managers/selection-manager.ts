@@ -12,6 +12,10 @@ import {
   ISelectionDiff,
 } from '../models';
 
+/**
+ * @internal
+ * @ignore
+ */
 export class SelectionManager<T extends IGridDataEntry> {
     public get selected(): T[] {
         return Array.from(this._selection.values());

@@ -4,9 +4,18 @@ import {
   TemplateRef,
 } from '@angular/core';
 
+/**
+ * Expanded row definition directive.
+ *
+ * @export
+ */
 @Directive({
-    selector: '[uiGridExpandedRow], ui-grid-expanded-row',
+  selector: '[uiGridExpandedRow], ui-grid-expanded-row',
 })
 export class UiGridExpandedRowDirective {
-    @ContentChild(TemplateRef) html?: TemplateRef<any>;
+  /**
+   * @internal
+   * @ignore
+   */
+  @ContentChild(TemplateRef) html?: TemplateRef<any>;
 }
