@@ -1,0 +1,987 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>UiPath Angular Components</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">UiPath Angular Components</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content directive">
+                   <div class="content-data">
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Directives</li>
+  <li>UiGridColumnDirective</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>The grid column definition directive.</p>
+
+            </p>
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
+                            <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+            </p>
+
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
+
+        <section>
+            <h3>Metadata</h3>
+            <table class="table table-sm table-hover">
+                <tbody>
+
+                    <tr>
+                        <td class="col-md-3">Selector</td>
+                        <td class="col-md-9"><code>[uiGridColumn], ui-grid-column</code></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#change$">change$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#identifier">identifier</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#method">method</a>
+                            </li>
+                            <li>
+                                <a href="#minWidth">minWidth</a>
+                            </li>
+                            <li>
+                                <a href="#primary">primary</a>
+                            </li>
+                            <li>
+                                <a href="#property">property</a>
+                            </li>
+                            <li>
+                                <a href="#refetch">refetch</a>
+                            </li>
+                            <li>
+                                <a href="#resizeable">resizeable</a>
+                            </li>
+                            <li>
+                                <a href="#searchable">searchable</a>
+                            </li>
+                            <li>
+                                <a href="#sort">sort</a>
+                            </li>
+                            <li>
+                                <a href="#sortable">sortable</a>
+                            </li>
+                            <li>
+                                <a href="#title">title</a>
+                            </li>
+                            <li>
+                                <a href="#visible">visible</a>
+                            </li>
+                            <li>
+                                <a href="#width">width</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#width">width</a>
+                                </li>
+                                <li>
+                                    <a href="#ariaSort">ariaSort</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+            <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="method"></a>
+                        <b>method</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:130</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The method metadata used for searches.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="minWidth"></a>
+                        <b>minWidth</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>30</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="158" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:158</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The minimum width percentage that the column should have when resizing.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="primary"></a>
+                        <b>primary</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="144" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:144</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>If the column should be styled as primary.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="property"></a>
+                        <b>property</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code> | string</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="123" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:123</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The property that should be loaded in the associated row cell.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="refetch"></a>
+                        <b>refetch</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="165" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:165</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>If the searchable dropdown associated to the column should trigger a data fetch when opened.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="resizeable"></a>
+                        <b>resizeable</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="109" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:109</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the column is resizeable or not.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="searchable"></a>
+                        <b>searchable</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:102</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the column should be included in the search.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sort"></a>
+                        <b>sort</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>SortDirection</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="137" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:137</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The current sort of the column.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sortable"></a>
+                        <b>sortable</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:95</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the column is sortable.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="title"></a>
+                        <b>title</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:116</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The column title.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="visible"></a>
+                        <b>visible</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="151" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:151</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>If the column should be rendered, or is only used for definition purposes.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="width"></a>
+                        <b>width</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:50</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Set the columnd width, in <code>%</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="change$"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            change$</b>
+                            <a href="#change$"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new Subject&lt;SimpleChanges&gt;()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="192" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:192</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits when reactive properties change.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="identifier"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            identifier</b>
+                            <a href="#identifier"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>identifier()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="88" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:88</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The string identifier for the column.</p>
+<p>(used for resize identification)</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="width"></a>
+                        <span class="name"><b>width</b><a href="#width"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>width()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:70</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Returns the column width, in <code>%</code>.</p>
+</div>
+
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>width(value)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:50</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Set the columnd width, in <code>%</code>.</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ariaSort"></a>
+                        <span class="name"><b>ariaSort</b><a href="#ariaSort"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>ariaSort()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:78</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Returns the <code>aria-sort</code> associated to the current sort.</p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  ContentChild,
+  Directive,
+  Input,
+  isDevMode,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  TemplateRef,
+} from &#x27;@angular/core&#x27;;
+import { SortDirection } from &#x27;@angular/material/sort&#x27;;
+import { identifier } from &#x27;@uipath/angular/utilities&#x27;;
+
+import { Subject } from &#x27;rxjs&#x27;;
+
+import {
+  UiGridDropdownFilterDirective,
+  UiGridSearchFilterDirective,
+} from &#x27;../filters&#x27;;
+
+/**
+ * @ignore
+ */
+const ARIA_SORT_MAP: Record&lt;SortDirection, string&gt; &#x3D; {
+    &#x27;&#x27;: &#x27;none&#x27;,
+    &#x27;asc&#x27;: &#x27;ascending&#x27;,
+    &#x27;desc&#x27;: &#x27;descending&#x27;,
+};
+
+/**
+ * @ignore
+ */
+const REACTIVE_INPUT_LIST: (keyof UiGridColumnDirective&lt;{}&gt;)[]
+    &#x3D; [&#x27;sort&#x27;, &#x27;visible&#x27;];
+
+/**
+ * The grid column definition directive.
+ *
+ * @export
+ */
+@Directive({
+    selector: &#x27;[uiGridColumn], ui-grid-column&#x27;,
+})
+export class UiGridColumnDirective&lt;T&gt; implements OnChanges, OnDestroy {
+    /**
+     * Set the columnd width, in &#x60;%&#x60;.
+     *
+     */
+    @Input()
+    public set width(value: number | string) {
+        if (
+            isDevMode() &amp;&amp;
+            typeof value &#x3D;&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp;
+            !value.endsWith(&#x27;%&#x27;)
+        ) {
+            console.error(&#x60;Width should be percentual for &#x27;${this.title}&#x27; column.&#x60;);
+        }
+
+        const width &#x3D; typeof value &#x3D;&#x3D;&#x3D; &#x27;string&#x27; ? Number(parseFloat(value).toFixed(1)) : value;
+
+        if (isNaN(width)) { return; }
+
+        this._width &#x3D; width * 10;
+    }
+
+    /**
+     * Returns the column width, in &#x60;%&#x60;.
+     *
+     */
+    public get width() {
+        return this._width;
+    }
+
+    /**
+     * Returns the &#x60;aria-sort&#x60; associated to the current sort.
+     *
+     */
+    public get ariaSort() {
+        return ARIA_SORT_MAP[this.sort];
+    }
+
+    /**
+     * The string identifier for the column.
+     *
+     * (used for resize identification)
+     *
+     */
+    public identifier &#x3D; identifier();
+
+    /**
+     * Configure if the column is sortable.
+     *
+     */
+    @Input()
+    public sortable &#x3D; false;
+
+    /**
+     * Configure if the column should be included in the search.
+     *
+     */
+    @Input()
+    public searchable &#x3D; false;
+
+    /**
+     * Configure if the column is resizeable or not.
+     *
+     */
+    @Input()
+    public resizeable &#x3D; true;
+
+    /**
+     * The column title.
+     *
+     */
+    @Input()
+    public title?: string;
+
+    /**
+     * The property that should be loaded in the associated row cell.
+     *
+     */
+    @Input()
+    public property?: keyof T | string; // nested property
+
+    /**
+     * The method metadata used for searches.
+     *
+     */
+    @Input()
+    public method?: string;
+
+    /**
+     * The current sort of the column.
+     *
+     */
+    @Input()
+    public sort: SortDirection &#x3D; &#x27;&#x27;;
+
+    /**
+     * If the column should be styled as primary.
+     *
+     */
+    @Input()
+    public primary &#x3D; false;
+
+    /**
+     * If the column should be rendered, or is only used for definition purposes.
+     *
+     */
+    @Input()
+    public visible &#x3D; true;
+
+    /**
+     * The minimum width percentage that the column should have when resizing.
+     *
+     */
+    @Input()
+    public minWidth &#x3D; 30;
+
+    /**
+     * If the searchable dropdown associated to the column should trigger a data fetch when opened.
+     *
+     */
+    @Input()
+    public refetch &#x3D; false;
+
+    /**
+     * The searchable dropdown directive reference.
+     * @ignore
+     */
+    @ContentChild(UiGridSearchFilterDirective)
+    public searchableDropdown?: UiGridSearchFilterDirective&lt;T&gt;;
+
+    /**
+     * The dropdown directive reference.
+     * @ignore
+     */
+    @ContentChild(UiGridDropdownFilterDirective)
+    public dropdown?: UiGridDropdownFilterDirective&lt;T&gt;;
+
+    /**
+     * The view template associated to the row cell.
+     * @ignore
+     */
+    @ContentChild(TemplateRef)
+    public html?: TemplateRef&lt;any&gt;;
+
+    /**
+     * Emits when reactive properties change.
+     *
+     */
+    public change$ &#x3D; new Subject&lt;SimpleChanges&gt;();
+
+    private _width &#x3D; NaN;
+
+    /**
+     * @ignore
+     */
+    ngOnChanges(changes: SimpleChanges) {
+        const isAnyPropertyChanged &#x3D; Object.keys(changes)
+            .filter(property &#x3D;&gt; REACTIVE_INPUT_LIST.includes(property as keyof UiGridColumnDirective&lt;T&gt;))
+            .map(property &#x3D;&gt; changes[property])
+            .some(change &#x3D;&gt; !change.firstChange &amp;&amp;
+                change.currentValue !&#x3D;&#x3D; change.previousValue,
+            );
+
+        if (!isAnyPropertyChanged) { return; }
+
+        this.change$.next(changes);
+    }
+
+    /**
+     * @ignore
+     */
+    ngOnDestroy() {
+        this.change$.complete();
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'directive';
+            var COMPODOC_CURRENT_PAGE_URL = 'UiGridColumnDirective.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

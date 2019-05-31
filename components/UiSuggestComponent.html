@@ -1,0 +1,3765 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>UiPath Angular Components</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">UiPath Angular Components</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>UiSuggestComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/angular/components/src/ui-suggest/ui-suggest.component.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>A form compatible <code>dropdown</code> packed <code>lazy-loading</code> and <code>virtual-scroll</code>.</p>
+
+    </p>
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../classes/UiSuggestMatFormField.html" target="_self" >UiSuggestMatFormField</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">encapsulation</td>
+                <td class="col-md-9"><code>ViewEncapsulation.None</code></td>
+            </tr>
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">providers</td>
+                <td class="col-md-9">
+                                <code><a href="https://angular.io/api/forms/NgForm" target="_blank" >NgForm</a></code>
+                                <code><a href="https://angular.io/api/forms/FormGroupDirective" target="_blank" >FormGroupDirective</a></code>
+                                <code><a href="../components/UiSuggestComponent.html" target="_self" >{
+    provide: MatFormFieldControl, useExisting: UiSuggestComponent,
+}</a></code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>ui-suggest</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./ui-suggest.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./ui-suggest.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#fetch">fetch</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#disabled">disabled</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#close">close</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isItemSelected">isItemSelected</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#open">open</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeSelection">removeSelection</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#reset">reset</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toggle">toggle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updateValue">updateValue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#clear">clear</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#clearable">clearable</a>
+                            </li>
+                            <li>
+                                <a href="#customValueLabelTranslator">customValueLabelTranslator</a>
+                            </li>
+                            <li>
+                                <a href="#debounceTime">debounceTime</a>
+                            </li>
+                            <li>
+                                <a href="#defaultValue">defaultValue</a>
+                            </li>
+                            <li>
+                                <a href="#direction">direction</a>
+                            </li>
+                            <li>
+                                <a href="#disabled">disabled</a>
+                            </li>
+                            <li>
+                                <a href="#disableTooltip">disableTooltip</a>
+                            </li>
+                            <li>
+                                <a href="#displayCount">displayCount</a>
+                            </li>
+                            <li>
+                                <a href="#enableCustomValue">enableCustomValue</a>
+                            </li>
+                            <li>
+                                <a href="#items">items</a>
+                            </li>
+                            <li>
+                                <a href="#loading">loading</a>
+                            </li>
+                            <li>
+                                <a href="#maxLength">maxLength</a>
+                            </li>
+                            <li>
+                                <a href="#multiple">multiple</a>
+                            </li>
+                            <li>
+                                <a href="#readonly">readonly</a>
+                            </li>
+                            <li>
+                                <a href="#searchable">searchable</a>
+                            </li>
+                            <li>
+                                <a href="#searchSourceFactory">searchSourceFactory</a>
+                            </li>
+                            <li>
+                                <a href="#width">width</a>
+                            </li>
+                            <li>
+                                <a href="#displayPriority">displayPriority</a>
+                            </li>
+                            <li>
+                                <a href="#placeholder">placeholder</a>
+                            </li>
+                            <li>
+                                <a href="#required">required</a>
+                            </li>
+                            <li>
+                                <a href="#value">value</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#closed">closed</a>
+                            </li>
+                            <li>
+                                <a href="#opened">opened</a>
+                            </li>
+                            <li>
+                                <a href="#sourceInitialized">sourceInitialized</a>
+                            </li>
+                            <li>
+                                <a href="#sourceUpdated">sourceUpdated</a>
+                            </li>
+                            <li>
+                                <a href="#deselected">deselected</a>
+                            </li>
+                            <li>
+                                <a href="#selected">selected</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostBindings</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#class.floating">class.floating</a>
+                            </li>
+                            <li>
+                                <a href="#class.form-control">class.form-control</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#readonly">readonly</a>
+                                </li>
+                                <li>
+                                    <a href="#direction">direction</a>
+                                </li>
+                                <li>
+                                    <a href="#tooltip">tooltip</a>
+                                </li>
+                                <li>
+                                    <a href="#isCustomValueVisible">isCustomValueVisible</a>
+                                </li>
+                                <li>
+                                    <a href="#renderItems">renderItems</a>
+                                </li>
+                                <li>
+                                    <a href="#loading">loading</a>
+                                </li>
+                                <li>
+                                    <a href="#hasNoResults">hasNoResults</a>
+                                </li>
+                                <li>
+                                    <a href="#viewportMaxHeight">viewportMaxHeight</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="clearable"></a>
+                        <b>clearable</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="382" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:382</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the component allows selection clearing.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="customValueLabelTranslator"></a>
+                        <b>customValueLabelTranslator</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="351" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:351</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="debounceTime"></a>
+                        <b>debounceTime</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>300</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="370" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:370</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The search event debounce interval in <code>ms</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="defaultValue"></a>
+                        <b>defaultValue</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="388" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:388</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure the <code>default</code> selected value.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="direction"></a>
+                        <b>direction</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="207" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:207</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure the direction in which to open the overlay: <code>up</code> or <code>down</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="disabled"></a>
+                        <b>disabled</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="109" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:109</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the component is <code>disabled</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="disableTooltip"></a>
+                        <b>disableTooltip</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="394" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:394</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the tooltip should be disabled.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="displayCount"></a>
+                        <b>displayCount</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>10</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="376" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:376</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The maximum number of items rendered in the viewport.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="enableCustomValue"></a>
+                        <b>enableCustomValue</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="282" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:282</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the user is allowed to select <code>custom values</code>.</p>
+<p>TODO:
+  Currently custom values can be selected if the component is used in <code>single</code> selection mode.
+  Add support for multiple selection</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="items"></a>
+                        <b>items</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="175" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:175</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The <code>dropdown</code> item list.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loading"></a>
+                        <b>loading</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="301" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:301</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the dropdown is in a <code>loading</code> state.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="maxLength"></a>
+                        <b>maxLength</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="364" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:364</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure the <code>maximum</code> search length.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="multiple"></a>
+                        <b>multiple</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="153" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:153</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the component allows multi-selection.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="readonly"></a>
+                        <b>readonly</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:133</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the component is <code>readonly</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="searchable"></a>
+                        <b>searchable</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="221" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:221</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the dropdown has <code>search</code> enabled.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="searchSourceFactory"></a>
+                        <b>searchSourceFactory</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="349" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:349</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>A search stream factory, generally used to retrieve data from the server when a the user searches.
+By <code>default</code>, a search factory is generated that does an <code>in-memory</code> lookup if <code>searchable</code> is set to <code>true</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="width"></a>
+                        <b>width</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;150px&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="358" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:358</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure the <code>control</code> width.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="displayPriority"></a>
+                        <b>displayPriority</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#SuggestDisplayPriority" target="_self" >SuggestDisplayPriority</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;default&#x27;</code>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../classes/UiSuggestMatFormField.html" target="_self" >UiSuggestMatFormField</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../classes/UiSuggestMatFormField.html#source" target="_self" >UiSuggestMatFormField:172</a></code>
+</div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure the component display priority.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="placeholder"></a>
+                        <b>placeholder</b>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../classes/UiSuggestMatFormField.html" target="_self" >UiSuggestMatFormField</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../classes/UiSuggestMatFormField.html#source" target="_self" >UiSuggestMatFormField:96</a></code>
+</div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure the component placeholder.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="required"></a>
+                        <b>required</b>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../classes/UiSuggestMatFormField.html" target="_self" >UiSuggestMatFormField</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../classes/UiSuggestMatFormField.html#source" target="_self" >UiSuggestMatFormField:59</a></code>
+</div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the input should be marked as <code>required</code> inside the form field.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="value"></a>
+                        <b>value</b>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../classes/UiSuggestMatFormField.html" target="_self" >UiSuggestMatFormField</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../classes/UiSuggestMatFormField.html#source" target="_self" >UiSuggestMatFormField:134</a></code>
+</div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Handles the dropdown value binding.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="closed"></a>
+                        <b>closed</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="415" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:415</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits when the overlay is hidden (dropdown close).</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="opened"></a>
+                        <b>opened</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="422" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:422</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits when the overlay is displayed (dropdown open).</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sourceInitialized"></a>
+                        <b>sourceInitialized</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="401" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:401</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits <code>once</code> when <code>data</code> is retrieved for the <code>first time</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sourceUpdated"></a>
+                        <b>sourceUpdated</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="408" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:408</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits <code>every</code> time item data is retrieved.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="deselected"></a>
+                        <b>deselected</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../classes/UiSuggestMatFormField.html" target="_self" >UiSuggestMatFormField</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../classes/UiSuggestMatFormField.html#source" target="_self" >UiSuggestMatFormField:199</a></code>
+</div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits the deselected item value when an item is deselected.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selected"></a>
+                        <b>selected</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../classes/UiSuggestMatFormField.html" target="_self" >UiSuggestMatFormField</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../classes/UiSuggestMatFormField.html#source" target="_self" >UiSuggestMatFormField:192</a></code>
+</div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits the selected item value an item is selected.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3>HostBindings</h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="class.floating"></a>
+                        <span class="name">
+                            <b>
+                            class.floating</b>
+                            <a href="#class.floating"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../classes/UiSuggestMatFormField.html" target="_self" >UiSuggestMatFormField</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../classes/UiSuggestMatFormField.html#source" target="_self" >UiSuggestMatFormField:49</a></code>
+</div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the form control label state.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="class.form-control"></a>
+                        <span class="name">
+                            <b>
+                            class.form-control</b>
+                            <a href="#class.form-control"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../classes/UiSuggestMatFormField.html" target="_self" >UiSuggestMatFormField</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../classes/UiSuggestMatFormField.html#source" target="_self" >UiSuggestMatFormField:80</a></code>
+</div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Determine if the component is rendered inside a form control</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="close"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            close
+                        </b>
+                        <a href="#close"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>close(refocus)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="669"
+                            class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:669</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Closes the dropdown.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>refocus</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                    <td>
+                                        <p>If the dropdown should be focused after closing.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isItemSelected"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            isItemSelected
+                        </b>
+                        <a href="#isItemSelected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isItemSelected(item?: <a href="../interfaces/ISuggestValue.html">ISuggestValue</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="768"
+                            class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:768</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Determines if the provided <code>item</code> is currently selected.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>item</td>
+                                    <td>
+                                                <code><a href="../interfaces/ISuggestValue.html" target="_self" >ISuggestValue</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>The <code>item</code> that needs to be checked.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>If the provided <code>item</code> is selected.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="open"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            open
+                        </b>
+                        <a href="#open"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>open()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="636"
+                            class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:636</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Open the dropdown.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeSelection"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            removeSelection
+                        </b>
+                        <a href="#removeSelection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeSelection(ev?: <a href="../classes/Key.html">KeyboardEvent | MouseEvent</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="706"
+                            class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:706</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Removes the active dropdown selection.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ev</td>
+                                    <td>
+                                                <code><a href="../classes/Key.html" target="_self" >KeyboardEvent | MouseEvent</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p><code>Mouse</code> or <code>Keyboard</code> removal trigger handles close events internally.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reset"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            reset
+                        </b>
+                        <a href="#reset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>reset()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="697"
+                            class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:697</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Resets the component state.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggle"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            toggle
+                        </b>
+                        <a href="#toggle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toggle()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="628"
+                            class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:628</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Toggle the dropdown state (opened/closed);</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateValue"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            updateValue
+                        </b>
+                        <a href="#updateValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateValue(inputValue: <a href="../interfaces/ISuggestValue.html">ISuggestValue | string</a>, closeAfterSelect, refocus)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="780"
+                            class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:780</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Updates the component value.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>inputValue</td>
+                                    <td>
+                                                <code><a href="../interfaces/ISuggestValue.html" target="_self" >ISuggestValue | string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>The value that needs to be selected.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>closeAfterSelect</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                    <td>
+                                        <p>If the dropdown should close after the value is selected.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>refocus</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                    <td>
+                                        <p>If the search input should regain focus after selection.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clear"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            clear
+                        </b>
+                        <a href="#clear"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>clear()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/UiSuggestMatFormField.html" target="_self" >UiSuggestMatFormField</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/UiSuggestMatFormField.html#source" target="_self" >UiSuggestMatFormField:273</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Clears the serach input value.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="fetch"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            fetch</b>
+                            <a href="#fetch"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="820" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:820</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Triggers a refetch of data, calling the <code>searchSourceFactory</code> with the provided search term.</p>
+</div>
+                    </td>
+                </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                          <div class="io-description">
+                                  <b>Parameters :</b>
+                                  <table class="params">
+                                      <thead>
+                                          <tr>
+                                                <td>Name</td>
+                                                    <td>Description</td>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                                <tr>
+                                                        <td>searchValue</td>
+                                                        <td>
+                                                                <code><p>The search value that should be used for the <code>fetch</code>.</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                      </tbody>
+                                  </table>
+                          </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="disabled"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                                <span class="modifier">Abstract</span>
+                            disabled</b>
+                            <a href="#disabled"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../classes/UiSuggestMatFormField.html" target="_self" >UiSuggestMatFormField</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../classes/UiSuggestMatFormField.html#source" target="_self" >UiSuggestMatFormField:42</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="readonly"></a>
+                        <span class="name"><b>readonly</b><a href="#readonly"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>readonly(value)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="136" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:136</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="direction"></a>
+                        <span class="name"><b>direction</b><a href="#direction"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>direction()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="212" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:212</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>direction(value)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="207" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:207</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Configure the direction in which to open the overlay: <code>up</code> or <code>down</code>.</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="tooltip"></a>
+                        <span class="name"><b>tooltip</b><a href="#tooltip"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>tooltip()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="243" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:243</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Computes the current tooltip value.</p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isCustomValueVisible"></a>
+                        <span class="name"><b>isCustomValueVisible</b><a href="#isCustomValueVisible"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>isCustomValueVisible()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="258" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:258</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Determines if the <code>custom value</code> option should be <code>displayed</code>.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="renderItems"></a>
+                        <span class="name"><b>renderItems</b><a href="#renderItems"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>renderItems()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="266" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:266</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Retrieves the currently <code>rendered</code> items.</p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loading"></a>
+                        <span class="name"><b>loading</b><a href="#loading"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>loading(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="301" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:301</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Configure if the dropdown is in a <code>loading</code> state.</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="hasNoResults"></a>
+                        <span class="name"><b>hasNoResults</b><a href="#hasNoResults"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>hasNoResults()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="309" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:309</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Determines if there are no results to display.</p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="viewportMaxHeight"></a>
+                        <span class="name"><b>viewportMaxHeight</b><a href="#viewportMaxHeight"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>viewportMaxHeight()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="317" class="link-to-prism">projects/angular/components/src/ui-suggest/ui-suggest.component.ts:317</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Computes the <code>viewport</code> max-height.</p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { LiveAnnouncer } from &#x27;@angular/cdk/a11y&#x27;;
+import { ListRange } from &#x27;@angular/cdk/collections&#x27;;
+import { CdkVirtualScrollViewport } from &#x27;@angular/cdk/scrolling&#x27;;
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  isDevMode,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  Self,
+  ViewChild,
+  ViewEncapsulation,
+} from &#x27;@angular/core&#x27;;
+import {
+  FormGroupDirective,
+  NgControl,
+  NgForm,
+} from &#x27;@angular/forms&#x27;;
+import { ErrorStateMatcher } from &#x27;@angular/material/core&#x27;;
+import { MatFormFieldControl } from &#x27;@angular/material/form-field&#x27;;
+import { VirtualScrollItemStatus } from &#x27;@uipath/angular/directives&#x27;;
+
+import cloneDeep from &#x27;lodash-es/cloneDeep&#x27;;
+import isEqual from &#x27;lodash-es/isEqual&#x27;;
+import {
+  BehaviorSubject,
+  combineLatest,
+  merge,
+  Observable,
+  Subject,
+  Subscription,
+} from &#x27;rxjs&#x27;;
+import {
+  debounceTime,
+  delay,
+  distinctUntilChanged,
+  filter,
+  finalize,
+  map,
+  retry,
+  startWith,
+  takeUntil,
+  tap,
+} from &#x27;rxjs/operators&#x27;;
+
+import {
+  ISuggestValue,
+  ISuggestValues,
+  SuggestDirection,
+} from &#x27;./models&#x27;;
+import { UI_SUGGEST_ANIMATIONS } from &#x27;./ui-suggest.animations&#x27;;
+import { UiSuggestIntl } from &#x27;./ui-suggest.intl&#x27;;
+import { UiSuggestMatFormField } from &#x27;./ui-suggest.mat-form-field&#x27;;
+import {
+  caseInsensitiveCompare,
+  generateLoadingInitialCollection,
+  inMemorySearch,
+  mapInitialItems,
+  resetUnloadedState,
+  setLoadedState,
+  setPendingState,
+  sortByPriorityAndDirection,
+  toSuggestValue,
+} from &#x27;./utils&#x27;;
+
+/**
+ * A form compatible &#x60;dropdown&#x60; packed &#x60;lazy-loading&#x60; and &#x60;virtual-scroll&#x60;.
+ *
+ * @export
+ */
+@Component({
+    selector: &#x27;ui-suggest&#x27;,
+    styleUrls: [&#x27;./ui-suggest.component.scss&#x27;],
+    templateUrl: &#x27;./ui-suggest.component.html&#x27;,
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        NgForm,
+        FormGroupDirective,
+        {
+            provide: MatFormFieldControl,
+            useExisting: UiSuggestComponent,
+        },
+    ],
+    animations: [
+        UI_SUGGEST_ANIMATIONS.transformMenuList,
+    ],
+})
+export class UiSuggestComponent extends UiSuggestMatFormField
+    implements
+    OnDestroy,
+    OnInit,
+    AfterViewInit {
+
+    /**
+     * Configure if the component is &#x60;disabled&#x60;.
+     *
+     */
+    @HostBinding(&#x27;class.disabled&#x27;)
+    @Input()
+    public get disabled() {
+        return this._disabled;
+    }
+    /**
+     * @ignore
+     */
+    public set disabled(value) {
+        this._disabled &#x3D; !!value;
+        if (
+            value &amp;&amp;
+            this.isOpen
+        ) {
+            this.close(false);
+        }
+        this.stateChanges.next();
+        this._cd.detectChanges();
+    }
+
+    /**
+     * Configure if the component is &#x60;readonly&#x60;.
+     *
+     */
+    @HostBinding(&#x27;class.readonly&#x27;)
+    @Input()
+    get readonly() {
+        return this._readonly;
+    }
+    set readonly(value) {
+        this._readonly &#x3D; !!value;
+        if (
+            value &amp;&amp;
+            this.isOpen
+        ) {
+            this.close(false);
+        }
+        this.stateChanges.next();
+        this._cd.detectChanges();
+    }
+
+    /**
+     * Configure if the component allows multi-selection.
+     *
+     */
+    @Input()
+    public get multiple() {
+        return this._multiple;
+    }
+    /**
+     * @ignore
+     */
+    public set multiple(multiple) {
+        if (this._multiple !&#x3D;&#x3D; multiple) {
+            if (!multiple) {
+                this._deselectValuesFrom(1);
+                this.registerChange(this.value);
+            }
+            this._multiple &#x3D; multiple;
+            this._cd.detectChanges();
+        }
+    }
+
+    /**
+     * The &#x60;dropdown&#x60; item list.
+     *
+     */
+    @Input()
+    public get items() {
+        return this._items;
+    }
+    /**
+     * @ignore
+     */
+    public set items(items: ISuggestValue[]) {
+
+        if (!items || isEqual(items, this._items)) { return; }
+
+        this._lastSetItems &#x3D; cloneDeep(items);
+
+        if (this.searchable) {
+            this.fetch(this.inputControl.value);
+        }
+
+        this._items &#x3D; sortByPriorityAndDirection(
+            cloneDeep(items),
+            this.displayPriority,
+            this.value,
+            this.isDown,
+        ).map(r &#x3D;&gt; ({ ...r, loading: VirtualScrollItemStatus.loaded }));
+    }
+
+    /**
+     * Configure the direction in which to open the overlay: &#x60;up&#x60; or &#x60;down&#x60;.
+     *
+     */
+    @
+    /**
+     * @ignore
+     */Input()
+    public set direction(value: SuggestDirection) {
+        if (this._direction &#x3D;&#x3D;&#x3D; value) { return; }
+        this._items.reverse();
+        this._direction &#x3D; value;
+    }
+    public get direction() {
+        return this._direction;
+    }
+
+    /**
+     * Configure if the dropdown has &#x60;search&#x60; enabled.
+     *
+     */
+    @Input()
+    public get searchable() {
+        return !!this.searchSourceFactory;
+    }
+    /**
+     * @ignore
+     */
+    public set searchable(searchable) {
+        if (!searchable) {
+            this.searchSourceFactory &#x3D; void 0;
+            return;
+        }
+
+        if (this.searchSourceFactory) {
+            return;
+        }
+        this.searchSourceFactory &#x3D; (searchTerm &#x3D; &#x27;&#x27;) &#x3D;&gt; inMemorySearch(searchTerm, this._lastSetItems);
+    }
+
+    /**
+     * Computes the current tooltip value.
+     *
+     */
+    public get tooltip() {
+        if (
+            !this.isOpen &amp;&amp;
+            this._hasValue
+        ) {
+            return this.value.map(v &#x3D;&gt; v.text).join(&#x27;, &#x27;);
+        }
+
+        return null;
+    }
+
+    /**
+     * Determines if the &#x60;custom value&#x60; option should be &#x60;displayed&#x60;.
+     *
+     */
+    public get isCustomValueVisible(): boolean {
+        return this._hasCustomValue$.value &amp;&amp; !this.loading$.value;
+    }
+
+    /**
+     * Retrieves the currently &#x60;rendered&#x60; items.
+     *
+     */
+    public get renderItems() {
+        return this.loading$.value ? [] :
+            this._hasCustomValue$.value &amp;&amp;
+                !this.isDown ?
+                [...this.items, false] :
+                this.items;
+    }
+
+    /**
+     * Configure if the user is allowed to select &#x60;custom values&#x60;.
+     *
+     * TODO:
+     *  Currently custom values can be selected if the component is used in &#x60;single&#x60; selection mode.
+     *  Add support for multiple selection
+     */
+    @Input()
+    public get enableCustomValue() {
+        return this._enableCustomValue &amp;&amp;
+            !this._multiple;
+    }
+    /**
+     * @ignore
+     */
+    public set enableCustomValue(value) {
+        this._enableCustomValue &#x3D; !!value;
+    }
+
+    /**
+     * Configure if the dropdown is in a &#x60;loading&#x60; state.
+     *
+     */
+    @
+    /**
+     * @ignore
+     */Input()
+    public set loading(value: boolean) {
+        this.loading$.next(value);
+    }
+
+    /**
+     * Determines if there are no results to display.
+     *
+     */
+    public get hasNoResults() {
+        return !this.loading$.value &amp;&amp; !this.items.length;
+    }
+
+    /**
+     * Computes the &#x60;viewport&#x60; max-height.
+     *
+     */
+    public get viewportMaxHeight() {
+        if (!this.isOpen) { return 0; }
+
+        const actualCount &#x3D; Math.max(this.renderItems.filter(Boolean).length + Number(this.isCustomValueVisible), 1);
+        const displayedCount &#x3D; Math.min(this.displayCount, actualCount);
+
+        return this.itemSize * displayedCount;
+    }
+
+    private get _isOnCustomValueIndex() {
+        return this.enableCustomValue &amp;&amp;
+            !!this.inputControl.value &amp;&amp;
+            (
+                this.activeIndex &#x3D;&#x3D;&#x3D; -1 ||
+                this.activeIndex &#x3D;&#x3D;&#x3D; this._items.length
+            );
+    }
+
+    private get _itemLowerBound() {
+        return this._hasCustomValue$.value &amp;&amp; this.isDown ? -1 : 0;
+    }
+
+    private get _itemUpperBound() {
+        return this.items.length + (this._hasCustomValue$.value &amp;&amp; !this.isDown ? 0 : -1);
+    }
+
+    /**
+     * A search stream factory, generally used to retrieve data from the server when a the user searches.
+     * By &#x60;default&#x60;, a search factory is generated that does an &#x60;in-memory&#x60; lookup if &#x60;searchable&#x60; is set to &#x60;true&#x60;.
+     *
+     */
+    @Input()
+    public searchSourceFactory?: (searchTerm?: string, fetchCount?: number, skip?: number) &#x3D;&gt; Observable&lt;ISuggestValues&lt;any&gt;&gt;;
+    @Input()
+    public customValueLabelTranslator!: (value: string) &#x3D;&gt; string;
+
+    /**
+     * Configure the &#x60;control&#x60; width.
+     *
+     */
+    @Input()
+    public width &#x3D; &#x27;150px&#x27;;
+    /**
+     * Configure the &#x60;maximum&#x60; search length.
+     *
+     */
+    @Input()
+    public maxLength?: number;
+    /**
+     * The search event debounce interval in &#x60;ms&#x60;.
+     *
+     */
+    @Input()
+    public debounceTime &#x3D; 300;
+    /**
+     * The maximum number of items rendered in the viewport.
+     *
+     */
+    @Input()
+    public displayCount &#x3D; 10;
+    /**
+     * Configure if the component allows selection clearing.
+     *
+     */
+    @Input()
+    public clearable &#x3D; true;
+    /**
+     * Configure the &#x60;default&#x60; selected value.
+     *
+     */
+    @Input()
+    public defaultValue &#x3D; &#x27;&#x27;;
+    /**
+     * Configure if the tooltip should be disabled.
+     *
+     */
+    @Input()
+    public disableTooltip &#x3D; false;
+
+    /**
+     * Emits &#x60;once&#x60; when &#x60;data&#x60; is retrieved for the &#x60;first time&#x60;.
+     *
+     */
+    @Output()
+    public sourceInitialized &#x3D; new EventEmitter&lt;ISuggestValue[]&gt;();
+
+    /**
+     * Emits &#x60;every&#x60; time item data is retrieved.
+     *
+     */
+    @Output()
+    public sourceUpdated &#x3D; new EventEmitter&lt;ISuggestValue[]&gt;();
+
+    /**
+     * Emits when the overlay is hidden (dropdown close).
+     *
+     */
+    @Output()
+    public closed &#x3D; new EventEmitter&lt;void&gt;();
+
+    /**
+     * Emits when the overlay is displayed (dropdown open).
+     *
+     */
+    @Output()
+    public opened &#x3D; new EventEmitter&lt;void&gt;();
+
+    /**
+     * @ignore
+     */
+    public VirtualScrollItemStatus &#x3D; VirtualScrollItemStatus;
+    /**
+     * @ignore
+     */
+    public isOpen &#x3D; false;
+    /**
+     * @ignore
+     */
+    public activeIndex &#x3D; -1;
+    /**
+     * @ignore
+     */
+    public loading$ &#x3D; new BehaviorSubject(false);
+    /**
+     * @ignore
+     */
+    public focus$ &#x3D; new Subject&lt;boolean&gt;();
+
+    private _hasCustomValue$ &#x3D; new BehaviorSubject(false);
+    private _reset$ &#x3D; new Subject();
+
+    private get _isOpenDisabled() {
+        return this.isOpen ||
+            this.disabled ||
+            this.readonly;
+    }
+
+    private get _hasValue() {
+        return this.value &amp;&amp;
+            !this.empty;
+    }
+
+    private _readonly &#x3D; false;
+
+    private _searchSub?: Subscription;
+
+    private _disabled &#x3D; false;
+    private _multiple &#x3D; false;
+    private _lastSetItems: ISuggestValue[] &#x3D; [];
+    private _enableCustomValue &#x3D; false;
+
+    private _triggerViewportRefresh$ &#x3D; new BehaviorSubject&lt;null&gt;(null);
+    private _destroyed$ &#x3D; new Subject();
+    private _scrollTo$ &#x3D; new Subject&lt;number&gt;();
+    private _rangeLoad$ &#x3D; new Subject&lt;ListRange&gt;();
+
+    @ViewChild(CdkVirtualScrollViewport)
+    private _virtualScroller?: CdkVirtualScrollViewport;
+
+    private _inputChange$: Observable&lt;string&gt;;
+
+    /**
+     * @ignore
+     */
+    constructor(
+        elementRef: ElementRef,
+        cd: ChangeDetectorRef,
+        errorStateMatcher: ErrorStateMatcher,
+        parentForm: NgForm,
+        parentFormGroup: FormGroupDirective,
+        @Optional()
+        @Self()
+        public ngControl: NgControl,
+        @Optional()
+        public intl: UiSuggestIntl,
+        private _liveAnnouncer: LiveAnnouncer,
+    ) {
+        super(
+            elementRef,
+            errorStateMatcher,
+            parentForm,
+            parentFormGroup,
+            cd,
+            ngControl,
+        );
+
+        this._inputChange$ &#x3D; this.inputControl.valueChanges
+            .pipe(
+                startWith(&#x27;&#x27;),
+                map((v &#x3D; &#x27;&#x27;) &#x3D;&gt; v.trim()),
+                distinctUntilChanged(),
+                tap(this._setLoadingState),
+                debounceTime(this.debounceTime),
+                filter(_ &#x3D;&gt;
+                    !this.disabled &amp;&amp;
+                    !!this.searchSourceFactory),
+            );
+        this.intl &#x3D; this.intl || new UiSuggestIntl();
+        this.customValueLabelTranslator &#x3D; this.customValueLabelTranslator || this.intl.customValueLabel;
+    }
+
+    /**
+     * @ignore
+     */
+    ngOnInit() {
+        merge(
+            this._reset$.pipe(
+                map(_ &#x3D;&gt; &#x27;&#x27;),
+                tap(_ &#x3D;&gt; !!this.inputControl.value &amp;&amp; this.inputControl.setValue(&#x27;&#x27;)),
+                tap(this._setLoadingState),
+            ),
+            this._inputChange$,
+        ).pipe(
+            takeUntil(this._destroyed$),
+        ).subscribe(this.fetch);
+
+        this._scrollTo$
+            .pipe(
+                delay(0),
+                filter(_ &#x3D;&gt; this.isOpen),
+                takeUntil(this._destroyed$),
+            )
+            .subscribe(this._virtualScrollTo);
+    }
+
+    /**
+     * @ignore
+     */
+    ngOnDestroy() {
+        this._destroyed$.next();
+        this._destroyed$.complete();
+        this.stateChanges.complete();
+        this.selected.complete();
+        this.deselected.complete();
+        this.sourceUpdated.complete();
+        this.closed.complete();
+        this.opened.complete();
+
+        if (!this.sourceInitialized.closed) {
+            this.sourceInitialized.complete();
+        }
+    }
+
+    /**
+     * @ignore
+     */
+    ngAfterViewInit() {
+        combineLatest([
+            this._triggerViewportRefresh$,
+            this._rangeLoad$,
+        ]).pipe(
+            map(([, range]) &#x3D;&gt; range),
+            takeUntil(this._destroyed$),
+        ).subscribe(this._rangeLoad);
+    }
+
+    /**
+     * Is called every time a new range needs to be loaded.
+     *
+     * @ignore
+     */
+    public rangeLoad &#x3D; (range: ListRange) &#x3D;&gt; this._rangeLoad$.next(range);
+
+    /**
+     * Disable state hook for the &#x60;form&#x60;.
+     *
+     * @param isDisabled The truth of of the &#x60;disabled&#x60; state.
+     * @ignore
+     */
+    public setDisabledState(isDisabled: boolean) {
+        this.disabled &#x3D; isDisabled;
+    }
+
+    /**
+     * Handles &#x60;click&#x60; events on the &#x60;form-control&#x60; container.
+     *
+     * @ignore
+     */
+    public onContainerClick(event: MouseEvent) {
+        if (
+            !this.focused &amp;&amp;
+            !this._isOpenDisabled
+        ) {
+            this.open();
+            this.focus$.next(true);
+            this.preventDefault(event);
+        }
+    }
+
+    /**
+     * Notifies focus changes to the &#x60;form&#x60;.
+     *
+     * @ignore
+     */
+    public onBlur() {
+        this._focusChanged(this.isOpen);
+    }
+
+    /**
+     * Notifies focus changes to the &#x60;form&#x60;.
+     *
+     * @ignore
+     */
+    public onFocus() {
+        this._focusChanged(true);
+    }
+
+    /**
+     * Toggle the dropdown state (opened/closed);
+     *
+     */
+    public toggle() {
+        this.isOpen ? this.close() : this.open();
+    }
+
+    /**
+     * Open the dropdown.
+     *
+     */
+    public open() {
+        if (this._isOpenDisabled) { return; }
+
+        this.isOpen &#x3D; true;
+        this.opened.emit();
+        this._focusChanged(true);
+
+        const [value] &#x3D; this.value;
+
+        if (
+            this.enableCustomValue &amp;&amp;
+            value &amp;&amp;
+            value.isCustom
+        ) {
+            this.inputControl.setValue(value.text);
+        }
+
+        const hasSingleSelectValue &#x3D; !!value &amp;&amp; !this.multiple;
+
+        this._setActiveIndex(
+            hasSingleSelectValue ?
+                this._items.findIndex(({ id }) &#x3D;&gt; id &#x3D;&#x3D;&#x3D; value.id) :
+                -1,
+        );
+
+        this._scrollTo$.next(this.activeIndex);
+    }
+
+    /**
+     * Closes the dropdown.
+     *
+     * @param [refocus&#x3D;true] If the dropdown should be focused after closing.
+     */
+    public close(refocus &#x3D; true) {
+        if (!this.isOpen) { return; }
+
+        if (this._isOnCustomValueIndex &amp;&amp; !this.loading$.value) {
+            if (!this.multiple) {
+                this._clearSelection();
+            }
+            this._pushEntry(toSuggestValue(this.inputControl.value, true));
+        }
+
+        this.registerTouch();
+        this.clear();
+
+        this.isOpen &#x3D; false;
+        this.activeIndex &#x3D; -1;
+        this.closed.emit();
+
+        this.focus$.next(refocus);
+
+        if (!refocus) {
+            this._focusChanged(false);
+        }
+    }
+
+    /**
+     * Resets the component state.
+     *
+     */
+    public reset() {
+        this._reset$.next();
+    }
+
+    /**
+     * Removes the active dropdown selection.
+     *
+     * @param [ev] &#x60;Mouse&#x60; or &#x60;Keyboard&#x60; removal trigger handles close events internally.
+     */
+    public removeSelection(ev?: KeyboardEvent | MouseEvent) {
+        if (!this.clearable) { return; }
+
+        this.preventDefault(ev);
+
+        this._clearSelection();
+        this.selected.emit();
+        this.registerChange(this.value);
+
+        this.close(false);
+    }
+
+    /**
+     * Navigates through the items by looking up the next focused / active index.
+     *
+     * @param increment The increment that should be applied to the current index.
+     * @param [ev] The naivgation trigger event.
+     * @ignore
+     */
+    public navigate(increment: number, ev?: Event) {
+        this.preventDefault(ev);
+
+        if (
+            !this.items.length &amp;&amp;
+            !this.enableCustomValue
+        ) { return; }
+
+        const [value] &#x3D; this.value;
+        if (
+            value &amp;&amp;
+            this.activeIndex &#x3D;&#x3D;&#x3D; this._itemLowerBound - 1
+        ) {
+            this.activeIndex &#x3D; this._items.findIndex(v &#x3D;&gt; v.id &#x3D;&#x3D;&#x3D; value.id);
+        }
+
+        this._safeCycleIncrement(increment);
+
+        this._announceNavigate();
+        this._scrollTo$.next(this.activeIndex);
+    }
+
+    /**
+     * Selects the current active item.
+     *
+     * @ignore
+     */
+    public setSelectedItem() {
+        if (this.loading$.value) { return; }
+
+        if (this._isOnCustomValueIndex) {
+            return this.updateValue(this.inputControl.value);
+        }
+
+        this._selectActiveItem(!this.multiple);
+    }
+
+    /**
+     * Determines if the provided &#x60;item&#x60; is currently selected.
+     *
+     * @param [item] The &#x60;item&#x60; that needs to be checked.
+     * @returns If the provided &#x60;item&#x60; is selected.
+     */
+    public isItemSelected(item?: ISuggestValue) {
+        return !!item &amp;&amp;
+            !!this.value.find(v &#x3D;&gt; v.id &#x3D;&#x3D;&#x3D; item.id);
+    }
+
+    /**
+     * Updates the component value.
+     *
+     * @param inputValue The value that needs to be selected.
+     * @param [closeAfterSelect&#x3D;true] If the dropdown should close after the value is selected.
+     * @param [refocus&#x3D;true] If the search input should regain focus after selection.
+     */
+    public updateValue(inputValue: ISuggestValue | string, closeAfterSelect &#x3D; true, refocus &#x3D; true) {
+        const value &#x3D; toSuggestValue(inputValue, this._isOnCustomValueIndex);
+        if (value.loading !&#x3D;&#x3D; VirtualScrollItemStatus.loaded) { return; }
+
+        const isItemSelected &#x3D; this.isItemSelected(value);
+
+        if (!isItemSelected &amp;&amp; value) {
+            if (!this.multiple) {
+                this._clearSelection();
+            }
+            this._pushEntry(value);
+        }
+
+        if (
+            this.multiple &amp;&amp;
+            isItemSelected &amp;&amp;
+            !!value
+        ) {
+            this._removeEntry(value);
+        }
+
+        if (closeAfterSelect) {
+            this.close(refocus);
+        }
+    }
+
+    /**
+     * @ignore
+     */
+    public preventDefault(ev?: Event) {
+        if (!ev) { return; }
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+    }
+
+    /**
+     * Triggers a refetch of data, calling the &#x60;searchSourceFactory&#x60; with the provided search term.
+     *
+     * @param searchValue The search value that should be used for the &#x60;fetch&#x60;.
+     */
+    public fetch &#x3D; (searchValue &#x3D; &#x27;&#x27;) &#x3D;&gt; {
+        if (!this.searchSourceFactory) { return; }
+
+        this.loading$.next(true);
+
+        if (this._searchSub) { this._searchSub.unsubscribe(); }
+
+        this._searchSub &#x3D; this.searchSourceFactory(searchValue, this.displayCount)
+            .pipe(
+                tap(this._setInitialItems),
+                map(this._findItemIndex(searchValue)),
+                tap(this._checkCustomValue(searchValue)),
+                tap(this._setActiveIndex),
+                takeUntil(this._destroyed$),
+            ).subscribe(_ &#x3D;&gt; {
+                this.loading$.next(false);
+                this._scrollToFirst();
+                this._cd.detectChanges();
+            }, (error) &#x3D;&gt; {
+                if (isDevMode()) {
+                    console.warn(&#x27;UiSuggest fetch failed, more info: &#x27;, error);
+                }
+
+                this.loading$.next(false);
+                this._items &#x3D; [];
+            });
+    }
+
+    /**
+     * &#x60;NgFor&#x60; track method.
+     *
+     * @ignore
+     */
+    public trackById &#x3D; (_: number, { id }: ISuggestValue) &#x3D;&gt; id;
+
+    private _selectActiveItem(closeAfterSelect: boolean) {
+        const item &#x3D; this.items[this.activeIndex];
+        if (!item) { return; }
+
+        this.updateValue(item, closeAfterSelect);
+        this._scrollTo$.next(this.activeIndex);
+    }
+
+    private _findItemIndex &#x3D; (searchValue: string) &#x3D;&gt;
+        () &#x3D;&gt; this._items.findIndex(({ text }) &#x3D;&gt; caseInsensitiveCompare(text, searchValue))
+
+    private _safeCycleIncrement(increment: number) {
+        let newIndex &#x3D; this.activeIndex + increment;
+        const isOutOfBoundsUpper &#x3D; newIndex &gt; this._itemUpperBound;
+
+        if (isOutOfBoundsUpper) {
+            newIndex &#x3D; this._itemLowerBound;
+        } else {
+            const isOutOfBoundsDownward &#x3D; newIndex &lt; this._itemLowerBound;
+            if (isOutOfBoundsDownward) {
+                newIndex &#x3D; this._itemUpperBound;
+            }
+        }
+
+        this.activeIndex &#x3D; newIndex;
+    }
+
+    private _checkCustomValue(searchValue: string) {
+        return (itemIndex: number) &#x3D;&gt; this.enableCustomValue &amp;&amp;
+            this._setHasCustomValue(!!searchValue &amp;&amp; itemIndex &#x3D;&#x3D;&#x3D; -1);
+    }
+
+    private _setHasCustomValue(isCustomValue: boolean) {
+        if (this._hasCustomValue$.value &#x3D;&#x3D;&#x3D; isCustomValue) { return; }
+        this._hasCustomValue$.next(isCustomValue);
+    }
+
+    private _virtualScrollTo &#x3D; (index: number) &#x3D;&gt; {
+        const vs &#x3D; this._virtualScroller;
+        if (!vs) { return; }
+
+        const start &#x3D; Math.max(Math.min(index, this.items.length - this.displayCount), 0);
+        const end &#x3D; start + this.displayCount;
+        vs.setRenderedRange({
+            start,
+            end,
+        });
+        vs.setRenderedContentOffset(start * this.itemSize);
+        // this is not an error it should go to index
+        // which can be outside the safe zone due to customValue
+        vs.scrollToIndex(index);
+    }
+
+    private _announceNavigate() {
+        const textToAnnounce &#x3D; !this._isOnCustomValueIndex ?
+            this.items[this.activeIndex].text :
+            &#x60;${this.intl.customValueLiveLabel} ${this.customValueLabelTranslator(this.inputControl.value)}&#x60;;
+        this._liveAnnouncer.announce(this.intl.currentItemLabel(textToAnnounce, this.activeIndex + 1, this._items.length));
+    }
+
+    private _setLoadingState &#x3D; () &#x3D;&gt; this.searchable &amp;&amp; this.loading$.next(true);
+
+    private _focusChanged(isFocused: boolean) {
+        if (isFocused &#x3D;&#x3D;&#x3D; this.focused) { return; }
+
+        this.focused &#x3D; isFocused;
+        this.stateChanges.next();
+    }
+
+    private _setInitialItems &#x3D; (searchResponse: ISuggestValues&lt;any&gt;) &#x3D;&gt; {
+        this._items &#x3D; mapInitialItems(searchResponse,
+            this.displayPriority,
+            this.value,
+            this.intl.loadingLabel,
+            this.isDown);
+
+        if (!this.sourceInitialized.closed) {
+            this.sourceInitialized.emit(this.items);
+            this.sourceInitialized.complete();
+        }
+        this.sourceUpdated.emit(this.items);
+    }
+
+    private _setActiveIndex &#x3D; (itemIndex: number) &#x3D;&gt; {
+        this.activeIndex &#x3D; itemIndex &gt; -1 ?
+            itemIndex :
+            this.isDown ?
+                this._itemLowerBound
+                : this._itemUpperBound;
+    }
+
+    private _scrollToFirst() {
+        this._scrollTo$.next(this.isDown ?
+            this._itemLowerBound
+            : this._itemUpperBound);
+    }
+
+    private _deselectValuesFrom(idx: number, deleteCount?: number) {
+        const deselected &#x3D; deleteCount ?
+            this.value.splice(idx, deleteCount) :
+            this.value.splice(idx);
+
+        deselected.forEach(item &#x3D;&gt; this.deselected.emit(item));
+    }
+
+    private _pushEntry(entry: ISuggestValue) {
+        this._setActiveIndex(this._items.indexOf(entry));
+
+        if (this.multiple) {
+            this.value.push(entry);
+        } else {
+            this.value.splice(0, 1, entry);
+        }
+
+        this.selected.emit(entry);
+        this.registerChange(this.value);
+    }
+
+    private _clearSelection() {
+        this._deselectValuesFrom(0);
+    }
+
+    private _removeEntry(value: ISuggestValue) {
+        const index &#x3D; this.value.findIndex(({ id }) &#x3D;&gt; id &#x3D;&#x3D;&#x3D; value.id);
+        this._deselectValuesFrom(index, 1);
+        this.registerChange(this.value);
+    }
+
+    private _rangeLoad &#x3D; ({ start, end }: ListRange) &#x3D;&gt; {
+        if (this.searchSourceFactory &#x3D;&#x3D; null) {
+            throw new Error(&#x27;searchSourceFactory is not defined&#x27;);
+        }
+
+        const fetchCount &#x3D; end - start + 1;
+
+        const mappedStart &#x3D; this.isDown ? start : this._items.length - end - 1;
+        const mappedEnd &#x3D; this.isDown ? end : this._items.length - start - 1;
+
+        setPendingState(this._items, mappedStart, mappedEnd);
+        this.searchSourceFactory(this.inputControl.value, fetchCount, start)
+            .pipe(
+                retry(1),
+                map(res &#x3D;&gt; this.isDown ? res : {
+                    data: (res.data || []).reverse(),
+                    total: res.total,
+                }),
+                tap(this._resetIfTotalCountChange),
+                takeUntil(
+                    merge(
+                        this.inputControl.valueChanges.pipe(
+                            distinctUntilChanged(),
+                        ),
+                        this._destroyed$,
+                    ),
+                ),
+                finalize(
+                    () &#x3D;&gt; resetUnloadedState(this._items, mappedStart, mappedEnd),
+                ),
+            )
+            .subscribe(({ data &#x3D; [] }) &#x3D;&gt; {
+                this._items &#x3D; setLoadedState(
+                    data,
+                    mappedStart,
+                    this._items,
+                );
+                this._cd.detectChanges();
+            });
+    }
+
+    private _resetIfTotalCountChange &#x3D; ({ total }: ISuggestValues&lt;any&gt;) &#x3D;&gt; {
+        const totalCountHasChanged &#x3D; this._items.length &gt; 0 &amp;&amp; total !&#x3D;&#x3D; this._items.length;
+        if (!totalCountHasChanged) {
+            return;
+        }
+        this._items &#x3D; generateLoadingInitialCollection(this.intl.loadingLabel, total);
+        if (!!total) {
+            this._triggerViewportRefresh$.next(null);
+        }
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div *ngLet&#x3D;&quot;focus$ | async as focus&quot;
+     [attr.aria-label]&#x3D;&quot;placeholder&quot;
+     (uiClickOutside)&#x3D;&quot;focused &amp;&amp;
+                    close(false)&quot;
+     class&#x3D;&quot;ui-suggest-container&quot;
+     role&#x3D;&quot;application&quot;&gt;
+    &lt;!-- role application to force up &amp; down arrow to generate browser (not screen reader) events --&gt;
+    &lt;div [attr.tabindex]&#x3D;&quot;!disabled &amp;&amp;
+                        !readonly ?
+                        0 : null&quot;
+         [matTooltip]&#x3D;&quot;tooltip&quot;
+         [uiAutofocus]&#x3D;&quot;!isOpen &amp;&amp; focus&quot;
+         [refocus]&#x3D;&quot;!isOpen &amp;&amp; focus&quot;
+         (click)&#x3D;&quot;toggle()&quot;
+         (keyup.enter)&#x3D;&quot;preventDefault($event);&quot;
+         (keydown.enter)&#x3D;&quot;preventDefault($event);
+                          open();&quot;
+         (keyup.space)&#x3D;&quot;open()&quot;
+         (keyup.esc)&#x3D;&quot;removeSelection($event)&quot;
+         (keydown.esc)&#x3D;&quot;isOpen &amp;&amp;
+                        preventDefault($event)&quot;
+         (keydown.space)&#x3D;&quot;preventDefault($event)&quot;
+         (focus)&#x3D;&quot;onFocus();&quot;
+         (blur)&#x3D;&quot;onBlur()&quot;
+         matRipple
+         class&#x3D;&quot;display&quot;&gt;
+        &lt;div class&#x3D;&quot;display-container text-ellipsis&quot;&gt;
+            &lt;span *ngIf&#x3D;&quot;!isFormControl &amp;&amp; placeholder&quot;
+                  class&#x3D;&quot;display-title&quot;&gt;
+                {{ placeholder }}:
+            &lt;/span&gt;
+            &lt;span class&#x3D;&quot;display-value&quot;&gt;
+                &lt;ng-container *ngIf&#x3D;&quot;!!value.length; else allLabel&quot;&gt;
+                    &lt;ng-container *ngFor&#x3D;&quot;let option of value; let i &#x3D; index&quot;&gt;
+                        {{ option.text + (i &#x3D;&#x3D;&#x3D; value.length - 1 ? &#x27;&#x27; : &#x27;, &#x27;) }}
+                    &lt;/ng-container&gt;
+                &lt;/ng-container&gt;
+                &lt;ng-template #allLabel&gt;
+                    {{ defaultValue }}
+                &lt;/ng-template&gt;
+            &lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ng-container *ngIf&#x3D;&quot;!readonly&quot;&gt;
+            &lt;!-- aria-hidden will override the default from mat-icon --&gt;
+            &lt;mat-icon *ngIf&#x3D;&quot;value.length &amp;&amp; clearable&quot;
+                      [matTooltip]&#x3D;&quot;intl.clearSelectionLabel&quot;
+                      (keydown.space)&#x3D;&quot;removeSelection($event)&quot;
+                      (keydown.enter)&#x3D;&quot;removeSelection($event)&quot;
+                      (click)&#x3D;&quot;removeSelection($event)&quot;
+                      tabindex&#x3D;&quot;0&quot;
+                      role&#x3D;&quot;button&quot;
+                      aria-hidden&#x3D;&quot;false&quot;
+                      svgIcon&#x3D;&quot;uipath:cancel&quot;
+                      class&#x3D;&quot;clear&quot;&gt;
+            &lt;/mat-icon&gt;
+            &lt;mat-icon *ngIf&#x3D;&quot;!value.length ||
+                         !clearable&quot;
+                      class&#x3D;&quot;arrow-down&quot;&gt;keyboard_arrow_down&lt;/mat-icon&gt;
+        &lt;/ng-container&gt;
+    &lt;/div&gt;
+    &lt;div [style.width]&#x3D;&quot;isFormControl ? null : width&quot;
+         [class.item-list-container-state-open]&#x3D;&quot;isOpen&quot;
+         [class.item-list-container-state-closed]&#x3D;&quot;!isOpen&quot;
+         [class.item-list-container-direction-down]&#x3D;&quot;isDown&quot;
+         [class.item-list-container-direction-up]&#x3D;&quot;!isDown&quot;
+         [class.searchable]&#x3D;&quot;searchable&quot;
+         [uiAutofocus]&#x3D;&quot;!searchable&quot;
+         [refocus]&#x3D;&quot;isOpen&quot;
+         [@displayState]&#x3D;&quot;isOpen ? &#x27;open&#x27; : &#x27;closed&#x27;&quot;
+         (keydown.arrowup)&#x3D;&quot;navigate(-1, $event)&quot;
+         (keydown.arrowdown)&#x3D;&quot;navigate(1, $event)&quot;
+         (keyup.esc)&#x3D;&quot;preventDefault($event);
+                      close();&quot;
+         (keyup.enter)&#x3D;&quot;preventDefault($event);&quot;
+         (keydown.enter)&#x3D;&quot;preventDefault($event);
+                        setSelectedItem();&quot;
+         (keydown.esc)&#x3D;&quot;preventDefault($event)&quot;
+         (keydown.tab)&#x3D;&quot;close(false)&quot;
+         (keydown.shift.tab)&#x3D;&quot;close()&quot;
+         tabindex&#x3D;&quot;-1&quot;
+         class&#x3D;&quot;item-list-container mat-elevation-z4&quot;&gt;
+        &lt;ng-container *ngIf&#x3D;&quot;!isDown&quot;&gt;
+            &lt;ng-container *ngTemplateOutlet&#x3D;&quot;resultList&quot;&gt;
+            &lt;/ng-container&gt;
+        &lt;/ng-container&gt;
+        &lt;mat-form-field *ngIf&#x3D;&quot;searchable&quot;
+                        floatLabel&#x3D;&quot;never&quot;&gt;
+            &lt;input [placeholder]&#x3D;&quot;this.isFormControl ? null : placeholder&quot;
+                   [formControl]&#x3D;&quot;inputControl&quot;
+                   [uiAutofocus]&#x3D;&quot;isOpen &amp;&amp;
+                                  searchable&quot;
+                   [attr.maxlength]&#x3D;&quot;maxLength&quot;
+                   [refocus]&#x3D;&quot;isOpen&quot;
+                   selectionLocation&#x3D;&quot;end&quot;
+                   autocomplete&#x3D;&quot;off&quot;
+                   matInput&gt;
+            &lt;mat-icon matSuffix&gt;search&lt;/mat-icon&gt;
+        &lt;/mat-form-field&gt;
+        &lt;ng-container *ngIf&#x3D;&quot;isDown&quot;&gt;
+            &lt;ng-container *ngTemplateOutlet&#x3D;&quot;resultList&quot;&gt;
+            &lt;/ng-container&gt;
+        &lt;/ng-container&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;ng-template #resultList&gt;
+    &lt;mat-list&gt;
+        &lt;cdk-virtual-scroll-viewport [isDown]&#x3D;&quot;isDown&quot;
+                                     [itemSize]&#x3D;&quot;itemSize&quot;
+                                     [style.max-height.px]&#x3D;&quot;viewportMaxHeight&quot;
+                                     [minBufferPx]&#x3D;&quot;viewportMaxHeight * 1.2&quot;
+                                     [maxBufferPx]&#x3D;&quot;viewportMaxHeight * 1.4&quot;
+                                     (rangeLoad)&#x3D;&quot;rangeLoad($event)&quot;
+                                     uiVirtualScrollRangeLoader&gt;
+            &lt;ng-container *ngTemplateOutlet&#x3D;&quot;customValueTemplate; context: { $implicit: &#x27;down&#x27; }&quot;&gt;
+            &lt;/ng-container&gt;
+
+            &lt;ng-container *cdkVirtualFor&#x3D;&quot;let item of renderItems; let index &#x3D; index; trackBy: trackById&quot;&gt;
+                &lt;mat-list-item *ngIf&#x3D;&quot;!!item&quot;
+                               [class.active]&#x3D;&quot;index &#x3D;&#x3D;&#x3D; activeIndex&quot;
+                               [class.is-loading]&#x3D;&quot;item.loading !&#x3D;&#x3D; VirtualScrollItemStatus.loaded&quot;
+                               [class.readonly]&#x3D;&quot;item.loading !&#x3D;&#x3D; VirtualScrollItemStatus.loaded&quot;
+                               [class.selected]&#x3D;&quot;!multiple &amp;&amp;
+                                                 isItemSelected(item)&quot;
+                               (click)&#x3D;&quot;preventDefault($event);
+                                        updateValue(item, !multiple, true);&quot;
+                               matRipple&gt;
+                    &lt;div [matTooltip]&#x3D;&quot;disableTooltip ? null : item.text&quot;
+                         matTooltipPosition&#x3D;&quot;right&quot;
+                         class&#x3D;&quot;ui-suggest-item&quot;&gt;
+                        &lt;mat-checkbox *ngIf&#x3D;&quot;multiple&quot;
+                                      [checked]&#x3D;&quot;isItemSelected(item)&quot;
+                                      [indeterminate]&#x3D;&quot;false&quot;&gt;
+                        &lt;/mat-checkbox&gt;
+                        &lt;div [attr.aria-label]&#x3D;&quot;item.text&quot;
+                             class&#x3D;&quot;text-label text-ellipsis&quot;
+                             tabindex&#x3D;&quot;-1&quot;&gt;
+                            &lt;mat-icon *ngIf&#x3D;&quot;!!item?.icon?.svgIcon&quot;
+                                      [svgIcon]&#x3D;&quot;item?.icon.svgIcon&quot;&gt;&lt;/mat-icon&gt;
+                            &lt;mat-icon *ngIf&#x3D;&quot;!!item?.icon?.matIcon&quot;&gt;{{item?.icon.matIcon}}&lt;/mat-icon&gt;
+                            {{ item?.icon?.iconOnly ? null : item.text }}
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/mat-list-item&gt;
+            &lt;/ng-container&gt;
+
+            &lt;ng-container *ngTemplateOutlet&#x3D;&quot;customValueTemplate; context: { $implicit: &#x27;up&#x27; }&quot;&gt;
+            &lt;/ng-container&gt;
+
+            &lt;mat-list-item *ngIf&#x3D;&quot;loading$ | async&quot;&gt;
+                &lt;div class&#x3D;&quot;loading-blue&quot;&gt;&lt;/div&gt;
+            &lt;/mat-list-item&gt;
+
+            &lt;mat-list-item *ngIf&#x3D;&quot;hasNoResults &amp;&amp;
+                                  !isCustomValueVisible &amp;&amp;
+                                  !(loading$ | async)&quot;
+                           [matTooltip]&#x3D;&quot;intl.noResultsLabel&quot;
+                           matTooltipPosition&#x3D;&quot;right&quot;
+                           class&#x3D;&quot;text-ellipsis no-results-text&quot;&gt;
+                &lt;em&gt;{{intl.noResultsLabel}}&lt;/em&gt;
+            &lt;/mat-list-item&gt;
+        &lt;/cdk-virtual-scroll-viewport&gt;
+    &lt;/mat-list&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #customValueTemplate
+             let-renderDirection&gt;
+    &lt;mat-list-item *ngIf&#x3D;&quot;isCustomValueVisible &amp;&amp; direction &#x3D;&#x3D;&#x3D; renderDirection&quot;
+                   [class.active]&#x3D;&quot;(renderDirection &#x3D;&#x3D;&#x3D; &#x27;down&#x27; ? -1 : items.length) &#x3D;&#x3D;&#x3D; activeIndex&quot;
+                   [matTooltip]&#x3D;&quot;customValueLabelTranslator(inputControl.value)&quot;
+                   (click)&#x3D;&quot;preventDefault($event); updateValue(inputControl.value, !multiple, true);&quot;
+                   matTooltipPosition&#x3D;&quot;right&quot;
+                   class&#x3D;&quot;text-ellipsis custom-item&quot;&gt;
+        &lt;div class&#x3D;&quot;text-label text-ellipsis&quot;&gt;
+            &lt;mat-icon&gt;add&lt;/mat-icon&gt;
+            {{ customValueLabelTranslator(inputControl.value) }}
+        &lt;/div&gt;
+    &lt;/mat-list-item&gt;
+&lt;/ng-template&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./ui-suggest.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;~@angular/material/theming&quot;;
+
+$height: 40px;
+$item-height: 32px;
+$form-control-height: 18px;
+$display-padding: 15px;
+$icon-size: 18px;
+$default-border-radius: 4px;
+/* https://github.com/angular/material2/blob/master/src/lib/button/_button-base.scss */
+$ui-suggest-focus-transition: background-color 200ms $swift-ease-in-out-timing-function;
+
+$componentName: &quot;ui-suggest&quot;;
+
+#{$componentName} {
+    position: relative;
+    display: block;
+
+    &amp;.disabled {
+        opacity: 0.38;
+    }
+
+    &amp;,
+    .item-list-container .mat-list-item {
+        .readonly,
+        &amp;.disabled {
+            pointer-events: none;
+        }
+        &amp;.is-loading {
+            font-style: italic;
+            opacity: 0.8;
+        }
+    }
+
+    .display-title {
+        font-weight: 700;
+    }
+
+    .item-list-container {
+        display: block;
+        position: absolute;
+        z-index: 5;
+        border-radius: $default-border-radius;
+        width: 100%;
+
+        .ui-suggest-item {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        &amp;:focus,
+        &amp;:hover {
+            outline: none;
+        }
+
+        .mat-form-field {
+            $field-padding: 16px;
+
+            padding: 0 $field-padding;
+            width: calc(100% - #{$field-padding * 2}) !important;
+            margin-bottom: 0 !important;
+            height: $height;
+            &amp;-infix {
+                border: 7px solid transparent;
+                border-left: none;
+                border-right: none;
+                padding: 0 0 5px 0;
+                border-left: 0;
+                border-right: 0;
+            }
+            &amp;-suffix {
+                align-self: center;
+                margin-bottom: 5px;
+
+                mat-icon {
+                    font-size: 24px;
+                }
+            }
+            &amp;-wrapper {
+                padding-bottom: 0;
+            }
+            &amp;-underline {
+                bottom: 7px;
+            }
+        }
+
+        .mat-list {
+            overflow-y: auto;
+            padding-top: 0;
+
+            &amp;-item {
+                cursor: pointer;
+
+                &amp;.text-ellipsis .mat-list-item-content {
+                    display: block;
+                }
+
+                .loading-blue {
+                    margin-left: 50%;
+                }
+
+                .mat-icon {
+                    vertical-align: middle;
+                    padding-right: 5px;
+                    margin-top: -3px;
+                }
+
+                .text-label {
+                    outline: none;
+                    margin-left: 5px;
+                    user-select: none;
+                    font-weight: normal;
+                }
+            }
+        }
+
+        &amp;-state-closed {
+            display: none;
+        }
+
+        cdk-virtual-scroll-viewport {
+            height: 100vh;
+            overflow-x: hidden;
+
+            .cdk-virtual-scroll-content-wrapper {
+                width: 100%;
+                overflow: hidden;
+            }
+        }
+    }
+
+    .display {
+        cursor: pointer;
+        user-select: none;
+        border-radius: $default-border-radius;
+
+        &amp;:hover,
+        &amp;:focus {
+            outline: none;
+        }
+
+        mat-icon {
+            outline: none;
+            position: absolute;
+            right: 5px;
+        }
+    }
+}
+
+#{$componentName}:not(.form-control) {
+    $searchUpDown: 3px;
+    $searchLeft: -1px;
+
+    .display,
+    .mat-form-field-label {
+        font-size: 0.8rem;
+    }
+
+    .display {
+        height: $height;
+        line-height: $height;
+        padding: 0 2 * $display-padding 0 $display-padding;
+        transition: $ui-suggest-focus-transition;
+
+        &amp;-container {
+            max-width: 200px;
+        }
+
+        mat-icon {
+            &amp;.clear,
+            &amp;.arrow-down {
+                bottom: 8px;
+            }
+        }
+    }
+
+    .item-list-container {
+        left: $searchLeft;
+        &amp;-direction {
+            &amp;-down {
+                top: $searchUpDown;
+                transform-origin: top left;
+
+                .mat-list-item:last-child {
+                    border-bottom-left-radius: $default-border-radius;
+                    border-bottom-right-radius: $default-border-radius;
+                }
+            }
+            &amp;-up {
+                bottom: -$searchUpDown;
+                transform-origin: bottom left;
+
+                .mat-list-item:first-child {
+                    border-top-left-radius: $default-border-radius;
+                    border-top-right-radius: $default-border-radius;
+                }
+            }
+        }
+
+        .mat-list {
+            &amp;-item {
+                height: $height;
+
+                &amp;.text-ellipsis .mat-list-item-content {
+                    line-height: $height;
+                }
+
+                &amp;.no-results-text .mat-list-item-content {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+#{$componentName}.form-control {
+    .display {
+        font-size: 14px;
+        height: $form-control-height;
+        line-height: $form-control-height;
+        padding: 0 2 * $display-padding 0 0;
+
+        mat-icon {
+            &amp;.clear,
+            &amp;.arrow-down {
+                bottom: 0;
+            }
+
+            &amp;.arrow-down {
+                top: -4px;
+            }
+        }
+    }
+
+    .item-list-container {
+        &amp;-direction {
+            &amp;-down {
+                top: -7px;
+
+                .mat-list-item:last-child {
+                    border-bottom-left-radius: $default-border-radius;
+                    border-bottom-right-radius: $default-border-radius;
+                }
+                &amp;.searchable {
+                    top: -5px;
+                }
+            }
+            &amp;-up {
+                bottom: -5px;
+
+                .mat-list-item:first-child {
+                    border-top-left-radius: $default-border-radius;
+                    border-top-right-radius: $default-border-radius;
+                }
+
+                &amp;.searchable {
+                    bottom: -17px;
+                }
+            }
+        }
+
+        .mat-list {
+            .mat-icon {
+                height: $icon-size;
+                font-size: $icon-size;
+                padding-right: 0;
+            }
+
+            &amp;-item {
+                height: $item-height;
+                font-size: 14px;
+
+                &amp;.text-ellipsis .mat-list-item-content {
+                    line-height: $item-height;
+                }
+            }
+
+            .mat-checkbox-ripple.mat-ripple {
+                height: 33px;
+                width: 33px;
+                left: -7px;
+                top: -7px;
+            }
+        }
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div *ngLet="focus$ | async as focus"     [attr.aria-label]="placeholder"     (uiClickOutside)="focused &&                    close(false)"     class="ui-suggest-container"     role="application">    <!-- role application to force up & down arrow to generate browser (not screen reader) events -->    <div [attr.tabindex]="!disabled &&                        !readonly ?                        0 : null"         [matTooltip]="tooltip"         [uiAutofocus]="!isOpen && focus"         [refocus]="!isOpen && focus"         (click)="toggle()"         (keyup.enter)="preventDefault($event);"         (keydown.enter)="preventDefault($event);                          open();"         (keyup.space)="open()"         (keyup.esc)="removeSelection($event)"         (keydown.esc)="isOpen &&                        preventDefault($event)"         (keydown.space)="preventDefault($event)"         (focus)="onFocus();"         (blur)="onBlur()"         matRipple         class="display">        <div class="display-container text-ellipsis">            <span *ngIf="!isFormControl && placeholder"                  class="display-title">                {{ placeholder }}:            </span>            <span class="display-value">                <ng-container *ngIf="!!value.length; else allLabel">                    <ng-container *ngFor="let option of value; let i = index">                        {{ option.text + (i === value.length - 1 ? \'\' : \', \') }}                    </ng-container>                </ng-container>                <ng-template #allLabel>                    {{ defaultValue }}                </ng-template>            </span>        </div>        <ng-container *ngIf="!readonly">            <!-- aria-hidden will override the default from mat-icon -->            <mat-icon *ngIf="value.length && clearable"                      [matTooltip]="intl.clearSelectionLabel"                      (keydown.space)="removeSelection($event)"                      (keydown.enter)="removeSelection($event)"                      (click)="removeSelection($event)"                      tabindex="0"                      role="button"                      aria-hidden="false"                      svgIcon="uipath:cancel"                      class="clear">            </mat-icon>            <mat-icon *ngIf="!value.length ||                         !clearable"                      class="arrow-down">keyboard_arrow_down</mat-icon>        </ng-container>    </div>    <div [style.width]="isFormControl ? null : width"         [class.item-list-container-state-open]="isOpen"         [class.item-list-container-state-closed]="!isOpen"         [class.item-list-container-direction-down]="isDown"         [class.item-list-container-direction-up]="!isDown"         [class.searchable]="searchable"         [uiAutofocus]="!searchable"         [refocus]="isOpen"         [@displayState]="isOpen ? \'open\' : \'closed\'"         (keydown.arrowup)="navigate(-1, $event)"         (keydown.arrowdown)="navigate(1, $event)"         (keyup.esc)="preventDefault($event);                      close();"         (keyup.enter)="preventDefault($event);"         (keydown.enter)="preventDefault($event);                        setSelectedItem();"         (keydown.esc)="preventDefault($event)"         (keydown.tab)="close(false)"         (keydown.shift.tab)="close()"         tabindex="-1"         class="item-list-container mat-elevation-z4">        <ng-container *ngIf="!isDown">            <ng-container *ngTemplateOutlet="resultList">            </ng-container>        </ng-container>        <mat-form-field *ngIf="searchable"                        floatLabel="never">            <input [placeholder]="this.isFormControl ? null : placeholder"                   [formControl]="inputControl"                   [uiAutofocus]="isOpen &&                                  searchable"                   [attr.maxlength]="maxLength"                   [refocus]="isOpen"                   selectionLocation="end"                   autocomplete="off"                   matInput>            <mat-icon matSuffix>search</mat-icon>        </mat-form-field>        <ng-container *ngIf="isDown">            <ng-container *ngTemplateOutlet="resultList">            </ng-container>        </ng-container>    </div></div><ng-template #resultList>    <mat-list>        <cdk-virtual-scroll-viewport [isDown]="isDown"                                     [itemSize]="itemSize"                                     [style.max-height.px]="viewportMaxHeight"                                     [minBufferPx]="viewportMaxHeight * 1.2"                                     [maxBufferPx]="viewportMaxHeight * 1.4"                                     (rangeLoad)="rangeLoad($event)"                                     uiVirtualScrollRangeLoader>            <ng-container *ngTemplateOutlet="customValueTemplate; context: { $implicit: \'down\' }">            </ng-container>            <ng-container *cdkVirtualFor="let item of renderItems; let index = index; trackBy: trackById">                <mat-list-item *ngIf="!!item"                               [class.active]="index === activeIndex"                               [class.is-loading]="item.loading !== VirtualScrollItemStatus.loaded"                               [class.readonly]="item.loading !== VirtualScrollItemStatus.loaded"                               [class.selected]="!multiple &&                                                 isItemSelected(item)"                               (click)="preventDefault($event);                                        updateValue(item, !multiple, true);"                               matRipple>                    <div [matTooltip]="disableTooltip ? null : item.text"                         matTooltipPosition="right"                         class="ui-suggest-item">                        <mat-checkbox *ngIf="multiple"                                      [checked]="isItemSelected(item)"                                      [indeterminate]="false">                        </mat-checkbox>                        <div [attr.aria-label]="item.text"                             class="text-label text-ellipsis"                             tabindex="-1">                            <mat-icon *ngIf="!!item?.icon?.svgIcon"                                      [svgIcon]="item?.icon.svgIcon"></mat-icon>                            <mat-icon *ngIf="!!item?.icon?.matIcon">{{item?.icon.matIcon}}</mat-icon>                            {{ item?.icon?.iconOnly ? null : item.text }}                        </div>                    </div>                </mat-list-item>            </ng-container>            <ng-container *ngTemplateOutlet="customValueTemplate; context: { $implicit: \'up\' }">            </ng-container>            <mat-list-item *ngIf="loading$ | async">                <div class="loading-blue"></div>            </mat-list-item>            <mat-list-item *ngIf="hasNoResults &&                                  !isCustomValueVisible &&                                  !(loading$ | async)"                           [matTooltip]="intl.noResultsLabel"                           matTooltipPosition="right"                           class="text-ellipsis no-results-text">                <em>{{intl.noResultsLabel}}</em>            </mat-list-item>        </cdk-virtual-scroll-viewport>    </mat-list></ng-template><ng-template #customValueTemplate             let-renderDirection>    <mat-list-item *ngIf="isCustomValueVisible && direction === renderDirection"                   [class.active]="(renderDirection === \'down\' ? -1 : items.length) === activeIndex"                   [matTooltip]="customValueLabelTranslator(inputControl.value)"                   (click)="preventDefault($event); updateValue(inputControl.value, !multiple, true);"                   matTooltipPosition="right"                   class="text-ellipsis custom-item">        <div class="text-label text-ellipsis">            <mat-icon>add</mat-icon>            {{ customValueLabelTranslator(inputControl.value) }}        </div>    </mat-list-item></ng-template></div>'
+    var COMPONENTS = [{'name': 'UiSuggestComponent', 'selector': 'ui-suggest'}];
+    var DIRECTIVES = [{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiScrollIntoViewDirective', 'selector': '[uiScrollIntoView]'},{'name': 'UiSecondFormatDirective', 'selector': '[uiSecondFormat], ui-secondformat'},{'name': 'UiVirtualScrollRangeLoaderDirective', 'selector': '[uiVirtualScrollRangeLoader], ui-virtual-scroll-range-loader'}];
+    var ACTUAL_COMPONENT = {'name': 'UiSuggestComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'UiSuggestComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

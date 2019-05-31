@@ -1,0 +1,864 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>UiPath Angular Components</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">UiPath Angular Components</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>UiGridSearchComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/angular/components/src/ui-grid/components/ui-grid-search/ui-grid-search.component.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>The grid search component.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">encapsulation</td>
+                <td class="col-md-9"><code>ViewEncapsulation.None</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>ui-grid-search</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./ui-grid-search.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./ui-grid-search.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#clear">clear</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#clearTooltip">clearTooltip</a>
+                            </li>
+                            <li>
+                                <a href="#debounce">debounce</a>
+                            </li>
+                            <li>
+                                <a href="#maxLength">maxLength</a>
+                            </li>
+                            <li>
+                                <a href="#placeholder">placeholder</a>
+                            </li>
+                            <li>
+                                <a href="#searchTooltip">searchTooltip</a>
+                            </li>
+                            <li>
+                                <a href="#tooltipDisabled">tooltipDisabled</a>
+                            </li>
+                            <li>
+                                <a href="#value">value</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#searchChange">searchChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#value">value</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="clearTooltip"></a>
+                        <b>clearTooltip</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/angular/components/src/ui-grid/components/ui-grid-search/ui-grid-search.component.ts:63</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The clear search tooltip text.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="debounce"></a>
+                        <b>debounce</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/angular/components/src/ui-grid/components/ui-grid-search/ui-grid-search.component.ts:39</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The search debounce time (ms).</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="maxLength"></a>
+                        <b>maxLength</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/angular/components/src/ui-grid/components/ui-grid-search/ui-grid-search.component.ts:51</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The max-length allowed in the search input.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="placeholder"></a>
+                        <b>placeholder</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/angular/components/src/ui-grid/components/ui-grid-search/ui-grid-search.component.ts:45</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The search input placeholder.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="searchTooltip"></a>
+                        <b>searchTooltip</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">projects/angular/components/src/ui-grid/components/ui-grid-search/ui-grid-search.component.ts:57</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The search tooltip text.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="tooltipDisabled"></a>
+                        <b>tooltipDisabled</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/angular/components/src/ui-grid/components/ui-grid-search/ui-grid-search.component.ts:69</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the search tooltip is disabled.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="value"></a>
+                        <b>value</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">projects/angular/components/src/ui-grid/components/ui-grid-search/ui-grid-search.component.ts:76</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The search value.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="searchChange"></a>
+                        <b>searchChange</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">projects/angular/components/src/ui-grid/components/ui-grid-search/ui-grid-search.component.ts:93</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The search event.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clear"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            clear
+                        </b>
+                        <a href="#clear"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>clear()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="123"
+                            class="link-to-prism">projects/angular/components/src/ui-grid/components/ui-grid-search/ui-grid-search.component.ts:123</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Clears the search input value.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="value"></a>
+                        <span class="name"><b>value</b><a href="#value"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>value(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">projects/angular/components/src/ui-grid/components/ui-grid-search/ui-grid-search.component.ts:79</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from &#x27;@angular/core&#x27;;
+import { FormControl } from &#x27;@angular/forms&#x27;;
+
+import { Subject } from &#x27;rxjs&#x27;;
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  takeUntil,
+} from &#x27;rxjs/operators&#x27;;
+
+/**
+ * The grid search component.
+ *
+ * @export
+ */
+@Component({
+    selector: &#x27;ui-grid-search&#x27;,
+    templateUrl: &#x27;./ui-grid-search.component.html&#x27;,
+    styleUrls: [&#x27;./ui-grid-search.component.scss&#x27;],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class UiGridSearchComponent implements OnInit, OnDestroy {
+    /**
+     * The search debounce time (ms).
+     *
+     */
+    @Input()
+    public debounce &#x3D; 0;
+    /**
+     * The search input placeholder.
+     *
+     */
+    @Input()
+    public placeholder?: string;
+    /**
+     * The max-length allowed in the search input.
+     *
+     */
+    @Input()
+    public maxLength?: number;
+    /**
+     * The search tooltip text.
+     *
+     */
+    @Input()
+    public searchTooltip?: string;
+    /**
+     * The clear search tooltip text.
+     *
+     */
+    @Input()
+    public clearTooltip?: string;
+    /**
+     * Configure if the search tooltip is disabled.
+     *
+     */
+    @Input()
+    public tooltipDisabled?: boolean;
+
+    /**
+     * The search value.
+     *
+     */
+    @Input()
+    public get value() {
+        return this.search.value;
+    }
+    public set value(value: string) {
+        this.search.setValue(value);
+    }
+
+    /**
+     * @ignore
+     */
+    public search &#x3D; new FormControl(&#x27;&#x27;);
+
+    /**
+     * The search event.
+     *
+     */
+    @Output()
+    public searchChange &#x3D; new EventEmitter&lt;string&gt;();
+
+    private _destroyed$ &#x3D; new Subject();
+
+    /**
+     * @ignore
+     */
+    ngOnInit() {
+        this.search.valueChanges.pipe(
+            debounceTime(this.debounce),
+            map(value &#x3D;&gt; value.trim()),
+            distinctUntilChanged(),
+            takeUntil(this._destroyed$),
+        ).subscribe(value &#x3D;&gt; this.searchChange.emit(value));
+    }
+
+    /**
+     * @ignore
+     */
+    ngOnDestroy() {
+        this.searchChange.complete();
+
+        this._destroyed$.next();
+        this._destroyed$.complete();
+    }
+
+    /**
+     * Clears the search input value.
+     *
+     */
+    public clear() {
+        this.search.setValue(&#x27;&#x27;);
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">﻿&lt;mat-form-field floatLabel&#x3D;&quot;never&quot;&gt;
+       &lt;input [formControl]&#x3D;&quot;search&quot;
+              [placeholder]&#x3D;&quot;placeholder&quot;
+              [attr.maxlength]&#x3D;&quot;maxLength&quot;
+              matInput
+              type&#x3D;&quot;search&quot;
+              autocomplete&#x3D;&quot;off&quot; /&gt;
+       &lt;mat-icon (click)&#x3D;&quot;clear()&quot;
+                 (keyup.enter)&#x3D;&quot;clear()&quot;
+                 (keyup.space)&#x3D;&quot;clear()&quot;
+                 [hidden]&#x3D;&quot;!search.value&quot;
+                 [matTooltip]&#x3D;&quot;clearTooltip&quot;
+                 [matTooltipDisabled]&#x3D;&quot;tooltipDisabled&quot;
+                 [attr.aria-label]&#x3D;&quot;clearTooltip&quot;
+                 matSuffix
+                 class&#x3D;&quot;ui-grid-search-cancel&quot;
+                 tabindex&#x3D;&quot;0&quot;&gt;
+              &lt;svg width&#x3D;&quot;100%&quot;
+                   height&#x3D;&quot;100%&quot;
+                   viewBox&#x3D;&quot;0 0 20 20&quot;
+                   style&#x3D;&quot;color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;&quot;&gt;
+                     &lt;path d&#x3D;&quot;M6.505 13.498l7-7M13.505 13.5l-7-7&quot;
+                           fill&#x3D;&quot;none&quot;
+                           stroke&#x3D;&quot;currentColor&quot;
+                           stroke-width&#x3D;&quot;2.0011213&quot; /&gt;
+              &lt;/svg&gt;
+       &lt;/mat-icon&gt;
+       &lt;mat-icon *ngIf&#x3D;&quot;!search.value&quot;
+                 [matTooltip]&#x3D;&quot;searchTooltip&quot;
+                 [matTooltipDisabled]&#x3D;&quot;tooltipDisabled&quot;
+                 svgIcon&#x3D;&quot;uipath:search&quot;
+                 matSuffix
+                 class&#x3D;&quot;svg-icon&quot;&gt;
+              &lt;svg width&#x3D;&quot;100%&quot;
+                   height&#x3D;&quot;100%&quot;
+                   viewBox&#x3D;&quot;0 0 30 30&quot;
+                   version&#x3D;&quot;1.1&quot;
+                   xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;
+                   xmlns:xlink&#x3D;&quot;http://www.w3.org/1999/xlink&quot;
+                   xml:space&#x3D;&quot;preserve&quot;
+                   style&#x3D;&quot;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;&quot;&gt;
+                     &lt;g transform&#x3D;&quot;matrix(1.46299,0,0,1.46299,-3.8521,-4.123)&quot;&gt;
+                            &lt;path
+                                  d&#x3D;&quot;M15.456,14.365L14.882,14.365L14.678,14.169C15.415,13.313 15.821,12.221 15.82,11.091C15.82,8.497 13.685,6.362 11.091,6.362C8.497,6.362 6.362,8.497 6.362,11.091C6.362,13.685 8.497,15.82 11.091,15.82C12.263,15.82 13.339,15.391 14.169,14.678L14.365,14.882L14.365,15.456L18.003,19.087L19.087,18.003L15.456,14.365ZM11.091,14.365C9.28,14.365 7.817,12.903 7.817,11.091C7.817,9.28 9.28,7.817 11.091,7.817C12.903,7.817 14.365,9.28 14.365,11.091C14.365,12.903 12.903,14.365 11.091,14.365Z&quot; /&gt;
+                     &lt;/g&gt;
+              &lt;/svg&gt;
+       &lt;/mat-icon&gt;
+&lt;/mat-form-field&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./ui-grid-search.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">ui-grid-search {
+    mat-form-field {
+        width: 140px;
+
+        .mat-form-field-flex {
+            align-items: flex-end;
+        }
+    }
+
+    .ui-grid-search-cancel {
+        cursor: pointer;
+
+        &amp;:focus {
+            outline: none;
+        }
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div>﻿<mat-form-field floatLabel="never">       <input [formControl]="search"              [placeholder]="placeholder"              [attr.maxlength]="maxLength"              matInput              type="search"              autocomplete="off" />       <mat-icon (click)="clear()"                 (keyup.enter)="clear()"                 (keyup.space)="clear()"                 [hidden]="!search.value"                 [matTooltip]="clearTooltip"                 [matTooltipDisabled]="tooltipDisabled"                 [attr.aria-label]="clearTooltip"                 matSuffix                 class="ui-grid-search-cancel"                 tabindex="0">              <svg width="100%"                   height="100%"                   viewBox="0 0 20 20"                   style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">                     <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"                           fill="none"                           stroke="currentColor"                           stroke-width="2.0011213" />              </svg>       </mat-icon>       <mat-icon *ngIf="!search.value"                 [matTooltip]="searchTooltip"                 [matTooltipDisabled]="tooltipDisabled"                 svgIcon="uipath:search"                 matSuffix                 class="svg-icon">              <svg width="100%"                   height="100%"                   viewBox="0 0 30 30"                   version="1.1"                   xmlns="http://www.w3.org/2000/svg"                   xmlns:xlink="http://www.w3.org/1999/xlink"                   xml:space="preserve"                   style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">                     <g transform="matrix(1.46299,0,0,1.46299,-3.8521,-4.123)">                            <path                                  d="M15.456,14.365L14.882,14.365L14.678,14.169C15.415,13.313 15.821,12.221 15.82,11.091C15.82,8.497 13.685,6.362 11.091,6.362C8.497,6.362 6.362,8.497 6.362,11.091C6.362,13.685 8.497,15.82 11.091,15.82C12.263,15.82 13.339,15.391 14.169,14.678L14.365,14.882L14.365,15.456L18.003,19.087L19.087,18.003L15.456,14.365ZM11.091,14.365C9.28,14.365 7.817,12.903 7.817,11.091C7.817,9.28 9.28,7.817 11.091,7.817C12.903,7.817 14.365,9.28 14.365,11.091C14.365,12.903 12.903,14.365 11.091,14.365Z" />                     </g>              </svg>       </mat-icon></mat-form-field></div>'
+    var COMPONENTS = [{'name': 'UiGridComponent', 'selector': 'ui-grid'},{'name': 'UiGridSearchComponent', 'selector': 'ui-grid-search'}];
+    var DIRECTIVES = [{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiScrollIntoViewDirective', 'selector': '[uiScrollIntoView]'},{'name': 'UiSecondFormatDirective', 'selector': '[uiSecondFormat], ui-secondformat'},{'name': 'UiVirtualScrollRangeLoaderDirective', 'selector': '[uiVirtualScrollRangeLoader], ui-virtual-scroll-range-loader'},{'name': 'UiVirtualScrollViewportResizeDirective', 'selector': '[uiVirtualScrollViewportResize], ui-virtual-scroll-viewport-resize'}];
+    var ACTUAL_COMPONENT = {'name': 'UiGridSearchComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'UiGridSearchComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

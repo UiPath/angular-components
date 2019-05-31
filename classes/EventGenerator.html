@@ -1,0 +1,1294 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>UiPath Angular Components</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">UiPath Angular Components</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li>EventGenerator</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/angular/testing/src/utilities/event-generator.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Most <code>unit tests</code> require user interaction, this collection aims to simplify event dispatching,
+by providing a collection of methods and properties that create the most often required <code>UIEvents</code>.</p>
+
+            </p>
+
+
+
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#change">change</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#clickXY">clickXY</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#drop">drop</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#input">input</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#keyDown">keyDown</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#keyUp">keyUp</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#moveXY">moveXY</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#click">click</a>
+                                </li>
+                                <li>
+                                    <a href="#mouseEnter">mouseEnter</a>
+                                </li>
+                                <li>
+                                    <a href="#mouseLeave">mouseLeave</a>
+                                </li>
+                                <li>
+                                    <a href="#doubleClick">doubleClick</a>
+                                </li>
+                                <li>
+                                    <a href="#dragOver">dragOver</a>
+                                </li>
+                                <li>
+                                    <a href="#dragLeave">dragLeave</a>
+                                </li>
+                                <li>
+                                    <a href="#dragEnd">dragEnd</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="change"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Static</span>
+                            change
+                        </b>
+                        <a href="#change"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>change()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="166"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:166</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Change event generator helpful for testing <code>HTMLInputElement</code>s.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://angular.io/api/router/Event" target="_blank" >Event</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>A simple <code>change</code> event.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clickXY"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Static</span>
+                            clickXY
+                        </b>
+                        <a href="#clickXY"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>clickXY(offsetX: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, offsetY: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="201"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:201</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Generates a <code>click</code> event on the requested X, Y coordinates.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>offsetX</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The X offset value.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>offsetY</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The Y offset value.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>MouseEvent</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>A <code>click</code> event with the <code>offsetX</code> and <code>offsetY</code> properties populated.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="drop"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Static</span>
+                            drop
+                        </b>
+                        <a href="#drop"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>drop(files: File[])</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="145"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:145</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Drop event generator, helpful for testing <code>HTMLInputElement</code>s of type <code>file</code>.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>files</td>
+                                    <td>
+                                            <code>File[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>[]</code>
+                                    </td>
+
+                                    <td>
+                                        <p>A list of files to associated to the event.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/IDropEvent.html" target="_self" >IDropEvent</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>The drop event with the <code>dataTransfer</code> and <code>files</code> properties populated.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="input"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Static</span>
+                            input
+                        </b>
+                        <a href="#input"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>input()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="188"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:188</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Generates an input event helpful for testing <code>HTMLInputElement</code>s.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://angular.io/api/router/Event" target="_blank" >Event</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>A simple <code>input</code> event.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="keyDown"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Static</span>
+                            keyDown
+                        </b>
+                        <a href="#keyDown"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>keyDown(key: <a href="../classes/Key.html">KeyOrKeyName</a>, modifier?: <a href="../interfaces/IKeyModifier.html">IKeyModifier</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="124"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:124</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>KeyDown event generator helper.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>key</td>
+                                    <td>
+                                                <code><a href="../classes/Key.html" target="_self" >KeyOrKeyName</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The pressed key.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>modifier</td>
+                                    <td>
+                                                <code><a href="../interfaces/IKeyModifier.html" target="_self" >IKeyModifier</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>The active modifier, if any.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Key.html" target="_self" >KeyboardEvent</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>A <code>keydown</code> event with the provided key and modifier metadata.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="keyUp"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Static</span>
+                            keyUp
+                        </b>
+                        <a href="#keyUp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>keyUp(key: <a href="../classes/Key.html">KeyOrKeyName</a>, modifier?: <a href="../interfaces/IKeyModifier.html">IKeyModifier</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="135"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:135</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>KeyUp event generator helper.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>key</td>
+                                    <td>
+                                                <code><a href="../classes/Key.html" target="_self" >KeyOrKeyName</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The pressed key.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>modifier</td>
+                                    <td>
+                                                <code><a href="../interfaces/IKeyModifier.html" target="_self" >IKeyModifier</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>The active modifier, if any.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Key.html" target="_self" >KeyboardEvent</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>A <code>keyup</code> event with the provided key and modifier metadata.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="moveXY"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Static</span>
+                            moveXY
+                        </b>
+                        <a href="#moveXY"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>moveXY(offsetX: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, offsetY: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="222"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:222</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Generates a <code>mousemove</code> event on the requested X, Y coordinates.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>offsetX</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The X offset value.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>offsetY</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The Y offset value.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>MouseEvent</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>A <code>mousemove</code> event with the <code>offsetX</code> and <code>offsetY</code> properties populated.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="click"></a>
+                        <span class="name"><b>click</b><a href="#click"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>click()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:51</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets a <code>click</code> event.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>MouseEvent</code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="mouseEnter"></a>
+                        <span class="name"><b>mouseEnter</b><a href="#mouseEnter"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>mouseEnter()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:61</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets a <code>mouseenter</code> event.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>MouseEvent</code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="mouseLeave"></a>
+                        <span class="name"><b>mouseLeave</b><a href="#mouseLeave"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>mouseLeave()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:71</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets a <code>mouseleave</code> event.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>MouseEvent</code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="doubleClick"></a>
+                        <span class="name"><b>doubleClick</b><a href="#doubleClick"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>doubleClick()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:81</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets a <code>dblclick</code> event.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>MouseEvent</code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dragOver"></a>
+                        <span class="name"><b>dragOver</b><a href="#dragOver"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>dragOver()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="91" class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:91</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets a <code>dragover</code> event.</p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dragLeave"></a>
+                        <span class="name"><b>dragLeave</b><a href="#dragLeave"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>dragLeave()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="101" class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:101</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets a <code>dragleave</code> event.</p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dragEnd"></a>
+                        <span class="name"><b>dragEnd</b><a href="#dragEnd"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>dragEnd()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:111</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets a <code>dragEnd</code> event.</p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { IDropEvent } from &#x27;./events&#x27;;
+import { FakeFileList } from &#x27;./fake-file-list&#x27;;
+import { CURSOR_IMG } from &#x27;./internal&#x27;;
+import {
+  IKey,
+  IKeyModifier,
+  Key,
+} from &#x27;./key&#x27;;
+
+type KeyOrKeyName &#x3D; (IKey | keyof Key);
+
+/**
+ * Most &#x60;unit tests&#x60; require user interaction, this collection aims to simplify event dispatching,
+ * by providing a collection of methods and properties that create the most often required &#x60;UIEvents&#x60;.
+ *
+ * @export
+ * @dynamic
+ */
+export class EventGenerator {
+    private static _cursor &#x3D; {
+        ref: {} as HTMLElement,
+        initialize: (parent?: HTMLElement) &#x3D;&gt; {
+            if (!parent) { return; }
+            EventGenerator._cursor.ref &#x3D; document.createElement(&#x27;div&#x27;) as HTMLElement;
+
+            EventGenerator._cursor.ref.style.position &#x3D; &#x27;absolute&#x27;;
+            EventGenerator._cursor.ref.style.display &#x3D; &#x27;block&#x27;;
+            EventGenerator._cursor.ref.style.left &#x3D; &#x27;0px&#x27;;
+            EventGenerator._cursor.ref.style.top &#x3D; &#x27;0px&#x27;;
+            EventGenerator._cursor.ref.style.width &#x3D; &#x27;20px&#x27;;
+            EventGenerator._cursor.ref.style.height &#x3D; &#x27;20px&#x27;;
+            EventGenerator._cursor.ref.style.background &#x3D; CURSOR_IMG;
+
+            parent.appendChild(EventGenerator._cursor.ref);
+        },
+        destroy: (parent?: HTMLElement) &#x3D;&gt; {
+            if (!parent) { return; }
+
+            parent.removeChild(EventGenerator._cursor.ref);
+        },
+        update: (x: number, y: number) &#x3D;&gt; {
+            EventGenerator._cursor.ref.style.left &#x3D; &#x60;${x - 10}px&#x60;;
+            EventGenerator._cursor.ref.style.top &#x3D; &#x60;${y - 10}px&#x60;;
+        },
+    };
+
+    /**
+     * Gets a &#x60;click&#x60; event.
+     *
+     */
+    static get click(): MouseEvent {
+        const event &#x3D; document.createEvent(&#x27;MouseEvent&#x27;);
+        event.initEvent(&#x27;click&#x27;, true, true);
+        return event;
+    }
+
+    /**
+     * Gets a &#x60;mouseenter&#x60; event.
+     *
+     */
+    static get mouseEnter(): MouseEvent {
+        const event &#x3D; document.createEvent(&#x27;MouseEvent&#x27;);
+        event.initEvent(&#x27;mouseenter&#x27;, true, true);
+        return event;
+    }
+
+    /**
+     * Gets a &#x60;mouseleave&#x60; event.
+     *
+     */
+    static get mouseLeave(): MouseEvent {
+        const event &#x3D; document.createEvent(&#x27;MouseEvent&#x27;);
+        event.initEvent(&#x27;mouseleave&#x27;, true, true);
+        return event;
+    }
+
+    /**
+     * Gets a &#x60;dblclick&#x60; event.
+     *
+     */
+    static get doubleClick(): MouseEvent {
+        const event &#x3D; document.createEvent(&#x27;MouseEvent&#x27;);
+        event.initEvent(&#x27;dblclick&#x27;, true, true);
+        return event;
+    }
+
+    /**
+     * Gets a &#x60;dragover&#x60; event.
+     *
+     */
+    static get dragOver() {
+        const dragOverEvent &#x3D; new Event(&#x27;DragEvent&#x27;);
+        dragOverEvent.initEvent(&#x27;dragover&#x27;, true, true);
+        return dragOverEvent;
+    }
+
+    /**
+     * Gets a &#x60;dragleave&#x60; event.
+     *
+     */
+    static get dragLeave() {
+        const dragOverEvent &#x3D; new Event(&#x27;DragEvent&#x27;);
+        dragOverEvent.initEvent(&#x27;dragleave&#x27;, true, true);
+        return dragOverEvent;
+    }
+
+    /**
+     * Gets a &#x60;dragEnd&#x60; event.
+     *
+     */
+    static get dragEnd() {
+        const dragOverEvent &#x3D; new Event(&#x27;DragEvent&#x27;);
+        dragOverEvent.initEvent(&#x27;dragend&#x27;, true, true);
+        return dragOverEvent;
+    }
+
+    /**
+     * KeyDown event generator helper.
+     *
+     * @param key The pressed key.
+     * @param [modifier] The active modifier, if any.
+     * @returns A &#x60;keydown&#x60; event with the provided key and modifier metadata.
+     */
+    static keyDown(key: KeyOrKeyName, modifier?: IKeyModifier): KeyboardEvent {
+        return EventGenerator._key(&#x27;keydown&#x27;, key, modifier);
+    }
+
+    /**
+     * KeyUp event generator helper.
+     *
+     * @param key The pressed key.
+     * @param [modifier] The active modifier, if any.
+     * @returns A &#x60;keyup&#x60; event with the provided key and modifier metadata.
+     */
+    static keyUp(key: KeyOrKeyName, modifier?: IKeyModifier): KeyboardEvent {
+        return EventGenerator._key(&#x27;keyup&#x27;, key, modifier);
+    }
+
+    /**
+     *  Drop event generator, helpful for testing &#x60;HTMLInputElement&#x60;s of type &#x60;file&#x60;.
+     *
+     * @param [files&#x3D;[]] A list of files to associated to the event.
+     * @returns The drop event with the &#x60;dataTransfer&#x60; and &#x60;files&#x60; properties populated.
+     */
+    static drop(files: File[] &#x3D; []): IDropEvent {
+        const fileList &#x3D; new FakeFileList(files);
+
+        const ev &#x3D; new DragEvent(&#x27;drop&#x27;);
+
+        Object.defineProperty(ev, &#x27;dataTransfer&#x27;, {
+            value: new DataTransfer(),
+        });
+        Object.defineProperty(ev.dataTransfer, &#x27;files&#x27;, {
+            value: fileList,
+        });
+
+
+        return ev as any as IDropEvent;
+    }
+
+    /**
+     * Change event generator helpful for testing &#x60;HTMLInputElement&#x60;s.
+     *
+     * @returns A simple &#x60;change&#x60; event.
+     */
+    static change(): Event {
+        const fileList &#x3D; new FakeFileList();
+        const changeEvent &#x3D; new Event(&#x27;InputEvent&#x27;);
+
+        changeEvent.initEvent(&#x27;change&#x27;, true, true);
+
+        Object.defineProperty(changeEvent, &#x27;target&#x27;, {
+            value: changeEvent.target || {},
+        });
+
+        Object.defineProperty(changeEvent.target, &#x27;files&#x27;, {
+            value: fileList,
+        });
+
+        return changeEvent;
+    }
+
+    /**
+     * Generates an input event helpful for testing &#x60;HTMLInputElement&#x60;s.
+     *
+     * @returns A simple &#x60;input&#x60; event.
+     */
+    static input(): Event {
+        const event &#x3D; document.createEvent(&#x27;Event&#x27;);
+        event.initEvent(&#x27;input&#x27;, true, true);
+        return event;
+    }
+
+    /**
+     * Generates a &#x60;click&#x60; event on the requested X, Y coordinates.
+     *
+     * @param offsetX The X offset value.
+     * @param offsetY The Y offset value.
+     * @returns A &#x60;click&#x60; event with the &#x60;offsetX&#x60; and &#x60;offsetY&#x60; properties populated.
+     */
+    static clickXY(offsetX: number, offsetY: number): MouseEvent {
+        const event &#x3D; this.click;
+
+        Object.defineProperty(event, &#x27;offsetX&#x27;, {
+            value: offsetX,
+        });
+        Object.defineProperty(event, &#x27;offsetY&#x27;, {
+            value: offsetY,
+        });
+
+        this._cursor.update(offsetX, offsetY);
+        return event;
+    }
+
+    /**
+     * Generates a &#x60;mousemove&#x60; event on the requested X, Y coordinates.
+     *
+     * @param offsetX The X offset value.
+     * @param offsetY The Y offset value.
+     * @returns A &#x60;mousemove&#x60; event with the &#x60;offsetX&#x60; and &#x60;offsetY&#x60; properties populated.
+     */
+    static moveXY(offsetX: number, offsetY: number): MouseEvent {
+        const event &#x3D; document.createEvent(&#x27;MouseEvent&#x27;);
+        event.initEvent(&#x27;mousemove&#x27;, true, false);
+
+
+        Object.defineProperty(event, &#x27;offsetX&#x27;, {
+            value: offsetX,
+        });
+        Object.defineProperty(event, &#x27;offsetY&#x27;, {
+            value: offsetY,
+        });
+
+        this._cursor.update(offsetX, offsetY);
+        return event;
+    }
+
+    private static _key(type: string, key: IKey | keyof Key, modifier &#x3D; {} as IKeyModifier) {
+        const safeKey &#x3D; EventGenerator._getKey(key) as IKey;
+        const options: KeyboardEventInit &#x3D; {
+            code: &#x60;${safeKey.code}&#x60;,
+            key: safeKey.name,
+            shiftKey: modifier &#x3D;&#x3D;&#x3D; Key.Shift,
+            altKey: modifier &#x3D;&#x3D;&#x3D; Key.Alt,
+            ctrlKey: modifier &#x3D;&#x3D;&#x3D; Key.Control,
+        };
+        return new KeyboardEvent(type, options);
+    }
+
+    private static _getKey(key: IKey | keyof Key): IKey {
+        if (typeof key &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+            const internalKey: IKey &#x3D; Key[key];
+            if (!internalKey) {
+                throw new Error(&#x60;Key definition for ${key} does not exist!&#x60;);
+            }
+            return internalKey;
+        }
+
+        return key as IKey;
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'EventGenerator.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

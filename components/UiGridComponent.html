@@ -1,0 +1,3128 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>UiPath Angular Components</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">UiPath Angular Components</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>UiGridComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/angular/components/src/ui-grid/ui-grid.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+            <code>ResizableGrid</code>
+    </p>
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/AfterContentInit" target="_blank" >AfterContentInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">encapsulation</td>
+                <td class="col-md-9"><code>ViewEncapsulation.None</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>ui-grid</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./ui-grid.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./ui-grid.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#columns$">columns$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dataManager">dataManager</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#filterManager">filterManager</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isAnyFilterDefined$">isAnyFilterDefined$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#liveAnnouncerManager">liveAnnouncerManager</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#resizeManager">resizeManager</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#selectionManager">selectionManager</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#sortManager">sortManager</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#visible$">visible$</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#checkboxLabel">checkboxLabel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#handleSelection">handleSelection</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toggle">toggle</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#data">data</a>
+                            </li>
+                            <li>
+                                <a href="#disabled">disabled</a>
+                            </li>
+                            <li>
+                                <a href="#expandedEntry">expandedEntry</a>
+                            </li>
+                            <li>
+                                <a href="#expandMode">expandMode</a>
+                            </li>
+                            <li>
+                                <a href="#isProjected">isProjected</a>
+                            </li>
+                            <li>
+                                <a href="#isResizing">isResizing</a>
+                            </li>
+                            <li>
+                                <a href="#loading">loading</a>
+                            </li>
+                            <li>
+                                <a href="#multiPageSelect">multiPageSelect</a>
+                            </li>
+                            <li>
+                                <a href="#noDataMessage">noDataMessage</a>
+                            </li>
+                            <li>
+                                <a href="#refreshable">refreshable</a>
+                            </li>
+                            <li>
+                                <a href="#resizeStrategy">resizeStrategy</a>
+                            </li>
+                            <li>
+                                <a href="#selectable">selectable</a>
+                            </li>
+                            <li>
+                                <a href="#virtualScroll">virtualScroll</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#refresh">refresh</a>
+                            </li>
+                            <li>
+                                <a href="#rendered">rendered</a>
+                            </li>
+                            <li>
+                                <a href="#sortChange">sortChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostListeners</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#document:keydown.shift">document:keydown.shift</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#data">data</a>
+                                </li>
+                                <li>
+                                    <a href="#isEveryVisibleRowChecked">isEveryVisibleRowChecked</a>
+                                </li>
+                                <li>
+                                    <a href="#hasValueOnVisiblePage">hasValueOnVisiblePage</a>
+                                </li>
+                                <li>
+                                    <a href="#resizeStrategy">resizeStrategy</a>
+                                </li>
+                                <li>
+                                    <a href="#scrollCompensationWidth">scrollCompensationWidth</a>
+                                </li>
+                                <li>
+                                    <a href="#showMultiPageSelectionInfo">showMultiPageSelectionInfo</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="data"></a>
+                        <b>data</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:86</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The data list that needs to be rendered within the grid.</p>
+<p>NOTE: to have access to all functionality, we recommend that entities display in the grid implement the IGridDataEntry interface.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="disabled"></a>
+                        <b>disabled</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="159" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:159</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Marks the grid enabled state.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="expandedEntry"></a>
+                        <b>expandedEntry</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>T</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="202" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:202</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Set the expanded entry.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="expandMode"></a>
+                        <b>expandMode</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;preserve&quot; | &quot;collapse&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;collapse&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="209" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:209</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the expanded entry should replace the active row, or add a new row with the expanded view.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isProjected"></a>
+                        <b>isProjected</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:107</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Marks the grid projected state.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isResizing"></a>
+                        <b>isResizing</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:97</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Marks the grid resizing state.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loading"></a>
+                        <b>loading</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="151" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:151</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Marks the grid loading state.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="multiPageSelect"></a>
+                        <b>multiPageSelect</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="174" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:174</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the grid allows multi-page selection.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="noDataMessage"></a>
+                        <b>noDataMessage</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="195" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:195</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Provide a custom <code>noDataMessage</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="refreshable"></a>
+                        <b>refreshable</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="181" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:181</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the grid is refreshable.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="resizeStrategy"></a>
+                        <b>resizeStrategy</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:133</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The desired resize strategy.</p>
+<p>FIXME: Currently only <code>ImmediateNeighbourHalt</code> is stable.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectable"></a>
+                        <b>selectable</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="166" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:166</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if the grid allows item selection.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="virtualScroll"></a>
+                        <b>virtualScroll</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="188" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:188</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure if <code>virtualScroll</code> is enabled.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="refresh"></a>
+                        <b>refresh</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="223" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:223</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits an event when user click the refresh button.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="rendered"></a>
+                        <b>rendered</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="230" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:230</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits an event once the grid has been rendered.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sortChange"></a>
+                        <b>sortChange</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="216" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:216</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits an event with the sort model when a column sort changes.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="document:keydown.shift"></a>
+                    <span class="name">
+                        <b>
+                            document:keydown.shift
+                        </b>
+                        <a href="#document:keydown.shift"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>document:keydown.shift(ev: MouseEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="522"
+                            class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:522</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Marks if the <code>Shift</code> key is pressed.</p>
+</div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkboxLabel"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            checkboxLabel
+                        </b>
+                        <a href="#checkboxLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkboxLabel(row?: T)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="573"
+                            class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:573</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Determines the <code>checkbox</code> <code>aria-label</code>.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>row</td>
+                                    <td>
+                                            <code>T</code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>The row for which the label is computed.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleSelection"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            handleSelection
+                        </b>
+                        <a href="#handleSelection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleSelection(idx: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, entry: T)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="532"
+                            class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:532</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Handles row selection, and reacts if the <code>Shift</code> key is pressed.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>idx</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The clicked row index.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>entry</td>
+                                    <td>
+                                            <code>T</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The entry associated to the selected row.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggle"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            toggle
+                        </b>
+                        <a href="#toggle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toggle(ev: MatCheckboxChange)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="559"
+                            class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:559</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Toggles the row selection state.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ev</td>
+                                    <td>
+                                            <code>MatCheckboxChange</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="columns$"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            columns$</b>
+                            <a href="#columns$"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new BehaviorSubject&lt;UiGridColumnDirective&lt;T&gt;[]&gt;([])</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="236" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:236</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits the column definitions when their definition changes.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dataManager"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            dataManager</b>
+                            <a href="#dataManager"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new DataManager&lt;T&gt;()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="306" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:306</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Data manager, used to optimize row rendering.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="filterManager"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            filterManager</b>
+                            <a href="#filterManager"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new FilterManager&lt;T&gt;()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="311" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:311</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Filter manager, used to manage filter state changes.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isAnyFilterDefined$"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            isAnyFilterDefined$</b>
+                            <a href="#isAnyFilterDefined$"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new BehaviorSubject&lt;boolean&gt;(false)</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="330" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:330</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits with information wether filters are defined.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="liveAnnouncerManager"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                                <span class="modifier">Optional</span>
+                            liveAnnouncerManager</b>
+                            <a href="#liveAnnouncerManager"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>LiveAnnouncerManager&lt;T&gt;</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="296" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:296</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Live announcer manager, used to emit notification via <code>aria-live</code>.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="resizeManager"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            resizeManager</b>
+                            <a href="#resizeManager"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>ResizeManager&lt;T&gt;</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="321" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:321</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Resize manager, used to compute resized column states.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectionManager"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            selectionManager</b>
+                            <a href="#selectionManager"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new SelectionManager&lt;T&gt;()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="301" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:301</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Selection manager, used to manage grid selection states.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sortManager"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            sortManager</b>
+                            <a href="#sortManager"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new SortManager&lt;T&gt;()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="316" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:316</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Sort manager, used to manage sort state changes.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="visible$"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            visible$</b>
+                            <a href="#visible$"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new BehaviorSubject&lt;UiGridColumnDirective&lt;T&gt;[]&gt;([])</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="242" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:242</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits the visible column definitions when their definition changes.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="data"></a>
+                        <span class="name"><b>data</b><a href="#data"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>data(value: [])</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:86</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>The data list that needs to be rendered within the grid.</p>
+<p>NOTE: to have access to all functionality, we recommend that entities display in the grid implement the IGridDataEntry interface.</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                        <td>Description</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
+                                                            <td>
+                                                                        <code>[]</code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                            <td>
+                                                                    <code><p>The list that needs to rendered.</p>
+</code>
+                                                            </td>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isEveryVisibleRowChecked"></a>
+                        <span class="name"><b>isEveryVisibleRowChecked</b><a href="#isEveryVisibleRowChecked"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>isEveryVisibleRowChecked()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="113" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:113</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Determines if all of the items are currently checked.</p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="hasValueOnVisiblePage"></a>
+                        <span class="name"><b>hasValueOnVisiblePage</b><a href="#hasValueOnVisiblePage"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>hasValueOnVisiblePage()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:122</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Determines if there&#39;s a value selected within the currently rendered items (used for multi-page selection).</p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="resizeStrategy"></a>
+                        <span class="name"><b>resizeStrategy</b><a href="#resizeStrategy"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>resizeStrategy(value)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:133</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>The desired resize strategy.</p>
+<p>FIXME: Currently only <code>ImmediateNeighbourHalt</code> is stable.</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="scrollCompensationWidth"></a>
+                        <span class="name"><b>scrollCompensationWidth</b><a href="#scrollCompensationWidth"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>scrollCompensationWidth()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="336" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:336</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Returns the scroll size, in order to compensate for the scrollbar.</p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showMultiPageSelectionInfo"></a>
+                        <span class="name"><b>showMultiPageSelectionInfo</b><a href="#showMultiPageSelectionInfo"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>showMultiPageSelectionInfo()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="350" class="link-to-prism">projects/angular/components/src/ui-grid/ui-grid.component.ts:350</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Determines if the multi-page selection row should be displayed.</p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  Optional,
+  Output,
+  QueryList,
+  SimpleChanges,
+  ViewEncapsulation,
+} from &#x27;@angular/core&#x27;;
+import { MatCheckboxChange } from &#x27;@angular/material/checkbox&#x27;;
+import { QueuedAnnouncer } from &#x27;@uipath/angular/a11y&#x27;;
+
+import range from &#x27;lodash-es/range&#x27;;
+import {
+  BehaviorSubject,
+  merge,
+  Observable,
+  Subject,
+} from &#x27;rxjs&#x27;;
+import {
+  debounceTime,
+  map,
+  skip,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
+} from &#x27;rxjs/operators&#x27;;
+
+import {
+  UiGridColumnDirective,
+  UiGridExpandedRowDirective,
+  UiGridRowActionDirective,
+  UiGridRowConfigDirective,
+} from &#x27;./body&#x27;;
+import { UiGridFooterDirective } from &#x27;./footer&#x27;;
+import { UiGridHeaderDirective } from &#x27;./header&#x27;;
+import {
+  DataManager,
+  FilterManager,
+  LiveAnnouncerManager,
+  PerformanceMonitor,
+  ResizeManager,
+  ResizeManagerFactory,
+  ResizeStrategy,
+  SelectionManager,
+  SortManager,
+} from &#x27;./managers&#x27;;
+import { ResizableGrid } from &#x27;./managers/resize/types&#x27;;
+import {
+  IGridDataEntry,
+  ISortModel,
+} from &#x27;./models&#x27;;
+import { UiGridIntl } from &#x27;./ui-grid.intl&#x27;;
+
+@Component({
+    selector: &#x27;ui-grid&#x27;,
+    templateUrl: &#x27;./ui-grid.component.html&#x27;,
+    styleUrls: [
+        &#x27;./ui-grid.component.scss&#x27;,
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+})
+export class UiGridComponent&lt;T extends IGridDataEntry&gt; extends ResizableGrid&lt;T&gt; implements AfterContentInit, OnChanges, OnDestroy {
+    /**
+     * The data list that needs to be rendered within the grid.
+     *
+     * NOTE: to have access to all functionality, we recommend that entities display in the grid implement the IGridDataEntry interface.
+     *
+     * @param value The list that needs to rendered.
+     */
+    @Input()
+    public set data(value: T[]) {
+        this._performanceMonitor.reset();
+        this.dataManager.update(value);
+    }
+
+    /**
+     * Marks the grid resizing state.
+     *
+     */
+    @HostBinding(&#x27;class.ui-grid-state-resizing&#x27;)
+    @Input()
+    public get isResizing() {
+        return this.resizeManager.isResizing;
+    }
+
+    /**
+     * Marks the grid projected state.
+     *
+     */
+    @HostBinding(&#x27;class.ui-grid-state-projected&#x27;)
+    @Input()
+    public isProjected: boolean;
+
+    /**
+     * Determines if all of the items are currently checked.
+     *
+     */
+    public get isEveryVisibleRowChecked() {
+        return this.dataManager.length &amp;&amp;
+            this.dataManager.every(row &#x3D;&gt; this.selectionManager.isSelected(row!));
+    }
+
+    /**
+     * Determines if there&#x27;s a value selected within the currently rendered items (used for multi-page selection).
+     *
+     */
+    public get hasValueOnVisiblePage() {
+        return this.dataManager.some(row &#x3D;&gt; this.selectionManager.isSelected(row!));
+    }
+
+    /**
+     * The desired resize strategy.
+     *
+     * FIXME: Currently only &#x60;ImmediateNeighbourHalt&#x60; is stable.
+     *
+     */
+    @Input()
+    public set resizeStrategy(value: ResizeStrategy) {
+        if (value &#x3D;&#x3D;&#x3D; this._resizeStrategy) { return; }
+
+        this._resizeStrategy &#x3D; value;
+
+        if (this.resizeManager !&#x3D; null) {
+            this.resizeManager.destroy();
+        }
+
+        this.resizeManager &#x3D; ResizeManagerFactory(this._resizeStrategy, this);
+    }
+
+    /**
+     * Marks the grid loading state.
+     *
+     */
+    @HostBinding(&#x27;class.ui-grid-state-loading&#x27;)
+    @Input()
+    public loading &#x3D; false;
+
+    /**
+     * Marks the grid enabled state.
+     *
+     */
+    @HostBinding(&#x27;class.ui-grid-state-disabled&#x27;)
+    @Input()
+    public disabled &#x3D; false;
+
+    /**
+     * Configure if the grid allows item selection.
+     *
+     */
+    @Input()
+    public selectable &#x3D; true;
+
+    /**
+     * Configure if the grid allows multi-page selection.
+     *
+     */
+    @HostBinding(&#x27;class.ui-grid-mode-multi-select&#x27;)
+    @Input()
+    public multiPageSelect &#x3D; false;
+
+    /**
+     * Configure if the grid is refreshable.
+     *
+     */
+    @Input()
+    public refreshable &#x3D; true;
+
+    /**
+     * Configure if &#x60;virtualScroll&#x60; is enabled.
+     *
+     */
+    @Input()
+    public virtualScroll &#x3D; false;
+
+    /**
+     * Provide a custom &#x60;noDataMessage&#x60;.
+     *
+     */
+    @Input()
+    public noDataMessage?: string;
+
+    /**
+     * Set the expanded entry.
+     *
+     */
+    @Input()
+    public expandedEntry?: T;
+
+    /**
+     * Configure if the expanded entry should replace the active row, or add a new row with the expanded view.
+     *
+     */
+    @Input()
+    public expandMode: &#x27;preserve&#x27; | &#x27;collapse&#x27; &#x3D; &#x27;collapse&#x27;;
+
+    /**
+     * Emits an event with the sort model when a column sort changes.
+     *
+     */
+    @Output()
+    public sortChange &#x3D; new EventEmitter&lt;ISortModel&lt;T&gt;&gt;();
+
+    /**
+     * Emits an event when user click the refresh button.
+     *
+     */
+    @Output()
+    public refresh &#x3D; new EventEmitter&lt;void&gt;();
+
+    /**
+     * Emits an event once the grid has been rendered.
+     *
+     */
+    @Output()
+    public rendered &#x3D; new EventEmitter&lt;void&gt;();
+
+    /**
+     * Emits the column definitions when their definition changes.
+     *
+     */
+    public columns$ &#x3D; new BehaviorSubject&lt;UiGridColumnDirective&lt;T&gt;[]&gt;([]);
+
+    /**
+     * Emits the visible column definitions when their definition changes.
+     *
+     */
+    public visible$ &#x3D; new BehaviorSubject&lt;UiGridColumnDirective&lt;T&gt;[]&gt;([]);
+
+    /**
+     * Row configuration directive reference.
+     *
+     * @ignore
+     */
+    @ContentChild(UiGridRowConfigDirective)
+    public rowConfig?: UiGridRowConfigDirective&lt;T&gt;;
+
+    /**
+     * Row action directive reference.
+     *
+     * @ignore
+     */
+    @ContentChild(UiGridRowActionDirective)
+    public actions?: UiGridRowActionDirective;
+
+    /**
+     * Footer directive reference.
+     *
+     * @ignore
+     */
+    @ContentChild(UiGridFooterDirective)
+    public footer?: UiGridFooterDirective;
+
+    /**
+     * Header directive reference.
+     *
+     * @ignore
+     */
+    @ContentChild(UiGridHeaderDirective)
+    public header?: UiGridHeaderDirective&lt;T&gt;;
+
+    /**
+     * Column directive reference list.
+     *
+     * @ignore
+     */
+    @ContentChildren(UiGridColumnDirective)
+    public columns!: QueryList&lt;UiGridColumnDirective&lt;T&gt;&gt;;
+
+    /**
+     * Expanded row template reference.
+     *
+     * @ignore
+     */
+    @ContentChild(UiGridExpandedRowDirective)
+    public expandedRow?: UiGridExpandedRowDirective;
+
+    /**
+     * Live announcer manager, used to emit notification via &#x60;aria-live&#x60;.
+     *
+     */
+    public liveAnnouncerManager?: LiveAnnouncerManager&lt;T&gt;;
+    /**
+     * Selection manager, used to manage grid selection states.
+     *
+     */
+    public selectionManager &#x3D; new SelectionManager&lt;T&gt;();
+    /**
+     * Data manager, used to optimize row rendering.
+     *
+     */
+    public dataManager &#x3D; new DataManager&lt;T&gt;();
+    /**
+     * Filter manager, used to manage filter state changes.
+     *
+     */
+    public filterManager &#x3D; new FilterManager&lt;T&gt;();
+    /**
+     * Sort manager, used to manage sort state changes.
+     *
+     */
+    public sortManager &#x3D; new SortManager&lt;T&gt;();
+    /**
+     * Resize manager, used to compute resized column states.
+     *
+     */
+    public resizeManager: ResizeManager&lt;T&gt;;
+    /**
+     * @ignore
+     */
+    public paintTime$: Observable&lt;string&gt;;
+    /**
+     * Emits with information wether filters are defined.
+     *
+     */
+    public isAnyFilterDefined$ &#x3D; new BehaviorSubject&lt;boolean&gt;(false);
+
+    /**
+     * Returns the scroll size, in order to compensate for the scrollbar.
+     *
+     */
+    public get scrollCompensationWidth() {
+        if (!this.virtualScroll) { return 0; }
+
+        const viewport: HTMLElement &#x3D; this._ref.nativeElement.querySelector(&#x27;.ui-grid-viewport&#x27;);
+
+        if (!viewport) { return 0; }
+
+        return viewport.offsetWidth - viewport.clientWidth;
+    }
+
+    /**
+     * Determines if the multi-page selection row should be displayed.
+     *
+     */
+    public get showMultiPageSelectionInfo() {
+        return this.multiPageSelect &amp;&amp;
+            !this.dataManager.pristine &amp;&amp;
+            (
+                this.dataManager.length ||
+                this.selectionManager.selected.length
+            );
+    }
+
+    protected _destroyed$ &#x3D; new Subject&lt;void&gt;();
+    protected _columnChanges$: Observable&lt;SimpleChanges&gt;;
+
+    private _resizeStrategy &#x3D; ResizeStrategy.ImmediateNeighbourHalt;
+    private _performanceMonitor: PerformanceMonitor;
+    private _configure$ &#x3D; new Subject();
+    private _isShiftPressed &#x3D; false;
+    private _lastCheckboxIdx &#x3D; 0;
+
+    /**
+     * @ignore
+     */
+    constructor(
+        @Optional()
+        public intl: UiGridIntl,
+        protected _ref: ElementRef,
+        protected _cd: ChangeDetectorRef,
+        private _zone: NgZone,
+        private _queuedAnnouncer: QueuedAnnouncer,
+    ) {
+        super();
+
+        this.isProjected &#x3D; this._ref.nativeElement.classList.contains(&#x27;ui-grid-state-responsive&#x27;);
+
+        this.intl &#x3D; intl || new UiGridIntl();
+
+        this._columnChanges$ &#x3D;
+            this.rendered.pipe(
+                switchMap(() &#x3D;&gt; merge(
+                    ...this.columns.map(column &#x3D;&gt; column.change$)),
+                ),
+                debounceTime(150),
+                tap(() &#x3D;&gt; this.isResizing &amp;&amp; this.resizeManager.stop()),
+            );
+
+        const sort$ &#x3D; this.sortManager
+            .sort$
+            .pipe(
+                tap(ev &#x3D;&gt; this.sortChange.emit(ev)),
+            );
+
+        const inputChanges$ &#x3D; merge(
+            this.intl.changes,
+            this._configure$,
+            this._columnChanges$,
+        ).pipe(
+            map(() &#x3D;&gt; this.columns.toArray()),
+            tap(columns &#x3D;&gt; this.filterManager.columns &#x3D; columns),
+            tap(columns &#x3D;&gt; this.sortManager.columns &#x3D; columns),
+            tap(columns &#x3D;&gt; this.columns$.next(columns)),
+            tap(columns &#x3D;&gt; this.isAnyFilterDefined$.next(
+                columns.some(c &#x3D;&gt; !!c.dropdown || !!c.searchableDropdown),
+            )),
+            map((columns) &#x3D;&gt; columns.filter(c &#x3D;&gt; !!c.visible)),
+            tap(visible &#x3D;&gt; this.visible$.next(visible)),
+        );
+
+        const data$ &#x3D; this.dataManager.data$.pipe(
+            tap(_ &#x3D;&gt; this._lastCheckboxIdx &#x3D; 0),
+        );
+
+        const selection$ &#x3D; this.selectionManager.changed$.pipe(
+            tap(_ &#x3D;&gt; this._cd.markForCheck()),
+        );
+
+        merge(
+            sort$,
+            inputChanges$,
+            data$,
+            selection$,
+        ).pipe(
+            takeUntil(this._destroyed$),
+        ).subscribe();
+
+        this.resizeManager &#x3D; ResizeManagerFactory(this._resizeStrategy, this);
+        this._performanceMonitor &#x3D; new PerformanceMonitor(_ref.nativeElement);
+        this.paintTime$ &#x3D; this._performanceMonitor.paintTime$;
+    }
+
+    /**
+     * @ignore
+     */
+    ngAfterContentInit() {
+        this.liveAnnouncerManager &#x3D; new LiveAnnouncerManager(
+            msg &#x3D;&gt; this._queuedAnnouncer.enqueue(msg),
+            this.intl,
+            this.dataManager.data$,
+            this.sortManager.sort$.pipe(skip(1)),
+            this.refresh,
+            this.footer &amp;&amp; this.footer.pageChange,
+        );
+
+        this._configure$.next();
+
+        this._zone.onStable.pipe(
+            take(1),
+        ).subscribe(() &#x3D;&gt; {
+            // ensure everything is painted once initial rendering is done
+            // a lot of templates loaded lazily, this is required
+            // to ensure everything is drawn once the grid is initalized
+            this._cd.markForCheck();
+
+            this.rendered.next();
+        });
+    }
+
+    /**
+     * @ignore
+     */
+    ngOnChanges(changes: SimpleChanges) {
+        const selectableChange &#x3D; changes[&#x27;selectable&#x27;];
+        if (
+            selectableChange &amp;&amp;
+            !selectableChange.firstChange &amp;&amp;
+            selectableChange.previousValue !&#x3D;&#x3D; selectableChange.currentValue
+        ) {
+            this.selectionManager.clear();
+            this._configure$.next();
+        }
+
+        const dataChange &#x3D; changes[&#x27;data&#x27;];
+
+        if (
+            dataChange &amp;&amp;
+            !dataChange.firstChange &amp;&amp;
+            !this.multiPageSelect
+        ) {
+            this._performanceMonitor.reset();
+            this.selectionManager.clear();
+        }
+    }
+
+    /**
+     * @ignore
+     */
+    ngOnDestroy() {
+        this.sortChange.complete();
+        this.rendered.complete();
+        this.columns$.complete();
+        this.isAnyFilterDefined$.complete();
+
+        this.dataManager.destroy();
+        this.resizeManager.destroy();
+        this.sortManager.destroy();
+        this.selectionManager.destroy();
+        this.filterManager.destroy();
+
+        if (this.liveAnnouncerManager) {
+            this.liveAnnouncerManager.destroy();
+        }
+
+        this._performanceMonitor.destroy();
+
+        this._destroyed$.next();
+        this._destroyed$.complete();
+        this._configure$.complete();
+    }
+
+    /**
+     * Marks if the &#x60;Shift&#x60; key is pressed.
+     */
+    @HostListener(&#x27;document:keydown.shift&#x27;, [&#x27;$event&#x27;])
+    @HostListener(&#x27;document:keyup.shift&#x27;, [&#x27;$event&#x27;])
+    public toggleShift(ev: MouseEvent) {
+        this._isShiftPressed &#x3D; ev.shiftKey;
+    }
+
+    /**
+     * Handles row selection, and reacts if the &#x60;Shift&#x60; key is pressed.
+     *
+     * @param idx The clicked row index.
+     * @param entry The entry associated to the selected row.
+     */
+    public handleSelection(idx: number, entry: T) {
+        if (!this._isShiftPressed) {
+            this._lastCheckboxIdx &#x3D; idx;
+            this.selectionManager.toggle(entry);
+            return;
+        }
+
+        const min &#x3D; Math.min(this._lastCheckboxIdx, idx);
+        const max &#x3D; Math.max(idx, this._lastCheckboxIdx);
+
+        this.selectionManager.deselect(...this.dataManager.data$.getValue());
+        /**
+         * If min &#x3D; max, the checkbox will be deselected as a consequence of clicking
+         * and will remain rendered as unchecked, even though we selected it
+         * to prevent this invalid render state, we check for changes after deselecting the rows
+         */
+
+        const rows &#x3D; range(min, max + 1)
+            .map(this.dataManager.get);
+        this.selectionManager.select(...rows);
+        this._cd.detectChanges();
+    }
+
+    /**
+     * Toggles the row selection state.
+     *
+     */
+    public toggle(ev: MatCheckboxChange) {
+        if (ev.checked) {
+            this.dataManager.forEach(row &#x3D;&gt; this.selectionManager.select(row!));
+        } else {
+            this._lastCheckboxIdx &#x3D; 0;
+            this.dataManager.forEach(row &#x3D;&gt; this.selectionManager.deselect(row!));
+        }
+    }
+
+    /**
+     * Determines the &#x60;checkbox&#x60; &#x60;aria-label&#x60;.
+     *
+     * @param [row] The row for which the label is computed.
+     */
+    public checkboxLabel(row?: T): string {
+        if (!row) {
+            return &#x60;${this.isEveryVisibleRowChecked ? &#x27;select&#x27; : &#x27;deselect&#x27;} all&#x60;;
+        }
+        return &#x60;${this.selectionManager.isSelected(row) ? &#x27;deselect&#x27; : &#x27;select&#x27;} row ${this.dataManager.indexOf(row)}&#x60;;
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">﻿&lt;ng-container *ngIf&#x3D;&quot;paintTime$ | async as paintTime&quot;&gt;
+    &lt;div class&#x3D;&quot;ui-grid-debug-information&quot;&gt;
+        Painted {{ dataManager?.length }} rows in {{ paintTime }}ms
+    &lt;/div&gt;
+&lt;/ng-container&gt;
+&lt;div *ngIf&#x3D;&quot;header?.actionButtons?.length ||
+            header?.search ||
+            (isAnyFilterDefined$ | async)&quot;
+     class&#x3D;&quot;ui-grid-filter-container&quot;&gt;
+    &lt;ng-container *ngIf&#x3D;&quot;!selectionManager.hasValue() ||
+                   !header?.actionButtons?.length&quot;
+                  class&#x3D;&quot;ui-grid-filter-options&quot;&gt;
+        &lt;ui-grid-search *ngIf&#x3D;&quot;header?.search&quot;
+                        [debounce]&#x3D;&quot;header!.searchDebounce&quot;
+                        [maxLength]&#x3D;&quot;header!.searchFilter&quot;
+                        [placeholder]&#x3D;&quot;intl.searchPlaceholder&quot;
+                        [searchTooltip]&#x3D;&quot;intl.searchTooltip&quot;
+                        [clearTooltip]&#x3D;&quot;intl.clearTooltip&quot;
+                        [tooltipDisabled]&#x3D;&quot;resizeManager.isResizing&quot;
+                        [value]&#x3D;&quot;header!.searchValue&quot;
+                        (searchChange)&#x3D;&quot;filterManager.searchChange($event, header!)&quot;
+                        class&#x3D;&quot;ui-grid-search ui-grid-filter-option&quot;&gt;
+        &lt;/ui-grid-search&gt;
+
+        &lt;ng-container *ngFor&#x3D;&quot;let column of columns$ | async&quot;&gt;
+            &lt;div *ngIf&#x3D;&quot;column.dropdown&quot;
+                 class&#x3D;&quot;ui-grid-dropdown-filter-container ui-grid-filter-option&quot;&gt;
+                &lt;button [matMenuTriggerFor]&#x3D;&quot;filterOptions&quot;
+                        [disabled]&#x3D;&quot;column.dropdown.disabled || disabled&quot;
+                        mat-button
+                        class&#x3D;&quot;ui-grid-dropdown-filter-button&quot;&gt;
+                    &lt;span class&#x3D;&quot;ui-grid-dropdown-filter-title&quot;&gt;{{ column.title }}: &lt;/span&gt;
+                    &lt;span class&#x3D;&quot;ui-grid-dropdown-filter-value&quot;&gt;
+                        {{ !!column.dropdown.value ? intl.translateDropdownOption(column.dropdown.value) : intl.noFilterPlaceholder }}
+                    &lt;/span&gt;
+                    &lt;mat-icon&gt;keyboard_arrow_down&lt;/mat-icon&gt;
+                &lt;/button&gt;
+                &lt;mat-menu #filterOptions&#x3D;&quot;matMenu&quot;
+                          [overlapTrigger]&#x3D;&quot;true&quot;&gt;
+                    &lt;button *ngIf&#x3D;&quot;column.dropdown.showAllOption&quot;
+                            [class.active]&#x3D;&quot;column.dropdown.value &#x3D;&#x3D; null&quot;
+                            (click)&#x3D;&quot;filterManager.dropdownUpdate(column!, undefined)&quot;
+                            mat-menu-item&gt;
+                        {{ intl.noFilterPlaceholder }}
+                    &lt;/button&gt;
+                    &lt;button *ngFor&#x3D;&quot;let dropdownItem of column.dropdown.items&quot;
+                            [class.active]&#x3D;&quot;column.dropdown.value?.label &#x3D;&#x3D;&#x3D; dropdownItem.label&quot;
+                            (click)&#x3D;&quot;filterManager.dropdownUpdate(column, dropdownItem)&quot;
+                            mat-menu-item&gt;
+                        {{ intl.translateDropdownOption(dropdownItem) }}
+                    &lt;/button&gt;
+                &lt;/mat-menu&gt;
+            &lt;/div&gt;
+
+            &lt;ng-container *ngIf&#x3D;&quot;column.searchableDropdown&quot;&gt;
+                &lt;ui-suggest #suggest
+                            [placeholder]&#x3D;&quot;column.title&quot;
+                            [defaultValue]&#x3D;&quot;column.searchableDropdown.noFilterPlaceholder || intl.noFilterPlaceholder&quot;
+                            [searchSourceFactory]&#x3D;&quot;column.searchableDropdown.searchSourceFactory&quot;
+                            [value]&#x3D;&quot;[column.searchableDropdown.value]&quot;
+                            [disabled]&#x3D;&quot;column.searchableDropdown.disabled || disabled&quot;
+                            [maxLength]&#x3D;&quot;64&quot;
+                            (selected)&#x3D;&quot;filterManager.searchableDropdownUpdate(column, $event)&quot;
+                            (opened)&#x3D;&quot;column.refetch &amp;&amp; suggest.fetch()&quot;
+                            width&#x3D;&quot;230px&quot;
+                            class&#x3D;&quot;ui-grid-search-filter ui-grid-filter-option&quot;&gt;
+                &lt;/ui-suggest&gt;
+            &lt;/ng-container&gt;
+        &lt;/ng-container&gt;
+    &lt;/ng-container&gt;
+    &lt;ng-container *ngIf&#x3D;&quot;selectionManager.hasValue()&quot;
+                  class&#x3D;&quot;ui-grid-action-buttons&quot;&gt;
+        &lt;ng-container *ngFor&#x3D;&quot;let button of header?.actionButtons&quot;&gt;
+            &lt;ng-container *ngIf&#x3D;&quot;button.visible&quot;&gt;
+                &lt;ng-container *ngTemplateOutlet&#x3D;&quot;button.html&quot;&gt;
+                &lt;/ng-container&gt;
+            &lt;/ng-container&gt;
+        &lt;/ng-container&gt;
+    &lt;/ng-container&gt;
+&lt;/div&gt;
+
+&lt;div class&#x3D;&quot;ui-grid-container&quot;&gt;
+    &lt;div class&#x3D;&quot;ui-grid-table-container&quot;&gt;
+        &lt;div *ngIf&#x3D;&quot;header?.mainButton?.visible&quot;
+             class&#x3D;&quot;ui-grid-action-button&quot;&gt;
+            &lt;ng-container *ngTemplateOutlet&#x3D;&quot;header?.mainButton?.html&quot;&gt;
+            &lt;/ng-container&gt;
+        &lt;/div&gt;
+
+        &lt;div [class.ui-grid-table-refreshable]&#x3D;&quot;refreshable&quot;
+             class&#x3D;&quot;ui-grid-table&quot;
+             role&#x3D;&quot;grid&quot;&gt;
+            &lt;div class&#x3D;&quot;ui-grid-header-row&quot;
+                 role&#x3D;&quot;row&quot;&gt;
+                &lt;div *ngIf&#x3D;&quot;selectable&quot;
+                     class&#x3D;&quot;ui-grid-header-cell ui-grid-checkbox-cell ui-grid-feature-cell&quot;
+                     role&#x3D;&quot;columnheader&quot;&gt;
+                    &lt;mat-checkbox (change)&#x3D;&quot;$event &amp;&amp; toggle($event)&quot;
+                                  [disabled]&#x3D;&quot;!dataManager.length&quot;
+                                  [checked]&#x3D;&quot;isEveryVisibleRowChecked&quot;
+                                  [indeterminate]&#x3D;&quot;hasValueOnVisiblePage &amp;&amp; !isEveryVisibleRowChecked&quot;
+                                  [aria-label]&#x3D;&quot;checkboxLabel()&quot;
+                                  tabindex&#x3D;&quot;0&quot;&gt;
+                    &lt;/mat-checkbox&gt;
+                &lt;/div&gt;
+
+                &lt;ng-container *ngIf&#x3D;&quot;multiPageSelect then multiPageSelectionHeaderCell&quot;&gt;
+                &lt;/ng-container&gt;
+
+                &lt;div *ngFor&#x3D;&quot;let column of visible$ | async; let last &#x3D; last&quot;
+                     [class.ui-grid-header-cell-sortable]&#x3D;&quot;column.sortable&quot;
+                     [class.ui-grid-resizeable]&#x3D;&quot;column.resizeable&quot;
+                     [class.ui-grid-state-resizing]&#x3D;&quot;column &#x3D;&#x3D;&#x3D; resizeManager.current?.column&quot;
+                     [attr.aria-sort]&#x3D;&quot;column.ariaSort&quot;
+                     [attr.data-property]&#x3D;&quot;column.property&quot;
+                     [attr.data-identifier]&#x3D;&quot;column.identifier&quot;
+                     [style.width.%]&#x3D;&quot;column.width&quot;
+                     (keyup.enter)&#x3D;&quot;sortManager.changeSort(column)&quot;
+                     (keyup.space)&#x3D;&quot;sortManager.changeSort(column)&quot;
+                     class&#x3D;&quot;ui-grid-header-cell&quot;
+                     role&#x3D;&quot;columnheader&quot;
+                     tabindex&#x3D;&quot;0&quot;&gt;
+                    &lt;div (click)&#x3D;&quot;sortManager.changeSort(column)&quot;
+                         class&#x3D;&quot;ui-grid-header-title&quot;&gt;
+                        &lt;p [class.ui-grid-header-title-filtered]&#x3D;&quot;column.dropdown?.value !&#x3D; null ||
+                                                                 column.searchableDropdown?.value !&#x3D; null&quot;
+                           [matTooltip]&#x3D;&quot;column.title&quot;
+                           [matTooltipDisabled]&#x3D;&quot;resizeManager.isResizing&quot;&gt;{{ column.title }}&lt;/p&gt;
+                        &lt;div *ngIf&#x3D;&quot;column.sortable&quot;
+                             [class.ui-grid-sort-indicator-asc]&#x3D;&quot;column.sort &#x3D;&#x3D;&#x3D; &#x27;asc&#x27;&quot;
+                             [class.ui-grid-sort-indicator-desc]&#x3D;&quot;column.sort &#x3D;&#x3D;&#x3D; &#x27;desc&#x27;&quot;
+                             class&#x3D;&quot;ui-grid-sort-indicator&quot;&gt;
+                            &lt;mat-icon class&#x3D;&quot;ui-grid-sort-icon&quot;&gt;
+                                &lt;svg xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;
+                                     viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+                                    &lt;path [attr.transform]&#x3D;&quot;column.sort &#x3D;&#x3D;&#x3D; &#x27;&#x27; ? &#x27;translate(0 -3)&#x27;: &#x27;&#x27;&quot;
+                                          class&#x3D;&quot;path-asc&quot;
+                                          d&#x3D;&quot;M12 11.8l2.5 2.5 1.1-1.1L12 9.7l-3.6 3.5 1.1 1.1z&quot; /&gt;
+                                    &lt;path [attr.transform]&#x3D;&quot;column.sort &#x3D;&#x3D;&#x3D; &#x27;&#x27; ? &#x27;translate(0 3)&#x27;: &#x27;&#x27;&quot;
+                                          class&#x3D;&quot;path-desc&quot;
+                                          d&#x3D;&quot;M12 12.2L9.5 9.7l-1.1 1.1 3.6 3.5 3.6-3.5-1.1-1.1z&quot; /&gt;
+                                &lt;/svg&gt;
+                            &lt;/mat-icon&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+
+                    &lt;div *ngIf&#x3D;&quot;column.resizeable &amp;&amp; !last&quot;
+                         [class.is-resizing]&#x3D;&quot;column.isResizing&quot;
+                         (mousedown)&#x3D;&quot;resizeManager.startResize($event, column)&quot;
+                         class&#x3D;&quot;ui-grid-resize-anchor&quot;&gt;
+                        &lt;mat-icon&gt;
+                            &lt;svg xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;
+                                 width&#x3D;&quot;24&quot;
+                                 height&#x3D;&quot;24&quot;&gt;
+                                &lt;path
+                                      d&#x3D;&quot;M11 18l-2 2-2-2 2-2 2 2zm-2-8l-2 2 2 2 2-2-2-2zm0-6L7 6l2 2 2-2-2-2zm6 4l2-2-2-2-2 2 2 2zm0 2l-2 2 2 2 2-2-2-2zm0 6l-2 2 2 2 2-2-2-2z&quot; /&gt;
+                            &lt;/svg&gt;
+                        &lt;/mat-icon&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;div *ngIf&#x3D;&quot;virtualScroll&quot;
+                     [style.marginLeft.px]&#x3D;&quot;scrollCompensationWidth&quot;
+                     class&#x3D;&quot;ui-grid-header-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell&quot;&gt;
+                &lt;/div&gt;
+                &lt;div *ngIf&#x3D;&quot;refreshable&quot;
+                     class&#x3D;&quot;ui-grid-header-cell ui-grid-refresh-cell ui-grid-feature-cell&quot;
+                     role&#x3D;&quot;columnheader&quot;&gt;
+                    &lt;button [matTooltip]&#x3D;&quot;intl.refreshTooltip&quot;
+                            [matTooltipDisabled]&#x3D;&quot;resizeManager.isResizing&quot;
+                            [disabled]&#x3D;&quot;disabled&quot;
+                            (click)&#x3D;&quot;refresh.emit()&quot;
+                            mat-icon-button
+                            class&#x3D;&quot;grid-refresh-button&quot;&gt;
+                        &lt;mat-icon&gt;refresh&lt;/mat-icon&gt;
+                    &lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div *ngIf&#x3D;&quot;!!actions&quot;
+                     class&#x3D;&quot;ui-grid-header-cell ui-grid-action-cell ui-grid-feature-cell&quot;&gt;
+                &lt;/div&gt;
+
+                &lt;mat-progress-bar *ngIf&#x3D;&quot;loading&quot;
+                                  mode&#x3D;&quot;query&quot;
+                                  class&#x3D;&quot;ui-grid-loader&quot;&gt;
+                &lt;/mat-progress-bar&gt;
+            &lt;/div&gt;
+
+            &lt;ng-container *ngIf&#x3D;&quot;multiPageSelect then multiPageSelectionRow&quot;&gt;
+            &lt;/ng-container&gt;
+
+            &lt;ng-container *ngIf&#x3D;&quot;dataManager?.length; else noData&quot;&gt;
+                &lt;ng-container *ngIf&#x3D;&quot;virtualScroll&quot;&gt;
+                    &lt;cdk-virtual-scroll-viewport [total]&#x3D;&quot;dataManager.length&quot;
+                                                 autosize
+                                                 uiVirtualScrollViewportResize
+                                                 class&#x3D;&quot;ui-grid-viewport&quot;&gt;
+                        &lt;ng-container *cdkVirtualFor&#x3D;&quot;let row of dataManager.data$ | async;
+                                                      let last &#x3D; last;
+                                                      let index &#x3D; index;
+                                                      trackBy: dataManager.hashTrack&quot;&gt;
+                            &lt;ng-container *ngTemplateOutlet&#x3D;&quot;rowTemplate; context: {
+                                    data: row,
+                                    index: index,
+                                    expanded: expandedEntry,
+                                    last: last
+                                }&quot;&gt;
+                            &lt;/ng-container&gt;
+                        &lt;/ng-container&gt;
+                    &lt;/cdk-virtual-scroll-viewport&gt;
+                &lt;/ng-container&gt;
+
+                &lt;ng-container *ngIf&#x3D;&quot;!virtualScroll&quot;&gt;
+                    &lt;ng-container *ngFor&#x3D;&quot;let row of dataManager.data$ | async;
+                                          let index &#x3D; index;
+                                          let last &#x3D; last;&quot;&gt;
+                        &lt;ng-container *ngTemplateOutlet&#x3D;&quot;rowTemplate; context: {
+                                data: row,
+                                index: index,
+                                expanded: expandedEntry,
+                                last: last
+                            }&quot;&gt;
+                        &lt;/ng-container&gt;
+                    &lt;/ng-container&gt;
+                &lt;/ng-container&gt;
+            &lt;/ng-container&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;ui-grid-footer-container&quot;&gt;
+        &lt;mat-paginator *ngIf&#x3D;&quot;!!footer&quot;
+                       [pageIndex]&#x3D;&quot;footer.state.pageIndex&quot;
+                       [pageSize]&#x3D;&quot;footer.state.pageSize&quot;
+                       [pageSizeOptions]&#x3D;&quot;footer.pageSizes&quot;
+                       [length]&#x3D;&quot;footer.length&quot;
+                       [disabled]&#x3D;&quot;disabled&quot;
+                       [showFirstLastButtons]&#x3D;&quot;true&quot;
+                       [hidePageSize]&#x3D;&quot;footer.hidePageSize&quot;
+                       (page)&#x3D;&quot;footer.pageChange?.next($event)&quot;&gt;
+        &lt;/mat-paginator&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;ng-template #rowTemplate
+             let-row&#x3D;&quot;data&quot;
+             let-expanded&#x3D;&quot;expanded&quot;
+             let-last&#x3D;&quot;last&quot;
+             let-index&#x3D;&quot;index&quot;&gt;
+    &lt;div cdkMonitorSubtreeFocus
+         class&#x3D;&quot;ui-grid-row&quot;
+         *ngIf&#x3D;&quot;expanded?.id !&#x3D;&#x3D; row?.id || expandMode &#x3D;&#x3D;&#x3D; &#x27;preserve&#x27;&quot;
+         [class.ui-grid-row-state-expanded]&#x3D;&quot;expanded?.id &#x3D;&#x3D;&#x3D; row?.id&quot;
+         [class.ui-grid-border-none]&#x3D;&quot;!footer &amp;&amp; last&quot;
+         [ngClass]&#x3D;&quot;rowConfig?.ngClassFn(row)&quot;
+         [tabIndex]&#x3D;&quot;0&quot;
+         [attr.data-row-index]&#x3D;&quot;index&quot;
+         role&#x3D;&quot;row&quot;&gt;
+
+        &lt;div *ngIf&#x3D;&quot;isProjected&quot;
+             class&#x3D;&quot;ui-grid-cell ui-grid-feature-cell ui-grid-mobile-feature-cell&quot;
+             role&#x3D;&quot;gridcell&quot;&gt;
+            &lt;div *ngIf&#x3D;&quot;selectable&quot;
+                 class&#x3D;&quot;ui-grid-mobile-feature-container ui-grid-mobile-refresh-container&quot;&gt;
+                &lt;mat-checkbox (click)&#x3D;&quot;$event.stopPropagation()&quot;
+                              (change)&#x3D;&quot;handleSelection(index, row)&quot;
+                              [checked]&#x3D;&quot;selectionManager.isSelected(row)&quot;
+                              [aria-label]&#x3D;&quot;checkboxLabel(row)&quot;
+                              tabindex&#x3D;&quot;0&quot;&gt;
+                &lt;/mat-checkbox&gt;
+            &lt;/div&gt;
+            &lt;div *ngIf&#x3D;&quot;!!actions&quot;
+                 class&#x3D;&quot;ui-grid-mobile-feature-container ui-grid-mobile-action-container&quot;&gt;
+                &lt;ng-container *ngTemplateOutlet&#x3D;&quot;actions.html; context: {
+                    data: row,
+                    index: index
+                }&quot;&gt;
+                &lt;/ng-container&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div *ngIf&#x3D;&quot;!isProjected &amp;&amp;
+                    selectable&quot;
+             class&#x3D;&quot;ui-grid-cell ui-grid-checkbox-cell ui-grid-feature-cell&quot;
+             role&#x3D;&quot;gridcell&quot;&gt;
+            &lt;mat-checkbox (click)&#x3D;&quot;$event.stopPropagation()&quot;
+                          (change)&#x3D;&quot;handleSelection(index, row)&quot;
+                          [checked]&#x3D;&quot;selectionManager.isSelected(row)&quot;
+                          [aria-label]&#x3D;&quot;checkboxLabel(row)&quot;
+                          tabindex&#x3D;&quot;0&quot;&gt;
+            &lt;/mat-checkbox&gt;
+        &lt;/div&gt;
+
+        &lt;ng-container *ngFor&#x3D;&quot;let column of visible$ | async&quot;&gt;
+            &lt;div [class.ui-grid-primary]&#x3D;&quot;column.primary&quot;
+                 [class.ui-grid-secondary]&#x3D;&quot;!column.primary&quot;
+                 [class.ui-grid-state-resizing]&#x3D;&quot;column &#x3D;&#x3D;&#x3D; resizeManager.current?.column&quot;
+                 [attr.data-property]&#x3D;&quot;column.property&quot;
+                 [attr.data-identifier]&#x3D;&quot;column.identifier&quot;
+                 [style.width.%]&#x3D;&quot;column.width&quot;
+                 class&#x3D;&quot;ui-grid-cell&quot;
+                 role&#x3D;&quot;gridcell&quot;&gt;
+                &lt;div *ngIf&#x3D;&quot;isProjected&quot;
+                     [matTooltip]&#x3D;&quot;column.title&quot;
+                     [matTooltipDisabled]&#x3D;&quot;resizeManager.isResizing&quot;
+                     class&#x3D;&quot;ui-grid-cell-mobile-title&quot;&gt;{{column.title}}&lt;/div&gt;
+                &lt;div class&#x3D;&quot;ui-grid-cell-content&quot;&gt;
+                    &lt;ng-container *ngTemplateOutlet&#x3D;&quot;column.html || textCellTemplate; context: {
+                            data: row,
+                            index: index,
+                            property: column.property
+                        }&quot;&gt;
+                    &lt;/ng-container&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/ng-container&gt;
+
+        &lt;div *ngIf&#x3D;&quot;virtualScroll&quot;
+             class&#x3D;&quot;ui-grid-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell&quot;&gt;
+        &lt;/div&gt;
+
+        &lt;div *ngIf&#x3D;&quot;!isProjected &amp;&amp;
+                    refreshable&quot;
+             class&#x3D;&quot;ui-grid-cell ui-grid-refresh-cell ui-grid-feature-cell&quot;&gt;
+        &lt;/div&gt;
+
+        &lt;div *ngIf&#x3D;&quot;!isProjected &amp;&amp;
+                    !!actions&quot;
+             class&#x3D;&quot;ui-grid-cell ui-grid-action-cell ui-grid-feature-cell&quot;&gt;
+            &lt;div class&#x3D;&quot;ui-grid-action-cell-container&quot;&gt;
+                &lt;ng-container *ngTemplateOutlet&#x3D;&quot;actions.html; context: {
+                        data: row,
+                        index: index
+                    }&quot;&gt;
+                &lt;/ng-container&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div *ngIf&#x3D;&quot;expanded?.id &#x3D;&#x3D;&#x3D; row?.id&quot;
+         [class.ui-grid-row-state-expanded]&#x3D;&quot;expanded?.id &#x3D;&#x3D;&#x3D; row?.id&quot;
+         [class.ui-grid-border-none]&#x3D;&quot;!footer &amp;&amp; last&quot;
+         role&#x3D;&quot;row&quot;&gt;
+        &lt;div class&#x3D;&quot;ui-grid-expanded-row-container&quot;&gt;
+            &lt;ng-container *ngTemplateOutlet&#x3D;&quot;expandedRow!.html; context: {
+                data: row,
+                index: index
+            }&quot;&gt;
+            &lt;/ng-container&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #textCellTemplate
+             let-row&#x3D;&quot;data&quot;
+             let-property&#x3D;&quot;property&quot;&gt;
+    &lt;p [matTooltip]&#x3D;&quot;dataManager.getProperty(row, property)&quot;
+       [matTooltipDisabled]&#x3D;&quot;resizeManager.isResizing&quot;&gt;{{ dataManager.getProperty(row, property) }}&lt;/p&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #noData&gt;
+    &lt;div *ngIf&#x3D;&quot;!dataManager.pristine&quot;
+         class&#x3D;&quot;ui-grid-row ui-grid-no-data-container&quot;
+         [class.ui-grid-border-none]&#x3D;&quot;!footer&quot;&gt;
+        &lt;mat-icon&gt;list&lt;/mat-icon&gt;
+        &lt;p&gt;{{noDataMessage || intl.noDataMessage}}&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #multiPageSelectionRow&gt;
+    &lt;div *ngIf&#x3D;&quot;!isProjected &amp;&amp;
+                showMultiPageSelectionInfo&quot;
+         class&#x3D;&quot;ui-grid-row ui-grid-selection-info-container&quot;&gt;
+        &lt;ng-container *ngTemplateOutlet&#x3D;&quot;multiPageSelectionInfo&quot;&gt;&lt;/ng-container&gt;
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #multiPageSelectionHeaderCell&gt;
+    &lt;div *ngIf&#x3D;&quot;isProjected &amp;&amp;
+                showMultiPageSelectionInfo&quot;
+         class&#x3D;&quot;ui-grid-header-cell ui-grid-feature-cell ui-grid-selection-info-container&quot;&gt;
+        &lt;ng-container *ngTemplateOutlet&#x3D;&quot;multiPageSelectionInfo&quot;&gt;&lt;/ng-container&gt;
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #multiPageSelectionInfo&gt;
+    &lt;ng-container *ngIf&#x3D;&quot;selectionManager.selected.length; else noSelectionTmpl&quot;&gt;
+        &lt;button [matTooltip]&#x3D;&quot;intl.clearSelectionTooltip&quot;
+                [matTooltipDisabled]&#x3D;&quot;resizeManager.isResizing&quot;
+                (click)&#x3D;&quot;selectionManager.clear()&quot;
+                mat-icon-button
+                color&#x3D;&quot;warn&quot;&gt;
+            &lt;mat-icon&gt;clear&lt;/mat-icon&gt;
+        &lt;/button&gt;
+        &lt;span class&#x3D;&quot;ui-grid-selection-info-message&quot;&gt;
+            {{ intl.translateMultiPageSelectionCount(selectionManager.selected.length) }}
+        &lt;/span&gt;
+    &lt;/ng-container&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #noSelectionTmpl&gt;
+    &lt;mat-icon [matTooltip]&#x3D;&quot;intl.multiPageSelectionInfoTooltip&quot;
+              [matTooltipDisabled]&#x3D;&quot;resizeManager.isResizing&quot;
+              class&#x3D;&quot;ui-grid-selection-info-icon&quot;
+              tabindex&#x3D;&quot;0&quot;&gt;info&lt;/mat-icon&gt;
+    &lt;span class&#x3D;&quot;ui-grid-selection-info-message&quot;&gt;
+        {{ intl.noSelectionMessage }}
+    &lt;/span&gt;
+&lt;/ng-template&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./ui-grid.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;../styles/ellipse&quot;;
+
+ui-grid {
+    $ui-grid-header-row-height: 56px;
+    $ui-grid-row-height: 48px;
+    $ui-grid-row-horizontal-padding: 24px;
+    $ui-feature-cell-width: 50px;
+    $ui-row-border-width: 1px;
+    $ui-header-resize-handle-width: 15px;
+    $ui-grid-default-spacing: 5px;
+    $ui-border-radius: 4px;
+    $ui-grid-button-size: 40px;
+    $ui-grid-main-font-size: 13.5px;
+    $ui-grid-secondary-font-size: 12px;
+
+    position: relative;
+    display: block;
+
+    &amp;.ui-grid-mode-multi-select {
+        .ui-grid-table {
+            cdk-virtual-scroll-viewport.ui-grid-viewport {
+                min-height: $ui-grid-row-height * 3;
+                height: calc(100vh - 300px - #{$ui-grid-row-height});
+
+                .cdk-virtual-scroll-content-wrapper {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .ui-grid-table {
+        cdk-virtual-scroll-viewport.ui-grid-viewport {
+            min-height: $ui-grid-row-height * 3;
+            height: calc(100vh - 300px);
+
+            .cdk-virtual-scroll-content-wrapper {
+                width: 100%;
+            }
+        }
+    }
+
+    .ui-grid-debug-information {
+        position: absolute;
+        text-align: right;
+        bottom: -30px;
+        width: 400px;
+        right: 0;
+    }
+
+    &amp;.ui-grid-state-projected {
+        .ui-grid-action-button {
+            right: 80px;
+        }
+
+        .ui-grid {
+            &amp;-table {
+                $ui-grid-projected-spacing-lr: 24px;
+                $ui-grid-projected-spacing-tb: 8px;
+
+                .ui-grid-cell-mobile-title {
+                    width: 115px;
+                    display: inline-block;
+                    font-weight: bold;
+                    text-align: left;
+                }
+
+                .ui-grid-header-cell {
+                    &amp;:not(.ui-grid-refresh-cell):not(.ui-grid-checkbox-cell):not(.ui-grid-selection-info-container) {
+                        display: none;
+                    }
+
+                    &amp;.ui-grid-refresh-cell {
+                        justify-content: flex-end;
+                        margin-right: $ui-grid-projected-spacing-lr;
+                    }
+
+                    &amp;.ui-grid-checkbox-cell {
+                        overflow: visible;
+                        justify-content: flex-start;
+                        margin-left: $ui-grid-projected-spacing-lr + $ui-grid-default-spacing;
+                    }
+                }
+
+                .ui-grid-row {
+                    height: auto;
+                    flex-direction: column;
+                    align-items: start;
+                    padding: $ui-grid-projected-spacing-tb $ui-grid-projected-spacing-lr;
+                }
+
+                .ui-grid-cell.ui-grid-mobile-feature-cell {
+                    margin-left: $ui-grid-default-spacing;
+                    overflow: visible;
+                    justify-content: flex-start;
+
+                    .ui-grid-mobile-feature-container {
+                        margin: 0 $ui-grid-default-spacing;
+
+                        &amp;:first-of-type {
+                            margin-left: 0;
+                        }
+                    }
+                }
+
+                .ui-grid-cell {
+                    justify-content: space-between;
+                    padding: 0;
+                    width: 100% !important;
+                }
+            }
+        }
+
+        .mat-paginator-container {
+            justify-content: center;
+        }
+    }
+    .mat-paginator-container {
+        padding: 0 $ui-grid-default-spacing;
+    }
+
+    &amp;.ui-grid-state-resizing {
+        .ui-grid-header-row {
+            user-select: none;
+        }
+    }
+
+    .ui-grid {
+        &amp;-primary,
+        &amp;-header-cell {
+            font-weight: 500;
+        }
+
+        &amp;-filter-container {
+            padding: 0 0 $ui-grid-default-spacing $ui-grid-default-spacing;
+            min-height: $ui-grid-header-row-height;
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        &amp;-container {
+            border-radius: $ui-border-radius;
+
+            .mat-paginator {
+                &amp;-container {
+                    min-height: $ui-grid-header-row-height - 1;
+                }
+
+                .mat-paginator-page-size-label,
+                .mat-paginator-range-label,
+                .mat-select-value {
+                    font-size: $ui-grid-secondary-font-size;
+                    line-height: $ui-grid-secondary-font-size;
+                }
+
+                .mat-form-field-infix {
+                    padding: 0;
+
+                    .mat-select {
+                        padding: 0.4375em 0;
+                    }
+                }
+            }
+        }
+
+        &amp;-table-container {
+            position: relative;
+        }
+
+        &amp;-no-data-container {
+            padding: $ui-grid-default-spacing;
+
+            mat-icon {
+                font-size: 32px;
+                width: 32px;
+                height: 32px;
+                margin-left: $ui-grid-default-spacing;
+            }
+
+            p {
+                margin-left: $ui-grid-default-spacing;
+            }
+        }
+
+        &amp;-selection-info-container {
+            button.mat-icon-button,
+            .ui-grid-selection-info-icon {
+                margin-left: 5px;
+            }
+            .ui-grid-selection-info-message {
+                margin-left: $ui-grid-default-spacing * 2;
+            }
+
+            .ui-grid-selection-info-icon {
+                // simulate same size as button
+                outline: none;
+                padding: 8px;
+            }
+
+            &amp;.ui-grid-header-cell {
+                width: 100%;
+                display: flex;
+                justify-content: flex-start;
+                flex-direction: row-reverse;
+                margin-right: $ui-grid-button-size + $ui-grid-row-horizontal-padding;
+            }
+        }
+
+        &amp;-resize-anchor {
+            height: 100%;
+            width: $ui-header-resize-handle-width + $ui-grid-default-spacing;
+            cursor: col-resize;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+
+            mat-icon {
+                margin-right: $ui-grid-default-spacing;
+            }
+        }
+
+        &amp;-dropdown-filter {
+            &amp;-button {
+                text-transform: none !important;
+                font-size: 0.8rem;
+                height: $ui-grid-button-size;
+                line-height: normal;
+                padding-right: 6px;
+
+                .ui-grid-dropdown-filter-title {
+                    font-weight: 700;
+                }
+            }
+        }
+
+        &amp;-filter-option {
+            margin-right: $ui-grid-default-spacing * 2;
+
+            &amp;.ui-grid-search {
+                $search-padding: $ui-grid-default-spacing;
+                bottom: $search-padding;
+                position: relative;
+                height: $ui-grid-header-row-height - $search-padding - 1px;
+            }
+
+            &amp;:last-child {
+                margin-right: 0;
+            }
+        }
+
+        &amp;-table {
+            display: block;
+
+            .ui-grid-header-title {
+                width: calc(100% - #{$ui-header-resize-handle-width + $ui-grid-default-spacing});
+                height: 100%;
+                display: inline-flex;
+                align-items: center;
+
+                p {
+                    @extend %ellipse;
+                }
+            }
+
+            .ui-grid-cell-content {
+                @extend %ellipse;
+
+                &gt; * {
+                    @extend %ellipse;
+                }
+            }
+
+            .ui-grid-header-row {
+                font-size: $ui-grid-secondary-font-size;
+                line-height: $ui-grid-secondary-font-size;
+                text-transform: uppercase;
+                height: $ui-grid-header-row-height;
+                position: relative;
+
+                mat-progress-bar {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                }
+            }
+
+            .ui-grid-expanded-row-container {
+                width: 100%;
+                height: 100%;
+                padding: $ui-grid-default-spacing;
+            }
+
+            .ui-grid-row {
+                height: $ui-grid-row-height;
+                font-size: $ui-grid-main-font-size;
+
+                &amp;.ui-grid-row-state-expanded {
+                    height: auto;
+                }
+            }
+
+            .ui-grid-header-row,
+            .ui-grid-row {
+                display: flex;
+                align-items: center;
+                border-width: 0;
+                box-sizing: border-box;
+
+                &amp;:not(.ui-grid-border-none) {
+                    border-style: solid;
+                    border-bottom-width: 1px;
+                }
+            }
+
+            &amp;:not(.ui-grid-table-refreshable) {
+                .ui-grid-action-cell {
+                    min-width: $ui-feature-cell-width;
+                }
+            }
+
+            .ui-grid-cell,
+            .ui-grid-header-cell {
+                flex: 1;
+                flex-basis: auto;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+                word-wrap: break-word;
+
+                &amp;:not(.ui-grid-feature-cell):not(:first-child) {
+                    box-sizing: border-box;
+                    padding: 0 0 0 $ui-grid-default-spacing;
+                }
+
+                &amp;:not(.ui-grid-feature-cell):first-of-type {
+                    padding-left: $ui-grid-row-horizontal-padding;
+
+                    [dir&#x3D;&quot;rtl&quot;] &amp; {
+                        padding-left: 0;
+                        padding-right: $ui-grid-row-horizontal-padding;
+                    }
+                }
+
+                &amp;:not(.ui-grid-feature-cell):last-of-type {
+                    padding-right: $ui-grid-row-horizontal-padding;
+
+                    [dir&#x3D;&quot;rtl&quot;] &amp; {
+                        padding-right: 0;
+                        padding-left: $ui-grid-row-horizontal-padding;
+                    }
+                }
+
+                &amp;.ui-grid-refresh-cell,
+                &amp;.ui-grid-checkbox-cell {
+                    min-width: $ui-feature-cell-width;
+                    justify-content: center;
+                }
+
+                &amp;.ui-grid-action-cell {
+                    position: relative;
+                    width: 0;
+                    padding: 0;
+                    overflow: visible;
+
+                    &gt; div {
+                        display: inline-flex;
+                        justify-content: flex-end;
+                        align-items: center;
+                        position: absolute;
+                        height: $ui-grid-row-height - $ui-row-border-width;
+                        min-width: $ui-feature-cell-width;
+                        padding-right: $ui-grid-default-spacing;
+                        right: 0;
+                        bottom: 0;
+                    }
+                }
+            }
+
+            .ui-grid-sort {
+                &amp;-indicator {
+                    height: $ui-grid-header-row-height - $ui-row-border-width;
+                    align-items: center;
+                    display: flex;
+
+                    &amp;-asc { //sorted asc
+                        .path-desc { // desc path
+                            opacity: 0;
+                        }
+                    }
+                    &amp;-desc { //sorted desc
+                        .path-asc { // asc path
+                            opacity: 0;
+                        }
+                    }
+                }
+            }
+
+            .ui-grid-header-cell {
+                height: $ui-grid-header-row-height - $ui-row-border-width;
+            }
+
+            .ui-grid-cell {
+                height: $ui-grid-row-height - $ui-row-border-width;
+            }
+
+            .ui-grid-header-cell-sortable {
+                cursor: pointer;
+            }
+        }
+
+        &amp;-action-button {
+            position: absolute;
+            right: $ui-grid-button-size;
+            top: -21px;
+            z-index: 2;
+        }
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div>﻿<ng-container *ngIf="paintTime$ | async as paintTime">    <div class="ui-grid-debug-information">        Painted {{ dataManager?.length }} rows in {{ paintTime }}ms    </div></ng-container><div *ngIf="header?.actionButtons?.length ||            header?.search ||            (isAnyFilterDefined$ | async)"     class="ui-grid-filter-container">    <ng-container *ngIf="!selectionManager.hasValue() ||                   !header?.actionButtons?.length"                  class="ui-grid-filter-options">        <ui-grid-search *ngIf="header?.search"                        [debounce]="header!.searchDebounce"                        [maxLength]="header!.searchFilter"                        [placeholder]="intl.searchPlaceholder"                        [searchTooltip]="intl.searchTooltip"                        [clearTooltip]="intl.clearTooltip"                        [tooltipDisabled]="resizeManager.isResizing"                        [value]="header!.searchValue"                        (searchChange)="filterManager.searchChange($event, header!)"                        class="ui-grid-search ui-grid-filter-option">        </ui-grid-search>        <ng-container *ngFor="let column of columns$ | async">            <div *ngIf="column.dropdown"                 class="ui-grid-dropdown-filter-container ui-grid-filter-option">                <button [matMenuTriggerFor]="filterOptions"                        [disabled]="column.dropdown.disabled || disabled"                        mat-button                        class="ui-grid-dropdown-filter-button">                    <span class="ui-grid-dropdown-filter-title">{{ column.title }}: </span>                    <span class="ui-grid-dropdown-filter-value">                        {{ !!column.dropdown.value ? intl.translateDropdownOption(column.dropdown.value) : intl.noFilterPlaceholder }}                    </span>                    <mat-icon>keyboard_arrow_down</mat-icon>                </button>                <mat-menu #filterOptions="matMenu"                          [overlapTrigger]="true">                    <button *ngIf="column.dropdown.showAllOption"                            [class.active]="column.dropdown.value == null"                            (click)="filterManager.dropdownUpdate(column!, undefined)"                            mat-menu-item>                        {{ intl.noFilterPlaceholder }}                    </button>                    <button *ngFor="let dropdownItem of column.dropdown.items"                            [class.active]="column.dropdown.value?.label === dropdownItem.label"                            (click)="filterManager.dropdownUpdate(column, dropdownItem)"                            mat-menu-item>                        {{ intl.translateDropdownOption(dropdownItem) }}                    </button>                </mat-menu>            </div>            <ng-container *ngIf="column.searchableDropdown">                <ui-suggest #suggest                            [placeholder]="column.title"                            [defaultValue]="column.searchableDropdown.noFilterPlaceholder || intl.noFilterPlaceholder"                            [searchSourceFactory]="column.searchableDropdown.searchSourceFactory"                            [value]="[column.searchableDropdown.value]"                            [disabled]="column.searchableDropdown.disabled || disabled"                            [maxLength]="64"                            (selected)="filterManager.searchableDropdownUpdate(column, $event)"                            (opened)="column.refetch && suggest.fetch()"                            width="230px"                            class="ui-grid-search-filter ui-grid-filter-option">                </ui-suggest>            </ng-container>        </ng-container>    </ng-container>    <ng-container *ngIf="selectionManager.hasValue()"                  class="ui-grid-action-buttons">        <ng-container *ngFor="let button of header?.actionButtons">            <ng-container *ngIf="button.visible">                <ng-container *ngTemplateOutlet="button.html">                </ng-container>            </ng-container>        </ng-container>    </ng-container></div><div class="ui-grid-container">    <div class="ui-grid-table-container">        <div *ngIf="header?.mainButton?.visible"             class="ui-grid-action-button">            <ng-container *ngTemplateOutlet="header?.mainButton?.html">            </ng-container>        </div>        <div [class.ui-grid-table-refreshable]="refreshable"             class="ui-grid-table"             role="grid">            <div class="ui-grid-header-row"                 role="row">                <div *ngIf="selectable"                     class="ui-grid-header-cell ui-grid-checkbox-cell ui-grid-feature-cell"                     role="columnheader">                    <mat-checkbox (change)="$event && toggle($event)"                                  [disabled]="!dataManager.length"                                  [checked]="isEveryVisibleRowChecked"                                  [indeterminate]="hasValueOnVisiblePage && !isEveryVisibleRowChecked"                                  [aria-label]="checkboxLabel()"                                  tabindex="0">                    </mat-checkbox>                </div>                <ng-container *ngIf="multiPageSelect then multiPageSelectionHeaderCell">                </ng-container>                <div *ngFor="let column of visible$ | async; let last = last"                     [class.ui-grid-header-cell-sortable]="column.sortable"                     [class.ui-grid-resizeable]="column.resizeable"                     [class.ui-grid-state-resizing]="column === resizeManager.current?.column"                     [attr.aria-sort]="column.ariaSort"                     [attr.data-property]="column.property"                     [attr.data-identifier]="column.identifier"                     [style.width.%]="column.width"                     (keyup.enter)="sortManager.changeSort(column)"                     (keyup.space)="sortManager.changeSort(column)"                     class="ui-grid-header-cell"                     role="columnheader"                     tabindex="0">                    <div (click)="sortManager.changeSort(column)"                         class="ui-grid-header-title">                        <p [class.ui-grid-header-title-filtered]="column.dropdown?.value != null ||                                                                 column.searchableDropdown?.value != null"                           [matTooltip]="column.title"                           [matTooltipDisabled]="resizeManager.isResizing">{{ column.title }}</p>                        <div *ngIf="column.sortable"                             [class.ui-grid-sort-indicator-asc]="column.sort === \'asc\'"                             [class.ui-grid-sort-indicator-desc]="column.sort === \'desc\'"                             class="ui-grid-sort-indicator">                            <mat-icon class="ui-grid-sort-icon">                                <svg xmlns="http://www.w3.org/2000/svg"                                     viewBox="0 0 24 24">                                    <path [attr.transform]="column.sort === \'\' ? \'translate(0 -3)\': \'\'"                                          class="path-asc"                                          d="M12 11.8l2.5 2.5 1.1-1.1L12 9.7l-3.6 3.5 1.1 1.1z" />                                    <path [attr.transform]="column.sort === \'\' ? \'translate(0 3)\': \'\'"                                          class="path-desc"                                          d="M12 12.2L9.5 9.7l-1.1 1.1 3.6 3.5 3.6-3.5-1.1-1.1z" />                                </svg>                            </mat-icon>                        </div>                    </div>                    <div *ngIf="column.resizeable && !last"                         [class.is-resizing]="column.isResizing"                         (mousedown)="resizeManager.startResize($event, column)"                         class="ui-grid-resize-anchor">                        <mat-icon>                            <svg xmlns="http://www.w3.org/2000/svg"                                 width="24"                                 height="24">                                <path                                      d="M11 18l-2 2-2-2 2-2 2 2zm-2-8l-2 2 2 2 2-2-2-2zm0-6L7 6l2 2 2-2-2-2zm6 4l2-2-2-2-2 2 2 2zm0 2l-2 2 2 2 2-2-2-2zm0 6l-2 2 2 2 2-2-2-2z" />                            </svg>                        </mat-icon>                    </div>                </div>                <div *ngIf="virtualScroll"                     [style.marginLeft.px]="scrollCompensationWidth"                     class="ui-grid-header-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">                </div>                <div *ngIf="refreshable"                     class="ui-grid-header-cell ui-grid-refresh-cell ui-grid-feature-cell"                     role="columnheader">                    <button [matTooltip]="intl.refreshTooltip"                            [matTooltipDisabled]="resizeManager.isResizing"                            [disabled]="disabled"                            (click)="refresh.emit()"                            mat-icon-button                            class="grid-refresh-button">                        <mat-icon>refresh</mat-icon>                    </button>                </div>                <div *ngIf="!!actions"                     class="ui-grid-header-cell ui-grid-action-cell ui-grid-feature-cell">                </div>                <mat-progress-bar *ngIf="loading"                                  mode="query"                                  class="ui-grid-loader">                </mat-progress-bar>            </div>            <ng-container *ngIf="multiPageSelect then multiPageSelectionRow">            </ng-container>            <ng-container *ngIf="dataManager?.length; else noData">                <ng-container *ngIf="virtualScroll">                    <cdk-virtual-scroll-viewport [total]="dataManager.length"                                                 autosize                                                 uiVirtualScrollViewportResize                                                 class="ui-grid-viewport">                        <ng-container *cdkVirtualFor="let row of dataManager.data$ | async;                                                      let last = last;                                                      let index = index;                                                      trackBy: dataManager.hashTrack">                            <ng-container *ngTemplateOutlet="rowTemplate; context: {                                    data: row,                                    index: index,                                    expanded: expandedEntry,                                    last: last                                }">                            </ng-container>                        </ng-container>                    </cdk-virtual-scroll-viewport>                </ng-container>                <ng-container *ngIf="!virtualScroll">                    <ng-container *ngFor="let row of dataManager.data$ | async;                                          let index = index;                                          let last = last;">                        <ng-container *ngTemplateOutlet="rowTemplate; context: {                                data: row,                                index: index,                                expanded: expandedEntry,                                last: last                            }">                        </ng-container>                    </ng-container>                </ng-container>            </ng-container>        </div>    </div>    <div class="ui-grid-footer-container">        <mat-paginator *ngIf="!!footer"                       [pageIndex]="footer.state.pageIndex"                       [pageSize]="footer.state.pageSize"                       [pageSizeOptions]="footer.pageSizes"                       [length]="footer.length"                       [disabled]="disabled"                       [showFirstLastButtons]="true"                       [hidePageSize]="footer.hidePageSize"                       (page)="footer.pageChange?.next($event)">        </mat-paginator>    </div></div><ng-template #rowTemplate             let-row="data"             let-expanded="expanded"             let-last="last"             let-index="index">    <div cdkMonitorSubtreeFocus         class="ui-grid-row"         *ngIf="expanded?.id !== row?.id || expandMode === \'preserve\'"         [class.ui-grid-row-state-expanded]="expanded?.id === row?.id"         [class.ui-grid-border-none]="!footer && last"         [ngClass]="rowConfig?.ngClassFn(row)"         [tabIndex]="0"         [attr.data-row-index]="index"         role="row">        <div *ngIf="isProjected"             class="ui-grid-cell ui-grid-feature-cell ui-grid-mobile-feature-cell"             role="gridcell">            <div *ngIf="selectable"                 class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">                <mat-checkbox (click)="$event.stopPropagation()"                              (change)="handleSelection(index, row)"                              [checked]="selectionManager.isSelected(row)"                              [aria-label]="checkboxLabel(row)"                              tabindex="0">                </mat-checkbox>            </div>            <div *ngIf="!!actions"                 class="ui-grid-mobile-feature-container ui-grid-mobile-action-container">                <ng-container *ngTemplateOutlet="actions.html; context: {                    data: row,                    index: index                }">                </ng-container>            </div>        </div>        <div *ngIf="!isProjected &&                    selectable"             class="ui-grid-cell ui-grid-checkbox-cell ui-grid-feature-cell"             role="gridcell">            <mat-checkbox (click)="$event.stopPropagation()"                          (change)="handleSelection(index, row)"                          [checked]="selectionManager.isSelected(row)"                          [aria-label]="checkboxLabel(row)"                          tabindex="0">            </mat-checkbox>        </div>        <ng-container *ngFor="let column of visible$ | async">            <div [class.ui-grid-primary]="column.primary"                 [class.ui-grid-secondary]="!column.primary"                 [class.ui-grid-state-resizing]="column === resizeManager.current?.column"                 [attr.data-property]="column.property"                 [attr.data-identifier]="column.identifier"                 [style.width.%]="column.width"                 class="ui-grid-cell"                 role="gridcell">                <div *ngIf="isProjected"                     [matTooltip]="column.title"                     [matTooltipDisabled]="resizeManager.isResizing"                     class="ui-grid-cell-mobile-title">{{column.title}}</div>                <div class="ui-grid-cell-content">                    <ng-container *ngTemplateOutlet="column.html || textCellTemplate; context: {                            data: row,                            index: index,                            property: column.property                        }">                    </ng-container>                </div>            </div>        </ng-container>        <div *ngIf="virtualScroll"             class="ui-grid-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">        </div>        <div *ngIf="!isProjected &&                    refreshable"             class="ui-grid-cell ui-grid-refresh-cell ui-grid-feature-cell">        </div>        <div *ngIf="!isProjected &&                    !!actions"             class="ui-grid-cell ui-grid-action-cell ui-grid-feature-cell">            <div class="ui-grid-action-cell-container">                <ng-container *ngTemplateOutlet="actions.html; context: {                        data: row,                        index: index                    }">                </ng-container>            </div>        </div>    </div>    <div *ngIf="expanded?.id === row?.id"         [class.ui-grid-row-state-expanded]="expanded?.id === row?.id"         [class.ui-grid-border-none]="!footer && last"         role="row">        <div class="ui-grid-expanded-row-container">            <ng-container *ngTemplateOutlet="expandedRow!.html; context: {                data: row,                index: index            }">            </ng-container>        </div>    </div></ng-template><ng-template #textCellTemplate             let-row="data"             let-property="property">    <p [matTooltip]="dataManager.getProperty(row, property)"       [matTooltipDisabled]="resizeManager.isResizing">{{ dataManager.getProperty(row, property) }}</p></ng-template><ng-template #noData>    <div *ngIf="!dataManager.pristine"         class="ui-grid-row ui-grid-no-data-container"         [class.ui-grid-border-none]="!footer">        <mat-icon>list</mat-icon>        <p>{{noDataMessage || intl.noDataMessage}}</p>    </div></ng-template><ng-template #multiPageSelectionRow>    <div *ngIf="!isProjected &&                showMultiPageSelectionInfo"         class="ui-grid-row ui-grid-selection-info-container">        <ng-container *ngTemplateOutlet="multiPageSelectionInfo"></ng-container>    </div></ng-template><ng-template #multiPageSelectionHeaderCell>    <div *ngIf="isProjected &&                showMultiPageSelectionInfo"         class="ui-grid-header-cell ui-grid-feature-cell ui-grid-selection-info-container">        <ng-container *ngTemplateOutlet="multiPageSelectionInfo"></ng-container>    </div></ng-template><ng-template #multiPageSelectionInfo>    <ng-container *ngIf="selectionManager.selected.length; else noSelectionTmpl">        <button [matTooltip]="intl.clearSelectionTooltip"                [matTooltipDisabled]="resizeManager.isResizing"                (click)="selectionManager.clear()"                mat-icon-button                color="warn">            <mat-icon>clear</mat-icon>        </button>        <span class="ui-grid-selection-info-message">            {{ intl.translateMultiPageSelectionCount(selectionManager.selected.length) }}        </span>    </ng-container></ng-template><ng-template #noSelectionTmpl>    <mat-icon [matTooltip]="intl.multiPageSelectionInfoTooltip"              [matTooltipDisabled]="resizeManager.isResizing"              class="ui-grid-selection-info-icon"              tabindex="0">info</mat-icon>    <span class="ui-grid-selection-info-message">        {{ intl.noSelectionMessage }}    </span></ng-template></div>'
+    var COMPONENTS = [{'name': 'UiGridComponent', 'selector': 'ui-grid'},{'name': 'UiGridSearchComponent', 'selector': 'ui-grid-search'}];
+    var DIRECTIVES = [{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiScrollIntoViewDirective', 'selector': '[uiScrollIntoView]'},{'name': 'UiSecondFormatDirective', 'selector': '[uiSecondFormat], ui-secondformat'},{'name': 'UiVirtualScrollRangeLoaderDirective', 'selector': '[uiVirtualScrollRangeLoader], ui-virtual-scroll-range-loader'},{'name': 'UiVirtualScrollViewportResizeDirective', 'selector': '[uiVirtualScrollViewportResize], ui-virtual-scroll-viewport-resize'}];
+    var ACTUAL_COMPONENT = {'name': 'UiGridComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'UiGridComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

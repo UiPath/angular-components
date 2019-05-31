@@ -1,0 +1,545 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>UiPath Angular Components</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">UiPath Angular Components</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content directive">
+                   <div class="content-data">
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Directives</li>
+  <li>UiVirtualScrollRangeLoaderDirective</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/angular/directives/src/ui-virtual-scroll-range-loader/ui-virtual-scroll-range-loader.directive.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>A directive that is designed to work alongside CdkVirtualScrollViewport
+which can be used to lazy load in chunks depending on what is in view</p>
+
+            </p>
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                            <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+            </p>
+
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
+
+        <section>
+            <h3>Metadata</h3>
+            <table class="table table-sm table-hover">
+                <tbody>
+
+                    <tr>
+                        <td class="col-md-3">Selector</td>
+                        <td class="col-md-9"><code>[uiVirtualScrollRangeLoader], ui-virtual-scroll-range-loader</code></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#buffer">buffer</a>
+                            </li>
+                            <li>
+                                <a href="#isDown">isDown</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#rangeLoad">rangeLoad</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+            <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="buffer"></a>
+                        <b>buffer</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>10</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">projects/angular/directives/src/ui-virtual-scroll-range-loader/ui-virtual-scroll-range-loader.directive.ts:81</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Used to extend the ListRange interval emmited by rangeLoad Output
+this will expand at both ends with the specified number,
+taking into account the status of the loading items
+available</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isDown"></a>
+                        <b>isDown</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="88" class="link-to-prism">projects/angular/directives/src/ui-virtual-scroll-range-loader/ui-virtual-scroll-range-loader.directive.ts:88</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Flag used to indicate the direction of items
+set to <code>false</code> if virtual scroll events indexes need to be reversed</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+            <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="rangeLoad"></a>
+                        <b>rangeLoad</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">projects/angular/directives/src/ui-virtual-scroll-range-loader/ui-virtual-scroll-range-loader.directive.ts:98</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Output of <code>ListRange</code> events based on renderedRangeStream from
+CdkVirtualScrollViewport which takes into account
+direction of list (<code>isDown</code>), <code>buffer</code>
+and reduces interval to untouched indexes (items with <code>loading: &quot;initial&quot;</code>)</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ListRange } from &#x27;@angular/cdk/collections&#x27;;
+import {
+  CdkVirtualForOf,
+  CdkVirtualScrollViewport,
+} from &#x27;@angular/cdk/scrolling&#x27;;
+import {
+  ContentChild,
+  Directive,
+  EventEmitter,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  Self,
+} from &#x27;@angular/core&#x27;;
+
+import { Subject } from &#x27;rxjs&#x27;;
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  startWith,
+  takeUntil,
+  tap,
+  withLatestFrom,
+} from &#x27;rxjs/operators&#x27;;
+
+/**
+ * Used for marking the loading state of items
+ * within a lazily loaded collection
+ *
+ * @export
+ */
+export enum VirtualScrollItemStatus {
+    /**
+     * Initial status of an item within the collection,
+     * a placeholder with no content
+     */
+    initial &#x3D; &#x27;initial&#x27;,
+    /**
+     * Item marked as pending to be loaded, a request was sent out,
+     * but still no content, item data was not yet received
+     */
+    pending &#x3D; &#x27;pending&#x27;,
+    /**
+     * Item with content, data of item has been loaded
+     */
+    loaded &#x3D; &#x27;loaded&#x27;,
+}
+
+/**
+ * Item with loading state to be used
+ * if lazily loading results to reduce events emitted
+ * and intervals emitted within events on &#x60;rangeLoad&#x60; Output
+ * @export
+ */
+export interface VirtualScrollItem {
+    loading?: VirtualScrollItemStatus;
+}
+
+/**
+ * A directive that is designed to work alongside CdkVirtualScrollViewport
+ * which can be used to lazy load in chunks depending on what is in view
+ * @export
+ */
+@Directive({
+    selector: &#x27;[uiVirtualScrollRangeLoader], ui-virtual-scroll-range-loader&#x27;,
+})
+export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
+
+    /**
+     * Used to extend the ListRange interval emmited by rangeLoad Output
+     * this will expand at both ends with the specified number,
+     * taking into account the status of the loading items
+     * available
+     *
+     */
+    @Input()
+    public buffer &#x3D; 10;
+
+    /**
+     * Flag used to indicate the direction of items
+     * set to &#x60;false&#x60; if virtual scroll events indexes need to be reversed
+     */
+    @Input()
+    public isDown &#x3D; true;
+
+    /**
+     * Output of &#x60;ListRange&#x60; events based on renderedRangeStream from
+     * CdkVirtualScrollViewport which takes into account
+     * direction of list (&#x60;isDown&#x60;), &#x60;buffer&#x60;
+     * and reduces interval to untouched indexes (items with &#x60;loading: &quot;initial&quot;&#x60;)
+     *
+     */
+    @Output()
+    public rangeLoad &#x3D; new EventEmitter&lt;ListRange&gt;();
+
+    @ContentChild(CdkVirtualForOf)
+    private readonly _cdkVirtualForOf!: CdkVirtualForOf&lt;VirtualScrollItem&gt;;
+
+    private readonly _destroyed$ &#x3D; new Subject();
+
+    /**
+     * @ignore
+     */
+    constructor(
+        @Self()
+        @Inject(CdkVirtualScrollViewport)
+        private readonly _viewport: CdkVirtualScrollViewport,
+    ) { }
+
+    /**
+     * @ignore
+     */
+    ngOnInit() {
+        this._viewport.renderedRangeStream
+            .pipe(
+                withLatestFrom(
+                    this._cdkVirtualForOf.dataStream.pipe(
+                        startWith([] as VirtualScrollItem[]),
+                    ),
+                ),
+                debounceTime(100),
+                distinctUntilChanged(([list1], [list2]) &#x3D;&gt; &#x60;${list1.start}${list1.end}&#x60; &#x3D;&#x3D;&#x3D; &#x60;${list2.start}${list2.end}&#x60;),
+                map(([range, items]) &#x3D;&gt; ({
+                    ...range,
+                    items,
+                })),
+                map(({ start, end, items }) &#x3D;&gt; ({
+                    ...this._adjustLoadingRange(start, end, this.buffer, items),
+                    items,
+                })),
+                filter(({ start, end }) &#x3D;&gt; this._isValidRange({ start, end })),
+                map(({ start, end, items }) &#x3D;&gt;
+                    this.isDown ?
+                        { start, end } :
+                        this._reverseIndex({ start, end }, items.length),
+                ),
+                filter(this._isValidRange),
+                tap(_ &#x3D;&gt; console.warn(this.buffer)),
+                tap(range &#x3D;&gt; this.rangeLoad.emit(range)),
+            )
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe();
+    }
+
+    /**
+     * @ignore
+     */
+    ngOnDestroy() {
+        this._destroyed$.next();
+        this._destroyed$.complete();
+    }
+
+    private _isValidRange &#x3D; ({ start, end }: ListRange) &#x3D;&gt; end &gt;&#x3D; 0 &amp;&amp; start &gt;&#x3D; 0 &amp;&amp; end - start &gt;&#x3D; 0;
+    private _reverseIndex({ start, end }: ListRange, count: number) {
+        return {
+            start: count - 1 - end,
+            end: count - 1 - start,
+        };
+    }
+
+    private _adjustLoadingRange(
+        start: number,
+        end: number,
+        buffer: number,
+        items: VirtualScrollItem[] | ReadonlyArray&lt;VirtualScrollItem&gt;): ListRange {
+        (
+            { start, end } &#x3D; this._addSafeBuffer(start, end, buffer, items)
+        );
+
+        let isTrimmedBefore;
+        let isTrimmedAfter;
+
+        (
+            { start, end, isTrimmedBefore, isTrimmedAfter } &#x3D; this._trimInterval(start, end, items)
+        );
+
+        if (start &gt; end) {
+            // kill the request
+            return { start, end: -1 };
+        }
+
+        const isNotTrimmedAtBothEnds &#x3D; !isTrimmedBefore || !isTrimmedAfter;
+        if (
+            end - start &lt; buffer &amp;&amp;
+            isNotTrimmedAtBothEnds
+        ) {
+            if (!isTrimmedBefore) {
+                start -&#x3D; buffer;
+            }
+            if (!isTrimmedAfter) {
+                end +&#x3D; buffer;
+            }
+
+            (
+                { start, end } &#x3D; this._trimInterval(
+                    Math.max(0, start),
+                    Math.min(items.length - 1, end),
+                    items,
+                )
+            );
+        }
+
+        if (start &gt; end) {
+            // kill the request
+            end &#x3D; -1;
+        }
+
+        return { start, end };
+    }
+
+    private _addSafeBuffer(start: number, end: number, buffer: number, items: VirtualScrollItem[] | ReadonlyArray&lt;VirtualScrollItem&gt;) {
+        end &#x3D; Math.min(end + buffer, items.length - 1);
+        start &#x3D; Math.max(start - buffer, 0);
+        return { start, end };
+    }
+
+    private _trimInterval(start: number, end: number, items: VirtualScrollItem[] | ReadonlyArray&lt;VirtualScrollItem&gt;) {
+        let isTrimmedBefore &#x3D; false;
+        let isTrimmedAfter &#x3D; false;
+        while (start &lt;&#x3D; end &amp;&amp;
+            items[start].loading !&#x3D;&#x3D; VirtualScrollItemStatus.initial) {
+            isTrimmedBefore &#x3D; true;
+            start +&#x3D; 1;
+        }
+        while (end &gt;&#x3D; start &amp;&amp;
+            items[end].loading !&#x3D;&#x3D; VirtualScrollItemStatus.initial) {
+            isTrimmedAfter &#x3D; true;
+            end -&#x3D; 1;
+        }
+        return { start, end, isTrimmedBefore, isTrimmedAfter };
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'directive';
+            var COMPODOC_CURRENT_PAGE_URL = 'UiVirtualScrollRangeLoaderDirective.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,942 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>UiPath Angular Components</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">UiPath Angular Components</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content directive">
+                   <div class="content-data">
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Directives</li>
+  <li>UiDragAndDropFileDirective</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>A directive that facilitates <code>file inputs</code> and <code>file drop regions</code>.</p>
+
+            </p>
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+                            <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+            </p>
+
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
+
+        <section>
+            <h3>Metadata</h3>
+            <table class="table table-sm table-hover">
+                <tbody>
+
+                    <tr>
+                        <td class="col-md-3">Selector</td>
+                        <td class="col-md-9"><code>[uiDragAndDropFile]</code></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#disabled">disabled</a>
+                            </li>
+                            <li>
+                                <a href="#fileBrowseRef">fileBrowseRef</a>
+                            </li>
+                            <li>
+                                <a href="#fileClearRef">fileClearRef</a>
+                            </li>
+                            <li>
+                                <a href="#fileType">fileType</a>
+                            </li>
+                            <li>
+                                <a href="#multiple">multiple</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#fileChange">fileChange</a>
+                            </li>
+                            <li>
+                                <a href="#fileClear">fileClear</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostBindings</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#class.file-dragging">class.file-dragging</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostListeners</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#dragend">dragend</a>
+                            </li>
+                            <li>
+                                <a href="#dragenter">dragenter</a>
+                            </li>
+                            <li>
+                                <a href="#dragleave">dragleave</a>
+                            </li>
+                            <li>
+                                <a href="#dragover">dragover</a>
+                            </li>
+                            <li>
+                                <a href="#drop">drop</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+        </tbody>
+    </table>
+</section>
+
+
+            <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="disabled"></a>
+                        <b>disabled</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:57</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configures the <code>disabled</code> state of the <code>file area</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="fileBrowseRef"></a>
+                        <b>fileBrowseRef</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Element</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:36</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The element reference that triggers file <code>browsing</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="fileClearRef"></a>
+                        <b>fileClearRef</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Element</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:43</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The element reference that serve as a <code>clear</code> trigger for the selected files.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="fileType"></a>
+                        <b>fileType</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:29</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The accepted <code>file-type</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="multiple"></a>
+                        <b>multiple</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:50</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configures if the <code>file area</code> accepts multiple files.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+            <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="fileChange"></a>
+                        <b>fileChange</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:64</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>An event that emits when the file selection state <code>changes</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="fileClear"></a>
+                        <b>fileClear</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:71</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>An event that emits when the file selection is <code>cleared</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+            <section>
+    <h3>HostBindings</h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="class.file-dragging"></a>
+                        <span class="name">
+                            <b>
+                            class.file-dragging</b>
+                            <a href="#class.file-dragging"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:74</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dragend"></a>
+                    <span class="name">
+                        <b>
+                            dragend
+                        </b>
+                        <a href="#dragend"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>dragend()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="192"
+                            class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:192</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Clears the <code>dragging</code> <code>state</code> when a <code>dragleave</code> event occurs.</p>
+</div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dragenter"></a>
+                    <span class="name">
+                        <b>
+                            dragenter
+                        </b>
+                        <a href="#dragenter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>dragenter(ev: DragEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="203"
+                            class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:203</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Prevents weird flickering <code>cross-browser</code>.</p>
+</div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dragleave"></a>
+                    <span class="name">
+                        <b>
+                            dragleave
+                        </b>
+                        <a href="#dragleave"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>dragleave(ev: DragEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="180"
+                            class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:180</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Clears the <code>dragging</code> <code>state</code> when a <code>dragleave</code> event occurs.</p>
+</div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dragover"></a>
+                    <span class="name">
+                        <b>
+                            dragover
+                        </b>
+                        <a href="#dragover"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>dragover(ev: DragEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="168"
+                            class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:168</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Marks the <code>state</code> as <code>dragging</code> when a <code>dragover</code> event occurs.</p>
+</div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="drop"></a>
+                    <span class="name">
+                        <b>
+                            drop
+                        </b>
+                        <a href="#drop"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>drop(ev: DragEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="155"
+                            class="link-to-prism">projects/angular/directives/src/ui-drag-and-drop-file/ui-drag-and-drop-file.directive.ts:155</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Reacts to <code>drop</code> events.</p>
+</div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  OnDestroy,
+  Output,
+  Renderer2,
+} from &#x27;@angular/core&#x27;;
+import { isInternetExplorer } from &#x27;@uipath/angular/utilities&#x27;;
+
+/**
+ * A directive that facilitates &#x60;file inputs&#x60; and &#x60;file drop regions&#x60;.
+ *
+ * @export
+ */
+@Directive({
+  selector: &#x27;[uiDragAndDropFile]&#x27;,
+})
+export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
+  /**
+   * The accepted &#x60;file-type&#x60;.
+   *
+   */
+  @Input()
+  public fileType?: string;
+
+  /**
+   * The element reference that triggers file &#x60;browsing&#x60;.
+   *
+   */
+  @Input()
+  public fileBrowseRef?: Element;
+
+  /**
+   * The element reference that serve as a &#x60;clear&#x60; trigger for the selected files.
+   *
+   */
+  @Input()
+  public fileClearRef?: Element;
+
+  /**
+   * Configures if the &#x60;file area&#x60; accepts multiple files.
+   *
+   */
+  @Input()
+  public multiple &#x3D; false;
+
+  /**
+   * Configures the &#x60;disabled&#x60; state of the &#x60;file area&#x60;.
+   *
+   */
+  @Input()
+  public disabled &#x3D; false;
+
+  /**
+   * An event that emits when the file selection state &#x60;changes&#x60;.
+   *
+   */
+  @Output()
+  public fileChange &#x3D; new EventEmitter&lt;File[]&gt;();
+
+  /**
+   * An event that emits when the file selection is &#x60;cleared&#x60;.
+   *
+   */
+  @Output()
+  public fileClear &#x3D; new EventEmitter();
+
+  @HostBinding(&#x27;class.file-dragging&#x27;)
+  protected _isDragging &#x3D; false;
+
+  private _disposalCallbacks: Array&lt;() &#x3D;&gt; void&gt; &#x3D; [];
+  private _fileInput: HTMLInputElement;
+
+  /**
+    * @ignore
+    */
+  constructor(
+    private _elementRef: ElementRef,
+    private _renderer: Renderer2,
+  ) {
+    this._fileInput &#x3D; this._renderer.createElement(&#x27;input&#x27;) as HTMLInputElement;
+    this._renderer.setProperty(this._fileInput, &#x27;type&#x27;, &#x27;file&#x27;);
+    this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
+    this._renderer.setAttribute(this._fileInput, &#x27;hidden&#x27;, &#x27;&#x27;);
+    this._renderer.appendChild(this._elementRef.nativeElement, this._fileInput);
+  }
+
+  /**
+    * @ignore
+    */
+  ngAfterViewInit() {
+    if (this.multiple) {
+      this._renderer.setProperty(this._fileInput, &#x27;multiple&#x27;, &#x27;true&#x27;);
+    }
+
+    this._preventEnterOnChildren(this._elementRef.nativeElement);
+
+    this._renderer.setProperty(this._fileInput, &#x27;accept&#x27;, this.fileType);
+
+    if (!this.fileBrowseRef) {
+      this.fileBrowseRef &#x3D; this._elementRef.nativeElement;
+    }
+
+    this._renderer.setStyle(this.fileBrowseRef, &#x27;cursor&#x27;, &#x27;pointer&#x27;);
+
+    const browse &#x3D; this._renderer
+      .listen(this.fileBrowseRef, &#x27;click&#x27;, () &#x3D;&gt; {
+        if (this.disabled) { return; }
+        this._fileInput.click();
+      });
+    this._disposalCallbacks.push(browse);
+
+    const change &#x3D; this._renderer.listen(this._fileInput, &#x27;change&#x27;, (ev) &#x3D;&gt; {
+      this._preventAll(ev);
+      if (this.disabled) { return; }
+      const target &#x3D; ev.target as HTMLInputElement;
+      if (target.files) {
+        this._emitFiles(target.files);
+        this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
+      }
+    });
+    this._disposalCallbacks.push(change);
+
+    if (this.fileClearRef) {
+      const clear &#x3D; this._renderer
+        .listen(this.fileClearRef, &#x27;click&#x27;, () &#x3D;&gt; {
+          if (this.disabled) { return; }
+          this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
+          this.fileClear.emit();
+        });
+      this._disposalCallbacks.push(clear);
+    }
+  }
+
+  /**
+    * @ignore
+    */
+  ngOnDestroy() {
+    this._disposalCallbacks.forEach(dispose &#x3D;&gt; {
+      dispose();
+    });
+  }
+
+  /**
+   * Reacts to &#x60;drop&#x60; events.
+   *
+   * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;drop&#x60;.
+   */
+  @HostListener(&#x27;drop&#x27;, [&#x27;$event&#x27;])
+  protected _onDrop(ev: DragEvent) {
+    this._preventAll(ev);
+    if (this.disabled) { return; }
+    this._isDragging &#x3D; false;
+    this._emitFiles(ev.dataTransfer!.files);
+  }
+
+  /**
+   * Marks the &#x60;state&#x60; as &#x60;dragging&#x60; when a &#x60;dragover&#x60; event occurs.
+   *
+   * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;dragover&#x60;.
+   */
+  @HostListener(&#x27;dragover&#x27;, [&#x27;$event&#x27;])
+  protected _onDragOver(ev: DragEvent) {
+    this._preventAll(ev);
+    if (this.disabled) { return; }
+    this._isDragging &#x3D; true;
+  }
+
+  /**
+   * Clears the &#x60;dragging&#x60; &#x60;state&#x60; when a &#x60;dragleave&#x60; event occurs.
+   *
+   * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;dragover&#x60;.
+   */
+  @HostListener(&#x27;dragleave&#x27;, [&#x27;$event&#x27;])
+  protected _onDragLeave(ev: DragEvent) {
+    this._preventAll(ev);
+    if (this.disabled) { return; }
+    this._isDragging &#x3D; false;
+  }
+
+  /**
+   * Clears the &#x60;dragging&#x60; &#x60;state&#x60; when a &#x60;dragleave&#x60; event occurs.
+   *
+   * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;dragend&#x60;.
+   */
+  @HostListener(&#x27;dragend&#x27;)
+  protected _onDragEnd() {
+    if (this.disabled) { return; }
+    this._isDragging &#x3D; false;
+  }
+
+  /**
+   * Prevents weird flickering &#x60;cross-browser&#x60;.
+   *
+   * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;dragenter&#x60;.
+   */
+  @HostListener(&#x27;dragenter&#x27;, [&#x27;$event&#x27;])
+  protected _onDragEnter(ev: DragEvent) {
+    this._preventAll(ev);
+    if (this.disabled) { return; }
+  }
+
+  private _emitFiles(files: FileList) {
+    if (
+      !files ||
+      !files.length ||
+      this.disabled
+    ) { return; }
+
+    const emittedFiles &#x3D; Array.from(files).filter(file &#x3D;&gt;
+      !this.fileType ||
+      file.name.endsWith(this.fileType),
+    );
+
+    if (!emittedFiles.length) { return; }
+
+    this.fileChange.emit(emittedFiles);
+  }
+
+  private _preventEnterOnChildren(element: Element) {
+    if (!isInternetExplorer()) { return; }
+
+    if (!!element.children.length) {
+      const children: Element[] &#x3D; Array.from(element.children);
+
+      for (const child of children) {
+        const dragenter &#x3D; this._renderer.listen(child, &#x27;dragenter&#x27;, this._preventAll);
+        const dragleave &#x3D; this._renderer.listen(child, &#x27;dragleave&#x27;, this._preventAll);
+
+        this._disposalCallbacks.push(
+          dragenter,
+          dragleave,
+        );
+      }
+    }
+  }
+
+  private _preventAll(ev: Event) {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'directive';
+            var COMPODOC_CURRENT_PAGE_URL = 'UiDragAndDropFileDirective.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

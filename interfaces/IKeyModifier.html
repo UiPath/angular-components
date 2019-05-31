@@ -1,0 +1,741 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>UiPath Angular Components</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">UiPath Angular Components</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Interfaces</li>
+  <li>IKeyModifier</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/angular/testing/src/utilities/key.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Key modifier schema.</p>
+
+            </p>
+
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                        <code><a href="../interfaces/IKey.html" target="_self" >IKey</a></code>
+            </p>
+
+        <section>
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#name">name</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section>
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="name"></a>
+                                        <span class="name"><b>name</b><a href="#name"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>name:     <code>&quot;Shift&quot; | &quot;Control&quot; | &quot;Alt&quot;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>&quot;Shift&quot; | &quot;Control&quot; | &quot;Alt&quot;</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>The friendly <code>name</code> of the current modifier.</p>
+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface IKey {
+    /**
+     * The code associated to the current &#x60;key&#x60;.
+     */
+    code: number;
+    /**
+     * The friendly &#x60;name&#x60; of the current &#x60;key&#x60;.
+     *
+     */
+    name: string;
+}
+
+/**
+ * Key modifier schema.
+ *
+ * @export
+ */
+export interface IKeyModifier extends IKey {
+    /**
+     * The friendly &#x60;name&#x60; of the current modifier.
+     *
+     */
+    name: &#x27;Shift&#x27; | &#x27;Control&#x27; | &#x27;Alt&#x27;;
+}
+
+/**
+ * A complete collection of &#x60;keys&#x60; that can be used to emit fake events for testing.
+ *
+ * @export
+ */
+export class Key implements Record&lt;keyof Key, IKey&gt; {
+    /**
+     * Metadata for key &#x60;q&#x60;.
+     *
+     */
+    public static q: IKey &#x3D; {
+        name: &#x27;q&#x27;,
+        code: 81,
+    };
+    /**
+     * Metadata for key &#x60;w&#x60;.
+     *
+     */
+    public static w: IKey &#x3D; {
+        name: &#x27;w&#x27;,
+        code: 87,
+    };
+    /**
+     * Metadata for key &#x60;e&#x60;.
+     *
+     */
+    public static e: IKey &#x3D; {
+        name: &#x27;e&#x27;,
+        code: 69,
+    };
+    /**
+     * Metadata for key &#x60;r&#x60;.
+     *
+     */
+    public static r: IKey &#x3D; {
+        name: &#x27;r&#x27;,
+        code: 82,
+    };
+    /**
+     * Metadata for key &#x60;t&#x60;.
+     *
+     */
+    public static t: IKey &#x3D; {
+        name: &#x27;t&#x27;,
+        code: 84,
+    };
+    /**
+     * Metadata for key &#x60;y&#x60;.
+     *
+     */
+    public static y: IKey &#x3D; {
+        name: &#x27;y&#x27;,
+        code: 89,
+    };
+    /**
+     * Metadata for key &#x60;u&#x60;.
+     *
+     */
+    public static u: IKey &#x3D; {
+        name: &#x27;u&#x27;,
+        code: 85,
+    };
+    /**
+     * Metadata for key &#x60;i&#x60;.
+     *
+     */
+    public static i: IKey &#x3D; {
+        name: &#x27;i&#x27;,
+        code: 73,
+    };
+    /**
+     * Metadata for key &#x60;o&#x60;.
+     *
+     */
+    public static o: IKey &#x3D; {
+        name: &#x27;o&#x27;,
+        code: 79,
+    };
+    /**
+     * Metadata for key &#x60;p&#x60;.
+     *
+     */
+    public static p: IKey &#x3D; {
+        name: &#x27;p&#x27;,
+        code: 80,
+    };
+    /**
+     * Metadata for key &#x60;a&#x60;.
+     *
+     */
+    public static a: IKey &#x3D; {
+        name: &#x27;a&#x27;,
+        code: 65,
+    };
+    /**
+     * Metadata for key &#x60;s&#x60;.
+     *
+     */
+    public static s: IKey &#x3D; {
+        name: &#x27;s&#x27;,
+        code: 83,
+    };
+    /**
+     * Metadata for key &#x60;d&#x60;.
+     *
+     */
+    public static d: IKey &#x3D; {
+        name: &#x27;d&#x27;,
+        code: 68,
+    };
+    /**
+     * Metadata for key &#x60;f&#x60;.
+     *
+     */
+    public static f: IKey &#x3D; {
+        name: &#x27;f&#x27;,
+        code: 70,
+    };
+    /**
+     * Metadata for key &#x60;g&#x60;.
+     *
+     */
+    public static g: IKey &#x3D; {
+        name: &#x27;g&#x27;,
+        code: 71,
+    };
+    /**
+     * Metadata for key &#x60;h&#x60;.
+     *
+     */
+    public static h: IKey &#x3D; {
+        name: &#x27;h&#x27;,
+        code: 72,
+    };
+    /**
+     * Metadata for key &#x60;j&#x60;.
+     *
+     */
+    public static j: IKey &#x3D; {
+        name: &#x27;j&#x27;,
+        code: 74,
+    };
+    /**
+     * Metadata for key &#x60;k&#x60;.
+     *
+     */
+    public static k: IKey &#x3D; {
+        name: &#x27;k&#x27;,
+        code: 75,
+    };
+    /**
+     * Metadata for key &#x60;l&#x60;.
+     *
+     */
+    public static l: IKey &#x3D; {
+        name: &#x27;l&#x27;,
+        code: 76,
+    };
+    /**
+     * Metadata for key &#x60;z&#x60;.
+     *
+     */
+    public static z: IKey &#x3D; {
+        name: &#x27;z&#x27;,
+        code: 90,
+    };
+    /**
+     * Metadata for key &#x60;x&#x60;.
+     *
+     */
+    public static x: IKey &#x3D; {
+        name: &#x27;x&#x27;,
+        code: 88,
+    };
+    /**
+     * Metadata for key &#x60;c&#x60;.
+     *
+     */
+    public static c: IKey &#x3D; {
+        name: &#x27;c&#x27;,
+        code: 67,
+    };
+    /**
+     * Metadata for key &#x60;v&#x60;.
+     *
+     */
+    public static v: IKey &#x3D; {
+        name: &#x27;v&#x27;,
+        code: 86,
+    };
+    /**
+     * Metadata for key &#x60;b&#x60;.
+     *
+     */
+    public static b: IKey &#x3D; {
+        name: &#x27;b&#x27;,
+        code: 66,
+    };
+    /**
+     * Metadata for key &#x60;n&#x60;.
+     *
+     */
+    public static n: IKey &#x3D; {
+        name: &#x27;n&#x27;,
+        code: 78,
+    };
+    /**
+     * Metadata for key &#x60;m&#x60;.
+     *
+     */
+    public static m: IKey &#x3D; {
+        name: &#x27;m&#x27;,
+        code: 77,
+    };
+    /**
+     * Metadata for key &#x60;Q&#x60;.
+     *
+     */
+    public static Q: IKey &#x3D; {
+        name: &#x27;Q&#x27;,
+        code: 81,
+    };
+    /**
+     * Metadata for key &#x60;W&#x60;.
+     *
+     */
+    public static W: IKey &#x3D; {
+        name: &#x27;W&#x27;,
+        code: 87,
+    };
+    /**
+     * Metadata for key &#x60;E&#x60;.
+     *
+     */
+    public static E: IKey &#x3D; {
+        name: &#x27;E&#x27;,
+        code: 69,
+    };
+    /**
+     * Metadata for key &#x60;R&#x60;.
+     *
+     */
+    public static R: IKey &#x3D; {
+        name: &#x27;R&#x27;,
+        code: 82,
+    };
+    /**
+     * Metadata for key &#x60;T&#x60;.
+     *
+     */
+    public static T: IKey &#x3D; {
+        name: &#x27;T&#x27;,
+        code: 84,
+    };
+    /**
+     * Metadata for key &#x60;Y&#x60;.
+     *
+     */
+    public static Y: IKey &#x3D; {
+        name: &#x27;Y&#x27;,
+        code: 89,
+    };
+    /**
+     * Metadata for key &#x60;U&#x60;.
+     *
+     */
+    public static U: IKey &#x3D; {
+        name: &#x27;U&#x27;,
+        code: 85,
+    };
+    /**
+     * Metadata for key &#x60;I&#x60;.
+     *
+     */
+    public static I: IKey &#x3D; {
+        name: &#x27;I&#x27;,
+        code: 73,
+    };
+    /**
+     * Metadata for key &#x60;O&#x60;.
+     *
+     */
+    public static O: IKey &#x3D; {
+        name: &#x27;O&#x27;,
+        code: 79,
+    };
+    /**
+     * Metadata for key &#x60;P&#x60;.
+     *
+     */
+    public static P: IKey &#x3D; {
+        name: &#x27;P&#x27;,
+        code: 80,
+    };
+    /**
+     * Metadata for key &#x60;A&#x60;.
+     *
+     */
+    public static A: IKey &#x3D; {
+        name: &#x27;A&#x27;,
+        code: 65,
+    };
+    /**
+     * Metadata for key &#x60;S&#x60;.
+     *
+     */
+    public static S: IKey &#x3D; {
+        name: &#x27;S&#x27;,
+        code: 83,
+    };
+    /**
+     * Metadata for key &#x60;D&#x60;.
+     *
+     */
+    public static D: IKey &#x3D; {
+        name: &#x27;D&#x27;,
+        code: 68,
+    };
+    /**
+     * Metadata for key &#x60;F&#x60;.
+     *
+     */
+    public static F: IKey &#x3D; {
+        name: &#x27;F&#x27;,
+        code: 70,
+    };
+    /**
+     * Metadata for key &#x60;G&#x60;.
+     *
+     */
+    public static G: IKey &#x3D; {
+        name: &#x27;G&#x27;,
+        code: 71,
+    };
+    /**
+     * Metadata for key &#x60;H&#x60;.
+     *
+     */
+    public static H: IKey &#x3D; {
+        name: &#x27;H&#x27;,
+        code: 72,
+    };
+    /**
+     * Metadata for key &#x60;J&#x60;.
+     *
+     */
+    public static J: IKey &#x3D; {
+        name: &#x27;J&#x27;,
+        code: 74,
+    };
+    /**
+     * Metadata for key &#x60;K&#x60;.
+     *
+     */
+    public static K: IKey &#x3D; {
+        name: &#x27;K&#x27;,
+        code: 75,
+    };
+    /**
+     * Metadata for key &#x60;L&#x60;.
+     *
+     */
+    public static L: IKey &#x3D; {
+        name: &#x27;L&#x27;,
+        code: 76,
+    };
+    /**
+     * Metadata for key &#x60;Z&#x60;.
+     *
+     */
+    public static Z: IKey &#x3D; {
+        name: &#x27;Z&#x27;,
+        code: 90,
+    };
+    /**
+     * Metadata for key &#x60;X&#x60;.
+     *
+     */
+    public static X: IKey &#x3D; {
+        name: &#x27;X&#x27;,
+        code: 88,
+    };
+    /**
+     * Metadata for key &#x60;C&#x60;.
+     *
+     */
+    public static C: IKey &#x3D; {
+        name: &#x27;C&#x27;,
+        code: 67,
+    };
+    /**
+     * Metadata for key &#x60;V&#x60;.
+     *
+     */
+    public static V: IKey &#x3D; {
+        name: &#x27;V&#x27;,
+        code: 86,
+    };
+    /**
+     * Metadata for key &#x60;B&#x60;.
+     *
+     */
+    public static B: IKey &#x3D; {
+        name: &#x27;B&#x27;,
+        code: 66,
+    };
+    /**
+     * Metadata for key &#x60;N&#x60;.
+     *
+     */
+    public static N: IKey &#x3D; {
+        name: &#x27;N&#x27;,
+        code: 78,
+    };
+    /**
+     * Metadata for key &#x60;M&#x60;.
+     *
+     */
+    public static M: IKey &#x3D; {
+        name: &#x27;M&#x27;,
+        code: 77,
+    };
+    /**
+     * Metadata for key &#x60;Shift&#x60;.
+     *
+     */
+    public static Shift: IKeyModifier &#x3D; {
+        name: &#x27;Shift&#x27;,
+        code: 16,
+    };
+    /**
+     * Metadata for key &#x60;Control&#x60;.
+     *
+     */
+    public static Control: IKeyModifier &#x3D; {
+        name: &#x27;Control&#x27;,
+        code: 17,
+    };
+    /**
+     * Metadata for key &#x60;Alt&#x60;.
+     *
+     */
+    public static Alt: IKeyModifier &#x3D; {
+        name: &#x27;Alt&#x27;,
+        code: 18,
+    };
+    /**
+     * Metadata for key &#x60;Enter&#x60;.
+     *
+     */
+    public static Enter: IKey &#x3D; {
+        name: &#x27;Enter&#x27;,
+        code: 13,
+    };
+    /**
+     * Metadata for key &#x60;ArrowLeft&#x60;.
+     *
+     */
+    public static ArrowLeft: IKey &#x3D; {
+        name: &#x27;ArrowLeft&#x27;,
+        code: 37,
+    };
+    /**
+     * Metadata for key &#x60;ArrowDown&#x60;.
+     *
+     */
+    public static ArrowDown: IKey &#x3D; {
+        name: &#x27;ArrowDown&#x27;,
+        code: 40,
+    };
+    /**
+     * Metadata for key &#x60;ArrowRight&#x60;.
+     *
+     */
+    public static ArrowRight: IKey &#x3D; {
+        name: &#x27;ArrowRight&#x27;,
+        code: 39,
+    };
+    /**
+     * Metadata for key &#x60;ArrowUp&#x60;.
+     *
+     */
+    public static ArrowUp: IKey &#x3D; {
+        name: &#x27;ArrowUp&#x27;,
+        code: 38,
+    };
+    /**
+     * Metadata for key &#x60;Space&#x60;.
+     *
+     */
+    public static Space: IKey &#x3D; {
+        name: &#x27; &#x27;,
+        code: 32,
+    };
+    /**
+     * Metadata for key &#x60;Tab&#x60;.
+     *
+     */
+    public static Tab: IKey &#x3D; {
+        name: &#x27;Tab&#x27;,
+        code: 9,
+    };
+    /**
+     * Metadata for key &#x60;Escape&#x60;.
+     *
+     */
+    public static Escape: IKey &#x3D; {
+        name: &#x27;Escape&#x27;,
+        code: 27,
+    };
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'IKeyModifier.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
