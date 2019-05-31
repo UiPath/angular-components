@@ -1,0 +1,419 @@
+@import "../styles/ellipse";
+
+ui-grid {
+    $ui-grid-header-row-height: 56px;
+    $ui-grid-row-height: 48px;
+    $ui-grid-row-horizontal-padding: 24px;
+    $ui-feature-cell-width: 50px;
+    $ui-row-border-width: 1px;
+    $ui-header-resize-handle-width: 15px;
+    $ui-grid-default-spacing: 5px;
+    $ui-border-radius: 4px;
+    $ui-grid-button-size: 40px;
+    $ui-grid-main-font-size: 13.5px;
+    $ui-grid-secondary-font-size: 12px;
+
+    position: relative;
+    display: block;
+
+    &.ui-grid-mode-multi-select {
+        .ui-grid-table {
+            cdk-virtual-scroll-viewport.ui-grid-viewport {
+                min-height: $ui-grid-row-height * 3;
+                height: calc(100vh - 300px - #{$ui-grid-row-height});
+
+                .cdk-virtual-scroll-content-wrapper {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .ui-grid-table {
+        cdk-virtual-scroll-viewport.ui-grid-viewport {
+            min-height: $ui-grid-row-height * 3;
+            height: calc(100vh - 300px);
+
+            .cdk-virtual-scroll-content-wrapper {
+                width: 100%;
+            }
+        }
+    }
+
+    .ui-grid-debug-information {
+        position: absolute;
+        text-align: right;
+        bottom: -30px;
+        width: 400px;
+        right: 0;
+    }
+
+    &.ui-grid-state-projected {
+        .ui-grid-action-button {
+            right: 80px;
+        }
+
+        .ui-grid {
+            &-table {
+                $ui-grid-projected-spacing-lr: 24px;
+                $ui-grid-projected-spacing-tb: 8px;
+
+                .ui-grid-cell-mobile-title {
+                    width: 115px;
+                    display: inline-block;
+                    font-weight: bold;
+                    text-align: left;
+                }
+
+                .ui-grid-header-cell {
+                    &:not(.ui-grid-refresh-cell):not(.ui-grid-checkbox-cell):not(.ui-grid-selection-info-container) {
+                        display: none;
+                    }
+
+                    &.ui-grid-refresh-cell {
+                        justify-content: flex-end;
+                        margin-right: $ui-grid-projected-spacing-lr;
+                    }
+
+                    &.ui-grid-checkbox-cell {
+                        overflow: visible;
+                        justify-content: flex-start;
+                        margin-left: $ui-grid-projected-spacing-lr + $ui-grid-default-spacing;
+                    }
+                }
+
+                .ui-grid-row {
+                    height: auto;
+                    flex-direction: column;
+                    align-items: start;
+                    padding: $ui-grid-projected-spacing-tb $ui-grid-projected-spacing-lr;
+                }
+
+                .ui-grid-cell.ui-grid-mobile-feature-cell {
+                    margin-left: $ui-grid-default-spacing;
+                    overflow: visible;
+                    justify-content: flex-start;
+
+                    .ui-grid-mobile-feature-container {
+                        margin: 0 $ui-grid-default-spacing;
+
+                        &:first-of-type {
+                            margin-left: 0;
+                        }
+                    }
+                }
+
+                .ui-grid-cell {
+                    justify-content: space-between;
+                    padding: 0;
+                    width: 100% !important;
+                }
+            }
+        }
+
+        .mat-paginator-container {
+            justify-content: center;
+        }
+    }
+    .mat-paginator-container {
+        padding: 0 $ui-grid-default-spacing;
+    }
+
+    &.ui-grid-state-resizing {
+        .ui-grid-header-row {
+            user-select: none;
+        }
+    }
+
+    .ui-grid {
+        &-primary,
+        &-header-cell {
+            font-weight: 500;
+        }
+
+        &-filter-container {
+            padding: 0 0 $ui-grid-default-spacing $ui-grid-default-spacing;
+            min-height: $ui-grid-header-row-height;
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        &-container {
+            border-radius: $ui-border-radius;
+
+            .mat-paginator {
+                &-container {
+                    min-height: $ui-grid-header-row-height - 1;
+                }
+
+                .mat-paginator-page-size-label,
+                .mat-paginator-range-label,
+                .mat-select-value {
+                    font-size: $ui-grid-secondary-font-size;
+                    line-height: $ui-grid-secondary-font-size;
+                }
+
+                .mat-form-field-infix {
+                    padding: 0;
+
+                    .mat-select {
+                        padding: 0.4375em 0;
+                    }
+                }
+            }
+        }
+
+        &-table-container {
+            position: relative;
+        }
+
+        &-no-data-container {
+            padding: $ui-grid-default-spacing;
+
+            mat-icon {
+                font-size: 32px;
+                width: 32px;
+                height: 32px;
+                margin-left: $ui-grid-default-spacing;
+            }
+
+            p {
+                margin-left: $ui-grid-default-spacing;
+            }
+        }
+
+        &-selection-info-container {
+            button.mat-icon-button,
+            .ui-grid-selection-info-icon {
+                margin-left: 5px;
+            }
+            .ui-grid-selection-info-message {
+                margin-left: $ui-grid-default-spacing * 2;
+            }
+
+            .ui-grid-selection-info-icon {
+                // simulate same size as button
+                outline: none;
+                padding: 8px;
+            }
+
+            &.ui-grid-header-cell {
+                width: 100%;
+                display: flex;
+                justify-content: flex-start;
+                flex-direction: row-reverse;
+                margin-right: $ui-grid-button-size + $ui-grid-row-horizontal-padding;
+            }
+        }
+
+        &-resize-anchor {
+            height: 100%;
+            width: $ui-header-resize-handle-width + $ui-grid-default-spacing;
+            cursor: col-resize;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+
+            mat-icon {
+                margin-right: $ui-grid-default-spacing;
+            }
+        }
+
+        &-dropdown-filter {
+            &-button {
+                text-transform: none !important;
+                font-size: 0.8rem;
+                height: $ui-grid-button-size;
+                line-height: normal;
+                padding-right: 6px;
+
+                .ui-grid-dropdown-filter-title {
+                    font-weight: 700;
+                }
+            }
+        }
+
+        &-filter-option {
+            margin-right: $ui-grid-default-spacing * 2;
+
+            &.ui-grid-search {
+                $search-padding: $ui-grid-default-spacing;
+                bottom: $search-padding;
+                position: relative;
+                height: $ui-grid-header-row-height - $search-padding - 1px;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        &-table {
+            display: block;
+
+            .ui-grid-header-title {
+                width: calc(100% - #{$ui-header-resize-handle-width + $ui-grid-default-spacing});
+                height: 100%;
+                display: inline-flex;
+                align-items: center;
+
+                p {
+                    @extend %ellipse;
+                }
+            }
+
+            .ui-grid-cell-content {
+                @extend %ellipse;
+
+                > * {
+                    @extend %ellipse;
+                }
+            }
+
+            .ui-grid-header-row {
+                font-size: $ui-grid-secondary-font-size;
+                line-height: $ui-grid-secondary-font-size;
+                text-transform: uppercase;
+                height: $ui-grid-header-row-height;
+                position: relative;
+
+                mat-progress-bar {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                }
+            }
+
+            .ui-grid-expanded-row-container {
+                width: 100%;
+                height: 100%;
+                padding: $ui-grid-default-spacing;
+            }
+
+            .ui-grid-row {
+                height: $ui-grid-row-height;
+                font-size: $ui-grid-main-font-size;
+
+                &.ui-grid-row-state-expanded {
+                    height: auto;
+                }
+            }
+
+            .ui-grid-header-row,
+            .ui-grid-row {
+                display: flex;
+                align-items: center;
+                border-width: 0;
+                box-sizing: border-box;
+
+                &:not(.ui-grid-border-none) {
+                    border-style: solid;
+                    border-bottom-width: 1px;
+                }
+            }
+
+            &:not(.ui-grid-table-refreshable) {
+                .ui-grid-action-cell {
+                    min-width: $ui-feature-cell-width;
+                }
+            }
+
+            .ui-grid-cell,
+            .ui-grid-header-cell {
+                flex: 1;
+                flex-basis: auto;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+                word-wrap: break-word;
+
+                &:not(.ui-grid-feature-cell):not(:first-child) {
+                    box-sizing: border-box;
+                    padding: 0 0 0 $ui-grid-default-spacing;
+                }
+
+                &:not(.ui-grid-feature-cell):first-of-type {
+                    padding-left: $ui-grid-row-horizontal-padding;
+
+                    [dir="rtl"] & {
+                        padding-left: 0;
+                        padding-right: $ui-grid-row-horizontal-padding;
+                    }
+                }
+
+                &:not(.ui-grid-feature-cell):last-of-type {
+                    padding-right: $ui-grid-row-horizontal-padding;
+
+                    [dir="rtl"] & {
+                        padding-right: 0;
+                        padding-left: $ui-grid-row-horizontal-padding;
+                    }
+                }
+
+                &.ui-grid-refresh-cell,
+                &.ui-grid-checkbox-cell {
+                    min-width: $ui-feature-cell-width;
+                    justify-content: center;
+                }
+
+                &.ui-grid-action-cell {
+                    position: relative;
+                    width: 0;
+                    padding: 0;
+                    overflow: visible;
+
+                    > div {
+                        display: inline-flex;
+                        justify-content: flex-end;
+                        align-items: center;
+                        position: absolute;
+                        height: $ui-grid-row-height - $ui-row-border-width;
+                        min-width: $ui-feature-cell-width;
+                        padding-right: $ui-grid-default-spacing;
+                        right: 0;
+                        bottom: 0;
+                    }
+                }
+            }
+
+            .ui-grid-sort {
+                &-indicator {
+                    height: $ui-grid-header-row-height - $ui-row-border-width;
+                    align-items: center;
+                    display: flex;
+
+                    &-asc { //sorted asc
+                        .path-desc { // desc path
+                            opacity: 0;
+                        }
+                    }
+                    &-desc { //sorted desc
+                        .path-asc { // asc path
+                            opacity: 0;
+                        }
+                    }
+                }
+            }
+
+            .ui-grid-header-cell {
+                height: $ui-grid-header-row-height - $ui-row-border-width;
+            }
+
+            .ui-grid-cell {
+                height: $ui-grid-row-height - $ui-row-border-width;
+            }
+
+            .ui-grid-header-cell-sortable {
+                cursor: pointer;
+            }
+        }
+
+        &-action-button {
+            position: absolute;
+            right: $ui-grid-button-size;
+            top: -21px;
+            z-index: 2;
+        }
+    }
+}

@@ -54,13 +54,13 @@ describe('Directive: Autofocus', () => {
       const directive = focusedInput.injector.get<UiAutofocusDirective>(UiAutofocusDirective);
 
       spyOn(directive, 'ngOnInit').and.callThrough();
-      spyOn(directive, 'queueFocus').and.callThrough();
+      spyOn(directive, 'enqueueFocus').and.callThrough();
       spyOn(directive, 'focus').and.callThrough();
       spyOn<any>(directive, '_getFocusableNode').and.callThrough();
 
       fixture.detectChanges();
       expect(directive.ngOnInit).toHaveBeenCalledTimes(1);
-      expect(directive.queueFocus).toHaveBeenCalledTimes(1);
+      expect(directive.enqueueFocus).toHaveBeenCalledTimes(1);
       expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
       expect(directive.element).toBeUndefined();
       expect(directive.focus).toHaveBeenCalledTimes(0);
@@ -77,13 +77,13 @@ describe('Directive: Autofocus', () => {
       component.autofocusFlag = false;
 
       spyOn(directive, 'ngOnInit').and.callThrough();
-      spyOn(directive, 'queueFocus').and.callThrough();
+      spyOn(directive, 'enqueueFocus').and.callThrough();
       spyOn(directive, 'focus').and.callThrough();
       spyOn<any>(directive, '_getFocusableNode').and.callThrough();
 
       fixture.detectChanges();
       expect(directive.ngOnInit).toHaveBeenCalledTimes(1);
-      expect(directive.queueFocus).toHaveBeenCalledTimes(1);
+      expect(directive.enqueueFocus).toHaveBeenCalledTimes(1);
 
       tick();
 
@@ -96,14 +96,14 @@ describe('Directive: Autofocus', () => {
       const directive = refocusedInput.injector.get<UiAutofocusDirective>(UiAutofocusDirective);
 
       spyOn(directive, 'ngOnInit').and.callThrough();
-      spyOn(directive, 'queueFocus').and.callThrough();
+      spyOn(directive, 'enqueueFocus').and.callThrough();
       spyOn(directive, 'focus').and.callThrough();
       spyOn<any>(directive, '_getFocusableNode').and.callThrough();
 
       // queue focus
       fixture.detectChanges();
       expect(directive.ngOnInit).toHaveBeenCalledTimes(1);
-      expect(directive.queueFocus).toHaveBeenCalledTimes(1);
+      expect(directive.enqueueFocus).toHaveBeenCalledTimes(1);
       expect(directive.element).toBeUndefined();
       expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
       expect(directive.focus).toHaveBeenCalledTimes(0);
@@ -120,7 +120,7 @@ describe('Directive: Autofocus', () => {
 
       // a new 'focus' should be queued after the refocusFlag becomes true
       fixture.detectChanges();
-      expect(directive.queueFocus).toHaveBeenCalledTimes(2);
+      expect(directive.enqueueFocus).toHaveBeenCalledTimes(2);
       expect(directive.focus).toHaveBeenCalledTimes(1);
       expect(directive.element!.focus).toHaveBeenCalledTimes(0);
 
