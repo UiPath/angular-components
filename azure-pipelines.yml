@@ -40,3 +40,10 @@ steps:
   env:
     VSTS_REGISTRY_TOKEN: $(system.registryToken)
   displayName: 'Bundle Library'
+
+- script: |
+    npm run docs
+    npm run docs:publish
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  displayName: 'Publish Documentation'
+
