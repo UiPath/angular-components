@@ -1,79 +1,147 @@
-import { IDropEvent } from './event-generator';
+import { IDropEvent } from './events';
 import { FakeFileList } from './fake-file-list';
+import { CURSOR_IMG } from './internal';
 import {
   IKey,
   IKeyModifier,
   Key,
 } from './key';
 
-export interface IDropEvent extends Event {
-    dataTransfer: {
-        files: FakeFileList,
-    };
-}
+type KeyOrKeyName = (IKey | keyof Key);
 
-// @dynamic
+/**
+ * Most `unit tests` require user interaction, this collection aims to simplify event dispatching,
+ * by providing a collection of methods and properties that create the most often required `UIEvents`.
+ *
+ * @export
+ * @dynamic
+ */
 export class EventGenerator {
-    static cursor = {
+    private static _cursor = {
         ref: {} as HTMLElement,
         initialize: (parent?: HTMLElement) => {
             if (!parent) { return; }
-            EventGenerator.cursor.ref = document.createElement('div') as HTMLElement;
+            EventGenerator._cursor.ref = document.createElement('div') as HTMLElement;
 
-            EventGenerator.cursor.ref.style.position = 'absolute';
-            EventGenerator.cursor.ref.style.display = 'block';
-            EventGenerator.cursor.ref.style.left = '0px';
-            EventGenerator.cursor.ref.style.top = '0px';
-            EventGenerator.cursor.ref.style.width = '20px';
-            EventGenerator.cursor.ref.style.height = '20px';
-            // tslint:disable-next-line:max-line-length
-            EventGenerator.cursor.ref.style.background = 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAABLFBMVEUAAAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAQECAgIKCgoNDQ0ODg4PDw8TExMVFRUeHh4hISEoKCgvLy89PT1QUFBWVlZaWlpiYmJoaGh3d3d5eXl9fX2IiIiXl5eZmZmmpqaoqKiqqqqrq6usrKywsLC1tbW4uLi8vLzBwcHU1NTc3Nzf39/o6Ojp6ens7Ozw8PD39/f4+Pj5+fn6+vr7+/v8/Pz9/f3///8jvPNLAAAAMnRSTlMAAAEGBxETFRodKDE/Q0ldXmZqeX1/hYeLjZaYmZqbnJ2ep6y0ur3JzNbi4+To7O38/mEAm4cAAADUSURBVHgBXdDlUoZAFMbxxcBu7MAQW8EHsbtDVOxgFX3u/x7EAfeFPTPny2/OhzN/YRhG0yQ6hZoU/nbQ34al4xgez9Cv4SgiHsMuo40b8hQTGt7yh+dw9Ms44QWmCziCkDLVK8zWlFHGX4wwV/uPwxl+kk+BW1/AOJGSZISpAn6Td5s7a1vBeI5DuGZy+PGOxS6rrVrhPfdwyRPPVC+lGB64C7t8xUAF+/xVNLbigUfLpsK67vkWUbW0zzf0KMxC9OLled3RsAEbK16zhqJ9piMP8gvd2SzacwFNVgAAAABJRU5ErkJggg==)';
+            EventGenerator._cursor.ref.style.position = 'absolute';
+            EventGenerator._cursor.ref.style.display = 'block';
+            EventGenerator._cursor.ref.style.left = '0px';
+            EventGenerator._cursor.ref.style.top = '0px';
+            EventGenerator._cursor.ref.style.width = '20px';
+            EventGenerator._cursor.ref.style.height = '20px';
+            EventGenerator._cursor.ref.style.background = CURSOR_IMG;
 
-            parent.appendChild(EventGenerator.cursor.ref);
+            parent.appendChild(EventGenerator._cursor.ref);
         },
         destroy: (parent?: HTMLElement) => {
             if (!parent) { return; }
 
-            parent.removeChild(EventGenerator.cursor.ref);
+            parent.removeChild(EventGenerator._cursor.ref);
         },
         update: (x: number, y: number) => {
-            EventGenerator.cursor.ref.style.left = `${x - 10}px`;
-            EventGenerator.cursor.ref.style.top = `${y - 10}px`;
+            EventGenerator._cursor.ref.style.left = `${x - 10}px`;
+            EventGenerator._cursor.ref.style.top = `${y - 10}px`;
         },
     };
 
+    /**
+     * Gets a `click` event.
+     *
+     */
     static get click(): MouseEvent {
         const event = document.createEvent('MouseEvent');
         event.initEvent('click', true, true);
         return event;
     }
 
+    /**
+     * Gets a `mouseenter` event.
+     *
+     */
     static get mouseEnter(): MouseEvent {
         const event = document.createEvent('MouseEvent');
         event.initEvent('mouseenter', true, true);
         return event;
     }
 
+    /**
+     * Gets a `mouseleave` event.
+     *
+     */
     static get mouseLeave(): MouseEvent {
         const event = document.createEvent('MouseEvent');
         event.initEvent('mouseleave', true, true);
         return event;
     }
 
+    /**
+     * Gets a `dblclick` event.
+     *
+     */
     static get doubleClick(): MouseEvent {
         const event = document.createEvent('MouseEvent');
         event.initEvent('dblclick', true, true);
         return event;
     }
 
-    static keyDown(key: IKey | keyof Key, modifier?: IKeyModifier): KeyboardEvent {
+    /**
+     * Gets a `dragover` event.
+     *
+     */
+    static get dragOver() {
+        const dragOverEvent = new Event('DragEvent');
+        dragOverEvent.initEvent('dragover', true, true);
+        return dragOverEvent;
+    }
+
+    /**
+     * Gets a `dragleave` event.
+     *
+     */
+    static get dragLeave() {
+        const dragOverEvent = new Event('DragEvent');
+        dragOverEvent.initEvent('dragleave', true, true);
+        return dragOverEvent;
+    }
+
+    /**
+     * Gets a `dragEnd` event.
+     *
+     */
+    static get dragEnd() {
+        const dragOverEvent = new Event('DragEvent');
+        dragOverEvent.initEvent('dragend', true, true);
+        return dragOverEvent;
+    }
+
+    /**
+     * KeyDown event generator helper.
+     *
+     * @param key The pressed key.
+     * @param [modifier] The active modifier, if any.
+     * @returns A `keydown` event with the provided key and modifier metadata.
+     */
+    static keyDown(key: KeyOrKeyName, modifier?: IKeyModifier): KeyboardEvent {
         return EventGenerator._key('keydown', key, modifier);
     }
 
-    static keyUp(key: IKey | keyof Key, modifier?: IKeyModifier): KeyboardEvent {
+    /**
+     * KeyUp event generator helper.
+     *
+     * @param key The pressed key.
+     * @param [modifier] The active modifier, if any.
+     * @returns A `keyup` event with the provided key and modifier metadata.
+     */
+    static keyUp(key: KeyOrKeyName, modifier?: IKeyModifier): KeyboardEvent {
         return EventGenerator._key('keyup', key, modifier);
     }
 
+    /**
+     *  Drop event generator, helpful for testing `HTMLInputElement`s of type `file`.
+     *
+     * @param [files=[]] A list of files to associated to the event.
+     * @returns The drop event with the `dataTransfer` and `files` properties populated.
+     */
     static drop(files: File[] = []): IDropEvent {
         const fileList = new FakeFileList(files);
 
@@ -90,7 +158,12 @@ export class EventGenerator {
         return ev as any as IDropEvent;
     }
 
-    static change() {
+    /**
+     * Change event generator helpful for testing `HTMLInputElement`s.
+     *
+     * @returns A simple `change` event.
+     */
+    static change(): Event {
         const fileList = new FakeFileList();
         const changeEvent = new Event('InputEvent');
 
@@ -107,13 +180,25 @@ export class EventGenerator {
         return changeEvent;
     }
 
-    static input() {
+    /**
+     * Generates an input event helpful for testing `HTMLInputElement`s.
+     *
+     * @returns A simple `input` event.
+     */
+    static input(): Event {
         const event = document.createEvent('Event');
         event.initEvent('input', true, true);
         return event;
     }
 
-    static clickXY(offsetX: number, offsetY: number) {
+    /**
+     * Generates a `click` event on the requested X, Y coordinates.
+     *
+     * @param offsetX The X offset value.
+     * @param offsetY The Y offset value.
+     * @returns A `click` event with the `offsetX` and `offsetY` properties populated.
+     */
+    static clickXY(offsetX: number, offsetY: number): MouseEvent {
         const event = this.click;
 
         Object.defineProperty(event, 'offsetX', {
@@ -123,11 +208,18 @@ export class EventGenerator {
             value: offsetY,
         });
 
-        this.cursor.update(offsetX, offsetY);
+        this._cursor.update(offsetX, offsetY);
         return event;
     }
 
-    static moveXY(offsetX: number, offsetY: number) {
+    /**
+     * Generates a `mousemove` event on the requested X, Y coordinates.
+     *
+     * @param offsetX The X offset value.
+     * @param offsetY The Y offset value.
+     * @returns A `mousemove` event with the `offsetX` and `offsetY` properties populated.
+     */
+    static moveXY(offsetX: number, offsetY: number): MouseEvent {
         const event = document.createEvent('MouseEvent');
         event.initEvent('mousemove', true, false);
 
@@ -139,26 +231,8 @@ export class EventGenerator {
             value: offsetY,
         });
 
-        this.cursor.update(offsetX, offsetY);
+        this._cursor.update(offsetX, offsetY);
         return event;
-    }
-
-    static get dragOver() {
-        const dragOverEvent = new Event('DragEvent');
-        dragOverEvent.initEvent('dragover', true, true);
-        return dragOverEvent;
-    }
-
-    static get dragLeave() {
-        const dragOverEvent = new Event('DragEvent');
-        dragOverEvent.initEvent('dragleave', true, true);
-        return dragOverEvent;
-    }
-
-    static get dragEnd() {
-        const dragOverEvent = new Event('DragEvent');
-        dragOverEvent.initEvent('dragend', true, true);
-        return dragOverEvent;
     }
 
     private static _key(type: string, key: IKey | keyof Key, modifier = {} as IKeyModifier) {

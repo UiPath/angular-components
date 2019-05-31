@@ -1,0 +1,17 @@
+ui-grid-search {
+    mat-form-field {
+        width: 140px;
+
+        .mat-form-field-flex {
+            align-items: flex-end;
+        }
+    }
+
+    .ui-grid-search-cancel {
+        cursor: pointer;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}

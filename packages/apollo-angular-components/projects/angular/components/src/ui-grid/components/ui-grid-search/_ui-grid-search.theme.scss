@@ -1,0 +1,10 @@
+@mixin ui-grid-search-theme($theme) {
+    $warn-palette: map-get($theme, "warn");
+
+    .ui-grid-search-cancel {
+        &:hover,
+        &:focus {
+            color: map-get($warn-palette, "default");
+        }
+    }
+}

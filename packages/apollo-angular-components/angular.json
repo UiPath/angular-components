@@ -5,7 +5,7 @@
   "projects": {
     "angular": {
       "root": "projects/angular",
-      "sourceRoot": "projects/angular/src",
+      "sourceRoot": "projects/angular",
       "projectType": "library",
       "prefix": "ui",
       "architect": {
@@ -21,7 +21,15 @@
           "options": {
             "main": "projects/angular/test.ts",
             "tsConfig": "projects/angular/tsconfig.spec.json",
-            "karmaConfig": "projects/angular/karma.conf.js"
+            "karmaConfig": "projects/angular/karma.conf.js",
+            "codeCoverageExclude": [
+              "**/test/**/*",
+              "**/testing/**/*",
+              "**/internal/**/*"
+            ],
+            "styles": [
+              "test.theme.scss"
+            ]
           }
         },
         "lint": {

@@ -1,0 +1,48 @@
+﻿<mat-form-field floatLabel="never">
+       <input [formControl]="search"
+              [placeholder]="placeholder"
+              [attr.maxlength]="maxLength"
+              matInput
+              type="search"
+              autocomplete="off" />
+       <mat-icon (click)="clear()"
+                 (keyup.enter)="clear()"
+                 (keyup.space)="clear()"
+                 [hidden]="!search.value"
+                 [matTooltip]="clearTooltip"
+                 [matTooltipDisabled]="tooltipDisabled"
+                 [attr.aria-label]="clearTooltip"
+                 matSuffix
+                 class="ui-grid-search-cancel"
+                 tabindex="0">
+              <svg width="100%"
+                   height="100%"
+                   viewBox="0 0 20 20"
+                   style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
+                     <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.0011213" />
+              </svg>
+       </mat-icon>
+       <mat-icon *ngIf="!search.value"
+                 [matTooltip]="searchTooltip"
+                 [matTooltipDisabled]="tooltipDisabled"
+                 svgIcon="uipath:search"
+                 matSuffix
+                 class="svg-icon">
+              <svg width="100%"
+                   height="100%"
+                   viewBox="0 0 30 30"
+                   version="1.1"
+                   xmlns="http://www.w3.org/2000/svg"
+                   xmlns:xlink="http://www.w3.org/1999/xlink"
+                   xml:space="preserve"
+                   style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+                     <g transform="matrix(1.46299,0,0,1.46299,-3.8521,-4.123)">
+                            <path
+                                  d="M15.456,14.365L14.882,14.365L14.678,14.169C15.415,13.313 15.821,12.221 15.82,11.091C15.82,8.497 13.685,6.362 11.091,6.362C8.497,6.362 6.362,8.497 6.362,11.091C6.362,13.685 8.497,15.82 11.091,15.82C12.263,15.82 13.339,15.391 14.169,14.678L14.365,14.882L14.365,15.456L18.003,19.087L19.087,18.003L15.456,14.365ZM11.091,14.365C9.28,14.365 7.817,12.903 7.817,11.091C7.817,9.28 9.28,7.817 11.091,7.817C12.903,7.817 14.365,9.28 14.365,11.091C14.365,12.903 12.903,14.365 11.091,14.365Z" />
+                     </g>
+              </svg>
+       </mat-icon>
+</mat-form-field>

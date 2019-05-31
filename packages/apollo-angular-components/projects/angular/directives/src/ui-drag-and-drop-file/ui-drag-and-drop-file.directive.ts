@@ -12,28 +12,61 @@ import {
 } from '@angular/core';
 import { isInternetExplorer } from '@uipath/angular/utilities';
 
+/**
+ * A directive that facilitates `file inputs` and `file drop regions`.
+ *
+ * @export
+ */
 @Directive({
   selector: '[uiDragAndDropFile]',
 })
 export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
+  /**
+   * The accepted `file-type`.
+   *
+   */
   @Input()
   public fileType?: string;
 
+  /**
+   * The element reference that triggers file `browsing`.
+   *
+   */
   @Input()
   public fileBrowseRef?: Element;
 
+  /**
+   * The element reference that serve as a `clear` trigger for the selected files.
+   *
+   */
   @Input()
   public fileClearRef?: Element;
 
+  /**
+   * Configures if the `file area` accepts multiple files.
+   *
+   */
   @Input()
   public multiple = false;
 
+  /**
+   * Configures the `disabled` state of the `file area`.
+   *
+   */
   @Input()
   public disabled = false;
 
+  /**
+   * An event that emits when the file selection state `changes`.
+   *
+   */
   @Output()
   public fileChange = new EventEmitter<File[]>();
 
+  /**
+   * An event that emits when the file selection is `cleared`.
+   *
+   */
   @Output()
   public fileClear = new EventEmitter();
 
@@ -43,6 +76,9 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
   private _disposalCallbacks: Array<() => void> = [];
   private _fileInput: HTMLInputElement;
 
+  /**
+    * @ignore
+    */
   constructor(
     private _elementRef: ElementRef,
     private _renderer: Renderer2,
@@ -54,6 +90,9 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
     this._renderer.appendChild(this._elementRef.nativeElement, this._fileInput);
   }
 
+  /**
+    * @ignore
+    */
   ngAfterViewInit() {
     if (this.multiple) {
       this._renderer.setProperty(this._fileInput, 'multiple', 'true');
@@ -98,12 +137,20 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
     }
   }
 
+  /**
+    * @ignore
+    */
   ngOnDestroy() {
     this._disposalCallbacks.forEach(dispose => {
       dispose();
     });
   }
 
+  /**
+   * Reacts to `drop` events.
+   *
+   * @param ev The `DragEvent` data associated to the `drop`.
+   */
   @HostListener('drop', ['$event'])
   protected _onDrop(ev: DragEvent) {
     this._preventAll(ev);
@@ -112,6 +159,11 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
     this._emitFiles(ev.dataTransfer!.files);
   }
 
+  /**
+   * Marks the `state` as `dragging` when a `dragover` event occurs.
+   *
+   * @param ev The `DragEvent` data associated to the `dragover`.
+   */
   @HostListener('dragover', ['$event'])
   protected _onDragOver(ev: DragEvent) {
     this._preventAll(ev);
@@ -119,6 +171,11 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
     this._isDragging = true;
   }
 
+  /**
+   * Clears the `dragging` `state` when a `dragleave` event occurs.
+   *
+   * @param ev The `DragEvent` data associated to the `dragover`.
+   */
   @HostListener('dragleave', ['$event'])
   protected _onDragLeave(ev: DragEvent) {
     this._preventAll(ev);
@@ -126,12 +183,22 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
     this._isDragging = false;
   }
 
+  /**
+   * Clears the `dragging` `state` when a `dragleave` event occurs.
+   *
+   * @param ev The `DragEvent` data associated to the `dragend`.
+   */
   @HostListener('dragend')
   protected _onDragEnd() {
     if (this.disabled) { return; }
     this._isDragging = false;
   }
 
+  /**
+   * Prevents weird flickering `cross-browser`.
+   *
+   * @param ev The `DragEvent` data associated to the `dragenter`.
+   */
   @HostListener('dragenter', ['$event'])
   protected _onDragEnter(ev: DragEvent) {
     this._preventAll(ev);
