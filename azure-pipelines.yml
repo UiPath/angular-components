@@ -22,21 +22,12 @@ steps:
   displayName: 'Install NPM Dependencies'
 
 - script: |
-    npm run test:coverage
+    git config --global user.email $GIT_USER
+    git config --global user.name $GIT_NAME
+    npm run docs
+    npm run docs:publish
   env:
     VSTS_REGISTRY_TOKEN: $(system.registryToken)
-  displayName: 'Run Tests and Generate Coverage Report'
-
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/*.test.xml'
-    failTaskOnFailedTests: true
-  displayName: 'Publish Test Results'
-
-- script: |
-    npm run build:prod
-    npm run build:theme
-  env:
-    VSTS_REGISTRY_TOKEN: $(system.registryToken)
-  displayName: 'Bundle Library'
+    GIT_USER: $(system.gitUser)
+    GIT_NAME: $(system.gitName)
+  displayName: 'Publish Documentation'
