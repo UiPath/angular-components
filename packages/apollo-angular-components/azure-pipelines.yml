@@ -5,27 +5,48 @@
 
 trigger:
 - master
+- feature/*
+- fix/*
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- script: |
+    echo '##vso[task.setvariable variable=VSTS_REGISTRY_TOKEN]$(system.registryToken)'
+    echo '##vso[task.setvariable variable=CC_TEST_REPORTER_ID]$(system.ccToken)'
+    echo '##vso[task.setvariable variable=GIT_COMMIT_SHA]$(Build.SourceVersion)'
+    echo '##vso[task.setvariable variable=GIT_BRANCH]$(Build.SourceBranchName)'
+  displayName: 'Configure Environment Variables'
+
+- script: |
+    echo $(GIT_COMMIT_SHA)
+    echo $(GIT_BRANCH)
+  displayName: 'Echo Commit SHA and Branch'
+
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
 - script: |
+    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+    chmod +x ./cc-test-reporter
+    ./cc-test-reporter before-build -d
+  displayName: 'Hook Code Climate Coverage Status'
+
+- script: |
     npm i
-  env:
-    VSTS_REGISTRY_TOKEN: $(system.registryToken)
   displayName: 'Install NPM Dependencies'
 
 - script: |
     npm run test:coverage
-  env:
-    VSTS_REGISTRY_TOKEN: $(system.registryToken)
   displayName: 'Run Tests and Generate Coverage Report'
+
+- script: |
+    ./cc-test-reporter format-coverage -d -t lcov ./coverage/lcov.info
+    ./cc-test-reporter upload-coverage -d
+  displayName: 'Publish LCOV result to Code Climate'
 
 - task: PublishTestResults@2
   inputs:
@@ -37,6 +58,4 @@ steps:
 - script: |
     npm run build:prod
     npm run build:theme
-  env:
-    VSTS_REGISTRY_TOKEN: $(system.registryToken)
   displayName: 'Bundle Library'
