@@ -17,30 +17,36 @@ type KeyOrKeyName = (IKey | keyof Key);
  * @dynamic
  */
 export class EventGenerator {
-    private static _cursor = {
+    /**
+     * A cursor utility that draws a cursor icon over the tested component.
+     *
+     * Very useful when testing hover effects.
+     *
+     */
+    public static cursor = {
         ref: {} as HTMLElement,
         initialize: (parent?: HTMLElement) => {
             if (!parent) { return; }
-            EventGenerator._cursor.ref = document.createElement('div') as HTMLElement;
+            EventGenerator.cursor.ref = document.createElement('div') as HTMLElement;
 
-            EventGenerator._cursor.ref.style.position = 'absolute';
-            EventGenerator._cursor.ref.style.display = 'block';
-            EventGenerator._cursor.ref.style.left = '0px';
-            EventGenerator._cursor.ref.style.top = '0px';
-            EventGenerator._cursor.ref.style.width = '20px';
-            EventGenerator._cursor.ref.style.height = '20px';
-            EventGenerator._cursor.ref.style.background = CURSOR_IMG;
+            EventGenerator.cursor.ref.style.position = 'absolute';
+            EventGenerator.cursor.ref.style.display = 'block';
+            EventGenerator.cursor.ref.style.left = '0px';
+            EventGenerator.cursor.ref.style.top = '0px';
+            EventGenerator.cursor.ref.style.width = '20px';
+            EventGenerator.cursor.ref.style.height = '20px';
+            EventGenerator.cursor.ref.style.background = CURSOR_IMG;
 
-            parent.appendChild(EventGenerator._cursor.ref);
+            parent.appendChild(EventGenerator.cursor.ref);
         },
         destroy: (parent?: HTMLElement) => {
             if (!parent) { return; }
 
-            parent.removeChild(EventGenerator._cursor.ref);
+            parent.removeChild(EventGenerator.cursor.ref);
         },
         update: (x: number, y: number) => {
-            EventGenerator._cursor.ref.style.left = `${x - 10}px`;
-            EventGenerator._cursor.ref.style.top = `${y - 10}px`;
+            EventGenerator.cursor.ref.style.left = `${x - 10}px`;
+            EventGenerator.cursor.ref.style.top = `${y - 10}px`;
         },
     };
 
@@ -208,7 +214,7 @@ export class EventGenerator {
             value: offsetY,
         });
 
-        this._cursor.update(offsetX, offsetY);
+        this.cursor.update(offsetX, offsetY);
         return event;
     }
 
@@ -231,7 +237,7 @@ export class EventGenerator {
             value: offsetY,
         });
 
-        this._cursor.update(offsetX, offsetY);
+        this.cursor.update(offsetX, offsetY);
         return event;
     }
 
