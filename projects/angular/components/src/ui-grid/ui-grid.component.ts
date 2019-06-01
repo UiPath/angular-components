@@ -39,14 +39,12 @@ import {
   tap,
 } from 'rxjs/operators';
 
-import {
-  UiGridColumnDirective,
-  UiGridExpandedRowDirective,
-  UiGridRowActionDirective,
-  UiGridRowConfigDirective,
-} from './body';
-import { UiGridFooterDirective } from './footer';
-import { UiGridHeaderDirective } from './header';
+import { UiGridColumnDirective } from './body/ui-grid-column.directive';
+import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
+import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
+import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
+import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
+import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 import {
   DataManager,
   FilterManager,

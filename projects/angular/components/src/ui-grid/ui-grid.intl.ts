@@ -2,7 +2,7 @@ import { OnDestroy } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
-import { IDropdownOption } from './filters';
+import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
 
 /**
  * Internationalization service definition for `UiGrid`.

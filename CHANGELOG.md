@@ -1,3 +1,9 @@
+# v0.9.3 (2019-06-02)
+
+### Fixes:
+
+* **UiGridModule** remove barrel definitions for decorated classes (fixes AOT build issues).
+
 # v0.9.2 (2019-06-01)
 
 ### Features:

@@ -13,7 +13,7 @@ import {
   throttleTime,
 } from 'rxjs/operators';
 
-import { UiGridColumnDirective } from '../../body';
+import { UiGridColumnDirective } from '../../body/ui-grid-column.directive';
 import { IGridDataEntry } from '../../models';
 import {
   cellSelector,
