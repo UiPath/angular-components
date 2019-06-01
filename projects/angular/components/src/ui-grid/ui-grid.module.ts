@@ -13,22 +13,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { UiVirtualScrollViewportResizeModule } from '@uipath/angular/directives';
 
 import { UiSuggestModule } from '../ui-suggest/ui-suggest.module';
-import {
-  UiGridColumnDirective,
-  UiGridExpandedRowDirective,
-  UiGridRowActionDirective,
-  UiGridRowConfigDirective,
-} from './body';
-import { UiGridSearchModule } from './components';
-import {
-  UiGridDropdownFilterDirective,
-  UiGridSearchFilterDirective,
-} from './filters';
-import { UiGridFooterDirective } from './footer';
-import {
-  UiGridHeaderButtonDirective,
-  UiGridHeaderDirective,
-} from './header';
+import { UiGridColumnDirective } from './body/ui-grid-column.directive';
+import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
+import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
+import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
+import { UiGridSearchModule } from './components/ui-grid-search/ui-grid-search.module';
+import { UiGridDropdownFilterDirective } from './filters/ui-grid-dropdown-filter.directive';
+import { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.directive';
+import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
+import { UiGridHeaderButtonDirective } from './header/ui-grid-header-button.directive';
+import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 import { UiGridComponent } from './ui-grid.component';
 
 @NgModule({

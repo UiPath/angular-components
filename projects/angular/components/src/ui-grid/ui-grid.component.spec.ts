@@ -32,7 +32,7 @@ import {
   take,
 } from 'rxjs/operators';
 
-import { IDropdownOption } from './filters';
+import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
 import {
   generateEntity,
   generateListFactory,
