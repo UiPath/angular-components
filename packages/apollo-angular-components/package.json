@@ -1,6 +1,6 @@
 {
-  "name": "angular",
-  "version": "0.9.0",
+  "name": "angular-components",
+  "version": "0.9.1",
   "author": {
     "name": "UiPath Inc",
     "url": "https://github.com/UiPath/angular-components"
@@ -28,7 +28,8 @@
     "start": "ng serve",
     "build": "ng build",
     "build:theme": "scss-bundle -c scss-bundle.config.json",
-    "build:prod": "npm-run-all lint build build:theme",
+    "build:readme": "cpx ./README.md ./dist/angular",
+    "build:prod": "npm-run-all lint build build:theme build:readme",
     "test:watch": "ng test",
     "test:coverage": "ng test --code-coverage --watch=false --browsers ChromeHeadless",
     "lint": "ng lint",
