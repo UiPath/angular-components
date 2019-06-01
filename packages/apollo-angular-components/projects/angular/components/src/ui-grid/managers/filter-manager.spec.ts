@@ -11,9 +11,9 @@ import {
   toArray,
 } from 'rxjs/operators';
 
-import { UiGridColumnDirective } from '../body';
-import { IDropdownOption } from '../filters';
-import { UiGridHeaderDirective } from '../header';
+import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
+import { IDropdownOption } from '../filters/ui-grid-dropdown-filter.directive';
+import { UiGridHeaderDirective } from '../header/ui-grid-header.directive';
 import { FilterManager } from '../managers';
 import {
   generateColumn,

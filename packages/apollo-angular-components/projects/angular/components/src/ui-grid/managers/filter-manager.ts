@@ -3,8 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 
 import { ISuggestValue } from '../../ui-suggest/models';
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
-import { IDropdownOption } from '../filters';
-import { UiGridHeaderDirective } from '../header';
+import { IDropdownOption } from '../filters/ui-grid-dropdown-filter.directive';
+import { UiGridHeaderDirective } from '../header/ui-grid-header.directive';
 import { IFilterModel } from '../models';
 
 /**
