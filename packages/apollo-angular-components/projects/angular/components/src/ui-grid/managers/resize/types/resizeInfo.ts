@@ -1,4 +1,4 @@
-import { UiGridColumnDirective } from '../../../body';
+import { UiGridColumnDirective } from '../../../body/ui-grid-column.directive';
 
 /**
  * @internal

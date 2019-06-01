@@ -12,6 +12,19 @@ export {
 export { UiGridModule } from './ui-grid/ui-grid.module';
 export { UiGridIntl } from './ui-grid/ui-grid.intl';
 export { UiGridComponent } from './ui-grid/ui-grid.component';
-export { IDropdownOption } from './ui-grid/filters';
-export * from './ui-grid/models';
-export * from './ui-grid/managers';
+export { IDropdownOption } from './ui-grid/filters/ui-grid-dropdown-filter.directive';
+export {
+    IFilterModel,
+    IGridDataEntry,
+    ISelectionDiff,
+    ISortModel,
+} from './ui-grid/models';
+export {
+    DataManager,
+    FilterManager,
+    LiveAnnouncerManager,
+    ResizeManager,
+    SelectionManager,
+    ResizeStrategy,
+    SortManager
+} from './ui-grid/managers';
