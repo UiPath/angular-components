@@ -1,3 +1,9 @@
+# v0.9.2 (2019-06-01)
+
+### Features:
+
+* **EventGenerator** expose the `cursor` utility that injects a cursor image, to help visualize UTs.
+
 # v0.9.1 (2019-06-01)
 
 ### First Official Release
