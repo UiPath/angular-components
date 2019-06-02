@@ -1,0 +1,4 @@
+steps:
+  - script: |
+      npm run build:prod
+    displayName: 'Bundle Library'

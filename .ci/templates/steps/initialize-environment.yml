@@ -1,0 +1,20 @@
+steps:
+  - script: |
+      echo '##vso[task.setvariable variable=CC_TEST_REPORTER_ID]$(system.ccToken)'
+      echo '##vso[task.setvariable variable=GIT_COMMIT_SHA]$(Build.SourceVersion)'
+      echo '##vso[task.setvariable variable=GIT_BRANCH]$(Build.SourceBranchName)'
+    displayName: 'Configure Environment Variables'
+
+  - script: |
+      echo $(GIT_COMMIT_SHA)
+      echo $(GIT_BRANCH)
+    displayName: 'Echo Commit SHA and Branch'
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      npm ci
+    displayName: 'Install NPM Dependencies'

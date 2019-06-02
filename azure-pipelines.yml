@@ -1,61 +1,25 @@
-# Node.js with Angular
-# Build a Node.js project that uses Angular.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+jobs:
+  - job: Test
+    pool :
+      vmImage: 'ubuntu-latest'
+    steps:
+      - template: .ci/templates/steps/initialize-environment.yml
+      - template: .ci/templates/steps/test.yml
+        parameters:
+          codeCoverage: 'true'
 
-trigger:
-- master
-- feature/*
-- fix/*
 
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-- script: |
-    echo '##vso[task.setvariable variable=VSTS_REGISTRY_TOKEN]$(system.registryToken)'
-    echo '##vso[task.setvariable variable=CC_TEST_REPORTER_ID]$(system.ccToken)'
-    echo '##vso[task.setvariable variable=GIT_COMMIT_SHA]$(Build.SourceVersion)'
-    echo '##vso[task.setvariable variable=GIT_BRANCH]$(Build.SourceBranchName)'
-  displayName: 'Configure Environment Variables'
-
-- script: |
-    echo $(GIT_COMMIT_SHA)
-    echo $(GIT_BRANCH)
-  displayName: 'Echo Commit SHA and Branch'
-
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
-
-- script: |
-    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-    chmod +x ./cc-test-reporter
-    ./cc-test-reporter before-build -d
-  displayName: 'Hook Code Climate Coverage Status'
-
-- script: |
-    npm ci
-  displayName: 'Install NPM Dependencies'
-
-- script: |
-    npm run test:coverage
-  displayName: 'Run Tests and Generate Coverage Report'
-
-- script: |
-    ./cc-test-reporter format-coverage -d -t lcov ./coverage/lcov.info
-    ./cc-test-reporter upload-coverage -d
-  displayName: 'Publish LCOV result to Code Climate'
-
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/*.test.xml'
-    failTaskOnFailedTests: true
-  displayName: 'Publish Test Results'
-
-- script: |
-    npm run build:prod
-    npm run build:theme
-  displayName: 'Bundle Library'
+  - job: Build
+    pool :
+      vmImage: 'ubuntu-latest'
+    steps:
+      - template: .ci/templates/steps/initialize-environment.yml
+      - template: .ci/templates/steps/create-bundle.yml
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: dist/angular
+          artifactName: '@uipath/angular'
+        displayName: 'Publish @uipath/angular binaries'
+        condition: succeeded()

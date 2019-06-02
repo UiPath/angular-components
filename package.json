@@ -31,6 +31,7 @@
     "build:readme": "cpx ./README.md ./dist/angular",
     "build:prod": "npm-run-all lint build build:theme build:readme",
     "test:watch": "ng test",
+    "test:headless": "ng test --watch=false --browsers ChromeHeadless",
     "test:coverage": "ng test --code-coverage --watch=false --browsers ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e",
