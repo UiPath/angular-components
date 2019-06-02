@@ -1,15 +1,19 @@
-# Node.js with Angular
-# Build a Node.js project that uses Angular.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-pool:
-  vmImage: 'ubuntu-latest'
+jobs:
+  - job: Test
+    pool :
+      vmImage: 'ubuntu-latest'
+    steps:
+      - template: .ci/templates/steps/initialize-environment.yml
+      - template: .ci/templates/steps/test.yml
+        parameters:
+          codeCoverage: 'true'
 
-steps:
-- template: .ci/templates/steps/initialize-environment.yml
 
-- template: .ci/templates/steps/test.yml
-  parameters:
-    codeCoverage: 'true'
-
-- template: .ci/templates/steps/create-bundle.yml
+  - job: Build
+    pool :
+      vmImage: 'ubuntu-latest'
+    steps:
+      - template: .ci/templates/steps/initialize-environment.yml
+      - template: .ci/templates/steps/create-bundle.yml
