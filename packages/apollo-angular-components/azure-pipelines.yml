@@ -17,3 +17,9 @@ jobs:
     steps:
       - template: .ci/templates/steps/initialize-environment.yml
       - template: .ci/templates/steps/create-bundle.yml
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: dist/angular
+          artifactName: '@uipath/angular'
+        displayName: 'Publish @uipath/angular binaries'
+        condition: succeeded()
