@@ -3,7 +3,11 @@ import { BehaviorSubject } from 'rxjs';
 
 import { ISuggestValue } from '../../ui-suggest/models';
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
-import { IDropdownOption } from '../filters/ui-grid-dropdown-filter.directive';
+import {
+  IDropdownOption,
+  UiGridDropdownFilterDirective,
+} from '../filters/ui-grid-dropdown-filter.directive';
+import { UiGridSearchFilterDirective } from '../filters/ui-grid-search-filter.directive';
 import { UiGridHeaderDirective } from '../header/ui-grid-header.directive';
 import { IFilterModel } from '../models';
 
@@ -27,30 +31,18 @@ export class FilterManager<T> {
 
     public set columns(columns: UiGridColumnDirective<T>[]) {
         this._columns = columns;
-        this._filterUpdate();
+        this._emitFilterOptions();
     }
 
     public destroy() {
         this.filter$.complete();
     }
 
-    public searchableDropdownUpdate(column?: UiGridColumnDirective<T>, value?: ISuggestValue) {
-        if (column) {
-            column.searchableDropdown!.updateValue(value);
-            column.searchableDropdown!.filterChange.emit(value ? this._mapSearchableDropdownItem(column) : null);
-        }
+    public searchableDropdownUpdate = (column?: UiGridColumnDirective<T>, value?: ISuggestValue) =>
+        this._updateFilterValue(column, value, this._mapSearchableDropdownItem)
 
-        this._filterUpdate();
-    }
-
-    public dropdownUpdate(column?: UiGridColumnDirective<T>, value?: IDropdownOption) {
-        if (column) {
-            column.dropdown!.updateValue(value);
-            column.dropdown!.filterChange.emit(value ? this._mapDropdownItem(column) : null);
-        }
-
-        this._filterUpdate();
-    }
+    public dropdownUpdate = (column?: UiGridColumnDirective<T>, value?: IDropdownOption) =>
+        this._updateFilterValue(column, value, this._mapDropdownItem)
 
     public searchChange(term: string | undefined, header: UiGridHeaderDirective<T>) {
         const searchFilterCollection: IFilterModel<T>[] = !!term ?
@@ -68,19 +60,32 @@ export class FilterManager<T> {
         header.searchFilter.emit(searchFilterCollection);
     }
 
-    private _filterUpdate() {
+    private _updateFilterValue = (
+        column: UiGridColumnDirective<T> | undefined,
+        value: ISuggestValue | IDropdownOption | undefined,
+        mapper: (column: UiGridColumnDirective<T>) => IFilterModel<T>,
+    ): void => {
+        if (!column) { return; }
+
+        const dropdown = column.dropdown || column.searchableDropdown;
+
+        if (!dropdown) { return; }
+
+        (dropdown as {
+            updateValue: (value: ISuggestValue | IDropdownOption | undefined) => void
+        }).updateValue(value);
+        dropdown.filterChange.emit(value ? mapper(column) : null);
+
+        this._emitFilterOptions();
+    }
+
+    private _emitFilterOptions = () => {
         const dropdownFilters = this._columns
-            .filter(c =>
-                !!c.dropdown &&
-                c.dropdown.value,
-            )
+            .filter(({ dropdown }) => this._hasFilterValue(dropdown))
             .map(this._mapDropdownItem);
 
         const searchableFilters = this._columns
-            .filter(c =>
-                !!c.searchableDropdown &&
-                c.searchableDropdown.value,
-            )
+            .filter(({ searchableDropdown }) => this._hasFilterValue(searchableDropdown))
             .map(this._mapSearchableDropdownItem);
 
         const updatedFilters = [...dropdownFilters, ...searchableFilters];
@@ -89,6 +94,10 @@ export class FilterManager<T> {
 
         this.filter$.next([...dropdownFilters, ...searchableFilters]);
     }
+
+    private _hasFilterValue = (dropdown?: UiGridSearchFilterDirective<T> | UiGridDropdownFilterDirective<T>) =>
+        !!dropdown &&
+        dropdown.value
 
     private _mapDropdownItem = (column: UiGridColumnDirective<T>) => ({
         method: column.dropdown!.method,
