@@ -156,35 +156,27 @@ export class UiSecondFormatDirective extends UiFormat {
         return `${daysLabel} ${hoursLabel} ${minutesLabel} ${secondsLabel}`.trim();
     }
 
-    private _dayFormat = (locale: IMomentRelativeLocale, days: number) => {
-        const formatter = days === 1 ? locale.d : locale.dd;
 
-        if (typeof formatter === 'string') {
-            return formatter.replace('%d', days.toString());
+    private _formatFactory = (
+        formatSingular: keyof IMomentRelativeLocale,
+        formatPlural: keyof IMomentRelativeLocale,
+    ) =>
+        (locale: IMomentRelativeLocale, value: number) => {
+            const formatter = value === 1 ? locale[formatSingular] : locale[formatPlural];
+
+            if (typeof formatter === 'string') {
+                return formatter.replace('%d', value.toString());
+            }
+
+            return formatter(value, true, formatPlural);
         }
 
-        return formatter(days, true, 'dd');
-    }
-
-    private _hourFormat = (locale: IMomentRelativeLocale, hours: number) => {
-        const formatter = hours === 1 ? locale.h : locale.hh;
-
-        if (typeof formatter === 'string') {
-            return formatter.replace('%d', hours.toString());
-        }
-
-        return formatter(hours, true, 'hh');
-    }
-
-    private _minuteFormat = (locale: IMomentRelativeLocale, minutes: number) => {
-        const formatter = minutes === 1 ? locale.m : locale.mm;
-
-        if (typeof formatter === 'string') {
-            return formatter.replace('%d', minutes.toString());
-        }
-
-        return formatter(minutes, true, 'mm');
-    }
+    // tslint:disable-next-line: member-ordering
+    private _dayFormat = this._formatFactory('d', 'dd');
+    // tslint:disable-next-line: member-ordering
+    private _hourFormat = this._formatFactory('h', 'hh');
+    // tslint:disable-next-line: member-ordering
+    private _minuteFormat = this._formatFactory('m', 'mm');
 
     private _secondFormat = (locale: IMomentRelativeLocale, seconds: number, remainder: number) =>
         typeof locale.ss === 'string' ?
