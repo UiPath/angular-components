@@ -4,8 +4,6 @@ import {
   Inject,
   InjectionToken,
   Input,
-  OnChanges,
-  OnDestroy,
   Optional,
   Renderer2,
 } from '@angular/core';
@@ -15,7 +13,6 @@ import {
   merge,
   Observable,
   of,
-  Subject,
 } from 'rxjs';
 import {
   distinctUntilChanged,
@@ -23,6 +20,8 @@ import {
   map,
   takeUntil,
 } from 'rxjs/operators';
+
+import { UiFormat } from '../internal/ui-format';
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670
@@ -87,16 +86,14 @@ export const UI_SECONDFORMAT_OPTIONS = new InjectionToken<Observable<void>>('UiS
 @Directive({
     selector: '[uiSecondFormat], ui-secondformat',
 })
-export class UiSecondFormatDirective implements OnChanges, OnDestroy {
+export class UiSecondFormatDirective extends UiFormat {
     /**
      * The number of `seconds` that need to be formatted.
      *
      */
     @Input() public seconds?: number;
 
-    private _text?: HTMLElement;
-    private _destroyed$ = new Subject();
-    private _redraw$ = new Subject();
+    protected _text?: HTMLElement;
 
     /**
      * @ignore
@@ -105,9 +102,14 @@ export class UiSecondFormatDirective implements OnChanges, OnDestroy {
         @Inject(UI_SECONDFORMAT_OPTIONS)
         @Optional()
         options: ISecondFormatOptions,
-        private _ref: ElementRef,
-        private _renderer: Renderer2,
+        renderer: Renderer2,
+        elementRef: ElementRef,
     ) {
+        super(
+            renderer,
+            elementRef
+        );
+
         options = options || {};
         const redraw$ = options.redraw$ || of(null);
 
@@ -123,28 +125,11 @@ export class UiSecondFormatDirective implements OnChanges, OnDestroy {
             ).subscribe(label => {
                 if (!this._text) {
                     this._text = this._renderer.createText(label);
-                    this._renderer.appendChild(this._ref.nativeElement, this._text);
+                    this._renderer.appendChild(this._elementRef.nativeElement, this._text);
                 } else {
                     this._renderer.setValue(this._text, label);
                 }
             });
-    }
-
-    /**
-     * @ignore
-     */
-    ngOnChanges() {
-        this._redraw$.next();
-    }
-
-    /**
-     * @ignore
-     */
-    ngOnDestroy() {
-        if (this._text) {
-            this._renderer.removeChild(this._ref.nativeElement, this._text);
-        }
-        this._destroyed$.next();
     }
 
     private _evaluate(value: number = 0) {
