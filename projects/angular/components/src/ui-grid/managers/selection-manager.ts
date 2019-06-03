@@ -53,15 +53,11 @@ export class SelectionManager<T extends IGridDataEntry> {
         }
     }
 
-    public select(...values: T[]): void {
-        values.forEach(value => this._markSelected(value));
-        this._emitChangeEvent();
-    }
+    public select = (...values: T[]): void =>
+        this._updateState(this._markSelected, values)
 
-    public deselect(...values: T[]): void {
-        values.forEach(value => this._unmarkSelected(value));
-        this._emitChangeEvent();
-    }
+    public deselect = (...values: T[]): void =>
+        this._updateState(this._unmarkSelected, values)
 
     public toggle(value: T): void {
         this.isSelected(value) ? this.deselect(value) : this.select(value);
@@ -94,6 +90,11 @@ export class SelectionManager<T extends IGridDataEntry> {
         this._selectionSnapshot.clear();
     }
 
+    private _updateState = (predicate: (value: T) => void, values: T[]) => {
+        values.forEach(predicate);
+        this._emitChangeEvent();
+    }
+
     private _emitChangeEvent() {
         if (this._selectedToEmit.length || this._deselectedToEmit.length) {
             this.changed$.next({
@@ -107,7 +108,7 @@ export class SelectionManager<T extends IGridDataEntry> {
         }
     }
 
-    private _markSelected(value: T) {
+    private _markSelected = (value: T) => {
         if (!this.isSelected(value)) {
             this._selection.set(value.id, cloneDeep(value));
 
@@ -117,7 +118,7 @@ export class SelectionManager<T extends IGridDataEntry> {
         }
     }
 
-    private _unmarkSelected(value: T) {
+    private _unmarkSelected = (value: T) => {
         if (this.isSelected(value)) {
             this._selection.delete(value.id);
 
