@@ -157,13 +157,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiGridModule.html" data-type="entity-link">UiGridModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-UiGridModule-1988a49d1836910476f800713ec477d3"' : 'data-target="#xs-components-links-module-UiGridModule-1988a49d1836910476f800713ec477d3"' }>
+                                            'data-target="#components-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' : 'data-target="#xs-components-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiGridModule-1988a49d1836910476f800713ec477d3"' :
-                                            'id="xs-components-links-module-UiGridModule-1988a49d1836910476f800713ec477d3"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' :
+                                            'id="xs-components-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' }>
                                             <li class="link">
                                                 <a href="components/UiGridComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiGridComponent</a>
@@ -172,13 +172,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiGridModule-1988a49d1836910476f800713ec477d3"' : 'data-target="#xs-directives-links-module-UiGridModule-1988a49d1836910476f800713ec477d3"' }>
+                                        'data-target="#directives-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' : 'data-target="#xs-directives-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiGridModule-1988a49d1836910476f800713ec477d3"' :
-                                        'id="xs-directives-links-module-UiGridModule-1988a49d1836910476f800713ec477d3"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' :
+                                        'id="xs-directives-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' }>
                                         <li class="link">
                                             <a href="directives/UiGridColumnDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiGridColumnDirective</a>
@@ -331,43 +331,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                 </ul>
                 </li>
-                        <li class="chapter">
-                            <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#directives-links"' :
-                                'data-target="#xs-directives-links"' }>
-                                <span class="icon ion-md-code-working"></span>
-                                <span>Directives</span>
-                                <span class="icon ion-ios-arrow-down"></span>
-                            </div>
-                            <ul class="links collapse" ${ isNormalMode ? 'id="directives-links"' : 'id="xs-directives-links"' }>
-                                <li class="link">
-                                    <a href="directives/UiGridColumnDirective.html" data-type="entity-link">UiGridColumnDirective</a>
-                                </li>
-                                <li class="link">
-                                    <a href="directives/UiGridDropdownFilterDirective.html" data-type="entity-link">UiGridDropdownFilterDirective</a>
-                                </li>
-                                <li class="link">
-                                    <a href="directives/UiGridExpandedRowDirective.html" data-type="entity-link">UiGridExpandedRowDirective</a>
-                                </li>
-                                <li class="link">
-                                    <a href="directives/UiGridFooterDirective.html" data-type="entity-link">UiGridFooterDirective</a>
-                                </li>
-                                <li class="link">
-                                    <a href="directives/UiGridHeaderButtonDirective.html" data-type="entity-link">UiGridHeaderButtonDirective</a>
-                                </li>
-                                <li class="link">
-                                    <a href="directives/UiGridHeaderDirective.html" data-type="entity-link">UiGridHeaderDirective</a>
-                                </li>
-                                <li class="link">
-                                    <a href="directives/UiGridRowActionDirective.html" data-type="entity-link">UiGridRowActionDirective</a>
-                                </li>
-                                <li class="link">
-                                    <a href="directives/UiGridRowConfigDirective.html" data-type="entity-link">UiGridRowConfigDirective</a>
-                                </li>
-                                <li class="link">
-                                    <a href="directives/UiGridSearchFilterDirective.html" data-type="entity-link">UiGridSearchFilterDirective</a>
-                                </li>
-                            </ul>
-                        </li>
                     <li class="chapter">
                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#classes-links"' :
                             'data-target="#xs-classes-links"' }>
