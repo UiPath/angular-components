@@ -75,7 +75,9 @@ class UiVirtualScrollRangeLoaderFixtureComponent {
 
     public lastRangeLoad?: ListRange;
 
-    @ViewChild('viewport')
+    @ViewChild('viewport', {
+        static: true,
+    })
     public viewport!: CdkVirtualScrollViewport;
 
     public rangeLoad(range: ListRange) {

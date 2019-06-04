@@ -71,7 +71,9 @@ describe('Component: UiGrid', () => {
         `,
     })
     class TestFixtureSimpleGridComponent {
-        @ViewChild(UiGridComponent)
+        @ViewChild(UiGridComponent, {
+            static: true,
+        })
         public grid!: UiGridComponent<ITestEntity>;
 
         public data: ITestEntity[] = [];
@@ -469,7 +471,9 @@ describe('Component: UiGrid', () => {
         `,
     })
     class TestFixtureGridHeaderActionsComponent {
-        @ViewChild(UiGridComponent)
+        @ViewChild(UiGridComponent, {
+            static: true,
+        })
         public grid!: UiGridComponent<ITestEntity>;
 
         public data: ITestEntity[] = [];
@@ -594,7 +598,9 @@ describe('Component: UiGrid', () => {
         `,
     })
     class TestFixtureGridHeaderWithFilterComponent {
-        @ViewChild(UiGridComponent)
+        @ViewChild(UiGridComponent, {
+            static: true,
+        })
         public grid!: UiGridComponent<ITestEntity>;
 
         public data: ITestEntity[] = [];
@@ -1100,7 +1106,9 @@ describe('Component: UiGrid', () => {
         `,
     })
     class TestFixtureGridFooterComponent {
-        @ViewChild(UiGridComponent)
+        @ViewChild(UiGridComponent, {
+            static: true,
+        })
         public grid!: UiGridComponent<ITestEntity>;
         public data: ITestEntity[] = [];
         public total = 0;

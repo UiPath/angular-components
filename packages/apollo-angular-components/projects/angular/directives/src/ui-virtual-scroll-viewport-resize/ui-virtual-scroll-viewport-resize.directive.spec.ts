@@ -54,7 +54,9 @@ const VIEWPORT_HEIGHT = ITEM_SIZE * ITEMS_IN_VIEWPORT;
     encapsulation: ViewEncapsulation.None,
 })
 class UiVirtualScrollViewportResizeFixtureComponent {
-    @ViewChild('viewport')
+    @ViewChild('viewport', {
+        static: true,
+    })
     public viewport!: CdkVirtualScrollViewport;
 
     public length = 5;
