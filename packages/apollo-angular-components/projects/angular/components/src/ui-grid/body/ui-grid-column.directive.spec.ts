@@ -34,7 +34,9 @@ import { UiGridColumnDirective } from './ui-grid-column.directive';
     `,
 })
 class TestFixtureComponent {
-    @ViewChild(UiGridColumnDirective)
+    @ViewChild(UiGridColumnDirective, {
+        static: true,
+    })
     public column!: UiGridColumnDirective<any>;
 
     public visible?: boolean;

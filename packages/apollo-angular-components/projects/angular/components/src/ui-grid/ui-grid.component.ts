@@ -244,7 +244,9 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      * @ignore
      */
-    @ContentChild(UiGridRowConfigDirective)
+    @ContentChild(UiGridRowConfigDirective, {
+        static: true,
+    })
     public rowConfig?: UiGridRowConfigDirective<T>;
 
     /**
@@ -252,7 +254,9 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      * @ignore
      */
-    @ContentChild(UiGridRowActionDirective)
+    @ContentChild(UiGridRowActionDirective, {
+        static: true,
+    })
     public actions?: UiGridRowActionDirective;
 
     /**
@@ -260,7 +264,9 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      * @ignore
      */
-    @ContentChild(UiGridFooterDirective)
+    @ContentChild(UiGridFooterDirective, {
+        static: true,
+    })
     public footer?: UiGridFooterDirective;
 
     /**
@@ -268,7 +274,9 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      * @ignore
      */
-    @ContentChild(UiGridHeaderDirective)
+    @ContentChild(UiGridHeaderDirective, {
+        static: true,
+    })
     public header?: UiGridHeaderDirective<T>;
 
     /**
@@ -284,7 +292,9 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      * @ignore
      */
-    @ContentChild(UiGridExpandedRowDirective)
+    @ContentChild(UiGridExpandedRowDirective, {
+        static: true,
+    })
     public expandedRow?: UiGridExpandedRowDirective;
 
     /**
@@ -493,6 +503,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this.sortChange.complete();
         this.rendered.complete();
         this.columns$.complete();
+        this.visible$.complete();
         this.isAnyFilterDefined$.complete();
 
         this.dataManager.destroy();

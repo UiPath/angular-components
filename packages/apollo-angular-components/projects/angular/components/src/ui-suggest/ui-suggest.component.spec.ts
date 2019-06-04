@@ -51,7 +51,9 @@ import { UiSuggestModule } from './ui-suggest.module';
 type SuggestProperties = 'disabled' | 'readonly';
 
 class UiSuggestFixture {
-    @ViewChild(UiSuggestComponent)
+    @ViewChild(UiSuggestComponent, {
+        static: true,
+    })
     public uiSuggest!: UiSuggestComponent;
 
     // tslint:disable-next-line: no-inferrable-types

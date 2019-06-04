@@ -458,7 +458,7 @@ export class UiSuggestComponent extends UiSuggestMatFormField
     private _scrollTo$ = new Subject<number>();
     private _rangeLoad$ = new Subject<ListRange>();
 
-    @ViewChild(CdkVirtualScrollViewport)
+    @ViewChild(CdkVirtualScrollViewport, { static: false })
     private _virtualScroller?: CdkVirtualScrollViewport;
 
     private _inputChange$: Observable<string>;
