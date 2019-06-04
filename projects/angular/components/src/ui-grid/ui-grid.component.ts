@@ -503,6 +503,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this.sortChange.complete();
         this.rendered.complete();
         this.columns$.complete();
+        this.visible$.complete();
         this.isAnyFilterDefined$.complete();
 
         this.dataManager.destroy();
