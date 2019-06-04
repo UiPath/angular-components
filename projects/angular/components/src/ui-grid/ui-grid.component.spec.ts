@@ -103,6 +103,10 @@ describe('Component: UiGrid', () => {
             grid = component.grid;
         });
 
+        afterEach(() => {
+            fixture.destroy();
+        });
+
         describe('Configuration: grid with columns and rows', () => {
             beforeEach(() => {
                 component.refreshable = false;
@@ -502,6 +506,10 @@ describe('Component: UiGrid', () => {
             grid.data = generateListFactory(generateEntity)();
         });
 
+        afterEach(() => {
+            fixture.destroy();
+        });
+
         describe('Configuration: without search', () => {
             beforeEach(() => {
                 component.search = false;
@@ -638,6 +646,10 @@ describe('Component: UiGrid', () => {
             component = fixture.componentInstance;
             grid = component.grid;
             grid.data = generateListFactory(generateEntity)();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
         });
 
         describe('Configuration: without search', () => {
@@ -1139,6 +1151,10 @@ describe('Component: UiGrid', () => {
             fixture.detectChanges();
         });
 
+        afterEach(() => {
+            fixture.destroy();
+        });
+
         describe('State: populated', () => {
 
             it('should render pagination', () => {
@@ -1212,6 +1228,96 @@ describe('Component: UiGrid', () => {
                 expect(pageIndex).toEqual(2);
                 expect(pageSize).toEqual(component.pageSize);
                 expect(length).toEqual(component.data.length);
+            });
+        });
+    });
+
+    @Component({
+        template: `
+            <ui-grid [data]="data">
+                <ui-grid-header [search]="true">
+                </ui-grid-header>
+                <ui-grid-column [property]="'myNumber'"
+                                [sortable]="true"
+                                title="Number Header"
+                                width="50%">
+                </ui-grid-column>
+                <ui-grid-column [property]="'myString'"
+                                title="String Header"
+                                width="50%">
+                </ui-grid-column>
+                <ui-grid-footer [length]="data.length"
+                                [pageSize]="10"
+                                [pageSizes]="[10, 15, 20]"
+                                [hidePageSize]="false"
+                                (pageChange)="lastPageChange = $event">
+                </ui-grid-footer>
+            </ui-grid>
+        `,
+    })
+    class TestFixtureGridCompleteComponent {
+        @ViewChild(UiGridComponent, {
+            static: true,
+        })
+        public grid!: UiGridComponent<ITestEntity>;
+        public data: ITestEntity[] = [];
+    }
+    describe('Scenario: grid with footer', () => {
+        let fixture: ComponentFixture<TestFixtureGridCompleteComponent>;
+        let component: TestFixtureGridCompleteComponent;
+        let data: ITestEntity[];
+
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    UiGridModule,
+                    NoopAnimationsModule,
+                ],
+                declarations: [TestFixtureGridCompleteComponent],
+            });
+
+            fixture = TestBed.createComponent(TestFixtureGridCompleteComponent);
+            component = fixture.componentInstance;
+            data = generateListFactory(generateEntity)(6);
+            component.data = data;
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should close all streams when ngOnDestroy is called', () => {
+            fixture.detectChanges();
+
+            const destroySpyList = [
+                component.grid.dataManager,
+                component.grid.resizeManager,
+                component.grid.sortManager,
+                component.grid.selectionManager,
+                component.grid.filterManager,
+                component.grid.liveAnnouncerManager!,
+                component.grid['_performanceMonitor'],
+            ].map(destroyableClass => spyOn(destroyableClass, 'destroy'));
+
+            const completeSpyList = [
+                component.grid.columns$,
+                component.grid.visible$,
+                component.grid.isAnyFilterDefined$,
+                component.grid.sortChange,
+                component.grid.rendered,
+                component.grid['_destroyed$'],
+                component.grid['_configure$'],
+            ].map(completableStream => spyOn(completableStream, 'complete'));
+
+            component.grid.ngOnDestroy();
+
+            [
+                ...destroySpyList,
+                ...completeSpyList,
+            ].forEach(destroySpy => {
+                expect(destroySpy).toHaveBeenCalled();
+                expect(destroySpy).toHaveBeenCalledTimes(1);
             });
         });
     });
