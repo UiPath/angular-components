@@ -1,0 +1,4 @@
+  steps:
+    - script: |
+        npm ci
+      displayName: 'Install NPM Dependencies'
