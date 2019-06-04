@@ -4,3 +4,11 @@ exclude_patterns:
 - '**/*.spec.ts'
 - '**/*.d.ts'
 - '**/node_modules/'
+
+checks:
+  method-lines:
+    config:
+      threshold: 50
+
+  file-lines:
+    enabled: false
