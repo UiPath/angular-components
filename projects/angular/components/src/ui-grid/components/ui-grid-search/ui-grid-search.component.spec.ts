@@ -35,7 +35,9 @@ import { UiGridSearchModule } from './ui-grid-search.module';
     `,
 })
 class TestFixtureComponent {
-    @ViewChild(UiGridSearchComponent)
+    @ViewChild(UiGridSearchComponent, {
+        static: true,
+    })
     public search!: UiGridSearchComponent;
 
     public debounce?: number;

@@ -39,7 +39,9 @@ class TestHostComponent {
     public contentType?: DisplayType;
     public titleType?: DisplayType;
 
-    @ViewChild(UiDateFormatDirective)
+    @ViewChild(UiDateFormatDirective, {
+        static: true,
+    })
     public uiDateFormat!: UiDateFormatDirective;
 }
 
