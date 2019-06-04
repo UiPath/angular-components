@@ -25,7 +25,9 @@ import {
 class TestHostComponent {
     public seconds?: number;
 
-    @ViewChild(UiSecondFormatDirective)
+    @ViewChild(UiSecondFormatDirective, {
+        static: true,
+    })
     public uiSecondFormat!: UiSecondFormatDirective;
 }
 

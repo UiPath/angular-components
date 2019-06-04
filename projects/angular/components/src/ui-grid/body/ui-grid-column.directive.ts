@@ -166,21 +166,27 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      * The searchable dropdown directive reference.
      * @ignore
      */
-    @ContentChild(UiGridSearchFilterDirective)
+    @ContentChild(UiGridSearchFilterDirective, {
+        static: true,
+    })
     public searchableDropdown?: UiGridSearchFilterDirective<T>;
 
     /**
      * The dropdown directive reference.
      * @ignore
      */
-    @ContentChild(UiGridDropdownFilterDirective)
+    @ContentChild(UiGridDropdownFilterDirective, {
+        static: true,
+    })
     public dropdown?: UiGridDropdownFilterDirective<T>;
 
     /**
      * The view template associated to the row cell.
      * @ignore
      */
-    @ContentChild(TemplateRef)
+    @ContentChild(TemplateRef, {
+        static: true,
+    })
     public html?: TemplateRef<any>;
 
     /**
