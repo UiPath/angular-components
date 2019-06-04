@@ -63,6 +63,7 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilter<T> implements O
    * @ignore
    */
   ngOnDestroy() {
+    super.ngOnDestroy();
     this.filterChange.complete();
   }
 }
