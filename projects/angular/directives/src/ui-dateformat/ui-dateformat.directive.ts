@@ -6,8 +6,6 @@ import {
   Inject,
   InjectionToken,
   Input,
-  OnChanges,
-  OnDestroy,
   Optional,
   Renderer2,
 } from '@angular/core';
@@ -18,12 +16,13 @@ import {
   merge,
   Observable,
   of,
-  Subject,
 } from 'rxjs';
 import {
   filter,
   takeUntil,
 } from 'rxjs/operators';
+
+import { UiFormat } from '../internal/ui-format';
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670
@@ -79,7 +78,7 @@ const RELATIVE_TIME_UPDATE_INTERVAL = 10000;
 @Directive({
     selector: '[uiDateFormat], ui-dateformat',
 })
-export class UiDateFormatDirective implements OnChanges, OnDestroy {
+export class UiDateFormatDirective extends UiFormat {
     /**
      * What format should the content have, `absolute` or `relative`.
      *
@@ -115,6 +114,8 @@ export class UiDateFormatDirective implements OnChanges, OnDestroy {
     @Input()
     public dateFormat = 'L LTS';
 
+    protected _text?: HTMLElement;
+
     private get _relativeTime() {
         if (!this.date) { return ''; }
         if (!(this.date instanceof Date)) { return this.date; }
@@ -132,13 +133,10 @@ export class UiDateFormatDirective implements OnChanges, OnDestroy {
             .format(this.dateFormat);
     }
 
-    private _text?: HTMLElement;
     private _lastAbsoluteTime?: string;
     private _lastRelativeTime?: string;
     private _lastContentType?: DisplayType;
     private _lastTitleType?: DisplayType;
-    private _redraw$ = new Subject();
-    private _destroyed$ = new Subject();
 
     /**
      * @ignore
@@ -147,9 +145,14 @@ export class UiDateFormatDirective implements OnChanges, OnDestroy {
         @Inject(UI_DATEFORMAT_OPTIONS)
         @Optional()
         options: IDateFormatOptions,
-        private _renderer: Renderer2,
-        private _elementRef: ElementRef,
+        renderer: Renderer2,
+        elementRef: ElementRef,
     ) {
+        super(
+            renderer,
+            elementRef
+        );
+
         options = options || {};
 
         this.timezone = options.timezone;
@@ -169,22 +172,6 @@ export class UiDateFormatDirective implements OnChanges, OnDestroy {
                 takeUntil(this._destroyed$),
             )
             .subscribe(() => this._evaluate());
-    }
-
-    /**
-     * @ignore
-     */
-    ngOnChanges() {
-        this._redraw$.next();
-    }
-    /**
-     * @ignore
-     */
-    ngOnDestroy() {
-        if (this._text) {
-            this._renderer.removeChild(this._elementRef.nativeElement, this._text);
-        }
-        this._destroyed$.next();
     }
 
     private _evaluate() {
