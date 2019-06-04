@@ -71,6 +71,7 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilter<T> implements
      * @ignore
      */
     ngOnDestroy() {
+        super.ngOnDestroy();
         this.filterChange.complete();
     }
 }
