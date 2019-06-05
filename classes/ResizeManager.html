@@ -1,0 +1,898 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>UiPath Angular Components</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">UiPath Angular Components</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li>ResizeManager</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/angular/components/src/ui-grid/managers/resize/resize-manager.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#current">current</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#handleResize">handleResize</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isResizing">isResizing</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#destroy">destroy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#endResize">endResize</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#setupState">setupState</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#startResize">startResize</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#stop">stop</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_grid: <a href="../classes/ResizableGrid.html">ResizableGrid<T></a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">projects/angular/components/src/ui-grid/managers/resize/resize-manager.ts:85</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_grid</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/ResizableGrid.html" target="_self" >ResizableGrid&lt;T&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="current"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                                <span class="modifier">Optional</span>
+                            current</b>
+                            <a href="#current"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/IResizeInfo.html" target="_self" >IResizeInfo&lt;T&gt;</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/angular/components/src/ui-grid/managers/resize/resize-manager.ts:35</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="handleResize"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            handleResize</b>
+                            <a href="#handleResize"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">projects/angular/components/src/ui-grid/managers/resize/resize-manager.ts:116</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isResizing"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            isResizing</b>
+                            <a href="#isResizing"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">projects/angular/components/src/ui-grid/managers/resize/resize-manager.ts:34</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="destroy"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            destroy
+                        </b>
+                        <a href="#destroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>destroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="187"
+                            class="link-to-prism">projects/angular/components/src/ui-grid/managers/resize/resize-manager.ts:187</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="endResize"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            endResize
+                        </b>
+                        <a href="#endResize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>endResize()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="181"
+                            class="link-to-prism">projects/angular/components/src/ui-grid/managers/resize/resize-manager.ts:181</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setupState"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            setupState
+                        </b>
+                        <a href="#setupState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setupState(ev: MouseEvent, column: UiGridColumnDirective<T>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="155"
+                            class="link-to-prism">projects/angular/components/src/ui-grid/managers/resize/resize-manager.ts:155</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ev</td>
+                                    <td>
+                                            <code>MouseEvent</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>column</td>
+                                    <td>
+                                            <code>UiGridColumnDirective&lt;T&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="startResize"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            startResize
+                        </b>
+                        <a href="#startResize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>startResize(ev: MouseEvent, column: UiGridColumnDirective<T>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="118"
+                            class="link-to-prism">projects/angular/components/src/ui-grid/managers/resize/resize-manager.ts:118</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ev</td>
+                                    <td>
+                                            <code>MouseEvent</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>column</td>
+                                    <td>
+                                            <code>UiGridColumnDirective&lt;T&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stop"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            stop
+                        </b>
+                        <a href="#stop"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>stop()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="145"
+                            class="link-to-prism">projects/angular/components/src/ui-grid/managers/resize/resize-manager.ts:145</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import toArray from &#x27;lodash-es/toArray&#x27;;
+import {
+  animationFrameScheduler,
+  fromEvent,
+  merge,
+  Subject,
+} from &#x27;rxjs&#x27;;
+import {
+  filter,
+  take,
+  takeUntil,
+  tap,
+  throttleTime,
+} from &#x27;rxjs/operators&#x27;;
+
+import { UiGridColumnDirective } from &#x27;../../body&#x27;;
+import { IGridDataEntry } from &#x27;../../models&#x27;;
+import {
+  cellSelector,
+  findHeaderIndexFor,
+  getProperty,
+  resizeFilter,
+  toPercentageStyle,
+} from &#x27;./resize-manager.constants&#x27;;
+import {
+  IResizeEvent,
+  IResizeInfo,
+  IResizeState,
+  ResizableGrid,
+  ResizeDirection,
+} from &#x27;./types&#x27;;
+
+export abstract class ResizeManager&lt;T extends IGridDataEntry&gt; {
+    public isResizing &#x3D; false;
+    public current?: IResizeInfo&lt;T&gt;;
+
+    protected set _resizeEvent(ev: MouseEvent) {
+        if (!this.current) { return; }
+
+        const value &#x3D; Math.round(ev.clientX - this.current.dragInitX!);
+
+        // compute the current direction and determine if it has changed
+        const direction &#x3D; value &gt; this._previous!.offsetPx ? ResizeDirection.Right : ResizeDirection.Left;
+        const isDirectionChanged &#x3D; this._direction !&#x3D;&#x3D; direction;
+
+        // if a direction change occured
+        // get the next neighbour
+        if (isDirectionChanged) {
+            this._direction &#x3D; direction;
+            this._neighbourIndexOffset &#x3D; 0;
+        }
+
+        const nextEvent: IResizeEvent&lt;T&gt; &#x3D; {
+            previous: this._previous!,
+            current: {
+                resized: this.current,
+                neighbour: this._getResizedPairAt(this.current.index + direction + this._neighbourIndexOffset),
+                oppositeNeighbour: this._getResizedPairAt(this.current.index + -direction),
+                offsetPx: value,
+                offsetPercent: Math.round(value / this._table!.clientWidth * 1000),
+                direction: direction,
+                event: ev,
+            },
+        };
+
+        this._resize$.next(nextEvent);
+    }
+
+    protected abstract _stateFilter: (state: IResizeEvent&lt;T&gt;) &#x3D;&gt; boolean;
+    protected abstract _resizeLeftFilter: (state: IResizeEvent&lt;T&gt;) &#x3D;&gt; boolean;
+    protected abstract _resizeRightFilter: (state: IResizeEvent&lt;T&gt;) &#x3D;&gt; boolean;
+    protected abstract _stateUpdate: (state: IResizeEvent&lt;T&gt;) &#x3D;&gt; void;
+
+    protected _neighbourIndexOffset &#x3D; 0;
+
+    protected _headers?: HTMLDivElement[];
+    protected _table?: HTMLTableElement | null;
+    protected _definitions?: UiGridColumnDirective&lt;T&gt;[];
+
+    private _previous?: IResizeState&lt;T&gt; &#x3D; {} as IResizeState&lt;T&gt;;
+    private _direction?: ResizeDirection;
+    private _resize$ &#x3D; new Subject&lt;IResizeEvent&lt;T&gt;&gt;();
+    private _stopped$ &#x3D; new Subject&lt;void&gt;();
+    private _widthMap &#x3D; new Map&lt;string, number&gt;();
+    private _gridElement: HTMLDivElement;
+
+    constructor(
+        private _grid: ResizableGrid&lt;T&gt;,
+    ) {
+        this._gridElement &#x3D; _grid[&#x27;_ref&#x27;].nativeElement;
+
+        merge(
+            _grid.rendered,
+            _grid[&#x27;_columnChanges$&#x27;],
+        ).pipe(takeUntil(_grid[&#x27;_destroyed$&#x27;]))
+            .subscribe(() &#x3D;&gt; {
+                this._table &#x3D; this._gridElement.querySelector&lt;HTMLTableElement&gt;(&#x27;.ui-grid-container&#x27;);
+                this._definitions &#x3D; _grid.columns.filter(c &#x3D;&gt; c.resizeable &amp;&amp; c.visible);
+
+                this._headers &#x3D; toArray&lt;HTMLDivElement&gt;(this._gridElement.querySelectorAll(&#x27;.ui-grid-resizeable&#x27;));
+
+                const headerWidth &#x3D; this._headers.reduce(
+                    (acc, curr) &#x3D;&gt; acc + (parseInt(curr.style.width!, 10) || 0),
+                    0,
+                ) / 10;
+
+                if (
+                    headerWidth &lt; 100 &amp;&amp;
+                    !!this._headers.length
+                ) {
+                    console.warn(&#x60;Table header sum is currently ${headerWidth} ( &lt; 100 ) please update column definitions.&#x60;);
+                }
+            });
+    }
+
+    public handleResize &#x3D; (ev: MouseEvent) &#x3D;&gt; this._resizeEvent &#x3D; ev;
+
+    public startResize(ev: MouseEvent, column: UiGridColumnDirective&lt;T&gt;) {
+        this.isResizing &#x3D; true;
+        // hook events
+        this.setupState(ev, column);
+
+        const defaultView &#x3D; this._gridElement.ownerDocument!.defaultView!;
+
+        const mouseUp$ &#x3D; fromEvent(defaultView, &#x27;mouseup&#x27;)
+            .pipe(
+                take(1),
+                takeUntil(this._stopped$),
+            );
+
+        mouseUp$.subscribe(() &#x3D;&gt; this.stop());
+
+        fromEvent&lt;MouseEvent&gt;(defaultView, &#x27;mousemove&#x27;)
+            .pipe(
+                throttleTime(16, animationFrameScheduler),
+                takeUntil(this._stopped$),
+            )
+            .subscribe(moveEv &#x3D;&gt; this.handleResize(moveEv));
+
+        // detection is required in order to update cell resize state
+        this._grid[&#x27;_cd&#x27;].detectChanges();
+        this._grid[&#x27;_cd&#x27;].detach();
+    }
+
+    public stop() {
+        this._stopped$.next();
+        this.endResize();
+        this.isResizing &#x3D; false;
+
+        // detection is required in order to update cell resize state
+        this._grid[&#x27;_cd&#x27;].reattach();
+        this._grid[&#x27;_cd&#x27;].detectChanges();
+    }
+
+    public setupState(ev: MouseEvent, column: UiGridColumnDirective&lt;T&gt;) {
+        this.current &#x3D; {} as IResizeInfo&lt;T&gt;;
+        this.current.index &#x3D; findHeaderIndexFor(this._headers!, column.identifier);
+        this.current &#x3D; Object.assign(this.current, {
+            column: column,
+            element: this._headers![this.current.index],
+            cells: this._getCellsFor(column.identifier),
+        });
+
+        this._startResizeCommon(ev);
+
+        this._resize$
+            .pipe(
+                filter(resizeFilter),
+                tap((state: IResizeEvent&lt;T&gt;) &#x3D;&gt; {
+                    // after filtering non-events
+                    // records previous states for event consistency
+                    this._previous &#x3D; state.current;
+                }),
+                filter(this._stateFilter),
+                filter(this._resizeRightFilter),
+                filter(this._resizeLeftFilter),
+            )
+            .subscribe(this._stateUpdate);
+    }
+
+    public endResize() {
+        this._endResizeCommon(this.current!, this._previous!.neighbour, this._previous!.oppositeNeighbour);
+        this.current &#x3D; undefined;
+        this._direction &#x3D; NaN;
+    }
+
+    public destroy() {
+        this._stopped$.complete();
+        this._resize$.complete();
+        this._widthMap.clear();
+
+        this.current &#x3D; undefined;
+
+        this._previous &#x3D; undefined;
+        this._headers &#x3D; undefined;
+        this._table &#x3D; undefined;
+        this._definitions &#x3D; undefined;
+    }
+
+    protected _getResizedPairAt(index: number): IResizeInfo&lt;T&gt; | undefined {
+        const element &#x3D; this._headers![index];
+
+        if (!element) { return; }
+
+        const property &#x3D; getProperty(element);
+
+        const column &#x3D; this._definitions!.find(d &#x3D;&gt; d.identifier &#x3D;&#x3D;&#x3D; property)!;
+
+        return {
+            element,
+            column,
+            index,
+            cells: this._getCellsFor(property),
+        };
+    }
+
+    protected _simulateStopFor(ev: MouseEvent | undefined, ...neighbours: Array&lt;IResizeInfo&lt;T&gt; | undefined&gt;) {
+        this._endResizeCommon(...neighbours);
+        this._startResizeCommon(ev);
+    }
+
+    protected _applyOffsetFor(entry: IResizeInfo&lt;T&gt; | undefined, offset: number) {
+        if (!entry) { return; }
+
+        const width &#x3D; entry.column.width as number + offset;
+        this._widthMap.set(entry.column.identifier, width);
+        entry.element.style.width &#x3D; toPercentageStyle(width);
+
+        entry.cells.forEach(cell &#x3D;&gt; cell.style.width &#x3D; toPercentageStyle(width));
+    }
+
+    private _getCellsFor &#x3D; (property: string) &#x3D;&gt; toArray&lt;HTMLDivElement&gt;(
+        this._gridElement
+            .querySelectorAll(cellSelector(property)),
+    )
+
+    private _startResizeCommon(ev?: MouseEvent) {
+        if (!ev) { return; }
+
+        this._previous &#x3D; Object.assign(this._previous, {
+            offsetPx: 0,
+        });
+        this.current!.dragInitX &#x3D; ev.clientX;
+    }
+
+    private _endResizeCommon(...entries: Array&lt;IResizeInfo&lt;T&gt; | undefined&gt;) {
+        entries.forEach(entry &#x3D;&gt; {
+            if (!entry) { return; }
+
+            const width &#x3D; this._widthMap.get(entry.column.identifier)!;
+            entry.column.width &#x3D; width / 10;
+            entry.element.style.width &#x3D; toPercentageStyle(width);
+        });
+        this._previous &#x3D; {} as IResizeState&lt;T&gt;;
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'ResizeManager.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
