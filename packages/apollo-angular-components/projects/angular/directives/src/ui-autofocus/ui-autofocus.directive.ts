@@ -1,17 +1,17 @@
 import { InteractivityChecker } from '@angular/cdk/a11y';
 import {
-  ChangeDetectorRef,
-  Directive,
-  ElementRef,
-  Input,
-  NgZone,
-  OnInit,
+    ChangeDetectorRef,
+    Directive,
+    ElementRef,
+    Input,
+    NgZone,
+    OnInit,
 } from '@angular/core';
 
 import { merge } from 'rxjs';
 import {
-  delay,
-  take,
+    delay,
+    take,
 } from 'rxjs/operators';
 
 /**

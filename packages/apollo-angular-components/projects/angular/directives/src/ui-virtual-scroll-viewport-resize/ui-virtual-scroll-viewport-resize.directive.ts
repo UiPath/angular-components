@@ -1,24 +1,24 @@
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { DOCUMENT } from '@angular/common';
 import {
-  Directive,
-  Inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  Self,
+    Directive,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Self,
 } from '@angular/core';
 
 import {
-  fromEvent,
-  merge,
-  Subject,
+    fromEvent,
+    merge,
+    Subject,
 } from 'rxjs';
 import {
-  debounceTime,
-  delay,
-  takeUntil,
-  tap,
+    debounceTime,
+    delay,
+    takeUntil,
+    tap,
 } from 'rxjs/operators';
 
 /**

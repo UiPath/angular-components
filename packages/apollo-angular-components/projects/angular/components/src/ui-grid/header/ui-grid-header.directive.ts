@@ -1,12 +1,12 @@
 import {
-  AfterViewInit,
-  ContentChildren,
-  Directive,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-  QueryList,
+    AfterViewInit,
+    ContentChildren,
+    Directive,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output,
+    QueryList,
 } from '@angular/core';
 
 import { IFilterModel } from '../models';

@@ -1,11 +1,11 @@
 import {
-  Directive,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
+    Directive,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
 } from '@angular/core';
 
 import * as Clipboard from 'clipboard';
@@ -18,7 +18,7 @@ import * as Clipboard from 'clipboard';
  * @export
  */
 @Directive({
-  selector: '[uiClipboard]',
+    selector: '[uiClipboard]',
 })
 export class UiClipboardDirective implements OnInit, OnDestroy {
   /**
@@ -26,7 +26,7 @@ export class UiClipboardDirective implements OnInit, OnDestroy {
    *
    */
   @Input()
-  public uiClipboard?: Element;
+    public uiClipboard?: Element;
 
   /**
    * Event that emits when the content is copied succesfully to the clipboard.
@@ -53,31 +53,31 @@ export class UiClipboardDirective implements OnInit, OnDestroy {
     * @ignore
     */
   ngOnInit() {
-    if (!this.uiClipboard) {
-      throw new Error('Missing uiClipboard reference');
-    }
+      if (!this.uiClipboard) {
+          throw new Error('Missing uiClipboard reference');
+      }
 
-    this._clipboard = new Clipboard(this._eltRef.nativeElement, {
-      target: () => {
-        return this.uiClipboard!;
-      },
-    });
+      this._clipboard = new Clipboard(this._eltRef.nativeElement, {
+          target: () => {
+              return this.uiClipboard!;
+          },
+      });
 
-    this._clipboard.on('success', (e) => {
-      this.clipboardSuccess.emit(e);
-    });
+      this._clipboard.on('success', (e) => {
+          this.clipboardSuccess.emit(e);
+      });
 
-    this._clipboard.on('error', (e) => {
-      this.clipboardError.emit(e);
-    });
+      this._clipboard.on('error', (e) => {
+          this.clipboardError.emit(e);
+      });
   }
 
   /**
     * @ignore
     */
   ngOnDestroy() {
-    if (this._clipboard) {
-      this._clipboard.destroy();
-    }
+      if (this._clipboard) {
+          this._clipboard.destroy();
+      }
   }
 }

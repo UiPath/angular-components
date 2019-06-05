@@ -1,6 +1,6 @@
 import {
-  Observable,
-  of,
+    Observable,
+    of,
 } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
@@ -12,5 +12,5 @@ import { delay } from 'rxjs/operators';
  * @returns The delayed stream.
  */
 export function asyncOf<T>(obj: T, delayMs = 0): Observable<T> {
-  return of(obj).pipe(delay(delayMs));
+    return of(obj).pipe(delay(delayMs));
 }

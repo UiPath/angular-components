@@ -1,24 +1,24 @@
 import {
-  Directive,
-  ElementRef,
-  Inject,
-  InjectionToken,
-  Input,
-  Optional,
-  Renderer2,
+    Directive,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Input,
+    Optional,
+    Renderer2,
 } from '@angular/core';
 
 import * as _moment from 'moment';
 import {
-  merge,
-  Observable,
-  of,
+    merge,
+    Observable,
+    of,
 } from 'rxjs';
 import {
-  distinctUntilChanged,
-  filter,
-  map,
-  takeUntil,
+    distinctUntilChanged,
+    filter,
+    map,
+    takeUntil,
 } from 'rxjs/operators';
 
 import { UiFormat } from '../internal/ui-format';
@@ -101,13 +101,13 @@ export class UiSecondFormatDirective extends UiFormat {
     constructor(
         @Inject(UI_SECONDFORMAT_OPTIONS)
         @Optional()
-        options: ISecondFormatOptions,
-        renderer: Renderer2,
-        elementRef: ElementRef,
+            options: ISecondFormatOptions,
+            renderer: Renderer2,
+            elementRef: ElementRef,
     ) {
         super(
             renderer,
-            elementRef
+            elementRef,
         );
 
         options = options || {};
@@ -184,6 +184,6 @@ export class UiSecondFormatDirective extends UiFormat {
             locale.ss(seconds + remainder, true, 'ss')
                 .replace((seconds + remainder)
                     .toString(),
-                    (seconds + remainder).toFixed(remainder ? 2 : 0),
+                (seconds + remainder).toFixed(remainder ? 2 : 0),
                 )
 }

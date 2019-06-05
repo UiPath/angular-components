@@ -4,8 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 import { ISuggestValue } from '../../ui-suggest/models';
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import {
-  IDropdownOption,
-  UiGridDropdownFilterDirective,
+    IDropdownOption,
+    UiGridDropdownFilterDirective,
 } from '../filters/ui-grid-dropdown-filter.directive';
 import { UiGridSearchFilterDirective } from '../filters/ui-grid-search-filter.directive';
 import { UiGridHeaderDirective } from '../header/ui-grid-header.directive';
@@ -72,7 +72,7 @@ export class FilterManager<T> {
         if (!dropdown) { return; }
 
         (dropdown as {
-            updateValue: (value: ISuggestValue | IDropdownOption | undefined) => void
+            updateValue: (value: ISuggestValue | IDropdownOption | undefined) => void,
         }).updateValue(value);
         dropdown.filterChange.emit(value ? mapper(column) : null);
 

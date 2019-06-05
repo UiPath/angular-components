@@ -1,7 +1,7 @@
 import {
-  ContentChild,
-  Directive,
-  TemplateRef,
+    ContentChild,
+    Directive,
+    TemplateRef,
 } from '@angular/core';
 
 /**
@@ -9,14 +9,14 @@ import {
  *
  */
 @Directive({
-  selector: '[uiGridRowAction], ui-grid-row-action',
+    selector: '[uiGridRowAction], ui-grid-row-action',
 })
 export class UiGridRowActionDirective {
   /**
    * @ignore
    */
   @ContentChild(TemplateRef, {
-    static: true,
+      static: true,
   })
-  public html?: TemplateRef<any>;
+    public html?: TemplateRef<any>;
 }

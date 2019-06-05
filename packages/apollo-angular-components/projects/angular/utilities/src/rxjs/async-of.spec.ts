@@ -1,19 +1,19 @@
 import {
-  fakeAsync,
-  tick,
+    fakeAsync,
+    tick,
 } from '@angular/core/testing';
 
 import {
-  merge,
-  of,
+    merge,
+    of,
 } from 'rxjs';
 import {
-  finalize,
-  share,
-  shareReplay,
-  skip,
-  startWith,
-  take,
+    finalize,
+    share,
+    shareReplay,
+    skip,
+    startWith,
+    take,
 } from 'rxjs/operators';
 
 import { asyncOf } from './async-of';
@@ -31,11 +31,11 @@ describe('Util(rxjs): asyncOf', () => {
         const emissions$ = merge(
             delay10,
             delay0,
-            noDelay
+            noDelay,
         ).pipe(
             take(3),
             share(),
-            finalize(done)
+            finalize(done),
         );
 
         const callbacks = {
@@ -52,7 +52,7 @@ describe('Util(rxjs): asyncOf', () => {
         delay10Spy.and.callThrough();
 
         emissions$.pipe(
-            take(1)
+            take(1),
         ).subscribe(callbacks.noDelay);
 
         expect(noDelaySpy).toHaveBeenCalled();
@@ -61,7 +61,7 @@ describe('Util(rxjs): asyncOf', () => {
 
         emissions$.pipe(
             skip(1),
-            take(1)
+            take(1),
         ).subscribe(callbacks.delay0);
 
         tick();
@@ -71,7 +71,7 @@ describe('Util(rxjs): asyncOf', () => {
 
         emissions$.pipe(
             skip(2),
-            take(1)
+            take(1),
         ).subscribe(callbacks.delay10);
 
         tick(10);
@@ -92,7 +92,7 @@ describe('Util(rxjs): asyncOf', () => {
                 response: (output: Object | null) => {
                     expect(output).not.toBeNull();
                     expect(output!.constructor).toBe(Object);
-                }
+                },
             };
 
             const emptySpy = spyOn(callbacks, 'empty');
@@ -102,7 +102,7 @@ describe('Util(rxjs): asyncOf', () => {
 
             stream$
                 .pipe(
-                    take(1)
+                    take(1),
                 ).subscribe(callbacks.empty);
 
             tick(delay);
@@ -112,7 +112,7 @@ describe('Util(rxjs): asyncOf', () => {
 
             stream$
                 .pipe(
-                    take(1)
+                    take(1),
                 ).subscribe(callbacks.response);
 
             tick(1);

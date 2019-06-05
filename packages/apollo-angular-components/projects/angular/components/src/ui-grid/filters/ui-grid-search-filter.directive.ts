@@ -1,14 +1,14 @@
 import {
-  Directive,
-  Input,
-  OnDestroy,
+    Directive,
+    Input,
+    OnDestroy,
 } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
 import {
-  ISuggestValue,
-  ISuggestValues,
+    ISuggestValue,
+    ISuggestValues,
 } from '../../ui-suggest/models';
 import { UiGridFilter } from './ui-grid-filter';
 
@@ -18,7 +18,7 @@ import { UiGridFilter } from './ui-grid-filter';
  * @export
  */
 @Directive({
-  selector: '[uiGridSearchFilter], ui-grid-search-filter',
+    selector: '[uiGridSearchFilter], ui-grid-search-filter',
 })
 export class UiGridSearchFilterDirective<T> extends UiGridFilter<T> implements OnDestroy {
   /**
@@ -26,7 +26,7 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilter<T> implements O
    *
    */
   @Input()
-  public property?: string;
+    public property?: string;
 
   /**
    * The no selection placeholder.
@@ -56,14 +56,14 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilter<T> implements O
    *
    */
   public updateValue(value?: ISuggestValue) {
-    this.value = value;
+      this.value = value;
   }
 
   /**
    * @ignore
    */
   ngOnDestroy() {
-    super.ngOnDestroy();
-    this.filterChange.complete();
+      super.ngOnDestroy();
+      this.filterChange.complete();
   }
 }
