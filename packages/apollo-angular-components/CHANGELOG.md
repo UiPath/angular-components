@@ -1,3 +1,8 @@
+# v0.9.5 (2019-06-05)
+* upgrade to `angular@8`
+* **UiGrid** complete `visible$` columns BehaviorSubject
+* **UiGridFilter** call destroy hook in child classes
+
 # v0.9.3-hotfix1 (2019-06-05)
 * **UiGrid** correctly bind to the search `maxlength` attribute
 
