@@ -10,10 +10,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
-  UiAutofocusModule,
-  UiClickOutsideModule,
-  UiNgLetModule,
-  UiVirtualScrollRangeLoaderModule,
+    UiAutofocusModule,
+    UiClickOutsideModule,
+    UiNgLetModule,
+    UiVirtualScrollRangeLoaderModule,
 } from '@uipath/angular/directives';
 
 import { UiSuggestComponent } from './ui-suggest.component';

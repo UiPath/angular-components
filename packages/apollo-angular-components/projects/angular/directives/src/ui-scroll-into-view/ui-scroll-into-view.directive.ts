@@ -1,8 +1,8 @@
 import {
-  Directive,
-  ElementRef,
-  Input,
-  NgZone,
+    Directive,
+    ElementRef,
+    Input,
+    NgZone,
 } from '@angular/core';
 
 import { merge } from 'rxjs';
@@ -23,7 +23,7 @@ type Boundary = 'parent' | Element;
  * @export
  */
 @Directive({
-  selector: '[uiScrollIntoView]',
+    selector: '[uiScrollIntoView]',
 })
 export class UiScrollIntoViewDirective {
   /**
@@ -31,7 +31,7 @@ export class UiScrollIntoViewDirective {
    *
    */
   @Input()
-  public boundary: Boundary = 'parent';
+    public boundary: Boundary = 'parent';
 
   /**
    * Configures if the decorated element should be scrolled into view.
@@ -40,25 +40,25 @@ export class UiScrollIntoViewDirective {
    */
   @Input()
   public set uiScrollIntoView(condition: boolean) {
-    this._zone.runOutsideAngular(() => {
-      if (!condition) { return; }
-      merge(
-        this._zone.onMicrotaskEmpty,
-        this._zone.onStable,
-      ).
-        pipe(
-          take(1),
-        ).subscribe(() => {
-          this.scrollIntoViewIfNeeded(
-            this._element.nativeElement, {
-              block: 'start',
-              boundary: this.boundary === 'parent' ?
-                this._element.nativeElement.parentElement :
-                this.boundary,
-            },
-          );
-        });
-    });
+      this._zone.runOutsideAngular(() => {
+          if (!condition) { return; }
+          merge(
+              this._zone.onMicrotaskEmpty,
+              this._zone.onStable,
+          ).
+              pipe(
+                  take(1),
+              ).subscribe(() => {
+                  this.scrollIntoViewIfNeeded(
+                      this._element.nativeElement, {
+                          block: 'start',
+                          boundary: this.boundary === 'parent' ?
+                              this._element.nativeElement.parentElement :
+                              this.boundary,
+                      },
+                  );
+              });
+      });
   }
 
   /**
@@ -71,7 +71,7 @@ export class UiScrollIntoViewDirective {
     * @ignore
     */
   constructor(
-    private _element: ElementRef,
-    private _zone: NgZone,
+      private _element: ElementRef,
+      private _zone: NgZone,
   ) { }
 }

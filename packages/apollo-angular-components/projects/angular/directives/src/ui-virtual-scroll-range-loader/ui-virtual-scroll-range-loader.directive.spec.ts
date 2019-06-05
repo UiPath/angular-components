@@ -1,24 +1,24 @@
 import { ListRange } from '@angular/cdk/collections';
 import {
-  CdkVirtualScrollViewport,
-  ScrollingModule,
+    CdkVirtualScrollViewport,
+    ScrollingModule,
 } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
-  Component,
-  ViewChild,
-  ViewEncapsulation,
+    Component,
+    ViewChild,
+    ViewEncapsulation,
 } from '@angular/core';
 import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
 } from '@angular/core/testing';
 
 import {
-  VirtualScrollItem,
-  VirtualScrollItemStatus,
+    VirtualScrollItem,
+    VirtualScrollItemStatus,
 } from './ui-virtual-scroll-range-loader.directive';
 import { UiVirtualScrollRangeLoaderModule } from './ui-virtual-scroll-range-loader.module';
 

@@ -1,11 +1,11 @@
 import {
-  animate,
-  AnimationTriggerMetadata,
-  group,
-  state,
-  style,
-  transition,
-  trigger,
+    animate,
+    AnimationTriggerMetadata,
+    group,
+    state,
+    style,
+    transition,
+    trigger,
 } from '@angular/animations';
 
 /**

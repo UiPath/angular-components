@@ -1,18 +1,18 @@
 import {
-  CdkVirtualScrollViewport,
-  ScrollingModule,
+    CdkVirtualScrollViewport,
+    ScrollingModule,
 } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
-  Component,
-  ViewChild,
-  ViewEncapsulation,
+    Component,
+    ViewChild,
+    ViewEncapsulation,
 } from '@angular/core';
 import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
 } from '@angular/core/testing';
 
 import { UiVirtualScrollViewportResizeModule } from './ui-virtual-scroll-viewport-resize.module';

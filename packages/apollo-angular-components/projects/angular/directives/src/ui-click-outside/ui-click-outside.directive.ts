@@ -1,23 +1,23 @@
 import { DOCUMENT } from '@angular/common';
 import {
-  Directive,
-  ElementRef,
-  Inject,
-  Injectable,
-  OnDestroy,
-  Output,
+    Directive,
+    ElementRef,
+    Inject,
+    Injectable,
+    OnDestroy,
+    Output,
 } from '@angular/core';
 
 import {
-  fromEvent,
-  Observable,
-  Subject,
+    fromEvent,
+    Observable,
+    Subject,
 } from 'rxjs';
 import {
-  filter,
-  share,
-  takeUntil,
-  throttleTime,
+    filter,
+    share,
+    takeUntil,
+    throttleTime,
 } from 'rxjs/operators';
 
 /**
@@ -40,39 +40,39 @@ const MAX_CLICKS_PER_SECOND = 3;
  * @export
  */
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class UiClickOutsideService implements OnDestroy {
-  /**
+    /**
    * The `global` event handler for `click` events.
    *
    */
-  public source: Observable<MouseEvent>;
-  private _destroyed$ = new Subject();
+    public source: Observable<MouseEvent>;
+    private _destroyed$ = new Subject();
 
-  /**
+    /**
     * @ignore
     */
-  constructor(
+    constructor(
     @Inject(DOCUMENT)
-    document: any,
-  ) {
-    this.source = fromEvent<MouseEvent>((document as Document).body, 'click', {
-      capture: true,
-    })
-      .pipe(
-        throttleTime(1000 / MAX_CLICKS_PER_SECOND),
-        takeUntil(this._destroyed$),
-        share(),
-      );
-  }
+        document: any,
+    ) {
+        this.source = fromEvent<MouseEvent>((document as Document).body, 'click', {
+            capture: true,
+        })
+            .pipe(
+                throttleTime(1000 / MAX_CLICKS_PER_SECOND),
+                takeUntil(this._destroyed$),
+                share(),
+            );
+    }
 
-  /**
+    /**
     * @ignore
     */
-  ngOnDestroy() {
-    this._destroyed$.next();
-  }
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
 }
 
 /**
@@ -81,7 +81,7 @@ export class UiClickOutsideService implements OnDestroy {
  * @export
  */
 @Directive({
-  selector: '[uiClickOutside]',
+    selector: '[uiClickOutside]',
 })
 export class UiClickOutsideDirective {
   /**
@@ -89,23 +89,23 @@ export class UiClickOutsideDirective {
    *
    */
   @Output()
-  public uiClickOutside: Observable<MouseEvent>;
+    public uiClickOutside: Observable<MouseEvent>;
 
   /**
     * @ignore
     */
   constructor(
-    ref: ElementRef,
-    private _clickService: UiClickOutsideService,
+      ref: ElementRef,
+      private _clickService: UiClickOutsideService,
   ) {
-    const element: HTMLElement = ref.nativeElement;
+      const element: HTMLElement = ref.nativeElement;
 
-    this.uiClickOutside = this._clickService
-      .source
-      .pipe(
-        filter(ev =>
-          !element.contains((ev.target as Element)),
-        ),
-      );
+      this.uiClickOutside = this._clickService
+          .source
+          .pipe(
+              filter(ev =>
+                  !element.contains((ev.target as Element)),
+              ),
+          );
   }
 }

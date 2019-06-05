@@ -1,21 +1,21 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewEncapsulation,
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    ViewEncapsulation,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { Subject } from 'rxjs';
 import {
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  takeUntil,
+    debounceTime,
+    distinctUntilChanged,
+    map,
+    takeUntil,
 } from 'rxjs/operators';
 
 /**

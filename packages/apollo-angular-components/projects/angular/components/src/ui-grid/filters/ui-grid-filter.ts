@@ -1,8 +1,8 @@
 import {
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output,
 } from '@angular/core';
 
 import { IFilterModel } from '../models';

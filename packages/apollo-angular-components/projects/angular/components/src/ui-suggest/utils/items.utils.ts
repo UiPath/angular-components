@@ -7,10 +7,10 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import {
-  ISuggestValue,
-  ISuggestValueData,
-  ISuggestValues,
-  SuggestDisplayPriority,
+    ISuggestValue,
+    ISuggestValueData,
+    ISuggestValues,
+    SuggestDisplayPriority,
 } from '../models';
 
 /**

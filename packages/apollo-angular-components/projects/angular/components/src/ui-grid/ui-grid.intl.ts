@@ -85,7 +85,7 @@ export class UiGridIntl implements OnDestroy {
      * @param count The total selection count.
      */
     public translateMultiPageSelectionCount =
-        (count: number) => `You have selected ${count} items.`
+    (count: number) => `You have selected ${count} items.`
 
     /**
      * Live announcer page loaded state notification.
@@ -111,7 +111,7 @@ export class UiGridIntl implements OnDestroy {
      * @param option The current dropdown option.
      */
     public translateDropdownOption =
-        (option: IDropdownOption) => option.label
+    (option: IDropdownOption) => option.label
 
     /**
      * Live announcer sort ascending notification.

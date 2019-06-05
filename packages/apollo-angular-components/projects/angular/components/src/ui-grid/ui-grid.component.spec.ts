@@ -1,11 +1,11 @@
 import {
-  Component,
-  ViewChild,
+    Component,
+    ViewChild,
 } from '@angular/core';
 import {
-  async,
-  ComponentFixture,
-  TestBed,
+    async,
+    ComponentFixture,
+    TestBed,
 } from '@angular/core/testing';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatMenuItem } from '@angular/material/menu';
@@ -13,30 +13,30 @@ import { PageEvent } from '@angular/material/paginator';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  ISuggestValues,
-  UiSuggestComponent,
+    ISuggestValues,
+    UiSuggestComponent,
 } from '@uipath/angular/components';
 import {
-  EventGenerator,
-  Key,
+    EventGenerator,
+    Key,
 } from '@uipath/angular/testing';
 
 import * as faker from 'faker';
 import {
-  Observable,
-  of,
+    Observable,
+    of,
 } from 'rxjs';
 import {
-  finalize,
-  skip,
-  take,
+    finalize,
+    skip,
+    take,
 } from 'rxjs/operators';
 
 import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
 import {
-  generateEntity,
-  generateListFactory,
-  ITestEntity,
+    generateEntity,
+    generateListFactory,
+    ITestEntity,
 } from './test';
 import { UiGridComponent } from './ui-grid.component';
 import { UiGridIntl } from './ui-grid.intl';
@@ -1047,9 +1047,32 @@ describe('Component: UiGrid', () => {
             SORT_TRANSITIONS.forEach(sortTransition => {
                 it(`should emit sort event when clicked ('${
                     sortTransition.from}' to '${sortTransition.to}')`, (done) => {
-                        const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
-                        const headerTitle = sortableHeader.query(By.css('.ui-grid-header-title'));
+                    const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
+                    const headerTitle = sortableHeader.query(By.css('.ui-grid-header-title'));
 
+                    const [column] = grid.columns.toArray();
+
+                    column.sort = '';
+                    fixture.detectChanges();
+
+                    grid.sortChange
+                        .pipe(
+                            take(1),
+                            finalize(done),
+                        ).subscribe(sort => {
+                            expect(sort.direction).toBe('asc');
+                            expect(sort.direction).toBe(column.sort);
+                            expect(sort.field).toBe(column.property!);
+                        });
+
+                    headerTitle.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+                });
+
+                SORT_KEY_EVENTS.forEach(ev => {
+                    it(`should emit sort event when key '${ev.key}' is pressed ('${
+                        sortTransition.from}' to '${sortTransition.to}')`, (done) => {
+                        const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
                         const [column] = grid.columns.toArray();
 
                         column.sort = '';
@@ -1065,32 +1088,9 @@ describe('Component: UiGrid', () => {
                                 expect(sort.field).toBe(column.property!);
                             });
 
-                        headerTitle.nativeElement.dispatchEvent(EventGenerator.click);
+                        sortableHeader.nativeElement.dispatchEvent(ev);
                         fixture.detectChanges();
                     });
-
-                SORT_KEY_EVENTS.forEach(ev => {
-                    it(`should emit sort event when key '${ev.key}' is pressed ('${
-                        sortTransition.from}' to '${sortTransition.to}')`, (done) => {
-                            const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
-                            const [column] = grid.columns.toArray();
-
-                            column.sort = '';
-                            fixture.detectChanges();
-
-                            grid.sortChange
-                                .pipe(
-                                    take(1),
-                                    finalize(done),
-                                ).subscribe(sort => {
-                                    expect(sort.direction).toBe('asc');
-                                    expect(sort.direction).toBe(column.sort);
-                                    expect(sort.field).toBe(column.property!);
-                                });
-
-                            sortableHeader.nativeElement.dispatchEvent(ev);
-                            fixture.detectChanges();
-                        });
                 });
             });
         });

@@ -1,14 +1,14 @@
 import {
-  Component,
-  ViewChild,
+    Component,
+    ViewChild,
 } from '@angular/core';
 import {
-  async,
-  ComponentFixture,
-  discardPeriodicTasks,
-  fakeAsync,
-  TestBed,
-  tick,
+    async,
+    ComponentFixture,
+    discardPeriodicTasks,
+    fakeAsync,
+    TestBed,
+    tick,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -16,10 +16,10 @@ import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 
 import {
-  DisplayType,
-  IDateFormatOptions,
-  UI_DATEFORMAT_OPTIONS,
-  UiDateFormatDirective,
+    DisplayType,
+    IDateFormatOptions,
+    UI_DATEFORMAT_OPTIONS,
+    UiDateFormatDirective,
 } from './ui-dateformat.directive';
 
 const defaultDateFormat = 'L LTS';

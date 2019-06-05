@@ -6,8 +6,8 @@ import 'zone.js/dist/zone-testing';
 
 import { getTestBed } from '@angular/core/testing';
 import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
+    BrowserDynamicTestingModule,
+    platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
 
 import * as faker from 'faker';
@@ -29,23 +29,23 @@ document.head.appendChild(customStyle);
 
 
 const reseed = () => {
-  faker.seed(SEED);
-  // overwrite Math.radom again in each global context
-  Math.random = () => faker.random.number({ min: 0, max: 100000 }) / 100000;
+    faker.seed(SEED);
+    // overwrite Math.radom again in each global context
+    Math.random = () => faker.random.number({ min: 0, max: 100000 }) / 100000;
 }
 
 beforeEach(reseed);
 
 const __describe = describe;
 (global as any).describe = function () {
-  reseed();
-  __describe.apply(this, arguments as any);
+    reseed();
+    __describe.apply(this, arguments as any);
 }
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting()
+    BrowserDynamicTestingModule,
+    platformBrowserDynamicTesting()
 );
 
 // Then we find all the tests.

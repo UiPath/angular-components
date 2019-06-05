@@ -1,19 +1,19 @@
 import {
-  fakeAsync,
-  tick,
+    fakeAsync,
+    tick,
 } from '@angular/core/testing';
 
 import {
-  merge,
-  of,
+    merge,
+    of,
 } from 'rxjs';
 import {
-  finalize,
-  share,
-  shareReplay,
-  skip,
-  startWith,
-  take,
+    finalize,
+    share,
+    shareReplay,
+    skip,
+    startWith,
+    take,
 } from 'rxjs/operators';
 
 import { asyncOf } from './async-of';

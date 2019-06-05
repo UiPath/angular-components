@@ -1,6 +1,6 @@
 import {
-  VirtualScrollItem,
-  VirtualScrollItemStatus,
+    VirtualScrollItem,
+    VirtualScrollItemStatus,
 } from '@uipath/angular/directives';
 
 /**
@@ -9,35 +9,35 @@ import {
  * @export
  */
 export interface ISuggestValue extends VirtualScrollItem {
-  /**
+    /**
   * Unique identifier associated to the entry.
   *
   */
-  id: number | string;
-  /**
+    id: number | string;
+    /**
    * Text associated to the entry.
    *
    */
-  text: string;
-  /**
+    text: string;
+    /**
   * Marks the current item state
   * @internal
   * @ignore
   */
-  loading?: VirtualScrollItemStatus;
-  /**
+    loading?: VirtualScrollItemStatus;
+    /**
   * Flag that marks custom items.
   * @internal
   * @ignore
   */
-  isCustom?: boolean;
-  /**
+    isCustom?: boolean;
+    /**
   * Optional icon that will be displayed to the left of the item.
   *
   */
-  icon?: {
-    iconOnly?: boolean;
-    svgIcon?: string;
-    matIcon?: string;
-  };
+    icon?: {
+        iconOnly?: boolean;
+        svgIcon?: string;
+        matIcon?: string;
+    };
 }
