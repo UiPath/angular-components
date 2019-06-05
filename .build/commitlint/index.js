@@ -5,17 +5,12 @@ const Octokit = require('@octokit/rest')
 const { lint, load } = require('@commitlint/core')
 const path = require('path')
 
-const ACCESS_TOKEN = process.env['GH_STATUS_TOKEN']
-
-if (!ACCESS_TOKEN) throw new Error('No access token found. env: GH_STATUS_TOKEN')
+const { variables } = require('../common')
+const { owner, repo, pull, token } = variables;
 
 const github = new Octokit({
-    auth: ACCESS_TOKEN,
+    auth: token,
 })
-
-const owner = process.env['GH_OWNER']
-const repo = process.env['GH_REPO']
-const pull = process.env['GH_PULL_ID']
 
 const _handleUnexpectedError = (err) => {
     console.error(err)
