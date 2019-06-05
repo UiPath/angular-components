@@ -1,7 +1,7 @@
 import {
-  Directive,
-  Input,
-  OnDestroy,
+    Directive,
+    Input,
+    OnDestroy,
 } from '@angular/core';
 
 import { UiGridFilter } from './ui-grid-filter';

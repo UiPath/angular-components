@@ -1,9 +1,9 @@
 import { PageEvent } from '@angular/material/paginator';
 
 import {
-  NEVER,
-  Observable,
-  Subject,
+    NEVER,
+    Observable,
+    Subject,
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

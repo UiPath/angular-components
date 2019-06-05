@@ -1,42 +1,42 @@
 import {
-  AfterContentInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  ContentChildren,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  HostListener,
-  Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  Optional,
-  Output,
-  QueryList,
-  SimpleChanges,
-  ViewEncapsulation,
+    AfterContentInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChild,
+    ContentChildren,
+    ElementRef,
+    EventEmitter,
+    HostBinding,
+    HostListener,
+    Input,
+    NgZone,
+    OnChanges,
+    OnDestroy,
+    Optional,
+    Output,
+    QueryList,
+    SimpleChanges,
+    ViewEncapsulation,
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
 
 import range from 'lodash-es/range';
 import {
-  BehaviorSubject,
-  merge,
-  Observable,
-  Subject,
+    BehaviorSubject,
+    merge,
+    Observable,
+    Subject,
 } from 'rxjs';
 import {
-  debounceTime,
-  map,
-  skip,
-  switchMap,
-  take,
-  takeUntil,
-  tap,
+    debounceTime,
+    map,
+    skip,
+    switchMap,
+    take,
+    takeUntil,
+    tap,
 } from 'rxjs/operators';
 
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
@@ -46,20 +46,20 @@ import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 import {
-  DataManager,
-  FilterManager,
-  LiveAnnouncerManager,
-  PerformanceMonitor,
-  ResizeManager,
-  ResizeManagerFactory,
-  ResizeStrategy,
-  SelectionManager,
-  SortManager,
+    DataManager,
+    FilterManager,
+    LiveAnnouncerManager,
+    PerformanceMonitor,
+    ResizeManager,
+    ResizeManagerFactory,
+    ResizeStrategy,
+    SelectionManager,
+    SortManager,
 } from './managers';
 import { ResizableGrid } from './managers/resize/types';
 import {
-  IGridDataEntry,
-  ISortModel,
+    IGridDataEntry,
+    ISortModel,
 } from './models';
 import { UiGridIntl } from './ui-grid.intl';
 

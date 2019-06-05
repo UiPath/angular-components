@@ -1,17 +1,17 @@
 import * as faker from 'faker';
 import { BehaviorSubject } from 'rxjs';
 import {
-  finalize,
-  skip,
-  take,
+    finalize,
+    skip,
+    take,
 } from 'rxjs/operators';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import { SortManager } from '../managers';
 import {
-  generateColumn,
-  generateListFactory,
-  ITestEntity,
+    generateColumn,
+    generateListFactory,
+    ITestEntity,
 } from '../test';
 
 describe('Component: UiGrid', () => {

@@ -1,11 +1,11 @@
 import {
-  Component,
-  ViewChild,
+    Component,
+    ViewChild,
 } from '@angular/core';
 import {
-  async,
-  ComponentFixture,
-  TestBed,
+    async,
+    ComponentFixture,
+    TestBed,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -13,9 +13,9 @@ import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 
 import {
-  ISecondFormatOptions,
-  UI_SECONDFORMAT_OPTIONS,
-  UiSecondFormatDirective,
+    ISecondFormatOptions,
+    UI_SECONDFORMAT_OPTIONS,
+    UiSecondFormatDirective,
 } from './ui-secondformat.directive';
 
 @Component({
@@ -292,7 +292,7 @@ describe('Directive: UiSecondFormat', () => {
                             // why? because 🇷🇺 👾...
                             [2, 3, 22, 23, 32, 33, 42, 43, 52, 53]
                                 .includes(seconds) ? 'секунды' : 'секунд'
-                            }`);
+                        }`);
                 });
             });
 

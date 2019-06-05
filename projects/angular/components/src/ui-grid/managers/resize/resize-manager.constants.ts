@@ -1,6 +1,6 @@
 import {
-  IResizeEvent,
-  IResizeInfo,
+    IResizeEvent,
+    IResizeInfo,
 } from './types';
 
 /**

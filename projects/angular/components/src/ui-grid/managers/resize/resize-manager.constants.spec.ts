@@ -1,12 +1,12 @@
 
 import {
-  IResizeEvent,
-  IResizeInfo,
+    IResizeEvent,
+    IResizeInfo,
 } from '../resize/types';
 import {
-  clampOffset,
-  isDirectionChanged,
-  isMinWidth,
+    clampOffset,
+    isDirectionChanged,
+    isMinWidth,
 } from './resize-manager.constants';
 
 describe('Manager: ResizeManager', () => {

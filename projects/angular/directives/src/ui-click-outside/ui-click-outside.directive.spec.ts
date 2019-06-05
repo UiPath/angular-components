@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { EventGenerator } from '@uipath/angular/testing';

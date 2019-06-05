@@ -1,8 +1,8 @@
 import {
-  ContentChild,
-  Directive,
-  Input,
-  TemplateRef,
+    ContentChild,
+    Directive,
+    Input,
+    TemplateRef,
 } from '@angular/core';
 
 /**
@@ -11,7 +11,7 @@ import {
  * @export
  */
 @Directive({
-  selector: '[uiHeaderButton], ui-header-button',
+    selector: '[uiHeaderButton], ui-header-button',
 })
 export class UiGridHeaderButtonDirective {
   /**
@@ -19,7 +19,7 @@ export class UiGridHeaderButtonDirective {
    *
    */
   @Input()
-  public type?: 'action' | 'main';
+    public type?: 'action' | 'main';
 
   /**
    * Configure if the button is visible or not.
@@ -33,7 +33,7 @@ export class UiGridHeaderButtonDirective {
    * @ignore
    */
   @ContentChild(TemplateRef, {
-    static: true,
+      static: true,
   })
   public html?: TemplateRef<any>;
 }

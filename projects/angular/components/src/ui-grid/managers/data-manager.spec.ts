@@ -4,9 +4,9 @@ import { BehaviorSubject } from 'rxjs';
 import { skip } from 'rxjs/operators';
 
 import {
-  generateEntity,
-  generateListFactory,
-  ITestEntity,
+    generateEntity,
+    generateListFactory,
+    ITestEntity,
 } from '../test';
 import { DataManager } from './data-manager';
 

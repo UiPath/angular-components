@@ -1,14 +1,14 @@
 import {
-  fakeAsync,
-  tick,
+    fakeAsync,
+    tick,
 } from '@angular/core/testing';
 
 import { of } from 'rxjs';
 import {
-  catchError,
-  delay,
-  finalize,
-  timeout,
+    catchError,
+    delay,
+    finalize,
+    timeout,
 } from 'rxjs/operators';
 
 import { concatJoin } from './concat-join';

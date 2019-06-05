@@ -1,20 +1,20 @@
 import {
-  ChangeDetectorRef,
-  DoCheck,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  Input,
-  Optional,
-  Output,
-  Self,
+    ChangeDetectorRef,
+    DoCheck,
+    ElementRef,
+    EventEmitter,
+    HostBinding,
+    Input,
+    Optional,
+    Output,
+    Self,
 } from '@angular/core';
 import {
-  ControlValueAccessor,
-  FormControl,
-  FormGroupDirective,
-  NgControl,
-  NgForm,
+    ControlValueAccessor,
+    FormControl,
+    FormGroupDirective,
+    NgControl,
+    NgForm,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -24,13 +24,13 @@ import isEqual from 'lodash-es/isEqual';
 import { Subject } from 'rxjs';
 
 import {
-  ISuggestValue,
-  SuggestDirection,
-  SuggestDisplayPriority,
+    ISuggestValue,
+    SuggestDirection,
+    SuggestDisplayPriority,
 } from './models';
 import {
-  checkAndNormalizeValue,
-  sortByPriorityAndDirection,
+    checkAndNormalizeValue,
+    sortByPriorityAndDirection,
 } from './utils';
 
 export abstract class UiSuggestMatFormField implements
