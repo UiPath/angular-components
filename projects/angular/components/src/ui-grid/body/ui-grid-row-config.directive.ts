@@ -1,6 +1,6 @@
 import {
-  Directive,
-  Input,
+    Directive,
+    Input,
 } from '@angular/core';
 
 import { IGridDataEntry } from '../models';
@@ -11,7 +11,7 @@ import { IGridDataEntry } from '../models';
  * @export
  */
 @Directive({
-  selector: '[uiGridRowConfig], ui-grid-row-config',
+    selector: '[uiGridRowConfig], ui-grid-row-config',
 })
 export class UiGridRowConfigDirective<T extends IGridDataEntry> {
   /**
@@ -19,5 +19,5 @@ export class UiGridRowConfigDirective<T extends IGridDataEntry> {
    *
    */
   @Input()
-  public ngClassFn: (entry: T) => Record<string, boolean> = (_) => ({} as Record<string, boolean>)
+    public ngClassFn: (entry: T) => Record<string, boolean> = (_) => ({} as Record<string, boolean>)
 }

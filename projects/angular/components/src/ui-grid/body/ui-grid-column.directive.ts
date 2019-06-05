@@ -1,12 +1,12 @@
 import {
-  ContentChild,
-  Directive,
-  Input,
-  isDevMode,
-  OnChanges,
-  OnDestroy,
-  SimpleChanges,
-  TemplateRef,
+    ContentChild,
+    Directive,
+    Input,
+    isDevMode,
+    OnChanges,
+    OnDestroy,
+    SimpleChanges,
+    TemplateRef,
 } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
 import { identifier } from '@uipath/angular/utilities';

@@ -4,6 +4,6 @@ import { UiDateFormatDirective } from './ui-dateformat.directive';
 
 @NgModule({
     declarations: [UiDateFormatDirective],
-    exports: [UiDateFormatDirective]
+    exports: [UiDateFormatDirective],
 })
 export class UiDateFormatModule { }

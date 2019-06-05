@@ -1,49 +1,49 @@
 import {
-  Component,
-  ViewChild,
+    Component,
+    ViewChild,
 } from '@angular/core';
 import {
-  async,
-  ComponentFixture,
-  discardPeriodicTasks,
-  fakeAsync,
-  TestBed,
-  tick,
+    async,
+    ComponentFixture,
+    discardPeriodicTasks,
+    fakeAsync,
+    TestBed,
+    tick,
 } from '@angular/core/testing';
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { VirtualScrollItemStatus } from '@uipath/angular/directives';
 import {
-  EventGenerator,
-  Key,
+    EventGenerator,
+    Key,
 } from '@uipath/angular/testing';
 
 import * as faker from 'faker';
 import {
-  Observable,
-  of,
+    Observable,
+    of,
 } from 'rxjs';
 import {
-  delay,
-  finalize,
-  map,
-  skip,
-  take,
+    delay,
+    finalize,
+    map,
+    skip,
+    take,
 } from 'rxjs/operators';
 
 import {
-  ISuggestValue,
-  ISuggestValues,
+    ISuggestValue,
+    ISuggestValues,
 } from './models';
 import {
-  generateSuggestionItem,
-  generateSuggetionItemList,
+    generateSuggestionItem,
+    generateSuggetionItemList,
 } from './test';
 import { UiSuggestComponent } from './ui-suggest.component';
 import { UiSuggestModule } from './ui-suggest.module';
@@ -1037,9 +1037,9 @@ const sharedSpecifications = (
                 const word = faker.random.word();
                 const wordWithWhitespace = `${
                     Array(6).fill(' ').join('')
-                    }${word}${
+                }${word}${
                     Array(6).fill(' ').join('')
-                    }`;
+                }`;
 
                 searchFor(wordWithWhitespace, fixture);
                 await fixture.whenStable();

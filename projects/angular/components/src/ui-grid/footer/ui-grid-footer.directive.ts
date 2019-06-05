@@ -1,10 +1,10 @@
 import {
-  Directive,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
+    Directive,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 

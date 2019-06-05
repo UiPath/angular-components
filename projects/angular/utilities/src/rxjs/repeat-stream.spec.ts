@@ -1,12 +1,12 @@
 import {
-  fakeAsync,
-  tick,
+    fakeAsync,
+    tick,
 } from '@angular/core/testing';
 
 import { of } from 'rxjs';
 import {
-  finalize,
-  take,
+    finalize,
+    take,
 } from 'rxjs/operators';
 
 import { repeatStream } from './repeat-stream';
@@ -41,7 +41,7 @@ describe('Util(rxjs): repeatStream', () => {
                         repeatStream(() => of(++emissionCount), interval)
                             .pipe(
                                 take(repeat),
-                                finalize(done)
+                                finalize(done),
                             )
                             .subscribe(callbacks.emission);
 

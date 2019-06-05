@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import {
-  ComponentFixture,
-  TestBed,
+    ComponentFixture,
+    TestBed,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { EventGenerator } from '@uipath/angular/testing';
 
 import { Subject } from 'rxjs';
 import {
-  finalize,
-  first,
+    finalize,
+    first,
 } from 'rxjs/operators';
 
 import { UiClipboardModule } from './ui-clipboard.module';
@@ -36,7 +36,7 @@ class ClipboardFixtureComponent {
         console.log('success', ev);
         this.event$.next({
             type: 'success',
-            ev
+            ev,
         });
     }
 
@@ -44,7 +44,7 @@ class ClipboardFixtureComponent {
         console.log('error', ev);
         this.event$.next({
             type: 'error',
-            ev
+            ev,
         });
     }
 }

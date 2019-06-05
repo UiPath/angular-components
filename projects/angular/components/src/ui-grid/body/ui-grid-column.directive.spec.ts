@@ -1,17 +1,17 @@
 import {
-  Component,
-  ViewChild,
+    Component,
+    ViewChild,
 } from '@angular/core';
 import {
-  ComponentFixture,
-  TestBed,
+    ComponentFixture,
+    TestBed,
 } from '@angular/core/testing';
 import { UiGridModule } from '@uipath/angular/components';
 
 import * as faker from 'faker';
 import {
-  finalize,
-  take,
+    finalize,
+    take,
 } from 'rxjs/operators';
 
 import { UiGridColumnDirective } from './ui-grid-column.directive';

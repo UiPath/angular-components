@@ -36,7 +36,8 @@
     "import-spacing": true,
     "indent": [
       true,
-      "spaces"
+      "spaces",
+      4
     ],
     "interface-over-type-literal": true,
     "label-position": true,
@@ -176,6 +177,13 @@
     "semicolon": [
       true,
       "always"
+    ],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
     ],
     "triple-equals": [
       true,

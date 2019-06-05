@@ -2,13 +2,13 @@ import { UiGridColumnDirective } from '../../../body/ui-grid-column.directive';
 import { IGridDataEntry } from '../../../models';
 import { ResizeManager } from '../resize-manager';
 import {
-  clampOffset,
-  isDirectionChanged,
-  isMinWidth,
+    clampOffset,
+    isDirectionChanged,
+    isMinWidth,
 } from '../resize-manager.constants';
 import {
-  IResizeEvent,
-  ResizeDirection,
+    IResizeEvent,
+    ResizeDirection,
 } from '../types';
 
 /**

@@ -1,25 +1,25 @@
 import 'moment-timezone';
 
 import {
-  Directive,
-  ElementRef,
-  Inject,
-  InjectionToken,
-  Input,
-  Optional,
-  Renderer2,
+    Directive,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Input,
+    Optional,
+    Renderer2,
 } from '@angular/core';
 
 import * as _moment from 'moment';
 import {
-  interval,
-  merge,
-  Observable,
-  of,
+    interval,
+    merge,
+    Observable,
+    of,
 } from 'rxjs';
 import {
-  filter,
-  takeUntil,
+    filter,
+    takeUntil,
 } from 'rxjs/operators';
 
 import { UiFormat } from '../internal/ui-format';
@@ -144,13 +144,13 @@ export class UiDateFormatDirective extends UiFormat {
     constructor(
         @Inject(UI_DATEFORMAT_OPTIONS)
         @Optional()
-        options: IDateFormatOptions,
-        renderer: Renderer2,
-        elementRef: ElementRef,
+            options: IDateFormatOptions,
+            renderer: Renderer2,
+            elementRef: ElementRef,
     ) {
         super(
             renderer,
-            elementRef
+            elementRef,
         );
 
         options = options || {};

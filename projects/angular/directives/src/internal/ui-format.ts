@@ -1,8 +1,8 @@
 import {
-  ElementRef,
-  OnChanges,
-  OnDestroy,
-  Renderer2,
+    ElementRef,
+    OnChanges,
+    OnDestroy,
+    Renderer2,
 } from '@angular/core';
 
 import { Subject } from 'rxjs';

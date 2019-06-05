@@ -1,15 +1,15 @@
 import { Subject } from 'rxjs';
 import {
-  finalize,
-  skip,
-  take,
+    finalize,
+    skip,
+    take,
 } from 'rxjs/operators';
 
 import { SelectionManager } from '../managers';
 import {
-  generateEntity,
-  generateListFactory,
-  ITestEntity,
+    generateEntity,
+    generateListFactory,
+    ITestEntity,
 } from '../test';
 
 describe('Component: UiGrid', () => {

@@ -34,6 +34,7 @@
     "test:headless": "ng test --watch=false --browsers ChromeHeadless",
     "test:coverage": "ng test --code-coverage --watch=false --browsers ChromeHeadless",
     "lint": "ng lint",
+    "lint:fix": "tslint --fix projects/**/*.ts",
     "e2e": "ng e2e",
     "package": "npm-run-all build:prod",
     "docs": "compodoc",

@@ -1,33 +1,33 @@
 import toArray from 'lodash-es/toArray';
 import {
-  animationFrameScheduler,
-  fromEvent,
-  merge,
-  Subject,
+    animationFrameScheduler,
+    fromEvent,
+    merge,
+    Subject,
 } from 'rxjs';
 import {
-  filter,
-  take,
-  takeUntil,
-  tap,
-  throttleTime,
+    filter,
+    take,
+    takeUntil,
+    tap,
+    throttleTime,
 } from 'rxjs/operators';
 
 import { UiGridColumnDirective } from '../../body/ui-grid-column.directive';
 import { IGridDataEntry } from '../../models';
 import {
-  cellSelector,
-  findHeaderIndexFor,
-  getProperty,
-  resizeFilter,
-  toPercentageStyle,
+    cellSelector,
+    findHeaderIndexFor,
+    getProperty,
+    resizeFilter,
+    toPercentageStyle,
 } from './resize-manager.constants';
 import {
-  IResizeEvent,
-  IResizeInfo,
-  IResizeState,
-  ResizableGrid,
-  ResizeDirection,
+    IResizeEvent,
+    IResizeInfo,
+    IResizeState,
+    ResizableGrid,
+    ResizeDirection,
 } from './types';
 
 /**

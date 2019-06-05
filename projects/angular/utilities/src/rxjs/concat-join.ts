@@ -1,11 +1,11 @@
 import {
-  concat,
-  Observable,
-  ObservableInput,
+    concat,
+    Observable,
+    ObservableInput,
 } from 'rxjs';
 import {
-  take,
-  toArray,
+    take,
+    toArray,
 } from 'rxjs/operators';
 
 import { ObservedValueOf } from './internal/observed-value-of';
@@ -47,10 +47,10 @@ export function concatJoin<O1 extends ObservableInput<any>, O2 extends Observabl
  * @returns An array with the emitted values.
  */
 export function concatJoin(...inputs: Observable<any>[]): Observable<any[]> {
-  const streams = inputs.map(input => input.pipe(take(1)));
+    const streams = inputs.map(input => input.pipe(take(1)));
 
-  return concat(...streams)
-    .pipe(
-      toArray(),
-    );
+    return concat(...streams)
+        .pipe(
+            toArray(),
+        );
 }

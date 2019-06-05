@@ -1,7 +1,7 @@
 import {
-  ContentChild,
-  Directive,
-  TemplateRef,
+    ContentChild,
+    Directive,
+    TemplateRef,
 } from '@angular/core';
 
 /**
@@ -10,7 +10,7 @@ import {
  * @export
  */
 @Directive({
-  selector: '[uiGridExpandedRow], ui-grid-expanded-row',
+    selector: '[uiGridExpandedRow], ui-grid-expanded-row',
 })
 export class UiGridExpandedRowDirective {
   /**
@@ -18,7 +18,7 @@ export class UiGridExpandedRowDirective {
    * @ignore
    */
   @ContentChild(TemplateRef, {
-    static: true,
+      static: true,
   })
-  public html?: TemplateRef<any>;
+    public html?: TemplateRef<any>;
 }
