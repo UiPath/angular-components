@@ -44,3 +44,19 @@ jobs:
     dependsOn:
       - CommitLint
     condition: succeeded('CommitLint')
+
+  - job: Documentation
+    pool :
+      vmImage: 'ubuntu-latest'
+    steps:
+      - template: .ci/templates/steps/initialize-environment.yml
+      - template: .ci/templates/steps/install-dependencies.yml
+      - script: |
+          npm run docs
+        displayName: 'Generating Docs'
+      - script: |
+          git config user.email azp@uipath.com
+          git config user.name "Azure Pipelines"
+          node .build/publish-gh-pages
+        displayName: 'Publishing Docs'
+    condition: eq(variables['Build.SourceBranchName'], 'master')
