@@ -36,7 +36,7 @@ class ClipboardFixtureComponent {
         console.log('success', ev);
         this.event$.next({
             type: 'success',
-            ev
+            ev,
         });
     }
 
@@ -44,7 +44,7 @@ class ClipboardFixtureComponent {
         console.log('error', ev);
         this.event$.next({
             type: 'error',
-            ev
+            ev,
         });
     }
 }

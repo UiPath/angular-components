@@ -20,11 +20,11 @@ describe('Manager: ResizeManager', () => {
                 element: {
                     style: {
                         width: '100px',
-                    }
+                    },
                 },
                 column: {
                     minWidth: 70,
-                }
+                },
             } as IResizeInfo<{}>;
 
             expect(isMinWidth(entry)).toEqual(false);
@@ -35,11 +35,11 @@ describe('Manager: ResizeManager', () => {
                 element: {
                     style: {
                         width: '100px',
-                    }
+                    },
                 },
                 column: {
                     minWidth: 100,
-                }
+                },
             } as IResizeInfo<{}>;
 
             expect(isMinWidth(entry)).toEqual(true);
@@ -54,7 +54,7 @@ describe('Manager: ResizeManager', () => {
                 },
                 previous: {
                     direction: 'right',
-                }
+                },
             } as unknown as IResizeEvent<object>;
 
             expect(isDirectionChanged(state)).toEqual(true);
@@ -67,7 +67,7 @@ describe('Manager: ResizeManager', () => {
                 },
                 previous: {
                     direction: 'right',
-                }
+                },
             } as unknown as IResizeEvent<object>;
 
             expect(isDirectionChanged(state)).toEqual(false);
@@ -84,7 +84,7 @@ describe('Manager: ResizeManager', () => {
                 column: {
                     width: 100,
                     minWidth: 50,
-                }
+                },
             } as IResizeInfo<{}>;
 
             expect(clampOffset(entry, -30)).toEqual(-30);
@@ -95,7 +95,7 @@ describe('Manager: ResizeManager', () => {
                 column: {
                     width: 40,
                     minWidth: 50,
-                }
+                },
             } as IResizeInfo<{}>;
 
             expect(clampOffset(entry, -30)).toEqual(10);

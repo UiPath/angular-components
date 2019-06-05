@@ -24,7 +24,7 @@ class NgLetContext {
  */
 @Directive({
   // tslint:disable-next-line: directive-selector
-  selector: '[ngLet]'
+  selector: '[ngLet]',
 })
 export class UiNgLetDirective implements OnInit {
   private _context = new NgLetContext();
@@ -43,7 +43,7 @@ export class UiNgLetDirective implements OnInit {
    */
   constructor(
     private _vcr: ViewContainerRef,
-    private _templateRef: TemplateRef<NgLetContext>
+    private _templateRef: TemplateRef<NgLetContext>,
   ) { }
 
   /**
@@ -52,7 +52,7 @@ export class UiNgLetDirective implements OnInit {
   ngOnInit() {
     this._vcr.createEmbeddedView(
       this._templateRef,
-      this._context
+      this._context,
     );
   }
 }

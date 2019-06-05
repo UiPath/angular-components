@@ -12,7 +12,7 @@ describe('Util(browser): extractCookies', () => {
         const matchMediaSpy = spyOnProperty(document, 'cookie', 'get');
         matchMediaSpy.and.returnValue('myCookie=1234');
 
-        expect(extractCookies()).toEqual({ myCookie: '1234', });
+        expect(extractCookies()).toEqual({ myCookie: '1234' });
     });
 
     it('should return an object with MULTIPLE properties', () => {

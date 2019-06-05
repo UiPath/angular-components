@@ -6,7 +6,7 @@ export {
     ISuggestValueData,
     ISuggestValues,
     SuggestDirection,
-    SuggestDisplayPriority
+    SuggestDisplayPriority,
 } from './ui-suggest/models';
 
 export { UiGridModule } from './ui-grid/ui-grid.module';
@@ -26,5 +26,5 @@ export {
     ResizeManager,
     SelectionManager,
     ResizeStrategy,
-    SortManager
+    SortManager,
 } from './ui-grid/managers';

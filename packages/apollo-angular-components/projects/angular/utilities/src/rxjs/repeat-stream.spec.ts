@@ -41,7 +41,7 @@ describe('Util(rxjs): repeatStream', () => {
                         repeatStream(() => of(++emissionCount), interval)
                             .pipe(
                                 take(repeat),
-                                finalize(done)
+                                finalize(done),
                             )
                             .subscribe(callbacks.emission);
 

@@ -28,7 +28,7 @@ const ITEMS_IN_VIEWPORT = 5;
 const VIEWPORT_HEIGHT = ITEM_SIZE * ITEMS_IN_VIEWPORT;
 const INITIAL_ITEMS = new Array(VIEWPORT_HEIGHT * 100)
     .fill(0).map(_ => ({
-        loading: VirtualScrollItemStatus.initial
+        loading: VirtualScrollItemStatus.initial,
     }));
 
 interface ITestVirtualScrollItem extends VirtualScrollItem {
@@ -137,7 +137,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
                 const { end, start } = vs.getRenderedRange();
                 expect(end).toEqual(component.lastRangeLoad!.end);
                 expect(start).toEqual(component.lastRangeLoad!.start);
-            })
+            }),
         );
 
         it('should emit RangeLoad equal to viewport range after scroll',
@@ -161,7 +161,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
                 const { end, start } = vs.getRenderedRange();
                 expect(end).toEqual(component.lastRangeLoad!.end);
                 expect(start).toEqual(component.lastRangeLoad!.start);
-            })
+            }),
         );
 
         it('should not emit RangeLoad if range is invalid',
@@ -184,7 +184,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
                 tick(RANGE_LOAD_DEBOUNCE);
                 expect(end).toEqual(component.lastRangeLoad!.end);
                 expect(start).toEqual(component.lastRangeLoad!.start);
-            })
+            }),
         );
 
         it('should not emit RangeLoad if all items are loaded',
@@ -206,7 +206,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
 
                 tick(RANGE_LOAD_DEBOUNCE);
                 expect(component.lastRangeLoad).toBeUndefined();
-            })
+            }),
         );
 
         it('should emit  RangeLoad without the last item index if that is loaded',
@@ -219,8 +219,8 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
                     .map(
                         (_, i) => ({
                             loading: i === targetRange.end ? VirtualScrollItemStatus.loaded : VirtualScrollItemStatus.initial,
-                            text: 'Loaded'
-                        })
+                            text: 'Loaded',
+                        }),
                     );
                 fixture.detectChanges();
 
@@ -233,7 +233,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
 
                 tick(RANGE_LOAD_DEBOUNCE);
                 expect(component.lastRangeLoad!.end).toBe(targetRange.end - 1);
-            })
+            }),
         );
 
         it('should emit  RangeLoad without the last item index if Pula that is loaded',
@@ -248,8 +248,8 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
                             loading: (i === targetRange.end || i === targetRange.start) ?
                                 VirtualScrollItemStatus.loaded :
                                 VirtualScrollItemStatus.initial,
-                            text: 'Loaded'
-                        })
+                            text: 'Loaded',
+                        }),
                     );
                 fixture.detectChanges();
 
@@ -263,7 +263,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
                 tick(RANGE_LOAD_DEBOUNCE);
                 expect(component.lastRangeLoad!.end).toBe(targetRange.end - 1);
                 expect(component.lastRangeLoad!.start).toBe(targetRange.start + 1);
-            })
+            }),
         );
     });
 
@@ -297,7 +297,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
                 const { end, start } = vs.getRenderedRange();
                 expect(end + component.buffer).toEqual(component.lastRangeLoad!.end);
                 expect(start).toEqual(component.lastRangeLoad!.start);
-            })
+            }),
         );
 
         it('should emit RangeLoad equal to viewport range after scroll',
@@ -321,7 +321,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
                 const { end, start } = vs.getRenderedRange();
                 expect(end + component.buffer).toEqual(component.lastRangeLoad!.end);
                 expect(start - component.buffer).toEqual(component.lastRangeLoad!.start);
-            })
+            }),
         );
 
         it('should emit RangeLoad with buffer at end even if it contains items in loaded state',
@@ -336,8 +336,8 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
                             loading: (i === targetRange.end) ?
                                 VirtualScrollItemStatus.loaded :
                                 VirtualScrollItemStatus.initial,
-                            text: 'Loaded'
-                        })
+                            text: 'Loaded',
+                        }),
                     );
                 fixture.detectChanges();
 
@@ -352,7 +352,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
 
                 expect(component.lastRangeLoad!.end).toBe(targetRange.end + component.buffer);
                 expect(component.lastRangeLoad!.start).toBe(targetRange.start);
-            })
+            }),
         );
     });
 
@@ -378,7 +378,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
                 const { end, start } = vs.getRenderedRange();
                 expect(start).toEqual((component.items.length - 1) - component.lastRangeLoad!.end);
                 expect(end).toEqual((component.items.length - 1) - component.lastRangeLoad!.start);
-            })
+            }),
         );
     });
 

@@ -72,7 +72,7 @@ export class FilterManager<T> {
         if (!dropdown) { return; }
 
         (dropdown as {
-            updateValue: (value: ISuggestValue | IDropdownOption | undefined) => void
+            updateValue: (value: ISuggestValue | IDropdownOption | undefined) => void,
         }).updateValue(value);
         dropdown.filterChange.emit(value ? mapper(column) : null);
 

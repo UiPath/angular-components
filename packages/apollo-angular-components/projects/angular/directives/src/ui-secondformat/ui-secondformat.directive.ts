@@ -107,7 +107,7 @@ export class UiSecondFormatDirective extends UiFormat {
     ) {
         super(
             renderer,
-            elementRef
+            elementRef,
         );
 
         options = options || {};
