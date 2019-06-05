@@ -153,24 +153,24 @@ By sharing the event stream, we end up adding only one event listener rather tha
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DOCUMENT } from &#x27;@angular/common&#x27;;
 import {
-  Directive,
-  ElementRef,
-  Inject,
-  Injectable,
-  OnDestroy,
-  Output,
+    Directive,
+    ElementRef,
+    Inject,
+    Injectable,
+    OnDestroy,
+    Output,
 } from &#x27;@angular/core&#x27;;
 
 import {
-  fromEvent,
-  Observable,
-  Subject,
+    fromEvent,
+    Observable,
+    Subject,
 } from &#x27;rxjs&#x27;;
 import {
-  filter,
-  share,
-  takeUntil,
-  throttleTime,
+    filter,
+    share,
+    takeUntil,
+    throttleTime,
 } from &#x27;rxjs/operators&#x27;;
 
 /**
@@ -193,39 +193,39 @@ const MAX_CLICKS_PER_SECOND &#x3D; 3;
  * @export
  */
 @Injectable({
-  providedIn: &#x27;root&#x27;,
+    providedIn: &#x27;root&#x27;,
 })
 export class UiClickOutsideService implements OnDestroy {
-  /**
+    /**
    * The &#x60;global&#x60; event handler for &#x60;click&#x60; events.
    *
    */
-  public source: Observable&lt;MouseEvent&gt;;
-  private _destroyed$ &#x3D; new Subject();
+    public source: Observable&lt;MouseEvent&gt;;
+    private _destroyed$ &#x3D; new Subject();
 
-  /**
+    /**
     * @ignore
     */
-  constructor(
+    constructor(
     @Inject(DOCUMENT)
-    document: any,
-  ) {
-    this.source &#x3D; fromEvent&lt;MouseEvent&gt;((document as Document).body, &#x27;click&#x27;, {
-      capture: true,
-    })
-      .pipe(
-        throttleTime(1000 / MAX_CLICKS_PER_SECOND),
-        takeUntil(this._destroyed$),
-        share(),
-      );
-  }
+        document: any,
+    ) {
+        this.source &#x3D; fromEvent&lt;MouseEvent&gt;((document as Document).body, &#x27;click&#x27;, {
+            capture: true,
+        })
+            .pipe(
+                throttleTime(1000 / MAX_CLICKS_PER_SECOND),
+                takeUntil(this._destroyed$),
+                share(),
+            );
+    }
 
-  /**
+    /**
     * @ignore
     */
-  ngOnDestroy() {
-    this._destroyed$.next();
-  }
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
 }
 
 /**
@@ -234,7 +234,7 @@ export class UiClickOutsideService implements OnDestroy {
  * @export
  */
 @Directive({
-  selector: &#x27;[uiClickOutside]&#x27;,
+    selector: &#x27;[uiClickOutside]&#x27;,
 })
 export class UiClickOutsideDirective {
   /**
@@ -242,24 +242,24 @@ export class UiClickOutsideDirective {
    *
    */
   @Output()
-  public uiClickOutside: Observable&lt;MouseEvent&gt;;
+    public uiClickOutside: Observable&lt;MouseEvent&gt;;
 
   /**
     * @ignore
     */
   constructor(
-    ref: ElementRef,
-    private _clickService: UiClickOutsideService,
+      ref: ElementRef,
+      private _clickService: UiClickOutsideService,
   ) {
-    const element: HTMLElement &#x3D; ref.nativeElement;
+      const element: HTMLElement &#x3D; ref.nativeElement;
 
-    this.uiClickOutside &#x3D; this._clickService
-      .source
-      .pipe(
-        filter(ev &#x3D;&gt;
-          !element.contains((ev.target as Element)),
-        ),
-      );
+      this.uiClickOutside &#x3D; this._clickService
+          .source
+          .pipe(
+              filter(ev &#x3D;&gt;
+                  !element.contains((ev.target as Element)),
+              ),
+          );
   }
 }
 </code></pre>

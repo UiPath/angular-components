@@ -332,10 +332,10 @@ eg: <code>[uiScrollIntoView]=&quot;isFocused&quot;</code></p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Directive,
-  ElementRef,
-  Input,
-  NgZone,
+    Directive,
+    ElementRef,
+    Input,
+    NgZone,
 } from &#x27;@angular/core&#x27;;
 
 import { merge } from &#x27;rxjs&#x27;;
@@ -356,7 +356,7 @@ type Boundary &#x3D; &#x27;parent&#x27; | Element;
  * @export
  */
 @Directive({
-  selector: &#x27;[uiScrollIntoView]&#x27;,
+    selector: &#x27;[uiScrollIntoView]&#x27;,
 })
 export class UiScrollIntoViewDirective {
   /**
@@ -364,7 +364,7 @@ export class UiScrollIntoViewDirective {
    *
    */
   @Input()
-  public boundary: Boundary &#x3D; &#x27;parent&#x27;;
+    public boundary: Boundary &#x3D; &#x27;parent&#x27;;
 
   /**
    * Configures if the decorated element should be scrolled into view.
@@ -373,25 +373,25 @@ export class UiScrollIntoViewDirective {
    */
   @Input()
   public set uiScrollIntoView(condition: boolean) {
-    this._zone.runOutsideAngular(() &#x3D;&gt; {
-      if (!condition) { return; }
-      merge(
-        this._zone.onMicrotaskEmpty,
-        this._zone.onStable,
-      ).
-        pipe(
-          take(1),
-        ).subscribe(() &#x3D;&gt; {
-          this.scrollIntoViewIfNeeded(
-            this._element.nativeElement, {
-              block: &#x27;start&#x27;,
-              boundary: this.boundary &#x3D;&#x3D;&#x3D; &#x27;parent&#x27; ?
-                this._element.nativeElement.parentElement :
-                this.boundary,
-            },
-          );
-        });
-    });
+      this._zone.runOutsideAngular(() &#x3D;&gt; {
+          if (!condition) { return; }
+          merge(
+              this._zone.onMicrotaskEmpty,
+              this._zone.onStable,
+          ).
+              pipe(
+                  take(1),
+              ).subscribe(() &#x3D;&gt; {
+                  this.scrollIntoViewIfNeeded(
+                      this._element.nativeElement, {
+                          block: &#x27;start&#x27;,
+                          boundary: this.boundary &#x3D;&#x3D;&#x3D; &#x27;parent&#x27; ?
+                              this._element.nativeElement.parentElement :
+                              this.boundary,
+                      },
+                  );
+              });
+      });
   }
 
   /**
@@ -404,8 +404,8 @@ export class UiScrollIntoViewDirective {
     * @ignore
     */
   constructor(
-    private _element: ElementRef,
-    private _zone: NgZone,
+      private _element: ElementRef,
+      private _zone: NgZone,
   ) { }
 }
 </code></pre>

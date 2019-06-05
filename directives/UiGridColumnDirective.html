@@ -540,7 +540,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="190" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:190</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="196" class="link-to-prism">projects/angular/components/src/ui-grid/body/ui-grid-column.directive.ts:196</a></div>
                             </td>
                         </tr>
 
@@ -703,14 +703,14 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  ContentChild,
-  Directive,
-  Input,
-  isDevMode,
-  OnChanges,
-  OnDestroy,
-  SimpleChanges,
-  TemplateRef,
+    ContentChild,
+    Directive,
+    Input,
+    isDevMode,
+    OnChanges,
+    OnDestroy,
+    SimpleChanges,
+    TemplateRef,
 } from &#x27;@angular/core&#x27;;
 import { SortDirection } from &#x27;@angular/material/sort&#x27;;
 import { identifier } from &#x27;@uipath/angular/utilities&#x27;;
@@ -870,21 +870,27 @@ export class UiGridColumnDirective&lt;T&gt; implements OnChanges, OnDestroy {
      * The searchable dropdown directive reference.
      * @ignore
      */
-    @ContentChild(UiGridSearchFilterDirective)
+    @ContentChild(UiGridSearchFilterDirective, {
+        static: true,
+    })
     public searchableDropdown?: UiGridSearchFilterDirective&lt;T&gt;;
 
     /**
      * The dropdown directive reference.
      * @ignore
      */
-    @ContentChild(UiGridDropdownFilterDirective)
+    @ContentChild(UiGridDropdownFilterDirective, {
+        static: true,
+    })
     public dropdown?: UiGridDropdownFilterDirective&lt;T&gt;;
 
     /**
      * The view template associated to the row cell.
      * @ignore
      */
-    @ContentChild(TemplateRef)
+    @ContentChild(TemplateRef, {
+        static: true,
+    })
     public html?: TemplateRef&lt;any&gt;;
 
     /**

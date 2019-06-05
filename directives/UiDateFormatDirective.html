@@ -72,13 +72,6 @@
 
             </p>
 
-            <p class="comment">
-                <h3>Implements</h3>
-            </p>
-            <p class="comment">
-                            <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
-                            <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
-            </p>
 
             <p class="comment">
                 <h3>Example</h3>
@@ -164,7 +157,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="88" class="link-to-prism">projects/angular/directives/src/ui-dateformat/ui-dateformat.directive.ts:88</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">projects/angular/directives/src/ui-dateformat/ui-dateformat.directive.ts:87</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -191,7 +184,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="110" class="link-to-prism">projects/angular/directives/src/ui-dateformat/ui-dateformat.directive.ts:110</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="109" class="link-to-prism">projects/angular/directives/src/ui-dateformat/ui-dateformat.directive.ts:109</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -217,7 +210,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">projects/angular/directives/src/ui-dateformat/ui-dateformat.directive.ts:116</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">projects/angular/directives/src/ui-dateformat/ui-dateformat.directive.ts:115</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -244,7 +237,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="104" class="link-to-prism">projects/angular/directives/src/ui-dateformat/ui-dateformat.directive.ts:104</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="103" class="link-to-prism">projects/angular/directives/src/ui-dateformat/ui-dateformat.directive.ts:103</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -276,7 +269,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">projects/angular/directives/src/ui-dateformat/ui-dateformat.directive.ts:98</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">projects/angular/directives/src/ui-dateformat/ui-dateformat.directive.ts:97</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -304,29 +297,28 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import &#x27;moment-timezone&#x27;;
 
 import {
-  Directive,
-  ElementRef,
-  Inject,
-  InjectionToken,
-  Input,
-  OnChanges,
-  OnDestroy,
-  Optional,
-  Renderer2,
+    Directive,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Input,
+    Optional,
+    Renderer2,
 } from &#x27;@angular/core&#x27;;
 
 import * as _moment from &#x27;moment&#x27;;
 import {
-  interval,
-  merge,
-  Observable,
-  of,
-  Subject,
+    interval,
+    merge,
+    Observable,
+    of,
 } from &#x27;rxjs&#x27;;
 import {
-  filter,
-  takeUntil,
+    filter,
+    takeUntil,
 } from &#x27;rxjs/operators&#x27;;
+
+import { UiFormat } from &#x27;../internal/ui-format&#x27;;
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670
@@ -382,7 +374,7 @@ const RELATIVE_TIME_UPDATE_INTERVAL &#x3D; 10000;
 @Directive({
     selector: &#x27;[uiDateFormat], ui-dateformat&#x27;,
 })
-export class UiDateFormatDirective implements OnChanges, OnDestroy {
+export class UiDateFormatDirective extends UiFormat {
     /**
      * What format should the content have, &#x60;absolute&#x60; or &#x60;relative&#x60;.
      *
@@ -418,6 +410,8 @@ export class UiDateFormatDirective implements OnChanges, OnDestroy {
     @Input()
     public dateFormat &#x3D; &#x27;L LTS&#x27;;
 
+    protected _text?: HTMLElement;
+
     private get _relativeTime() {
         if (!this.date) { return &#x27;&#x27;; }
         if (!(this.date instanceof Date)) { return this.date; }
@@ -435,13 +429,10 @@ export class UiDateFormatDirective implements OnChanges, OnDestroy {
             .format(this.dateFormat);
     }
 
-    private _text?: HTMLElement;
     private _lastAbsoluteTime?: string;
     private _lastRelativeTime?: string;
     private _lastContentType?: DisplayType;
     private _lastTitleType?: DisplayType;
-    private _redraw$ &#x3D; new Subject();
-    private _destroyed$ &#x3D; new Subject();
 
     /**
      * @ignore
@@ -449,10 +440,15 @@ export class UiDateFormatDirective implements OnChanges, OnDestroy {
     constructor(
         @Inject(UI_DATEFORMAT_OPTIONS)
         @Optional()
-        options: IDateFormatOptions,
-        private _renderer: Renderer2,
-        private _elementRef: ElementRef,
+            options: IDateFormatOptions,
+            renderer: Renderer2,
+            elementRef: ElementRef,
     ) {
+        super(
+            renderer,
+            elementRef,
+        );
+
         options &#x3D; options || {};
 
         this.timezone &#x3D; options.timezone;
@@ -472,22 +468,6 @@ export class UiDateFormatDirective implements OnChanges, OnDestroy {
                 takeUntil(this._destroyed$),
             )
             .subscribe(() &#x3D;&gt; this._evaluate());
-    }
-
-    /**
-     * @ignore
-     */
-    ngOnChanges() {
-        this._redraw$.next();
-    }
-    /**
-     * @ignore
-     */
-    ngOnDestroy() {
-        if (this._text) {
-            this._renderer.removeChild(this._elementRef.nativeElement, this._text);
-        }
-        this._destroyed$.next();
     }
 
     private _evaluate() {

@@ -347,16 +347,16 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Directive,
-  Input,
-  OnDestroy,
+    Directive,
+    Input,
+    OnDestroy,
 } from &#x27;@angular/core&#x27;;
 
 import { Observable } from &#x27;rxjs&#x27;;
 
 import {
-  ISuggestValue,
-  ISuggestValues,
+    ISuggestValue,
+    ISuggestValues,
 } from &#x27;../../ui-suggest/models&#x27;;
 import { UiGridFilter } from &#x27;./ui-grid-filter&#x27;;
 
@@ -366,7 +366,7 @@ import { UiGridFilter } from &#x27;./ui-grid-filter&#x27;;
  * @export
  */
 @Directive({
-  selector: &#x27;[uiGridSearchFilter], ui-grid-search-filter&#x27;,
+    selector: &#x27;[uiGridSearchFilter], ui-grid-search-filter&#x27;,
 })
 export class UiGridSearchFilterDirective&lt;T&gt; extends UiGridFilter&lt;T&gt; implements OnDestroy {
   /**
@@ -374,7 +374,7 @@ export class UiGridSearchFilterDirective&lt;T&gt; extends UiGridFilter&lt;T&gt; 
    *
    */
   @Input()
-  public property?: string;
+    public property?: string;
 
   /**
    * The no selection placeholder.
@@ -404,14 +404,15 @@ export class UiGridSearchFilterDirective&lt;T&gt; extends UiGridFilter&lt;T&gt; 
    *
    */
   public updateValue(value?: ISuggestValue) {
-    this.value &#x3D; value;
+      this.value &#x3D; value;
   }
 
   /**
    * @ignore
    */
   ngOnDestroy() {
-    this.filterChange.complete();
+      super.ngOnDestroy();
+      this.filterChange.complete();
   }
 }
 </code></pre>

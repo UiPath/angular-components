@@ -246,19 +246,19 @@ even if the source has not yet been initialized.</p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Directive,
-  Input,
-  OnInit,
-  TemplateRef,
-  ViewContainerRef,
+    Directive,
+    Input,
+    OnInit,
+    TemplateRef,
+    ViewContainerRef,
 } from &#x27;@angular/core&#x27;;
 
 /**
  * @ignore
  */
 class NgLetContext {
-  $implicit: any &#x3D; null;
-  ngLet: any &#x3D; null;
+    $implicit: any &#x3D; null;
+    ngLet: any &#x3D; null;
 }
 
 /**
@@ -270,37 +270,37 @@ class NgLetContext {
  * @export
  */
 @Directive({
-  // tslint:disable-next-line: directive-selector
-  selector: &#x27;[ngLet]&#x27;
+    // tslint:disable-next-line: directive-selector
+    selector: &#x27;[ngLet]&#x27;,
 })
 export class UiNgLetDirective implements OnInit {
-  private _context &#x3D; new NgLetContext();
+    private _context &#x3D; new NgLetContext();
 
   /**
    * The context bound to the decorated area.
    *
    */
   @Input()
-  set ngLet(value: any) {
-    this._context.$implicit &#x3D; this._context.ngLet &#x3D; value;
-  }
+    set ngLet(value: any) {
+        this._context.$implicit &#x3D; this._context.ngLet &#x3D; value;
+    }
 
   /**
    * @ignore
    */
   constructor(
-    private _vcr: ViewContainerRef,
-    private _templateRef: TemplateRef&lt;NgLetContext&gt;
+      private _vcr: ViewContainerRef,
+      private _templateRef: TemplateRef&lt;NgLetContext&gt;,
   ) { }
 
   /**
    * @ignore
    */
   ngOnInit() {
-    this._vcr.createEmbeddedView(
-      this._templateRef,
-      this._context
-    );
+      this._vcr.createEmbeddedView(
+          this._templateRef,
+          this._context,
+      );
   }
 }
 </code></pre>

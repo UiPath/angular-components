@@ -244,31 +244,31 @@ and reduces interval to untouched indexes (items with <code>loading: &quot;initi
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ListRange } from &#x27;@angular/cdk/collections&#x27;;
 import {
-  CdkVirtualForOf,
-  CdkVirtualScrollViewport,
+    CdkVirtualForOf,
+    CdkVirtualScrollViewport,
 } from &#x27;@angular/cdk/scrolling&#x27;;
 import {
-  ContentChild,
-  Directive,
-  EventEmitter,
-  Inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  Self,
+    ContentChild,
+    Directive,
+    EventEmitter,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    Self,
 } from &#x27;@angular/core&#x27;;
 
 import { Subject } from &#x27;rxjs&#x27;;
 import {
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  map,
-  startWith,
-  takeUntil,
-  tap,
-  withLatestFrom,
+    debounceTime,
+    distinctUntilChanged,
+    filter,
+    map,
+    startWith,
+    takeUntil,
+    tap,
+    withLatestFrom,
 } from &#x27;rxjs/operators&#x27;;
 
 /**
@@ -341,7 +341,9 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
     @Output()
     public rangeLoad &#x3D; new EventEmitter&lt;ListRange&gt;();
 
-    @ContentChild(CdkVirtualForOf)
+    @ContentChild(CdkVirtualForOf, {
+        static: true,
+    })
     private readonly _cdkVirtualForOf!: CdkVirtualForOf&lt;VirtualScrollItem&gt;;
 
     private readonly _destroyed$ &#x3D; new Subject();

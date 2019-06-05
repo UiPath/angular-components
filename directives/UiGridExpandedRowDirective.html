@@ -101,9 +101,9 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  ContentChild,
-  Directive,
-  TemplateRef,
+    ContentChild,
+    Directive,
+    TemplateRef,
 } from &#x27;@angular/core&#x27;;
 
 /**
@@ -112,14 +112,17 @@
  * @export
  */
 @Directive({
-  selector: &#x27;[uiGridExpandedRow], ui-grid-expanded-row&#x27;,
+    selector: &#x27;[uiGridExpandedRow], ui-grid-expanded-row&#x27;,
 })
 export class UiGridExpandedRowDirective {
   /**
    * @internal
    * @ignore
    */
-  @ContentChild(TemplateRef) html?: TemplateRef&lt;any&gt;;
+  @ContentChild(TemplateRef, {
+      static: true,
+  })
+    public html?: TemplateRef&lt;any&gt;;
 }
 </code></pre>
     </div>

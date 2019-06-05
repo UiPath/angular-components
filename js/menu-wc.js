@@ -67,13 +67,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiAutofocusModule.html" data-type="entity-link">UiAutofocusModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiAutofocusModule-cef6e6ca764b7bb3138beb83f7dee2e6"' : 'data-target="#xs-directives-links-module-UiAutofocusModule-cef6e6ca764b7bb3138beb83f7dee2e6"' }>
+                                        'data-target="#directives-links-module-UiAutofocusModule-458e13f7fa25bff1ba64f62ad1c140a1"' : 'data-target="#xs-directives-links-module-UiAutofocusModule-458e13f7fa25bff1ba64f62ad1c140a1"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiAutofocusModule-cef6e6ca764b7bb3138beb83f7dee2e6"' :
-                                        'id="xs-directives-links-module-UiAutofocusModule-cef6e6ca764b7bb3138beb83f7dee2e6"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiAutofocusModule-458e13f7fa25bff1ba64f62ad1c140a1"' :
+                                        'id="xs-directives-links-module-UiAutofocusModule-458e13f7fa25bff1ba64f62ad1c140a1"' }>
                                         <li class="link">
                                             <a href="directives/UiAutofocusDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiAutofocusDirective</a>
@@ -85,13 +85,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiClickOutsideModule.html" data-type="entity-link">UiClickOutsideModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiClickOutsideModule-ff625b68e02985ccd592116cb19d152f"' : 'data-target="#xs-directives-links-module-UiClickOutsideModule-ff625b68e02985ccd592116cb19d152f"' }>
+                                        'data-target="#directives-links-module-UiClickOutsideModule-7f2d20698f6ab439b3bdb779b9a9c30e"' : 'data-target="#xs-directives-links-module-UiClickOutsideModule-7f2d20698f6ab439b3bdb779b9a9c30e"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiClickOutsideModule-ff625b68e02985ccd592116cb19d152f"' :
-                                        'id="xs-directives-links-module-UiClickOutsideModule-ff625b68e02985ccd592116cb19d152f"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiClickOutsideModule-7f2d20698f6ab439b3bdb779b9a9c30e"' :
+                                        'id="xs-directives-links-module-UiClickOutsideModule-7f2d20698f6ab439b3bdb779b9a9c30e"' }>
                                         <li class="link">
                                             <a href="directives/UiClickOutsideDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiClickOutsideDirective</a>
@@ -103,13 +103,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiClipboardModule.html" data-type="entity-link">UiClipboardModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiClipboardModule-d84c8138d6265e2dcf24b426f5913248"' : 'data-target="#xs-directives-links-module-UiClipboardModule-d84c8138d6265e2dcf24b426f5913248"' }>
+                                        'data-target="#directives-links-module-UiClipboardModule-7931fbb3e3ba4b0a8bf37d86ebec5c58"' : 'data-target="#xs-directives-links-module-UiClipboardModule-7931fbb3e3ba4b0a8bf37d86ebec5c58"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiClipboardModule-d84c8138d6265e2dcf24b426f5913248"' :
-                                        'id="xs-directives-links-module-UiClipboardModule-d84c8138d6265e2dcf24b426f5913248"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiClipboardModule-7931fbb3e3ba4b0a8bf37d86ebec5c58"' :
+                                        'id="xs-directives-links-module-UiClipboardModule-7931fbb3e3ba4b0a8bf37d86ebec5c58"' }>
                                         <li class="link">
                                             <a href="directives/UiClipboardDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiClipboardDirective</a>
@@ -121,13 +121,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiDateFormatModule.html" data-type="entity-link">UiDateFormatModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiDateFormatModule-b515989153428c4b3a4668483ea1a7eb"' : 'data-target="#xs-directives-links-module-UiDateFormatModule-b515989153428c4b3a4668483ea1a7eb"' }>
+                                        'data-target="#directives-links-module-UiDateFormatModule-6ae273c00ff491a6e230713da8b5ad07"' : 'data-target="#xs-directives-links-module-UiDateFormatModule-6ae273c00ff491a6e230713da8b5ad07"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiDateFormatModule-b515989153428c4b3a4668483ea1a7eb"' :
-                                        'id="xs-directives-links-module-UiDateFormatModule-b515989153428c4b3a4668483ea1a7eb"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiDateFormatModule-6ae273c00ff491a6e230713da8b5ad07"' :
+                                        'id="xs-directives-links-module-UiDateFormatModule-6ae273c00ff491a6e230713da8b5ad07"' }>
                                         <li class="link">
                                             <a href="directives/UiDateFormatDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiDateFormatDirective</a>
@@ -139,13 +139,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiDragAndDropModule.html" data-type="entity-link">UiDragAndDropModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiDragAndDropModule-d0b0ce7c0ffbea3b6de6befe4edee45b"' : 'data-target="#xs-directives-links-module-UiDragAndDropModule-d0b0ce7c0ffbea3b6de6befe4edee45b"' }>
+                                        'data-target="#directives-links-module-UiDragAndDropModule-be5077b169fec6fc344ac672c8d2db2e"' : 'data-target="#xs-directives-links-module-UiDragAndDropModule-be5077b169fec6fc344ac672c8d2db2e"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiDragAndDropModule-d0b0ce7c0ffbea3b6de6befe4edee45b"' :
-                                        'id="xs-directives-links-module-UiDragAndDropModule-d0b0ce7c0ffbea3b6de6befe4edee45b"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiDragAndDropModule-be5077b169fec6fc344ac672c8d2db2e"' :
+                                        'id="xs-directives-links-module-UiDragAndDropModule-be5077b169fec6fc344ac672c8d2db2e"' }>
                                         <li class="link">
                                             <a href="directives/UiDragAndDropFileDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiDragAndDropFileDirective</a>
@@ -157,13 +157,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiGridModule.html" data-type="entity-link">UiGridModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' : 'data-target="#xs-components-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' }>
+                                            'data-target="#components-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' : 'data-target="#xs-components-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' :
-                                            'id="xs-components-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' :
+                                            'id="xs-components-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' }>
                                             <li class="link">
                                                 <a href="components/UiGridComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiGridComponent</a>
@@ -172,13 +172,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' : 'data-target="#xs-directives-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' }>
+                                        'data-target="#directives-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' : 'data-target="#xs-directives-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' :
-                                        'id="xs-directives-links-module-UiGridModule-0948e946230c6e793327b09d77c9743f"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' :
+                                        'id="xs-directives-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' }>
                                         <li class="link">
                                             <a href="directives/UiGridColumnDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiGridColumnDirective</a>
@@ -222,13 +222,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiGridSearchModule.html" data-type="entity-link">UiGridSearchModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-UiGridSearchModule-d3c262ba30afe31f79f67237e0f94f9c"' : 'data-target="#xs-components-links-module-UiGridSearchModule-d3c262ba30afe31f79f67237e0f94f9c"' }>
+                                            'data-target="#components-links-module-UiGridSearchModule-80f9bf84dcb5b0ece93a4eabe6417634"' : 'data-target="#xs-components-links-module-UiGridSearchModule-80f9bf84dcb5b0ece93a4eabe6417634"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiGridSearchModule-d3c262ba30afe31f79f67237e0f94f9c"' :
-                                            'id="xs-components-links-module-UiGridSearchModule-d3c262ba30afe31f79f67237e0f94f9c"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiGridSearchModule-80f9bf84dcb5b0ece93a4eabe6417634"' :
+                                            'id="xs-components-links-module-UiGridSearchModule-80f9bf84dcb5b0ece93a4eabe6417634"' }>
                                             <li class="link">
                                                 <a href="components/UiGridSearchComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiGridSearchComponent</a>
@@ -240,13 +240,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiNgLetModule.html" data-type="entity-link">UiNgLetModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiNgLetModule-90399582a5aefb872067589b9189d28e"' : 'data-target="#xs-directives-links-module-UiNgLetModule-90399582a5aefb872067589b9189d28e"' }>
+                                        'data-target="#directives-links-module-UiNgLetModule-aefe9609baaf86922c94deff52a48d3b"' : 'data-target="#xs-directives-links-module-UiNgLetModule-aefe9609baaf86922c94deff52a48d3b"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiNgLetModule-90399582a5aefb872067589b9189d28e"' :
-                                        'id="xs-directives-links-module-UiNgLetModule-90399582a5aefb872067589b9189d28e"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiNgLetModule-aefe9609baaf86922c94deff52a48d3b"' :
+                                        'id="xs-directives-links-module-UiNgLetModule-aefe9609baaf86922c94deff52a48d3b"' }>
                                         <li class="link">
                                             <a href="directives/UiNgLetDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiNgLetDirective</a>
@@ -258,13 +258,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiScrollIntoViewModule.html" data-type="entity-link">UiScrollIntoViewModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiScrollIntoViewModule-319209c821797d442df14feb01839367"' : 'data-target="#xs-directives-links-module-UiScrollIntoViewModule-319209c821797d442df14feb01839367"' }>
+                                        'data-target="#directives-links-module-UiScrollIntoViewModule-4b7b3661286fcf5bcff8ffbbb39d1ced"' : 'data-target="#xs-directives-links-module-UiScrollIntoViewModule-4b7b3661286fcf5bcff8ffbbb39d1ced"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiScrollIntoViewModule-319209c821797d442df14feb01839367"' :
-                                        'id="xs-directives-links-module-UiScrollIntoViewModule-319209c821797d442df14feb01839367"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiScrollIntoViewModule-4b7b3661286fcf5bcff8ffbbb39d1ced"' :
+                                        'id="xs-directives-links-module-UiScrollIntoViewModule-4b7b3661286fcf5bcff8ffbbb39d1ced"' }>
                                         <li class="link">
                                             <a href="directives/UiScrollIntoViewDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiScrollIntoViewDirective</a>
@@ -276,13 +276,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiSecondFormatModule.html" data-type="entity-link">UiSecondFormatModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiSecondFormatModule-6b649721efc4b1b646faf7c6305c8900"' : 'data-target="#xs-directives-links-module-UiSecondFormatModule-6b649721efc4b1b646faf7c6305c8900"' }>
+                                        'data-target="#directives-links-module-UiSecondFormatModule-cdcb11578000514d87f86a2a04f9887e"' : 'data-target="#xs-directives-links-module-UiSecondFormatModule-cdcb11578000514d87f86a2a04f9887e"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiSecondFormatModule-6b649721efc4b1b646faf7c6305c8900"' :
-                                        'id="xs-directives-links-module-UiSecondFormatModule-6b649721efc4b1b646faf7c6305c8900"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiSecondFormatModule-cdcb11578000514d87f86a2a04f9887e"' :
+                                        'id="xs-directives-links-module-UiSecondFormatModule-cdcb11578000514d87f86a2a04f9887e"' }>
                                         <li class="link">
                                             <a href="directives/UiSecondFormatDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiSecondFormatDirective</a>
@@ -297,13 +297,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiVirtualScrollRangeLoaderModule.html" data-type="entity-link">UiVirtualScrollRangeLoaderModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiVirtualScrollRangeLoaderModule-0d45aa895e08148d034e5b7463a78724"' : 'data-target="#xs-directives-links-module-UiVirtualScrollRangeLoaderModule-0d45aa895e08148d034e5b7463a78724"' }>
+                                        'data-target="#directives-links-module-UiVirtualScrollRangeLoaderModule-968c61eb4ce7818aca03d197da49ef6d"' : 'data-target="#xs-directives-links-module-UiVirtualScrollRangeLoaderModule-968c61eb4ce7818aca03d197da49ef6d"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiVirtualScrollRangeLoaderModule-0d45aa895e08148d034e5b7463a78724"' :
-                                        'id="xs-directives-links-module-UiVirtualScrollRangeLoaderModule-0d45aa895e08148d034e5b7463a78724"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiVirtualScrollRangeLoaderModule-968c61eb4ce7818aca03d197da49ef6d"' :
+                                        'id="xs-directives-links-module-UiVirtualScrollRangeLoaderModule-968c61eb4ce7818aca03d197da49ef6d"' }>
                                         <li class="link">
                                             <a href="directives/UiVirtualScrollRangeLoaderDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiVirtualScrollRangeLoaderDirective</a>
@@ -315,13 +315,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiVirtualScrollViewportResizeModule.html" data-type="entity-link">UiVirtualScrollViewportResizeModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiVirtualScrollViewportResizeModule-cb300a230b3a26b4e013b958272d07c1"' : 'data-target="#xs-directives-links-module-UiVirtualScrollViewportResizeModule-cb300a230b3a26b4e013b958272d07c1"' }>
+                                        'data-target="#directives-links-module-UiVirtualScrollViewportResizeModule-5fb6ee71cee396b27532677f4db1fc14"' : 'data-target="#xs-directives-links-module-UiVirtualScrollViewportResizeModule-5fb6ee71cee396b27532677f4db1fc14"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiVirtualScrollViewportResizeModule-cb300a230b3a26b4e013b958272d07c1"' :
-                                        'id="xs-directives-links-module-UiVirtualScrollViewportResizeModule-cb300a230b3a26b4e013b958272d07c1"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiVirtualScrollViewportResizeModule-5fb6ee71cee396b27532677f4db1fc14"' :
+                                        'id="xs-directives-links-module-UiVirtualScrollViewportResizeModule-5fb6ee71cee396b27532677f4db1fc14"' }>
                                         <li class="link">
                                             <a href="directives/UiVirtualScrollViewportResizeDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiVirtualScrollViewportResizeDirective</a>
@@ -347,6 +347,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="classes/Key.html" data-type="entity-link">Key</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UiFormat.html" data-type="entity-link">UiFormat</a>
                             </li>
                             <li class="link">
                                 <a href="classes/UiGridIntl.html" data-type="entity-link">UiGridIntl</a>

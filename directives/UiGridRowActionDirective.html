@@ -96,9 +96,9 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  ContentChild,
-  Directive,
-  TemplateRef,
+    ContentChild,
+    Directive,
+    TemplateRef,
 } from &#x27;@angular/core&#x27;;
 
 /**
@@ -106,13 +106,16 @@
  *
  */
 @Directive({
-  selector: &#x27;[uiGridRowAction], ui-grid-row-action&#x27;,
+    selector: &#x27;[uiGridRowAction], ui-grid-row-action&#x27;,
 })
 export class UiGridRowActionDirective {
   /**
    * @ignore
    */
-  @ContentChild(TemplateRef) html?: TemplateRef&lt;any&gt;;
+  @ContentChild(TemplateRef, {
+      static: true,
+  })
+    public html?: TemplateRef&lt;any&gt;;
 }
 </code></pre>
     </div>

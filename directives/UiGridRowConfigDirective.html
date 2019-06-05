@@ -162,8 +162,8 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Directive,
-  Input,
+    Directive,
+    Input,
 } from &#x27;@angular/core&#x27;;
 
 import { IGridDataEntry } from &#x27;../models&#x27;;
@@ -174,7 +174,7 @@ import { IGridDataEntry } from &#x27;../models&#x27;;
  * @export
  */
 @Directive({
-  selector: &#x27;[uiGridRowConfig], ui-grid-row-config&#x27;,
+    selector: &#x27;[uiGridRowConfig], ui-grid-row-config&#x27;,
 })
 export class UiGridRowConfigDirective&lt;T extends IGridDataEntry&gt; {
   /**
@@ -182,7 +182,7 @@ export class UiGridRowConfigDirective&lt;T extends IGridDataEntry&gt; {
    *
    */
   @Input()
-  public ngClassFn: (entry: T) &#x3D;&gt; Record&lt;string, boolean&gt; &#x3D; (_) &#x3D;&gt; ({} as Record&lt;string, boolean&gt;)
+    public ngClassFn: (entry: T) &#x3D;&gt; Record&lt;string, boolean&gt; &#x3D; (_) &#x3D;&gt; ({} as Record&lt;string, boolean&gt;)
 }
 </code></pre>
     </div>

@@ -316,9 +316,9 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Directive,
-  Input,
-  OnDestroy,
+    Directive,
+    Input,
+    OnDestroy,
 } from &#x27;@angular/core&#x27;;
 
 import { UiGridFilter } from &#x27;./ui-grid-filter&#x27;;
@@ -388,6 +388,7 @@ export class UiGridDropdownFilterDirective&lt;T&gt; extends UiGridFilter&lt;T&gt
      * @ignore
      */
     ngOnDestroy() {
+        super.ngOnDestroy();
         this.filterChange.complete();
     }
 }

@@ -629,16 +629,16 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  HostListener,
-  Input,
-  OnDestroy,
-  Output,
-  Renderer2,
+    AfterViewInit,
+    Directive,
+    ElementRef,
+    EventEmitter,
+    HostBinding,
+    HostListener,
+    Input,
+    OnDestroy,
+    Output,
+    Renderer2,
 } from &#x27;@angular/core&#x27;;
 import { isInternetExplorer } from &#x27;@uipath/angular/utilities&#x27;;
 
@@ -648,7 +648,7 @@ import { isInternetExplorer } from &#x27;@uipath/angular/utilities&#x27;;
  * @export
  */
 @Directive({
-  selector: &#x27;[uiDragAndDropFile]&#x27;,
+    selector: &#x27;[uiDragAndDropFile]&#x27;,
 })
 export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
   /**
@@ -656,7 +656,7 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
    *
    */
   @Input()
-  public fileType?: string;
+    public fileType?: string;
 
   /**
    * The element reference that triggers file &#x60;browsing&#x60;.
@@ -710,70 +710,70 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
     * @ignore
     */
   constructor(
-    private _elementRef: ElementRef,
-    private _renderer: Renderer2,
+      private _elementRef: ElementRef,
+      private _renderer: Renderer2,
   ) {
-    this._fileInput &#x3D; this._renderer.createElement(&#x27;input&#x27;) as HTMLInputElement;
-    this._renderer.setProperty(this._fileInput, &#x27;type&#x27;, &#x27;file&#x27;);
-    this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
-    this._renderer.setAttribute(this._fileInput, &#x27;hidden&#x27;, &#x27;&#x27;);
-    this._renderer.appendChild(this._elementRef.nativeElement, this._fileInput);
+      this._fileInput &#x3D; this._renderer.createElement(&#x27;input&#x27;) as HTMLInputElement;
+      this._renderer.setProperty(this._fileInput, &#x27;type&#x27;, &#x27;file&#x27;);
+      this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
+      this._renderer.setAttribute(this._fileInput, &#x27;hidden&#x27;, &#x27;&#x27;);
+      this._renderer.appendChild(this._elementRef.nativeElement, this._fileInput);
   }
 
   /**
     * @ignore
     */
   ngAfterViewInit() {
-    if (this.multiple) {
-      this._renderer.setProperty(this._fileInput, &#x27;multiple&#x27;, &#x27;true&#x27;);
-    }
-
-    this._preventEnterOnChildren(this._elementRef.nativeElement);
-
-    this._renderer.setProperty(this._fileInput, &#x27;accept&#x27;, this.fileType);
-
-    if (!this.fileBrowseRef) {
-      this.fileBrowseRef &#x3D; this._elementRef.nativeElement;
-    }
-
-    this._renderer.setStyle(this.fileBrowseRef, &#x27;cursor&#x27;, &#x27;pointer&#x27;);
-
-    const browse &#x3D; this._renderer
-      .listen(this.fileBrowseRef, &#x27;click&#x27;, () &#x3D;&gt; {
-        if (this.disabled) { return; }
-        this._fileInput.click();
-      });
-    this._disposalCallbacks.push(browse);
-
-    const change &#x3D; this._renderer.listen(this._fileInput, &#x27;change&#x27;, (ev) &#x3D;&gt; {
-      this._preventAll(ev);
-      if (this.disabled) { return; }
-      const target &#x3D; ev.target as HTMLInputElement;
-      if (target.files) {
-        this._emitFiles(target.files);
-        this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
+      if (this.multiple) {
+          this._renderer.setProperty(this._fileInput, &#x27;multiple&#x27;, &#x27;true&#x27;);
       }
-    });
-    this._disposalCallbacks.push(change);
 
-    if (this.fileClearRef) {
-      const clear &#x3D; this._renderer
-        .listen(this.fileClearRef, &#x27;click&#x27;, () &#x3D;&gt; {
+      this._preventEnterOnChildren(this._elementRef.nativeElement);
+
+      this._renderer.setProperty(this._fileInput, &#x27;accept&#x27;, this.fileType);
+
+      if (!this.fileBrowseRef) {
+          this.fileBrowseRef &#x3D; this._elementRef.nativeElement;
+      }
+
+      this._renderer.setStyle(this.fileBrowseRef, &#x27;cursor&#x27;, &#x27;pointer&#x27;);
+
+      const browse &#x3D; this._renderer
+          .listen(this.fileBrowseRef, &#x27;click&#x27;, () &#x3D;&gt; {
+              if (this.disabled) { return; }
+              this._fileInput.click();
+          });
+      this._disposalCallbacks.push(browse);
+
+      const change &#x3D; this._renderer.listen(this._fileInput, &#x27;change&#x27;, (ev) &#x3D;&gt; {
+          this._preventAll(ev);
           if (this.disabled) { return; }
-          this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
-          this.fileClear.emit();
-        });
-      this._disposalCallbacks.push(clear);
-    }
+          const target &#x3D; ev.target as HTMLInputElement;
+          if (target.files) {
+              this._emitFiles(target.files);
+              this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
+          }
+      });
+      this._disposalCallbacks.push(change);
+
+      if (this.fileClearRef) {
+          const clear &#x3D; this._renderer
+              .listen(this.fileClearRef, &#x27;click&#x27;, () &#x3D;&gt; {
+                  if (this.disabled) { return; }
+                  this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
+                  this.fileClear.emit();
+              });
+          this._disposalCallbacks.push(clear);
+      }
   }
 
   /**
     * @ignore
     */
   ngOnDestroy() {
-    this._disposalCallbacks.forEach(dispose &#x3D;&gt; {
-      dispose();
-    });
+      this._disposalCallbacks.forEach(dispose &#x3D;&gt; {
+          dispose();
+      });
   }
 
   /**
@@ -783,10 +783,10 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
    */
   @HostListener(&#x27;drop&#x27;, [&#x27;$event&#x27;])
   protected _onDrop(ev: DragEvent) {
-    this._preventAll(ev);
-    if (this.disabled) { return; }
-    this._isDragging &#x3D; false;
-    this._emitFiles(ev.dataTransfer!.files);
+      this._preventAll(ev);
+      if (this.disabled) { return; }
+      this._isDragging &#x3D; false;
+      this._emitFiles(ev.dataTransfer!.files);
   }
 
   /**
@@ -796,9 +796,9 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
    */
   @HostListener(&#x27;dragover&#x27;, [&#x27;$event&#x27;])
   protected _onDragOver(ev: DragEvent) {
-    this._preventAll(ev);
-    if (this.disabled) { return; }
-    this._isDragging &#x3D; true;
+      this._preventAll(ev);
+      if (this.disabled) { return; }
+      this._isDragging &#x3D; true;
   }
 
   /**
@@ -808,9 +808,9 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
    */
   @HostListener(&#x27;dragleave&#x27;, [&#x27;$event&#x27;])
   protected _onDragLeave(ev: DragEvent) {
-    this._preventAll(ev);
-    if (this.disabled) { return; }
-    this._isDragging &#x3D; false;
+      this._preventAll(ev);
+      if (this.disabled) { return; }
+      this._isDragging &#x3D; false;
   }
 
   /**
@@ -820,8 +820,8 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
    */
   @HostListener(&#x27;dragend&#x27;)
   protected _onDragEnd() {
-    if (this.disabled) { return; }
-    this._isDragging &#x3D; false;
+      if (this.disabled) { return; }
+      this._isDragging &#x3D; false;
   }
 
   /**
@@ -831,48 +831,48 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
    */
   @HostListener(&#x27;dragenter&#x27;, [&#x27;$event&#x27;])
   protected _onDragEnter(ev: DragEvent) {
-    this._preventAll(ev);
-    if (this.disabled) { return; }
+      this._preventAll(ev);
+      if (this.disabled) { return; }
   }
 
   private _emitFiles(files: FileList) {
-    if (
-      !files ||
+      if (
+          !files ||
       !files.length ||
       this.disabled
-    ) { return; }
+      ) { return; }
 
-    const emittedFiles &#x3D; Array.from(files).filter(file &#x3D;&gt;
-      !this.fileType ||
+      const emittedFiles &#x3D; Array.from(files).filter(file &#x3D;&gt;
+          !this.fileType ||
       file.name.endsWith(this.fileType),
-    );
+      );
 
-    if (!emittedFiles.length) { return; }
+      if (!emittedFiles.length) { return; }
 
-    this.fileChange.emit(emittedFiles);
+      this.fileChange.emit(emittedFiles);
   }
 
   private _preventEnterOnChildren(element: Element) {
-    if (!isInternetExplorer()) { return; }
+      if (!isInternetExplorer()) { return; }
 
-    if (!!element.children.length) {
-      const children: Element[] &#x3D; Array.from(element.children);
+      if (!!element.children.length) {
+          const children: Element[] &#x3D; Array.from(element.children);
 
-      for (const child of children) {
-        const dragenter &#x3D; this._renderer.listen(child, &#x27;dragenter&#x27;, this._preventAll);
-        const dragleave &#x3D; this._renderer.listen(child, &#x27;dragleave&#x27;, this._preventAll);
+          for (const child of children) {
+              const dragenter &#x3D; this._renderer.listen(child, &#x27;dragenter&#x27;, this._preventAll);
+              const dragleave &#x3D; this._renderer.listen(child, &#x27;dragleave&#x27;, this._preventAll);
 
-        this._disposalCallbacks.push(
-          dragenter,
-          dragleave,
-        );
+              this._disposalCallbacks.push(
+                  dragenter,
+                  dragleave,
+              );
+          }
       }
-    }
   }
 
   private _preventAll(ev: Event) {
-    ev.preventDefault();
-    ev.stopPropagation();
+      ev.preventDefault();
+      ev.stopPropagation();
   }
 }
 </code></pre>

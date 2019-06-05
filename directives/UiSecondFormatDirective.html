@@ -74,13 +74,6 @@ Depends On:
 
             </p>
 
-            <p class="comment">
-                <h3>Implements</h3>
-            </p>
-            <p class="comment">
-                            <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
-                            <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
-            </p>
 
             <p class="comment">
                 <h3>Example</h3>
@@ -149,7 +142,7 @@ Depends On:
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">projects/angular/directives/src/ui-secondformat/ui-secondformat.directive.ts:95</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">projects/angular/directives/src/ui-secondformat/ui-secondformat.directive.ts:94</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -172,30 +165,29 @@ Depends On:
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Directive,
-  ElementRef,
-  Inject,
-  InjectionToken,
-  Input,
-  OnChanges,
-  OnDestroy,
-  Optional,
-  Renderer2,
+    Directive,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Input,
+    Optional,
+    Renderer2,
 } from &#x27;@angular/core&#x27;;
 
 import * as _moment from &#x27;moment&#x27;;
 import {
-  merge,
-  Observable,
-  of,
-  Subject,
+    merge,
+    Observable,
+    of,
 } from &#x27;rxjs&#x27;;
 import {
-  distinctUntilChanged,
-  filter,
-  map,
-  takeUntil,
+    distinctUntilChanged,
+    filter,
+    map,
+    takeUntil,
 } from &#x27;rxjs/operators&#x27;;
+
+import { UiFormat } from &#x27;../internal/ui-format&#x27;;
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670
@@ -260,16 +252,14 @@ export const UI_SECONDFORMAT_OPTIONS &#x3D; new InjectionToken&lt;Observable&lt;
 @Directive({
     selector: &#x27;[uiSecondFormat], ui-secondformat&#x27;,
 })
-export class UiSecondFormatDirective implements OnChanges, OnDestroy {
+export class UiSecondFormatDirective extends UiFormat {
     /**
      * The number of &#x60;seconds&#x60; that need to be formatted.
      *
      */
     @Input() public seconds?: number;
 
-    private _text?: HTMLElement;
-    private _destroyed$ &#x3D; new Subject();
-    private _redraw$ &#x3D; new Subject();
+    protected _text?: HTMLElement;
 
     /**
      * @ignore
@@ -277,10 +267,15 @@ export class UiSecondFormatDirective implements OnChanges, OnDestroy {
     constructor(
         @Inject(UI_SECONDFORMAT_OPTIONS)
         @Optional()
-        options: ISecondFormatOptions,
-        private _ref: ElementRef,
-        private _renderer: Renderer2,
+            options: ISecondFormatOptions,
+            renderer: Renderer2,
+            elementRef: ElementRef,
     ) {
+        super(
+            renderer,
+            elementRef,
+        );
+
         options &#x3D; options || {};
         const redraw$ &#x3D; options.redraw$ || of(null);
 
@@ -296,28 +291,11 @@ export class UiSecondFormatDirective implements OnChanges, OnDestroy {
             ).subscribe(label &#x3D;&gt; {
                 if (!this._text) {
                     this._text &#x3D; this._renderer.createText(label);
-                    this._renderer.appendChild(this._ref.nativeElement, this._text);
+                    this._renderer.appendChild(this._elementRef.nativeElement, this._text);
                 } else {
                     this._renderer.setValue(this._text, label);
                 }
             });
-    }
-
-    /**
-     * @ignore
-     */
-    ngOnChanges() {
-        this._redraw$.next();
-    }
-
-    /**
-     * @ignore
-     */
-    ngOnDestroy() {
-        if (this._text) {
-            this._renderer.removeChild(this._ref.nativeElement, this._text);
-        }
-        this._destroyed$.next();
     }
 
     private _evaluate(value: number &#x3D; 0) {
@@ -344,35 +322,27 @@ export class UiSecondFormatDirective implements OnChanges, OnDestroy {
         return &#x60;${daysLabel} ${hoursLabel} ${minutesLabel} ${secondsLabel}&#x60;.trim();
     }
 
-    private _dayFormat &#x3D; (locale: IMomentRelativeLocale, days: number) &#x3D;&gt; {
-        const formatter &#x3D; days &#x3D;&#x3D;&#x3D; 1 ? locale.d : locale.dd;
 
-        if (typeof formatter &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
-            return formatter.replace(&#x27;%d&#x27;, days.toString());
+    private _formatFactory &#x3D; (
+        formatSingular: keyof IMomentRelativeLocale,
+        formatPlural: keyof IMomentRelativeLocale,
+    ) &#x3D;&gt;
+        (locale: IMomentRelativeLocale, value: number) &#x3D;&gt; {
+            const formatter &#x3D; value &#x3D;&#x3D;&#x3D; 1 ? locale[formatSingular] : locale[formatPlural];
+
+            if (typeof formatter &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+                return formatter.replace(&#x27;%d&#x27;, value.toString());
+            }
+
+            return formatter(value, true, formatPlural);
         }
 
-        return formatter(days, true, &#x27;dd&#x27;);
-    }
-
-    private _hourFormat &#x3D; (locale: IMomentRelativeLocale, hours: number) &#x3D;&gt; {
-        const formatter &#x3D; hours &#x3D;&#x3D;&#x3D; 1 ? locale.h : locale.hh;
-
-        if (typeof formatter &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
-            return formatter.replace(&#x27;%d&#x27;, hours.toString());
-        }
-
-        return formatter(hours, true, &#x27;hh&#x27;);
-    }
-
-    private _minuteFormat &#x3D; (locale: IMomentRelativeLocale, minutes: number) &#x3D;&gt; {
-        const formatter &#x3D; minutes &#x3D;&#x3D;&#x3D; 1 ? locale.m : locale.mm;
-
-        if (typeof formatter &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
-            return formatter.replace(&#x27;%d&#x27;, minutes.toString());
-        }
-
-        return formatter(minutes, true, &#x27;mm&#x27;);
-    }
+    // tslint:disable-next-line: member-ordering
+    private _dayFormat &#x3D; this._formatFactory(&#x27;d&#x27;, &#x27;dd&#x27;);
+    // tslint:disable-next-line: member-ordering
+    private _hourFormat &#x3D; this._formatFactory(&#x27;h&#x27;, &#x27;hh&#x27;);
+    // tslint:disable-next-line: member-ordering
+    private _minuteFormat &#x3D; this._formatFactory(&#x27;m&#x27;, &#x27;mm&#x27;);
 
     private _secondFormat &#x3D; (locale: IMomentRelativeLocale, seconds: number, remainder: number) &#x3D;&gt;
         typeof locale.ss &#x3D;&#x3D;&#x3D; &#x27;string&#x27; ?
@@ -380,7 +350,7 @@ export class UiSecondFormatDirective implements OnChanges, OnDestroy {
             locale.ss(seconds + remainder, true, &#x27;ss&#x27;)
                 .replace((seconds + remainder)
                     .toString(),
-                    (seconds + remainder).toFixed(remainder ? 2 : 0),
+                (seconds + remainder).toFixed(remainder ? 2 : 0),
                 )
 }
 </code></pre>

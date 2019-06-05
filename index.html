@@ -53,6 +53,24 @@
 <p><code>npm i @uipath/angular</code></p>
 <h2 id="documentation">Documentation</h2>
 <p>Visit our docs page <a href="https://uipath.github.io/angular-components">here</a>. Thanks go to the <a href="https://compodoc.app/">@compodoc</a> team! 👌</p>
+<h1 id="git-conventions">Git Conventions</h1>
+<h3 id="commit-messages">Commit Messages</h3>
+<p>We initially started off by using a <code>custom</code> commit message convention, now that we&#39;ve gone OS, we realize it will be much easier for everyone if we adhere to the <code>conventional-commit</code> standard.</p>
+<p>The project comes preconfigured with <code>commitlint</code> and <code>husky</code> hooks in order to automate checks.</p>
+<p>Another advantage of <code>conventional-commits</code> is that it will allow us to later on integrate <code>semantic-release</code> with ease.</p>
+<h3 id="conflict-resolution">Conflict Resolution</h3>
+<p>We all know that once you open a <code>PR</code>, it sometimes goes through a rigorous code review process. Sometimes, due to this delay, we end up with a <code>PR</code> that has <code>conflicts</code>.</p>
+<p>In this scenarios, we&#39;re usually used to either <code>merge</code> or <code>rebase</code>.</p>
+<p>We personally prefer that branches get <code>rebased</code>, and usually stay away from <code>merge</code> commits as they mostly end up polluting the history needlessly. At this point, most of you are probabily thinking: <code>Yeah, but it&#39;s not a good practice to rebase if multiple people are working on the same branch!</code>.</p>
+<p>True, it&#39;s not recommended to <code>rebase</code> when multiple people are active on the same <code>branch</code>, but in this scenario <code>git</code> offers a very elegant solution: <code>fixup</code> commits. By using <code>fixup commits</code>, the branch can later go through an <code>interactive rebase</code> once the <code>review</code> process is done and the <code>PR</code> is approved.</p>
+<p>For example: after you make your changes and stage them you can run a <code>git commit --fixup HEAD~</code> to add the changes in the last but one commit. Before the merge, you can then simply <code>git rebase -i &lt;ref&gt; --autosquash</code> and every change will be squashed in the correct commit.</p>
+<h3 id="why">Why?</h3>
+<p><strong>Q:</strong> Why all the hassle, does it really matter?</p>
+<p><strong>A:</strong> We&#39;ve seen too many branches where <code>merge commits</code> get introduced without a good reason, too many branches that have almost the same number <code>merge commits</code> as <code>commits</code> so we want to enforce a git usage guidline that promotes responsibility. 🐱‍👤</p>
+<p><strong>Q:</strong> But I want to integrate a branch, not yet merged and implement a new feature.</p>
+<p><strong>A:</strong> In this scenario, you have the <code>master</code> branch, and the <code>feature</code> branch that you depend upon. What we do in this case, is create a local branch where we merge the required <code>feature</code> branch into <code>master</code> and start our branch from there. Once the <code>feature</code> branch we depend upon, gets merged into <code>master</code>, we <code>rebase</code> over master. Easy peasy! 🤓</p>
+<p><strong>Q:</strong> But what if I just want to add a feature?</p>
+<p><strong>A:</strong> We think that in software, it&#39;s not just about the feature, it&#39;s also about the fact that others will later on need to support that feature or modify it, having a good historical track helps everyone better understand the evolution of the codebase.</p>
 <h2 id="coming-up-most-likely-v1">Coming Up (most likely v1)</h2>
 <ul>
 <li>Getting Started / Contribution Guidlines</li>

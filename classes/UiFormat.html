@@ -42,7 +42,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>PerformanceMonitor</li>
+  <li>UiFormat</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -60,32 +60,24 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/angular/components/src/ui-grid/managers/performance.ts</code>
+            <code>projects/angular/directives/src/internal/ui-format.ts</code>
         </p>
 
 
 
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
+                            <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+            </p>
 
 
             <section>
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <h6><b>Properties</b></h6>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <ul class="index-list">
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#paintTime$">paintTime$</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -96,12 +88,10 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#destroy">destroy</a>
+                                <a href="#ngOnChanges">ngOnChanges</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#reset">reset</a>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
                             </li>
                         </ul>
                     </td>
@@ -111,20 +101,6 @@
 
 
 
-                    <tr>
-                        <td class="col-md-4">
-                            <h6><b>Accessors</b></h6>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <ul class="index-list">
-                                <li>
-                                    <a href="#enabled">enabled</a>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
         </tbody>
     </table>
 </section>
@@ -135,12 +111,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(element: Element)</code>
+<code>constructor(_renderer: <a href="https://angular.io/api/core/Renderer2" target="_blank">Renderer2</a>, _elementRef: <a href="https://angular.io/api/core/ElementRef" target="_blank">ElementRef</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">projects/angular/components/src/ui-grid/managers/performance.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">projects/angular/directives/src/internal/ui-format.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -158,10 +134,22 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>element</td>
+                                                        <td>_renderer</td>
                                                   
                                                         <td>
-                                                                    <code>Element</code>
+                                                                        <code><a href="https://angular.io/api/core/Renderer2" target="_blank" >Renderer2</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_elementRef</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -178,39 +166,6 @@
         </table>
 </section>
 
-            <section>
-    
-        <h3 id="inputs">
-            Properties
-        </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="paintTime$"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                            paintTime$</b>
-                            <a href="#paintTime$"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>new Subject&lt;string&gt;()</code>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">projects/angular/components/src/ui-grid/managers/performance.ts:6</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-</section>
 
             <section>
     
@@ -221,28 +176,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="destroy"></a>
+                    <a name="ngOnChanges"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Public</span>
-                            destroy
+                            ngOnChanges
                         </b>
-                        <a href="#destroy"><span class="icon ion-ios-link"></span></a>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>destroy()</code>
+<code>ngOnChanges()</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">projects/angular/components/src/ui-grid/managers/performance.ts:31</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="20"
+                            class="link-to-prism">projects/angular/directives/src/internal/ui-format.ts:20</a></div>
                 </td>
             </tr>
 
@@ -262,28 +215,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="reset"></a>
+                    <a name="ngOnDestroy"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Public</span>
-                            reset
+                            ngOnDestroy
                         </b>
-                        <a href="#reset"><span class="icon ion-ios-link"></span></a>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>reset()</code>
+<code>ngOnDestroy()</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="25"
-                            class="link-to-prism">projects/angular/components/src/ui-grid/managers/performance.ts:25</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="24"
+                            class="link-to-prism">projects/angular/directives/src/internal/ui-format.ts:24</a></div>
                 </td>
             </tr>
 
@@ -305,95 +256,39 @@
 
 
 
-            <section>
-    <h3 id="accessors">
-        Accessors
-    </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="enabled"></a>
-                        <span class="name"><b>enabled</b><a href="#enabled"><span class="icon ion-ios-link"></span></a></span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <span class="accessor"><b>get</b><code>enabled()</code></span>
-                    </td>
-                </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">projects/angular/components/src/ui-grid/managers/performance.ts:8</a></div>
-                                </td>
-                            </tr>
-
-            </tbody>
-        </table>
-</section>
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { isDevMode } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    ElementRef,
+    OnChanges,
+    OnDestroy,
+    Renderer2,
+} from &#x27;@angular/core&#x27;;
 
 import { Subject } from &#x27;rxjs&#x27;;
 
-export class PerformanceMonitor {
-    public paintTime$ &#x3D; new Subject&lt;string&gt;();
+export abstract class UiFormat implements OnChanges, OnDestroy {
+    protected abstract _text?: HTMLElement;
+    protected _redraw$ &#x3D; new Subject();
+    protected _destroyed$ &#x3D; new Subject();
 
-    public get enabled() {
-        return isDevMode();
+    constructor(
+        protected _renderer: Renderer2,
+        protected _elementRef: ElementRef,
+    ) { }
+
+    ngOnChanges() {
+        this._redraw$.next();
     }
 
-    private _timestamp?: number;
-    private _obsever?: MutationObserver;
-
-    constructor(element: Element) {
-        if (!this.enabled) { return; }
-
-        this._obsever &#x3D; new MutationObserver(this._onPaint);
-        this._obsever.observe(element, {
-            childList: true,
-            subtree: true,
-        });
+    ngOnDestroy() {
+        if (this._text) {
+            this._renderer.removeChild(this._elementRef.nativeElement, this._text);
+        }
+        this._destroyed$.next();
     }
-
-    public reset() {
-        if (!this.enabled) { return; }
-
-        this._timestamp &#x3D; performance.now();
-    }
-
-    public destroy() {
-        this.paintTime$.complete();
-
-        if (!this.enabled) { return; }
-
-        this._obsever!.disconnect();
-    }
-
-    private _onPaint &#x3D; (record: MutationRecord[]) &#x3D;&gt; {
-        const isRowPaint &#x3D; record
-            .some(r &#x3D;&gt;
-                this._isRow(r.target) ||
-                [
-                    ...Array.from(r.addedNodes),
-                    ...Array.from(r.removedNodes),
-                ].some(this._isRow),
-            );
-
-        if (!isRowPaint) { return; }
-
-        this.paintTime$.next((performance.now() - this._timestamp!).toFixed(2));
-    }
-
-    private _isRow &#x3D; (element: Node) &#x3D;&gt;
-        !!(element as Element).classList &amp;&amp;
-        (element as Element)
-            .classList
-            .contains(&#x27;ui-grid-row&#x27;)
 }
 </code></pre>
     </div>
@@ -422,7 +317,7 @@ export class PerformanceMonitor {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'PerformanceMonitor.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'UiFormat.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
