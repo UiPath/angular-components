@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class QueuedAnnouncer {
     private _msgQueue: string[] = [];

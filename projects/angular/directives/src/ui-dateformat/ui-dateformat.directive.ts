@@ -150,7 +150,7 @@ export class UiDateFormatDirective extends UiFormat {
     ) {
         super(
             renderer,
-            elementRef
+            elementRef,
         );
 
         options = options || {};

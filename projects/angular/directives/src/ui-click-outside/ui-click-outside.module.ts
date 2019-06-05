@@ -4,6 +4,6 @@ import { UiClickOutsideDirective } from './ui-click-outside.directive';
 
 @NgModule({
     declarations: [UiClickOutsideDirective],
-    exports: [UiClickOutsideDirective]
+    exports: [UiClickOutsideDirective],
 })
 export class UiClickOutsideModule { }
