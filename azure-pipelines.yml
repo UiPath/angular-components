@@ -13,7 +13,7 @@ jobs:
           node index.js
         workingDirectory: .build/commitlint
         displayName: 'Linting Commits'
-        condition: eq(variables['GIT_BRANCH'], 'merge')
+    condition: eq(variables['Build.SourceBranchName'], 'merge')
 
   - job: Test
     pool :
@@ -26,7 +26,7 @@ jobs:
           codeCoverage: 'true'
     dependsOn:
       - CommitLint
-    condition: succeeded('CommitLint')
+    condition: or(ne(variables['Build.SourceBranchName'], 'merge'), succeeded('CommitLint'))
 
   - job: Build
     pool :
@@ -43,7 +43,7 @@ jobs:
         condition: succeeded()
     dependsOn:
       - CommitLint
-    condition: succeeded('CommitLint')
+    condition: or(ne(variables['Build.SourceBranchName'], 'merge'), succeeded('CommitLint'))
 
   - job: Documentation
     pool :
