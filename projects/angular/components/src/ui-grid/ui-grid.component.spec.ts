@@ -538,10 +538,24 @@ describe('Component: UiGrid', () => {
         describe('Configuration: with search', () => {
             beforeEach(() => {
                 component.search = true;
+            });
+
+            it('should limit the search input value to the configured max-length', () => {
+                const max = 1337;
+                component.grid.header!.searchMaxLength = max;
                 fixture.detectChanges();
+
+                const search = fixture.debugElement.query(By.css('ui-grid-search'));
+                const input = search.query(By.css('input'));
+
+                const maxLength = input.attributes['maxlength'];
+
+                expect(maxLength).toEqual(`${max}`);
             });
 
             it('should display the search input and NOT display the selection actions if no row is selected', () => {
+                fixture.detectChanges();
+
                 const headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
                 const gridSearch = fixture.debugElement.query(By.css('ui-grid-search'));
 
@@ -551,6 +565,8 @@ describe('Component: UiGrid', () => {
             });
 
             it('should NOT display the search input and display the selection actions if at least one row is selected', () => {
+                fixture.detectChanges();
+
                 const rowCheckboxInputList = fixture.debugElement
                     .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
 
