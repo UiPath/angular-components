@@ -1,3 +1,6 @@
+# v0.9.3-hotfix1 (2019-06-05)
+* **UiGrid** correctly bind to the search `maxlength` attribute
+
 # v0.9.3 (2019-06-02)
 
 ### Fixes:
