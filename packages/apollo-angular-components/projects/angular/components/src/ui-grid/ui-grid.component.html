@@ -12,7 +12,7 @@
                   class="ui-grid-filter-options">
         <ui-grid-search *ngIf="header?.search"
                         [debounce]="header!.searchDebounce"
-                        [maxLength]="header!.searchFilter"
+                        [maxLength]="header!.searchMaxLength"
                         [placeholder]="intl.searchPlaceholder"
                         [searchTooltip]="intl.searchTooltip"
                         [clearTooltip]="intl.clearTooltip"
