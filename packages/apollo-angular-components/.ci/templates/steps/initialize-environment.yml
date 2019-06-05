@@ -3,6 +3,10 @@ steps:
       echo '##vso[task.setvariable variable=CC_TEST_REPORTER_ID]$(system.ccToken)'
       echo '##vso[task.setvariable variable=GIT_COMMIT_SHA]$(Build.SourceVersion)'
       echo '##vso[task.setvariable variable=GIT_BRANCH]$(Build.SourceBranchName)'
+      echo '##vso[task.setvariable variable=GH_STATUS_TOKEN]$(system.githubStatusToken)'
+      echo '##vso[task.setvariable variable=GH_PULL_ID]$(System.PullRequest.PullRequestNumber)'
+      echo '##vso[task.setvariable variable=GH_OWNER]UiPath'
+      echo '##vso[task.setvariable variable=GH_REPO]angular-components'
     displayName: 'Configure Environment Variables'
 
   - script: |
@@ -10,11 +14,12 @@ steps:
       echo $(GIT_BRANCH)
     displayName: 'Echo Commit SHA and Branch'
 
+  - script: |
+      echo $(GH_PULL_ID)
+    displayName: 'Echo PR Number'
+    condition: eq(variables['GIT_BRANCH'], 'merge')
+
   - task: NodeTool@0
     inputs:
       versionSpec: '12.x'
     displayName: 'Install Node.js'
-
-  - script: |
-      npm ci
-    displayName: 'Install NPM Dependencies'
