@@ -69,6 +69,12 @@ even if the source has not yet been initialized.</p>
 
             </p>
 
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+            </p>
 
             <p class="comment">
                 <h3>Example</h3>
@@ -151,7 +157,7 @@ even if the source has not yet been initialized.</p>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/angular/directives/src/ui-ng-let/ui-ng-let.directive.ts:36</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">projects/angular/directives/src/ui-ng-let/ui-ng-let.directive.ts:37</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -189,7 +195,7 @@ even if the source has not yet been initialized.</p>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/angular/directives/src/ui-ng-let/ui-ng-let.directive.ts:36</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">projects/angular/directives/src/ui-ng-let/ui-ng-let.directive.ts:37</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -240,10 +246,11 @@ even if the source has not yet been initialized.</p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Directive,
-  Input,
-  TemplateRef,
-  ViewContainerRef,
+    Directive,
+    Input,
+    OnInit,
+    TemplateRef,
+    ViewContainerRef,
 } from &#x27;@angular/core&#x27;;
 
 /**
@@ -266,30 +273,35 @@ class NgLetContext {
     // tslint:disable-next-line: directive-selector
     selector: &#x27;[ngLet]&#x27;,
 })
-export class UiNgLetDirective {
+export class UiNgLetDirective implements OnInit {
     private _context &#x3D; new NgLetContext();
 
-    /**
-     * The context bound to the decorated area.
-     *
-     */
-    @Input()
+  /**
+   * The context bound to the decorated area.
+   *
+   */
+  @Input()
     set ngLet(value: any) {
         this._context.$implicit &#x3D; this._context.ngLet &#x3D; value;
     }
 
-    /**
-     * @ignore
-     */
-    constructor(
-        private _vcr: ViewContainerRef,
-        private _templateRef: TemplateRef&lt;NgLetContext&gt;,
-    ) {
-        this._vcr.createEmbeddedView(
-            this._templateRef,
-            this._context,
-        );
-    }
+  /**
+   * @ignore
+   */
+  constructor(
+      private _vcr: ViewContainerRef,
+      private _templateRef: TemplateRef&lt;NgLetContext&gt;,
+  ) { }
+
+  /**
+   * @ignore
+   */
+  ngOnInit() {
+      this._vcr.createEmbeddedView(
+          this._templateRef,
+          this._context,
+      );
+  }
 }
 </code></pre>
     </div>
