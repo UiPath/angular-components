@@ -1,3 +1,6 @@
+# v0.9.6 (2019-06-06)
+* **NgLet** move embedded view creation in `ctor`, this will allow `ViewChild` queries to be configured with `static: true` strategy
+
 # v0.9.5 (2019-06-05)
 * upgrade to `angular@8`
 * **UiGrid** complete `visible$` columns BehaviorSubject
