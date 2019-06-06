@@ -1,9 +1,8 @@
 import {
-    Directive,
-    Input,
-    OnInit,
-    TemplateRef,
-    ViewContainerRef,
+  Directive,
+  Input,
+  TemplateRef,
+  ViewContainerRef,
 } from '@angular/core';
 
 /**
@@ -26,33 +25,28 @@ class NgLetContext {
     // tslint:disable-next-line: directive-selector
     selector: '[ngLet]',
 })
-export class UiNgLetDirective implements OnInit {
+export class UiNgLetDirective {
     private _context = new NgLetContext();
 
-  /**
-   * The context bound to the decorated area.
-   *
-   */
-  @Input()
+    /**
+     * The context bound to the decorated area.
+     *
+     */
+    @Input()
     set ngLet(value: any) {
         this._context.$implicit = this._context.ngLet = value;
     }
 
-  /**
-   * @ignore
-   */
-  constructor(
-      private _vcr: ViewContainerRef,
-      private _templateRef: TemplateRef<NgLetContext>,
-  ) { }
-
-  /**
-   * @ignore
-   */
-  ngOnInit() {
-      this._vcr.createEmbeddedView(
-          this._templateRef,
-          this._context,
-      );
-  }
+    /**
+     * @ignore
+     */
+    constructor(
+        private _vcr: ViewContainerRef,
+        private _templateRef: TemplateRef<NgLetContext>,
+    ) {
+        this._vcr.createEmbeddedView(
+            this._templateRef,
+            this._context,
+        );
+    }
 }
