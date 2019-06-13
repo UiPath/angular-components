@@ -1,7 +1,8 @@
+import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
+
 import * as faker from 'faker';
 import { of } from 'rxjs';
 
-import { ISuggestValue } from '../../ui-suggest/models';
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import { UiGridDropdownFilterDirective } from '../filters/ui-grid-dropdown-filter.directive';
 import { UiGridSearchFilterDirective } from '../filters/ui-grid-search-filter.directive';

@@ -1,14 +1,14 @@
-import { ISuggestValue } from '@uipath/angular/components';
+import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
 import * as faker from 'faker';
 import isArray from 'lodash-es/isArray';
 import { BehaviorSubject } from 'rxjs';
 import {
-    finalize,
-    first,
-    skip,
-    take,
-    toArray,
+  finalize,
+  first,
+  skip,
+  take,
+  toArray,
 } from 'rxjs/operators';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
@@ -16,12 +16,12 @@ import { IDropdownOption } from '../filters/ui-grid-dropdown-filter.directive';
 import { UiGridHeaderDirective } from '../header/ui-grid-header.directive';
 import { FilterManager } from '../managers';
 import {
-    generateColumn,
-    generateDropdownFilter,
-    generateListFactory,
-    generateSearchFilterDefinition,
-    ISearchableDropdownFilterDefinition,
-    ITestEntity,
+  generateColumn,
+  generateDropdownFilter,
+  generateListFactory,
+  generateSearchFilterDefinition,
+  ISearchableDropdownFilterDefinition,
+  ITestEntity,
 } from '../test';
 
 interface ITestColumnOptionDefinition<T> {

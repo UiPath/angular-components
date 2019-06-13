@@ -27,8 +27,11 @@
       "@uipath/angular/a11y": [
         "./projects/angular/a11y/src/public_api.ts"
       ],
-      "@uipath/angular/components": [
-        "./projects/angular/components/src/public_api.ts"
+      "@uipath/angular/components/ui-suggest": [
+        "./projects/angular/components/ui-suggest/src/public_api.ts"
+      ],
+      "@uipath/angular/components/ui-grid": [
+        "./projects/angular/components/ui-grid/src/public_api.ts"
       ],
       "@uipath/angular/utilities": [
         "./projects/angular/utilities/src/public_api.ts"
