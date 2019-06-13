@@ -157,13 +157,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiGridModule.html" data-type="entity-link">UiGridModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' : 'data-target="#xs-components-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' }>
+                                            'data-target="#components-links-module-UiGridModule-1bcb52df46d079a1ea145004670691ec"' : 'data-target="#xs-components-links-module-UiGridModule-1bcb52df46d079a1ea145004670691ec"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' :
-                                            'id="xs-components-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiGridModule-1bcb52df46d079a1ea145004670691ec"' :
+                                            'id="xs-components-links-module-UiGridModule-1bcb52df46d079a1ea145004670691ec"' }>
                                             <li class="link">
                                                 <a href="components/UiGridComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiGridComponent</a>
@@ -172,13 +172,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' : 'data-target="#xs-directives-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' }>
+                                        'data-target="#directives-links-module-UiGridModule-1bcb52df46d079a1ea145004670691ec"' : 'data-target="#xs-directives-links-module-UiGridModule-1bcb52df46d079a1ea145004670691ec"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' :
-                                        'id="xs-directives-links-module-UiGridModule-fd6164c32b059945ec346f2aef6f1867"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiGridModule-1bcb52df46d079a1ea145004670691ec"' :
+                                        'id="xs-directives-links-module-UiGridModule-1bcb52df46d079a1ea145004670691ec"' }>
                                         <li class="link">
                                             <a href="directives/UiGridColumnDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiGridColumnDirective</a>

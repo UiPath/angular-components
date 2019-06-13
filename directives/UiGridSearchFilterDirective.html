@@ -55,7 +55,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/angular/components/src/ui-grid/filters/ui-grid-search-filter.directive.ts</code>
+            <code>projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts</code>
         </p>
 
             <p class="comment">
@@ -164,7 +164,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/angular/components/src/ui-grid/filters/ui-grid-search-filter.directive.ts:36</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts:36</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -191,7 +191,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">projects/angular/components/src/ui-grid/filters/ui-grid-search-filter.directive.ts:29</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts:29</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -218,7 +218,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/angular/components/src/ui-grid/filters/ui-grid-search-filter.directive.ts:45</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts:45</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -245,7 +245,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/angular/components/src/ui-grid/filters/ui-grid-search-filter.directive.ts:52</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts:52</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -290,7 +290,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="58"
-                            class="link-to-prism">projects/angular/components/src/ui-grid/filters/ui-grid-search-filter.directive.ts:58</a></div>
+                            class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts:58</a></div>
                 </td>
             </tr>
 
@@ -347,17 +347,17 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-    Directive,
-    Input,
-    OnDestroy,
+  Directive,
+  Input,
+  OnDestroy,
 } from &#x27;@angular/core&#x27;;
+import {
+  ISuggestValue,
+  ISuggestValues,
+} from &#x27;@uipath/angular/components/ui-suggest&#x27;;
 
 import { Observable } from &#x27;rxjs&#x27;;
 
-import {
-    ISuggestValue,
-    ISuggestValues,
-} from &#x27;../../ui-suggest/models&#x27;;
 import { UiGridFilter } from &#x27;./ui-grid-filter&#x27;;
 
 /**

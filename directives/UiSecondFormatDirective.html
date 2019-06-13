@@ -55,7 +55,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/angular/directives/src/ui-secondformat/ui-secondformat.directive.ts</code>
+            <code>projects/angular/directives/ui-secondformat/src/ui-secondformat.directive.ts</code>
         </p>
 
             <p class="comment">
@@ -142,7 +142,7 @@ Depends On:
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">projects/angular/directives/src/ui-secondformat/ui-secondformat.directive.ts:94</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">projects/angular/directives/ui-secondformat/src/ui-secondformat.directive.ts:93</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -165,29 +165,28 @@ Depends On:
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-    Directive,
-    ElementRef,
-    Inject,
-    InjectionToken,
-    Input,
-    Optional,
-    Renderer2,
+  Directive,
+  ElementRef,
+  Inject,
+  InjectionToken,
+  Input,
+  Optional,
+  Renderer2,
 } from &#x27;@angular/core&#x27;;
+import { UiFormat } from &#x27;@uipath/angular/directives/internal&#x27;;
 
 import * as _moment from &#x27;moment&#x27;;
 import {
-    merge,
-    Observable,
-    of,
+  merge,
+  Observable,
+  of,
 } from &#x27;rxjs&#x27;;
 import {
-    distinctUntilChanged,
-    filter,
-    map,
-    takeUntil,
+  distinctUntilChanged,
+  filter,
+  map,
+  takeUntil,
 } from &#x27;rxjs/operators&#x27;;
-
-import { UiFormat } from &#x27;../internal/ui-format&#x27;;
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670
