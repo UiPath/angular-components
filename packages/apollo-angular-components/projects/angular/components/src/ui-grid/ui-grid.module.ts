@@ -10,7 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { UiVirtualScrollViewportResizeModule } from '@uipath/angular/directives';
+import { UiVirtualScrollViewportResizeModule } from '@uipath/angular/directives/ui-virtual-scroll-viewport-resize';
 
 import { UiSuggestModule } from '../ui-suggest/ui-suggest.module';
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
