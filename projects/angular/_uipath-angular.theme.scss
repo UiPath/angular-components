@@ -1,5 +1,5 @@
-@import "./components/src/ui-suggest/ui-suggest.theme";
-@import "./components/src/ui-grid/ui-grid.theme";
+@import "./components/ui-suggest/src/ui-suggest.theme";
+@import "./components/ui-grid/src/ui-grid.theme";
 
 @mixin uipath-angular-theme($theme) {
   @include ui-suggest-theme($theme);

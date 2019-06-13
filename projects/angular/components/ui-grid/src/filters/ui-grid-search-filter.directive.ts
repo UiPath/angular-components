@@ -1,15 +1,15 @@
 import {
-    Directive,
-    Input,
-    OnDestroy,
+  Directive,
+  Input,
+  OnDestroy,
 } from '@angular/core';
+import {
+  ISuggestValue,
+  ISuggestValues,
+} from '@uipath/angular/components/ui-suggest';
 
 import { Observable } from 'rxjs';
 
-import {
-    ISuggestValue,
-    ISuggestValues,
-} from '../../ui-suggest/models';
 import { UiGridFilter } from './ui-grid-filter';
 
 /**

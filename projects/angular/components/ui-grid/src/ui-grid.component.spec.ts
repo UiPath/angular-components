@@ -1,11 +1,11 @@
 import {
-    Component,
-    ViewChild,
+  Component,
+  ViewChild,
 } from '@angular/core';
 import {
-    async,
-    ComponentFixture,
-    TestBed,
+  async,
+  ComponentFixture,
+  TestBed,
 } from '@angular/core/testing';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatMenuItem } from '@angular/material/menu';
@@ -13,30 +13,30 @@ import { PageEvent } from '@angular/material/paginator';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
-    ISuggestValues,
-    UiSuggestComponent,
-} from '@uipath/angular/components';
+  ISuggestValues,
+  UiSuggestComponent,
+} from '@uipath/angular/components/ui-suggest';
 import {
-    EventGenerator,
-    Key,
+  EventGenerator,
+  Key,
 } from '@uipath/angular/testing';
 
 import * as faker from 'faker';
 import {
-    Observable,
-    of,
+  Observable,
+  of,
 } from 'rxjs';
 import {
-    finalize,
-    skip,
-    take,
+  finalize,
+  skip,
+  take,
 } from 'rxjs/operators';
 
 import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
 import {
-    generateEntity,
-    generateListFactory,
-    ITestEntity,
+  generateEntity,
+  generateListFactory,
+  ITestEntity,
 } from './test';
 import { UiGridComponent } from './ui-grid.component';
 import { UiGridIntl } from './ui-grid.intl';
