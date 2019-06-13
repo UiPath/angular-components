@@ -1,7 +1,7 @@
 import {
-    VirtualScrollItem,
-    VirtualScrollItemStatus,
-} from '@uipath/angular/directives';
+  VirtualScrollItem,
+  VirtualScrollItemStatus,
+} from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
 
 /**
  * UiSuggest item schema.

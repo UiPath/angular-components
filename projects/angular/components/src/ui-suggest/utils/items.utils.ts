@@ -1,5 +1,5 @@
 import { isDevMode } from '@angular/core';
-import { VirtualScrollItemStatus } from '@uipath/angular/directives';
+import { VirtualScrollItemStatus } from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
 
 import cloneDeep from 'lodash-es/cloneDeep';
 import sortBy from 'lodash-es/sortBy';
@@ -7,10 +7,10 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import {
-    ISuggestValue,
-    ISuggestValueData,
-    ISuggestValues,
-    SuggestDisplayPriority,
+  ISuggestValue,
+  ISuggestValueData,
+  ISuggestValues,
+  SuggestDisplayPriority,
 } from '../models';
 
 /**

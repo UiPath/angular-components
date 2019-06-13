@@ -1,27 +1,26 @@
 import {
-    Directive,
-    ElementRef,
-    Inject,
-    InjectionToken,
-    Input,
-    Optional,
-    Renderer2,
+  Directive,
+  ElementRef,
+  Inject,
+  InjectionToken,
+  Input,
+  Optional,
+  Renderer2,
 } from '@angular/core';
+import { UiFormat } from '@uipath/angular/directives/internal';
 
 import * as _moment from 'moment';
 import {
-    merge,
-    Observable,
-    of,
+  merge,
+  Observable,
+  of,
 } from 'rxjs';
 import {
-    distinctUntilChanged,
-    filter,
-    map,
-    takeUntil,
+  distinctUntilChanged,
+  filter,
+  map,
+  takeUntil,
 } from 'rxjs/operators';
-
-import { UiFormat } from '../internal/ui-format';
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670
