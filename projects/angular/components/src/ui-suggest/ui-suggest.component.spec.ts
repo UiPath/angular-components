@@ -903,6 +903,7 @@ const sharedSpecifications = (
             expect(uiSuggest.value.length).toBe(1);
             expect(uiSuggest.value[0].id).toEqual(randomItem.id);
             expect(uiSuggest.value[0].text).toEqual(randomItem.text);
+            expect(uiSuggest.value[0].additionalData).toEqual(randomItem.additionalData);
         }));
 
         it('should clear the selected value if the clear button is pressed', () => {

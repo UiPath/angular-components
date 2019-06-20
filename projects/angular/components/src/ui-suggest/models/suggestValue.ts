@@ -8,7 +8,7 @@ import {
  *
  * @export
  */
-export interface ISuggestValue extends VirtualScrollItem {
+export interface ISuggestValue<T = any> extends VirtualScrollItem {
   /**
   * Unique identifier associated to the entry.
   *
@@ -40,4 +40,10 @@ export interface ISuggestValue extends VirtualScrollItem {
     svgIcon?: string;
     matIcon?: string;
   };
+
+  /**
+   * Optional properties that may be passed to an item.
+   *
+   */
+  additionalData?: T;
 }
