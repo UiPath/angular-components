@@ -141,7 +141,6 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
                         this._reverseIndex({ start, end }, items.length),
                 ),
                 filter(this._isValidRange),
-                tap(_ => console.warn(this.buffer)),
                 tap(range => this.rangeLoad.emit(range)),
             )
             .pipe(takeUntil(this._destroyed$))
