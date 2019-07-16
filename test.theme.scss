@@ -6,3 +6,4 @@ $theme: mat-dark-theme(mat-palette($mat-green, 500), mat-palette($mat-amber, 500
 @include mat-core();
 @include angular-material-theme($theme);
 @include uipath-angular-theme($theme);
+@include mat-snack-bar-theme($theme);
