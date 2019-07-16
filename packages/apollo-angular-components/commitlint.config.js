@@ -15,6 +15,8 @@ module.exports = {
                 'scroll-into-view',
                 'virtual-scroll-range-loader',
                 'virtual-scroll-viewport-resize',
+                'snackbar',
+                'pipes',
             ];
 
             return [2, 'always', scopeList];
