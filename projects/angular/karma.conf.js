@@ -17,7 +17,6 @@ module.exports = function (config) {
       jasmine: {
         random: false,
       },
-      useIframe: false,
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     coverageIstanbulReporter: {
