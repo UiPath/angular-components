@@ -1,0 +1,25 @@
+.ui-snackbar {
+    &-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &-message,
+    &-dismiss {
+        display: flex;
+        align-items: center;
+    }
+
+    &-message {
+        mat-icon {
+            margin-right: 10px;
+        }
+        span {
+            overflow-y: auto;
+            max-height: calc(100vh - 80px);
+            font-size: 14.5px;
+            line-height: 1.35em;
+            word-break: break-word;
+        }
+    }
+}

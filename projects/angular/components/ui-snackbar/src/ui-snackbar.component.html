@@ -1,0 +1,13 @@
+<div class="ui-snackbar-container">
+    <div class="ui-snackbar-message">
+        <mat-icon *ngIf="data.icon">{{data.icon}}</mat-icon>
+        <span [innerHTML]="data.message | nl2br"></span>
+    </div>
+    <div class="ui-snackbar-dismiss">
+        <button [attr.aria-label]="data.closeAriaLabel"
+                (click)="snackBarRef.dismiss()"
+                mat-icon-button>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
