@@ -1,3 +1,6 @@
+# v0.10.3 (2019-07-17)
+* correctly export pipe modules / classes (support AOT builds)
+
 # v0.10.2 (2019-07-17)
 * **BREAKING CHANGE** rename `UiSnackbarIntlService` to `UiSnackbarIntl`
 
