@@ -1,2 +1,2 @@
-export * from './nl2br';
-export * from './pipe.module';
+export { UiNl2BrPipe } from './nl2br';
+export { UiPipeModule } from './pipe.module';
