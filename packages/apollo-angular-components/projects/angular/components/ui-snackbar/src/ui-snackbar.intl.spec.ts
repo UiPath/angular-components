@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UiSnackbarIntlService } from './ui-snackbar-intl.service';
+import { UiSnackbarIntl } from './ui-snackbar.intl';
 
 describe('Service: UiSnackbarIntlService', () => {
     beforeEach(() => TestBed.configureTestingModule({
-        providers: [UiSnackbarIntlService],
+        providers: [UiSnackbarIntl],
     }));
 
     it('should create', () => {
-        const service: UiSnackbarIntlService = TestBed.get(UiSnackbarIntlService);
+        const service: UiSnackbarIntl = TestBed.get(UiSnackbarIntl);
         expect(service).toBeTruthy();
         expect(service.closeAriaLabel).toEqual('Close');
     });

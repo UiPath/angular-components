@@ -6,7 +6,7 @@ import {
 import { Subject } from 'rxjs';
 
 @Injectable()
-export class UiSnackbarIntlService implements OnDestroy {
+export class UiSnackbarIntl implements OnDestroy {
     public closeAriaLabel = 'Close';
     protected _destroyed$ = new Subject<void>();
 
