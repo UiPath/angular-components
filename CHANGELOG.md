@@ -1,3 +1,6 @@
+# v0.10.2 (2019-07-17)
+* **BREAKING CHANGE** rename `UiSnackbarIntlService` to `UiSnackbarIntl`
+
 # v0.10.1 (2019-07-17)
 #### Components
 
