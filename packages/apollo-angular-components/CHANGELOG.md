@@ -1,3 +1,16 @@
+# v0.10.1 (2019-07-17)
+#### Components
+
+* [snackbar](https://uipath.github.io/angular-components/components/UiSnackBarComponent.html)
+
+#### Services
+
+* [snackbar-service](https://uipath.github.io/angular-components/components/UiSnackBarComponent.html)
+
+#### Directives
+
+* [nl2br](https://uipath.github.io/angular-components/pipes/UiNl2BrPipe.html)
+
 # v0.10.0 (2019-06-13)
 * **BREAKING CHANGE** components will no longer be importent directly `@uipath/angular/components`, they will now be imported from their corresponding folder, eg: `@uipath/angular/components/{{NAME}}`
 * **BREAKING CHANGE** directives will no longer be importent directly `@uipath/angular/directives`, they will now be imported from their corresponding folder, eg: `@uipath/angular/directives/{{NAME}}`
