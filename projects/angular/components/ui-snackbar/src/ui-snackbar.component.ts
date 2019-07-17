@@ -16,7 +16,7 @@ import {
 
 import { Observable } from 'rxjs';
 
-import { UiSnackbarIntlService } from './ui-snackbar-intl.service';
+import { UiSnackbarIntl } from './ui-snackbar.intl';
 
 interface ISnackBarAlert {
     /**
@@ -119,10 +119,10 @@ export class UiSnackBarService {
         @Inject(MAT_SNACK_BAR_DEFAULT_OPTIONS)
         private _options: MatSnackBarConfig,
         @Optional()
-        private readonly _snackIntl: UiSnackbarIntlService,
+        private readonly _snackIntl: UiSnackbarIntl,
     ) {
         this._snackIntl = this._snackIntl ||
-            new UiSnackbarIntlService();
+            new UiSnackbarIntl();
 
         this.info = this._alertFactory(SnackBarType.Info);
         this.error = this._alertFactory(SnackBarType.Error);

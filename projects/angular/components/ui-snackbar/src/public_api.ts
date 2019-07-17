@@ -1,3 +1,9 @@
-export * from './ui-snackbar.component';
+export {
+    SnackBarType,
+    SnackbarAction,
+    UiSnackBarService,
+    UiSnackBarComponent,
+} from './ui-snackbar.component';
+
 export { UiSnackBarModule } from './ui-snackbar.module';
-export { UiSnackbarIntlService } from './ui-snackbar-intl.service';
+export { UiSnackbarIntl } from './ui-snackbar.intl';
