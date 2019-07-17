@@ -407,7 +407,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/QueuedAnnouncer.html" data-type="entity-link">QueuedAnnouncer</a>
                                 </li>
                                 <li class="link">
-                                    <a href="injectables/UiSnackbarIntlService.html" data-type="entity-link">UiSnackbarIntlService</a>
+                                    <a href="injectables/UiSnackbarIntl.html" data-type="entity-link">UiSnackbarIntl</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/UiSuggestIntl.html" data-type="entity-link">UiSuggestIntl</a>

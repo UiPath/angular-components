@@ -128,7 +128,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_snackBar: MatSnackBar, _options: MatSnackBarConfig, _snackIntl: <a href="../injectables/UiSnackbarIntlService.html">UiSnackbarIntlService</a>)</code>
+<code>constructor(_snackBar: MatSnackBar, _options: MatSnackBarConfig, _snackIntl: <a href="../injectables/UiSnackbarIntl.html">UiSnackbarIntl</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -178,7 +178,7 @@
                                                         <td>_snackIntl</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/UiSnackbarIntlService.html" target="_self" >UiSnackbarIntlService</a></code>
+                                                                        <code><a href="../injectables/UiSnackbarIntl.html" target="_self" >UiSnackbarIntl</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -597,7 +597,7 @@ import {
 
 import { Observable } from &#x27;rxjs&#x27;;
 
-import { UiSnackbarIntlService } from &#x27;./ui-snackbar-intl.service&#x27;;
+import { UiSnackbarIntl } from &#x27;./ui-snackbar.intl&#x27;;
 
 interface ISnackBarAlert {
     /**
@@ -700,10 +700,10 @@ export class UiSnackBarService {
         @Inject(MAT_SNACK_BAR_DEFAULT_OPTIONS)
         private _options: MatSnackBarConfig,
         @Optional()
-        private readonly _snackIntl: UiSnackbarIntlService,
+        private readonly _snackIntl: UiSnackbarIntl,
     ) {
         this._snackIntl &#x3D; this._snackIntl ||
-            new UiSnackbarIntlService();
+            new UiSnackbarIntl();
 
         this.info &#x3D; this._alertFactory(SnackBarType.Info);
         this.error &#x3D; this._alertFactory(SnackBarType.Error);
