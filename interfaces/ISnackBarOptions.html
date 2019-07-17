@@ -43,7 +43,7 @@
 
 <ol class="breadcrumb">
   <li>Interfaces</li>
-  <li>IDropdownOption</li>
+  <li>ISnackBarOptions</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -61,17 +61,23 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/angular/components/ui-grid/src/filters/ui-grid-dropdown-filter.directive.ts</code>
+            <code>projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts</code>
         </p>
 
             <p class="comment">
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Dropdown option schema.</p>
+                <p>Snackbar config options</p>
 
             </p>
 
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                    <code>Partial</code>
+            </p>
 
         <section>
             <h3 id="index">Index</h3>
@@ -86,14 +92,8 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#label">label</a>
-                                </li>
-                                <li>
                                             <span class="modifier">Optional</span>
-                                        <a href="#translationKey">translationKey</a>
-                                </li>
-                                <li>
-                                        <a href="#value">value</a>
+                                        <a href="#type">type</a>
                                 </li>
                             </ul>
                         </td>
@@ -110,13 +110,13 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="label"></a>
-                                        <span class="name"><b>label</b><a href="#label"><span class="icon ion-ios-link"></span></a></span>
+                                        <a name="type"></a>
+                                        <span class="name"><b>type</b><a href="#type"><span class="icon ion-ios-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>label:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>type:         <code><a href="../miscellaneous/enumerations.html#SnackBarType" target="_self" >SnackBarType</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -124,42 +124,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                                        </td>
-                                    </tr>
-
-
-
-
-
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-description"><p>The dropdown option label.</p>
-</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="translationKey"></a>
-                                        <span class="name"><b>translationKey</b><a href="#translationKey"><span class="icon ion-ios-link"></span></a></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>translationKey:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#SnackBarType" target="_self" >SnackBarType</a></code>
 
                                         </td>
                                     </tr>
@@ -175,42 +140,7 @@
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>The dropdown translation key, used by the <code>intl</code> service.</p>
-</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="value"></a>
-                                        <span class="name"><b>value</b><a href="#value"><span class="icon ion-ios-link"></span></a></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>value:     <code>string | number | boolean</code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>    <code>string | number | boolean</code>
-
-                                        </td>
-                                    </tr>
-
-
-
-
-
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-description"><p>The current dropdown value.</p>
+                                    <div class="io-description"><p>The type of the alert (info, success, warning or error)</p>
 </div>
                                 </td>
                             </tr>
@@ -222,80 +152,177 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-    Directive,
-    Input,
-    OnDestroy,
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  Injectable,
+  Optional,
+  ViewEncapsulation,
 } from &#x27;@angular/core&#x27;;
+import {
+  MAT_SNACK_BAR_DATA,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatSnackBar,
+  MatSnackBarConfig,
+  MatSnackBarRef,
+} from &#x27;@angular/material/snack-bar&#x27;;
 
-import { UiGridFilter } from &#x27;./ui-grid-filter&#x27;;
+import { Observable } from &#x27;rxjs&#x27;;
 
-/**
- * Dropdown option schema.
- *
- * @export
- */
-export interface IDropdownOption {
+import { UiSnackbarIntlService } from &#x27;./ui-snackbar-intl.service&#x27;;
+
+interface ISnackBarAlert {
     /**
-     * The current dropdown value.
-     *
+     * Alert message
      */
-    value: string | number | boolean;
+    message: string;
+     /**
+     * How long to remain on the screen
+     */
+    duration: number;
     /**
-     * The dropdown option label.
-     *
+     * Material icon to be used in snackbar
      */
-    label: string;
+    icon?: string;
     /**
-     * The dropdown translation key, used by the &#x60;intl&#x60; service.
-     *
+     * Aria label for screen-readers on close button
      */
-    translationKey?: string;
+    closeAriaLabel?: string;
 }
 
-/**
- * The dropdown filter definition directive.
- *
- * @export
- */
-@Directive({
-    selector: &#x27;[uiGridDropdownFilter], ui-grid-dropdown-filter&#x27;,
+@Component({
+    templateUrl: &#x27;./ui-snackbar.component.html&#x27;,
+    styleUrls: [
+        &#x27;./ui-snackbar.component.scss&#x27;,
+    ],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UiGridDropdownFilterDirective&lt;T&gt; extends UiGridFilter&lt;T&gt; implements OnDestroy {
+export class UiSnackBarComponent {
+    constructor(
+        @Inject(MAT_SNACK_BAR_DATA)
+        public data: ISnackBarAlert,
+        public snackBarRef: MatSnackBarRef&lt;UiSnackBarComponent&gt;,
+    ) { }
+}
+
+export enum SnackBarType {
+    Info &#x3D; &#x27;info&#x27;,
+    Error &#x3D; &#x27;error&#x27;,
+    Warning &#x3D; &#x27;warning&#x27;,
+    Success &#x3D; &#x27;success&#x27;,
+    None &#x3D; &#x27;none&#x27;,
+}
+
+export const ICON_MAP: Map&lt;SnackBarType, string&gt; &#x3D; new Map([
+    [SnackBarType.Info, &#x27;message&#x27;],
+    [SnackBarType.Success, &#x27;check_circle&#x27;],
+    [SnackBarType.Warning, &#x27;warning&#x27;],
+    [SnackBarType.Error, &#x27;info&#x27;],
+]);
+
+export type SnackbarAction &#x3D; (message: string, duration?: number) &#x3D;&gt; Observable&lt;void&gt;;
+
+/**
+ * Snackbar config options
+ */
+interface ISnackBarOptions extends Partial&lt;Exclude&lt;ISnackBarAlert, &#x27;closeAriaLabel&#x27; | &#x27;message&#x27;&gt;&gt; {
     /**
-     * The dropdown items.
-     *
+     * The type of the alert (info, success, warning or error)
      */
-    @Input()
-    public items?: IDropdownOption[];
+    type?: SnackBarType;
+}
+
+export const panelClass &#x3D; (type: SnackBarType) &#x3D;&gt;
+    &#x60;ui-snackbar-${type}&#x60;;
+
+@Injectable({
+    providedIn: &#x27;root&#x27;,
+})
+export class UiSnackBarService {
+    private _ref?: MatSnackBarRef&lt;UiSnackBarComponent&gt;;
 
     /**
-     * If it should display the &#x60;All&#x60; option.
-     *
-     */
-    @Input()
-    public showAllOption &#x3D; true;
-
+     * Display an info snackbar
+     * @param message The message to be displayed
+     * @param duration How long to remain on the screen
+    */
+    public info: SnackbarAction;
     /**
-     * The current dropdown option.
-     *
-     */
-    @Input()
-    public value?: IDropdownOption;
-
+     * Display an error snackbar
+     * @param message The message to be displayed
+     * @param duration How long to remain on the screen
+    */
+    public error: SnackbarAction;
     /**
-     * Updates the dropdown value.
-     *
-     */
-    public updateValue(value?: IDropdownOption) {
-        this.value &#x3D; value;
+     * Display an success snackbar
+     * @param message The message to be displayed
+     * @param duration How long to remain on the screen
+    */
+    public success: SnackbarAction;
+    /**
+     * Display an warning snackbar
+     * @param message The message to be displayed
+     * @param duration How long to remain on the screen
+    */
+    public warning: SnackbarAction;
+
+    constructor(
+        private _snackBar: MatSnackBar,
+        @Inject(MAT_SNACK_BAR_DEFAULT_OPTIONS)
+        private _options: MatSnackBarConfig,
+        @Optional()
+        private readonly _snackIntl: UiSnackbarIntlService,
+    ) {
+        this._snackIntl &#x3D; this._snackIntl ||
+            new UiSnackbarIntlService();
+
+        this.info &#x3D; this._alertFactory(SnackBarType.Info);
+        this.error &#x3D; this._alertFactory(SnackBarType.Error);
+        this.success &#x3D; this._alertFactory(SnackBarType.Success);
+        this.warning &#x3D; this._alertFactory(SnackBarType.Warning);
     }
 
     /**
-     * @ignore
+     * Display a snackbar (customizable)
+     * @param message The message to be displayed
+     * @param options Customize default options: snackbar type, icon, display duration
      */
-    ngOnDestroy() {
-        super.ngOnDestroy();
-        this.filterChange.complete();
+    public show &#x3D; (message: string, { type, duration, icon }
+        : ISnackBarOptions &#x3D; {}) &#x3D;&gt;
+        this._alert(type || SnackBarType.None, {
+            message,
+            icon: icon || ICON_MAP.get(type!),
+            duration: duration || this._options.duration!,
+        })
+
+    /**
+     * Dismiss the displayed snackbar
+     */
+    public clear() {
+        if (!this._ref) { return; }
+
+        this._ref.dismiss();
+    }
+
+    private _alertFactory &#x3D; (type: SnackBarType) &#x3D;&gt;
+        (message: string, duration?: number) &#x3D;&gt; this._alert(type, {
+            message,
+            icon: ICON_MAP.get(type),
+            duration: duration || this._options.duration!,
+        })
+
+    private _alert(type: SnackBarType, options: ISnackBarAlert) {
+        this._ref &#x3D; this._snackBar.openFromComponent(UiSnackBarComponent, {
+            data: {
+                closeAriaLabel: this._snackIntl.closeAriaLabel,
+                ...options,
+            },
+            duration: options.duration,
+            panelClass: panelClass(type),
+        });
+
+        return this._ref.afterOpened();
     }
 }
 </code></pre>
@@ -325,7 +352,7 @@ export class UiGridDropdownFilterDirective&lt;T&gt; extends UiGridFilter&lt;T&gt
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
-            var COMPODOC_CURRENT_PAGE_URL = 'IDropdownOption.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'ISnackBarOptions.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

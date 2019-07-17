@@ -27,7 +27,7 @@
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content directive">
+               <div class="content pipe">
                    <div class="content-data">
 
 
@@ -35,9 +35,13 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
-  <li>Directives</li>
-  <li>UiGridExpandedRowDirective</li>
+  <li>Pipes</li>
+  <li>UiNl2BrPipe</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -51,87 +55,130 @@
 
 <div class="tab-content">
     <div class="tab-pane fade active in" id="c-info">
+
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/angular/components/ui-grid/src/body/ui-grid-expanded-row.directive.ts</code>
+            <code>projects/angular/pipes/src/nl2br/nl2br.pipe.ts</code>
         </p>
 
-            <p class="comment">
-                <h3>Description</h3>
-            </p>
-            <p class="comment">
-                <p>Expanded row definition directive.</p>
 
-            </p>
-
-
-            <p class="comment">
-                <h3>Example</h3>
-            </p>
-            <div class="io-description">
-            </div>
 
         <section>
             <h3>Metadata</h3>
             <table class="table table-sm table-hover">
                 <tbody>
-
                     <tr>
-                        <td class="col-md-3">Selector</td>
-                        <td class="col-md-9"><code>[uiGridExpandedRow], ui-grid-expanded-row</code></td>
+                        <td class="col-md-3">Name</td>
+                        <td class="col-md-9">nl2br</td>
                     </tr>
-
                 </tbody>
             </table>
         </section>
 
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transform"></a>
+                    <span class="name">
+                        <b>
+                            transform
+                        </b>
+                        <a href="#transform"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>transform(value?: string | null)</code>
+                </td>
+            </tr>
 
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="8"
+                            class="link-to-prism">projects/angular/pipes/src/nl2br/nl2br.pipe.ts:8</a></div>
+                </td>
+            </tr>
 
 
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                            <code>string | null</code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
 
 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
-
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-    ContentChild,
-    Directive,
-    TemplateRef,
+  Pipe,
+  PipeTransform,
 } from &#x27;@angular/core&#x27;;
 
-/**
- * Expanded row definition directive.
- *
- * @export
- */
-@Directive({
-    selector: &#x27;[uiGridExpandedRow], ui-grid-expanded-row&#x27;,
-})
-export class UiGridExpandedRowDirective {
-  /**
-   * @internal
-   * @ignore
-   */
-  @ContentChild(TemplateRef, {
-      static: true,
-  })
-    public html?: TemplateRef&lt;any&gt;;
+@Pipe({ name: &#x27;nl2br&#x27; })
+export class UiNl2BrPipe implements PipeTransform {
+    transform(value?: string | null) {
+        return value ?
+            value
+                .replace(/\r\n/g, &#x27;&lt;br/&gt;&#x27;)
+                .replace(/\r/g, &#x27;&lt;br/&gt;&#x27;)
+                .replace(/\n/g, &#x27;&lt;br/&gt;&#x27;)
+            :
+            null;
+    }
 }
 </code></pre>
     </div>
 
 </div>
-
-
-
-
 
 
 
@@ -157,8 +204,8 @@ export class UiGridExpandedRowDirective {
 
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'directive';
-            var COMPODOC_CURRENT_PAGE_URL = 'UiGridExpandedRowDirective.html';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'pipe';
+            var COMPODOC_CURRENT_PAGE_URL = 'UiNl2BrPipe.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
