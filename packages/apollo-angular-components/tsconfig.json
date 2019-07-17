@@ -72,6 +72,9 @@
       "@uipath/angular/testing": [
         "./projects/angular/testing/src/public_api.ts"
       ],
+      "@uipath/angular/pipes": [
+        "./projects/angular/pipes/src/public_api.ts"
+      ],
     }
   }
 }

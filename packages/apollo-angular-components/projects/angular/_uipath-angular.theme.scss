@@ -1,7 +1,12 @@
 @import "./components/ui-suggest/src/ui-suggest.theme";
 @import "./components/ui-grid/src/ui-grid.theme";
+@import "./components/ui-snackbar/src/ui-snackbar.theme";
 
 @mixin uipath-angular-theme($theme) {
   @include ui-suggest-theme($theme);
   @include ui-grid-theme($theme);
+}
+
+@mixin uipath-snackbar-theme($theme, $snackbar-theme: null) {
+  @include ui-snackbar-theme($theme, $snackbar-theme);
 }
