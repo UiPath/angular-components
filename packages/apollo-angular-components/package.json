@@ -38,7 +38,8 @@
     "e2e": "ng e2e",
     "package": "npm-run-all build:prod",
     "docs": "compodoc",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "check-public-exports": "ts-node --project ./tsconfig.node.json ./.build/check-public-exports"
   },
   "config": {
     "commitizen": {
@@ -84,6 +85,7 @@
     "@commitlint/config-conventional": "^8.1.0",
     "@commitlint/prompt": "^8.1.0",
     "@compodoc/compodoc": "^1.1.10",
+    "@types/chalk": "^2.2.0",
     "@types/clipboard": "2.0.1",
     "@types/faker": "4.1.5",
     "@types/jasmine": "3.3.12",
@@ -92,11 +94,13 @@
     "@types/moment-timezone": "0.5.12",
     "@types/node": "12.0.2",
     "@types/object-hash": "1.2.0",
+    "chalk": "^2.4.2",
     "codelyzer": "^5.0.1",
     "commitizen": "3.1.1",
     "cpx": "1.5.0",
     "faker": "4.1.0",
     "gh-pages": "2.0.1",
+    "glob": "^7.1.4",
     "husky": "2.3.0",
     "jasmine-core": "3.4.0",
     "jasmine-spec-reporter": "4.2.1",
