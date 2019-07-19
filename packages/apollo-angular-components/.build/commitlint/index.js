@@ -1,60 +1,23 @@
 /**
  * Adapted from: https://github.com/fathyb/commitlint-circle
  */
-const Octokit = require('@octokit/rest')
 const { lint, load } = require('@commitlint/core')
 const path = require('path')
+const { red, yellow, blue, green } = require('chalk');
 
-const { variables } = require('../common')
-const { owner, repo, pull, token } = variables;
-
-const github = new Octokit({
-    auth: token,
-})
+const { getPullRequestHead, getCommits, statusReporterFactory } = require('../common/github');
 
 const _handleUnexpectedError = (err) => {
     console.error(err)
     process.exit(1)
 }
 
-const getCommits = async () => {
-    console.log('📡   Looking up commits for PR #%s...', pull)
-    const response = await github.pulls.listCommits({
-        owner,
-        repo,
-        pull_number: pull,
-        per_page: 100
-    })
-
-    return response.data
-}
-
-const reportStatus = async (state, sha, description, target_url) => {
-    await github.repos.createStatus({
-        owner,
-        repo,
-        sha,
-        state,
-        description,
-        context: 'commitlint',
-        target_url,
-    })
-}
-
-const getPullRequestHead = async () => {
-    const pr = await github.pullRequests.get({
-        owner,
-        repo,
-        pull_number: pull,
-    })
-
-    return pr.data.head
-}
+const reportStatus = statusReporterFactory('commitlint')
 
 const run = async () => {
     const head = await getPullRequestHead()
 
-    console.log('👮‍   Calling Git Police...')
+    console.log(blue('👮‍   Calling Git Police...'))
 
     await reportStatus('pending', head.sha, 'Checking commits...')
 
@@ -69,13 +32,11 @@ const run = async () => {
     const isConventionalCommitGuidelineRespected = lintResultList.every(result => result.valid)
     const isAnyFixupCommit = commits.some(({ commit }) => commit.message.startsWith('fixup!'))
 
-    console.log(isConventionalCommitGuidelineRespected)
-
     if (
         isConventionalCommitGuidelineRespected &&
         !isAnyFixupCommit
     ) {
-        console.log(`💯   Good to go!`)
+        console.log(green(`💯   Good to go!`))
 
         await reportStatus('success', head.sha, '✔ Good to go!')
             .catch(_handleUnexpectedError)
@@ -84,7 +45,7 @@ const run = async () => {
     }
 
     if (isAnyFixupCommit) {
-        console.log(`😬   There are still some fixup commits.`)
+        console.warn(yellow(`😬   There are still some fixup commits.`))
 
         await reportStatus('error', head.sha, 'Please rebase and apply the fixup commits!')
             .catch(_handleUnexpectedError)
@@ -92,7 +53,7 @@ const run = async () => {
         return;
     }
 
-    console.log(`⛔   Something doesn't check out`)
+    console.error(red(`⛔   Something doesn't check out`))
 
     await reportStatus('error', head.sha, 'We use conventional commits (╯°□°）╯︵ ┻━┻', 'https://www.conventionalcommits.org/en/v1.0.0-beta.4/')
         .catch(_handleUnexpectedError)

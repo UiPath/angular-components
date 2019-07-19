@@ -2,17 +2,18 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 jobs:
-  - job: CommitLint
+  - job: Checks
     pool :
       vmImage: 'ubuntu-latest'
     steps:
       - template: .ci/templates/steps/initialize-environment.yml
       - template: .ci/templates/steps/install-dependencies.yml
       - script: |
-          npm ci
-          node index.js
-        workingDirectory: .build/commitlint
+          npm run check:commits
         displayName: 'Linting Commits'
+      - script: |
+          npm run check:exports
+        displayName: 'Check Public API'
     condition: eq(variables['Build.SourceBranchName'], 'merge')
 
   - job: Test
@@ -25,8 +26,8 @@ jobs:
         parameters:
           codeCoverage: 'true'
     dependsOn:
-      - CommitLint
-    condition: or(ne(variables['Build.SourceBranchName'], 'merge'), succeeded('CommitLint'))
+      - Checks
+    condition: or(ne(variables['Build.SourceBranchName'], 'merge'), succeeded('Checks'))
 
   - job: Build
     pool :
@@ -42,8 +43,8 @@ jobs:
         displayName: 'Publish @uipath/angular binaries'
         condition: succeeded()
     dependsOn:
-      - CommitLint
-    condition: or(ne(variables['Build.SourceBranchName'], 'merge'), succeeded('CommitLint'))
+      - Checks
+    condition: or(ne(variables['Build.SourceBranchName'], 'merge'), succeeded('Checks'))
 
   - job: Documentation
     pool :
