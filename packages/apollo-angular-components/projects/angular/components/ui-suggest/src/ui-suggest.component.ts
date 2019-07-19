@@ -118,8 +118,9 @@ export class UiSuggestComponent extends UiSuggestMatFormField
         ) {
             this.close(false);
         }
+
+        this._cd.markForCheck();
         this.stateChanges.next();
-        this._cd.detectChanges();
     }
 
     /**
