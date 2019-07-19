@@ -11,17 +11,24 @@ import {
 } from 'path';
 import * as ts from 'typescript';
 
+import {
+  getPullRequestHead,
+  statusReporterFactory,
+} from '../common/github';
+
+const reportStatus = statusReporterFactory('public-api-check');
+
 const {
     red,
     cyan,
     green,
+    grey,
 } = chalk.default;
 
 const ROOT = resolve(__dirname, '../..');
 const BARREL = 'index.ts';
 
 const resolveParentDir = (path) => dirname(resolve(ROOT, path));
-
 interface IExportPair {
     exportLocation: string;
     exported: string;
@@ -38,6 +45,12 @@ interface IDecoratedError extends IDecoratedClass {
 }
 
 let isErrorFlagged = false;
+
+const _handleUnexpectedError = (err?: string) => {
+    if (err) { console.error(err); }
+
+    process.exit(1);
+};
 
 const buildError = ({ className, decoratorName, exportLocation, rootPath }: IDecoratedError, message: string) => {
     return [
@@ -144,7 +157,7 @@ const resolveFileLocation = (exportLocation: string, path: string) => {
     return resolve(parentDir, fileName);
 };
 
-const checkForUnamedDecoratedExports = (rootPath: string, path: string, exportList: IExportPair[]) =>
+const checkForUnnamedDecoratedExports = (rootPath: string, path: string, exportList: IExportPair[]) =>
     exportList
         .filter(e => !e.exported)
         .forEach(({ exportLocation }) => {
@@ -171,7 +184,7 @@ const checkForUnamedDecoratedExports = (rootPath: string, path: string, exportLi
                             }),
                     );
             } else {
-                checkForUnamedDecoratedExports(rootPath, fileLocation, exportDeclarations);
+                checkForUnnamedDecoratedExports(rootPath, fileLocation, exportDeclarations);
             }
         });
 
@@ -229,22 +242,53 @@ const checkFile = (path: string) => {
     const sourceFile = readFileNode(path);
     const rootExports = getExportDeclarations(sourceFile);
 
-    checkForUnamedDecoratedExports(path, path, rootExports);
+    console.log(`${grey('Checking')} ${cyan(sourceFile.fileName)} ${grey('for unnamed decorated exports...')}`);
+    checkForUnnamedDecoratedExports(path, path, rootExports);
+
+    console.log(`${grey('Checking')} ${cyan(sourceFile.fileName)} ${grey('decorated exports hidden behind barrels...')}`);
     checkForBarreledDecoratedExports(path, path, rootExports);
 };
 
-glob(
-    './projects/**/public_api.ts',
-    { root: ROOT },
-    (err, files) => {
-        if (err) { throw err; }
+const forEachApiFile = (callback: (string) => void) => {
+    return new Promise((res, rej) => {
+        const walker = new glob.Glob('./projects/**/public_api.ts', {
+            root: ROOT,
+        }, (err, files) => {
+            if (err) {
+                console.error(err);
+                rej(err);
+            }
 
-        files.forEach(file => {
-            checkFile(file);
+            files.forEach(callback);
         });
 
-        if (isErrorFlagged) {
-            process.exit(1);
-        }
-    },
-);
+        walker.on('end', res);
+    });
+};
+
+const run = async () => {
+    const head = await getPullRequestHead();
+
+    await reportStatus('pending', head.sha, 'Checking Public API...')
+        .catch(_handleUnexpectedError);
+
+    await forEachApiFile(checkFile);
+
+    if (isErrorFlagged) {
+        console.error(red(`⛔   Something doesn't check out`));
+
+        await reportStatus('error', head.sha, 'npm run check:exports for more info...')
+            .catch(_handleUnexpectedError);
+    } else {
+        console.log(green(`💯   Good to go!`));
+
+        await reportStatus('success', head.sha, '✔ Good to go!')
+            .catch(_handleUnexpectedError);
+    }
+};
+
+(async () => {
+    await run()
+        .catch(_handleUnexpectedError);
+})();
+
