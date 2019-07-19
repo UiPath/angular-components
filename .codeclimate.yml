@@ -4,6 +4,7 @@ exclude_patterns:
 - '**/*.spec.ts'
 - '**/*.d.ts'
 - '**/node_modules/'
+- '**/.build/'
 
 checks:
   method-lines:
