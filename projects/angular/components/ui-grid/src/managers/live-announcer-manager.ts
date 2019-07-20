@@ -1,9 +1,10 @@
+import { Injectable } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 
 import {
-    NEVER,
-    Observable,
-    Subject,
+  NEVER,
+  Observable,
+  Subject,
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -14,7 +15,8 @@ import { UiGridIntl } from '../ui-grid.intl';
  * @internal
  * @ignore
  */
-export class LiveAnnouncerManager<T> {
+@Injectable()
+ export class LiveAnnouncerManager<T> {
     private _destroyed$ = new Subject<void>();
 
     constructor(

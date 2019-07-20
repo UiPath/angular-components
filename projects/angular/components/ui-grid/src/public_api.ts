@@ -8,12 +8,4 @@ export {
     ISelectionDiff,
     ISortModel,
 } from './models';
-export {
-    DataManager,
-    FilterManager,
-    LiveAnnouncerManager,
-    ResizeManager,
-    SelectionManager,
-    ResizeStrategy,
-    SortManager,
-} from './managers';
+export * from './managers';

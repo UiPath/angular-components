@@ -1,4 +1,7 @@
-import { isDevMode } from '@angular/core';
+import {
+  Injectable,
+  isDevMode,
+} from '@angular/core';
 
 import assignWith from 'lodash-es/assignWith';
 import cloneDeep from 'lodash-es/cloneDeep';
@@ -42,7 +45,8 @@ type PropertyMap<T> = { [Key in keyof T]?: PropertyMap<T[Key]> };
  * @ignore
  * @internal
  */
-export class DataManager<T extends IGridDataEntry> {
+@Injectable()
+ export class DataManager<T extends IGridDataEntry> {
     public get length() {
         return this.data$.value.length;
     }

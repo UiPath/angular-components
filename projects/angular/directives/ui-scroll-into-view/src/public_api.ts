@@ -1,2 +1,2 @@
-export { UiScrollIntoViewDirective } from './ui-scroll-into-view.directive';
-export { UiScrollIntoViewModule } from './ui-scroll-into-view.module';
+export * from './ui-scroll-into-view.directive';
+export * from './ui-scroll-into-view.module';

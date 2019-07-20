@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
 import isEqual from 'lodash-es/isEqual';
@@ -19,7 +20,8 @@ import { IFilterModel } from '../models';
  * @ignore
  * @internal
  */
-export class FilterManager<T> {
+@Injectable()
+ export class FilterManager<T> {
     public filter$ = new BehaviorSubject<IFilterModel<T>[]>([]);
 
     constructor(
