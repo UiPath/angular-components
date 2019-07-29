@@ -17,6 +17,7 @@ module.exports = {
                 'virtual-scroll-viewport-resize',
                 'snackbar',
                 'nl2br',
+                'progress-button'
             ];
 
             return [2, 'always', scopeList];
