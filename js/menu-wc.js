@@ -273,6 +273,39 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                             </li>
                             <li class="link">
+                                <a href="modules/UiProgressButtonModule.html" data-type="entity-link">UiProgressButtonModule</a>
+                                    <li class="chapter inner">
+                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                            'data-target="#components-links-module-UiProgressButtonModule-a99a23afb6056ec69b000f5aff52d662"' : 'data-target="#xs-components-links-module-UiProgressButtonModule-a99a23afb6056ec69b000f5aff52d662"' }>
+                                            <span class="icon ion-md-cog"></span>
+                                            <span>Components</span>
+                                            <span class="icon ion-ios-arrow-down"></span>
+                                        </div>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiProgressButtonModule-a99a23afb6056ec69b000f5aff52d662"' :
+                                            'id="xs-components-links-module-UiProgressButtonModule-a99a23afb6056ec69b000f5aff52d662"' }>
+                                            <li class="link">
+                                                <a href="components/UiButtonProgressBarComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiButtonProgressBarComponent</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                <li class="chapter inner">
+                                    <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                        'data-target="#directives-links-module-UiProgressButtonModule-a99a23afb6056ec69b000f5aff52d662"' : 'data-target="#xs-directives-links-module-UiProgressButtonModule-a99a23afb6056ec69b000f5aff52d662"' }>
+                                        <span class="icon ion-md-code-working"></span>
+                                        <span>Directives</span>
+                                        <span class="icon ion-ios-arrow-down"></span>
+                                    </div>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiProgressButtonModule-a99a23afb6056ec69b000f5aff52d662"' :
+                                        'id="xs-directives-links-module-UiProgressButtonModule-a99a23afb6056ec69b000f5aff52d662"' }>
+                                        <li class="link">
+                                            <a href="directives/UiProgressButtonDirective.html"
+                                                data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiProgressButtonDirective</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </li>
+                            <li class="link">
                                 <a href="modules/UiScrollIntoViewModule.html" data-type="entity-link">UiScrollIntoViewModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
@@ -325,6 +358,39 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                             </li>
                                         </ul>
                                     </li>
+                            </li>
+                            <li class="link">
+                                <a href="modules/UiSpinnerButtonModule.html" data-type="entity-link">UiSpinnerButtonModule</a>
+                                    <li class="chapter inner">
+                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                            'data-target="#components-links-module-UiSpinnerButtonModule-1149b0d2ac2d3d2dfccc4f7eff863d7e"' : 'data-target="#xs-components-links-module-UiSpinnerButtonModule-1149b0d2ac2d3d2dfccc4f7eff863d7e"' }>
+                                            <span class="icon ion-md-cog"></span>
+                                            <span>Components</span>
+                                            <span class="icon ion-ios-arrow-down"></span>
+                                        </div>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiSpinnerButtonModule-1149b0d2ac2d3d2dfccc4f7eff863d7e"' :
+                                            'id="xs-components-links-module-UiSpinnerButtonModule-1149b0d2ac2d3d2dfccc4f7eff863d7e"' }>
+                                            <li class="link">
+                                                <a href="components/UiButtonProgressSpinnerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiButtonProgressSpinnerComponent</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                <li class="chapter inner">
+                                    <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                        'data-target="#directives-links-module-UiSpinnerButtonModule-1149b0d2ac2d3d2dfccc4f7eff863d7e"' : 'data-target="#xs-directives-links-module-UiSpinnerButtonModule-1149b0d2ac2d3d2dfccc4f7eff863d7e"' }>
+                                        <span class="icon ion-md-code-working"></span>
+                                        <span>Directives</span>
+                                        <span class="icon ion-ios-arrow-down"></span>
+                                    </div>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiSpinnerButtonModule-1149b0d2ac2d3d2dfccc4f7eff863d7e"' :
+                                        'id="xs-directives-links-module-UiSpinnerButtonModule-1149b0d2ac2d3d2dfccc4f7eff863d7e"' }>
+                                        <li class="link">
+                                            <a href="directives/UiSpinnerButtonDirective.html"
+                                                data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiSpinnerButtonDirective</a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </li>
                             <li class="link">
                                 <a href="modules/UiSuggestModule.html" data-type="entity-link">UiSuggestModule</a>
@@ -389,6 +455,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="classes/UiGridIntl.html" data-type="entity-link">UiGridIntl</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UiLoaderButton.html" data-type="entity-link">UiLoaderButton</a>
                             </li>
                             <li class="link">
                                 <a href="classes/UiSuggestMatFormField.html" data-type="entity-link">UiSuggestMatFormField</a>
