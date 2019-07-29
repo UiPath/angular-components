@@ -1,3 +1,7 @@
+# v0.10.4 (2019-07-29)
+* [progress-button] implement button augmentor directive, that enables loading state configuraiton via a progress bar
+* [spinner-button] implement button augmentor directive, that enables loading state configuraiton via a spinner
+
 # v0.10.3 (2019-07-17)
 * correctly export pipe modules / classes (support AOT builds)
 
