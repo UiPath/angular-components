@@ -1,0 +1,31 @@
+$spinner-diameter: 22px;
+
+ui-button-progress-spinner {
+
+    .mat-progress-spinner {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        &.ui-mat-progress-spinner-fab[style] {
+            width: 100%!important;
+            height: 100%!important;
+
+            svg[style] {
+                width: 100%!important;
+                height: 100%!important;
+            }
+        }
+
+        &:not(.ui-mat-progress-spinner-fab) {
+            top: calc(50% - #{$spinner-diameter / 2});
+            left: calc(50% - #{$spinner-diameter / 2});
+        }
+    }
+}
+
+.ui-spinner-button-loading {
+    .mat-button-wrapper {
+        opacity: 0.4;
+    }
+}

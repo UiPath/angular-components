@@ -1,0 +1,7 @@
+<mat-progress-spinner *ngIf="loading$ | async"
+                      [mode]="mode$ | async"
+                      [color]="color$ | async"
+                      [value]="value$ | async"
+                      [diameter]="22"
+                      [class.ui-mat-progress-spinner-fab]="isRound$ | async">
+</mat-progress-spinner>
