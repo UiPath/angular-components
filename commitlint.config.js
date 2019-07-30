@@ -19,6 +19,7 @@ module.exports = {
                 'nl2br',
                 'progress-button',
                 'spinner-button',
+                'content-loader',
             ];
 
             return [2, 'always', scopeList];
