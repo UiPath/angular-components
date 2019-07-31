@@ -1,3 +1,8 @@
+# v0.10.5 (2019-07-31)
+* `*uiContentLoading` is a new structural directive that  will will render a progress spinner while the input value is `true` else it will render the content within the container (similar to `*ngIf`)
+* **ui-progress-button** fix stroke width
+* **ui-progress-button** add fade animation to the button text
+
 # v0.10.4 (2019-07-29)
 * [progress-button] implement button augmentor directive, that enables loading state configuraiton via a progress bar
 * [spinner-button] implement button augmentor directive, that enables loading state configuraiton via a spinner
