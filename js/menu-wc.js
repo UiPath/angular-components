@@ -118,6 +118,39 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                             </li>
                             <li class="link">
+                                <a href="modules/UiContentLoaderModule.html" data-type="entity-link">UiContentLoaderModule</a>
+                                    <li class="chapter inner">
+                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                            'data-target="#components-links-module-UiContentLoaderModule-a8d653fb11da29d58c71482cc13e324b"' : 'data-target="#xs-components-links-module-UiContentLoaderModule-a8d653fb11da29d58c71482cc13e324b"' }>
+                                            <span class="icon ion-md-cog"></span>
+                                            <span>Components</span>
+                                            <span class="icon ion-ios-arrow-down"></span>
+                                        </div>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiContentLoaderModule-a8d653fb11da29d58c71482cc13e324b"' :
+                                            'id="xs-components-links-module-UiContentLoaderModule-a8d653fb11da29d58c71482cc13e324b"' }>
+                                            <li class="link">
+                                                <a href="components/UiContentSpinnerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiContentSpinnerComponent</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                <li class="chapter inner">
+                                    <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                        'data-target="#directives-links-module-UiContentLoaderModule-a8d653fb11da29d58c71482cc13e324b"' : 'data-target="#xs-directives-links-module-UiContentLoaderModule-a8d653fb11da29d58c71482cc13e324b"' }>
+                                        <span class="icon ion-md-code-working"></span>
+                                        <span>Directives</span>
+                                        <span class="icon ion-ios-arrow-down"></span>
+                                    </div>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiContentLoaderModule-a8d653fb11da29d58c71482cc13e324b"' :
+                                        'id="xs-directives-links-module-UiContentLoaderModule-a8d653fb11da29d58c71482cc13e324b"' }>
+                                        <li class="link">
+                                            <a href="directives/UiContentLoaderDirective.html"
+                                                data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiContentLoaderDirective</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </li>
+                            <li class="link">
                                 <a href="modules/UiDateFormatModule.html" data-type="entity-link">UiDateFormatModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?

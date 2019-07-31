@@ -35,7 +35,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>UiButtonProgressSpinnerComponent</li>
+  <li>UiContentSpinnerComponent</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -61,7 +61,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>projects/angular/directives/ui-spinner-button/src/internal/ui-button-progress-spinner.component.ts</code>
+    <code>projects/angular/directives/ui-content-loader/src/internal/ui-content-spinner.component.ts</code>
 </p>
 
 
@@ -99,19 +99,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>ui-button-progress-spinner</code></td>
+                <td class="col-md-9"><code>ui-content-spinner</code></td>
             </tr>
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>./ui-button-progress-spinner.component.scss</code></td>
+                <td class="col-md-9"><code>./ui-content-spinner.component.scss</code></td>
             </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>./ui-button-progress-spinner.component.html</code></td>
+                <td class="col-md-9"><code>./ui-content-spinner.component.html</code></td>
             </tr>
 
 
@@ -143,15 +143,15 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#isRound$">isRound$</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#loading$">loading$</a>
+                                <a href="#diameter$">diameter$</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#mode$">mode$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#style$">style$</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -178,6 +178,20 @@
 
 
 
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostBindings</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#style.min-height.px">style.min-height.px</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
 
         </tbody>
@@ -187,6 +201,29 @@
 
 
 
+    <section>
+    <h3>HostBindings</h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="style.min-height.px"></a>
+                        <span class="name">
+                            <b>
+                            style.min-height.px</b>
+                            <a href="#style.min-height.px"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">projects/angular/directives/ui-content-loader/src/internal/ui-content-spinner.component.ts:22</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
 
 
     <section>
@@ -216,8 +253,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="26"
-                            class="link-to-prism">projects/angular/directives/ui-spinner-button/src/internal/ui-button-progress-spinner.component.ts:26</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="41"
+                            class="link-to-prism">projects/angular/directives/ui-content-loader/src/internal/ui-content-spinner.component.ts:41</a></div>
                 </td>
             </tr>
 
@@ -259,7 +296,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/angular/directives/ui-spinner-button/src/internal/ui-button-progress-spinner.component.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/angular/directives/ui-content-loader/src/internal/ui-content-spinner.component.ts:28</a></div>
                             </td>
                         </tr>
 
@@ -270,50 +307,23 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="isRound$"></a>
+                        <a name="diameter$"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Public</span>
-                            isRound$</b>
-                            <a href="#isRound$"><span class="icon ion-ios-link"></span></a>
+                            diameter$</b>
+                            <a href="#diameter$"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>new BehaviorSubject(false)</code>
+                            <i>Default value : </i><code>new BehaviorSubject&lt;MatProgressSpinner[&#x27;diameter&#x27;]&gt;(100)</code>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">projects/angular/directives/ui-spinner-button/src/internal/ui-button-progress-spinner.component.ts:19</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="loading$"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                            loading$</b>
-                            <a href="#loading$"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>new BehaviorSubject(false)</code>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/angular/directives/ui-spinner-button/src/internal/ui-button-progress-spinner.component.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">projects/angular/directives/ui-content-loader/src/internal/ui-content-spinner.component.ts:29</a></div>
                             </td>
                         </tr>
 
@@ -340,7 +350,43 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">projects/angular/directives/ui-spinner-button/src/internal/ui-button-progress-spinner.component.ts:22</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">projects/angular/directives/ui-content-loader/src/internal/ui-content-spinner.component.ts:26</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="style$"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            style$</b>
+                            <a href="#style$"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>this.diameter$
+        .pipe(
+            map(diameter &#x3D;&gt; {
+                const displace &#x3D; &#x60;calc(50% - ${diameter / 2}px)&#x60;;
+                return {
+                    top: displace,
+                    left: displace,
+                };
+            }),
+        )</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/angular/directives/ui-content-loader/src/internal/ui-content-spinner.component.ts:30</a></div>
                             </td>
                         </tr>
 
@@ -367,7 +413,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">projects/angular/directives/ui-spinner-button/src/internal/ui-button-progress-spinner.component.ts:23</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/angular/directives/ui-content-loader/src/internal/ui-content-spinner.component.ts:27</a></div>
                             </td>
                         </tr>
 
@@ -383,31 +429,45 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   ChangeDetectionStrategy,
   Component,
+  HostBinding,
   OnDestroy,
   ViewEncapsulation,
 } from &#x27;@angular/core&#x27;;
 import { MatProgressSpinner } from &#x27;@angular/material/progress-spinner&#x27;;
 
 import { BehaviorSubject } from &#x27;rxjs&#x27;;
+import { map } from &#x27;rxjs/operators&#x27;;
 
 @Component({
-    selector: &#x27;ui-button-progress-spinner&#x27;,
-    templateUrl: &#x27;./ui-button-progress-spinner.component.html&#x27;,
-    styleUrls: [&#x27;./ui-button-progress-spinner.component.scss&#x27;],
+    selector: &#x27;ui-content-spinner&#x27;,
+    templateUrl: &#x27;./ui-content-spinner.component.html&#x27;,
+    styleUrls: [&#x27;./ui-content-spinner.component.scss&#x27;],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class UiButtonProgressSpinnerComponent implements OnDestroy {
-    public isRound$ &#x3D; new BehaviorSubject(false);
-    public loading$ &#x3D; new BehaviorSubject(false);
+export class UiContentSpinnerComponent implements OnDestroy {
+    @HostBinding(&#x27;style.min-height.px&#x27;)
+    public get minHeight() {
+        return this.diameter$.value * 2.5;
+    }
 
     public mode$ &#x3D; new BehaviorSubject&lt;MatProgressSpinner[&#x27;mode&#x27;]&gt;(&#x27;indeterminate&#x27;);
     public value$ &#x3D; new BehaviorSubject&lt;MatProgressSpinner[&#x27;value&#x27;]&gt;(0);
     public color$ &#x3D; new BehaviorSubject&lt;MatProgressSpinner[&#x27;color&#x27;]&gt;(&#x27;primary&#x27;);
+    public diameter$ &#x3D; new BehaviorSubject&lt;MatProgressSpinner[&#x27;diameter&#x27;]&gt;(100);
+    public style$ &#x3D; this.diameter$
+        .pipe(
+            map(diameter &#x3D;&gt; {
+                const displace &#x3D; &#x60;calc(50% - ${diameter / 2}px)&#x60;;
+                return {
+                    top: displace,
+                    left: displace,
+                };
+            }),
+        );
 
     ngOnDestroy() {
-        this.isRound$.complete();
-        this.loading$.complete();
+        this.diameter$.complete();
         this.mode$.complete();
         this.value$.complete();
         this.color$.complete();
@@ -417,61 +477,27 @@ export class UiButtonProgressSpinnerComponent implements OnDestroy {
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;mat-progress-spinner *ngIf&#x3D;&quot;loading$ | async&quot;
-                      [mode]&#x3D;&quot;mode$ | async&quot;
+        <pre class="line-numbers"><code class="language-html">&lt;mat-progress-spinner [mode]&#x3D;&quot;mode$ | async&quot;
                       [color]&#x3D;&quot;color$ | async&quot;
                       [value]&#x3D;&quot;value$ | async&quot;
-                      [diameter]&#x3D;&quot;22&quot;
-                      [strokeWidth]&#x3D;&quot;2&quot;
-                      [class.ui-mat-progress-spinner-fab]&#x3D;&quot;isRound$ | async&quot;&gt;
+                      [diameter]&#x3D;&quot;diameter$ | async&quot;
+                      [ngStyle]&#x3D;&quot;style$ | async&quot;&gt;
 &lt;/mat-progress-spinner&gt;
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
                 <p class="comment">
-                    <code>./ui-button-progress-spinner.component.scss</code>
+                    <code>./ui-content-spinner.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">$spinner-diameter: 22px;
+                <pre class="line-numbers"><code class="language-scss">ui-content-spinner {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
 
-@import &quot;~@angular/material/theming&quot;;
-
-/* https://github.com/angular/material2/blob/master/src/lib/button/_button-base.scss */
-$ui-button-progress-default-transition: 200ms $swift-ease-in-out-timing-function;
-$ui-button-progress-opacity-transition: opacity $ui-button-progress-default-transition;
-
-ui-button-progress-spinner {
   .mat-progress-spinner {
     position: absolute;
-    top: 0;
-    left: 0;
-
-    &amp;.ui-mat-progress-spinner-fab[style] {
-      width: 100% !important;
-      height: 100% !important;
-
-      svg[style] {
-        width: 100% !important;
-        height: 100% !important;
-      }
-    }
-
-    &amp;:not(.ui-mat-progress-spinner-fab) {
-      top: calc(50% - #{$spinner-diameter / 2});
-      left: calc(50% - #{$spinner-diameter / 2});
-    }
-  }
-}
-
-.ui-spinner-button {
-  .mat-button-wrapper {
-    transition: $ui-button-progress-opacity-transition;
-  }
-}
-
-.ui-spinner-button-loading {
-  .mat-button-wrapper {
-    opacity: 0;
   }
 }
 </code></pre>
@@ -502,7 +528,7 @@ ui-button-progress-spinner {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><mat-progress-spinner *ngIf="loading$ | async"                      [mode]="mode$ | async"                      [color]="color$ | async"                      [value]="value$ | async"                      [diameter]="22"                      [strokeWidth]="2"                      [class.ui-mat-progress-spinner-fab]="isRound$ | async"></mat-progress-spinner></div>'
+        var COMPONENT_TEMPLATE = '<div><mat-progress-spinner [mode]="mode$ | async"                      [color]="color$ | async"                      [value]="value$ | async"                      [diameter]="diameter$ | async"                      [ngStyle]="style$ | async"></mat-progress-spinner></div>'
     var COMPONENTS = [{'name': 'UiButtonProgressBarComponent', 'selector': 'ui-button-progress-bar'},{'name': 'UiButtonProgressSpinnerComponent', 'selector': 'ui-button-progress-spinner'},{'name': 'UiContentSpinnerComponent', 'selector': 'ui-content-spinner'},{'name': 'UiGridComponent', 'selector': 'ui-grid'},{'name': 'UiGridSearchComponent', 'selector': 'ui-grid-search'},{'name': 'UiSnackBarComponent', 'selector': ''}];
     var DIRECTIVES = [{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiContentLoaderDirective', 'selector': '[uiContentLoading]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiProgressButtonDirective', 'selector': '
         button[mat-button][ui-progress-button],
@@ -529,7 +555,7 @@ ui-button-progress-spinner {
         button[mat-mini-fab][uiSpinnerButton],
         button[mat-button][ui-spinner-button],
     '},{'name': 'UiVirtualScrollRangeLoaderDirective', 'selector': '[uiVirtualScrollRangeLoader], ui-virtual-scroll-range-loader'},{'name': 'UiVirtualScrollViewportResizeDirective', 'selector': '[uiVirtualScrollViewportResize], ui-virtual-scroll-viewport-resize'}];
-    var ACTUAL_COMPONENT = {'name': 'UiButtonProgressSpinnerComponent'};
+    var ACTUAL_COMPONENT = {'name': 'UiContentSpinnerComponent'};
 </script>
 <script src="../js/tree.js"></script>
 
@@ -564,7 +590,7 @@ ui-button-progress-spinner {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
-            var COMPODOC_CURRENT_PAGE_URL = 'UiButtonProgressSpinnerComponent.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'UiContentSpinnerComponent.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
