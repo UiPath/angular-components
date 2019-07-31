@@ -1,31 +1,42 @@
 $spinner-diameter: 22px;
 
+@import "~@angular/material/theming";
+
+/* https://github.com/angular/material2/blob/master/src/lib/button/_button-base.scss */
+$ui-button-progress-default-transition: 200ms $swift-ease-in-out-timing-function;
+$ui-button-progress-opacity-transition: opacity $ui-button-progress-default-transition;
+
 ui-button-progress-spinner {
+  .mat-progress-spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
 
-    .mat-progress-spinner {
-        position: absolute;
-        top: 0;
-        left: 0;
+    &.ui-mat-progress-spinner-fab[style] {
+      width: 100% !important;
+      height: 100% !important;
 
-        &.ui-mat-progress-spinner-fab[style] {
-            width: 100%!important;
-            height: 100%!important;
-
-            svg[style] {
-                width: 100%!important;
-                height: 100%!important;
-            }
-        }
-
-        &:not(.ui-mat-progress-spinner-fab) {
-            top: calc(50% - #{$spinner-diameter / 2});
-            left: calc(50% - #{$spinner-diameter / 2});
-        }
+      svg[style] {
+        width: 100% !important;
+        height: 100% !important;
+      }
     }
+
+    &:not(.ui-mat-progress-spinner-fab) {
+      top: calc(50% - #{$spinner-diameter / 2});
+      left: calc(50% - #{$spinner-diameter / 2});
+    }
+  }
+}
+
+.ui-spinner-button {
+  .mat-button-wrapper {
+    transition: $ui-button-progress-opacity-transition;
+  }
 }
 
 .ui-spinner-button-loading {
-    .mat-button-wrapper {
-        opacity: 0.4;
-    }
+  .mat-button-wrapper {
+    opacity: 0;
+  }
 }
