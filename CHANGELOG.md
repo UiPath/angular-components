@@ -1,3 +1,6 @@
+# v0.10.6 (2019-08-01)
+* **ui-suggest** set static spinner strokeWidth
+
 # v0.10.5 (2019-07-31)
 * `*uiContentLoading` is a new structural directive that  will will render a progress spinner while the input value is `true` else it will render the content within the container (similar to `*ngIf`)
 * **ui-progress-button** fix stroke width
