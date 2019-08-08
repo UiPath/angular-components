@@ -22,6 +22,7 @@ module.exports = {
                 'content-loader',
                 'testing',
                 'password-toggle',
+                'password-indicator',
             ];
 
             return [2, 'always', scopeList];
