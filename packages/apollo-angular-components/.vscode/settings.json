@@ -1,5 +1,4 @@
 {
-    "files.autoSave": "onFocusChange",
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
     "breadcrumbs.enabled": true,
@@ -9,7 +8,6 @@
     "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 1,
     "importSorter.importStringConfiguration.trailingComma": "multiLine",
     "importSorter.generalConfiguration.sortOnBeforeSave": true,
-    "importSorter.importStringConfiguration.tabSize": 2,
     "importSorter.sortConfiguration.customOrderingRules.rules": [
         {
             "type": "importMember",
