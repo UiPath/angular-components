@@ -437,8 +437,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="192"
-                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:192</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="195"
+                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:195</a></div>
                 </td>
             </tr>
 
@@ -479,8 +479,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="203"
-                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:203</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="206"
+                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:206</a></div>
                 </td>
             </tr>
 
@@ -521,8 +521,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="180"
-                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:180</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="183"
+                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:183</a></div>
                 </td>
             </tr>
 
@@ -797,7 +797,10 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
   @HostListener(&#x27;dragover&#x27;, [&#x27;$event&#x27;])
   protected _onDragOver(ev: DragEvent) {
       this._preventAll(ev);
-      if (this.disabled) { return; }
+    if (
+      this.disabled ||
+      ev.dataTransfer &amp;&amp; ev.dataTransfer.items.length &gt; 1 &amp;&amp; !this.multiple
+    ) { return; }
       this._isDragging &#x3D; true;
   }
 
@@ -847,7 +850,10 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
       file.name.endsWith(this.fileType),
       );
 
-      if (!emittedFiles.length) { return; }
+    if (
+      !emittedFiles.length ||
+      emittedFiles.length &gt; 1 &amp;&amp; !this.multiple
+    ) { return; }
 
       this.fileChange.emit(emittedFiles);
   }
