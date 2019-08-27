@@ -437,8 +437,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="195"
-                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:195</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="198"
+                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:198</a></div>
                 </td>
             </tr>
 
@@ -479,8 +479,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="206"
-                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:206</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="209"
+                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:209</a></div>
                 </td>
             </tr>
 
@@ -521,8 +521,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="183"
-                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:183</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="186"
+                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:186</a></div>
                 </td>
             </tr>
 
@@ -629,16 +629,16 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    HostListener,
-    Input,
-    OnDestroy,
-    Output,
-    Renderer2,
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  OnDestroy,
+  Output,
+  Renderer2,
 } from &#x27;@angular/core&#x27;;
 import { isInternetExplorer } from &#x27;@uipath/angular/utilities&#x27;;
 
@@ -799,7 +799,10 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
       this._preventAll(ev);
     if (
       this.disabled ||
-      ev.dataTransfer &amp;&amp; ev.dataTransfer.items.length &gt; 1 &amp;&amp; !this.multiple
+      !this.multiple &amp;&amp;
+      ev.dataTransfer &amp;&amp;
+      ev.dataTransfer.items &amp;&amp;
+      ev.dataTransfer.items.length &gt; 1
     ) { return; }
       this._isDragging &#x3D; true;
   }
