@@ -167,7 +167,10 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
   @HostListener('dragover', ['$event'])
   protected _onDragOver(ev: DragEvent) {
       this._preventAll(ev);
-      if (this.disabled) { return; }
+    if (
+      this.disabled ||
+      ev.dataTransfer && ev.dataTransfer.items.length > 1 && !this.multiple
+    ) { return; }
       this._isDragging = true;
   }
 
@@ -217,7 +220,10 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
       file.name.endsWith(this.fileType),
       );
 
-      if (!emittedFiles.length) { return; }
+    if (
+      !emittedFiles.length ||
+      emittedFiles.length > 1 && !this.multiple
+    ) { return; }
 
       this.fileChange.emit(emittedFiles);
   }
