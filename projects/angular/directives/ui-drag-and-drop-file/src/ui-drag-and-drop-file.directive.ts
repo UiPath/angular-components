@@ -1,14 +1,14 @@
 import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    HostListener,
-    Input,
-    OnDestroy,
-    Output,
-    Renderer2,
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  OnDestroy,
+  Output,
+  Renderer2,
 } from '@angular/core';
 import { isInternetExplorer } from '@uipath/angular/utilities';
 
@@ -169,7 +169,10 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
       this._preventAll(ev);
     if (
       this.disabled ||
-      ev.dataTransfer && ev.dataTransfer.items.length > 1 && !this.multiple
+      !this.multiple &&
+      ev.dataTransfer &&
+      ev.dataTransfer.items &&
+      ev.dataTransfer.items.length > 1
     ) { return; }
       this._isDragging = true;
   }
