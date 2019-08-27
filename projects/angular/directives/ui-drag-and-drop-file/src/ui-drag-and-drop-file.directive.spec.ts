@@ -18,6 +18,7 @@ import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
         [fileType]="fileType"
         [fileClearRef]="clearRef"
         [disabled]="disabled"
+        [multiple]="multiple"
         (fileClear)="onFileClear()"
         (fileChange)="onFileChange($event)">
         Test
@@ -30,6 +31,7 @@ class TestDragAndDropFileComponent {
     public fileType = '.txt';
     public files?: File[];
     public disabled = false;
+    public multiple = false;
 
     onFileChange(files: FileList) {
         this.files = Array.from(files);
@@ -159,6 +161,9 @@ describe('Directive: UiDragAndDropFileDirective', () => {
             });
 
             it('should filter different file types', () => {
+                component.multiple = true;
+                fixture.detectChanges();
+
                 dropEvent.dataTransfer.files.add(
                     fakeFile(component.fileType),
                     fakeFile(component.fileType),
@@ -172,6 +177,17 @@ describe('Directive: UiDragAndDropFileDirective', () => {
 
                 expect(component.files).toBeDefined();
                 expect(component.files!.length).toBe(3);
+            });
+
+            it('should NOT allow multiple files when multiple=false', () => {
+                dropEvent.dataTransfer.files.add(
+                    fakeFile('.jpg'),
+                    fakeFile('.png'),
+                );
+
+                container.dispatchEvent(dropEvent);
+
+                expect(component.files).toBeUndefined();
             });
         });
 
@@ -209,6 +225,9 @@ describe('Directive: UiDragAndDropFileDirective', () => {
             });
 
             it('should filter different file types', () => {
+                component.multiple = true;
+                fixture.detectChanges();
+
                 targetElement.files.add(
                     fakeFile(component.fileType),
                     fakeFile(component.fileType),
