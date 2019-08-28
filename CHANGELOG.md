@@ -1,3 +1,7 @@
+# v0.10.7 (2019-08-28)
+* **grid** react to ngIf-ed columns
+* **drag-and-drop-file** respect multiple=false flag
+
 # v0.10.6 (2019-08-01)
 * **ui-suggest** set static spinner strokeWidth
 
@@ -7,7 +11,7 @@
 * **ui-progress-button** add fade animation to the button text
 
 # v0.10.4 (2019-07-29)
-* [progress-button] implement button augmentor directive, that enables loading state configuraiton via a progress bar
+* [progress-button] implement button augmentor directive, that enables loading state configuration via a progress bar
 * [spinner-button] implement button augmentor directive, that enables loading state configuraiton via a spinner
 
 # v0.10.3 (2019-07-17)
