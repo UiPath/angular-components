@@ -58,9 +58,14 @@ describe('Component: UiGrid', () => {
                                 width="25%">
                 </ui-grid-column>
 
-                <ui-grid-column [property]="'myObj.myObjString'"
+                <ui-grid-column *ngIf="isColumnVisible"
+                                [property]="'myObj.myObjString'"
                                 title="Nested String Header"
                                 width="25%">
+                        <ui-grid-dropdown-filter [items]="someFilter"
+                                                 [showAllOption]="true"
+                                                 method="ge">
+                        </ui-grid-dropdown-filter>
                 </ui-grid-column>
 
                 <ui-grid-column [property]="'myObj.myObjDate'"
@@ -77,6 +82,8 @@ describe('Component: UiGrid', () => {
         public grid!: UiGridComponent<ITestEntity>;
 
         public data: ITestEntity[] = [];
+        public someFilter = [];
+        public isColumnVisible = true;
         public selectable?: boolean;
         public refreshable?: boolean;
     }
@@ -148,6 +155,22 @@ describe('Component: UiGrid', () => {
                     const headerCells = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell.ui-grid-feature-cell'));
 
                     expect(headerCells.length).toEqual(0);
+                });
+
+               it('should hide the ngIf-ed column and its filter', () => {
+                    let headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
+                    const getDropdownFilter = () => fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
+
+                    expect(headers).toBeDefined();
+                    expect(headers.length).toEqual(4);
+                    expect(getDropdownFilter()).toBeTruthy();
+
+                    fixture.componentInstance.isColumnVisible = false;
+                    fixture.detectChanges();
+
+                    headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
+                    expect(headers.length).toEqual(3);
+                    expect(getDropdownFilter()).toBeFalsy();
                 });
             });
 
@@ -1063,32 +1086,9 @@ describe('Component: UiGrid', () => {
             SORT_TRANSITIONS.forEach(sortTransition => {
                 it(`should emit sort event when clicked ('${
                     sortTransition.from}' to '${sortTransition.to}')`, (done) => {
-                    const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
-                    const headerTitle = sortableHeader.query(By.css('.ui-grid-header-title'));
-
-                    const [column] = grid.columns.toArray();
-
-                    column.sort = '';
-                    fixture.detectChanges();
-
-                    grid.sortChange
-                        .pipe(
-                            take(1),
-                            finalize(done),
-                        ).subscribe(sort => {
-                            expect(sort.direction).toBe('asc');
-                            expect(sort.direction).toBe(column.sort);
-                            expect(sort.field).toBe(column.property!);
-                        });
-
-                    headerTitle.nativeElement.dispatchEvent(EventGenerator.click);
-                    fixture.detectChanges();
-                });
-
-                SORT_KEY_EVENTS.forEach(ev => {
-                    it(`should emit sort event when key '${ev.key}' is pressed ('${
-                        sortTransition.from}' to '${sortTransition.to}')`, (done) => {
                         const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
+                        const headerTitle = sortableHeader.query(By.css('.ui-grid-header-title'));
+
                         const [column] = grid.columns.toArray();
 
                         column.sort = '';
@@ -1104,9 +1104,32 @@ describe('Component: UiGrid', () => {
                                 expect(sort.field).toBe(column.property!);
                             });
 
-                        sortableHeader.nativeElement.dispatchEvent(ev);
+                        headerTitle.nativeElement.dispatchEvent(EventGenerator.click);
                         fixture.detectChanges();
                     });
+
+                SORT_KEY_EVENTS.forEach(ev => {
+                    it(`should emit sort event when key '${ev.key}' is pressed ('${
+                        sortTransition.from}' to '${sortTransition.to}')`, (done) => {
+                            const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
+                            const [column] = grid.columns.toArray();
+
+                            column.sort = '';
+                            fixture.detectChanges();
+
+                            grid.sortChange
+                                .pipe(
+                                    take(1),
+                                    finalize(done),
+                                ).subscribe(sort => {
+                                    expect(sort.direction).toBe('asc');
+                                    expect(sort.direction).toBe(column.sort);
+                                    expect(sort.field).toBe(column.property!);
+                                });
+
+                            sortableHeader.nativeElement.dispatchEvent(ev);
+                            fixture.detectChanges();
+                        });
                 });
             });
         });
