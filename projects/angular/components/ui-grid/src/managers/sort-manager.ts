@@ -39,7 +39,12 @@ export class SortManager<T> {
 
         const sortedColumn = columns.find(column => column.sort !== '');
 
-        if (!sortedColumn) { return; }
+        if (!sortedColumn) {
+            if (!isEqual(this.sort$.getValue(), {})) {
+                this.sort$.next({} as ISortModel<T>);
+            }
+            return;
+        }
 
         this._emitSort(sortedColumn);
     }
@@ -51,7 +56,7 @@ export class SortManager<T> {
             .filter(c => c.sortable && c.property !== column.property)
             .forEach(c => c.sort = '');
 
-        column.sort = SORT_CYCLE_MAP[column.sort] as SortDirection;
+        column.sort = SORT_CYCLE_MAP[column.sort];
 
         this._emitSort(column);
     }
