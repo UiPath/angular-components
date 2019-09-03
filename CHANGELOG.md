@@ -1,3 +1,6 @@
+# v0.10.8 (2019-09-03)
+* **ui-suggest** add support for custom item template and size
+
 # v0.10.7 (2019-08-28)
 * **grid** react to ngIf-ed columns
 * **drag-and-drop-file** respect multiple=false flag
