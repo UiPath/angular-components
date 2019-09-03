@@ -62,6 +62,7 @@ class UiSuggestFixture {
 
     public clearable?: boolean;
     public searchable?: boolean;
+    public alwaysExpanded?: boolean;
     public disabled?: boolean;
     public multiple?: boolean;
     public readonly?: boolean;
@@ -133,7 +134,7 @@ const sharedSpecifications = (
             expect(displayValue.nativeElement.innerText.trim()).toEqual(component.defaultValue);
         });
 
-        it('should remove NULL or Undefiend entries', () => {
+        it('should remove NULL or Undefined entries', () => {
             const item = generateSuggestionItem();
             component.value = [undefined, null, null, undefined, item, null, undefined] as ISuggestValue[];
 
@@ -237,6 +238,32 @@ const sharedSpecifications = (
             expect(itemListEntries).not.toBeNull();
             expect(itemListEntries.length).toEqual(0);
         });
+
+        it('should render the list open and not close on selection if alwaysExpanded is true', (async () => {
+            const items = generateSuggetionItemList(10);
+
+            component.alwaysExpanded = true;
+            component.items = items;
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+
+            expect(itemListEntries).not.toBeNull();
+            expect(itemListEntries.length).toEqual(items.length);
+
+            const itemIndex = Math.floor(Math.random() * items.length);
+            const currentListItem = fixture.debugElement.queryAll(
+                By.css('.mat-list-item'),
+            )[itemIndex];
+
+            currentListItem.nativeElement.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+
+            expect(itemListEntries).not.toBeNull();
+            expect(itemListEntries.length).toEqual(items.length);
+        }));
 
         it('should filter items if typed into', (done) => {
             let items = generateSuggetionItemList(40);
@@ -1037,9 +1064,9 @@ const sharedSpecifications = (
                 const word = faker.random.word();
                 const wordWithWhitespace = `${
                     Array(6).fill(' ').join('')
-                }${word}${
+                    }${word}${
                     Array(6).fill(' ').join('')
-                }`;
+                    }`;
 
                 searchFor(wordWithWhitespace, fixture);
                 await fixture.whenStable();
@@ -1597,6 +1624,7 @@ describe('Component: UiSuggest', () => {
                         [clearable]="clearable"
                         [searchable]="searchable"
                         [enableCustomValue]="enableCustomValue"
+                        [alwaysExpanded]="alwaysExpanded"
                         [items]="items"
                         [value]="value"
                         [direction]="direction"
@@ -1673,6 +1701,7 @@ describe('Component: UiSuggest', () => {
                             [clearable]="clearable"
                             [searchable]="searchable"
                             [enableCustomValue]="enableCustomValue"
+                            [alwaysExpanded]="alwaysExpanded"
                             [items]="items"
                             [value]="value"
                             [direction]="direction"
@@ -1835,6 +1864,85 @@ describe('Component: UiSuggest', () => {
                 const suggest = fixture.debugElement.query(By.css('ui-suggest')).nativeElement as HTMLElement;
                 expect(suggest.getAttribute('aria-required')).toEqual('false');
             });
+        });
+    });
+
+
+    @Component({
+        template: `
+                <ui-suggest [placeholder]="placeholder"
+                            [defaultValue]="defaultValue"
+                            [clearable]="clearable"
+                            [searchable]="searchable"
+                            [enableCustomValue]="enableCustomValue"
+                            [alwaysExpanded]="alwaysExpanded"
+                            [items]="items"
+                            [value]="value"
+                            [direction]="direction"
+                            [displayPriority]="displayPriority"
+                            [disabled]="disabled"
+                            [multiple]="multiple"
+                            [readonly]="readonly">
+                            <ng-template let-item >
+                                <div class="item-template">{{ item.text }}</div>
+                            </ng-template>
+            </ui-suggest>
+        `,
+    })
+    class UiSuggestCustomTemplateFixtureComponent extends UiSuggestFixture { }
+
+    describe('Type: custom template', () => {
+        let fixture: ComponentFixture<UiSuggestCustomTemplateFixtureComponent>;
+        let component: UiSuggestCustomTemplateFixtureComponent;
+
+        const beforeEachFn = () => {
+            TestBed.configureTestingModule({
+                imports: [
+                    UiSuggestModule,
+                    ReactiveFormsModule,
+                    MatInputModule,
+                    NoopAnimationsModule,
+                ],
+                declarations: [
+                    UiSuggestCustomTemplateFixtureComponent,
+                ],
+            });
+
+            const compFixture = TestBed.createComponent(UiSuggestCustomTemplateFixtureComponent);
+
+            return {
+                fixture: compFixture,
+                component: compFixture.componentInstance,
+                uiSuggest: compFixture.componentInstance.uiSuggest,
+            };
+        };
+
+        describe('Behavior: Specific', () => {
+            beforeEach(() => {
+                const setup = beforeEachFn();
+                fixture = setup.fixture;
+                component = setup.component;
+            });
+
+            it('should render the list items using the provided custom template', (async () => {
+                const items = generateSuggetionItemList(5);
+                component.items = items;
+
+                fixture.detectChanges();
+                const display = fixture.debugElement.query(By.css('.display'));
+                display.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const generatedItems = fixture.debugElement.queryAll(By.css('ui-suggest .item-template'));
+
+                expect(items.length).toBe(generatedItems.length);
+
+                items.forEach((item, index) => {
+                    expect(item.text).toBe(generatedItems[index].nativeElement.innerText);
+                });
+            }));
         });
     });
 });
