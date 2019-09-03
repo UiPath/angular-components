@@ -102,10 +102,19 @@ export abstract class UiSuggestMatFormField implements
     }
 
     /**
+     * Set a custom size for the list items.
+     *
+     */
+    @Input()
+    public customItemSize?: number;
+
+    /**
      * Computes the component item height depending on the current render mode.
      *
      */
     public get itemSize() {
+        if (this.customItemSize) { return this.customItemSize; }
+
         return this.isFormControl ? 32 : 40;
     }
 
