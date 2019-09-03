@@ -129,33 +129,43 @@
                                [class.is-loading]="item.loading !== VirtualScrollItemStatus.loaded"
                                [class.readonly]="item.loading !== VirtualScrollItemStatus.loaded"
                                [class.selected]="!multiple &&
-                                                 isItemSelected(item)"
+                                          isItemSelected(item)"
+                               [style.height.px]="itemSize"
                                (click)="preventDefault($event);
-                                        updateValue(item, !multiple, true);"
+                                    updateValue(item, !multiple, true);"
                                matRipple>
-                    <div [matTooltip]="disableTooltip ? null : item.text"
-                         matTooltipPosition="right"
-                         class="ui-suggest-item">
-                        <mat-checkbox *ngIf="multiple"
-                                      [checked]="isItemSelected(item)"
-                                      [indeterminate]="false">
-                        </mat-checkbox>
-                        <div [attr.aria-label]="item.text"
-                             class="text-label text-ellipsis"
-                             tabindex="-1">
-                            <mat-icon *ngIf="!!item?.icon?.svgIcon"
-                                      [svgIcon]="item?.icon.svgIcon"></mat-icon>
-                            <mat-icon *ngIf="!!item?.icon?.matIcon">{{item?.icon.matIcon}}</mat-icon>
-                            {{ item?.icon?.iconOnly ? null : item.text }}
+                    <ng-container *ngIf="itemTemplate; else defaultItem">
+                        <ng-container *ngTemplateOutlet="itemTemplate; context: {
+                                                    $implicit: item
+                                                }">
+                        </ng-container>
+                    </ng-container>
+                    <ng-template #defaultItem>
+                        <div [matTooltip]="disableTooltip ? null : item.text"
+                             matTooltipPosition="right"
+                             class="ui-suggest-item">
+                            <mat-checkbox *ngIf="multiple"
+                                          [checked]="isItemSelected(item)"
+                                          [indeterminate]="false">
+                            </mat-checkbox>
+                            <div [attr.aria-label]="item.text"
+                                 class="text-label text-ellipsis"
+                                 tabindex="-1">
+                                <mat-icon *ngIf="!!item?.icon?.svgIcon"
+                                          [svgIcon]="item?.icon.svgIcon"></mat-icon>
+                                <mat-icon *ngIf="!!item?.icon?.matIcon">{{item?.icon.matIcon}}</mat-icon>
+                                {{ item?.icon?.iconOnly ? null : item.text }}
+                            </div>
                         </div>
-                    </div>
+                    </ng-template>
                 </mat-list-item>
             </ng-container>
 
             <ng-container *ngTemplateOutlet="customValueTemplate; context: { $implicit: 'up' }">
             </ng-container>
 
-            <mat-list-item *ngIf="loading$ | async">
+            <mat-list-item *ngIf="loading$ | async"
+                           [style.height.px]="itemSize">
                 <mat-progress-spinner color="primary"
                                       mode="indeterminate"
                                       diameter="20"
@@ -180,6 +190,7 @@
     <mat-list-item *ngIf="isCustomValueVisible && direction === renderDirection"
                    [class.active]="(renderDirection === 'down' ? -1 : items.length) === activeIndex"
                    [matTooltip]="customValueLabelTranslator(inputControl.value)"
+                   [style.height.px]="itemSize"
                    (click)="preventDefault($event); updateValue(inputControl.value, !multiple, true);"
                    matTooltipPosition="right"
                    class="text-ellipsis custom-item">

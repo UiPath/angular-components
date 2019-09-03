@@ -6,6 +6,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ContentChild,
   ElementRef,
   EventEmitter,
   HostBinding,
@@ -16,6 +17,7 @@ import {
   Optional,
   Output,
   Self,
+  TemplateRef,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
@@ -144,6 +146,15 @@ export class UiSuggestComponent extends UiSuggestMatFormField
         this._cd.detectChanges();
     }
 
+
+    /**
+     * If true, the item list will render open and will not close on selection
+     *
+     * @ignore
+     */
+    @Input()
+    public alwaysExpanded = false;
+
     /**
      * Configure if the component allows multi-selection.
      *
@@ -222,6 +233,13 @@ export class UiSuggestComponent extends UiSuggestMatFormField
         }
         this.searchSourceFactory = (searchTerm = '') => inMemorySearch(searchTerm, this._lastSetItems);
     }
+
+    /**
+     * Reference for custom item template
+     *
+     */
+    @ContentChild(TemplateRef, { static: true })
+    public itemTemplate: TemplateRef<any> | null = null;
 
     /**
      * Computes the current tooltip value.
@@ -508,6 +526,10 @@ export class UiSuggestComponent extends UiSuggestMatFormField
      * @ignore
      */
     ngOnInit() {
+        if (this.alwaysExpanded) {
+            this.open();
+        }
+
         merge(
             this._reset$.pipe(
                 map(_ => ''),
@@ -656,7 +678,7 @@ export class UiSuggestComponent extends UiSuggestMatFormField
      * @param [refocus=true] If the dropdown should be focused after closing.
      */
     public close(refocus = true) {
-        if (!this.isOpen) { return; }
+        if (this.alwaysExpanded || !this.isOpen) { return; }
 
         if (this._isOnCustomValueIndex && !this.loading$.value) {
             if (!this.multiple) {
