@@ -8,7 +8,13 @@ import {
     Key,
 } from '@uipath/angular/testing';
 
+import { HttpTestingController } from '@angular/common/http/testing';
 import { SUGGEST_DEBOUNCE } from './constants';
+
+export interface IStubEndpoint {
+    url: string;
+    response: any;
+}
 
 export class IntegrationUtils<T> {
     public get component() {
@@ -39,6 +45,12 @@ export class IntegrationUtils<T> {
     public enter = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getNativeElement(selector, debugEl)
             .dispatchEvent(EventGenerator.keyDown(Key.Enter))
+
+    public expectAndFlush = (stub: IStubEndpoint, httpClient: HttpTestingController) => {
+        httpClient
+            .expectOne(request => request.url.includes(stub.url))
+            .flush(stub.response);
+    }
 
     public setInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
         const input = this.getNativeElement(selector, debugEl);
