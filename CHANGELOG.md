@@ -1,3 +1,6 @@
+# v0.10.9 (2019-10-03)
+* **date-format** add resolver support for timezone
+
 # v0.10.8 (2019-09-03)
 * **ui-suggest** add support for custom item template and size
 
