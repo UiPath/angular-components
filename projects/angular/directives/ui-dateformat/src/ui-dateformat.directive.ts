@@ -35,6 +35,11 @@ const moment = _moment;
 export type DisplayType = 'absolute' | 'relative';
 
 /**
+ * Timezone resolver type.
+ */
+export type TimezoneResolver = () => string;
+
+/**
  * The date format options schema.
  */
 export interface IDateFormatOptions {
@@ -47,7 +52,7 @@ export interface IDateFormatOptions {
      * The timezone in which the date should be displayed.
      *
      */
-    timezone: string;
+    timezone: string | TimezoneResolver;
 }
 
 /**
@@ -60,6 +65,19 @@ export const UI_DATEFORMAT_OPTIONS = new InjectionToken<IDateFormatOptions>('UiD
  * @ignore
  */
 const RELATIVE_TIME_UPDATE_INTERVAL = 10000;
+
+export const resolveTimezone = (options: IDateFormatOptions) => {
+    const type = typeof options.timezone;
+
+    switch (type) {
+        case 'string':
+            return (options.timezone as string);
+        case 'function':
+            return (options.timezone as TimezoneResolver)();
+        default:
+            return '';
+    }
+};
 
 /**
  * A directive that formats a given `Date` input in a `relative` or `absolute` format.
@@ -99,7 +117,7 @@ export class UiDateFormatDirective extends UiFormat {
      *
      */
     @Input()
-    public timezone: string;
+    public timezone?: string;
     /**
      * The input `Date` that needs to be formatted.
      *
@@ -128,7 +146,7 @@ export class UiDateFormatDirective extends UiFormat {
         if (!(this.date instanceof Date)) { return this.date; }
 
         return moment(this.date)
-            .tz(this.timezone)
+            .tz(this.timezone || resolveTimezone(this._options))
             .format(this.dateFormat);
     }
 
@@ -143,19 +161,18 @@ export class UiDateFormatDirective extends UiFormat {
     constructor(
         @Inject(UI_DATEFORMAT_OPTIONS)
         @Optional()
-            options: IDateFormatOptions,
-            renderer: Renderer2,
-            elementRef: ElementRef,
+        private _options: IDateFormatOptions,
+        renderer: Renderer2,
+        elementRef: ElementRef,
     ) {
         super(
             renderer,
             elementRef,
         );
 
-        options = options || {};
+        _options = _options || {};
 
-        this.timezone = options.timezone;
-        const redraw$ = options.redraw$ || of(null);
+        const redraw$ = _options.redraw$ || of(null);
 
         merge(
             redraw$,
