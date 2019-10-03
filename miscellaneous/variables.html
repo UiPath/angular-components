@@ -79,6 +79,9 @@
                             <a href="#PIPES" title="projects/angular/pipes/src/pipe.module.ts"><b>PIPES</b>&nbsp;&nbsp;&nbsp;(projects/.../pipe.module.ts)</a>
                         </li>
                         <li>
+                            <a href="#resolveTimezone" title="projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts"><b>resolveTimezone</b>&nbsp;&nbsp;&nbsp;(projects/.../ui-dateformat.directive.ts)</a>
+                        </li>
+                        <li>
                             <a href="#UI_DATEFORMAT_OPTIONS" title="projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts"><b>UI_DATEFORMAT_OPTIONS</b>&nbsp;&nbsp;&nbsp;(projects/.../ui-dateformat.directive.ts)</a>
                         </li>
                         <li>
@@ -363,6 +366,38 @@
     <h3>projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts</h3>
     <section>
     <h3></h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="resolveTimezone"></a>
+                        <span class="name">
+                            <b>
+                            resolveTimezone</b>
+                            <a href="#resolveTimezone"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>(options: IDateFormatOptions) &#x3D;&gt; {
+    const type &#x3D; typeof options.timezone;
+
+    switch (type) {
+        case &#x27;string&#x27;:
+            return (options.timezone as string);
+        case &#x27;function&#x27;:
+            return (options.timezone as TimezoneResolver)();
+        default:
+            return &#x27;&#x27;;
+    }
+}</code>
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">

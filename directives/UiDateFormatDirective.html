@@ -161,7 +161,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:86</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="104" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:104</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -188,7 +188,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="108" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:108</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:126</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -214,7 +214,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:114</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="132" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:132</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -241,7 +241,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:102</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:120</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -273,7 +273,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="96" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:96</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:114</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -335,6 +335,11 @@ const moment &#x3D; _moment;
 export type DisplayType &#x3D; &#x27;absolute&#x27; | &#x27;relative&#x27;;
 
 /**
+ * Timezone resolver type.
+ */
+export type TimezoneResolver &#x3D; () &#x3D;&gt; string;
+
+/**
  * The date format options schema.
  */
 export interface IDateFormatOptions {
@@ -347,7 +352,7 @@ export interface IDateFormatOptions {
      * The timezone in which the date should be displayed.
      *
      */
-    timezone: string;
+    timezone: string | TimezoneResolver;
 }
 
 /**
@@ -360,6 +365,19 @@ export const UI_DATEFORMAT_OPTIONS &#x3D; new InjectionToken&lt;IDateFormatOptio
  * @ignore
  */
 const RELATIVE_TIME_UPDATE_INTERVAL &#x3D; 10000;
+
+export const resolveTimezone &#x3D; (options: IDateFormatOptions) &#x3D;&gt; {
+    const type &#x3D; typeof options.timezone;
+
+    switch (type) {
+        case &#x27;string&#x27;:
+            return (options.timezone as string);
+        case &#x27;function&#x27;:
+            return (options.timezone as TimezoneResolver)();
+        default:
+            return &#x27;&#x27;;
+    }
+};
 
 /**
  * A directive that formats a given &#x60;Date&#x60; input in a &#x60;relative&#x60; or &#x60;absolute&#x60; format.
@@ -399,7 +417,7 @@ export class UiDateFormatDirective extends UiFormat {
      *
      */
     @Input()
-    public timezone: string;
+    public timezone?: string;
     /**
      * The input &#x60;Date&#x60; that needs to be formatted.
      *
@@ -428,7 +446,7 @@ export class UiDateFormatDirective extends UiFormat {
         if (!(this.date instanceof Date)) { return this.date; }
 
         return moment(this.date)
-            .tz(this.timezone)
+            .tz(this.timezone || resolveTimezone(this._options))
             .format(this.dateFormat);
     }
 
@@ -443,19 +461,18 @@ export class UiDateFormatDirective extends UiFormat {
     constructor(
         @Inject(UI_DATEFORMAT_OPTIONS)
         @Optional()
-            options: IDateFormatOptions,
-            renderer: Renderer2,
-            elementRef: ElementRef,
+        private _options: IDateFormatOptions,
+        renderer: Renderer2,
+        elementRef: ElementRef,
     ) {
         super(
             renderer,
             elementRef,
         );
 
-        options &#x3D; options || {};
+        _options &#x3D; _options || {};
 
-        this.timezone &#x3D; options.timezone;
-        const redraw$ &#x3D; options.redraw$ || of(null);
+        const redraw$ &#x3D; _options.redraw$ || of(null);
 
         merge(
             redraw$,
