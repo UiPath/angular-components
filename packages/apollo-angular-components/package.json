@@ -3,7 +3,11 @@
   "version": "0.10.9",
   "author": {
     "name": "UiPath Inc",
-    "url": "https://github.com/UiPath/angular-components"
+    "url": "https://uipath.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UiPath/angular-components.git"
   },
   "license": "MIT",
   "keywords": [
@@ -40,7 +44,9 @@
     "docs": "compodoc",
     "commit": "git-cz",
     "check:exports": "ts-node --project ./tsconfig.node.json ./.build/check-public-exports",
-    "check:commits": "node ./.build/commitlint"
+    "check:commits": "node ./.build/commitlint",
+    "publish:npm": "json -I -f dist/angular/package.json -e 'delete this.publishConfig' && npm publish",
+    "publish:gh": "json -I -f dist/angular/package.json -e 'this.publishConfig = {registry:\"https://npm.pkg.github.com/\"}' && npm publish"
   },
   "config": {
     "commitizen": {
@@ -107,6 +113,7 @@
     "husky": "2.3.0",
     "jasmine-core": "3.4.0",
     "jasmine-spec-reporter": "4.2.1",
+    "json": "^9.0.6",
     "karma": "4.1.0",
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage-istanbul-reporter": "2.0.5",

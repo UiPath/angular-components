@@ -4,7 +4,11 @@
   "license": "MIT",
   "author": {
     "name": "UiPath Inc",
-    "url": "https://github.com/UiPath/angular-components"
+    "url": "https://uipath.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UiPath/angular-components.git"
   },
   "keywords": [
     "angular",
