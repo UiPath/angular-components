@@ -1,3 +1,4 @@
+import { HttpTestingController } from '@angular/common/http/testing';
 import {
     ComponentFixture,
     tick,
@@ -8,7 +9,6 @@ import {
     Key,
 } from '@uipath/angular/testing';
 
-import { HttpTestingController } from '@angular/common/http/testing';
 import { SUGGEST_DEBOUNCE } from './constants';
 
 export interface IStubEndpoint {
@@ -36,6 +36,14 @@ export class IntegrationUtils<T> {
     public getComponent = (selector: string, debugEl = this.fixture.debugElement) => {
         const debugElement = this.getDebugElement(selector, debugEl);
         return !!debugElement ? debugElement.componentInstance : null;
+    }
+
+    public getGridCellsText = (gridSelector: string, rowNumber: number, cellNumbers: number[], debugEl = this.fixture.debugElement) => {
+        const rowEl = this.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"]`, debugEl);
+        return rowEl
+            .queryAll(By.css('.ui-grid-cell'))
+            .filter((_, index) => cellNumbers.includes(index + 1))
+            .map((cellEl) => cellEl.nativeElement.innerText);
     }
 
     public click = (selector: string, debugEl = this.fixture.debugElement) =>
