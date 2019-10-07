@@ -1,4 +1,5 @@
 import { HttpTestingController } from '@angular/common/http/testing';
+import { DebugElement } from '@angular/core';
 import {
     ComponentFixture,
     tick,
@@ -50,6 +51,9 @@ export class IntegrationUtils<T> {
         this.getNativeElement(selector, debugEl)
             .dispatchEvent(EventGenerator.click)
 
+    public clickRadioButton = (selector: string, debugEl = this.fixture.debugElement) =>
+        this.click(`${selector} .mat-radio-label`, debugEl)
+
     public enter = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getNativeElement(selector, debugEl)
             .dispatchEvent(EventGenerator.keyDown(Key.Enter))
@@ -88,4 +92,23 @@ export class IntegrationUtils<T> {
         listItem.dispatchEvent(EventGenerator.click);
         this.fixture.detectChanges();
     }
+
+    public isRadioButtonChecked = (selector: string, debugEl = this.fixture.debugElement) =>
+        this.getDebugElement(selector, debugEl)
+            .nativeElement
+            .classList
+            .contains('mat-radio-checked')
+
+    public isRadioGroupDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
+        this.getDebugElement(selector, debugEl)
+            .queryAll(By.css('mat-radio-button'))
+            .every((elem) => this._isRadioButtonElementDisabled(elem))
+
+    public isRadioButtonDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
+        this._isRadioButtonElementDisabled(
+            this.getDebugElement(selector, debugEl),
+        )
+
+    private _isRadioButtonElementDisabled = (debugEl: DebugElement) =>
+        debugEl.nativeElement.classList.contains('mat-radio-disabled')
 }
