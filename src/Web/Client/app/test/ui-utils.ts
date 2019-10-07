@@ -93,6 +93,11 @@ export class IntegrationUtils<T> {
         this.fixture.detectChanges();
     }
 
+    public getUiSuggestValue = (selector: string, debugEl = this.fixture.debugElement) =>
+        this.getNativeElement(`${selector} .display-value`, debugEl)
+            .innerText
+            .trim()
+
     public isRadioButtonChecked = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
             .nativeElement
