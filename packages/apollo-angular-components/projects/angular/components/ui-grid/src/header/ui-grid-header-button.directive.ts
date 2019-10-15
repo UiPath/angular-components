@@ -19,7 +19,7 @@ export class UiGridHeaderButtonDirective {
    *
    */
   @Input()
-    public type?: 'action' | 'main';
+    public type?: 'action' | 'main' | 'inline';
 
   /**
    * Configure if the button is visible or not.
