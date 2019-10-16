@@ -5,6 +5,7 @@ import {
 import {
   async,
   ComponentFixture,
+  fakeAsync,
   TestBed,
 } from '@angular/core/testing';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -62,7 +63,8 @@ describe('Component: UiGrid', () => {
                                 [property]="'myObj.myObjString'"
                                 title="Nested String Header"
                                 width="25%">
-                        <ui-grid-dropdown-filter [items]="someFilter"
+                        <ui-grid-dropdown-filter [visible]="isFilterVisible"
+                                                 [items]="someFilter"
                                                  [showAllOption]="true"
                                                  method="ge">
                         </ui-grid-dropdown-filter>
@@ -84,6 +86,7 @@ describe('Component: UiGrid', () => {
         public data: ITestEntity[] = [];
         public someFilter = [];
         public isColumnVisible = true;
+        public isFilterVisible = true;
         public selectable?: boolean;
         public refreshable?: boolean;
     }
@@ -157,7 +160,7 @@ describe('Component: UiGrid', () => {
                     expect(headerCells.length).toEqual(0);
                 });
 
-               it('should hide the ngIf-ed column and its filter', () => {
+                it(`should hide the column and its filter when the column 'visible' input is set to false`, () => {
                     let headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
                     const getDropdownFilter = () => fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
 
@@ -172,6 +175,23 @@ describe('Component: UiGrid', () => {
                     expect(headers.length).toEqual(3);
                     expect(getDropdownFilter()).toBeFalsy();
                 });
+
+                it(`should hide the filter when the 'visible' input is set to false`, fakeAsync(() => {
+                    let headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
+                    const getDropdownFilter = () => fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
+
+                    expect(headers).toBeDefined();
+                    expect(headers.length).toEqual(4);
+                    fixture.detectChanges();
+                    expect(getDropdownFilter()).toBeTruthy();
+
+                    fixture.componentInstance.isFilterVisible = false;
+                    fixture.detectChanges();
+
+                    headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
+                    expect(headers.length).toEqual(4);
+                    expect(getDropdownFilter()).toBeFalsy();
+                }));
             });
 
             describe('State: populated', () => {
@@ -196,6 +216,7 @@ describe('Component: UiGrid', () => {
                 });
 
                 it('should render the correct cell text for each column', () => {
+                    fixture.detectChanges();
                     const rows = fixture.debugElement.queryAll(By.css('.ui-grid-row'));
 
                     rows.forEach((row, index) => {
