@@ -227,6 +227,8 @@
     OnDestroy,
 } from &#x27;@angular/core&#x27;;
 
+import { BehaviorSubject } from &#x27;rxjs&#x27;;
+
 import { UiGridFilter } from &#x27;./ui-grid-filter&#x27;;
 
 /**
@@ -281,6 +283,19 @@ export class UiGridDropdownFilterDirective&lt;T&gt; extends UiGridFilter&lt;T&gt
      */
     @Input()
     public value?: IDropdownOption;
+
+    /**
+     * Wether the filter should be rendered in the grid.
+     *
+     */
+    @Input()
+    public get visible() { return this.visible$.value; }
+    public set visible(visible: boolean) { this.visible$.next(visible); }
+
+    /**
+     * @ignore
+     */
+    public visible$ &#x3D; new BehaviorSubject(true);
 
     /**
      * Updates the dropdown value.
