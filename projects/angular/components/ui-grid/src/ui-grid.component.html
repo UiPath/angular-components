@@ -23,7 +23,7 @@
         </ui-grid-search>
 
         <ng-container *ngFor="let column of columns$ | async">
-            <div *ngIf="column.dropdown"
+            <div *ngIf="column.dropdown?.visible$ | async"
                  class="ui-grid-dropdown-filter-container ui-grid-filter-option">
                 <button [matMenuTriggerFor]="filterOptions"
                         [disabled]="column.dropdown.disabled || disabled"
@@ -52,7 +52,7 @@
                 </mat-menu>
             </div>
 
-            <ng-container *ngIf="column.searchableDropdown">
+            <ng-container *ngIf="column.searchableDropdown?.visible$ | async">
                 <ui-suggest #suggest
                             [placeholder]="column.title"
                             [defaultValue]="column.searchableDropdown.noFilterPlaceholder || intl.noFilterPlaceholder"
