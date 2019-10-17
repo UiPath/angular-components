@@ -504,6 +504,11 @@ describe('Component: UiGrid', () => {
                             <button class="main-action-button">Main Action</button>
                         </ng-template>
                     </ui-header-button>
+                    <ui-header-button type="inline">
+                        <ng-template>
+                            <button class="inline-action-button">Inline Action</button>
+                        </ng-template>
+                    </ui-header-button>
                     <ui-header-button type="action">
                         <ng-template>
                             <button class="selection-action-button">Selection Action</button>
@@ -568,6 +573,14 @@ describe('Component: UiGrid', () => {
                 expect(mainHeaderAction.nativeElement.innerText).toEqual('Main Action');
             });
 
+            it('should display an inline header button', () => {
+                const inlineHeaderAction = fixture.debugElement.query(By.css('.inline-action-button'));
+
+                expect(inlineHeaderAction).toBeDefined();
+                expect(inlineHeaderAction.nativeElement).toBeDefined();
+                expect(inlineHeaderAction.nativeElement.innerText).toEqual('Inline Action');
+            });
+
             it('should NOT display the selection action button if no row is selected', () => {
                 const headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
 
@@ -588,6 +601,20 @@ describe('Component: UiGrid', () => {
                 expect(headerSelectionAction).toBeDefined();
                 expect(headerSelectionAction.nativeElement).toBeDefined();
                 expect(headerSelectionAction.nativeElement.innerText).toEqual('Selection Action');
+            });
+
+            it('should NOT display the inline header button if at least one row is selected', () => {
+                const rowCheckboxInputList = fixture.debugElement
+                    .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                const checkboxInput = faker.helpers.randomize(rowCheckboxInputList);
+
+                checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+
+                const inlineHeaderAction = fixture.debugElement.query(By.css('.inline-action-button'));
+                expect(inlineHeaderAction).toBeFalsy();
             });
         });
 

@@ -4,12 +4,12 @@
     </div>
 </ng-container>
 <div *ngIf="header?.actionButtons?.length ||
+            header?.inlineButtons?.length ||
             header?.search ||
             (isAnyFilterDefined$ | async)"
      class="ui-grid-filter-container">
     <ng-container *ngIf="!selectionManager.hasValue() ||
-                   !header?.actionButtons?.length"
-                  class="ui-grid-filter-options">
+                   !header?.actionButtons?.length">
         <ui-grid-search *ngIf="header?.search"
                         [debounce]="header!.searchDebounce"
                         [maxLength]="header!.searchMaxLength"
@@ -68,6 +68,16 @@
             </ng-container>
         </ng-container>
     </ng-container>
+
+    <ng-container *ngIf="!selectionManager.hasValue()">
+        <ng-container *ngFor="let button of header?.inlineButtons">
+            <ng-container *ngIf="button.visible">
+                <ng-container *ngTemplateOutlet="button.html">
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+
     <ng-container *ngIf="selectionManager.hasValue()"
                   class="ui-grid-action-buttons">
         <ng-container *ngFor="let button of header?.actionButtons">
