@@ -1,3 +1,7 @@
+# v0.10.10 (2019-10-17)
+* **grid** define inline header buttons
+* **grid** add ability to toggle filters visibility
+
 # v0.10.9 (2019-10-03)
 * **date-format** add resolver support for timezone
 
