@@ -1,6 +1,6 @@
 {
   "name": "angular-components",
-  "version": "0.10.9",
+  "version": "0.10.10",
   "author": {
     "name": "UiPath Inc",
     "url": "https://uipath.com"
@@ -45,8 +45,8 @@
     "commit": "git-cz",
     "check:exports": "ts-node --project ./tsconfig.node.json ./.build/check-public-exports",
     "check:commits": "node ./.build/commitlint",
-    "publish:npm": "json -I -f dist/angular/package.json -e 'delete this.publishConfig' && npm publish",
-    "publish:gh": "json -I -f dist/angular/package.json -e 'this.publishConfig = {registry:\"https://npm.pkg.github.com/\"}' && npm publish"
+    "publish:npm": "json -I -f dist/angular/package.json -e 'delete this.publishConfig' && npm publish dist/angular",
+    "publish:gh": "json -I -f dist/angular/package.json -e 'this.publishConfig = {registry:\"https://npm.pkg.github.com/\"}' && npm publish dist/angular"
   },
   "config": {
     "commitizen": {
