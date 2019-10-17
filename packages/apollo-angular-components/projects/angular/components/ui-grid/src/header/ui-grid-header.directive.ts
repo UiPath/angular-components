@@ -75,6 +75,12 @@ export class UiGridHeaderDirective<T> implements AfterViewInit, OnDestroy {
      */
     public actionButtons?: UiGridHeaderButtonDirective[];
 
+    /**
+     * @internal
+     * @ignore
+     */
+    public inlineButtons?: UiGridHeaderButtonDirective[];
+
     @ContentChildren(UiGridHeaderButtonDirective)
     private _buttons!: QueryList<UiGridHeaderButtonDirective>;
 
@@ -85,6 +91,7 @@ export class UiGridHeaderDirective<T> implements AfterViewInit, OnDestroy {
     ngAfterViewInit() {
         this.mainButton = this._buttons.find(b => b.type === 'main');
         this.actionButtons = this._buttons.filter(b => b.type === 'action');
+        this.inlineButtons = this._buttons.filter(b => b.type === 'inline');
     }
 
     /**
