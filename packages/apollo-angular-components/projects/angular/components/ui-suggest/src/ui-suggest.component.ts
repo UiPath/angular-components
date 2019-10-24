@@ -2,29 +2,29 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ListRange } from '@angular/cdk/collections';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  Input,
-  isDevMode,
-  OnDestroy,
-  OnInit,
-  Optional,
-  Output,
-  Self,
-  TemplateRef,
-  ViewChild,
-  ViewEncapsulation,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChild,
+    ElementRef,
+    EventEmitter,
+    HostBinding,
+    Input,
+    isDevMode,
+    OnDestroy,
+    OnInit,
+    Optional,
+    Output,
+    Self,
+    TemplateRef,
+    ViewChild,
+    ViewEncapsulation,
 } from '@angular/core';
 import {
-  FormGroupDirective,
-  NgControl,
-  NgForm,
+    FormGroupDirective,
+    NgControl,
+    NgForm,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -33,44 +33,44 @@ import { VirtualScrollItemStatus } from '@uipath/angular/directives/ui-virtual-s
 import cloneDeep from 'lodash-es/cloneDeep';
 import isEqual from 'lodash-es/isEqual';
 import {
-  BehaviorSubject,
-  combineLatest,
-  merge,
-  Observable,
-  Subject,
-  Subscription,
+    BehaviorSubject,
+    combineLatest,
+    merge,
+    Observable,
+    Subject,
+    Subscription,
 } from 'rxjs';
 import {
-  debounceTime,
-  delay,
-  distinctUntilChanged,
-  filter,
-  finalize,
-  map,
-  retry,
-  startWith,
-  takeUntil,
-  tap,
+    debounceTime,
+    delay,
+    distinctUntilChanged,
+    filter,
+    finalize,
+    map,
+    retry,
+    startWith,
+    takeUntil,
+    tap,
 } from 'rxjs/operators';
 
 import {
-  ISuggestValue,
-  ISuggestValues,
-  SuggestDirection,
+    ISuggestValue,
+    ISuggestValues,
+    SuggestDirection,
 } from './models';
 import { UI_SUGGEST_ANIMATIONS } from './ui-suggest.animations';
 import { UiSuggestIntl } from './ui-suggest.intl';
 import { UiSuggestMatFormField } from './ui-suggest.mat-form-field';
 import {
-  caseInsensitiveCompare,
-  generateLoadingInitialCollection,
-  inMemorySearch,
-  mapInitialItems,
-  resetUnloadedState,
-  setLoadedState,
-  setPendingState,
-  sortByPriorityAndDirection,
-  toSuggestValue,
+    caseInsensitiveCompare,
+    generateLoadingInitialCollection,
+    inMemorySearch,
+    mapInitialItems,
+    resetUnloadedState,
+    setLoadedState,
+    setPendingState,
+    sortByPriorityAndDirection,
+    toSuggestValue,
 } from './utils';
 
 /**
@@ -113,6 +113,8 @@ export class UiSuggestComponent extends UiSuggestMatFormField
         return this._disabled;
     }
     public set disabled(value) {
+        if (this._disabled === !!value) { return; }
+
         this._disabled = !!value;
         if (
             value &&
@@ -123,6 +125,16 @@ export class UiSuggestComponent extends UiSuggestMatFormField
 
         this._cd.markForCheck();
         this.stateChanges.next();
+
+        if (value || !this.searchable) {
+            return;
+        }
+
+        if (this.searchSourceFactory) {
+            this.fetch();
+        } else {
+            this.loading$.next(false);
+        }
     }
 
     /**
