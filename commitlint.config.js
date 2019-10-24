@@ -20,6 +20,7 @@ module.exports = {
                 'progress-button',
                 'spinner-button',
                 'content-loader',
+                'testing',
             ];
 
             return [2, 'always', scopeList];
