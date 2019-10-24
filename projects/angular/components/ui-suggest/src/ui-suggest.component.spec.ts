@@ -1,49 +1,49 @@
 import {
-  Component,
-  ViewChild,
+    Component,
+    ViewChild,
 } from '@angular/core';
 import {
-  async,
-  ComponentFixture,
-  discardPeriodicTasks,
-  fakeAsync,
-  TestBed,
-  tick,
+    async,
+    ComponentFixture,
+    discardPeriodicTasks,
+    fakeAsync,
+    TestBed,
+    tick,
 } from '@angular/core/testing';
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  EventGenerator,
-  Key,
+    EventGenerator,
+    Key,
 } from '@uipath/angular/testing';
 
 import * as faker from 'faker';
 import { VirtualScrollItemStatus } from 'projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api';
 import {
-  Observable,
-  of,
+    Observable,
+    of,
 } from 'rxjs';
 import {
-  delay,
-  finalize,
-  map,
-  skip,
-  take,
+    delay,
+    finalize,
+    map,
+    skip,
+    take,
 } from 'rxjs/operators';
 
 import {
-  ISuggestValue,
-  ISuggestValues,
+    ISuggestValue,
+    ISuggestValues,
 } from './models';
 import {
-  generateSuggestionItem,
-  generateSuggetionItemList,
+    generateSuggestionItem,
+    generateSuggetionItemList,
 } from './test';
 import { UiSuggestComponent } from './ui-suggest.component';
 import { UiSuggestModule } from './ui-suggest.module';
@@ -526,6 +526,57 @@ const sharedSpecifications = (
                 expect(uiSuggest.isOpen).toBeFalsy();
             });
         });
+
+        describe('Scenario: toggle disabled state', () => {
+            it('should toggle loading state if it is searchable with items', async () => {
+                const items = generateSuggetionItemList();
+                component.items = items;
+                component.disabled = true;
+                component.searchable = true;
+
+                fixture.detectChanges();
+
+                expect(uiSuggest.disabled).toBeTruthy();
+                expect(uiSuggest.loading$.value).toBeTruthy();
+
+                component.disabled = false;
+                fixture.detectChanges();
+
+                expect(uiSuggest.disabled).toBeFalsy();
+
+                const display = fixture.debugElement.query(By.css('.display'));
+                display.nativeElement.dispatchEvent(EventGenerator.click);
+
+                expect(uiSuggest.loading$.value).toBeFalsy();
+            });
+
+            it('should not be in loading state if it has a searchSourceFactory', async () => {
+                const items = generateSuggetionItemList();
+                component.disabled = true;
+                uiSuggest.searchSourceFactory = (term) => {
+                    return of([...items]).pipe(
+                        map(itemList => ({
+                            data: itemList.filter(item => item.text.includes(term as string)),
+                            total: itemList.length,
+                        }) as ISuggestValues<any>),
+                    );
+                };
+
+                fixture.detectChanges();
+                expect(uiSuggest.disabled).toBeTruthy();
+
+                component.disabled = false;
+                fixture.detectChanges();
+                expect(uiSuggest.disabled).toBeFalsy();
+
+                const display = fixture.debugElement.query(By.css('.display'));
+                display.nativeElement.dispatchEvent(EventGenerator.click);
+                await fixture.whenStable();
+
+                expect(uiSuggest.loading$.value).toBeFalsy();
+            });
+        });
+
 
         it('should not open on first click and close on the second', () => {
             fixture.detectChanges();

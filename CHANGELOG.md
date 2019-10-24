@@ -1,3 +1,6 @@
+# v0.10.12 (2019-10-24)
+* **suggest** fix `loading` state on toggle disabled
+
 # v0.10.11 (2019-10-24)
 * **testing** define `keyCode` and bind correct `code` in generator
 
