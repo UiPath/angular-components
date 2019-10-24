@@ -1,3 +1,6 @@
+# v0.10.11 (2019-10-24)
+* **testing** define `keyCode` and bind correct `code` in generator
+
 # v0.10.10 (2019-10-17)
 * **grid** define inline header buttons
 * **grid** add ability to toggle filters visibility
