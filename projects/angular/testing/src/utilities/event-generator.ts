@@ -2,9 +2,9 @@ import { IDropEvent } from './events';
 import { FakeFileList } from './fake-file-list';
 import { CURSOR_IMG } from './internal';
 import {
-    IKey,
-    IKeyModifier,
-    Key,
+  IKey,
+  IKeyModifier,
+  Key,
 } from './key';
 
 type KeyOrKeyName = (IKey | keyof Key);
@@ -243,13 +243,15 @@ export class EventGenerator {
 
     private static _key(type: string, key: IKey | keyof Key, modifier = {} as IKeyModifier) {
         const safeKey = EventGenerator._getKey(key) as IKey;
-        const options: KeyboardEventInit = {
+        const options: KeyboardEventInit & { keyCode: number } = {
             code: `${safeKey.code}`,
             key: safeKey.name,
+            keyCode: safeKey.keyCode,
             shiftKey: modifier === Key.Shift,
             altKey: modifier === Key.Alt,
             ctrlKey: modifier === Key.Control,
         };
+
         return new KeyboardEvent(type, options);
     }
 
