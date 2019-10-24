@@ -1062,9 +1062,9 @@ by providing a collection of methods and properties that create the most often r
 import { FakeFileList } from &#x27;./fake-file-list&#x27;;
 import { CURSOR_IMG } from &#x27;./internal&#x27;;
 import {
-    IKey,
-    IKeyModifier,
-    Key,
+  IKey,
+  IKeyModifier,
+  Key,
 } from &#x27;./key&#x27;;
 
 type KeyOrKeyName &#x3D; (IKey | keyof Key);
@@ -1303,13 +1303,15 @@ export class EventGenerator {
 
     private static _key(type: string, key: IKey | keyof Key, modifier &#x3D; {} as IKeyModifier) {
         const safeKey &#x3D; EventGenerator._getKey(key) as IKey;
-        const options: KeyboardEventInit &#x3D; {
+        const options: KeyboardEventInit &amp; { keyCode: number } &#x3D; {
             code: &#x60;${safeKey.code}&#x60;,
             key: safeKey.name,
+            keyCode: safeKey.keyCode,
             shiftKey: modifier &#x3D;&#x3D;&#x3D; Key.Shift,
             altKey: modifier &#x3D;&#x3D;&#x3D; Key.Alt,
             ctrlKey: modifier &#x3D;&#x3D;&#x3D; Key.Control,
         };
+
         return new KeyboardEvent(type, options);
     }
 

@@ -89,6 +89,9 @@
                                         <a href="#code">code</a>
                                 </li>
                                 <li>
+                                        <a href="#keyCode">keyCode</a>
+                                </li>
+                                <li>
                                         <a href="#name">name</a>
                                 </li>
                             </ul>
@@ -112,7 +115,42 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>code:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                        <code>code:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>The code associated to the current <code>key</code>.</p>
+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="keyCode"></a>
+                                        <span class="name"><b>keyCode</b><a href="#keyCode"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>keyCode:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -131,7 +169,7 @@
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>The code associated to the current <code>key</code>.</p>
+                                    <div class="io-description"><p>The keyCode associated to the current <code>key</code>.</p>
 </div>
                                 </td>
                             </tr>
@@ -179,9 +217,13 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface IKey {
     /**
+     * The keyCode associated to the current &#x60;key&#x60;.
+     */
+    keyCode: number;
+    /**
      * The code associated to the current &#x60;key&#x60;.
      */
-    code: number;
+    code: string;
     /**
      * The friendly &#x60;name&#x60; of the current &#x60;key&#x60;.
      *
@@ -214,7 +256,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static q: IKey &#x3D; {
         name: &#x27;q&#x27;,
-        code: 81,
+        code: &#x27;KeyQ&#x27;,
+        keyCode: 81,
     };
     /**
      * Metadata for key &#x60;w&#x60;.
@@ -222,7 +265,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static w: IKey &#x3D; {
         name: &#x27;w&#x27;,
-        code: 87,
+        code: &#x27;KeyW&#x27;,
+        keyCode: 87,
     };
     /**
      * Metadata for key &#x60;e&#x60;.
@@ -230,7 +274,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static e: IKey &#x3D; {
         name: &#x27;e&#x27;,
-        code: 69,
+        code: &#x27;KeyE&#x27;,
+        keyCode: 69,
     };
     /**
      * Metadata for key &#x60;r&#x60;.
@@ -238,7 +283,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static r: IKey &#x3D; {
         name: &#x27;r&#x27;,
-        code: 82,
+        code: &#x27;KeyR&#x27;,
+        keyCode: 82,
     };
     /**
      * Metadata for key &#x60;t&#x60;.
@@ -246,7 +292,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static t: IKey &#x3D; {
         name: &#x27;t&#x27;,
-        code: 84,
+        code: &#x27;KeyT&#x27;,
+        keyCode: 84,
     };
     /**
      * Metadata for key &#x60;y&#x60;.
@@ -254,7 +301,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static y: IKey &#x3D; {
         name: &#x27;y&#x27;,
-        code: 89,
+        code: &#x27;KeyY&#x27;,
+        keyCode: 89,
     };
     /**
      * Metadata for key &#x60;u&#x60;.
@@ -262,7 +310,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static u: IKey &#x3D; {
         name: &#x27;u&#x27;,
-        code: 85,
+        code: &#x27;KeyU&#x27;,
+        keyCode: 85,
     };
     /**
      * Metadata for key &#x60;i&#x60;.
@@ -270,7 +319,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static i: IKey &#x3D; {
         name: &#x27;i&#x27;,
-        code: 73,
+        code: &#x27;KeyI&#x27;,
+        keyCode: 73,
     };
     /**
      * Metadata for key &#x60;o&#x60;.
@@ -278,7 +328,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static o: IKey &#x3D; {
         name: &#x27;o&#x27;,
-        code: 79,
+        code: &#x27;KeyO&#x27;,
+        keyCode: 79,
     };
     /**
      * Metadata for key &#x60;p&#x60;.
@@ -286,7 +337,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static p: IKey &#x3D; {
         name: &#x27;p&#x27;,
-        code: 80,
+        code: &#x27;KeyP&#x27;,
+        keyCode: 80,
     };
     /**
      * Metadata for key &#x60;a&#x60;.
@@ -294,7 +346,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static a: IKey &#x3D; {
         name: &#x27;a&#x27;,
-        code: 65,
+        code: &#x27;KeyA&#x27;,
+        keyCode: 65,
     };
     /**
      * Metadata for key &#x60;s&#x60;.
@@ -302,7 +355,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static s: IKey &#x3D; {
         name: &#x27;s&#x27;,
-        code: 83,
+        code: &#x27;KeyS&#x27;,
+        keyCode: 83,
     };
     /**
      * Metadata for key &#x60;d&#x60;.
@@ -310,7 +364,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static d: IKey &#x3D; {
         name: &#x27;d&#x27;,
-        code: 68,
+        code: &#x27;KeyD&#x27;,
+        keyCode: 68,
     };
     /**
      * Metadata for key &#x60;f&#x60;.
@@ -318,7 +373,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static f: IKey &#x3D; {
         name: &#x27;f&#x27;,
-        code: 70,
+        code: &#x27;KeyF&#x27;,
+        keyCode: 70,
     };
     /**
      * Metadata for key &#x60;g&#x60;.
@@ -326,7 +382,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static g: IKey &#x3D; {
         name: &#x27;g&#x27;,
-        code: 71,
+        code: &#x27;KeyG&#x27;,
+        keyCode: 71,
     };
     /**
      * Metadata for key &#x60;h&#x60;.
@@ -334,7 +391,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static h: IKey &#x3D; {
         name: &#x27;h&#x27;,
-        code: 72,
+        code: &#x27;KeyH&#x27;,
+        keyCode: 72,
     };
     /**
      * Metadata for key &#x60;j&#x60;.
@@ -342,7 +400,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static j: IKey &#x3D; {
         name: &#x27;j&#x27;,
-        code: 74,
+        code: &#x27;KeyJ&#x27;,
+        keyCode: 74,
     };
     /**
      * Metadata for key &#x60;k&#x60;.
@@ -350,7 +409,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static k: IKey &#x3D; {
         name: &#x27;k&#x27;,
-        code: 75,
+        code: &#x27;KeyK&#x27;,
+        keyCode: 75,
     };
     /**
      * Metadata for key &#x60;l&#x60;.
@@ -358,7 +418,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static l: IKey &#x3D; {
         name: &#x27;l&#x27;,
-        code: 76,
+        code: &#x27;KeyL&#x27;,
+        keyCode: 76,
     };
     /**
      * Metadata for key &#x60;z&#x60;.
@@ -366,7 +427,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static z: IKey &#x3D; {
         name: &#x27;z&#x27;,
-        code: 90,
+        code: &#x27;KeyZ&#x27;,
+        keyCode: 90,
     };
     /**
      * Metadata for key &#x60;x&#x60;.
@@ -374,7 +436,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static x: IKey &#x3D; {
         name: &#x27;x&#x27;,
-        code: 88,
+        code: &#x27;KeyX&#x27;,
+        keyCode: 88,
     };
     /**
      * Metadata for key &#x60;c&#x60;.
@@ -382,7 +445,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static c: IKey &#x3D; {
         name: &#x27;c&#x27;,
-        code: 67,
+        code: &#x27;KeyC&#x27;,
+        keyCode: 67,
     };
     /**
      * Metadata for key &#x60;v&#x60;.
@@ -390,7 +454,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static v: IKey &#x3D; {
         name: &#x27;v&#x27;,
-        code: 86,
+        code: &#x27;KeyV&#x27;,
+        keyCode: 86,
     };
     /**
      * Metadata for key &#x60;b&#x60;.
@@ -398,7 +463,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static b: IKey &#x3D; {
         name: &#x27;b&#x27;,
-        code: 66,
+        code: &#x27;KeyB&#x27;,
+        keyCode: 66,
     };
     /**
      * Metadata for key &#x60;n&#x60;.
@@ -406,7 +472,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static n: IKey &#x3D; {
         name: &#x27;n&#x27;,
-        code: 78,
+        code: &#x27;KeyN&#x27;,
+        keyCode: 78,
     };
     /**
      * Metadata for key &#x60;m&#x60;.
@@ -414,7 +481,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static m: IKey &#x3D; {
         name: &#x27;m&#x27;,
-        code: 77,
+        code: &#x27;KeyM&#x27;,
+        keyCode: 77,
     };
     /**
      * Metadata for key &#x60;Q&#x60;.
@@ -422,7 +490,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static Q: IKey &#x3D; {
         name: &#x27;Q&#x27;,
-        code: 81,
+        code: &#x27;KeyQ&#x27;,
+        keyCode: 81,
     };
     /**
      * Metadata for key &#x60;W&#x60;.
@@ -430,7 +499,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static W: IKey &#x3D; {
         name: &#x27;W&#x27;,
-        code: 87,
+        code: &#x27;KeyW&#x27;,
+        keyCode: 87,
     };
     /**
      * Metadata for key &#x60;E&#x60;.
@@ -438,7 +508,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static E: IKey &#x3D; {
         name: &#x27;E&#x27;,
-        code: 69,
+        code: &#x27;KeyE&#x27;,
+        keyCode: 69,
     };
     /**
      * Metadata for key &#x60;R&#x60;.
@@ -446,7 +517,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static R: IKey &#x3D; {
         name: &#x27;R&#x27;,
-        code: 82,
+        code: &#x27;KeyR&#x27;,
+        keyCode: 82,
     };
     /**
      * Metadata for key &#x60;T&#x60;.
@@ -454,7 +526,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static T: IKey &#x3D; {
         name: &#x27;T&#x27;,
-        code: 84,
+        code: &#x27;KeyT&#x27;,
+        keyCode: 84,
     };
     /**
      * Metadata for key &#x60;Y&#x60;.
@@ -462,7 +535,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static Y: IKey &#x3D; {
         name: &#x27;Y&#x27;,
-        code: 89,
+        code: &#x27;KeyY&#x27;,
+        keyCode: 89,
     };
     /**
      * Metadata for key &#x60;U&#x60;.
@@ -470,7 +544,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static U: IKey &#x3D; {
         name: &#x27;U&#x27;,
-        code: 85,
+        code: &#x27;KeyU&#x27;,
+        keyCode: 85,
     };
     /**
      * Metadata for key &#x60;I&#x60;.
@@ -478,7 +553,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static I: IKey &#x3D; {
         name: &#x27;I&#x27;,
-        code: 73,
+        code: &#x27;KeyI&#x27;,
+        keyCode: 73,
     };
     /**
      * Metadata for key &#x60;O&#x60;.
@@ -486,7 +562,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static O: IKey &#x3D; {
         name: &#x27;O&#x27;,
-        code: 79,
+        code: &#x27;KeyO&#x27;,
+        keyCode: 79,
     };
     /**
      * Metadata for key &#x60;P&#x60;.
@@ -494,7 +571,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static P: IKey &#x3D; {
         name: &#x27;P&#x27;,
-        code: 80,
+        code: &#x27;KeyP&#x27;,
+        keyCode: 80,
     };
     /**
      * Metadata for key &#x60;A&#x60;.
@@ -502,7 +580,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static A: IKey &#x3D; {
         name: &#x27;A&#x27;,
-        code: 65,
+        code: &#x27;KeyA&#x27;,
+        keyCode: 65,
     };
     /**
      * Metadata for key &#x60;S&#x60;.
@@ -510,7 +589,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static S: IKey &#x3D; {
         name: &#x27;S&#x27;,
-        code: 83,
+        code: &#x27;KeyS&#x27;,
+        keyCode: 83,
     };
     /**
      * Metadata for key &#x60;D&#x60;.
@@ -518,7 +598,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static D: IKey &#x3D; {
         name: &#x27;D&#x27;,
-        code: 68,
+        code: &#x27;KeyD&#x27;,
+        keyCode: 68,
     };
     /**
      * Metadata for key &#x60;F&#x60;.
@@ -526,7 +607,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static F: IKey &#x3D; {
         name: &#x27;F&#x27;,
-        code: 70,
+        code: &#x27;KeyF&#x27;,
+        keyCode: 70,
     };
     /**
      * Metadata for key &#x60;G&#x60;.
@@ -534,7 +616,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static G: IKey &#x3D; {
         name: &#x27;G&#x27;,
-        code: 71,
+        code: &#x27;KeyG&#x27;,
+        keyCode: 71,
     };
     /**
      * Metadata for key &#x60;H&#x60;.
@@ -542,7 +625,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static H: IKey &#x3D; {
         name: &#x27;H&#x27;,
-        code: 72,
+        code: &#x27;KeyH&#x27;,
+        keyCode: 72,
     };
     /**
      * Metadata for key &#x60;J&#x60;.
@@ -550,7 +634,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static J: IKey &#x3D; {
         name: &#x27;J&#x27;,
-        code: 74,
+        code: &#x27;KeyJ&#x27;,
+        keyCode: 74,
     };
     /**
      * Metadata for key &#x60;K&#x60;.
@@ -558,7 +643,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static K: IKey &#x3D; {
         name: &#x27;K&#x27;,
-        code: 75,
+        code: &#x27;KeyK&#x27;,
+        keyCode: 75,
     };
     /**
      * Metadata for key &#x60;L&#x60;.
@@ -566,7 +652,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static L: IKey &#x3D; {
         name: &#x27;L&#x27;,
-        code: 76,
+        code: &#x27;KeyL&#x27;,
+        keyCode: 76,
     };
     /**
      * Metadata for key &#x60;Z&#x60;.
@@ -574,7 +661,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static Z: IKey &#x3D; {
         name: &#x27;Z&#x27;,
-        code: 90,
+        code: &#x27;KeyZ&#x27;,
+        keyCode: 90,
     };
     /**
      * Metadata for key &#x60;X&#x60;.
@@ -582,7 +670,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static X: IKey &#x3D; {
         name: &#x27;X&#x27;,
-        code: 88,
+        code: &#x27;KeyX&#x27;,
+        keyCode: 88,
     };
     /**
      * Metadata for key &#x60;C&#x60;.
@@ -590,7 +679,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static C: IKey &#x3D; {
         name: &#x27;C&#x27;,
-        code: 67,
+        code: &#x27;KeyC&#x27;,
+        keyCode: 67,
     };
     /**
      * Metadata for key &#x60;V&#x60;.
@@ -598,7 +688,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static V: IKey &#x3D; {
         name: &#x27;V&#x27;,
-        code: 86,
+        code: &#x27;KeyV&#x27;,
+        keyCode: 86,
     };
     /**
      * Metadata for key &#x60;B&#x60;.
@@ -606,7 +697,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static B: IKey &#x3D; {
         name: &#x27;B&#x27;,
-        code: 66,
+        code: &#x27;KeyB&#x27;,
+        keyCode: 66,
     };
     /**
      * Metadata for key &#x60;N&#x60;.
@@ -614,7 +706,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static N: IKey &#x3D; {
         name: &#x27;N&#x27;,
-        code: 78,
+        code: &#x27;KeyN&#x27;,
+        keyCode: 78,
     };
     /**
      * Metadata for key &#x60;M&#x60;.
@@ -622,7 +715,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static M: IKey &#x3D; {
         name: &#x27;M&#x27;,
-        code: 77,
+        code: &#x27;KeyM&#x27;,
+        keyCode: 77,
     };
     /**
      * Metadata for key &#x60;Shift&#x60;.
@@ -630,7 +724,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static Shift: IKeyModifier &#x3D; {
         name: &#x27;Shift&#x27;,
-        code: 16,
+        code: &#x27;Shift&#x27;,
+        keyCode: 16,
     };
     /**
      * Metadata for key &#x60;Control&#x60;.
@@ -638,7 +733,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static Control: IKeyModifier &#x3D; {
         name: &#x27;Control&#x27;,
-        code: 17,
+        code: &#x27;Control&#x27;,
+        keyCode: 17,
     };
     /**
      * Metadata for key &#x60;Alt&#x60;.
@@ -646,7 +742,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static Alt: IKeyModifier &#x3D; {
         name: &#x27;Alt&#x27;,
-        code: 18,
+        code: &#x27;Alt&#x27;,
+        keyCode: 18,
     };
     /**
      * Metadata for key &#x60;Enter&#x60;.
@@ -654,7 +751,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static Enter: IKey &#x3D; {
         name: &#x27;Enter&#x27;,
-        code: 13,
+        code: &#x27;Enter&#x27;,
+        keyCode: 13,
     };
     /**
      * Metadata for key &#x60;ArrowLeft&#x60;.
@@ -662,7 +760,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static ArrowLeft: IKey &#x3D; {
         name: &#x27;ArrowLeft&#x27;,
-        code: 37,
+        code: &#x27;ArrowLeft&#x27;,
+        keyCode: 37,
     };
     /**
      * Metadata for key &#x60;ArrowDown&#x60;.
@@ -670,7 +769,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static ArrowDown: IKey &#x3D; {
         name: &#x27;ArrowDown&#x27;,
-        code: 40,
+        code: &#x27;ArrowDown&#x27;,
+        keyCode: 40,
     };
     /**
      * Metadata for key &#x60;ArrowRight&#x60;.
@@ -678,7 +778,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static ArrowRight: IKey &#x3D; {
         name: &#x27;ArrowRight&#x27;,
-        code: 39,
+        code: &#x27;ArrowRight&#x27;,
+        keyCode: 39,
     };
     /**
      * Metadata for key &#x60;ArrowUp&#x60;.
@@ -686,7 +787,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static ArrowUp: IKey &#x3D; {
         name: &#x27;ArrowUp&#x27;,
-        code: 38,
+        code: &#x27;ArrowUp&#x27;,
+        keyCode: 38,
     };
     /**
      * Metadata for key &#x60;Space&#x60;.
@@ -694,7 +796,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static Space: IKey &#x3D; {
         name: &#x27; &#x27;,
-        code: 32,
+        code: &#x27;Space&#x27;,
+        keyCode: 32,
     };
     /**
      * Metadata for key &#x60;Tab&#x60;.
@@ -702,7 +805,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static Tab: IKey &#x3D; {
         name: &#x27;Tab&#x27;,
-        code: 9,
+        code: &#x27;Tab&#x27;,
+        keyCode: 9,
     };
     /**
      * Metadata for key &#x60;Escape&#x60;.
@@ -710,7 +814,8 @@ export class Key implements Record&lt;keyof Key, IKey&gt; {
      */
     public static Escape: IKey &#x3D; {
         name: &#x27;Escape&#x27;,
-        code: 27,
+        code: &#x27;Escape&#x27;,
+        keyCode: 27,
     };
 }
 </code></pre>
