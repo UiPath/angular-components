@@ -1,6 +1,6 @@
 {
   "name": "angular-components",
-  "version": "0.10.12",
+  "version": "0.10.13",
   "author": {
     "name": "UiPath Inc",
     "url": "https://uipath.com"
@@ -73,7 +73,7 @@
     "@angular/router": "8.1.1",
     "clipboard": "2.0.4",
     "core-js": "2.5.4",
-    "lodash-es": "4.17.14",
+    "lodash-es": "4.17.15",
     "moment": "2.24.0",
     "moment-timezone": "0.5.25",
     "object-hash": "1.3.1",
