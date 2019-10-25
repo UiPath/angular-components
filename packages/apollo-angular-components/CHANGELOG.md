@@ -1,3 +1,6 @@
+# v0.10.13 (2019-10-25)
+* **suggest** fix `loading` state on toggle disabled
+
 # v0.10.12 (2019-10-24)
 * **suggest** fix `loading` state on toggle disabled
 
