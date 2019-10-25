@@ -73,6 +73,8 @@ import {
     toSuggestValue,
 } from './utils';
 
+export const DEFAULT_SUGGEST_DEBOUNCE_TIME = 300;
+
 /**
  * A form compatible `dropdown` packing `lazy-loading` and `virtual-scroll`.
  *
@@ -110,12 +112,12 @@ export class UiSuggestComponent extends UiSuggestMatFormField
     @HostBinding('class.disabled')
     @Input()
     public get disabled() {
-        return this._disabled;
+        return this._disabled$.value;
     }
     public set disabled(value) {
-        if (this._disabled === !!value) { return; }
+        if (this._disabled$.value === !!value) { return; }
 
-        this._disabled = !!value;
+        this._disabled$.next(!!value);
         if (
             value &&
             this.isOpen
@@ -125,16 +127,6 @@ export class UiSuggestComponent extends UiSuggestMatFormField
 
         this._cd.markForCheck();
         this.stateChanges.next();
-
-        if (value || !this.searchable) {
-            return;
-        }
-
-        if (this.searchSourceFactory) {
-            this.fetch();
-        } else {
-            this.loading$.next(false);
-        }
     }
 
     /**
@@ -378,7 +370,7 @@ export class UiSuggestComponent extends UiSuggestMatFormField
      *
      */
     @Input()
-    public debounceTime = 300;
+    public debounceTime = DEFAULT_SUGGEST_DEBOUNCE_TIME;
     /**
      * The maximum number of items rendered in the viewport.
      *
@@ -479,7 +471,7 @@ export class UiSuggestComponent extends UiSuggestMatFormField
 
     private _searchSub?: Subscription;
 
-    private _disabled = false;
+    private _disabled$ = new BehaviorSubject(false);
     private _multiple = false;
     private _lastSetItems: ISuggestValue[] = [];
     private _enableCustomValue = false;
@@ -519,17 +511,19 @@ export class UiSuggestComponent extends UiSuggestMatFormField
             ngControl,
         );
 
-        this._inputChange$ = this.inputControl.valueChanges
-            .pipe(
+        this._inputChange$ = combineLatest([
+            this.inputControl.valueChanges.pipe(
                 startWith(''),
                 map((v = '') => v.trim()),
                 distinctUntilChanged(),
                 tap(this._setLoadingState),
                 debounceTime(this.debounceTime),
-                filter(_ =>
-                    !this.disabled &&
-                    !!this.searchSourceFactory),
-            );
+                filter(_ => !!this.searchSourceFactory),
+            ),
+            this._disabled$.pipe(filter(v => !v)),
+        ]).pipe(
+            map(([value]) => value),
+        );
         this.intl = this.intl || new UiSuggestIntl();
         this.customValueLabelTranslator = this.customValueLabelTranslator || this.intl.customValueLabel;
     }
@@ -935,7 +929,7 @@ export class UiSuggestComponent extends UiSuggestMatFormField
         this._liveAnnouncer.announce(this.intl.currentItemLabel(textToAnnounce, this.activeIndex + 1, this._items.length));
     }
 
-    private _setLoadingState = () => this.searchable && this.loading$.next(true);
+    private _setLoadingState = () => !this.disabled && this.searchSourceFactory && this.loading$.next(true);
 
     private _focusChanged(isFocused: boolean) {
         if (isFocused === this.focused) { return; }
