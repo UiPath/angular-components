@@ -28,6 +28,7 @@
                 <button [matMenuTriggerFor]="filterOptions"
                         [disabled]="column.dropdown.disabled || disabled"
                         mat-button
+                        type="button"
                         class="ui-grid-dropdown-filter-button">
                     <span class="ui-grid-dropdown-filter-title">{{ column.title }}: </span>
                     <span class="ui-grid-dropdown-filter-value">
@@ -40,12 +41,14 @@
                     <button *ngIf="column.dropdown.showAllOption"
                             [class.active]="column.dropdown.value == null"
                             (click)="filterManager.dropdownUpdate(column!, undefined)"
+                            type="button"
                             mat-menu-item>
                         {{ intl.noFilterPlaceholder }}
                     </button>
                     <button *ngFor="let dropdownItem of column.dropdown.items"
                             [class.active]="column.dropdown.value?.label === dropdownItem.label"
                             (click)="filterManager.dropdownUpdate(column, dropdownItem)"
+                            type="button"
                             mat-menu-item>
                         {{ intl.translateDropdownOption(dropdownItem) }}
                     </button>
@@ -181,6 +184,7 @@
                             [disabled]="disabled"
                             (click)="refresh.emit()"
                             mat-icon-button
+                            type="button"
                             class="grid-refresh-button">
                         <mat-icon>refresh</mat-icon>
                     </button>
@@ -395,6 +399,7 @@
                 [matTooltipDisabled]="resizeManager.isResizing"
                 (click)="selectionManager.clear()"
                 mat-icon-button
+                type="button"
                 color="warn">
             <mat-icon>clear</mat-icon>
         </button>
