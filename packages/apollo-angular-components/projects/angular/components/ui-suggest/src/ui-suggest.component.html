@@ -8,9 +8,9 @@
     <div [attr.tabindex]="!disabled &&
                         !readonly ?
                         0 : null"
-         [matTooltip]="tooltip"
          [uiAutofocus]="!isOpen && focus"
          [refocus]="!isOpen && focus"
+         [matRippleDisabled]="isFormControl"
          (click)="toggle()"
          (keyup.enter)="preventDefault($event);"
          (keydown.enter)="preventDefault($event);
@@ -24,7 +24,8 @@
          (blur)="onBlur()"
          matRipple
          class="display">
-        <div class="display-container text-ellipsis">
+        <div [matTooltip]="tooltip"
+             class="display-container text-ellipsis">
             <span *ngIf="!isFormControl && placeholder"
                   class="display-title">
                 {{ placeholder }}:
