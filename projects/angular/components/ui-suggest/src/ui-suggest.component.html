@@ -124,20 +124,22 @@
             </ng-container>
 
             <ng-container *cdkVirtualFor="let item of renderItems; let index = index; trackBy: trackById">
-                <mat-list-item *ngIf="!!item"
-                               [class.active]="index === activeIndex"
+                <mat-list-item [class.active]="index === activeIndex"
                                [class.is-loading]="item.loading !== VirtualScrollItemStatus.loaded"
                                [class.readonly]="item.loading !== VirtualScrollItemStatus.loaded"
-                               [class.selected]="!multiple &&
-                                          isItemSelected(item)"
-                               [style.height.px]="itemSize"
+                               [class.selected]="!!item &&
+                                                !multiple &&
+                                                isItemSelected(item)"
+                               [style.height.px]="!!item ? itemSize : 0"
                                (click)="preventDefault($event);
-                                    updateValue(item, !multiple, true);"
+                                        updateValue(item, !multiple, true);"
                                matRipple>
-                    <ng-container *ngIf="itemTemplate; else defaultItem">
-                        <ng-container *ngTemplateOutlet="itemTemplate; context: {
-                                                    $implicit: item
-                                                }">
+                    <ng-container *ngIf="!!item">
+                        <ng-container *ngIf="itemTemplate; else defaultItem">
+                            <ng-container *ngTemplateOutlet="itemTemplate; context: {
+                                                                $implicit: item
+                                                            }">
+                            </ng-container>
                         </ng-container>
                     </ng-container>
                     <ng-template #defaultItem>

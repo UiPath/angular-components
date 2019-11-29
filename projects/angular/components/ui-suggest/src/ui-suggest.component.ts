@@ -2,29 +2,29 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ListRange } from '@angular/cdk/collections';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    isDevMode,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    Self,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  isDevMode,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  Self,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {
-    FormGroupDirective,
-    NgControl,
-    NgForm,
+  FormGroupDirective,
+  NgControl,
+  NgForm,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -33,44 +33,44 @@ import { VirtualScrollItemStatus } from '@uipath/angular/directives/ui-virtual-s
 import cloneDeep from 'lodash-es/cloneDeep';
 import isEqual from 'lodash-es/isEqual';
 import {
-    BehaviorSubject,
-    combineLatest,
-    merge,
-    Observable,
-    Subject,
-    Subscription,
+  BehaviorSubject,
+  combineLatest,
+  merge,
+  Observable,
+  Subject,
+  Subscription,
 } from 'rxjs';
 import {
-    debounceTime,
-    delay,
-    distinctUntilChanged,
-    filter,
-    finalize,
-    map,
-    retry,
-    startWith,
-    takeUntil,
-    tap,
+  debounceTime,
+  delay,
+  distinctUntilChanged,
+  filter,
+  finalize,
+  map,
+  retry,
+  startWith,
+  takeUntil,
+  tap,
 } from 'rxjs/operators';
 
 import {
-    ISuggestValue,
-    ISuggestValues,
-    SuggestDirection,
+  ISuggestValue,
+  ISuggestValues,
+  SuggestDirection,
 } from './models';
 import { UI_SUGGEST_ANIMATIONS } from './ui-suggest.animations';
 import { UiSuggestIntl } from './ui-suggest.intl';
 import { UiSuggestMatFormField } from './ui-suggest.mat-form-field';
 import {
-    caseInsensitiveCompare,
-    generateLoadingInitialCollection,
-    inMemorySearch,
-    mapInitialItems,
-    resetUnloadedState,
-    setLoadedState,
-    setPendingState,
-    sortByPriorityAndDirection,
-    toSuggestValue,
+  caseInsensitiveCompare,
+  generateLoadingInitialCollection,
+  inMemorySearch,
+  mapInitialItems,
+  resetUnloadedState,
+  setLoadedState,
+  setPendingState,
+  sortByPriorityAndDirection,
+  toSuggestValue,
 } from './utils';
 
 export const DEFAULT_SUGGEST_DEBOUNCE_TIME = 300;
@@ -453,6 +453,20 @@ export class UiSuggestComponent extends UiSuggestMatFormField
      */
     public focus$ = new Subject<boolean>();
 
+    @ViewChild(CdkVirtualScrollViewport, { static: false })
+    protected set _virtualScrollerQuery(value: CdkVirtualScrollViewport) {
+        if (this._virtualScroller === value) { return; }
+
+        this._virtualScroller = value;
+
+        this._virtualScroller!
+            .scrolledIndexChange
+            .pipe(
+                takeUntil(this._destroyed$),
+            )
+            .subscribe(start => this._visibleRange = { start, end: start + this.displayCount });
+    }
+
     private _hasCustomValue$ = new BehaviorSubject(false);
     private _reset$ = new Subject();
 
@@ -481,8 +495,8 @@ export class UiSuggestComponent extends UiSuggestMatFormField
     private _scrollTo$ = new Subject<number>();
     private _rangeLoad$ = new Subject<ListRange>();
 
-    @ViewChild(CdkVirtualScrollViewport, { static: false })
     private _virtualScroller?: CdkVirtualScrollViewport;
+    private _visibleRange = { start: Number.NEGATIVE_INFINITY, end: Number.POSITIVE_INFINITY };
 
     private _inputChange$: Observable<string>;
 
@@ -698,6 +712,7 @@ export class UiSuggestComponent extends UiSuggestMatFormField
 
         this.isOpen = false;
         this.activeIndex = -1;
+        this._visibleRange = { start: Number.NEGATIVE_INFINITY, end: Number.POSITIVE_INFINITY };
         this.closed.emit();
 
         this.focus$.next(refocus);
@@ -908,10 +923,29 @@ export class UiSuggestComponent extends UiSuggestMatFormField
 
     private _virtualScrollTo = (index: number) => {
         const vs = this._virtualScroller;
-        if (!vs) { return; }
+        const customValueOffset = this._itemLowerBound;
 
-        const start = Math.max(Math.min(index, this.items.length - this.displayCount), 0);
+        if (!vs ||
+            (this.isDown
+                ? index !== 0
+                : index !== this._items.length - 1) &&
+            index >= this._visibleRange.start + customValueOffset &&
+            index < this._visibleRange.end + customValueOffset
+        ) {
+            return;
+        }
+
+        const passedBottomBound = index === this._visibleRange.end + customValueOffset;
+        const passedTopBound = index < this._visibleRange.start + customValueOffset;
+
+        const start = passedBottomBound
+            ? index + 1 - customValueOffset - this.displayCount
+            : Math.max(Math.min(index, this.items.length - this.displayCount), 0);
+
         const end = start + this.displayCount;
+
+        this._visibleRange = { start, end };
+
         vs.setRenderedRange({
             start,
             end,
@@ -919,7 +953,11 @@ export class UiSuggestComponent extends UiSuggestMatFormField
         vs.setRenderedContentOffset(start * this.itemSize);
         // this is not an error it should go to index
         // which can be outside the safe zone due to customValue
-        vs.scrollToIndex(index);
+        vs.scrollToIndex(
+            this._isOnCustomValueIndex
+                ? index
+                : start + Number(this.isDown && this.isCustomValueVisible && passedTopBound),
+        );
     }
 
     private _announceNavigate() {
