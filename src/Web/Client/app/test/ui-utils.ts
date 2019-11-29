@@ -87,7 +87,10 @@ export class IntegrationUtils<T> {
         }
 
         const listItems = suggest.queryAll(By.css('.mat-list-item'));
-        const listItem = listItems[nth].nativeElement;
+
+        const reverseOrder = !!suggest.query(By.css('.item-list-container-direction-up'));
+
+        const listItem = listItems[reverseOrder ? listItems.length - nth - 1 : nth].nativeElement;
 
         listItem.dispatchEvent(EventGenerator.click);
         this.fixture.detectChanges();
