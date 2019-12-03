@@ -71,6 +71,7 @@ class UiSuggestFixture {
     public value?: ISuggestValue[];
     public direction: 'up' | 'down' = 'down';
     public displayPriority: 'default' | 'selected' = 'default';
+    public fetchStrategy: 'eager' | 'onOpen' = 'eager';
 }
 
 const searchFor = (value: string, fixture: ComponentFixture<UiSuggestFixture>) => {
@@ -1348,6 +1349,40 @@ const sharedSpecifications = (
             uiSuggest.displayCount = 10;
         });
 
+        describe('Feature: fetchStrategy', () => {
+            it('should make fetch call if fetchStrategy is `eager`', async(async () => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(sourceSpy).toHaveBeenCalled();
+            }));
+
+            it('should not fetch if fetchStrategy is `onOpen`', async(async () => {
+                component.fetchStrategy = 'onOpen';
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(sourceSpy).toHaveBeenCalledTimes(0);
+            }));
+
+            it('should call fetch if fetchStrategy is `onOpen` and suggest gets opened', async(async () => {
+                component.fetchStrategy = 'onOpen';
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(sourceSpy).toHaveBeenCalledTimes(0);
+
+                const display = fixture.debugElement.query(By.css('.display'));
+                display.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(sourceSpy).toHaveBeenCalled();
+            }));
+        });
+
         it('should generate the same number of items as those in total if displayCount is set to a lower limit ', async(async () => {
             uiSuggest.displayCount = 5;
             fixture.detectChanges();
@@ -1688,6 +1723,7 @@ describe('Component: UiSuggest', () => {
                         [displayPriority]="displayPriority"
                         [disabled]="disabled"
                         [multiple]="multiple"
+                        [fetchStrategy]="fetchStrategy"
                         [readonly]="readonly">
             </ui-suggest>
         `,
@@ -1766,6 +1802,7 @@ describe('Component: UiSuggest', () => {
                             [disabled]="disabled"
                             [multiple]="multiple"
                             [readonly]="readonly"
+                            [fetchStrategy]="fetchStrategy"
                             formControlName="test">
             </ui-suggest>
             </mat-form-field>
@@ -1939,7 +1976,8 @@ describe('Component: UiSuggest', () => {
                             [displayPriority]="displayPriority"
                             [disabled]="disabled"
                             [multiple]="multiple"
-                            [readonly]="readonly">
+                            [readonly]="readonly"
+                            [fetchStrategy]="fetchStrategy">
                             <ng-template let-item >
                                 <div class="item-template">{{ item.text }}</div>
                             </ng-template>

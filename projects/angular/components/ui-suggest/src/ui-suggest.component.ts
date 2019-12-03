@@ -37,6 +37,7 @@ import {
   combineLatest,
   merge,
   Observable,
+  of,
   Subject,
   Subscription,
 } from 'rxjs';
@@ -49,6 +50,7 @@ import {
   map,
   retry,
   startWith,
+  switchMap,
   takeUntil,
   tap,
 } from 'rxjs/operators';
@@ -354,6 +356,17 @@ export class UiSuggestComponent extends UiSuggestMatFormField
     public customValueLabelTranslator!: (value: string) => string;
 
     /**
+     * Configure the `fetchStrategy` for requesting data using searchSourceFactory
+     * `eager` - makes calls to searchSourceFactory onInit
+     * `onOpen` - makes calls to searchSourceFactory onOpen
+     */
+    @Input()
+    public set fetchStrategy(strategy: 'eager' | 'onOpen') {
+        if (strategy === this._fetchStrategy$.value) { return; }
+
+        this._fetchStrategy$.next(strategy);
+    }
+    /**
      * Configure the `control` width.
      *
      */
@@ -433,7 +446,14 @@ export class UiSuggestComponent extends UiSuggestMatFormField
      *
      * @ignore
      */
-    public isOpen = false;
+    public set isOpen(isOpen: boolean) {
+        if (this._isOpen$.value === isOpen) { return; }
+
+        this._isOpen$.next(isOpen);
+    }
+    public get isOpen() {
+        return this._isOpen$.value;
+    }
     /**
      * The current selected item index.
      *
@@ -494,6 +514,8 @@ export class UiSuggestComponent extends UiSuggestMatFormField
     private _destroyed$ = new Subject();
     private _scrollTo$ = new Subject<number>();
     private _rangeLoad$ = new Subject<ListRange>();
+    private _fetchStrategy$ = new BehaviorSubject<'eager' | 'onOpen'>('eager');
+    private _isOpen$ = new BehaviorSubject(false);
 
     private _virtualScroller?: CdkVirtualScrollViewport;
     private _visibleRange = { start: Number.NEGATIVE_INFINITY, end: Number.POSITIVE_INFINITY };
@@ -535,9 +557,18 @@ export class UiSuggestComponent extends UiSuggestMatFormField
                 filter(_ => !!this.searchSourceFactory),
             ),
             this._disabled$.pipe(filter(v => !v)),
+            this._fetchStrategy$
+                .pipe(
+                    switchMap(strategy =>
+                        strategy === 'eager'
+                            ? of(strategy)
+                            : this._isOpen$.pipe(filter(o => !!o)),
+                    ),
+                ),
         ]).pipe(
             map(([value]) => value),
         );
+
         this.intl = this.intl || new UiSuggestIntl();
         this.customValueLabelTranslator = this.customValueLabelTranslator || this.intl.customValueLabel;
     }
