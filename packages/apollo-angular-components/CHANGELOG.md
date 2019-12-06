@@ -1,3 +1,7 @@
+# v0.10.14 (2019-12-06)
+* **grid** add `type=button`s to prevent submitting enclosing forms
+* **snackbar** add `type=button`s to prevent submitting enclosing forms
+
 # v0.10.13 (2019-10-25)
 * **suggest** fix `loading` state on toggle disabled
 
