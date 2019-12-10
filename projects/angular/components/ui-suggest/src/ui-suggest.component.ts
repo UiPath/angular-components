@@ -951,13 +951,21 @@ export class UiSuggestComponent extends UiSuggestMatFormField
             end,
         });
         vs.setRenderedContentOffset(start * this.itemSize);
-        // this is not an error it should go to index
-        // which can be outside the safe zone due to customValue
-        vs.scrollToIndex(
-            this._isOnCustomValueIndex
+
+        if (
+            end > this._itemUpperBound
+            && this.isCustomValueVisible
+        ) {
+            this._gotoBottomAsync(vs.elementRef.nativeElement);
+        } else {
+            // this is not an error it should go to index
+            // which can be outside the safe zone due to customValue
+            const targetIndex = this._isOnCustomValueIndex
                 ? index
-                : start + Number(this.isDown && this.isCustomValueVisible && passedTopBound),
-        );
+                : start + Number(this.isDown && this.isCustomValueVisible && passedTopBound);
+
+            vs.scrollToIndex(targetIndex);
+        }
     }
 
     private _announceNavigate() {
@@ -1085,5 +1093,9 @@ export class UiSuggestComponent extends UiSuggestMatFormField
         if (!!total) {
             this._triggerViewportRefresh$.next(null);
         }
+    }
+
+    private _gotoBottomAsync(element: HTMLElement) {
+        setTimeout(() => element.scrollTop = element.scrollHeight - element.clientHeight, 0);
     }
 }
