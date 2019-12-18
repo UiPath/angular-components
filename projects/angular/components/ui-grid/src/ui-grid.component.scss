@@ -183,6 +183,21 @@ ui-grid {
             }
         }
 
+        &-group-container {
+            padding: $ui-grid-default-spacing;
+
+            mat-icon {
+                font-size: 32px;
+                width: 32px;
+                height: 32px;
+                margin-left: $ui-grid-default-spacing;
+            }
+
+            p {
+                margin-left: $ui-grid-default-spacing;
+            }
+        }
+
         &-selection-info-container {
             button.mat-icon-button,
             .ui-grid-selection-info-icon {
@@ -236,6 +251,11 @@ ui-grid {
 
         &-filter-option {
             margin-right: $ui-grid-default-spacing * 2;
+            display: flex;
+
+            &-divider {
+                margin: 3px 0 3px 10px;
+            }
 
             &.ui-grid-search {
                 $search-padding: $ui-grid-default-spacing;

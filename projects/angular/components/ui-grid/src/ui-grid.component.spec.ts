@@ -1855,4 +1855,197 @@ describe('Component: UiGrid', () => {
             });
         });
     });
+
+    @Component({
+        template: `
+            <ui-grid [data]="data">
+                <ui-grid-column [property]="'myNumber'"
+                                [sortable]="true"
+                                [groupable]="groupable"
+                                title="Number Header"
+                                width="50%">
+                </ui-grid-column>
+                <ui-grid-column [property]="'myString'"
+                                title="String Header"
+                                width="50%">
+                </ui-grid-column>
+            </ui-grid>
+        `,
+    })
+    class TestFixtureGridWithGroupComponent {
+        @ViewChild(UiGridComponent, {
+            static: true,
+        })
+        public grid!: UiGridComponent<ITestEntity>;
+        public data: ITestEntity[] = [];
+        public groupable = false;
+    }
+
+    describe('Scenario: groupable grid', () => {
+        let fixture: ComponentFixture<TestFixtureGridWithGroupComponent>;
+        let component: TestFixtureGridWithGroupComponent;
+
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    UiGridModule,
+                    NoopAnimationsModule,
+                ],
+                declarations: [TestFixtureGridWithGroupComponent],
+            });
+
+            fixture = TestBed.createComponent(TestFixtureGridWithGroupComponent);
+            component = fixture.componentInstance;
+            component.data = generateListFactory(generateEntity)(5);
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        describe('Configuration: without group', () => {
+            beforeEach(() => {
+                component.groupable = false;
+                fixture.detectChanges();
+            });
+
+            it('should not display the group dropdown', () => {
+                const dropdown = fixture.debugElement.query(By.css('[data-cy=ui-grid-group-dropdown]'));
+                expect(dropdown).toBeNull();
+            });
+        });
+
+        describe('Configuration: with group', () => {
+            beforeEach(() => {
+                component.groupable = true;
+                fixture.detectChanges();
+            });
+
+            it('should display the group dropdown', () => {
+                const dropdown = fixture.debugElement.queryAll(By.css('[data-cy=ui-grid-group-dropdown]'));
+                expect(dropdown).toBeDefined();
+                expect(dropdown.length).toEqual(1);
+            });
+
+            it(`should display the 'None' option and the column names in the value list`, () => {
+
+                const dropdown = fixture.debugElement.query(By.css('[data-cy=ui-grid-group-dropdown]'));
+                const dropdownButton = dropdown.query(By.css('.ui-grid-dropdown-filter-button'));
+
+                dropdownButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const matMenuItems = dropdown.queryAll(By.directive(MatMenuItem)).map(item => item.componentInstance as MatMenuItem);
+
+                expect(matMenuItems.length).toEqual(2);
+                const [firstMenutItem, ...rest] = matMenuItems;
+
+                expect(firstMenutItem.getLabel()).toEqual('None');
+                rest.forEach((menuItem) => expect(menuItem.getLabel()).toEqual('Number Header'));
+            });
+
+            it('should show grouped column name when grouping is done without groupMessageCb', () => {
+
+                const dropdown = fixture.debugElement.query(By.css('[data-cy=ui-grid-group-dropdown]'));
+                const dropdownButton = dropdown.query(By.css('.ui-grid-dropdown-filter-button'));
+
+                dropdownButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const matMenuItems = dropdown.queryAll(By.directive(MatMenuItem));
+
+                const menuItem = matMenuItems[1];
+
+                menuItem.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const filterValue = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-value'));
+                expect(filterValue.nativeElement.innerText.trim()).toEqual((menuItem.componentInstance as MatMenuItem).getLabel());
+
+                const myNumberColumn = fixture.debugElement
+                    .queryAll(By.css('[data-property=myNumber]'))
+                    .filter((_, idx) => idx !== 0)
+                    .map(c => c.nativeElement.innerText as string);
+
+                fixture.debugElement
+                    .queryAll(By.css('.ui-grid-group-message'))
+                    .map(res => res.nativeElement.innerText as string)
+                    .forEach(res => expect(myNumberColumn.find(c => c === res)).toBeDefined());
+            });
+
+            it('should show grouped column name when grouping is done with groupMessage', () => {
+                component.grid.intl.groupMessage = function (arg: number) {
+                    if (arg > 35000) {
+                        return 'Large Value';
+                    }
+                    return 'Small Value';
+                };
+                fixture.detectChanges();
+
+                const dropdown = fixture.debugElement.query(By.css('[data-cy=ui-grid-group-dropdown]'));
+                const dropdownButton = dropdown.query(By.css('.ui-grid-dropdown-filter-button'));
+
+                dropdownButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const matMenuItems = dropdown.queryAll(By.directive(MatMenuItem));
+
+                const menuItem = matMenuItems[1];
+
+                menuItem.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                let prevGroup: string;
+                const expectedGroups = component.data
+                    .map(d => d.myNumber)
+                    .map(n => n > 35000 ? 'Large Value' : 'Small Value')
+                    .map((res, idx) => {
+                        if (idx === 0) {
+                            prevGroup = res;
+                            return res;
+                        }
+                        if (prevGroup === res) {
+                            return null;
+                        }
+                        prevGroup = res;
+                        return res;
+                    })
+                    .filter(res => res !== null) as string[];
+                const actualGroup = fixture.debugElement
+                    .queryAll(By.css('.ui-grid-group-message'))
+                    .map(res => res.nativeElement.innerText as string);
+
+                expect(expectedGroups).toEqual(actualGroup);
+            });
+
+            it('should expand and collapse the grouped rows on click', () => {
+                const dropdown = fixture.debugElement.query(By.css('[data-cy=ui-grid-group-dropdown]'));
+                const dropdownButton = dropdown.query(By.css('.ui-grid-dropdown-filter-button'));
+
+                dropdownButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const matMenuItems = dropdown.queryAll(By.directive(MatMenuItem));
+
+                const menuItem = matMenuItems[1];
+
+                menuItem.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                let rows = fixture.debugElement.queryAll(By.css('.ui-grid-row'));
+                rows[0].nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                rows = fixture.debugElement.queryAll(By.css('.ui-grid-row'));
+                expect(rows[1].nativeElement).toHaveClass('ui-grid-group-container');
+
+                rows[0].nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                rows = fixture.debugElement.queryAll(By.css('.ui-grid-row'));
+                expect(rows[1].nativeElement).not.toHaveClass('ui-grid-group-container');
+
+            });
+        });
+    });
 });

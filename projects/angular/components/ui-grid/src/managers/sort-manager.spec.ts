@@ -33,8 +33,16 @@ describe('Component: UiGrid', () => {
                 expect(manager.sort$.constructor).toBe(BehaviorSubject);
             });
 
+            it('should expose a sort stream for multiple columns of type behavior subject', () => {
+                expect(manager.multiSort$.constructor).toBe(BehaviorSubject);
+            });
+
             it('should expose a sort stream with initial value an empty object', () => {
                 expect(Object.keys(manager.sort$.getValue()).length).toBe(0);
+            });
+
+            it('should expose a sort stream for multiple columns with initial value an empty array', () => {
+                expect(Object.keys(manager.multiSort$.getValue()).length).toBe(0);
             });
         });
 
@@ -143,6 +151,197 @@ describe('Component: UiGrid', () => {
 
                     manager.changeSort(first);
                     manager.changeSort(second);
+                });
+
+                it('should emit multi sort change event', (done) => {
+                    const [first, ...rest] = columns;
+                    const second = faker.helpers.randomize(rest);
+
+
+                    manager.multiSort$
+                        .pipe(
+                            skip(2),
+                            take(1),
+                            finalize(done),
+                        ).subscribe(sort => {
+                            expect(sort[0].field).toEqual(second.property!);
+                            expect(sort[0].direction).toEqual('desc');
+                            expect(sort[1].field).toEqual(first.property!);
+                            expect(sort[1].direction).toEqual('asc');
+                        });
+                    first.sort = '';
+                    manager.changeSort(first);
+                    second.sort = 'asc';
+                    manager.changeSort(second);
+                });
+
+                it('should emit multi sort change event for each column only once', (done) => {
+                    const [first, ...rest] = columns;
+                    const second = faker.helpers.randomize(rest);
+
+                    manager.multiSort$
+                        .pipe(
+                            skip(3),
+                            take(1),
+                            finalize(done),
+                        ).subscribe(sort => {
+                            expect(sort.filter(c => c.title === first.title).length).toEqual(1);
+                            expect(sort[0].field).toEqual(first.property!);
+                            expect(sort[0].direction).toEqual('desc');
+                            expect(sort[1].field).toEqual(second.property!);
+                            expect(sort[1].direction).toEqual('desc');
+                        });
+
+                    first.sort = '';
+                    manager.changeSort(first);
+                    second.sort = 'asc';
+                    manager.changeSort(second);
+                    first.sort = 'asc';
+                    manager.changeSort(first);
+                });
+
+                it('should emit multi sort change event with only 1 element in the array in case of sort reset', (done) => {
+                    const [first, ...rest] = columns;
+                    const second = faker.helpers.randomize(rest);
+
+                    manager.multiSort$
+                        .pipe(
+                            skip(3),
+                            take(1),
+                            finalize(done),
+                        ).subscribe(sort => {
+                            expect(sort.length).toEqual(1);
+                            expect(sort[0].field).toEqual(first.property!);
+                            expect(sort[0].direction).toEqual('');
+                        });
+
+                    first.sort = '';
+                    manager.changeSort(first);
+                    second.sort = 'asc';
+                    manager.changeSort(second);
+                    first.sort = 'desc';
+                    manager.changeSort(first);
+                });
+            });
+
+            describe('Event: group change', () => {
+                it('should emit multi sort change event with only first element as the column by which it is grouped', (done) => {
+                    const column = faker.helpers.randomize(columns);
+                    column.sort = 'asc';
+
+                    manager.multiSort$
+                        .pipe(
+                            skip(1),
+                            take(1),
+                            finalize(done),
+                        ).subscribe(sort => {
+                            expect(sort.length).toEqual(1);
+                            expect(sort[0].field).toEqual(column.property!);
+                            expect(sort[0].direction).toEqual('asc');
+                        });
+
+                    manager.changeGroup(column);
+                });
+
+                it('should emit multi sort change event where sorted column as the second element in the multiSort array', (done) => {
+                    const [first, second, ...rest] = columns;
+                    const third = faker.helpers.randomize(rest);
+
+                    manager.multiSort$
+                        .pipe(
+                            skip(3),
+                            take(1),
+                            finalize(done),
+                        ).subscribe(sort => {
+                            expect(sort[0].field).toEqual(second.property!);
+                            expect(sort[0].direction).toEqual('asc');
+                            expect(sort[1].field).toEqual(third.property!);
+                            expect(sort[1].direction).toEqual('desc');
+                            expect(sort[2].field).toEqual(first.property!);
+                            expect(sort[2].direction).toEqual('asc');
+                        });
+
+                    first.sort = '';
+                    manager.changeSort(first);
+                    second.sort = 'asc';
+                    manager.changeGroup(second);
+                    third.sort = 'asc';
+                    manager.changeSort(third);
+                });
+
+                it('should emit multi sort change event with no groupBy when grouping is done by none', (done) => {
+                    const [first, ...rest] = columns;
+                    const second = faker.helpers.randomize(rest);
+
+                    manager.multiSort$
+                        .pipe(
+                            skip(3),
+                            take(1),
+                            finalize(done),
+                        ).subscribe(sort => {
+                            expect(sort.length).toEqual(1);
+                            expect(sort[0].field).toEqual(first.property!);
+                            expect(sort[0].direction).toEqual('asc');
+                        });
+
+                    first.sort = '';
+                    manager.changeSort(first);
+                    manager.changeGroup(second);
+                    manager.changeGroup(null);
+                });
+
+                it('should emit multi sort change event with each column only once', (done) => {
+                    const [first, ...rest] = columns;
+                    const second = faker.helpers.randomize(rest);
+
+                    manager.multiSort$
+                        .pipe(
+                            skip(3),
+                            take(1),
+                            finalize(done),
+                        ).subscribe(sort => {
+                            expect(sort.length).toEqual(2);
+                            expect(sort[0].field).toEqual(first.property!);
+                            expect(sort[0].direction).toEqual('asc');
+                            expect(sort[1].field).toEqual(second.property!);
+                            expect(sort[1].direction).toEqual('desc');
+                        });
+
+                    first.sort = '';
+                    manager.changeSort(first);
+                    second.sort = 'asc';
+                    manager.changeSort(second);
+                    manager.changeGroup(first);
+                });
+
+                it('should emit multi sort change with group by column never in unsorted state', (done) => {
+                    const first = faker.helpers.randomize(columns);
+
+                    manager.multiSort$
+                        .pipe(
+                            skip(2),
+                            take(1),
+                            finalize(done),
+                        ).subscribe(sort => {
+                            expect(sort.length).toEqual(1);
+                            expect(sort[0].field).toEqual(first.property!);
+                            expect(sort[0].direction).toEqual('desc');
+                        });
+
+                    manager.multiSort$
+                        .pipe(
+                            skip(3),
+                            take(1),
+                            finalize(done),
+                        ).subscribe(sort => {
+                            expect(sort.length).toEqual(1);
+                            expect(sort[0].field).toEqual(first.property!);
+                            expect(sort[0].direction).toEqual('asc');
+                        });
+
+                    manager.changeGroup(first);
+                    manager.changeSort(first);
+                    manager.changeSort(first);
                 });
             });
         });

@@ -22,6 +22,7 @@ import {
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
 
+import isEqual from 'lodash-es/isEqual';
 import range from 'lodash-es/range';
 import {
     animationFrameScheduler,
@@ -368,6 +369,23 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     public isAnyFilterDefined$ = new BehaviorSubject<boolean>(false);
+    /**
+     * Array of columns with groupable directive, if any column is present a groupBy dropdown should appear
+     *
+     */
+    public groupableColumns = [] as UiGridColumnDirective<T>[];
+    /**
+     * Array of groups and its state
+     *
+     */
+    public groups: { propertyValue: UiGridColumnDirective<T>['property'], message: any, collapsed?: boolean }[] = [];
+
+    /**
+     * group header message
+     *
+     */
+    public groupMessage?: string;
+
 
     /**
      * Emits the visible column definitions when their definition changes.
@@ -418,6 +436,8 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     private _configure$ = new Subject();
     private _isShiftPressed = false;
     private _lastCheckboxIdx = 0;
+    private _lastGroupBy: any;
+
 
     /**
      * @ignore
@@ -466,6 +486,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             tap(columns => this.isAnyFilterDefined$.next(
                 columns.some(c => !!c.dropdown || !!c.searchableDropdown),
             )),
+            tap(columns => this.groupableColumns = columns.filter(c => !!c.groupable)),
         );
 
         const data$ = this.dataManager.data$.pipe(
@@ -638,5 +659,53 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             return `${this.isEveryVisibleRowChecked ? 'select' : 'deselect'} all`;
         }
         return `${this.selectionManager.isSelected(row) ? 'deselect' : 'select'} row ${this.dataManager.indexOf(row)}`;
+    }
+
+    /**
+     * Determines Group Header rows' visibility
+     *
+     * @param [row] Position where group message will appear
+     */
+    public showGroupMessage(row: T, last: boolean): boolean {
+        if (!this.sortManager.groupedBy) { return false; }
+
+        const column = this.sortManager.groupedBy as UiGridColumnDirective<T>;
+        const propertyValue = this.dataManager.getProperty(row, column.property!);
+
+        this.groupMessage = this.intl.groupMessage(propertyValue);
+
+        if (!this.groups.find(c => c.propertyValue === propertyValue)) {
+            this.groups.push({ propertyValue, message: this.groupMessage });
+        }
+
+        if (!isEqual(this.groupMessage, this._lastGroupBy)) {
+            this._updateLastGroupBy(last, this.groupMessage);
+            return true;
+        }
+        this._updateLastGroupBy(last);
+
+        return false;
+    }
+
+    private _updateLastGroupBy(last: boolean, groupMessage?: any) {
+        if (groupMessage) {
+            this._lastGroupBy = groupMessage;
+        }
+        if (last) {
+            this._lastGroupBy = null;
+        }
+    }
+
+    public toggleGroupCollapse(row: T) {
+        const column = this.sortManager.groupedBy as UiGridColumnDirective<T>;
+        const propertyValue = this.dataManager.getProperty(row, column.property!);
+        const groupMessage = this.intl.groupMessage(propertyValue);
+        this.groups.forEach(g => g.message === groupMessage ? g.collapsed = !g.collapsed : undefined);
+    }
+
+    public isCollapsed(row: T) {
+        if (!this.sortManager.groupedBy || !this.sortManager.groupedBy.property) { return false; }
+        return this.groups.find(g => g.propertyValue ===
+            this.dataManager.getProperty(row, this.sortManager.groupedBy!.property!))!.collapsed;
     }
 }

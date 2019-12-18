@@ -53,6 +53,13 @@ export class UiGridIntl implements OnDestroy {
      *
      */
     public noFilterPlaceholder = 'All';
+
+    /**
+     * No active grouping
+     *
+     */
+    public noGroupPlaceholder = 'None';
+
     /**
      * Search placeholder.
      *
@@ -98,7 +105,11 @@ export class UiGridIntl implements OnDestroy {
      *
      */
     public descending = 'descending';
-
+    /**
+     * Group Dropdown title
+     *
+     */
+    public groupByTitle = 'Group By:';
 
     /**
      * Generates a selection label for the given count.
@@ -106,7 +117,7 @@ export class UiGridIntl implements OnDestroy {
      * @param count The total selection count.
      */
     public translateMultiPageSelectionCount =
-    (count: number) => `You have selected ${count} items.`
+        (count: number) => `You have selected ${count} items.`
 
     /**
      * Live announcer page loaded state notification.
@@ -137,7 +148,7 @@ export class UiGridIntl implements OnDestroy {
      * @param option The current dropdown option.
      */
     public translateDropdownOption =
-    (option: IDropdownOption) => option.label
+        (option: IDropdownOption) => option.label
 
     /**
      * Live announcer sort ascending notification.
@@ -162,6 +173,13 @@ export class UiGridIntl implements OnDestroy {
      */
     public columnUnsorted = (columnTtile: string) =>
         `Column ${columnTtile} unsorted`
+
+    /**
+     * Function which accepts the value of a property to return the desired message or property's value
+     * useful when entity's property is numeric or empty user wants it value to map to something else
+     *
+     */
+    public groupMessage = (propertyValue: any) => propertyValue;
 
     /**
      * @ignore

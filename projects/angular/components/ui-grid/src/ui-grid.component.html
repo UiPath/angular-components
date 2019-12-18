@@ -7,7 +7,8 @@
             header?.actionButtons?.length ||
             header?.inlineButtons?.length ||
             header?.search ||
-            (isAnyFilterDefined$ | async)"
+            (isAnyFilterDefined$ | async) ||
+            groupableColumns.length"
      class="ui-grid-filter-container">
     <ui-grid-toggle-columns *ngIf="toggleColumns && !selectionManager.hasValue()"
                             [options]="visibilityManager.options$ | async"
@@ -33,6 +34,41 @@
                         (searchChange)="filterManager.searchChange($event, header!)"
                         class="ui-grid-search ui-grid-filter-option">
         </ui-grid-search>
+
+        <ng-container *ngIf="groupableColumns.length">
+            <div class="ui-grid-dropdown-filter-container ui-grid-filter-option"
+                 data-cy="ui-grid-group-dropdown">
+                <button [matMenuTriggerFor]="groupOptions"
+                        mat-button
+                        type="button"
+                        class="ui-grid-dropdown-filter-button">
+                    <span class="ui-grid-dropdown-filter-title">{{ intl.groupByTitle }}</span>
+                    <span class="ui-grid-dropdown-filter-value">
+                        {{ sortManager.groupedBy ? sortManager.groupedBy!.title : intl.noGroupPlaceholder }}
+                    </span>
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                </button>
+                <mat-divider *ngIf="isAnyFilterDefined$ | async"
+                             class="ui-grid-filter-option-divider"
+                             vertical="true"></mat-divider>
+                <mat-menu #groupOptions="matMenu"
+                          [overlapTrigger]="true">
+                    <button [class.active]="sortManager.groupedBy === null"
+                            (click)="sortManager.changeGroup(null)"
+                            type="button"
+                            mat-menu-item>
+                        {{ intl.noGroupPlaceholder }}
+                    </button>
+                    <button *ngFor="let column of groupableColumns"
+                            [class.active]="sortManager.groupedBy && sortManager.groupedBy!.property === column.property"
+                            (click)="sortManager.changeGroup(column)"
+                            type="button"
+                            mat-menu-item>
+                        {{ column.title }}
+                    </button>
+                </mat-menu>
+            </div>
+        </ng-container>
 
         <ng-container *ngFor="let column of columns$ | async">
             <div *ngIf="column.dropdown?.visible$ | async"
@@ -271,9 +307,18 @@
              let-expanded="expanded"
              let-last="last"
              let-index="index">
+    <div *ngIf="showGroupMessage(row, last)"
+         (click)="toggleGroupCollapse(row)"
+         class="ui-grid-row ui-grid-group-container">
+        <mat-icon *ngIf="!isCollapsed(row) else collapsed">keyboard_arrow_down</mat-icon>
+        <ng-template #collapsed>
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </ng-template>
+        <p class="ui-grid-group-message">{{ groupMessage }}</p>
+    </div>
     <div cdkMonitorSubtreeFocus
          class="ui-grid-row"
-         *ngIf="expanded?.id !== row?.id || expandMode === 'preserve'"
+         *ngIf="(expanded?.id !== row?.id || expandMode === 'preserve') && !isCollapsed(row)"
          [class.ui-grid-row-state-expanded]="expanded?.id === row?.id"
          [class.ui-grid-border-none]="!footer && last"
          [ngClass]="rowConfig?.ngClassFn(row)"

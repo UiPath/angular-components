@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -31,6 +32,7 @@ import { UiGridComponent } from './ui-grid.component';
         CommonModule,
         MatPaginatorModule,
         MatCheckboxModule,
+        MatDividerModule,
         MatButtonModule,
         MatIconModule,
         MatMenuModule,
