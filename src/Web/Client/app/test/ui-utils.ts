@@ -47,6 +47,10 @@ export class IntegrationUtils<T> {
             .map((cellEl) => cellEl.nativeElement.innerText);
     }
 
+    public getGridRowItem = (gridSelector: string, rowNumber: number, selector: string, debugEl = this.fixture.debugElement) => {
+        return this.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"] ${selector}`, debugEl);
+    }
+
     public click = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getNativeElement(selector, debugEl)!
             .dispatchEvent(EventGenerator.click)
