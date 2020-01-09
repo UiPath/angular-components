@@ -51,6 +51,23 @@ export class IntegrationUtils<T> {
         return this.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"] ${selector}`, debugEl);
     }
 
+    public switchToTab = async (number: number, debugEl = this.fixture.debugElement) => {
+        const tab = this.getDebugElement(`.mat-tab-label:nth-of-type(${number}) .mat-tab-label-content`, debugEl);
+        tab.nativeElement.dispatchEvent(EventGenerator.click);
+        this.fixture.detectChanges();
+        await this.fixture.whenRenderingDone();
+        this.fixture.detectChanges();
+    }
+
+    public checkGridRow = (gridSelector: string, rowNumber: number, debugEl = this.fixture.debugElement) => {
+        const rowEl = this.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"]`, debugEl);
+
+        const rowCheckbox = this.getDebugElement(`mat-checkbox input`, rowEl);
+
+        rowCheckbox.nativeElement.dispatchEvent(EventGenerator.click);
+        this.fixture.detectChanges();
+    }
+
     public click = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getNativeElement(selector, debugEl)!
             .dispatchEvent(EventGenerator.click)
@@ -98,6 +115,23 @@ export class IntegrationUtils<T> {
 
         listItem.dispatchEvent(EventGenerator.click);
         this.fixture.detectChanges();
+    }
+
+    public selectNthUiSuggestItem = async (selector: string, nth: number) => {
+        const suggest = this.getDebugElement(selector);
+
+        this.click(`.display`, suggest);
+        this.fixture.detectChanges();
+
+        const listItems = suggest.queryAll(By.css('.mat-list-item'));
+
+        const reverseOrder = !!suggest.query(By.css('.item-list-container-direction-up'));
+
+        const listItem = listItems[reverseOrder ? listItems.length - nth - 1 : nth].nativeElement;
+
+        listItem.dispatchEvent(EventGenerator.click);
+        this.fixture.detectChanges();
+        await this.fixture.whenStable();
     }
 
     public getUiSuggestValue = (selector: string, debugEl = this.fixture.debugElement) =>
