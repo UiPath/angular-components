@@ -29,9 +29,9 @@ export class IntegrationUtils<T> {
     public getDebugElement = (selector: string, debugEl = this.fixture.debugElement) =>
         debugEl.query(By.css(selector))
 
-    public getNativeElement = (selector: string, debugEl = this.fixture.debugElement) => {
+    public getNativeElement = <U extends HTMLElement>(selector: string, debugEl = this.fixture.debugElement) => {
         const debugElement = this.getDebugElement(selector, debugEl);
-        return !!debugElement ? debugElement.nativeElement : null;
+        return !!debugElement ? debugElement.nativeElement as U : null;
     }
 
     public getComponent = (selector: string, debugEl = this.fixture.debugElement) => {
@@ -48,14 +48,14 @@ export class IntegrationUtils<T> {
     }
 
     public click = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.getNativeElement(selector, debugEl)
+        this.getNativeElement(selector, debugEl)!
             .dispatchEvent(EventGenerator.click)
 
     public clickRadioButton = (selector: string, debugEl = this.fixture.debugElement) =>
         this.click(`${selector} .mat-radio-label`, debugEl)
 
     public enter = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.getNativeElement(selector, debugEl)
+        this.getNativeElement(selector, debugEl)!
             .dispatchEvent(EventGenerator.keyDown(Key.Enter))
 
     public expectAndFlush = (stub: IStubEndpoint, httpClient: HttpTestingController) => {
@@ -65,7 +65,7 @@ export class IntegrationUtils<T> {
     }
 
     public setInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
-        const input = this.getNativeElement(selector, debugEl);
+        const input = this.getNativeElement<HTMLInputElement>(selector, debugEl)!;
         input.value = value;
         input.dispatchEvent(EventGenerator.input());
         this.fixture.detectChanges();
@@ -97,7 +97,7 @@ export class IntegrationUtils<T> {
     }
 
     public getUiSuggestValue = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.getNativeElement(`${selector} .display-value`, debugEl)
+        this.getNativeElement(`${selector} .display-value`, debugEl)!
             .innerText
             .trim()
 
