@@ -6,6 +6,7 @@ $item-height: 32px;
 $form-control-height: 18px;
 $display-padding: 15px;
 $icon-size: 18px;
+$mat-icon-size: 24px;
 $default-border-radius: 4px;
 /* https://github.com/angular/material2/blob/master/src/lib/button/_button-base.scss */
 $ui-suggest-focus-transition: background-color 200ms $swift-ease-in-out-timing-function;
@@ -83,7 +84,6 @@ $componentName: "ui-suggest";
             }
             &-suffix {
                 align-self: center;
-                margin-bottom: 5px;
 
                 mat-icon {
                     font-size: 24px;
@@ -146,16 +146,17 @@ $componentName: "ui-suggest";
         cursor: pointer;
         user-select: none;
         border-radius: $default-border-radius;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
         &:hover,
         &:focus {
             outline: none;
         }
 
-        mat-icon {
-            outline: none;
-            position: absolute;
-            right: 5px;
+        &-container {
+            max-width: calc(100% - #{$mat-icon-size});
         }
     }
 }
@@ -172,18 +173,11 @@ $componentName: "ui-suggest";
     .display {
         height: $height;
         line-height: $height;
-        padding: 0 2 * $display-padding 0 $display-padding;
         transition: $ui-suggest-focus-transition;
+        padding: 0 6px 0 16px;
 
         &-container {
             max-width: 200px;
-        }
-
-        mat-icon {
-            &.clear,
-            &.arrow-down {
-                bottom: 8px;
-            }
         }
     }
 
@@ -227,22 +221,15 @@ $componentName: "ui-suggest";
 }
 
 #{$componentName}.form-control {
+    .mat-form-field-flex {
+        padding: 0;
+        background: inherit;
+    }
+
     .display {
         font-size: 14px;
         height: $form-control-height;
         line-height: $form-control-height;
-        padding: 0 2 * $display-padding 0 0;
-
-        mat-icon {
-            &.clear,
-            &.arrow-down {
-                bottom: 0;
-            }
-
-            &.arrow-down {
-                top: -4px;
-            }
-        }
     }
 
     .item-list-container {
@@ -293,6 +280,52 @@ $componentName: "ui-suggest";
                 width: 33px;
                 left: -7px;
                 top: -7px;
+            }
+        }
+    }
+}
+
+.mat-form-field-appearance-outline {
+    ui-suggest {
+        margin-top: -1px;
+
+        .display {
+            > mat-icon.arrow-down {
+                margin-top: -6px;
+            }
+        }
+
+        .mat-form-field {
+            .mat-form-field-suffix {
+                height: 36px;
+            }
+        }
+    }
+}
+
+.mat-form-field-appearance-fill {
+    ui-suggest {
+        margin-top: -2px;
+
+        .display {
+            > mat-icon.arrow-down {
+                margin-top: -12px;
+            }
+        }
+
+        .mat-form-field {
+            .mat-form-field-suffix {
+                height: 32px;
+            }
+        }
+    }
+}
+
+.mat-form-field-appearance-standard {
+    ui-suggest {
+        .mat-form-field {
+            .mat-form-field-suffix {
+                height: 32px;
             }
         }
     }

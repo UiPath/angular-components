@@ -1439,8 +1439,14 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 tick(1);
 
-                if (i > uiSuggest.displayCount) {
-                    const currentItem = uiSuggest.items[i];
+                const idx = uiSuggest.activeIndex;
+
+                // update the view when scrolling occurs
+                if (idx >= uiSuggest.displayCount) {
+                    fixture.detectChanges();
+                    tick(1);
+
+                    const currentItem = uiSuggest.items[idx];
                     expect(currentItem.loading).toBe(VirtualScrollItemStatus.initial);
 
                     const selectedItem = fixture.debugElement.query(By.css('.mat-list-item.active'));
