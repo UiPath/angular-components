@@ -40,6 +40,13 @@ $componentName: "ui-suggest";
         font-weight: 700;
     }
 
+    .display-value {
+        &:after {
+            content: "";
+            display: inline-block;
+        }
+    }
+
     .item-list-container {
         display: block;
         position: absolute;
