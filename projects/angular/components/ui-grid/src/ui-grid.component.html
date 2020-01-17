@@ -115,102 +115,103 @@
         <div [class.ui-grid-table-refreshable]="refreshable"
              class="ui-grid-table"
              role="grid">
-            <div class="ui-grid-header-row"
-                 role="row">
-                <div *ngIf="selectable"
-                     class="ui-grid-header-cell ui-grid-checkbox-cell ui-grid-feature-cell"
-                     role="columnheader">
-                    <mat-checkbox (change)="$event && toggle($event)"
-                                  [disabled]="!dataManager.length"
-                                  [checked]="isEveryVisibleRowChecked"
-                                  [indeterminate]="hasValueOnVisiblePage && !isEveryVisibleRowChecked"
-                                  [aria-label]="checkboxLabel()"
-                                  tabindex="0">
-                    </mat-checkbox>
-                </div>
+            <div class="ui-grid-header">
+                <div *ngIf="showHeaderRow"
+                     class="ui-grid-header-row"
+                     role="row">
+                    <div *ngIf="selectable"
+                         class="ui-grid-header-cell ui-grid-checkbox-cell ui-grid-feature-cell"
+                         role="columnheader">
+                        <mat-checkbox (change)="$event && toggle($event)"
+                                      [disabled]="!dataManager.length"
+                                      [checked]="isEveryVisibleRowChecked"
+                                      [indeterminate]="hasValueOnVisiblePage && !isEveryVisibleRowChecked"
+                                      [aria-label]="checkboxLabel()"
+                                      tabindex="0">
+                        </mat-checkbox>
+                    </div>
 
-                <ng-container *ngIf="multiPageSelect then multiPageSelectionHeaderCell">
-                </ng-container>
+                    <ng-container *ngIf="multiPageSelect then multiPageSelectionHeaderCell">
+                    </ng-container>
 
-                <div *ngFor="let column of visible$ | async; let last = last"
-                     [class.ui-grid-header-cell-sortable]="column.sortable"
-                     [class.ui-grid-resizeable]="column.resizeable"
-                     [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
-                     [attr.aria-sort]="column.ariaSort"
-                     [attr.data-property]="column.property"
-                     [attr.data-identifier]="column.identifier"
-                     [style.width.%]="column.width"
-                     (keyup.enter)="sortManager.changeSort(column)"
-                     (keyup.space)="sortManager.changeSort(column)"
-                     class="ui-grid-header-cell"
-                     role="columnheader"
-                     tabindex="0">
-                    <div (click)="sortManager.changeSort(column)"
-                         class="ui-grid-header-title">
-                        <p [class.ui-grid-header-title-filtered]="column.dropdown?.value != null ||
+                    <div *ngFor="let column of visible$ | async; let last = last"
+                         [class.ui-grid-header-cell-sortable]="column.sortable"
+                         [class.ui-grid-resizeable]="column.resizeable"
+                         [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
+                         [attr.aria-sort]="column.ariaSort"
+                         [attr.data-property]="column.property"
+                         [attr.data-identifier]="column.identifier"
+                         [style.width.%]="column.width"
+                         (keyup.enter)="sortManager.changeSort(column)"
+                         (keyup.space)="sortManager.changeSort(column)"
+                         class="ui-grid-header-cell"
+                         role="columnheader"
+                         tabindex="0">
+                        <div (click)="sortManager.changeSort(column)"
+                             class="ui-grid-header-title">
+                            <p [class.ui-grid-header-title-filtered]="column.dropdown?.value != null ||
                                                                  column.searchableDropdown?.value != null"
-                           [matTooltip]="column.title"
-                           [matTooltipDisabled]="resizeManager.isResizing">{{ column.title }}</p>
-                        <div *ngIf="column.sortable"
-                             [class.ui-grid-sort-indicator-asc]="column.sort === 'asc'"
-                             [class.ui-grid-sort-indicator-desc]="column.sort === 'desc'"
-                             class="ui-grid-sort-indicator">
-                            <mat-icon class="ui-grid-sort-icon">
+                               [matTooltip]="column.title"
+                               [matTooltipDisabled]="resizeManager.isResizing">{{ column.title }}</p>
+                            <div *ngIf="column.sortable"
+                                 [class.ui-grid-sort-indicator-asc]="column.sort === 'asc'"
+                                 [class.ui-grid-sort-indicator-desc]="column.sort === 'desc'"
+                                 class="ui-grid-sort-indicator">
+                                <mat-icon class="ui-grid-sort-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         viewBox="0 0 24 24">
+                                        <path [attr.transform]="column.sort === '' ? 'translate(0 -3)': ''"
+                                              class="path-asc"
+                                              d="M12 11.8l2.5 2.5 1.1-1.1L12 9.7l-3.6 3.5 1.1 1.1z" />
+                                        <path [attr.transform]="column.sort === '' ? 'translate(0 3)': ''"
+                                              class="path-desc"
+                                              d="M12 12.2L9.5 9.7l-1.1 1.1 3.6 3.5 3.6-3.5-1.1-1.1z" />
+                                    </svg>
+                                </mat-icon>
+                            </div>
+                        </div>
+
+                        <div *ngIf="column.resizeable && !last"
+                             [class.is-resizing]="column.isResizing"
+                             (mousedown)="resizeManager.startResize($event, column)"
+                             class="ui-grid-resize-anchor">
+                            <mat-icon>
                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 24 24">
-                                    <path [attr.transform]="column.sort === '' ? 'translate(0 -3)': ''"
-                                          class="path-asc"
-                                          d="M12 11.8l2.5 2.5 1.1-1.1L12 9.7l-3.6 3.5 1.1 1.1z" />
-                                    <path [attr.transform]="column.sort === '' ? 'translate(0 3)': ''"
-                                          class="path-desc"
-                                          d="M12 12.2L9.5 9.7l-1.1 1.1 3.6 3.5 3.6-3.5-1.1-1.1z" />
+                                     width="24"
+                                     height="24">
+                                    <path
+                                          d="M11 18l-2 2-2-2 2-2 2 2zm-2-8l-2 2 2 2 2-2-2-2zm0-6L7 6l2 2 2-2-2-2zm6 4l2-2-2-2-2 2 2 2zm0 2l-2 2 2 2 2-2-2-2zm0 6l-2 2 2 2 2-2-2-2z" />
                                 </svg>
                             </mat-icon>
                         </div>
                     </div>
 
-                    <div *ngIf="column.resizeable && !last"
-                         [class.is-resizing]="column.isResizing"
-                         (mousedown)="resizeManager.startResize($event, column)"
-                         class="ui-grid-resize-anchor">
-                        <mat-icon>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 width="24"
-                                 height="24">
-                                <path
-                                      d="M11 18l-2 2-2-2 2-2 2 2zm-2-8l-2 2 2 2 2-2-2-2zm0-6L7 6l2 2 2-2-2-2zm6 4l2-2-2-2-2 2 2 2zm0 2l-2 2 2 2 2-2-2-2zm0 6l-2 2 2 2 2-2-2-2z" />
-                            </svg>
-                        </mat-icon>
+                    <div *ngIf="virtualScroll"
+                         [style.marginLeft.px]="scrollCompensationWidth"
+                         class="ui-grid-header-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">
+                    </div>
+                    <div *ngIf="refreshable"
+                         class="ui-grid-header-cell ui-grid-refresh-cell ui-grid-feature-cell"
+                         role="columnheader">
+                        <button [matTooltip]="intl.refreshTooltip"
+                                [matTooltipDisabled]="resizeManager.isResizing"
+                                [disabled]="disabled"
+                                (click)="refresh.emit()"
+                                mat-icon-button
+                                type="button"
+                                class="grid-refresh-button">
+                            <mat-icon>refresh</mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="!!actions"
+                         class="ui-grid-header-cell ui-grid-action-cell ui-grid-feature-cell">
                     </div>
                 </div>
-
-                <div *ngIf="virtualScroll"
-                     [style.marginLeft.px]="scrollCompensationWidth"
-                     class="ui-grid-header-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">
-                </div>
-                <div *ngIf="refreshable"
-                     class="ui-grid-header-cell ui-grid-refresh-cell ui-grid-feature-cell"
-                     role="columnheader">
-                    <button [matTooltip]="intl.refreshTooltip"
-                            [matTooltipDisabled]="resizeManager.isResizing"
-                            [disabled]="disabled"
-                            (click)="refresh.emit()"
-                            mat-icon-button
-                            type="button"
-                            class="grid-refresh-button">
-                        <mat-icon>refresh</mat-icon>
-                    </button>
-                </div>
-                <div *ngIf="!!actions"
-                     class="ui-grid-header-cell ui-grid-action-cell ui-grid-feature-cell">
-                </div>
-
                 <mat-progress-bar *ngIf="loading"
                                   mode="query"
                                   class="ui-grid-loader">
                 </mat-progress-bar>
             </div>
-
             <ng-container *ngIf="multiPageSelect then multiPageSelectionRow">
             </ng-container>
 
