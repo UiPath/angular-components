@@ -1,4 +1,10 @@
 # v0.10.14 (2019-12-06)
+* **suggest** fix toolip and scrolling
+* **suggest** implement fetch strategies
+* **password-toggle** implement password toggle for inputs
+* **password-indicator** implement a complexity progress indicator
+
+# v0.10.14 (2019-12-06)
 * **grid** add `type=button`s to prevent submitting enclosing forms
 * **snackbar** add `type=button`s to prevent submitting enclosing forms
 
