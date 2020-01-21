@@ -21,6 +21,8 @@ module.exports = {
                 'spinner-button',
                 'content-loader',
                 'testing',
+                'password-toggle',
+                'password-indicator',
             ];
 
             return [2, 'always', scopeList];

@@ -4,6 +4,7 @@
     "outDir": "../../out-tsc/spec",
     "types": [
       "jasmine",
+      "jasmine_dom_matchers",
       "node"
     ]
   },
