@@ -288,6 +288,42 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                             </li>
                             <li class="link">
+                                <a href="modules/UiPasswordIndicatorModule.html" data-type="entity-link">UiPasswordIndicatorModule</a>
+                                    <li class="chapter inner">
+                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                            'data-target="#components-links-module-UiPasswordIndicatorModule-8caadba4f3bdb638a98bdcf79a98981c"' : 'data-target="#xs-components-links-module-UiPasswordIndicatorModule-8caadba4f3bdb638a98bdcf79a98981c"' }>
+                                            <span class="icon ion-md-cog"></span>
+                                            <span>Components</span>
+                                            <span class="icon ion-ios-arrow-down"></span>
+                                        </div>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiPasswordIndicatorModule-8caadba4f3bdb638a98bdcf79a98981c"' :
+                                            'id="xs-components-links-module-UiPasswordIndicatorModule-8caadba4f3bdb638a98bdcf79a98981c"' }>
+                                            <li class="link">
+                                                <a href="components/UiPasswordIndicatorComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiPasswordIndicatorComponent</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                            </li>
+                            <li class="link">
+                                <a href="modules/UiPasswordToggleModule.html" data-type="entity-link">UiPasswordToggleModule</a>
+                                    <li class="chapter inner">
+                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                            'data-target="#components-links-module-UiPasswordToggleModule-2ca4166687156a21236b21d8e53ab23b"' : 'data-target="#xs-components-links-module-UiPasswordToggleModule-2ca4166687156a21236b21d8e53ab23b"' }>
+                                            <span class="icon ion-md-cog"></span>
+                                            <span>Components</span>
+                                            <span class="icon ion-ios-arrow-down"></span>
+                                        </div>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiPasswordToggleModule-2ca4166687156a21236b21d8e53ab23b"' :
+                                            'id="xs-components-links-module-UiPasswordToggleModule-2ca4166687156a21236b21d8e53ab23b"' }>
+                                            <li class="link">
+                                                <a href="components/UiPasswordToggleComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiPasswordToggleComponent</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                            </li>
+                            <li class="link">
                                 <a href="modules/UiPipeModule.html" data-type="entity-link">UiPipeModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
@@ -509,6 +545,12 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/QueuedAnnouncer.html" data-type="entity-link">QueuedAnnouncer</a>
                                 </li>
                                 <li class="link">
+                                    <a href="injectables/UiPasswordComplexityIntl.html" data-type="entity-link">UiPasswordComplexityIntl</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/UiPasswordToggleIntl.html" data-type="entity-link">UiPasswordToggleIntl</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/UiSnackbarIntl.html" data-type="entity-link">UiSnackbarIntl</a>
                                 </li>
                                 <li class="link">
@@ -544,6 +586,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/IKeyModifier.html" data-type="entity-link">IKeyModifier</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/IRegexLike.html" data-type="entity-link">IRegexLike</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/ISecondFormatOptions.html" data-type="entity-link">ISecondFormatOptions</a>
