@@ -1,17 +1,18 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  Injectable,
-  Optional,
-  ViewEncapsulation,
+    ChangeDetectionStrategy,
+    Component,
+    Inject,
+    Injectable,
+    Optional,
+    TemplateRef,
+    ViewEncapsulation,
 } from '@angular/core';
 import {
-  MAT_SNACK_BAR_DATA,
-  MAT_SNACK_BAR_DEFAULT_OPTIONS,
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarRef,
+    MAT_SNACK_BAR_DATA,
+    MAT_SNACK_BAR_DEFAULT_OPTIONS,
+    MatSnackBar,
+    MatSnackBarConfig,
+    MatSnackBarRef,
 } from '@angular/material/snack-bar';
 
 import { Observable } from 'rxjs';
@@ -22,10 +23,10 @@ interface ISnackBarAlert {
     /**
      * Alert message
      */
-    message: string;
-     /**
-     * How long to remain on the screen
-     */
+    message: string | TemplateRef<any>;
+    /**
+    * How long to remain on the screen
+    */
     duration: number;
     /**
      * Material icon to be used in snackbar
@@ -46,6 +47,14 @@ interface ISnackBarAlert {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiSnackBarComponent {
+    /**
+     * @internal
+     * @ignore
+     */
+    public isPropertyString(property: string | TemplateRef<any>): property is string {
+        return typeof property === 'string';
+    }
+
     constructor(
         @Inject(MAT_SNACK_BAR_DATA)
         public data: ISnackBarAlert,
@@ -68,7 +77,7 @@ export const ICON_MAP: Map<SnackBarType, string> = new Map([
     [SnackBarType.Error, 'info'],
 ]);
 
-export type SnackbarAction = (message: string, duration?: number) => Observable<void>;
+export type SnackbarAction = (message: string | TemplateRef<any>, duration?: number) => Observable<void>;
 
 /**
  * Snackbar config options
@@ -153,7 +162,7 @@ export class UiSnackBarService {
     }
 
     private _alertFactory = (type: SnackBarType) =>
-        (message: string, duration?: number) => this._alert(type, {
+        (message: string | TemplateRef<any>, duration?: number) => this._alert(type, {
             message,
             icon: ICON_MAP.get(type),
             duration: duration || this._options.duration!,
