@@ -1,7 +1,12 @@
 <div class="ui-snackbar-container">
     <div class="ui-snackbar-message">
         <mat-icon *ngIf="data.icon">{{data.icon}}</mat-icon>
-        <span [innerHTML]="data.message | nl2br"></span>
+        <span *ngIf="isPropertyString(data.message); else renderTemplate"
+              [innerHTML]="data.message | nl2br"></span>
+        <ng-template #renderTemplate>
+            <ng-container [ngTemplateOutlet]="data.message"
+                          [ngTemplateOutletContext]="{ $implicit: snackBarRef }"></ng-container>
+        </ng-template>
     </div>
     <div class="ui-snackbar-dismiss">
         <button [attr.aria-label]="data.closeAriaLabel"
