@@ -1,4 +1,8 @@
-# v0.10.14 (2019-12-06)
+
+# v0.10.14 (2019-01-22)
+* **snackbar** add support for custom template instead of message
+
+# v0.10.15 (2020-01-21)
 * **suggest** fix toolip and scrolling
 * **suggest** implement fetch strategies
 * **password-toggle** implement password toggle for inputs
