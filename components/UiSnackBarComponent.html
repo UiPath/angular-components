@@ -159,7 +159,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:48</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:56</a></div>
                             </td>
                         </tr>
 
@@ -249,7 +249,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:51</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:60</a></div>
                             </td>
                         </tr>
 
@@ -277,7 +277,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:52</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:61</a></div>
                             </td>
                         </tr>
 
@@ -291,19 +291,20 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  Injectable,
-  Optional,
-  ViewEncapsulation,
+    ChangeDetectionStrategy,
+    Component,
+    Inject,
+    Injectable,
+    Optional,
+    TemplateRef,
+    ViewEncapsulation,
 } from &#x27;@angular/core&#x27;;
 import {
-  MAT_SNACK_BAR_DATA,
-  MAT_SNACK_BAR_DEFAULT_OPTIONS,
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarRef,
+    MAT_SNACK_BAR_DATA,
+    MAT_SNACK_BAR_DEFAULT_OPTIONS,
+    MatSnackBar,
+    MatSnackBarConfig,
+    MatSnackBarRef,
 } from &#x27;@angular/material/snack-bar&#x27;;
 
 import { Observable } from &#x27;rxjs&#x27;;
@@ -314,10 +315,10 @@ interface ISnackBarAlert {
     /**
      * Alert message
      */
-    message: string;
-     /**
-     * How long to remain on the screen
-     */
+    message: string | TemplateRef&lt;any&gt;;
+    /**
+    * How long to remain on the screen
+    */
     duration: number;
     /**
      * Material icon to be used in snackbar
@@ -338,6 +339,14 @@ interface ISnackBarAlert {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiSnackBarComponent {
+    /**
+     * @internal
+     * @ignore
+     */
+    public isPropertyString(property: string | TemplateRef&lt;any&gt;): property is string {
+        return typeof property &#x3D;&#x3D;&#x3D; &#x27;string&#x27;;
+    }
+
     constructor(
         @Inject(MAT_SNACK_BAR_DATA)
         public data: ISnackBarAlert,
@@ -360,7 +369,7 @@ export const ICON_MAP: Map&lt;SnackBarType, string&gt; &#x3D; new Map([
     [SnackBarType.Error, &#x27;info&#x27;],
 ]);
 
-export type SnackbarAction &#x3D; (message: string, duration?: number) &#x3D;&gt; Observable&lt;void&gt;;
+export type SnackbarAction &#x3D; (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; Observable&lt;void&gt;;
 
 /**
  * Snackbar config options
@@ -445,7 +454,7 @@ export class UiSnackBarService {
     }
 
     private _alertFactory &#x3D; (type: SnackBarType) &#x3D;&gt;
-        (message: string, duration?: number) &#x3D;&gt; this._alert(type, {
+        (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; this._alert(type, {
             message,
             icon: ICON_MAP.get(type),
             duration: duration || this._options.duration!,
@@ -471,7 +480,12 @@ export class UiSnackBarService {
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;ui-snackbar-container&quot;&gt;
     &lt;div class&#x3D;&quot;ui-snackbar-message&quot;&gt;
         &lt;mat-icon *ngIf&#x3D;&quot;data.icon&quot;&gt;{{data.icon}}&lt;/mat-icon&gt;
-        &lt;span [innerHTML]&#x3D;&quot;data.message | nl2br&quot;&gt;&lt;/span&gt;
+        &lt;span *ngIf&#x3D;&quot;isPropertyString(data.message); else renderTemplate&quot;
+              [innerHTML]&#x3D;&quot;data.message | nl2br&quot;&gt;&lt;/span&gt;
+        &lt;ng-template #renderTemplate&gt;
+            &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;data.message&quot;
+                          [ngTemplateOutletContext]&#x3D;&quot;{ $implicit: snackBarRef }&quot;&gt;&lt;/ng-container&gt;
+        &lt;/ng-template&gt;
     &lt;/div&gt;
     &lt;div class&#x3D;&quot;ui-snackbar-dismiss&quot;&gt;
         &lt;button [attr.aria-label]&#x3D;&quot;data.closeAriaLabel&quot;
@@ -542,7 +556,7 @@ export class UiSnackBarService {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="ui-snackbar-container">    <div class="ui-snackbar-message">        <mat-icon *ngIf="data.icon">{{data.icon}}</mat-icon>        <span [innerHTML]="data.message | nl2br"></span>    </div>    <div class="ui-snackbar-dismiss">        <button [attr.aria-label]="data.closeAriaLabel"                (click)="snackBarRef.dismiss()"                type="button"                mat-icon-button>            <mat-icon>close</mat-icon>        </button>    </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="ui-snackbar-container">    <div class="ui-snackbar-message">        <mat-icon *ngIf="data.icon">{{data.icon}}</mat-icon>        <span *ngIf="isPropertyString(data.message); else renderTemplate"              [innerHTML]="data.message | nl2br"></span>        <ng-template #renderTemplate>            <ng-container [ngTemplateOutlet]="data.message"                          [ngTemplateOutletContext]="{ $implicit: snackBarRef }"></ng-container>        </ng-template>    </div>    <div class="ui-snackbar-dismiss">        <button [attr.aria-label]="data.closeAriaLabel"                (click)="snackBarRef.dismiss()"                type="button"                mat-icon-button>            <mat-icon>close</mat-icon>        </button>    </div></div></div>'
     var COMPONENTS = [{'name': 'UiButtonProgressBarComponent', 'selector': 'ui-button-progress-bar'},{'name': 'UiButtonProgressSpinnerComponent', 'selector': 'ui-button-progress-spinner'},{'name': 'UiContentSpinnerComponent', 'selector': 'ui-content-spinner'},{'name': 'UiGridComponent', 'selector': 'ui-grid'},{'name': 'UiGridSearchComponent', 'selector': 'ui-grid-search'},{'name': 'UiPasswordIndicatorComponent', 'selector': 'ui-password-indicator'},{'name': 'UiPasswordToggleComponent', 'selector': 'ui-password-toggle'},{'name': 'UiSnackBarComponent', 'selector': ''}];
     var DIRECTIVES = [{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiContentLoaderDirective', 'selector': '[uiContentLoading]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiProgressButtonDirective', 'selector': '
         button[mat-button][ui-progress-button],

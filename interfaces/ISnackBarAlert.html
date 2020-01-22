@@ -228,7 +228,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>message:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>message:     <code>string | TemplateRef&lt;any&gt;</code>
 </code>
                                     </td>
                                 </tr>
@@ -236,7 +236,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>    <code>string | TemplateRef&lt;any&gt;</code>
 
                                         </td>
                                     </tr>
@@ -259,19 +259,20 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  Injectable,
-  Optional,
-  ViewEncapsulation,
+    ChangeDetectionStrategy,
+    Component,
+    Inject,
+    Injectable,
+    Optional,
+    TemplateRef,
+    ViewEncapsulation,
 } from &#x27;@angular/core&#x27;;
 import {
-  MAT_SNACK_BAR_DATA,
-  MAT_SNACK_BAR_DEFAULT_OPTIONS,
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarRef,
+    MAT_SNACK_BAR_DATA,
+    MAT_SNACK_BAR_DEFAULT_OPTIONS,
+    MatSnackBar,
+    MatSnackBarConfig,
+    MatSnackBarRef,
 } from &#x27;@angular/material/snack-bar&#x27;;
 
 import { Observable } from &#x27;rxjs&#x27;;
@@ -282,10 +283,10 @@ interface ISnackBarAlert {
     /**
      * Alert message
      */
-    message: string;
-     /**
-     * How long to remain on the screen
-     */
+    message: string | TemplateRef&lt;any&gt;;
+    /**
+    * How long to remain on the screen
+    */
     duration: number;
     /**
      * Material icon to be used in snackbar
@@ -306,6 +307,14 @@ interface ISnackBarAlert {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiSnackBarComponent {
+    /**
+     * @internal
+     * @ignore
+     */
+    public isPropertyString(property: string | TemplateRef&lt;any&gt;): property is string {
+        return typeof property &#x3D;&#x3D;&#x3D; &#x27;string&#x27;;
+    }
+
     constructor(
         @Inject(MAT_SNACK_BAR_DATA)
         public data: ISnackBarAlert,
@@ -328,7 +337,7 @@ export const ICON_MAP: Map&lt;SnackBarType, string&gt; &#x3D; new Map([
     [SnackBarType.Error, &#x27;info&#x27;],
 ]);
 
-export type SnackbarAction &#x3D; (message: string, duration?: number) &#x3D;&gt; Observable&lt;void&gt;;
+export type SnackbarAction &#x3D; (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; Observable&lt;void&gt;;
 
 /**
  * Snackbar config options
@@ -413,7 +422,7 @@ export class UiSnackBarService {
     }
 
     private _alertFactory &#x3D; (type: SnackBarType) &#x3D;&gt;
-        (message: string, duration?: number) &#x3D;&gt; this._alert(type, {
+        (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; this._alert(type, {
             message,
             icon: ICON_MAP.get(type),
             duration: duration || this._options.duration!,

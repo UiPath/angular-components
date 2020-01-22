@@ -133,7 +133,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:115</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:124</a></div>
                             </td>
                         </tr>
 
@@ -224,8 +224,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="149"
-                            class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:149</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="158"
+                            class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:158</a></div>
                 </td>
             </tr>
 
@@ -270,7 +270,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="103" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:103</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:112</a></div>
                             </td>
                         </tr>
 
@@ -335,7 +335,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:97</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="106" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:106</a></div>
                             </td>
                         </tr>
 
@@ -399,7 +399,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="138" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:138</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="147" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:147</a></div>
                             </td>
                         </tr>
 
@@ -464,7 +464,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="109" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:109</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:118</a></div>
                             </td>
                         </tr>
 
@@ -529,7 +529,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:115</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:124</a></div>
                             </td>
                         </tr>
 
@@ -580,19 +580,20 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  Injectable,
-  Optional,
-  ViewEncapsulation,
+    ChangeDetectionStrategy,
+    Component,
+    Inject,
+    Injectable,
+    Optional,
+    TemplateRef,
+    ViewEncapsulation,
 } from &#x27;@angular/core&#x27;;
 import {
-  MAT_SNACK_BAR_DATA,
-  MAT_SNACK_BAR_DEFAULT_OPTIONS,
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarRef,
+    MAT_SNACK_BAR_DATA,
+    MAT_SNACK_BAR_DEFAULT_OPTIONS,
+    MatSnackBar,
+    MatSnackBarConfig,
+    MatSnackBarRef,
 } from &#x27;@angular/material/snack-bar&#x27;;
 
 import { Observable } from &#x27;rxjs&#x27;;
@@ -603,10 +604,10 @@ interface ISnackBarAlert {
     /**
      * Alert message
      */
-    message: string;
-     /**
-     * How long to remain on the screen
-     */
+    message: string | TemplateRef&lt;any&gt;;
+    /**
+    * How long to remain on the screen
+    */
     duration: number;
     /**
      * Material icon to be used in snackbar
@@ -627,6 +628,14 @@ interface ISnackBarAlert {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiSnackBarComponent {
+    /**
+     * @internal
+     * @ignore
+     */
+    public isPropertyString(property: string | TemplateRef&lt;any&gt;): property is string {
+        return typeof property &#x3D;&#x3D;&#x3D; &#x27;string&#x27;;
+    }
+
     constructor(
         @Inject(MAT_SNACK_BAR_DATA)
         public data: ISnackBarAlert,
@@ -649,7 +658,7 @@ export const ICON_MAP: Map&lt;SnackBarType, string&gt; &#x3D; new Map([
     [SnackBarType.Error, &#x27;info&#x27;],
 ]);
 
-export type SnackbarAction &#x3D; (message: string, duration?: number) &#x3D;&gt; Observable&lt;void&gt;;
+export type SnackbarAction &#x3D; (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; Observable&lt;void&gt;;
 
 /**
  * Snackbar config options
@@ -734,7 +743,7 @@ export class UiSnackBarService {
     }
 
     private _alertFactory &#x3D; (type: SnackBarType) &#x3D;&gt;
-        (message: string, duration?: number) &#x3D;&gt; this._alert(type, {
+        (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; this._alert(type, {
             message,
             icon: ICON_MAP.get(type),
             duration: duration || this._options.duration!,
