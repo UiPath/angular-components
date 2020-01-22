@@ -1,11 +1,15 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component } from '@angular/core';
 import {
-  async,
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
+    Component,
+    TemplateRef,
+    ViewChild,
+} from '@angular/core';
+import {
+    async,
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
 } from '@angular/core/testing';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,20 +17,26 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import * as faker from 'faker';
 
 import {
-  ICON_MAP,
-  panelClass,
-  SnackbarAction,
-  SnackBarType,
-  UiSnackBarService,
+    ICON_MAP,
+    panelClass,
+    SnackbarAction,
+    SnackBarType,
+    UiSnackBarService,
 } from './ui-snackbar.component';
 import { UiSnackBarModule } from './ui-snackbar.module';
 
 const DEFAULT_DURATION = 2500;
 
 @Component({
-    template: '',
+    template: `<ng-template #richContent>
+                <div class="rich-class">Some Rich</div>
+                <a href="#">content</a>
+               </ng-template>`,
 })
 export class SnackBarFixtureComponent {
+    @ViewChild('richContent', { static: true })
+    public richContent!: TemplateRef<any>;
+
     constructor(public service: UiSnackBarService) { }
 }
 
@@ -270,5 +280,17 @@ describe('Service: UiSnackBarService', () => {
 
         const snackAfterClear = getSnack();
         expect(snackAfterClear).toBeNull();
+    });
+
+    it('should show rich context via template', () => {
+        // make sure the template is initialized
+        fixture.detectChanges();
+
+        service.success(fixture.componentInstance.richContent);
+        const snack = getSnack()!;
+
+        expect(snack).not.toBeNull();
+        expect(snack.querySelectorAll('div.rich-class').length).toEqual(1);
+        expect(snack.querySelectorAll('a').length).toEqual(1);
     });
 });
