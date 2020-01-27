@@ -139,6 +139,18 @@ export class IntegrationUtils<T> {
             .innerText
             .trim()
 
+    public isCheckboxChecked = (selector: string, debugEl = this.fixture.debugElement) =>
+        this.getDebugElement(selector, debugEl)
+            .nativeElement
+            .classList
+            .contains('mat-checkbox-checked')
+
+    public toggleCheckbox = (selector: string, debugEl = this.fixture.debugElement) =>
+        this.getDebugElement(selector, debugEl)
+            .query(By.css('.mat-checkbox-label'))
+            .nativeElement
+            .dispatchEvent(EventGenerator.click)
+
     public isRadioButtonChecked = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
             .nativeElement
