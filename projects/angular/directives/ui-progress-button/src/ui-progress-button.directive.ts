@@ -1,13 +1,13 @@
 import {
-  ComponentFactoryResolver,
-  Directive,
-  Input,
-  OnInit,
-  Renderer2,
-  ViewContainerRef,
+    ComponentFactoryResolver,
+    Directive,
+    Input,
+    OnInit,
+    Renderer2,
+    ViewContainerRef,
 } from '@angular/core';
 import { MatProgressBar } from '@angular/material/progress-bar';
-import { UiLoaderButton } from '@uipath/angular/directives/internal';
+import { UiLoaderButtonDirective } from '@uipath/angular/directives/internal';
 
 import { UiButtonProgressBarComponent } from './internal/ui-button-progress-bar.component';
 
@@ -29,7 +29,7 @@ export const enum ButtonProgressClass {
     exportAs: 'uiProgressButton',
 })
 export class UiProgressButtonDirective
-    extends UiLoaderButton<UiProgressButtonDirective, UiButtonProgressBarComponent>
+    extends UiLoaderButtonDirective<UiButtonProgressBarComponent>
     implements OnInit {
 
     @Input()

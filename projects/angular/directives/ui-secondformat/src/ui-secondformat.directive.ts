@@ -1,25 +1,25 @@
 import {
-  Directive,
-  ElementRef,
-  Inject,
-  InjectionToken,
-  Input,
-  Optional,
-  Renderer2,
+    Directive,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Input,
+    Optional,
+    Renderer2,
 } from '@angular/core';
-import { UiFormat } from '@uipath/angular/directives/internal';
+import { UiFormatDirective } from '@uipath/angular/directives/internal';
 
 import * as _moment from 'moment';
 import {
-  merge,
-  Observable,
-  of,
+    merge,
+    Observable,
+    of,
 } from 'rxjs';
 import {
-  distinctUntilChanged,
-  filter,
-  map,
-  takeUntil,
+    distinctUntilChanged,
+    filter,
+    map,
+    takeUntil,
 } from 'rxjs/operators';
 
 /**
@@ -85,7 +85,7 @@ export const UI_SECONDFORMAT_OPTIONS = new InjectionToken<Observable<void>>('UiS
 @Directive({
     selector: '[uiSecondFormat], ui-secondformat',
 })
-export class UiSecondFormatDirective extends UiFormat {
+export class UiSecondFormatDirective extends UiFormatDirective {
     /**
      * The number of `seconds` that need to be formatted.
      *

@@ -1,4 +1,5 @@
 import {
+    Directive,
     ElementRef,
     OnChanges,
     OnDestroy,
@@ -7,7 +8,8 @@ import {
 
 import { Subject } from 'rxjs';
 
-export abstract class UiFormat implements OnChanges, OnDestroy {
+@Directive()
+export abstract class UiFormatDirective implements OnChanges, OnDestroy {
     protected abstract _text?: HTMLElement;
     protected _redraw$ = new Subject();
     protected _destroyed$ = new Subject();

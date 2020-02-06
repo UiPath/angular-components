@@ -1,26 +1,26 @@
 import 'moment-timezone';
 
 import {
-  Directive,
-  ElementRef,
-  Inject,
-  InjectionToken,
-  Input,
-  Optional,
-  Renderer2,
+    Directive,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Input,
+    Optional,
+    Renderer2,
 } from '@angular/core';
-import { UiFormat } from '@uipath/angular/directives/internal';
+import { UiFormatDirective } from '@uipath/angular/directives/internal';
 
 import * as _moment from 'moment';
 import {
-  interval,
-  merge,
-  Observable,
-  of,
+    interval,
+    merge,
+    Observable,
+    of,
 } from 'rxjs';
 import {
-  filter,
-  takeUntil,
+    filter,
+    takeUntil,
 } from 'rxjs/operators';
 
 /**
@@ -95,7 +95,7 @@ export const resolveTimezone = (options: IDateFormatOptions) => {
 @Directive({
     selector: '[uiDateFormat], ui-dateformat',
 })
-export class UiDateFormatDirective extends UiFormat {
+export class UiDateFormatDirective extends UiFormatDirective {
     /**
      * What format should the content have, `absolute` or `relative`.
      *
