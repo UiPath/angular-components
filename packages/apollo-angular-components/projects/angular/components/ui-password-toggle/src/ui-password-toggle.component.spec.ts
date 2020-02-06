@@ -1,11 +1,11 @@
 import {
-  Component,
-  Injectable,
-  ViewChild,
+    Component,
+    Injectable,
+    ViewChild,
 } from '@angular/core';
 import {
-  ComponentFixture,
-  TestBed,
+    ComponentFixture,
+    TestBed,
 } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -80,7 +80,7 @@ describe('Component: UiPasswordToggle', () => {
             ],
         });
 
-        intl = TestBed.get(UiPasswordToggleIntl);
+        intl = TestBed.inject(UiPasswordToggleIntl) as TestPasswordToggleIntl;
 
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;

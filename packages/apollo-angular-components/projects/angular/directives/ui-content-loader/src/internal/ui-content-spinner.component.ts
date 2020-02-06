@@ -1,9 +1,9 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  HostBinding,
-  OnDestroy,
-  ViewEncapsulation,
+    ChangeDetectionStrategy,
+    Component,
+    HostBinding,
+    OnDestroy,
+    ViewEncapsulation,
 } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 

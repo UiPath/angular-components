@@ -8,7 +8,7 @@ describe('Service: UiSnackbarIntlService', () => {
     }));
 
     it('should create', () => {
-        const service: UiSnackbarIntl = TestBed.get(UiSnackbarIntl);
+        const service: UiSnackbarIntl = TestBed.inject(UiSnackbarIntl);
         expect(service).toBeTruthy();
         expect(service.closeAriaLabel).toEqual('Close');
     });

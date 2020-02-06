@@ -1558,7 +1558,7 @@ describe('Component: UiGrid', () => {
                         checkbox.nativeElement.dispatchEvent(EventGenerator.click);
                         fixture.detectChanges();
 
-                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(false);
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBeFalsy();
                     });
 
                     tick(200);
@@ -1582,7 +1582,7 @@ describe('Component: UiGrid', () => {
                         checkbox.nativeElement.dispatchEvent(EventGenerator.click);
                         fixture.detectChanges();
 
-                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(false);
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBeFalsy();
                     });
 
                     tick(200);
@@ -1594,7 +1594,7 @@ describe('Component: UiGrid', () => {
 
                     options.forEach(async o => {
                         const checkbox = o.query(By.css('.mat-pseudo-checkbox'));
-                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(false);
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBeFalsy();
 
                         checkbox.nativeElement.dispatchEvent(EventGenerator.click);
                         fixture.detectChanges();

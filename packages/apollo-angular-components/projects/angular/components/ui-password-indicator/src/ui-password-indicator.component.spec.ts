@@ -148,7 +148,7 @@ describe('Component: UiPasswordIndicator', () => {
 
                 expect(ruleList).toBeArrayOfSize(ruleKeys.length);
 
-                const intl: UiPasswordComplexityIntl = TestBed.get(UiPasswordComplexityIntl);
+                const intl: UiPasswordComplexityIntl = TestBed.inject(UiPasswordComplexityIntl);
 
                 ruleList.forEach((rule, idx) => {
                     const ruleKey = ruleKeys[idx];

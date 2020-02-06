@@ -1,56 +1,58 @@
 import {
-  Component,
-  ViewChild,
+    Component,
+    Directive,
+    ViewChild,
 } from '@angular/core';
 import {
-  async,
-  ComponentFixture,
-  discardPeriodicTasks,
-  fakeAsync,
-  TestBed,
-  tick,
+    async,
+    ComponentFixture,
+    discardPeriodicTasks,
+    fakeAsync,
+    TestBed,
+    tick,
 } from '@angular/core/testing';
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  EventGenerator,
-  Key,
+    EventGenerator,
+    Key,
 } from '@uipath/angular/testing';
 
 import * as faker from 'faker';
 import { VirtualScrollItemStatus } from 'projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api';
 import {
-  Observable,
-  of,
+    Observable,
+    of,
 } from 'rxjs';
 import {
-  delay,
-  finalize,
-  map,
-  skip,
-  take,
+    delay,
+    finalize,
+    map,
+    skip,
+    take,
 } from 'rxjs/operators';
 
 import {
-  ISuggestValue,
-  ISuggestValues,
+    ISuggestValue,
+    ISuggestValues,
 } from './models';
 import {
-  generateSuggestionItem,
-  generateSuggetionItemList,
+    generateSuggestionItem,
+    generateSuggetionItemList,
 } from './test';
 import { UiSuggestComponent } from './ui-suggest.component';
 import { UiSuggestModule } from './ui-suggest.module';
 
 type SuggestProperties = 'disabled' | 'readonly';
 
-class UiSuggestFixture {
+@Directive()
+class UiSuggestFixtureDirective {
     @ViewChild(UiSuggestComponent, {
         static: true,
     })
@@ -74,7 +76,7 @@ class UiSuggestFixture {
     public fetchStrategy: 'eager' | 'onOpen' = 'eager';
 }
 
-const searchFor = (value: string, fixture: ComponentFixture<UiSuggestFixture>) => {
+const searchFor = (value: string, fixture: ComponentFixture<UiSuggestFixtureDirective>) => {
     const display = fixture.debugElement.query(By.css('.display'));
     display.nativeElement.dispatchEvent(EventGenerator.click);
 
@@ -89,13 +91,13 @@ const searchFor = (value: string, fixture: ComponentFixture<UiSuggestFixture>) =
 
 const sharedSpecifications = (
     beforeEachFn: () => {
-        fixture: ComponentFixture<UiSuggestFixture>,
-        component: UiSuggestFixture,
+        fixture: ComponentFixture<UiSuggestFixtureDirective>,
+        component: UiSuggestFixtureDirective,
         uiSuggest: UiSuggestComponent,
     },
 ) => {
-    let fixture: ComponentFixture<UiSuggestFixture>;
-    let component: UiSuggestFixture;
+    let fixture: ComponentFixture<UiSuggestFixtureDirective>;
+    let component: UiSuggestFixtureDirective;
     let uiSuggest: UiSuggestComponent;
 
     beforeEach(() => {
@@ -284,6 +286,9 @@ const sharedSpecifications = (
 
             uiSuggest.sourceUpdated
                 .pipe(
+                    // skip initial value emission
+                    // (this is an in memory search and it starts with the set values)
+                    skip(1),
                     take(1),
                     finalize(done),
                 )
@@ -388,7 +393,7 @@ const sharedSpecifications = (
             fixture.detectChanges();
         });
 
-        it('should emit selected on clear', async (done) => {
+        it('should emit selected on clear', (done) => {
             const items = generateSuggetionItemList();
 
             component.searchable = true;
@@ -1243,7 +1248,7 @@ const sharedSpecifications = (
             expect(uiSuggest.value[0].text).toBe(selectedValues[0].text);
         });
 
-        it('should have selected items displayed first if display priority is set to selected', async(async () => {
+        it('should have selected items displayed first if display priority is set to selected', async () => {
             const items = component.items!;
             const selectedItems = [
                 items[items.length - 1],
@@ -1251,6 +1256,7 @@ const sharedSpecifications = (
             ];
             component.value = selectedItems;
             component.displayPriority = 'selected';
+
             fixture.detectChanges();
 
             const display = fixture.debugElement.query(By.css('.display'));
@@ -1271,7 +1277,7 @@ const sharedSpecifications = (
 
                 expect(selectedItems.find(x => x.text === labelText)).toBeDefined();
             });
-        }));
+        });
 
         it('should resort when display priority is set to selected and the value updates', () => {
             const items = component.items!;
@@ -1728,7 +1734,7 @@ describe('Component: UiSuggest', () => {
             </ui-suggest>
         `,
     })
-    class UiSuggestFixtureComponent extends UiSuggestFixture { }
+    class UiSuggestFixtureComponent extends UiSuggestFixtureDirective { }
     describe('Type: standalone', () => {
         let fixture: ComponentFixture<UiSuggestFixtureComponent>;
         // @ts-ignore
@@ -1796,7 +1802,6 @@ describe('Component: UiSuggest', () => {
                             [enableCustomValue]="enableCustomValue"
                             [alwaysExpanded]="alwaysExpanded"
                             [items]="items"
-                            [value]="value"
                             [direction]="direction"
                             [displayPriority]="displayPriority"
                             [disabled]="disabled"
@@ -1809,8 +1814,16 @@ describe('Component: UiSuggest', () => {
         </form>
         `,
     })
-    class UiSuggestFormControlFixtureComponent extends UiSuggestFixture {
+    class UiSuggestFormControlFixtureComponent extends UiSuggestFixtureDirective {
         public formGroup: FormGroup;
+
+        public set value(value: ISuggestValue[]) {
+            this.formGroup.get('test')?.setValue(value);
+        }
+
+        public get value(): ISuggestValue[] {
+            return this.formGroup.get('test')?.value;
+        }
 
         get formControl() {
             return this.formGroup.get('test');
@@ -1984,7 +1997,7 @@ describe('Component: UiSuggest', () => {
             </ui-suggest>
         `,
     })
-    class UiSuggestCustomTemplateFixtureComponent extends UiSuggestFixture { }
+    class UiSuggestCustomTemplateFixtureComponent extends UiSuggestFixtureDirective { }
 
     describe('Type: custom template', () => {
         let fixture: ComponentFixture<UiSuggestCustomTemplateFixtureComponent>;

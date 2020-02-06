@@ -85,7 +85,7 @@ describe('Service: UiSnackBarService', () => {
             ],
         });
 
-        overlayContainer = TestBed.get<OverlayContainer>(OverlayContainer);
+        overlayContainer = TestBed.inject<OverlayContainer>(OverlayContainer);
         fixture = TestBed.createComponent(SnackBarFixtureComponent);
         service = fixture.componentInstance.service;
     }));
