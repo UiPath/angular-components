@@ -1,19 +1,19 @@
 import {
-  Directive,
-  Input,
-  OnDestroy,
+    Directive,
+    Input,
+    OnDestroy,
 } from '@angular/core';
 import {
-  ISuggestValue,
-  ISuggestValues,
+    ISuggestValue,
+    ISuggestValues,
 } from '@uipath/angular/components/ui-suggest';
 
 import {
-  BehaviorSubject,
-  Observable,
+    BehaviorSubject,
+    Observable,
 } from 'rxjs';
 
-import { UiGridFilter } from './ui-grid-filter';
+import { UiGridFilterDirective } from './ui-grid-filter';
 
 /**
  * The searchable dropdown definition directive.
@@ -23,7 +23,7 @@ import { UiGridFilter } from './ui-grid-filter';
 @Directive({
     selector: '[uiGridSearchFilter], ui-grid-search-filter',
 })
-export class UiGridSearchFilterDirective<T> extends UiGridFilter<T> implements OnDestroy {
+export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> implements OnDestroy {
     /**
      * The property associated to the dropdown search.
      *

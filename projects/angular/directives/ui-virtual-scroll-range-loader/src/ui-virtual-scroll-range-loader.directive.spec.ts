@@ -236,7 +236,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
             }),
         );
 
-        it('should emit  RangeLoad without the last item index if Pula that is loaded',
+        it('should emit  RangeLoad without the last item index if that is loaded',
             fakeAsync(() => {
                 const targetRange = {
                     start: 0,

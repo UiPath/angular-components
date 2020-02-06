@@ -1,14 +1,14 @@
 import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  HostListener,
-  Input,
-  OnDestroy,
-  Output,
-  Renderer2,
+    AfterViewInit,
+    Directive,
+    ElementRef,
+    EventEmitter,
+    HostBinding,
+    HostListener,
+    Input,
+    OnDestroy,
+    Output,
+    Renderer2,
 } from '@angular/core';
 import { isInternetExplorer } from '@uipath/angular/utilities';
 

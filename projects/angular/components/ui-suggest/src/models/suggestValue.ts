@@ -1,6 +1,6 @@
 import {
-  VirtualScrollItem,
-  VirtualScrollItemStatus,
+    VirtualScrollItem,
+    VirtualScrollItemStatus,
 } from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
 
 /**

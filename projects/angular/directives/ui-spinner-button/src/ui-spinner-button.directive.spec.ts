@@ -1,10 +1,10 @@
 import {
-  Component,
-  DebugElement,
+    Component,
+    DebugElement,
 } from '@angular/core';
 import {
-  ComponentFixture,
-  TestBed,
+    ComponentFixture,
+    TestBed,
 } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
