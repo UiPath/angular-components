@@ -59,6 +59,26 @@ export class UiGridIntl implements OnDestroy {
      */
     public searchPlaceholder = 'Search';
     /**
+     * Tooltip for toggle columns select dropdown
+     *
+     */
+    public toggleTooltip = 'Toggle column visibility';
+    /**
+     * Tooltip for resetting to column defaults
+     *
+     */
+    public toggleResetToDefaults = 'Reset';
+    /**
+     * Main title for visible columns displayed within the dropdown
+     *
+     */
+    public toggleTitle = 'Visible Columns';
+    /**
+     * Text displayed next to icon for dropdown
+     *
+     */
+    public togglePlaceholderTitle = 'Columns';
+    /**
      * No data row message.
      *
      */
@@ -78,6 +98,7 @@ export class UiGridIntl implements OnDestroy {
      *
      */
     public descending = 'descending';
+
 
     /**
      * Generates a selection label for the given count.
