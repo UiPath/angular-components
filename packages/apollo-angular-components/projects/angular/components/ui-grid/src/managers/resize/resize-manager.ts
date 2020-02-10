@@ -7,6 +7,7 @@ import {
 } from 'rxjs';
 import {
     filter,
+    map,
     take,
     takeUntil,
     tap,
@@ -96,25 +97,30 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         merge(
             _grid.rendered,
             _grid['_columnChanges$'],
-        ).pipe(takeUntil(_grid['_destroyed$']))
-            .subscribe(() => {
+        ).pipe(
+            map(() => {
                 this._table = this._gridElement.querySelector<HTMLTableElement>('.ui-grid-container');
                 this._definitions = _grid.columns.filter(c => c.resizeable && c.visible);
 
-                this._headers = toArray<HTMLDivElement>(this._gridElement.querySelectorAll('.ui-grid-resizeable'));
+                return this._headers = toArray<HTMLDivElement>(this._gridElement.querySelectorAll('.ui-grid-resizeable'));
+            }),
+            map((headers, i) => {
+                if (_grid.toggleColumns || i > 0) { return; }
 
-                const headerWidth = this._headers.reduce(
+                const headerWidth = headers.reduce(
                     (acc, curr) => acc + (parseInt(curr.style.width!, 10) || 0),
                     0,
                 ) / 10;
 
                 if (
                     headerWidth < 100 &&
-                    !!this._headers.length
+                    !!headers.length
                 ) {
                     console.warn(`Table header sum is currently ${headerWidth} ( < 100 ) please update column definitions.`);
                 }
-            });
+            }),
+            takeUntil(_grid['_destroyed$']),
+        ).subscribe();
     }
 
     public handleResize = (ev: MouseEvent) => this._resizeEvent = ev;

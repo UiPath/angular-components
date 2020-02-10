@@ -5,6 +5,7 @@ import {
     isDevMode,
     OnChanges,
     OnDestroy,
+    SimpleChange,
     SimpleChanges,
     TemplateRef,
 } from '@angular/core';
@@ -29,7 +30,7 @@ const ARIA_SORT_MAP: Record<SortDirection, string> = {
  * @ignore
  */
 const REACTIVE_INPUT_LIST: (keyof UiGridColumnDirective<{}>)[]
-    = ['sort', 'visible'];
+    = ['sort', 'visible', 'title'];
 
 /**
  * The grid column definition directive.
@@ -41,7 +42,7 @@ const REACTIVE_INPUT_LIST: (keyof UiGridColumnDirective<{}>)[]
 })
 export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     /**
-     * Set the columnd width, in `%`.
+     * Set the column width, in `%`.
      *
      */
     @Input()
@@ -142,11 +143,28 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     public primary = false;
 
     /**
-     * If the column should be rendered, or is only used for definition purposes.
+     * If the column can have visibility toggled.
      *
      */
     @Input()
-    public visible = true;
+    public disableToggle = false;
+
+    /**
+     * If the column should be rendered, used as default state if toggle columns is turned on.
+     *
+     */
+    @Input()
+    public get visible() {
+        return this._visible;
+    }
+    public set visible(visible: boolean) {
+        if (visible === this._visible) { return; }
+        this._visible = !!visible;
+
+        this.change$.next({
+            visible: new SimpleChange(!visible, visible, false),
+        });
+    }
 
     /**
      * The minimum width percentage that the column should have when resizing.
@@ -196,6 +214,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     public change$ = new Subject<SimpleChanges>();
 
     private _width = NaN;
+    private _visible = true;
 
     /**
      * @ignore
