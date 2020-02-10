@@ -1,12 +1,14 @@
 import {
-  Component,
-  ViewChild,
+    Component,
+    ViewChild,
 } from '@angular/core';
 import {
-  async,
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
+    async,
+    ComponentFixture,
+    discardPeriodicTasks,
+    fakeAsync,
+    TestBed,
+    tick,
 } from '@angular/core/testing';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatMenuItem } from '@angular/material/menu';
@@ -14,30 +16,30 @@ import { PageEvent } from '@angular/material/paginator';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  ISuggestValues,
-  UiSuggestComponent,
+    ISuggestValues,
+    UiSuggestComponent,
 } from '@uipath/angular/components/ui-suggest';
 import {
-  EventGenerator,
-  Key,
+    EventGenerator,
+    Key,
 } from '@uipath/angular/testing';
 
 import * as faker from 'faker';
 import {
-  Observable,
-  of,
+    Observable,
+    of,
 } from 'rxjs';
 import {
-  finalize,
-  skip,
-  take,
+    finalize,
+    skip,
+    take,
 } from 'rxjs/operators';
 
 import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
 import {
-  generateEntity,
-  generateListFactory,
-  ITestEntity,
+    generateEntity,
+    generateListFactory,
+    ITestEntity,
 } from './test';
 import { UiGridComponent } from './ui-grid.component';
 import { UiGridIntl } from './ui-grid.intl';
@@ -1383,13 +1385,13 @@ describe('Component: UiGrid', () => {
                 component.grid.sortManager,
                 component.grid.selectionManager,
                 component.grid.filterManager,
+                component.grid.visibilityManager,
                 component.grid.liveAnnouncerManager!,
                 component.grid['_performanceMonitor'],
             ].map(destroyableClass => spyOn(destroyableClass, 'destroy'));
 
             const completeSpyList = [
                 component.grid.columns$,
-                component.grid.visible$,
                 component.grid.isAnyFilterDefined$,
                 component.grid.sortChange,
                 component.grid.rendered,
@@ -1405,6 +1407,334 @@ describe('Component: UiGrid', () => {
             ].forEach(destroySpy => {
                 expect(destroySpy).toHaveBeenCalled();
                 expect(destroySpy).toHaveBeenCalledTimes(1);
+            });
+        });
+    });
+
+    describe('Scenario: grid with toggle columns', () => {
+        @Component({
+            template: `
+            <ui-grid [data]="data"
+                     [toggleColumns]="true">
+                <ui-grid-column [property]="'myNumber'"
+                                [sortable]="true"
+                                title="Number Header"
+                                width="50%">
+                </ui-grid-column>
+                <ui-grid-column [property]="'myString'"
+                                title="String Header"
+                                width="25%">
+                </ui-grid-column>
+                <ui-grid-column [property]="'prop2'"
+                                title="Prop 2"
+                                width="25%">
+                </ui-grid-column>
+                <ui-grid-column [property]="'prop3'"
+                                title="Prop 3"
+                                width="25%">
+                </ui-grid-column>
+            </ui-grid>
+        `,
+        })
+        class TestFixtureGridToggleComponent {
+            @ViewChild(UiGridComponent, {
+                static: true,
+            })
+            public grid!: UiGridComponent<ITestEntity>;
+            public data: ITestEntity[] = [];
+        }
+        describe('Scenario all columns visible', () => {
+            let fixture: ComponentFixture<TestFixtureGridToggleComponent>;
+            let component: TestFixtureGridToggleComponent;
+            let data: ITestEntity[];
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        NoopAnimationsModule,
+                    ],
+                    declarations: [TestFixtureGridToggleComponent],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureGridToggleComponent);
+                component = fixture.componentInstance;
+                data = generateListFactory(generateEntity)(6);
+                component.data = data;
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should close all streams when ngOnDestroy is called', () => {
+                const destroySpyList = [
+                    component.grid.dataManager,
+                    component.grid.resizeManager,
+                    component.grid.sortManager,
+                    component.grid.selectionManager,
+                    component.grid.filterManager,
+                    component.grid.visibilityManager,
+                    component.grid.liveAnnouncerManager!,
+                    component.grid['_performanceMonitor'],
+                ].map(destroyableClass => spyOn(destroyableClass, 'destroy'));
+
+                const completeSpyList = [
+                    component.grid.columns$,
+                    component.grid.isAnyFilterDefined$,
+                    component.grid.sortChange,
+                    component.grid.rendered,
+                    component.grid['_destroyed$'],
+                    component.grid['_configure$'],
+                ].map(completableStream => spyOn(completableStream, 'complete'));
+
+                component.grid.ngOnDestroy();
+
+                [
+                    ...destroySpyList,
+                    ...completeSpyList,
+                ].forEach(destroySpy => {
+                    expect(destroySpy).toHaveBeenCalled();
+                    expect(destroySpy).toHaveBeenCalledTimes(1);
+                });
+            });
+
+            it('should render toggle component', () => {
+                const toggleComponent = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-columns'));
+                expect(toggleComponent).toBeDefined();
+            });
+
+            it('should render toggle icon button', () => {
+                const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                expect(buttonToggle).toBeDefined();
+            });
+
+            describe('Scenario: Open', () => {
+                let buttonToggle: HTMLButtonElement;
+
+                beforeEach(async () => {
+                    fixture.detectChanges();
+
+                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                    buttonToggle.dispatchEvent(EventGenerator.click);
+
+                    await fixture.whenStable();
+                    fixture.detectChanges();
+                });
+
+                it('should render an open select menu', () => {
+                    const panel = fixture.debugElement.query(By.css('.ui-grid-toggle-panel'));
+
+                    expect(panel).toBeDefined();
+                });
+
+                it('should have a select menu with options equal to number of columns', () => {
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option'));
+
+                    expect(options).toBeDefined();
+                    expect(options.length).toEqual(4);
+                });
+
+                it('should have first visible option disabled', () => {
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option'));
+
+                    options
+                        .forEach((o, i) => {
+                            expect(o.nativeElement.classList.contains('mat-option-disabled'))
+                                .toBe(i === 0);
+                        },
+                        );
+                });
+
+                it('should be able to hide all available columns', fakeAsync(async () => {
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option:not(.mat-option-disabled)'));
+                    expect(options.length).toEqual(3);
+
+                    options.forEach(async o => {
+                        const checkbox = o.query(By.css('.mat-pseudo-checkbox'));
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(true);
+
+                        checkbox.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(false);
+                    });
+
+                    tick(200);
+                    fixture.detectChanges();
+                    const headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
+
+                    expect(headers).toBeDefined();
+                    expect(headers.length).toEqual(3);
+                    discardPeriodicTasks();
+                }),
+                );
+
+                it('should update grid if options are toggled', fakeAsync(() => {
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option:not(.mat-option-disabled)'));
+                    expect(options.length).toEqual(3);
+
+                    options.forEach(async o => {
+                        const checkbox = o.query(By.css('.mat-pseudo-checkbox'));
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(true);
+
+                        checkbox.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(false);
+                    });
+
+                    tick(200);
+                    fixture.detectChanges();
+                    let headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
+
+                    expect(headers).toBeDefined();
+                    expect(headers.length).toEqual(3);
+
+                    options.forEach(async o => {
+                        const checkbox = o.query(By.css('.mat-pseudo-checkbox'));
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(false);
+
+                        checkbox.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(true);
+                    });
+
+                    tick(200);
+                    fixture.detectChanges();
+                    headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
+
+                    expect(headers).toBeDefined();
+                    expect(headers.length).toEqual(6);
+                    discardPeriodicTasks();
+                }));
+
+                it('should not render menu if grid has a selection', () => {
+                    const checkboxHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell.ui-grid-checkbox-cell'));
+
+                    const checkboxInput = checkboxHeader.query(By.css('input'));
+                    checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+
+                    fixture.detectChanges();
+
+                    const panel = fixture.debugElement.query(By.css('.ui-grid-toggle-panel'));
+
+                    expect(panel).toBeNull();
+                });
+            });
+        });
+
+        @Component({
+            template: `
+            <ui-grid [data]="data"
+                     [toggleColumns]="true">
+                <ui-grid-column [property]="'myNumber'"
+                                [visible]="false"
+                                title="Number Header"
+                                width="50%">
+                </ui-grid-column>
+                <ui-grid-column [property]="'myString'"
+                                title="String Header"
+                                width="25%">
+                </ui-grid-column>
+                <ui-grid-column [property]="'prop2'"
+                                [disableToggle]="true"
+                                title="Prop 2"
+                                width="25%">
+                </ui-grid-column>
+                <ui-grid-column [property]="'prop3'"
+                                [disableToggle]="true"
+                                [visible]="false"
+                                title="Prop 3"
+                                width="5%">
+                </ui-grid-column>
+                <ui-grid-column [property]="'prop4'"
+                                [disableToggle]="true"
+                                [visible]="false"
+                                title="Prop 4"
+                                width="5%">
+                </ui-grid-column>
+                <ui-grid-column [property]="'prop5'"
+                                [disableToggle]="true"
+                                [visible]="false"
+                                title="Prop 5"
+                                width="5%">
+                </ui-grid-column>
+            </ui-grid>
+        `,
+        })
+        class TestFixtureGridToggleHiddenComponent {
+            @ViewChild(UiGridComponent, {
+                static: true,
+            })
+            public grid!: UiGridComponent<ITestEntity>;
+            public data: ITestEntity[] = [];
+        }
+        describe('Scenario hidden columns', () => {
+            let fixture: ComponentFixture<TestFixtureGridToggleHiddenComponent>;
+            let component: TestFixtureGridToggleHiddenComponent;
+            let data: ITestEntity[];
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        NoopAnimationsModule,
+                    ],
+                    declarations: [TestFixtureGridToggleHiddenComponent],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureGridToggleHiddenComponent);
+                component = fixture.componentInstance;
+                data = generateListFactory(generateEntity)(6);
+                component.data = data;
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should render toggle component', () => {
+                const toggleComponent = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-columns'));
+                expect(toggleComponent).toBeDefined();
+            });
+
+            it('should render toggle icon button', () => {
+                const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                expect(buttonToggle).toBeDefined();
+            });
+
+            describe('Scenario: Open', () => {
+                let buttonToggle: HTMLButtonElement;
+
+                beforeEach(async () => {
+                    fixture.detectChanges();
+
+                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                    buttonToggle.dispatchEvent(EventGenerator.click);
+
+                    await fixture.whenStable();
+                    fixture.detectChanges();
+                });
+
+                it('should not render columns hidden and with disableToggle', () => {
+                    fixture.detectChanges();
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option'));
+
+                    expect(options).toBeDefined();
+                    expect(options.length).toEqual(3);
+                });
+
+                it('should render option as disabled if disableToggle is set to true', () => {
+                    fixture.detectChanges();
+                    const option = fixture.debugElement.query(By.css('.ui-grid-toggle-panel .mat-option-disabled'));
+
+                    expect(option).toBeDefined();
+                    expect(option.nativeElement.innerText).toEqual('Prop 2');
+                });
             });
         });
     });

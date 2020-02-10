@@ -1,0 +1,33 @@
+$toggle-col-width: 10em;
+
+.ui-grid-toggle-columns {
+  margin-right: 6px;
+  padding-left: 0;
+
+  mat-select {
+    overflow: hidden;
+    width: 0;
+    // adjustments in order to match trigger icon with optgroup-label icon
+    position: relative;
+    top: -10px;
+    left: -4px;
+  }
+}
+
+// overlay panel
+.ui-grid-toggle-panel {
+  // IE fix - min-width with calc does not render properly so we add a fallback in case min-width is evaluated even lower
+  width: 210px !important;
+
+  .mat-optgroup-label {
+    padding-left: 12px;
+    display: flex;
+    padding-right: 6px;
+    justify-content: space-between;
+    align-items: center;
+
+    .mat-icon {
+      margin-right: 0;
+    }
+  }
+}

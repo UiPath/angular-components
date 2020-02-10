@@ -1,42 +1,42 @@
 import {
-  AfterContentInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  ContentChildren,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  HostListener,
-  Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  Optional,
-  Output,
-  QueryList,
-  SimpleChanges,
-  ViewEncapsulation,
+    AfterContentInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChild,
+    ContentChildren,
+    ElementRef,
+    EventEmitter,
+    HostBinding,
+    HostListener,
+    Input,
+    NgZone,
+    OnChanges,
+    OnDestroy,
+    Optional,
+    Output,
+    QueryList,
+    SimpleChanges,
+    ViewEncapsulation,
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
 
 import range from 'lodash-es/range';
 import {
-  BehaviorSubject,
-  merge,
-  Observable,
-  Subject,
+    BehaviorSubject,
+    merge,
+    Observable,
+    Subject,
 } from 'rxjs';
 import {
-  debounceTime,
-  map,
-  skip,
-  switchMap,
-  take,
-  takeUntil,
-  tap,
+    debounceTime,
+    map,
+    skip,
+    switchMap,
+    take,
+    takeUntil,
+    tap,
 } from 'rxjs/operators';
 
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
@@ -46,20 +46,21 @@ import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 import {
-  DataManager,
-  FilterManager,
-  LiveAnnouncerManager,
-  PerformanceMonitor,
-  ResizeManager,
-  ResizeManagerFactory,
-  ResizeStrategy,
-  SelectionManager,
-  SortManager,
+    DataManager,
+    FilterManager,
+    LiveAnnouncerManager,
+    PerformanceMonitor,
+    ResizeManager,
+    ResizeManagerFactory,
+    ResizeStrategy,
+    SelectionManager,
+    SortManager,
+    VisibilityManger,
 } from './managers';
 import { ResizableGrid } from './managers/resize/types';
 import {
-  IGridDataEntry,
-  ISortModel,
+    IGridDataEntry,
+    ISortModel,
 } from './models';
 import { UiGridIntl } from './ui-grid.intl';
 
@@ -164,6 +165,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     public selectable = true;
 
     /**
+     * Configure if the grid allows to toggle column visibility.
+     *
+     */
+    @Input()
+    public toggleColumns = false;
+
+    /**
      * Configure if the grid allows multi-page selection.
      *
      */
@@ -184,6 +192,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @Input()
     public virtualScroll = false;
+
+    /**
+     * Show paint time stats
+     *
+     */
+    @Input()
+    public showPaintTime = false;
 
     /**
      * Provide a custom `noDataMessage`.
@@ -232,12 +247,6 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     public columns$ = new BehaviorSubject<UiGridColumnDirective<T>[]>([]);
-
-    /**
-     * Emits the visible column definitions when their definition changes.
-     *
-     */
-    public visible$ = new BehaviorSubject<UiGridColumnDirective<T>[]>([]);
 
     /**
      * Row configuration directive reference.
@@ -302,40 +311,59 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     public liveAnnouncerManager?: LiveAnnouncerManager<T>;
+
     /**
      * Selection manager, used to manage grid selection states.
      *
      */
     public selectionManager = new SelectionManager<T>();
+
     /**
      * Data manager, used to optimize row rendering.
      *
      */
     public dataManager = new DataManager<T>();
+
     /**
      * Filter manager, used to manage filter state changes.
      *
      */
     public filterManager = new FilterManager<T>();
+
+    /**
+     * Visibility manager, used to manage visibility of columns.
+     *
+     */
+    public visibilityManager = new VisibilityManger<T>();
+
     /**
      * Sort manager, used to manage sort state changes.
      *
      */
     public sortManager = new SortManager<T>();
+
     /**
      * Resize manager, used to compute resized column states.
      *
      */
     public resizeManager: ResizeManager<T>;
+
     /**
      * @ignore
      */
     public paintTime$: Observable<string>;
+
     /**
      * Emits with information wether filters are defined.
      *
      */
     public isAnyFilterDefined$ = new BehaviorSubject<boolean>(false);
+
+    /**
+     * Emits the visible column definitions when their definition changes.
+     *
+     */
+    public visible$ = this.visibilityManager.columns$;
 
     /**
      * Returns the scroll size, in order to compensate for the scrollbar.
@@ -393,9 +421,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this._columnChanges$ =
             this.rendered.pipe(
                 switchMap(() => merge(
-                    ...this.columns.map(column => column.change$)),
+                    ...this.columns.map(column =>
+                        column.change$,
+                    )),
                 ),
-                debounceTime(150),
+                debounceTime(10),
                 tap(() => this.isResizing && this.resizeManager.stop()),
             );
 
@@ -413,12 +443,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             map(() => this.columns.toArray()),
             tap(columns => this.filterManager.columns = columns),
             tap(columns => this.sortManager.columns = columns),
+            tap(columns => this.visibilityManager.columns = columns),
             tap(columns => this.columns$.next(columns)),
             tap(columns => this.isAnyFilterDefined$.next(
                 columns.some(c => !!c.dropdown || !!c.searchableDropdown),
             )),
-            map((columns) => columns.filter(c => !!c.visible)),
-            tap(visible => this.visible$.next(visible)),
         );
 
         const data$ = this.dataManager.data$.pipe(
@@ -510,7 +539,6 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this.sortChange.complete();
         this.rendered.complete();
         this.columns$.complete();
-        this.visible$.complete();
         this.isAnyFilterDefined$.complete();
 
         this.dataManager.destroy();
@@ -518,6 +546,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this.sortManager.destroy();
         this.selectionManager.destroy();
         this.filterManager.destroy();
+        this.visibilityManager.destroy();
 
         if (this.liveAnnouncerManager) {
             this.liveAnnouncerManager.destroy();

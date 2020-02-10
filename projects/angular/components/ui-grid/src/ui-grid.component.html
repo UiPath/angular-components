@@ -1,13 +1,25 @@
-﻿<ng-container *ngIf="paintTime$ | async as paintTime">
+﻿<ng-container *ngIf="showPaintTime && (paintTime$ | async) as paintTime">
     <div class="ui-grid-debug-information">
         Painted {{ dataManager?.length }} rows in {{ paintTime }}ms
     </div>
 </ng-container>
-<div *ngIf="header?.actionButtons?.length ||
+<div *ngIf="toggleColumns ||
+            header?.actionButtons?.length ||
             header?.inlineButtons?.length ||
             header?.search ||
             (isAnyFilterDefined$ | async)"
      class="ui-grid-filter-container">
+    <ui-grid-toggle-columns *ngIf="toggleColumns && !selectionManager.hasValue()"
+                            [options]="visibilityManager.options$ | async"
+                            [dirty]="visibilityManager.isDirty$ | async"
+                            [toggleTooltip]="intl.toggleTooltip"
+                            [resetToDefaults]="intl.toggleResetToDefaults"
+                            [toggleTitle]="intl.toggleTitle"
+                            [togglePlaceholderTitle]="intl.togglePlaceholderTitle"
+                            (visibleColumns)="visibilityManager.update($event)"
+                            (resetColumns)="visibilityManager.reset()">
+    </ui-grid-toggle-columns>
+
     <ng-container *ngIf="!selectionManager.hasValue() ||
                    !header?.actionButtons?.length">
         <ui-grid-search *ngIf="header?.search"
@@ -301,7 +313,6 @@
                           tabindex="0">
             </mat-checkbox>
         </div>
-
         <ng-container *ngFor="let column of visible$ | async">
             <div [class.ui-grid-primary]="column.primary"
                  [class.ui-grid-secondary]="!column.primary"

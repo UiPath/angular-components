@@ -20,6 +20,7 @@ import { UiGridColumnDirective } from '../../../body/ui-grid-column.directive';
 export abstract class ResizableGrid<T> {
     public abstract columns: QueryList<UiGridColumnDirective<T>>;
     public abstract rendered: EventEmitter<void>;
+    public abstract toggleColumns: boolean;
 
     protected abstract _ref: ElementRef;
     protected abstract _cd: ChangeDetectorRef;
