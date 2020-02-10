@@ -1,17 +1,17 @@
 import {
-  Component,
-  ViewChild,
+    Component,
+    ViewChild,
 } from '@angular/core';
 import {
-  ComponentFixture,
-  TestBed,
+    ComponentFixture,
+    TestBed,
 } from '@angular/core/testing';
 import { UiGridModule } from '@uipath/angular/components/ui-grid';
 
 import * as faker from 'faker';
 import {
-  finalize,
-  take,
+    finalize,
+    take,
 } from 'rxjs/operators';
 
 import { UiGridColumnDirective } from './ui-grid-column.directive';
@@ -39,7 +39,7 @@ class TestFixtureComponent {
     })
     public column!: UiGridColumnDirective<any>;
 
-    public visible?: boolean;
+    public visible = false;
     public width?: string;
     public sortable?: boolean;
     public searchable?: boolean;
@@ -89,9 +89,11 @@ describe('Component: UiGrid', () => {
             it('should create an instance of the directive', () => {
                 expect(column).toBeDefined();
             });
+            it('should have visible set to false', () => {
+                expect(column.visible).toBeFalse();
+            });
 
             it('should have all properties undefined', () => {
-                expect(column.visible).toBeUndefined();
                 expect(column.width).toBeNaN();
                 expect(column.sortable).toBeUndefined();
                 expect(column.searchable).toBeUndefined();
