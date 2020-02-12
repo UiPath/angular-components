@@ -449,21 +449,21 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Directive,
-  Input,
-  OnDestroy,
+    Directive,
+    Input,
+    OnDestroy,
 } from &#x27;@angular/core&#x27;;
 import {
-  ISuggestValue,
-  ISuggestValues,
+    ISuggestValue,
+    ISuggestValues,
 } from &#x27;@uipath/angular/components/ui-suggest&#x27;;
 
 import {
-  BehaviorSubject,
-  Observable,
+    BehaviorSubject,
+    Observable,
 } from &#x27;rxjs&#x27;;
 
-import { UiGridFilter } from &#x27;./ui-grid-filter&#x27;;
+import { UiGridFilterDirective } from &#x27;./ui-grid-filter&#x27;;
 
 /**
  * The searchable dropdown definition directive.
@@ -473,7 +473,7 @@ import { UiGridFilter } from &#x27;./ui-grid-filter&#x27;;
 @Directive({
     selector: &#x27;[uiGridSearchFilter], ui-grid-search-filter&#x27;,
 })
-export class UiGridSearchFilterDirective&lt;T&gt; extends UiGridFilter&lt;T&gt; implements OnDestroy {
+export class UiGridSearchFilterDirective&lt;T&gt; extends UiGridFilterDirective&lt;T&gt; implements OnDestroy {
     /**
      * The property associated to the dropdown search.
      *

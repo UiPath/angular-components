@@ -169,27 +169,27 @@ Depends On:</p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Directive,
-  ElementRef,
-  Inject,
-  InjectionToken,
-  Input,
-  Optional,
-  Renderer2,
+    Directive,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Input,
+    Optional,
+    Renderer2,
 } from &#x27;@angular/core&#x27;;
-import { UiFormat } from &#x27;@uipath/angular/directives/internal&#x27;;
+import { UiFormatDirective } from &#x27;@uipath/angular/directives/internal&#x27;;
 
 import * as _moment from &#x27;moment&#x27;;
 import {
-  merge,
-  Observable,
-  of,
+    merge,
+    Observable,
+    of,
 } from &#x27;rxjs&#x27;;
 import {
-  distinctUntilChanged,
-  filter,
-  map,
-  takeUntil,
+    distinctUntilChanged,
+    filter,
+    map,
+    takeUntil,
 } from &#x27;rxjs/operators&#x27;;
 
 /**
@@ -255,7 +255,7 @@ export const UI_SECONDFORMAT_OPTIONS &#x3D; new InjectionToken&lt;Observable&lt;
 @Directive({
     selector: &#x27;[uiSecondFormat], ui-secondformat&#x27;,
 })
-export class UiSecondFormatDirective extends UiFormat {
+export class UiSecondFormatDirective extends UiFormatDirective {
     /**
      * The number of &#x60;seconds&#x60; that need to be formatted.
      *

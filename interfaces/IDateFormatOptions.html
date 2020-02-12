@@ -180,26 +180,26 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import &#x27;moment-timezone&#x27;;
 
 import {
-  Directive,
-  ElementRef,
-  Inject,
-  InjectionToken,
-  Input,
-  Optional,
-  Renderer2,
+    Directive,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Input,
+    Optional,
+    Renderer2,
 } from &#x27;@angular/core&#x27;;
-import { UiFormat } from &#x27;@uipath/angular/directives/internal&#x27;;
+import { UiFormatDirective } from &#x27;@uipath/angular/directives/internal&#x27;;
 
 import * as _moment from &#x27;moment&#x27;;
 import {
-  interval,
-  merge,
-  Observable,
-  of,
+    interval,
+    merge,
+    Observable,
+    of,
 } from &#x27;rxjs&#x27;;
 import {
-  filter,
-  takeUntil,
+    filter,
+    takeUntil,
 } from &#x27;rxjs/operators&#x27;;
 
 /**
@@ -274,7 +274,7 @@ export const resolveTimezone &#x3D; (options: IDateFormatOptions) &#x3D;&gt; {
 @Directive({
     selector: &#x27;[uiDateFormat], ui-dateformat&#x27;,
 })
-export class UiDateFormatDirective extends UiFormat {
+export class UiDateFormatDirective extends UiFormatDirective {
     /**
      * What format should the content have, &#x60;absolute&#x60; or &#x60;relative&#x60;.
      *

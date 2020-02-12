@@ -370,16 +370,16 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  ComponentFactoryResolver,
-  Directive,
-  Input,
-  OnInit,
-  Renderer2,
-  ViewContainerRef,
+    ComponentFactoryResolver,
+    Directive,
+    Input,
+    OnInit,
+    Renderer2,
+    ViewContainerRef,
 } from &#x27;@angular/core&#x27;;
 import { MatButton } from &#x27;@angular/material/button&#x27;;
 import { MatProgressSpinner } from &#x27;@angular/material/progress-spinner&#x27;;
-import { UiLoaderButton } from &#x27;@uipath/angular/directives/internal&#x27;;
+import { UiLoaderButtonDirective } from &#x27;@uipath/angular/directives/internal&#x27;;
 
 import { UiButtonProgressSpinnerComponent } from &#x27;./internal/ui-button-progress-spinner.component&#x27;;
 
@@ -408,7 +408,7 @@ export const enum SpinnerButtonClass {
     exportAs: &#x27;uiSpinnerButton&#x27;,
 })
 export class UiSpinnerButtonDirective
-    extends UiLoaderButton&lt;UiSpinnerButtonDirective, UiButtonProgressSpinnerComponent&gt;
+    extends UiLoaderButtonDirective&lt;UiButtonProgressSpinnerComponent&gt;
     implements OnInit {
     @Input()
     public spinnerButtonLoading &#x3D; false;

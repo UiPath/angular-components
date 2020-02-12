@@ -432,13 +432,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiSnackBarModule.html" data-type="entity-link">UiSnackBarModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-UiSnackBarModule-b83a05e1395306d80df6111c06dfd702"' : 'data-target="#xs-components-links-module-UiSnackBarModule-b83a05e1395306d80df6111c06dfd702"' }>
+                                            'data-target="#components-links-module-UiSnackBarModule-e74e559889cb6cb793b48c9502d11eae"' : 'data-target="#xs-components-links-module-UiSnackBarModule-e74e559889cb6cb793b48c9502d11eae"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiSnackBarModule-b83a05e1395306d80df6111c06dfd702"' :
-                                            'id="xs-components-links-module-UiSnackBarModule-b83a05e1395306d80df6111c06dfd702"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiSnackBarModule-e74e559889cb6cb793b48c9502d11eae"' :
+                                            'id="xs-components-links-module-UiSnackBarModule-e74e559889cb6cb793b48c9502d11eae"' }>
                                             <li class="link">
                                                 <a href="components/UiSnackBarComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiSnackBarComponent</a>
@@ -538,16 +538,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/Key.html" data-type="entity-link">Key</a>
                             </li>
                             <li class="link">
-                                <a href="classes/UiFormat.html" data-type="entity-link">UiFormat</a>
-                            </li>
-                            <li class="link">
                                 <a href="classes/UiGridIntl.html" data-type="entity-link">UiGridIntl</a>
-                            </li>
-                            <li class="link">
-                                <a href="classes/UiLoaderButton.html" data-type="entity-link">UiLoaderButton</a>
-                            </li>
-                            <li class="link">
-                                <a href="classes/UiSuggestMatFormField.html" data-type="entity-link">UiSuggestMatFormField</a>
                             </li>
                         </ul>
                     </li>

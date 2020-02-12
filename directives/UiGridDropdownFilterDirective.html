@@ -425,7 +425,7 @@
 
 import { BehaviorSubject } from &#x27;rxjs&#x27;;
 
-import { UiGridFilter } from &#x27;./ui-grid-filter&#x27;;
+import { UiGridFilterDirective } from &#x27;./ui-grid-filter&#x27;;
 
 /**
  * Dropdown option schema.
@@ -458,7 +458,7 @@ export interface IDropdownOption {
 @Directive({
     selector: &#x27;[uiGridDropdownFilter], ui-grid-dropdown-filter&#x27;,
 })
-export class UiGridDropdownFilterDirective&lt;T&gt; extends UiGridFilter&lt;T&gt; implements OnDestroy {
+export class UiGridDropdownFilterDirective&lt;T&gt; extends UiGridFilterDirective&lt;T&gt; implements OnDestroy {
     /**
      * The dropdown items.
      *
