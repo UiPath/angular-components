@@ -1,11 +1,11 @@
 import {
-  Component,
-  ElementRef,
-  ViewChild,
+    Component,
+    ElementRef,
+    ViewChild,
 } from '@angular/core';
 import {
-  ComponentFixture,
-  TestBed,
+    ComponentFixture,
+    TestBed,
 } from '@angular/core/testing';
 
 import { of } from 'rxjs';
@@ -80,9 +80,7 @@ describe('Directive: UiClipboard', () => {
         `,
     })
     class NgLetDynamicFixtureComponent {
-        @ViewChild('child', {
-            static: false,
-        })
+        @ViewChild('child')
         public child!: ElementRef<HTMLDivElement>;
 
         public data$ = of({

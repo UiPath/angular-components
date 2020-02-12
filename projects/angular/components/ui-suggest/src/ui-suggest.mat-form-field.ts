@@ -1,5 +1,6 @@
 import {
     ChangeDetectorRef,
+    Directive,
     DoCheck,
     ElementRef,
     EventEmitter,
@@ -20,6 +21,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { identifier } from '@uipath/angular/utilities';
 
+import cloneDeep from 'lodash-es/cloneDeep';
 import isEqual from 'lodash-es/isEqual';
 import { Subject } from 'rxjs';
 
@@ -33,7 +35,8 @@ import {
     sortByPriorityAndDirection,
 } from './utils';
 
-export abstract class UiSuggestMatFormField implements
+@Directive()
+export abstract class UiSuggestMatFormFieldDirective implements
     DoCheck,
     MatFormFieldControl<ISuggestValue[]>,
     ControlValueAccessor {
@@ -159,12 +162,7 @@ export abstract class UiSuggestMatFormField implements
         this.stateChanges.next();
         this.registerChange(checkedNewValue);
 
-        this._items = sortByPriorityAndDirection(
-            this._items,
-            this.displayPriority,
-            this.value,
-            this.isDown,
-        );
+        this._items = this._sortItems(this._items);
     }
 
     /**
@@ -322,4 +320,13 @@ export abstract class UiSuggestMatFormField implements
     public registerOnTouched(fn: (ev?: Event) => void) {
         this.registerTouch = fn;
     }
+
+    protected _sortItems = (items: ISuggestValue[]) =>
+        sortByPriorityAndDirection(
+            cloneDeep(items),
+            this.displayPriority,
+            this.value,
+            this.isDown,
+        )
+
 }

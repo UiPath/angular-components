@@ -1,4 +1,5 @@
 import {
+    Directive,
     EventEmitter,
     Input,
     OnDestroy,
@@ -14,7 +15,8 @@ import { IFilterModel } from '../models';
  * @internal
  * @ignore
  */
-export abstract class UiGridFilter<T> implements OnDestroy {
+@Directive()
+export abstract class UiGridFilterDirective<T> implements OnDestroy {
     @Input()
     public disabled?: boolean;
 

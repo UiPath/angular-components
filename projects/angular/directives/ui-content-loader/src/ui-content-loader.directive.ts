@@ -1,23 +1,23 @@
 import {
-  ComponentFactoryResolver,
-  ComponentRef,
-  Directive,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  TemplateRef,
-  ViewContainerRef,
+    ComponentFactoryResolver,
+    ComponentRef,
+    Directive,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    TemplateRef,
+    ViewContainerRef,
 } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 import {
-  BehaviorSubject,
-  Subject,
+    BehaviorSubject,
+    Subject,
 } from 'rxjs';
 import {
-  distinctUntilChanged,
-  filter,
+    distinctUntilChanged,
+    filter,
 } from 'rxjs/operators';
 
 import { UiContentSpinnerComponent } from './internal/ui-content-spinner.component';

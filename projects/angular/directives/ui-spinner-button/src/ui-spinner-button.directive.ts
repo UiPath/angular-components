@@ -1,15 +1,15 @@
 
 import {
-  ComponentFactoryResolver,
-  Directive,
-  Input,
-  OnInit,
-  Renderer2,
-  ViewContainerRef,
+    ComponentFactoryResolver,
+    Directive,
+    Input,
+    OnInit,
+    Renderer2,
+    ViewContainerRef,
 } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { UiLoaderButton } from '@uipath/angular/directives/internal';
+import { UiLoaderButtonDirective } from '@uipath/angular/directives/internal';
 
 import { UiButtonProgressSpinnerComponent } from './internal/ui-button-progress-spinner.component';
 
@@ -38,7 +38,7 @@ export const enum SpinnerButtonClass {
     exportAs: 'uiSpinnerButton',
 })
 export class UiSpinnerButtonDirective
-    extends UiLoaderButton<UiSpinnerButtonDirective, UiButtonProgressSpinnerComponent>
+    extends UiLoaderButtonDirective<UiButtonProgressSpinnerComponent>
     implements OnInit {
     @Input()
     public spinnerButtonLoading = false;
