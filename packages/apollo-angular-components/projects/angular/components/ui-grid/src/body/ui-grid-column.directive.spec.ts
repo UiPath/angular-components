@@ -65,7 +65,7 @@ const BOOLEAN_PROPERTIES: TestInputProperty[] = [
     'refetch',
 ];
 
-describe('Component: UiGrid', () => {
+describe('Component: UiGridColumn', () => {
     describe('Directive: UiGridColumn', () => {
         let fixture: ComponentFixture<TestFixtureComponent>;
         let component: TestFixtureComponent;
@@ -114,7 +114,7 @@ describe('Component: UiGrid', () => {
                     it(`should set ${boolProperty} to '${value}'`, () => {
                         expect(column[boolProperty]).toEqual(component[boolProperty]);
 
-                        component[boolProperty] = value;
+                        (component as any)[boolProperty] = value;
 
                         fixture.detectChanges();
 

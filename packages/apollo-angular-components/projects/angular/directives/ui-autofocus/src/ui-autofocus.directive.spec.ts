@@ -53,13 +53,11 @@ describe('Directive: Autofocus', () => {
     it('should call the focus event', fakeAsync(() => {
         const directive = focusedInput.injector.get<UiAutofocusDirective>(UiAutofocusDirective);
 
-        spyOn(directive, 'ngOnInit').and.callThrough();
         spyOn(directive, 'enqueueFocus').and.callThrough();
         spyOn(directive, 'focus').and.callThrough();
         spyOn<any>(directive, '_getFocusableNode').and.callThrough();
 
         fixture.detectChanges();
-        expect(directive.ngOnInit).toHaveBeenCalledTimes(1);
         expect(directive.enqueueFocus).toHaveBeenCalledTimes(1);
         expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
         expect(directive.element).toBeUndefined();
@@ -76,13 +74,11 @@ describe('Directive: Autofocus', () => {
         const directive = focusedInput.injector.get<UiAutofocusDirective>(UiAutofocusDirective);
         component.autofocusFlag = false;
 
-        spyOn(directive, 'ngOnInit').and.callThrough();
         spyOn(directive, 'enqueueFocus').and.callThrough();
         spyOn(directive, 'focus').and.callThrough();
         spyOn<any>(directive, '_getFocusableNode').and.callThrough();
 
         fixture.detectChanges();
-        expect(directive.ngOnInit).toHaveBeenCalledTimes(1);
         expect(directive.enqueueFocus).toHaveBeenCalledTimes(1);
 
         tick();
@@ -95,14 +91,12 @@ describe('Directive: Autofocus', () => {
     it('should call the focus event when refocus flag is set', fakeAsync(() => {
         const directive = refocusedInput.injector.get<UiAutofocusDirective>(UiAutofocusDirective);
 
-        spyOn(directive, 'ngOnInit').and.callThrough();
         spyOn(directive, 'enqueueFocus').and.callThrough();
         spyOn(directive, 'focus').and.callThrough();
         spyOn<any>(directive, '_getFocusableNode').and.callThrough();
 
         // queue focus
         fixture.detectChanges();
-        expect(directive.ngOnInit).toHaveBeenCalledTimes(1);
         expect(directive.enqueueFocus).toHaveBeenCalledTimes(1);
         expect(directive.element).toBeUndefined();
         expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);

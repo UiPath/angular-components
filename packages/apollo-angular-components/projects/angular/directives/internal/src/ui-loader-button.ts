@@ -1,15 +1,17 @@
 import {
-  ComponentFactoryResolver,
-  ComponentRef,
-  OnChanges,
-  OnDestroy,
-  SimpleChange,
-  SimpleChanges,
-  Type,
-  ViewContainerRef,
+    ComponentFactoryResolver,
+    ComponentRef,
+    Directive,
+    OnChanges,
+    OnDestroy,
+    SimpleChange,
+    SimpleChanges,
+    Type,
+    ViewContainerRef,
 } from '@angular/core';
 
-export abstract class UiLoaderButton<K, T> implements OnChanges, OnDestroy {
+@Directive()
+export abstract class UiLoaderButtonDirective<T> implements OnChanges, OnDestroy {
     protected _loader: T;
     protected _loaderElement: HTMLElement;
     protected _loaderRef: ComponentRef<T>;
@@ -18,7 +20,7 @@ export abstract class UiLoaderButton<K, T> implements OnChanges, OnDestroy {
         return this._container.element.nativeElement;
     }
 
-    private _watchers = new Map<keyof K, () => void>();
+    private _watchers = new Map<string, () => void>();
 
     constructor(
         loaderType: Type<T>,
@@ -51,7 +53,7 @@ export abstract class UiLoaderButton<K, T> implements OnChanges, OnDestroy {
             });
     }
 
-    protected _registerWatcher = (key: keyof K, action: () => void) => {
+    protected _registerWatcher = (key: string, action: () => void) => {
         this._watchers.set(key, action);
     }
 

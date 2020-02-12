@@ -1,6 +1,6 @@
 import {
-  Pipe,
-  PipeTransform,
+    Pipe,
+    PipeTransform,
 } from '@angular/core';
 
 @Pipe({ name: 'nl2br' })

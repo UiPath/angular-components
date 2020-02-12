@@ -2,9 +2,9 @@ import { IDropEvent } from './events';
 import { FakeFileList } from './fake-file-list';
 import { CURSOR_IMG } from './internal';
 import {
-  IKey,
-  IKeyModifier,
-  Key,
+    IKey,
+    IKeyModifier,
+    Key,
 } from './key';
 
 type KeyOrKeyName = (IKey | keyof Key);

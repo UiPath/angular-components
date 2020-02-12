@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import {
-  Component,
-  DebugElement,
+    Component,
+    DebugElement,
 } from '@angular/core';
 import {
-  ComponentFixture,
-  TestBed,
+    ComponentFixture,
+    TestBed,
 } from '@angular/core/testing';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { By } from '@angular/platform-browser';

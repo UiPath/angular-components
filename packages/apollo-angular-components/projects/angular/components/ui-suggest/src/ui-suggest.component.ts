@@ -2,29 +2,31 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ListRange } from '@angular/cdk/collections';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  Input,
-  isDevMode,
-  OnDestroy,
-  OnInit,
-  Optional,
-  Output,
-  Self,
-  TemplateRef,
-  ViewChild,
-  ViewEncapsulation,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChild,
+    ElementRef,
+    EventEmitter,
+    HostBinding,
+    Input,
+    isDevMode,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Optional,
+    Output,
+    Self,
+    SimpleChanges,
+    TemplateRef,
+    ViewChild,
+    ViewEncapsulation,
 } from '@angular/core';
 import {
-  FormGroupDirective,
-  NgControl,
-  NgForm,
+    FormGroupDirective,
+    NgControl,
+    NgForm,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -33,46 +35,45 @@ import { VirtualScrollItemStatus } from '@uipath/angular/directives/ui-virtual-s
 import cloneDeep from 'lodash-es/cloneDeep';
 import isEqual from 'lodash-es/isEqual';
 import {
-  BehaviorSubject,
-  combineLatest,
-  merge,
-  Observable,
-  of,
-  Subject,
-  Subscription,
+    BehaviorSubject,
+    combineLatest,
+    merge,
+    Observable,
+    of,
+    Subject,
+    Subscription,
 } from 'rxjs';
 import {
-  debounceTime,
-  delay,
-  distinctUntilChanged,
-  filter,
-  finalize,
-  map,
-  retry,
-  startWith,
-  switchMap,
-  takeUntil,
-  tap,
+    debounceTime,
+    delay,
+    distinctUntilChanged,
+    filter,
+    finalize,
+    map,
+    retry,
+    startWith,
+    switchMap,
+    takeUntil,
+    tap,
 } from 'rxjs/operators';
 
 import {
-  ISuggestValue,
-  ISuggestValues,
-  SuggestDirection,
+    ISuggestValue,
+    ISuggestValues,
+    SuggestDirection,
 } from './models';
 import { UI_SUGGEST_ANIMATIONS } from './ui-suggest.animations';
 import { UiSuggestIntl } from './ui-suggest.intl';
-import { UiSuggestMatFormField } from './ui-suggest.mat-form-field';
+import { UiSuggestMatFormFieldDirective } from './ui-suggest.mat-form-field';
 import {
-  caseInsensitiveCompare,
-  generateLoadingInitialCollection,
-  inMemorySearch,
-  mapInitialItems,
-  resetUnloadedState,
-  setLoadedState,
-  setPendingState,
-  sortByPriorityAndDirection,
-  toSuggestValue,
+    caseInsensitiveCompare,
+    generateLoadingInitialCollection,
+    inMemorySearch,
+    mapInitialItems,
+    resetUnloadedState,
+    setLoadedState,
+    setPendingState,
+    toSuggestValue,
 } from './utils';
 
 export const DEFAULT_SUGGEST_DEBOUNCE_TIME = 300;
@@ -101,10 +102,11 @@ export const DEFAULT_SUGGEST_DEBOUNCE_TIME = 300;
         UI_SUGGEST_ANIMATIONS.transformMenuList,
     ],
 })
-export class UiSuggestComponent extends UiSuggestMatFormField
+export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     implements
     OnDestroy,
     OnInit,
+    OnChanges,
     AfterViewInit {
 
     /**
@@ -198,12 +200,8 @@ export class UiSuggestComponent extends UiSuggestMatFormField
             this.fetch(this.inputControl.value);
         }
 
-        this._items = sortByPriorityAndDirection(
-            cloneDeep(items),
-            this.displayPriority,
-            this.value,
-            this.isDown,
-        ).map(r => ({ ...r, loading: VirtualScrollItemStatus.loaded }));
+        this._items = this._sortItems(items)
+            .map(r => ({ ...r, loading: VirtualScrollItemStatus.loaded }));
     }
 
     /**
@@ -473,7 +471,7 @@ export class UiSuggestComponent extends UiSuggestMatFormField
      */
     public focus$ = new Subject<boolean>();
 
-    @ViewChild(CdkVirtualScrollViewport, { static: false })
+    @ViewChild(CdkVirtualScrollViewport)
     protected set _virtualScrollerQuery(value: CdkVirtualScrollViewport) {
         if (this._virtualScroller === value) { return; }
 
@@ -599,6 +597,14 @@ export class UiSuggestComponent extends UiSuggestMatFormField
                 takeUntil(this._destroyed$),
             )
             .subscribe(this._virtualScrollTo);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        const { displayPriority } = changes;
+
+        if (displayPriority?.currentValue !== displayPriority?.previousValue) {
+            this._items = this._sortItems(this._items);
+        }
     }
 
     /**
