@@ -115,8 +115,13 @@ export class UiGridIntl implements OnDestroy {
      * @param renderedItemCount The number of rendered items.
      * @param total The total number of items available.
      */
-    public loadedPage = (page: number, renderedItemCount: number, total: number) =>
-        `Loaded page number ${page} containing ${renderedItemCount} out of ${total} items`
+    public loadedPage = (page: number, renderedItemCount: number, total?: number | null) => {
+        if (total == null || isNaN(total)) {
+            return `Loaded page number ${page} containing ${renderedItemCount} items`;
+        }
+
+        return `Loaded page number ${page} containing ${renderedItemCount} out of ${total} items`;
+    }
 
     /**
      * Live announcer page loading state notification.

@@ -1,5 +1,3 @@
-import { PageEvent } from '@angular/material/paginator';
-
 import {
     NEVER,
     Observable,
@@ -7,6 +5,7 @@ import {
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { PageChangeEvent } from '../events/page-change-event';
 import { ISortModel } from '../models';
 import { UiGridIntl } from '../ui-grid.intl';
 
@@ -23,12 +22,12 @@ export class LiveAnnouncerManager<T> {
         data$: Observable<T[]>,
         sort$: Observable<ISortModel<T>>,
         refresh$: Observable<void>,
-        pageChange$: Observable<PageEvent> = NEVER,
+        pageChange$: Observable<PageChangeEvent> = NEVER,
     ) {
 
         this._bindAnnouncement(
             pageChange$,
-            pageEvent => intl.loadingPage(pageEvent.pageIndex + 1),
+            pageChangeEvent => intl.loadingPage(pageChangeEvent.pageIndex + 1),
         );
 
         this._bindAnnouncement(
@@ -36,17 +35,17 @@ export class LiveAnnouncerManager<T> {
             _ => intl.pageRefreshing,
         );
 
-        let latestPageEvent: PageEvent;
+        let latestPageChangeEvent: PageChangeEvent;
 
         this._untilDestroyed(pageChange$)
-            .subscribe(e => latestPageEvent = e);
+            .subscribe(e => latestPageChangeEvent = e);
 
         this._bindAnnouncement(data$, items =>
-            latestPageEvent &&
+            latestPageChangeEvent &&
             intl.loadedPage(
-                latestPageEvent.pageIndex + 1,
+                latestPageChangeEvent.pageIndex + 1,
                 items.length,
-                latestPageEvent.length,
+                latestPageChangeEvent.length,
             ),
         );
 
