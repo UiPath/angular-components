@@ -6,9 +6,10 @@ import {
     OnInit,
     Output,
 } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
 
 import { tap } from 'rxjs/operators';
+
+import { PageChangeEvent } from '../events/page-change-event';
 
 /**
  * Footer definition directive.
@@ -54,7 +55,7 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
      *
      */
     @Output()
-    public pageChange = new EventEmitter<PageEvent>();
+    public pageChange = new EventEmitter<PageChangeEvent>();
 
     /**
      * The current footer state.
@@ -64,7 +65,7 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
         return this._state;
     }
 
-    private _state: PageEvent = { length: NaN, pageIndex: 0, pageSize: NaN, previousPageIndex: NaN };
+    private _state: PageChangeEvent = { length: NaN, pageIndex: 0, pageSize: NaN, previousPageIndex: NaN };
 
     /**
      * @ignore
