@@ -2,6 +2,7 @@ export { UiGridModule } from './ui-grid.module';
 export { UiGridIntl } from './ui-grid.intl';
 export { UiGridComponent } from './ui-grid.component';
 export { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
+export { PageChangeEvent } from './events/page-change-event';
 export {
     IFilterModel,
     IGridDataEntry,
