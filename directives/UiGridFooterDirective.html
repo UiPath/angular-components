@@ -180,7 +180,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:50</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:51</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -206,7 +206,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:27</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:28</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -233,7 +233,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:34</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:35</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -265,7 +265,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:43</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:44</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -295,7 +295,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:57</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:58</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -332,7 +332,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:34</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:35</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -392,7 +392,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:63</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/angular/components/ui-grid/src/footer/ui-grid-footer.directive.ts:64</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -419,9 +419,10 @@
     OnInit,
     Output,
 } from &#x27;@angular/core&#x27;;
-import { PageEvent } from &#x27;@angular/material/paginator&#x27;;
 
 import { tap } from &#x27;rxjs/operators&#x27;;
+
+import { PageChangeEvent } from &#x27;../events/page-change-event&#x27;;
 
 /**
  * Footer definition directive.
@@ -467,7 +468,7 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
      *
      */
     @Output()
-    public pageChange &#x3D; new EventEmitter&lt;PageEvent&gt;();
+    public pageChange &#x3D; new EventEmitter&lt;PageChangeEvent&gt;();
 
     /**
      * The current footer state.
@@ -477,7 +478,7 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
         return this._state;
     }
 
-    private _state: PageEvent &#x3D; { length: NaN, pageIndex: 0, pageSize: NaN, previousPageIndex: NaN };
+    private _state: PageChangeEvent &#x3D; { length: NaN, pageIndex: 0, pageSize: NaN, previousPageIndex: NaN };
 
     /**
      * @ignore

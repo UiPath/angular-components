@@ -382,7 +382,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="142" class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.intl.ts:142</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="147" class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.intl.ts:147</a></div>
                             </td>
                         </tr>
 
@@ -439,7 +439,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="150" class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.intl.ts:150</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="155" class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.intl.ts:155</a></div>
                             </td>
                         </tr>
 
@@ -496,7 +496,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="158" class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.intl.ts:158</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="163" class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.intl.ts:163</a></div>
                             </td>
                         </tr>
 
@@ -663,7 +663,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.intl.ts:126</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="131" class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.intl.ts:131</a></div>
                             </td>
                         </tr>
 
@@ -1188,7 +1188,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.intl.ts:134</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.intl.ts:139</a></div>
                             </td>
                         </tr>
 
@@ -1411,8 +1411,13 @@ export class UiGridIntl implements OnDestroy {
      * @param renderedItemCount The number of rendered items.
      * @param total The total number of items available.
      */
-    public loadedPage &#x3D; (page: number, renderedItemCount: number, total: number) &#x3D;&gt;
-        &#x60;Loaded page number ${page} containing ${renderedItemCount} out of ${total} items&#x60;
+    public loadedPage &#x3D; (page: number, renderedItemCount: number, total?: number | null) &#x3D;&gt; {
+        if (total &#x3D;&#x3D; null || isNaN(total)) {
+            return &#x60;Loaded page number ${page} containing ${renderedItemCount} items&#x60;;
+        }
+
+        return &#x60;Loaded page number ${page} containing ${renderedItemCount} out of ${total} items&#x60;;
+    }
 
     /**
      * Live announcer page loading state notification.
