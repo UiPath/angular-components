@@ -17,6 +17,7 @@ export { UiGridSearchModule } from './components/ui-grid-search/ui-grid-search.m
 export { UiGridToggleColumnsModule } from './components/ui-grid-toggle-columns/ui-grid-toggle-columns.module';
 export { UiGridToggleColumnsComponent } from './components/ui-grid-toggle-columns/ui-grid-toggle-columns.component';
 export { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
+export { PageChangeEvent } from './events/page-change-event';
 export {
     IFilterModel,
     IGridDataEntry,
