@@ -1,6 +1,6 @@
-
-# v0.10.14 (2019-01-22)
-* **snackbar** add support for custom template instead of message
+# v0.10.17 (2019-01-22)
+* **grid** add support for toggle-able columns
+* **grid** announce page changes with unknown total
 
 # v0.10.15 (2020-01-21)
 * **suggest** fix toolip and scrolling
