@@ -50,7 +50,8 @@ describe('Component: UiGrid', () => {
         template: `
             <ui-grid [data]="data"
                      [selectable]="selectable"
-                     [refreshable]="refreshable">
+                     [refreshable]="refreshable"
+                     [showHeaderRow]="showHeaderRow">
                 <ui-grid-column [property]="'myNumber'"
                                 title="Number Header"
                                 width="25%">
@@ -91,6 +92,7 @@ describe('Component: UiGrid', () => {
         public isFilterVisible = true;
         public selectable?: boolean;
         public refreshable?: boolean;
+        public showHeaderRow = true;
     }
     describe('Scenario: simple grid', () => {
         let fixture: ComponentFixture<TestFixtureSimpleGridComponent>;
@@ -492,6 +494,66 @@ describe('Component: UiGrid', () => {
                     });
 
 
+                });
+            });
+        });
+
+        describe('Configuration: grid without header row', () => {
+            beforeEach(() => {
+                component.showHeaderRow = false;
+
+                fixture.detectChanges();
+            });
+
+            describe('State: initial', () => {
+                it('should not render any header', () => {
+                    const headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
+
+                    expect(headers).toBeDefined();
+                    expect(headers.length).toEqual(0);
+                });
+            });
+
+            describe('State: populated', () => {
+                let data: ITestEntity[];
+
+                beforeEach(() => {
+                    data = generateListFactory(generateEntity)(50);
+
+                    component.data = data;
+                    fixture.detectChanges();
+                });
+
+                it('should correctly set the data internally', () => {
+                    expect(grid.dataManager.length).toEqual(data.length);
+                    expect(grid.dataManager.data$.getValue()).toEqual(data);
+                });
+
+                it('should render all the rows associated to the data array', () => {
+                    const rows = fixture.debugElement.queryAll(By.css('.ui-grid-row'));
+
+                    expect(rows.length).toEqual(data.length);
+                });
+
+                it('should render the correct cell text for each column', () => {
+                    fixture.detectChanges();
+                    const rows = fixture.debugElement.queryAll(By.css('.ui-grid-row'));
+
+                    rows.forEach((row, index) => {
+                        const dataEntry = data[index];
+
+                        const [
+                            numberCell,
+                            boolCell,
+                            nestedStringCell,
+                            nestedDateCell,
+                        ] = row.queryAll(By.css('.ui-grid-cell'));
+
+                        expect(numberCell.nativeElement.innerText).toContain(dataEntry.myNumber);
+                        expect(boolCell.nativeElement.innerText).toContain(dataEntry.myBool.toString());
+                        expect(nestedStringCell.nativeElement.innerText).toContain(dataEntry.myObj.myObjString);
+                        expect(nestedDateCell.nativeElement.innerText).toContain(dataEntry.myObj.myObjDate.toString());
+                    });
                 });
             });
         });
