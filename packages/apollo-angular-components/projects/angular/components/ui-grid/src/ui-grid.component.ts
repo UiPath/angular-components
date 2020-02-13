@@ -222,6 +222,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     public expandMode: 'preserve' | 'collapse' = 'collapse';
 
     /**
+     * Configure if ui-grid-header-row should be visible, by default it is visible
+     *
+     */
+    @Input()
+    public showHeaderRow = true;
+
+    /**
      * Emits an event with the sort model when a column sort changes.
      *
      */

@@ -277,10 +277,11 @@ ui-grid {
                 text-transform: uppercase;
                 height: $ui-grid-header-row-height;
                 position: relative;
+            }
 
+            .ui-grid-header {
                 mat-progress-bar {
                     position: absolute;
-                    bottom: 0;
                     right: 0;
                 }
             }
@@ -383,13 +384,17 @@ ui-grid {
                     align-items: center;
                     display: flex;
 
-                    &-asc { //sorted asc
-                        .path-desc { // desc path
+                    //sorted asc
+                    &-asc {
+                        // desc path
+                        .path-desc {
                             opacity: 0;
                         }
                     }
-                    &-desc { //sorted desc
-                        .path-asc { // asc path
+                    &-desc {
+                        //sorted desc
+                        .path-asc {
+                            // asc path
                             opacity: 0;
                         }
                     }
