@@ -254,7 +254,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             !this.isOpen &&
             this._hasValue
         ) {
-            return this.value.map(v => v.text).join(', ');
+            return this.value.map(v => this.intl.translateLabel(v.text)).join(', ');
         }
 
         return null;
