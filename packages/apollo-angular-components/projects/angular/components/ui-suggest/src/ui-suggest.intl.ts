@@ -52,6 +52,13 @@ export class UiSuggestIntl implements OnDestroy {
     public customValueLabel = (text: string) => text;
 
     /**
+     * Value label generator function.
+     *
+     * @param text The text of the value.
+     */
+    public translateLabel = (text: string) => text;
+
+    /**
      * @ignore
      */
     ngOnDestroy() {
