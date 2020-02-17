@@ -1,3 +1,6 @@
+# v0.10.18 (2019-02-17)
+* **suggest** translate option labels via intl service
+
 # v0.10.17 (2019-01-22)
 * **grid** add support for toggle-able columns
 * **grid** announce page changes with unknown total
