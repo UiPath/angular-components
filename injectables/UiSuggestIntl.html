@@ -110,6 +110,10 @@
                                     <span class="modifier">Public</span>
                                 <a href="#noResultsLabel">noResultsLabel</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#translateLabel">translateLabel</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -414,6 +418,63 @@
 
             </tbody>
         </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="translateLabel"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            translateLabel</b>
+                            <a href="#translateLabel"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/angular/components/ui-suggest/src/ui-suggest.intl.ts:59</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Value label generator function.</p>
+</div>
+                    </td>
+                </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                          <div class="io-description">
+                                  <b>Parameters :</b>
+                                  <table class="params">
+                                      <thead>
+                                          <tr>
+                                                <td>Name</td>
+                                                    <td>Description</td>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                                <tr>
+                                                        <td>text</td>
+                                                        <td>
+                                                                <code><p>The text of the value.</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                      </tbody>
+                                  </table>
+                          </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
 </section>
 
     </div>
@@ -472,6 +533,13 @@ export class UiSuggestIntl implements OnDestroy {
      * @param text The text of the custom value.
      */
     public customValueLabel &#x3D; (text: string) &#x3D;&gt; text;
+
+    /**
+     * Value label generator function.
+     *
+     * @param text The text of the value.
+     */
+    public translateLabel &#x3D; (text: string) &#x3D;&gt; text;
 
     /**
      * @ignore
