@@ -33,7 +33,7 @@
             <span class="display-value">
                 <ng-container *ngIf="!!value.length; else allLabel">
                     <ng-container *ngFor="let option of value; let i = index">
-                        {{ option.text + (i === value.length - 1 ? '' : ', ') }}
+                        {{ intl.translateLabel(option.text) + (i === value.length - 1 ? '' : ', ') }}
                     </ng-container>
                 </ng-container>
                 <ng-template #allLabel>
@@ -144,20 +144,20 @@
                         </ng-container>
                     </ng-container>
                     <ng-template #defaultItem>
-                        <div [matTooltip]="disableTooltip ? null : item.text"
+                        <div [matTooltip]="disableTooltip ? null : intl.translateLabel(item.text)"
                              matTooltipPosition="right"
                              class="ui-suggest-item">
                             <mat-checkbox *ngIf="multiple"
                                           [checked]="isItemSelected(item)"
                                           [indeterminate]="false">
                             </mat-checkbox>
-                            <div [attr.aria-label]="item.text"
+                            <div [attr.aria-label]="intl.translateLabel(item.text)"
                                  class="text-label text-ellipsis"
                                  tabindex="-1">
                                 <mat-icon *ngIf="!!item?.icon?.svgIcon"
                                           [svgIcon]="item?.icon.svgIcon"></mat-icon>
                                 <mat-icon *ngIf="!!item?.icon?.matIcon">{{item?.icon.matIcon}}</mat-icon>
-                                {{ item?.icon?.iconOnly ? null : item.text }}
+                                {{ item?.icon?.iconOnly ? null : intl.translateLabel(item.text) }}
                             </div>
                         </div>
                     </ng-template>
