@@ -568,6 +568,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         );
 
         this.intl = this.intl || new UiSuggestIntl();
+        this.intl
+            .changes
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(() => cd.detectChanges());
         this.customValueLabelTranslator = this.customValueLabelTranslator || this.intl.customValueLabel;
     }
 
