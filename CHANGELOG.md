@@ -1,3 +1,6 @@
+# v0.10.21 (2019-02-18)
+* **suggest** react to intl changes
+
 # v0.10.18 (2019-02-17)
 * **suggest** translate option labels via intl service
 
