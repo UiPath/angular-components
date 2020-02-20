@@ -29,6 +29,9 @@ export class IntegrationUtils<T> {
     public getDebugElement = (selector: string, debugEl = this.fixture.debugElement) =>
         debugEl.query(By.css(selector))
 
+    public getAllDebugElements = (selector: string, debugEl = this.fixture.debugElement) =>
+        debugEl.queryAll(By.css(selector))
+
     public getNativeElement = <U extends HTMLElement>(selector: string, debugEl = this.fixture.debugElement) => {
         const debugElement = this.getDebugElement(selector, debugEl);
         return !!debugElement ? debugElement.nativeElement as U : null;
@@ -45,6 +48,11 @@ export class IntegrationUtils<T> {
             .queryAll(By.css('.ui-grid-cell'))
             .filter((_, index) => cellNumbers.includes(index + 1))
             .map((cellEl) => cellEl.nativeElement.innerText);
+    }
+
+    public getGridHeaders = (gridSelector: string, debugEl = this.fixture.debugElement) => {
+        return this.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
+            .filter(el => this.getDebugElement('.ui-grid-header-title', el));
     }
 
     public getGridRowItem = (gridSelector: string, rowNumber: number, selector: string, debugEl = this.fixture.debugElement) => {
