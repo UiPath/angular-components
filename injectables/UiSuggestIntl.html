@@ -88,6 +88,10 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#changes">changes</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#clearSelectionLabel">clearSelectionLabel</a>
                             </li>
                             <li>
@@ -134,6 +138,39 @@
         <h3 id="inputs">
             Properties
         </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="changes"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            changes</b>
+                            <a href="#changes"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new Subject()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/angular/components/ui-suggest/src/ui-suggest.intl.ts:40</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Notify if changes have occurred that require that the labels be updated.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -193,7 +230,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/angular/components/ui-suggest/src/ui-suggest.intl.ts:45</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/angular/components/ui-suggest/src/ui-suggest.intl.ts:51</a></div>
                             </td>
                         </tr>
 
@@ -264,7 +301,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/angular/components/ui-suggest/src/ui-suggest.intl.ts:52</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/angular/components/ui-suggest/src/ui-suggest.intl.ts:58</a></div>
                             </td>
                         </tr>
 
@@ -438,7 +475,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/angular/components/ui-suggest/src/ui-suggest.intl.ts:59</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">projects/angular/components/ui-suggest/src/ui-suggest.intl.ts:65</a></div>
                             </td>
                         </tr>
 
@@ -516,6 +553,12 @@ export class UiSuggestIntl implements OnDestroy {
      */
     public customValueLiveLabel &#x3D; &#x27;Custom value&#x27;;
 
+    /**
+     * Notify if changes have occurred that require that the labels be updated.
+     *
+     */
+    public changes &#x3D; new Subject();
+
     protected _destroyed$ &#x3D; new Subject&lt;void&gt;();
 
     /**
@@ -547,6 +590,7 @@ export class UiSuggestIntl implements OnDestroy {
     ngOnDestroy() {
         this._destroyed$.next();
         this._destroyed$.complete();
+        this.changes.complete();
     }
 }
 </code></pre>
