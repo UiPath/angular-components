@@ -1,9 +1,11 @@
+# v9.0.3 (2020-02-26
+* upgrade to ng 9.0.3
 
-# v9.0.0 (2019-02-12)
+# v9.0.0 (2020-02-12)
 * **grid** add support for toggle-able columns
 * upgrade to ng 9
 
-# v0.10.14 (2019-01-22)
+# v0.10.14 (2020-01-22)
 * **snackbar** add support for custom template instead of message
 
 # v0.10.15 (2020-01-21)
