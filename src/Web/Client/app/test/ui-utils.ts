@@ -159,6 +159,18 @@ export class IntegrationUtils<T> {
             .nativeElement
             .dispatchEvent(EventGenerator.click)
 
+    public toggleSlider = (selector: string, debugEl = this.fixture.debugElement) =>
+        this.getDebugElement(selector, debugEl)
+            .query(By.css('.mat-slide-toggle-label'))
+            .nativeElement
+            .dispatchEvent(EventGenerator.click)
+
+    public isToggleChecked = (selector: string, debugEl = this.fixture.debugElement) =>
+        this.getDebugElement(selector, debugEl)
+            .nativeElement
+            .classList
+            .contains('mat-checked')
+
     public isRadioButtonChecked = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
             .nativeElement
