@@ -159,11 +159,31 @@ export class IntegrationUtils<T> {
             .nativeElement
             .dispatchEvent(EventGenerator.click)
 
+    public setCheckboxState = (selector: string, state: boolean, debugEl = this.fixture.debugElement) => {
+        const isChecked = this.isCheckboxChecked(selector, debugEl);
+        if (
+            !isChecked && state ||
+            isChecked && !state
+        ) {
+            this.toggleCheckbox(selector);
+        }
+    }
+
     public toggleSlider = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
             .query(By.css('.mat-slide-toggle-label'))
             .nativeElement
             .dispatchEvent(EventGenerator.click)
+
+    public setSliderState(selector: string, state: boolean, debugEl = this.fixture.debugElement) {
+        const isToggled = this.isToggleChecked(selector, debugEl);
+        if (
+            isToggled && !state ||
+            !isToggled && state
+        ) {
+            debugEl.query(By.css(`${selector} input[type=checkbox]`)).nativeElement.click();
+        }
+    }
 
     public isToggleChecked = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
