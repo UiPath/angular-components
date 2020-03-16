@@ -1,4 +1,7 @@
-# v9.0.3 (2020-02-26
+# v9.0.2 (2020-03-16)
+* **snackbar** show snackbars with 0 delay (that don't auto-close)
+
+# v9.0.1 (2020-02-26)
 * upgrade to ng 9.0.3
 
 # v9.0.0 (2020-02-12)
