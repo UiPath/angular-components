@@ -207,11 +207,23 @@ describe('Service: UiSnackBarService', () => {
 
                 tick(DEFAULT_DURATION - 1);
                 const snackBeforeTimeout = getSnack();
-                expect(snackBeforeTimeout).toBeDefined();
+                expect(snackBeforeTimeout).not.toBeNull();
 
                 tick(1);
                 const snackAfterTimeout = getSnack();
-                expect(snackAfterTimeout).toBeDefined();
+                expect(snackAfterTimeout).toBeNull();
+            }));
+
+            it('should not dismiss after the default duration if the duration is zero', fakeAsync(() => {
+                const method = getMethodFor(type);
+
+                method(faker.lorem.paragraph(), 0);
+                fixture.detectChanges();
+
+                tick(DEFAULT_DURATION + 1);
+
+                const snackAfterDefaultTimeout = getSnack();
+                expect(snackAfterDefaultTimeout).not.toBeNull();
             }));
         });
 
