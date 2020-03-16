@@ -441,7 +441,7 @@ export class UiSnackBarService {
         this._alert(type || SnackBarType.None, {
             message,
             icon: icon || ICON_MAP.get(type!),
-            duration: duration || this._options.duration!,
+            duration: duration || duration &#x3D;&#x3D;&#x3D; 0 ? duration : this._options.duration!,
         })
 
     /**
@@ -457,7 +457,7 @@ export class UiSnackBarService {
         (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; this._alert(type, {
             message,
             icon: ICON_MAP.get(type),
-            duration: duration || this._options.duration!,
+            duration: duration || duration &#x3D;&#x3D;&#x3D; 0 ? duration : this._options.duration!,
         })
 
     private _alert(type: SnackBarType, options: ISnackBarAlert) {
