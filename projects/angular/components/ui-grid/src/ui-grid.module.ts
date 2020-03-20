@@ -1,4 +1,3 @@
-import { ScrollingModule as XScrollingModule } from '@angular/cdk-experimental/scrolling';
 import { A11yModule } from '@angular/cdk/a11y';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
@@ -37,7 +36,6 @@ import { UiGridComponent } from './ui-grid.component';
         MatTooltipModule,
         MatProgressBarModule,
         ScrollingModule,
-        XScrollingModule,
         UiGridSearchModule,
         UiGridToggleColumnsModule,
         UiSuggestModule,

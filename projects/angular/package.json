@@ -1,6 +1,6 @@
 {
   "name": "@uipath/angular",
-  "version": "9.0.2",
+  "version": "9.0.3",
   "license": "MIT",
   "author": {
     "name": "UiPath Inc",
@@ -30,7 +30,6 @@
   "peerDependencies": {
     "@angular/animations": ">=8.0.0",
     "@angular/cdk": ">=8.0.0",
-    "@angular/cdk-experimental": ">=8.0.0",
     "@angular/common": ">=8.0.0",
     "@angular/compiler": ">=8.0.0",
     "@angular/core": ">=8.0.0",
