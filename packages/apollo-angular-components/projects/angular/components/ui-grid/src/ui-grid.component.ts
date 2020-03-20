@@ -229,6 +229,14 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     public showHeaderRow = true;
 
     /**
+     * Configure the row size for each row.
+     * TODO: Replace this with autosize when it comes out of cdk/experimental (scrolling issues on FF)
+     *
+     */
+    @Input()
+    public rowSize = 48;
+
+    /**
      * Emits an event with the sort model when a column sort changes.
      *
      */
