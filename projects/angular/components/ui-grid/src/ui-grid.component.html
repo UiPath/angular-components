@@ -218,7 +218,7 @@
             <ng-container *ngIf="dataManager?.length; else noData">
                 <ng-container *ngIf="virtualScroll">
                     <cdk-virtual-scroll-viewport [total]="dataManager.length"
-                                                 autosize
+                                                 [itemSize]="rowSize"
                                                  uiVirtualScrollViewportResize
                                                  class="ui-grid-viewport">
                         <ng-container *cdkVirtualFor="let row of dataManager.data$ | async;
