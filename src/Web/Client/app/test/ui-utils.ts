@@ -55,6 +55,10 @@ export class IntegrationUtils<T> {
             .filter(el => this.getDebugElement('.ui-grid-header-title', el));
     }
 
+    public getGridHeader = (property: string, debugEl = this.fixture.debugElement) => {
+        return this.getDebugElement(`.ui-grid-header-cell[data-property="${property}"] .ui-grid-header-title`, debugEl);
+    }
+
     public getGridRowItem = (gridSelector: string, rowNumber: number, selector: string, debugEl = this.fixture.debugElement) => {
         return this.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"] ${selector}`, debugEl);
     }
