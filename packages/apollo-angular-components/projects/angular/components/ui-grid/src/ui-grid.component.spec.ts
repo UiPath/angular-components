@@ -7,6 +7,7 @@ import {
     ComponentFixture,
     discardPeriodicTasks,
     fakeAsync,
+    flush,
     TestBed,
     tick,
 } from '@angular/core/testing';
@@ -26,6 +27,7 @@ import {
 
 import * as faker from 'faker';
 import {
+    animationFrameScheduler,
     Observable,
     of,
 } from 'rxjs';
@@ -49,9 +51,10 @@ describe('Component: UiGrid', () => {
     @Component({
         template: `
             <ui-grid [data]="data"
-                     [selectable]="selectable"
                      [refreshable]="refreshable"
-                     [showHeaderRow]="showHeaderRow">
+                     [selectable]="selectable"
+                     [showHeaderRow]="showHeaderRow"
+                     [virtualScroll]="virtualScroll">
                 <ui-grid-column [property]="'myNumber'"
                                 title="Number Header"
                                 width="25%">
@@ -93,6 +96,7 @@ describe('Component: UiGrid', () => {
         public selectable?: boolean;
         public refreshable?: boolean;
         public showHeaderRow = true;
+        public virtualScroll = false;
     }
     describe('Scenario: simple grid', () => {
         let fixture: ComponentFixture<TestFixtureSimpleGridComponent>;
@@ -110,6 +114,7 @@ describe('Component: UiGrid', () => {
             });
 
             fixture = TestBed.createComponent(TestFixtureSimpleGridComponent);
+            fixture.componentInstance.virtualScroll = false;
 
             fixture.detectChanges();
 
@@ -556,6 +561,56 @@ describe('Component: UiGrid', () => {
                     });
                 });
             });
+        });
+
+        describe('Configuration: using virtual scroll', () => {
+            beforeEach(() => {
+                component.virtualScroll = true;
+                fixture.detectChanges();
+            });
+
+            const virtualScrollViewportSelector = By.css('.ui-grid-viewport');
+            const compensationCellSelector = By.css('.ui-grid-scroll-size-compensation-cell');
+
+            function finishInit(componentFixture: ComponentFixture<any>) {
+                // On the first cycle we render and measure the viewport.
+                componentFixture.detectChanges();
+                flush();
+
+                // On the second cycle we render the items.
+                componentFixture.detectChanges();
+                flush();
+
+                // Flush the initial fake scroll event.
+                animationFrameScheduler.flush();
+                flush();
+                componentFixture.detectChanges();
+
+                // Flush the scrollbar width compensation calculation
+                tick();
+                componentFixture.detectChanges();
+            }
+
+            it('should NOT add a scrollbar spacer when scrollbar is not present', fakeAsync(() => {
+                component.data = generateListFactory(generateEntity)(1);
+                finishInit(fixture);
+
+                const compensationWidthPx = fixture.debugElement.query(compensationCellSelector).nativeElement.style.marginLeft;
+
+                expect(parseInt(compensationWidthPx, 10)).toBe(0);
+            }));
+
+            it('should add a scrollbar spacer equal to the scrollbar width', fakeAsync(() => {
+                component.data = generateListFactory(generateEntity)(50);
+                fixture.detectChanges();
+
+                finishInit(fixture);
+
+                const compensationWidthPx = fixture.debugElement.query(compensationCellSelector).nativeElement.style.marginLeft;
+                const virtualScrollViewport = fixture.debugElement.query(virtualScrollViewportSelector).nativeElement;
+
+                expect(parseInt(compensationWidthPx, 10)).toBe(virtualScrollViewport.offsetWidth - virtualScrollViewport.clientWidth);
+            }));
         });
     });
 
