@@ -24,6 +24,7 @@ import { QueuedAnnouncer } from '@uipath/angular/a11y';
 
 import range from 'lodash-es/range';
 import {
+    animationFrameScheduler,
     BehaviorSubject,
     merge,
     Observable,
@@ -31,7 +32,9 @@ import {
 } from 'rxjs';
 import {
     debounceTime,
+    distinctUntilChanged,
     map,
+    observeOn,
     skip,
     switchMap,
     take,
@@ -229,14 +232,6 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     public showHeaderRow = true;
 
     /**
-     * Configure the row size for each row.
-     * TODO: Replace this with autosize when it comes out of cdk/experimental (scrolling issues on FF)
-     *
-     */
-    @Input()
-    public rowSize = 48;
-
-    /**
      * Emits an event with the sort model when a column sort changes.
      *
      */
@@ -383,16 +378,24 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     /**
      * Returns the scroll size, in order to compensate for the scrollbar.
      *
+     * @deprecated
      */
-    public get scrollCompensationWidth() {
-        if (!this.virtualScroll) { return 0; }
+    public scrollCompensationWidth = 0;
 
-        const viewport: HTMLElement = this._ref.nativeElement.querySelector('.ui-grid-viewport');
-
-        if (!viewport) { return 0; }
-
-        return viewport.offsetWidth - viewport.clientWidth;
-    }
+    /**
+     * @internal
+     * @ignore
+     */
+    public scrollCompensationWidth$ = this.dataManager.data$.pipe(
+        map(data => data.length),
+        distinctUntilChanged(),
+        observeOn(animationFrameScheduler),
+        debounceTime(0),
+        map(() => this._ref.nativeElement.querySelector('.ui-grid-viewport')),
+        map(view => view ? view.offsetWidth - view.clientWidth : 0),
+        // tslint:disable-next-line: deprecation
+        tap(compensationWidth => this.scrollCompensationWidth = compensationWidth),
+    );
 
     /**
      * Determines if the multi-page selection row should be displayed.

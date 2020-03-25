@@ -187,7 +187,7 @@
                     </div>
 
                     <div *ngIf="virtualScroll"
-                         [style.marginLeft.px]="scrollCompensationWidth"
+                         [style.marginLeft.px]="scrollCompensationWidth$ | async"
                          class="ui-grid-header-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">
                     </div>
                     <div *ngIf="refreshable"
@@ -218,7 +218,7 @@
             <ng-container *ngIf="dataManager?.length; else noData">
                 <ng-container *ngIf="virtualScroll">
                     <cdk-virtual-scroll-viewport [total]="dataManager.length"
-                                                 [itemSize]="rowSize"
+                                                 autosize
                                                  uiVirtualScrollViewportResize
                                                  class="ui-grid-viewport">
                         <ng-container *cdkVirtualFor="let row of dataManager.data$ | async;
