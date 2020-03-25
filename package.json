@@ -117,7 +117,7 @@
     "jasmine-spec-reporter": "4.2.1",
     "jasmine_dom_matchers": "^1.4.0",
     "json": "^9.0.6",
-    "karma": "4.1.0",
+    "karma": "^4.4.1",
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage-istanbul-reporter": "2.0.5",
     "karma-jasmine": "2.0.1",
