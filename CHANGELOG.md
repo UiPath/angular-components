@@ -1,3 +1,6 @@
+# v9.0.3 (2020-03-25)
+* **grid** fix scroll performance when using virtual viewport
+
 # v9.0.2 (2020-03-16)
 * **snackbar** show snackbars with 0 delay (that don't auto-close)
 
