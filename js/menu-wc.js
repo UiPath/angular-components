@@ -412,21 +412,21 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="modules/UiSecondFormatModule.html" data-type="entity-link">UiSecondFormatModule</a>
-                                <li class="chapter inner">
-                                    <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiSecondFormatModule-cdcb11578000514d87f86a2a04f9887e"' : 'data-target="#xs-directives-links-module-UiSecondFormatModule-cdcb11578000514d87f86a2a04f9887e"' }>
-                                        <span class="icon ion-md-code-working"></span>
-                                        <span>Directives</span>
-                                        <span class="icon ion-ios-arrow-down"></span>
-                                    </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiSecondFormatModule-cdcb11578000514d87f86a2a04f9887e"' :
-                                        'id="xs-directives-links-module-UiSecondFormatModule-cdcb11578000514d87f86a2a04f9887e"' }>
-                                        <li class="link">
-                                            <a href="directives/UiSecondFormatDirective.html"
-                                                data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiSecondFormatDirective</a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                    <li class="chapter inner">
+                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                            'data-target="#components-links-module-UiSecondFormatModule-82451d48547e23e12ae3791458c7e031"' : 'data-target="#xs-components-links-module-UiSecondFormatModule-82451d48547e23e12ae3791458c7e031"' }>
+                                            <span class="icon ion-md-cog"></span>
+                                            <span>Components</span>
+                                            <span class="icon ion-ios-arrow-down"></span>
+                                        </div>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiSecondFormatModule-82451d48547e23e12ae3791458c7e031"' :
+                                            'id="xs-components-links-module-UiSecondFormatModule-82451d48547e23e12ae3791458c7e031"' }>
+                                            <li class="link">
+                                                <a href="components/UiSecondFormatDirective.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiSecondFormatDirective</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                             </li>
                             <li class="link">
                                 <a href="modules/UiSnackBarModule.html" data-type="entity-link">UiSnackBarModule</a>
