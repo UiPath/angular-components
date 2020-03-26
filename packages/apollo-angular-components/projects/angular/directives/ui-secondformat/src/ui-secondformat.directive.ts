@@ -1,25 +1,22 @@
 import {
-    Directive,
-    ElementRef,
+    ChangeDetectionStrategy,
+    Component,
     Inject,
     InjectionToken,
     Input,
     Optional,
-    Renderer2,
 } from '@angular/core';
-import { UiFormatDirective } from '@uipath/angular/directives/internal';
 
 import * as _moment from 'moment';
 import {
+    BehaviorSubject,
     merge,
     Observable,
     of,
 } from 'rxjs';
 import {
     distinctUntilChanged,
-    filter,
     map,
-    takeUntil,
 } from 'rxjs/operators';
 
 /**
@@ -27,28 +24,6 @@ import {
  * @ignore
  */
 const moment = _moment;
-
-/**
- * Moment formatter schema.
- *
- * @ignore
- */
-type IMomentFormatter = string | ((num: number, withoutSuffix: boolean, key: string) => string);
-
-/**
- * Moment locale schema.
- *
- * @ignore
- */
-interface IMomentRelativeLocale {
-    dd: IMomentFormatter;
-    d: IMomentFormatter;
-    hh: IMomentFormatter;
-    h: IMomentFormatter;
-    mm: IMomentFormatter;
-    m: IMomentFormatter;
-    ss: IMomentFormatter;
-}
 
 /**
  * The date format options schema.
@@ -71,7 +46,7 @@ export const UI_SECONDFORMAT_OPTIONS = new InjectionToken<Observable<void>>('UiS
  * A directive that formats a given number of `seconds` into a human readable format.
  *
  * eg:
- * For input `61` -> output `1 minute 1 seconds`.
+ * For input `61` -> output `1 minute` with the tooltip PT1M1S.
  * Depends On:
  * - [moment](https://www.npmjs.com/package/moment)
  * - [moment-timezone](https://www.npmjs.com/package/moment-timezone)
@@ -82,17 +57,34 @@ export const UI_SECONDFORMAT_OPTIONS = new InjectionToken<Observable<void>>('UiS
  *
  * @export
  */
-@Directive({
-    selector: '[uiSecondFormat], ui-secondformat',
+@Component({
+    selector: 'ui-secondformat',
+    template: `<span [matTooltip]="tooltip$ | async">{{ text$ | async }}</span>`,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UiSecondFormatDirective extends UiFormatDirective {
+// tslint:disable-next-line: component-class-suffix
+export class UiSecondFormatDirective {
     /**
      * The number of `seconds` that need to be formatted.
      *
      */
-    @Input() public seconds?: number;
+    @Input()
+    public get seconds() { return this._seconds$.value; }
+    public set seconds(seconds: number | null) { this._seconds$.next(seconds); }
+
+    /**
+     * @internal
+     */
+    public tooltip$: Observable<string | undefined>;
+
+    /**
+     * @internal
+     */
+    public text$: Observable<string>;
 
     protected _text?: HTMLElement;
+
+    private _seconds$ = new BehaviorSubject<number | null>(null);
 
     /**
      * @ignore
@@ -100,89 +92,25 @@ export class UiSecondFormatDirective extends UiFormatDirective {
     constructor(
         @Inject(UI_SECONDFORMAT_OPTIONS)
         @Optional()
-            options: ISecondFormatOptions,
-            renderer: Renderer2,
-            elementRef: ElementRef,
+        options: ISecondFormatOptions,
     ) {
-        super(
-            renderer,
-            elementRef,
-        );
-
         options = options || {};
         const redraw$ = options.redraw$ || of(null);
 
-        merge(
+        const seconds$ = merge(
             redraw$,
-            this._redraw$,
-        )
-            .pipe(
-                filter(() => this.seconds != null),
-                map(() => this._evaluate(this.seconds)),
-                distinctUntilChanged(),
-                takeUntil(this._destroyed$),
-            ).subscribe(label => {
-                if (!this._text) {
-                    this._text = this._renderer.createText(label);
-                    this._renderer.appendChild(this._elementRef.nativeElement, this._text);
-                } else {
-                    this._renderer.setValue(this._text, label);
-                }
-            });
+            this._seconds$.pipe(distinctUntilChanged()),
+        ).pipe(
+            map(() => this.seconds),
+            map(seconds => seconds != null ? moment.duration(seconds, 'seconds') : undefined),
+        );
+
+        this.text$ = seconds$.pipe(
+            map(seconds => seconds?.humanize() ?? ''),
+        );
+
+        this.tooltip$ = seconds$.pipe(
+            map(seconds => seconds?.toISOString()),
+        );
     }
-
-    private _evaluate(value: number = 0) {
-        const days = Math.floor(value / 60 / 60 / 24);
-        const hours = Math.floor(value / 60 / 60 % 24);
-        const minutes = Math.floor(value / 60 % 60);
-        const seconds = Math.floor(value % 60);
-        const remainder = value - Math.floor(value);
-
-        return this._format(days, hours, minutes, seconds, remainder);
-    }
-
-    private _format(days: number, hours: number, minutes: number, seconds: number, remainder: number) {
-        const locale = (moment.localeData() as any)['_relativeTime'] as IMomentRelativeLocale;
-
-        const daysLabel = !!days ? this._dayFormat(locale, days) : '';
-        const hoursLabel = !!hours ? this._hourFormat(locale, hours) : '';
-        const minutesLabel = !!minutes ? this._minuteFormat(locale, minutes) : '';
-        const secondsLabel =
-            !hoursLabel && !minutesLabel && !daysLabel ||
-                seconds > 0 ?
-                this._secondFormat(locale, seconds, remainder) : '';
-
-        return `${daysLabel} ${hoursLabel} ${minutesLabel} ${secondsLabel}`.trim();
-    }
-
-
-    private _formatFactory = (
-        formatSingular: keyof IMomentRelativeLocale,
-        formatPlural: keyof IMomentRelativeLocale,
-    ) =>
-        (locale: IMomentRelativeLocale, value: number) => {
-            const formatter = value === 1 ? locale[formatSingular] : locale[formatPlural];
-
-            if (typeof formatter === 'string') {
-                return formatter.replace('%d', value.toString());
-            }
-
-            return formatter(value, true, formatPlural);
-        }
-
-    // tslint:disable-next-line: member-ordering
-    private _dayFormat = this._formatFactory('d', 'dd');
-    // tslint:disable-next-line: member-ordering
-    private _hourFormat = this._formatFactory('h', 'hh');
-    // tslint:disable-next-line: member-ordering
-    private _minuteFormat = this._formatFactory('m', 'mm');
-
-    private _secondFormat = (locale: IMomentRelativeLocale, seconds: number, remainder: number) =>
-        typeof locale.ss === 'string' ?
-            locale.ss.replace('%d', (seconds + remainder).toFixed(remainder ? 2 : 0)) :
-            locale.ss(seconds + remainder, true, 'ss')
-                .replace((seconds + remainder)
-                    .toString(),
-                (seconds + remainder).toFixed(remainder ? 2 : 0),
-                )
 }
