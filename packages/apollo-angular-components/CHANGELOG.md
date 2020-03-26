@@ -1,3 +1,6 @@
+# v9.0.4 (2020-03-26)
+* **secondformat** fix localization issue
+
 # v9.0.3 (2020-03-25)
 * **grid** fix scroll performance when using virtual viewport
 
