@@ -74,6 +74,7 @@ class UiSuggestFixtureDirective {
     public direction: 'up' | 'down' = 'down';
     public displayPriority: 'default' | 'selected' = 'default';
     public fetchStrategy: 'eager' | 'onOpen' = 'eager';
+    public minChars = 0;
 }
 
 const searchFor = (value: string, fixture: ComponentFixture<UiSuggestFixtureDirective>) => {
@@ -1387,6 +1388,52 @@ const sharedSpecifications = (
 
                 expect(sourceSpy).toHaveBeenCalled();
             }));
+
+            it(`should fetch call after the 'minChars' is met`, async(async () => {
+                const MIN_CHARS = 5;
+                component.minChars = MIN_CHARS;
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const searchInput = fixture.debugElement.query(By.css('.mat-input-element')).nativeElement;
+
+                const typeChar = async () => {
+                    searchInput.value = searchInput.value + faker.random.alphaNumeric(1);
+                    searchInput.dispatchEvent(EventGenerator.input());
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+                };
+
+                const deleteChar = async () => {
+                    searchInput.value = searchInput.value.slice(0, -1);
+                    searchInput.dispatchEvent(EventGenerator.input());
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+                };
+
+                // 4 characters
+                for (let i = 1; i < MIN_CHARS; i++) {
+                    await typeChar();
+                    expect(sourceSpy).toHaveBeenCalledTimes(0);
+                }
+
+                // 5 characters
+                await typeChar();
+                expect(sourceSpy).toHaveBeenCalledTimes(1);
+
+                // 4 characters
+                await deleteChar();
+                expect(sourceSpy).toHaveBeenCalledTimes(1);
+
+                // 5 characters
+                await typeChar();
+                expect(sourceSpy).toHaveBeenCalledTimes(2);
+
+                // 6 characters
+                await typeChar();
+                expect(sourceSpy).toHaveBeenCalledTimes(3);
+            }));
         });
 
         it('should generate the same number of items as those in total if displayCount is set to a lower limit ', async(async () => {
@@ -1730,6 +1777,7 @@ describe('Component: UiSuggest', () => {
                         [disabled]="disabled"
                         [multiple]="multiple"
                         [fetchStrategy]="fetchStrategy"
+                        [minChars]="minChars"
                         [readonly]="readonly">
             </ui-suggest>
         `,
@@ -1808,6 +1856,7 @@ describe('Component: UiSuggest', () => {
                             [multiple]="multiple"
                             [readonly]="readonly"
                             [fetchStrategy]="fetchStrategy"
+                            [minChars]="minChars"
                             formControlName="test">
             </ui-suggest>
             </mat-form-field>
@@ -1990,7 +2039,8 @@ describe('Component: UiSuggest', () => {
                             [disabled]="disabled"
                             [multiple]="multiple"
                             [readonly]="readonly"
-                            [fetchStrategy]="fetchStrategy">
+                            [fetchStrategy]="fetchStrategy"
+                            [minChars]="minChars">
                             <ng-template let-item >
                                 <div class="item-template">{{ item.text }}</div>
                             </ng-template>

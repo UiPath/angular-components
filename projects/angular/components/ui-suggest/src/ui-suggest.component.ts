@@ -357,6 +357,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * Configure the `fetchStrategy` for requesting data using searchSourceFactory
      * `eager` - makes calls to searchSourceFactory onInit
      * `onOpen` - makes calls to searchSourceFactory onOpen
+     *
      */
     @Input()
     public set fetchStrategy(strategy: 'eager' | 'onOpen') {
@@ -364,6 +365,15 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         this._fetchStrategy$.next(strategy);
     }
+
+    /**
+     * Configure the minimum number of characters that triggers the searchSourceFactory call
+     * This will have priority over the fetch strategy if set.
+     *
+     */
+    @Input()
+    public minChars = 0;
+
     /**
      * Configure the `control` width.
      *
@@ -550,6 +560,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                 startWith(''),
                 map((v = '') => v.trim()),
                 distinctUntilChanged(),
+                filter(v => v.length >= this.minChars),
                 tap(this._setLoadingState),
                 debounceTime(this.debounceTime),
                 filter(_ => !!this.searchSourceFactory),
@@ -557,11 +568,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             this._disabled$.pipe(filter(v => !v)),
             this._fetchStrategy$
                 .pipe(
-                    switchMap(strategy =>
-                        strategy === 'eager'
-                            ? of(strategy)
-                            : this._isOpen$.pipe(filter(o => !!o)),
-                    ),
+                    switchMap(strategy => {
+                        switch (strategy) {
+                            case 'onOpen':
+                                return this._isOpen$.pipe(filter(o => !!o));
+                            case 'eager':
+                                return of(strategy);
+                        }
+                    }),
                 ),
         ]).pipe(
             map(([value]) => value),
