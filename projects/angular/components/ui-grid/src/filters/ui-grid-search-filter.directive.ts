@@ -25,6 +25,13 @@ import { UiGridFilterDirective } from './ui-grid-filter';
 })
 export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> implements OnDestroy {
     /**
+     * Configure the `fetchStrategy` for requesting data using searchSourceFactory
+     * `eager` - makes calls to searchSourceFactory onInit
+     * `onOpen` - makes calls to searchSourceFactory onOpen
+     */
+    @Input()
+    public fetchStrategy: 'eager' | 'onOpen' = 'onOpen';
+    /**
      * The property associated to the dropdown search.
      *
      */

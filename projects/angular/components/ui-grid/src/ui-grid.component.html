@@ -72,6 +72,7 @@
                             [placeholder]="column.title"
                             [defaultValue]="column.searchableDropdown.noFilterPlaceholder || intl.noFilterPlaceholder"
                             [searchSourceFactory]="column.searchableDropdown.searchSourceFactory"
+                            [fetchStrategy]="column.searchableDropdown.fetchStrategy"
                             [value]="[column.searchableDropdown.value]"
                             [disabled]="column.searchableDropdown.disabled || disabled"
                             [maxLength]="64"
