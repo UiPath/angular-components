@@ -61,6 +61,7 @@ import {
     ISuggestValue,
     ISuggestValues,
     SuggestDirection,
+    SuggestSearchStrategy,
 } from './models';
 import { UI_SUGGEST_ANIMATIONS } from './ui-suggest.animations';
 import { UiSuggestIntl } from './ui-suggest.intl';
@@ -360,7 +361,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @Input()
-    public set fetchStrategy(strategy: 'eager' | 'onOpen') {
+    public set fetchStrategy(strategy: SuggestSearchStrategy) {
         if (strategy === this._fetchStrategy$.value) { return; }
 
         this._fetchStrategy$.next(strategy);
@@ -522,7 +523,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     private _destroyed$ = new Subject();
     private _scrollTo$ = new Subject<number>();
     private _rangeLoad$ = new Subject<ListRange>();
-    private _fetchStrategy$ = new BehaviorSubject<'eager' | 'onOpen'>('eager');
+    private _fetchStrategy$ = new BehaviorSubject<SuggestSearchStrategy>('eager');
     private _isOpen$ = new BehaviorSubject(false);
 
     private _virtualScroller?: CdkVirtualScrollViewport;

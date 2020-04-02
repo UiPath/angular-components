@@ -5,7 +5,11 @@ export {
     IDropdownOption,
     UiGridDropdownFilterDirective,
 } from './filters/ui-grid-dropdown-filter.directive';
-export { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.directive';
+export {
+    UiGridSearchFilterDirective,
+    IGridSearchFilterOptions,
+    UI_GRID_SEARCH_FILTER_DEFAULT_OPTIONS,
+} from './filters/ui-grid-search-filter.directive';
 export { UiGridHeaderButtonDirective } from './header/ui-grid-header-button.directive';
 export { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 export { UiGridColumnDirective } from './body/ui-grid-column.directive';
