@@ -69,6 +69,11 @@ export class IntegrationUtils<T> {
         return this.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"] ${selector}`, debugEl);
     }
 
+    public clickGridRowItem = (gridSelector: string, rowNumber: number, selector: string, debugEl = this.fixture.debugElement) => {
+        return this.getNativeElement(`${gridSelector} [data-row-index="${rowNumber - 1}"] ${selector}`, debugEl)!
+            .dispatchEvent(EventGenerator.click);
+    }
+
     public switchToTab = async (number: number, debugEl = this.fixture.debugElement) => {
         const tab = this.getDebugElement(`.mat-tab-label:nth-of-type(${number}) .mat-tab-label-content`, debugEl);
         tab.nativeElement.dispatchEvent(EventGenerator.click);
