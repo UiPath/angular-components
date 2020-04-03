@@ -176,14 +176,20 @@
                 </mat-progress-spinner>
             </mat-list-item>
 
-            <mat-list-item *ngIf="hasNoResults &&
+            <ng-container *ngLet="(
+                inputControl.value.length < minChars
+                    ? intl.minCharsLength(minChars)
+                    : intl.noResultsLabel
+            ) as label">
+                <mat-list-item *ngIf="hasNoResults &&
                                   !isCustomValueVisible &&
                                   !(loading$ | async)"
-                           [matTooltip]="intl.noResultsLabel"
-                           matTooltipPosition="right"
-                           class="text-ellipsis no-results-text">
-                <em>{{intl.noResultsLabel}}</em>
-            </mat-list-item>
+                               [matTooltip]="label"
+                               matTooltipPosition="right"
+                               class="text-ellipsis no-results-text">
+                    <em>{{label}}</em>
+                </mat-list-item>
+            </ng-container>
         </cdk-virtual-scroll-viewport>
     </mat-list>
 </ng-template>
