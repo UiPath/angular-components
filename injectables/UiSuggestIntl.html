@@ -112,6 +112,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#minCharsLength">minCharsLength</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#noResultsLabel">noResultsLabel</a>
                             </li>
                             <li>
@@ -420,6 +424,39 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="minCharsLength"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            minCharsLength</b>
+                            <a href="#minCharsLength"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/angular/components/ui-suggest/src/ui-suggest.intl.ts:64</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Label displayed when minimum number of characters to trigger the search is not met.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="noResultsLabel"></a>
                         <span class="name">
                             <b>
@@ -475,7 +512,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">projects/angular/components/ui-suggest/src/ui-suggest.intl.ts:65</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">projects/angular/components/ui-suggest/src/ui-suggest.intl.ts:73</a></div>
                             </td>
                         </tr>
 
@@ -576,6 +613,14 @@ export class UiSuggestIntl implements OnDestroy {
      * @param text The text of the custom value.
      */
     public customValueLabel &#x3D; (text: string) &#x3D;&gt; text;
+
+    /**
+   * Label displayed when minimum number of characters to trigger the search is not met.
+   *
+   */
+    public minCharsLength &#x3D; (length: number) &#x3D;&gt; length &#x3D;&#x3D;&#x3D; 1
+        ? &#x27;Please start typing to search&#x27;
+        : &#x60;Please type at least ${length} characters to search&#x60;
 
     /**
      * Value label generator function.
