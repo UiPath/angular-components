@@ -6,9 +6,11 @@ import {
     HostBinding,
     HostListener,
     Input,
+    OnChanges,
     OnDestroy,
     Output,
     Renderer2,
+    SimpleChanges,
 } from '@angular/core';
 import { isInternetExplorer } from '@uipath/angular/utilities';
 
@@ -20,7 +22,7 @@ import { isInternetExplorer } from '@uipath/angular/utilities';
 @Directive({
     selector: '[uiDragAndDropFile]',
 })
-export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
+export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnDestroy {
   /**
    * The accepted `file-type`.
    *
@@ -91,6 +93,16 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
   }
 
   /**
+   * @ignore
+   */
+  ngOnChanges(changes: SimpleChanges) {
+      if (changes.fileType) {
+          const fileType = changes.fileType.currentValue;
+          this._renderer.setProperty(this._fileInput, 'accept', fileType || '');
+      }
+  }
+
+  /**
     * @ignore
     */
   ngAfterViewInit() {
@@ -99,8 +111,6 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
       }
 
       this._preventEnterOnChildren(this._elementRef.nativeElement);
-
-      this._renderer.setProperty(this._fileInput, 'accept', this.fileType);
 
       if (!this.fileBrowseRef) {
           this.fileBrowseRef = this._elementRef.nativeElement;
@@ -218,10 +228,13 @@ export class UiDragAndDropFileDirective implements AfterViewInit, OnDestroy {
       this.disabled
       ) { return; }
 
-      const emittedFiles = Array.from(files).filter(file =>
-          !this.fileType ||
-      file.name.endsWith(this.fileType),
-      );
+      const acceptedExtensions = (this.fileType ?? '')
+          .split(',')
+          .map(e => e.trim().toLowerCase());
+      const isAccepted = (file: File) => this.fileType
+          ? acceptedExtensions.some(extension => file.name.toLowerCase().endsWith(extension))
+          : true;
+      const emittedFiles = Array.from(files).filter(isAccepted);
 
     if (
       !emittedFiles.length ||
