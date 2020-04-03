@@ -10,6 +10,8 @@ import {
     IDropEvent,
 } from '@uipath/angular/testing';
 
+import * as faker from 'faker';
+
 import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
 
 @Component({
@@ -29,9 +31,10 @@ import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
 })
 class TestDragAndDropFileComponent {
     public fileType = '.txt';
-    public files?: File[];
     public disabled = false;
     public multiple = false;
+
+    public files?: File[];
 
     onFileChange(files: FileList) {
         this.files = Array.from(files);
@@ -40,14 +43,23 @@ class TestDragAndDropFileComponent {
     onFileClear() {
         this.files = undefined;
     }
+
+    fakeFiles({ accepted = 0, rejected = 0 }): File[] {
+        const randomArray = <T>(size: number, source: T[]) => new Array(size).fill(0).map(() => faker.random.arrayElement(source));
+        const acceptedFileExtensions = this.fileType.split(', ');
+        const rejectedFileEstensions = ['.jpg', '.png', '.tiff'];
+
+        return faker.helpers
+            .shuffle(
+                [
+                    ...randomArray(accepted, acceptedFileExtensions),
+                    ...randomArray(rejected, rejectedFileEstensions),
+                ],
+            )
+            .map(fakeFile);
+    }
+
 }
-
-const fakeFile = (extension: string) =>
-    new File([''], `filename${extension}`, {
-        lastModified: Date.now(),
-    });
-
-const appliedClass = 'file-dragging';
 
 describe('Directive: UiDragAndDropFileDirective', () => {
     let component: TestDragAndDropFileComponent;
@@ -76,9 +88,26 @@ describe('Directive: UiDragAndDropFileDirective', () => {
             expect(fileInput).not.toBeNull();
         });
 
-        it('should have the correct accept type', () => {
+        it('should accept files of any type if file type is missing', () => {
+            delete component.fileType;
+            fixture.detectChanges();
+
+            expect(fileInput.getAttribute('accept')).toBe('');
+        });
+
+        it('should accept files of the specified type if single file type', () => {
             expect(fileInput.getAttribute('accept')).toBe(component.fileType);
         });
+
+        it('should accept files of any of the specified types if multiple file types', () => {
+            const fileTypes = '.txt, .md';
+
+            component.fileType = fileTypes;
+            fixture.detectChanges();
+
+            expect(fileInput.getAttribute('accept')).toBe(fileTypes);
+        });
+
 
         it('should trigger browse when parent container is clicked', () => {
             const spy = spyOn(fileInput, 'click');
@@ -97,7 +126,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
 
     describe('file selection', () => {
         it('should remove value after clicking clear element', () => {
-            component.files = [fakeFile(component.fileType)];
+            component.files = component.fakeFiles({ accepted: 1 });
 
             const fileClear = fixture.debugElement.query(By.css('.clear')).nativeElement as HTMLDivElement;
             fileClear.dispatchEvent(EventGenerator.click);
@@ -105,8 +134,9 @@ describe('Directive: UiDragAndDropFileDirective', () => {
 
             expect(component.files).toBeUndefined();
         });
-        it('should not remove value after clicking clear element while disabled', () => {
-            component.files = [fakeFile(component.fileType)];
+
+        it('should NOT remove value after clicking clear element while disabled', () => {
+            component.files = component.fakeFiles({ accepted: 1 });
             component.disabled = true;
             fixture.detectChanges();
 
@@ -126,9 +156,12 @@ describe('Directive: UiDragAndDropFileDirective', () => {
                 container = fixture.debugElement.query(By.css('div')).nativeElement as HTMLDivElement;
             });
 
-            it('should emit files the accepted type', () => {
+            it('should emit files of any type if file type is missing', () => {
+                delete component.fileType;
+                fixture.detectChanges();
+
                 dropEvent.dataTransfer.files.add(
-                    fakeFile(component.fileType),
+                    fakeFile('.md'),
                 );
 
                 container.dispatchEvent(dropEvent);
@@ -137,12 +170,37 @@ describe('Directive: UiDragAndDropFileDirective', () => {
                 expect(component.files!.length).toBe(1);
             });
 
-            it('should not emit files the accepted type if disabled', () => {
+            it('should emit files of the accepted type if single file type', () => {
+                dropEvent.dataTransfer.files.add(
+                    ...component.fakeFiles({ accepted: 1 }),
+                );
+
+                container.dispatchEvent(dropEvent);
+
+                expect(component.files).toBeDefined();
+                expect(component.files!.length).toBe(1);
+            });
+
+            it('should emit files of the accepted types if multiple file types', () => {
+                component.fileType = '.md, .html';
+                fixture.detectChanges();
+
+                dropEvent.dataTransfer.files.add(
+                    ...component.fakeFiles({ accepted: 1 }),
+                );
+
+                container.dispatchEvent(dropEvent);
+
+                expect(component.files).toBeDefined();
+                expect(component.files!.length).toBe(1);
+            });
+
+            it('should NOT emit files the accepted type if disabled', () => {
                 component.disabled = true;
                 fixture.detectChanges();
 
                 dropEvent.dataTransfer.files.add(
-                    fakeFile(component.fileType),
+                    ...component.fakeFiles({ accepted: 1 }),
                 );
 
                 container.dispatchEvent(dropEvent);
@@ -152,7 +210,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
 
             it('should NOT emit files of different types', () => {
                 dropEvent.dataTransfer.files.add(
-                    fakeFile('.jpg'),
+                    ...component.fakeFiles({ rejected: 1 }),
                 );
 
                 container.dispatchEvent(dropEvent);
@@ -165,12 +223,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
                 fixture.detectChanges();
 
                 dropEvent.dataTransfer.files.add(
-                    fakeFile(component.fileType),
-                    fakeFile(component.fileType),
-                    fakeFile('.jpg'),
-                    fakeFile('.png'),
-                    fakeFile(component.fileType),
-                    fakeFile('.tiff'),
+                    ...component.fakeFiles({ accepted: 3, rejected: 5 }),
                 );
 
                 container.dispatchEvent(dropEvent);
@@ -181,8 +234,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
 
             it('should NOT allow multiple files when multiple=false', () => {
                 dropEvent.dataTransfer.files.add(
-                    fakeFile('.jpg'),
-                    fakeFile('.png'),
+                    ...component.fakeFiles({ accepted: 2 }),
                 );
 
                 container.dispatchEvent(dropEvent);
@@ -203,9 +255,12 @@ describe('Directive: UiDragAndDropFileDirective', () => {
                 };
             });
 
-            it('should emit files the accepted type', () => {
+            it('should emit files of any type if file type is missing', () => {
+                delete component.fileType;
+                fixture.detectChanges();
+
                 targetElement.files.add(
-                    fakeFile(component.fileType),
+                    fakeFile('.md'),
                 );
 
                 fileInput.dispatchEvent(changeEvent);
@@ -214,9 +269,35 @@ describe('Directive: UiDragAndDropFileDirective', () => {
                 expect(component.files!.length).toBe(1);
             });
 
+            it('should emit files of the accepted type if single file type', () => {
+                targetElement.files.add(
+                    ...component.fakeFiles({ accepted: 1 }),
+                );
+
+                fileInput.dispatchEvent(changeEvent);
+
+                expect(component.files).toBeDefined();
+                expect(component.files!.length).toBe(1);
+            });
+
+            it('should emit files of the accepted types if multiple file types', () => {
+                component.fileType = '.md, .html';
+                fixture.detectChanges();
+
+                targetElement.files.add(
+                    ...component.fakeFiles({ accepted: 1 }),
+                );
+
+                fileInput.dispatchEvent(changeEvent);
+
+                expect(component.files).toBeDefined();
+                expect(component.files!.length).toBe(1);
+            });
+
+
             it('should NOT emit files of different types', () => {
                 targetElement.files.add(
-                    fakeFile('.jpg'),
+                    ...component.fakeFiles({ rejected: 1 }),
                 );
 
                 fileInput.dispatchEvent(changeEvent);
@@ -229,12 +310,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
                 fixture.detectChanges();
 
                 targetElement.files.add(
-                    fakeFile(component.fileType),
-                    fakeFile(component.fileType),
-                    fakeFile('.jpg'),
-                    fakeFile('.png'),
-                    fakeFile(component.fileType),
-                    fakeFile('.tiff'),
+                    ...component.fakeFiles({ accepted: 3, rejected: 5 }),
                 );
 
                 fileInput.dispatchEvent(changeEvent);
@@ -245,12 +321,14 @@ describe('Directive: UiDragAndDropFileDirective', () => {
         });
     });
 
+    const appliedClass = 'file-dragging';
     describe(`${appliedClass} decoration`, () => {
         let container: HTMLDivElement;
 
         beforeEach(() => {
             container = fixture.debugElement.query(By.css('div')).nativeElement as HTMLDivElement;
         });
+
         it('should apply class on drag-over', () => {
             container.dispatchEvent(EventGenerator.dragOver);
 
@@ -258,7 +336,8 @@ describe('Directive: UiDragAndDropFileDirective', () => {
 
             expect(container.classList.contains(appliedClass)).toBeTruthy();
         });
-        it('should not apply class on drag-over if disabled', () => {
+
+        it('should NOT apply class on drag-over if disabled', () => {
             component.disabled = true;
             fixture.detectChanges();
 
@@ -296,3 +375,9 @@ describe('Directive: UiDragAndDropFileDirective', () => {
         });
     });
 });
+
+function fakeFile(extension: string): File {
+    return new File([''], `filename${extension}`, {
+        lastModified: Date.now(),
+    });
+}
