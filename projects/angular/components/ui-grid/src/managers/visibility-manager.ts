@@ -106,9 +106,10 @@ export class VisibilityManger<T extends IGridDataEntry> {
 
             if (isDevMode()) {
                 console.warn(`Did not find column with [disableToggle]="true", locking '${firstColumn.property}' column`);
-                firstColumn!.disableToggle = true;
-                visibleOptions[0].disabled = true;
             }
+
+            firstColumn.disableToggle = true;
+            visibleOptions[0].disabled = true;
         }
 
         return columnOptions;
