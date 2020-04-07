@@ -1,3 +1,8 @@
+# v9.0.5 (2020-04-07)
+* **drag-and-drop-file**: add multiple file types support
+* **grid**: fix default toggle disabled column
+* **suggest**: add support for minimum characters search
+
 # v9.0.4 (2020-03-26)
 * **secondformat** fix localization issue
 
