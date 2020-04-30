@@ -37,6 +37,11 @@ export class IntegrationUtils<T> {
         return !!debugElement ? debugElement.nativeElement as U : null;
     }
 
+    public getAllNativeElements = <U extends HTMLElement>(selector: string, debugEl = this.fixture.debugElement) => {
+        const debugElements = this.getAllDebugElements(selector, debugEl);
+        return debugElements.map(e => e.nativeElement as U);
+    }
+
     public getComponent = (selector: string, debugEl = this.fixture.debugElement) => {
         const debugElement = this.getDebugElement(selector, debugEl);
         return !!debugElement ? debugElement.componentInstance : null;
