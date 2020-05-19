@@ -1,3 +1,6 @@
+# v9.0.6 (2020-05-14)
+* **snackbar** enable configurable plain-text only messages (to help with XSS issues)
+
 # v9.0.5 (2020-04-07)
 * **drag-and-drop-file**: add multiple file types support
 * **grid**: fix default toggle disabled column
