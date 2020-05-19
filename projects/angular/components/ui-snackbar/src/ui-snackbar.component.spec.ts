@@ -21,6 +21,8 @@ import {
     panelClass,
     SnackbarAction,
     SnackBarType,
+    UI_MAT_SNACK_BAR_DEFAULT_OPTIONS,
+    UiMatSnackBarConfig,
     UiSnackBarService,
 } from './ui-snackbar.component';
 import { UiSnackBarModule } from './ui-snackbar.module';
@@ -44,6 +46,7 @@ describe('Service: UiSnackBarService', () => {
     let service: UiSnackBarService;
     let overlayContainer: OverlayContainer;
     let fixture: ComponentFixture<SnackBarFixtureComponent>;
+    let securitySettings: UiMatSnackBarConfig;
 
     const getSnack = () =>
         overlayContainer
@@ -67,6 +70,10 @@ describe('Service: UiSnackBarService', () => {
     };
 
     beforeEach(async(() => {
+        securitySettings = {
+            restrictHtml: false,
+        };
+
         TestBed.configureTestingModule({
             imports: [
                 NoopAnimationsModule,
@@ -78,6 +85,10 @@ describe('Service: UiSnackBarService', () => {
                     useValue: {
                         duration: DEFAULT_DURATION,
                     },
+                },
+                {
+                    provide: UI_MAT_SNACK_BAR_DEFAULT_OPTIONS,
+                    useFactory: () => securitySettings,
                 },
             ],
             declarations: [
@@ -304,5 +315,22 @@ describe('Service: UiSnackBarService', () => {
         expect(snack).not.toBeNull();
         expect(snack.querySelectorAll('div.rich-class').length).toEqual(1);
         expect(snack.querySelectorAll('a').length).toEqual(1);
+    });
+
+    it('should REMOVE html from the message', () => {
+        securitySettings.restrictHtml = true;
+        fixture = TestBed.createComponent(SnackBarFixtureComponent);
+        service = fixture.componentInstance.service;
+
+        service.show(`
+            <a id="injected-link" href="#some-link">a link text</a>
+            <img id="injected-image" src="invalid" onerror=callError()>
+            hello world
+        `);
+
+        const snack = getSnack();
+
+        expect(snack!.querySelectorAll('a').length).toEqual(0, 'an anchor creeped into the message');
+        expect(snack!.querySelectorAll('img').length).toEqual(0, 'an img creeped into the message');
     });
 });
