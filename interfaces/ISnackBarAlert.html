@@ -263,6 +263,7 @@
     Component,
     Inject,
     Injectable,
+    InjectionToken,
     Optional,
     TemplateRef,
     ViewEncapsulation,
@@ -339,6 +340,11 @@ export const ICON_MAP: Map&lt;SnackBarType, string&gt; &#x3D; new Map([
 
 export type SnackbarAction &#x3D; (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; Observable&lt;void&gt;;
 
+export class UiMatSnackBarConfig {
+    public restrictHtml &#x3D; false;
+}
+export const UI_MAT_SNACK_BAR_DEFAULT_OPTIONS &#x3D; new InjectionToken&lt;UiMatSnackBarConfig&gt;(&#x27;UiMatSnackBarConfig&#x27;);
+
 /**
  * Snackbar config options
  */
@@ -389,6 +395,9 @@ export class UiSnackBarService {
         private _options: MatSnackBarConfig,
         @Optional()
         private readonly _snackIntl: UiSnackbarIntl,
+        @Inject(UI_MAT_SNACK_BAR_DEFAULT_OPTIONS)
+        @Optional()
+        private _additionalOptions?: UiMatSnackBarConfig,
     ) {
         this._snackIntl &#x3D; this._snackIntl ||
             new UiSnackbarIntl();
@@ -429,6 +438,16 @@ export class UiSnackBarService {
         })
 
     private _alert(type: SnackBarType, options: ISnackBarAlert) {
+        if (
+            this._additionalOptions?.restrictHtml &amp;&amp;
+            typeof options.message &#x3D;&#x3D;&#x3D; &#x27;string&#x27;
+        ) {
+            const span &#x3D; document.createElement(&#x27;span&#x27;);
+            span.innerText &#x3D; options.message;
+            options.message &#x3D; span.innerHTML;
+            span.remove();
+        }
+
         this._ref &#x3D; this._snackBar.openFromComponent(UiSnackBarComponent, {
             data: {
                 closeAriaLabel: this._snackIntl.closeAriaLabel,

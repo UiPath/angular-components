@@ -128,12 +128,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_snackBar: MatSnackBar, _options: MatSnackBarConfig, _snackIntl: <a href="../injectables/UiSnackbarIntl.html">UiSnackbarIntl</a>)</code>
+<code>constructor(_snackBar: MatSnackBar, _options: MatSnackBarConfig, _snackIntl: <a href="../injectables/UiSnackbarIntl.html">UiSnackbarIntl</a>, _additionalOptions?: <a href="../classes/UiMatSnackBarConfig.html">UiMatSnackBarConfig</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:124</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:130</a></div>
                             </td>
                         </tr>
 
@@ -186,6 +186,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>_additionalOptions</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/UiMatSnackBarConfig.html" target="_self" >UiMatSnackBarConfig</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Yes
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -224,8 +236,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="158"
-                            class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:158</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="167"
+                            class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:167</a></div>
                 </td>
             </tr>
 
@@ -270,7 +282,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:112</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:118</a></div>
                             </td>
                         </tr>
 
@@ -335,7 +347,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="106" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:106</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:112</a></div>
                             </td>
                         </tr>
 
@@ -399,7 +411,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="147" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:147</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="156" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:156</a></div>
                             </td>
                         </tr>
 
@@ -464,7 +476,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:118</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:124</a></div>
                             </td>
                         </tr>
 
@@ -529,7 +541,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:124</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:130</a></div>
                             </td>
                         </tr>
 
@@ -584,6 +596,7 @@
     Component,
     Inject,
     Injectable,
+    InjectionToken,
     Optional,
     TemplateRef,
     ViewEncapsulation,
@@ -660,6 +673,11 @@ export const ICON_MAP: Map&lt;SnackBarType, string&gt; &#x3D; new Map([
 
 export type SnackbarAction &#x3D; (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; Observable&lt;void&gt;;
 
+export class UiMatSnackBarConfig {
+    public restrictHtml &#x3D; false;
+}
+export const UI_MAT_SNACK_BAR_DEFAULT_OPTIONS &#x3D; new InjectionToken&lt;UiMatSnackBarConfig&gt;(&#x27;UiMatSnackBarConfig&#x27;);
+
 /**
  * Snackbar config options
  */
@@ -710,6 +728,9 @@ export class UiSnackBarService {
         private _options: MatSnackBarConfig,
         @Optional()
         private readonly _snackIntl: UiSnackbarIntl,
+        @Inject(UI_MAT_SNACK_BAR_DEFAULT_OPTIONS)
+        @Optional()
+        private _additionalOptions?: UiMatSnackBarConfig,
     ) {
         this._snackIntl &#x3D; this._snackIntl ||
             new UiSnackbarIntl();
@@ -750,6 +771,16 @@ export class UiSnackBarService {
         })
 
     private _alert(type: SnackBarType, options: ISnackBarAlert) {
+        if (
+            this._additionalOptions?.restrictHtml &amp;&amp;
+            typeof options.message &#x3D;&#x3D;&#x3D; &#x27;string&#x27;
+        ) {
+            const span &#x3D; document.createElement(&#x27;span&#x27;);
+            span.innerText &#x3D; options.message;
+            options.message &#x3D; span.innerHTML;
+            span.remove();
+        }
+
         this._ref &#x3D; this._snackBar.openFromComponent(UiSnackBarComponent, {
             data: {
                 closeAriaLabel: this._snackIntl.closeAriaLabel,

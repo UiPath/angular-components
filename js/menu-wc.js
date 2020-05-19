@@ -540,6 +540,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <li class="link">
                                 <a href="classes/UiGridIntl.html" data-type="entity-link">UiGridIntl</a>
                             </li>
+                            <li class="link">
+                                <a href="classes/UiMatSnackBarConfig.html" data-type="entity-link">UiMatSnackBarConfig</a>
+                            </li>
                         </ul>
                     </li>
                         <li class="chapter">
