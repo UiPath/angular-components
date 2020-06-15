@@ -3,6 +3,7 @@ module.exports = {
     rules: {
         'scope-enum': () => {
             const scopeList = [
+                'a11y',
                 'grid',
                 'suggest',
                 'dateformat',
