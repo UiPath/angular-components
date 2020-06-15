@@ -299,6 +299,7 @@ describe('Component: UiGrid', () => {
                     const refreshBtn = refresh.query(By.css('.grid-refresh-button'));
                     expect(refreshBtn).toBeDefined();
                     expect(refreshBtn.nativeElement).toBeDefined();
+                    expect(refreshBtn.nativeElement).toHaveAttr('aria-label', intl.refreshTooltip);
                 });
             });
 
@@ -1626,7 +1627,10 @@ describe('Component: UiGrid', () => {
 
             it('should render toggle icon button', () => {
                 const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                const intl = new UiGridIntl();
+
                 expect(buttonToggle).toBeDefined();
+                expect(buttonToggle).toHaveAttr('aria-label', intl.togglePlaceholderTitle);
             });
 
             describe('Scenario: Open', () => {
