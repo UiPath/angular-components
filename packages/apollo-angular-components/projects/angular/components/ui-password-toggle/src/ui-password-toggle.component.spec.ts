@@ -62,6 +62,7 @@ describe('Component: UiPasswordToggle', () => {
     let fixture: ComponentFixture<TestHostComponent>;
     let component: TestHostComponent;
     let intl: TestPasswordToggleIntl;
+    let toggleButton: HTMLButtonElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -84,6 +85,10 @@ describe('Component: UiPasswordToggle', () => {
 
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;
+        toggleButton = fixture.debugElement
+            .query(By.css('button'))
+            .nativeElement;
+
         fixture.detectChanges();
     });
 
@@ -97,36 +102,28 @@ describe('Component: UiPasswordToggle', () => {
         });
 
         it('should have the toggle enabled', () => {
-            const button = fixture.debugElement
-                .query(By.css('button'));
-
-            expect(button.nativeElement).not.toBeDisabled();
+            expect(toggleButton).not.toBeDisabled();
         });
     });
-
 
     it('should toggle the input type from text <-> password and password <-> text', () => {
         component.password = faker.internet.password();
         fixture.detectChanges();
 
-        const button: HTMLButtonElement = fixture.debugElement
-            .query(By.css('button'))
-            .nativeElement;
-
         const input = fixture.debugElement
             .query(By.css('input'));
 
-        button.dispatchEvent(EventGenerator.click);
+        toggleButton.dispatchEvent(EventGenerator.click);
         fixture.detectChanges();
 
         expect(input.nativeElement).toHaveAttr('type', 'text');
 
-        button.dispatchEvent(EventGenerator.click);
+        toggleButton.dispatchEvent(EventGenerator.click);
         fixture.detectChanges();
 
         expect(input.nativeElement).toHaveAttr('type', 'password');
 
-        button.dispatchEvent(EventGenerator.click);
+        toggleButton.dispatchEvent(EventGenerator.click);
         fixture.detectChanges();
 
         expect(input.nativeElement).toHaveAttr('type', 'text');
@@ -136,30 +133,34 @@ describe('Component: UiPasswordToggle', () => {
         const show = await component.toggle.tooltip$.pipe(take(1)).toPromise();
 
         expect(show).toEqual(intl.originalTooltipShow);
+        fixture.detectChanges();
+        expect(toggleButton).toHaveAttr('aria-label', intl.originalTooltipShow);
 
         intl.changeLabels();
 
         const translatedShow = await component.toggle.tooltip$.pipe(take(1)).toPromise();
 
         expect(translatedShow).toEqual(intl.translatedTooltipShow);
+        fixture.detectChanges();
+        expect(toggleButton).toHaveAttr('aria-label', intl.translatedTooltipShow);
     });
 
     it('should update the hide tooltip if the intl emits changes', async () => {
-        const button: HTMLButtonElement = fixture.debugElement
-            .query(By.css('button'))
-            .nativeElement;
-
-        button.dispatchEvent(EventGenerator.click);
+        toggleButton.dispatchEvent(EventGenerator.click);
 
         const hide = await component.toggle.tooltip$.pipe(take(1)).toPromise();
 
         expect(hide).toEqual(intl.originalTooltipHide);
+        fixture.detectChanges();
+        expect(toggleButton).toHaveAttr('aria-label', intl.originalTooltipHide);
 
         intl.changeLabels();
 
         const translatedHide = await component.toggle.tooltip$.pipe(take(1)).toPromise();
 
         expect(translatedHide).toEqual(intl.translatedTooltipHide);
+        fixture.detectChanges();
+        expect(toggleButton).toHaveAttr('aria-label', intl.translatedTooltipHide);
     });
 
     it('should throw if no input is provided', () => {
@@ -180,17 +181,13 @@ describe('Component: UiPasswordToggle', () => {
         component.disabled = true;
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('button'));
-
-        expect(button.nativeElement).toBeDisabled();
+        expect(toggleButton).toBeDisabled();
     });
 
     it('should NOT disable the button', () => {
         component.disabled = false;
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('button'));
-
-        expect(button.nativeElement).not.toBeDisabled();
+        expect(toggleButton).not.toBeDisabled();
     });
 });

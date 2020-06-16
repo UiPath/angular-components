@@ -1,3 +1,7 @@
+# v9.0.7 (2020-06-16)
+* **grid** fix a11y issue on toggle visibility column reset button
+* **a11y** add automatic aria-label support
+
 # v9.0.6 (2020-05-14)
 * **snackbar** enable configurable plain-text only messages (to help with XSS issues)
 
