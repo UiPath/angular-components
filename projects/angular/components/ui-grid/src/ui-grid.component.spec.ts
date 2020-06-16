@@ -48,6 +48,8 @@ import { UiGridIntl } from './ui-grid.intl';
 import { UiGridModule } from './ui-grid.module';
 
 describe('Component: UiGrid', () => {
+    const GRID_COLUMN_CHANGE_DELAY = 10;
+
     @Component({
         template: `
             <ui-grid [data]="data"
@@ -297,6 +299,7 @@ describe('Component: UiGrid', () => {
                     const refreshBtn = refresh.query(By.css('.grid-refresh-button'));
                     expect(refreshBtn).toBeDefined();
                     expect(refreshBtn.nativeElement).toBeDefined();
+                    expect(refreshBtn.nativeElement).toHaveAttr('aria-label', intl.refreshTooltip);
                 });
             });
 
@@ -1624,7 +1627,10 @@ describe('Component: UiGrid', () => {
 
             it('should render toggle icon button', () => {
                 const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                const intl = new UiGridIntl();
+
                 expect(buttonToggle).toBeDefined();
+                expect(buttonToggle).toHaveAttr('aria-label', intl.togglePlaceholderTitle);
             });
 
             describe('Scenario: Open', () => {
@@ -1678,7 +1684,7 @@ describe('Component: UiGrid', () => {
                         expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBeFalsy();
                     });
 
-                    tick(200);
+                    tick(GRID_COLUMN_CHANGE_DELAY);
                     fixture.detectChanges();
                     const headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
 
@@ -1702,7 +1708,7 @@ describe('Component: UiGrid', () => {
                         expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBeFalsy();
                     });
 
-                    tick(200);
+                    tick(GRID_COLUMN_CHANGE_DELAY);
                     fixture.detectChanges();
                     let headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
 
@@ -1719,7 +1725,7 @@ describe('Component: UiGrid', () => {
                         expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(true);
                     });
 
-                    tick(200);
+                    tick(GRID_COLUMN_CHANGE_DELAY);
                     fixture.detectChanges();
                     headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
 
@@ -1739,6 +1745,222 @@ describe('Component: UiGrid', () => {
                     const panel = fixture.debugElement.query(By.css('.ui-grid-toggle-panel'));
 
                     expect(panel).toBeNull();
+                });
+            });
+
+            describe('Scenario: Dirty State', () => {
+                let buttonToggle: HTMLButtonElement;
+
+                beforeEach(async () => {
+                    fixture.detectChanges();
+
+                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                    buttonToggle.dispatchEvent(EventGenerator.click);
+
+                    await fixture.whenStable();
+                    fixture.detectChanges();
+                });
+
+                it('should render an open select menu', () => {
+                    const panel = fixture.debugElement.query(By.css('.ui-grid-toggle-panel'));
+
+                    expect(panel).toBeDefined();
+                });
+
+                it('should render reset button if option is changed', fakeAsync(
+                    () => {
+                        const firstOption = fixture.debugElement
+                            .query(By.css('.ui-grid-toggle-panel .mat-option:not(.mat-option-disabled)'));
+
+                        const checkbox = firstOption.query(By.css('.mat-pseudo-checkbox'));
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(true);
+
+                        checkbox.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBeFalsy();
+                        tick(GRID_COLUMN_CHANGE_DELAY);
+                        fixture.detectChanges();
+
+                        const reset = fixture.debugElement.query(By.css('.ui-grid-toggle-reset'));
+
+                        expect(reset).toBeDefined();
+
+                        discardPeriodicTasks();
+                    }),
+                );
+
+                it('should be able to reset if in dirty state', fakeAsync(
+                    async () => {
+                        const firstOption = fixture.debugElement
+                            .query(By.css('.ui-grid-toggle-panel .mat-option:not(.mat-option-disabled)'));
+
+                        const checkbox = firstOption.query(By.css('.mat-pseudo-checkbox'));
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(true, 'first option NOT checked initially');
+
+                        checkbox.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBeFalsy('first option still checked after click');
+                        tick(GRID_COLUMN_CHANGE_DELAY);
+                        fixture.detectChanges();
+
+                        let reset = fixture.debugElement.query(By.css('.ui-grid-toggle-reset'));
+
+                        expect(reset).toBeDefined();
+                        reset.nativeElement.dispatchEvent(EventGenerator.click);
+                        tick(GRID_COLUMN_CHANGE_DELAY);
+                        fixture.detectChanges();
+
+                        const headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
+
+                        expect(headers).toBeDefined();
+                        expect(headers.length).toEqual(6, 'Not all columns rendered');
+
+                        buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                        buttonToggle.dispatchEvent(EventGenerator.click);
+
+                        fixture.detectChanges();
+
+                        reset = fixture.debugElement.query(By.css('.ui-grid-toggle-reset'));
+                        expect(reset).toBeNull('Reset still rendered');
+
+                        discardPeriodicTasks();
+                        flush();
+                    }),
+                );
+
+                describe('Behavior: Keyboard Navigation', () => {
+                    beforeEach(
+                        fakeAsync(
+                            () => {
+                                const firstOption = fixture.debugElement
+                                    .query(By.css('.ui-grid-toggle-panel .mat-option:not(.mat-option-disabled)'));
+                                const checkbox = firstOption.query(By.css('.mat-pseudo-checkbox'));
+                                checkbox.nativeElement.dispatchEvent(EventGenerator.click);
+
+                                tick(GRID_COLUMN_CHANGE_DELAY);
+                                fixture.detectChanges();
+
+                                discardPeriodicTasks();
+                            },
+                        ),
+                    );
+
+                    it('should be able to navigate to reset button and back using arrows',
+                        fakeAsync(
+                            async () => {
+                                const toggleComponent = fixture.debugElement.query(By.css('.ui-grid-toggle-columns'));
+                                const reset = fixture.debugElement.query(By.css('.ui-grid-toggle-reset'));
+
+                                expect(
+                                    reset.nativeElement === document.activeElement,
+                                ).toBe(false, 'Reset is already focused');
+
+                                toggleComponent.nativeElement.dispatchEvent(
+                                    EventGenerator.keyDown(Key.ArrowUp),
+                                );
+                                fixture.detectChanges();
+
+                                expect(
+                                    reset.nativeElement,
+                                ).toBe(document.activeElement, 'Reset is NOT focused!');
+
+                                toggleComponent.nativeElement.dispatchEvent(
+                                    EventGenerator.keyDown(Key.ArrowDown),
+                                );
+                                fixture.detectChanges();
+
+                                expect(
+                                    reset.nativeElement === document.activeElement,
+                                ).toBe(false, 'Reset is still focused');
+
+                                const highlightedOption = fixture.debugElement.query(By.css('.mat-option.mat-active'));
+
+                                expect(highlightedOption).toBeDefined();
+                                discardPeriodicTasks();
+                                flush();
+                            },
+                        ),
+                    );
+
+                    [
+                        EventGenerator.keyDown(Key.Enter),
+                        EventGenerator.keyDown(Key.Space),
+                        EventGenerator.click,
+                    ].forEach(e => {
+                        it(`should be able to reset on (${
+                            e instanceof KeyboardEvent
+                                ? `keydown."` + e.code.toLowerCase() + `"`
+                                : 'click'
+                            })`,
+                            fakeAsync(() => {
+                                const reset = fixture.debugElement.query(By.css('.ui-grid-toggle-reset'));
+
+                                reset.nativeElement.dispatchEvent(e);
+
+                                tick(GRID_COLUMN_CHANGE_DELAY);
+                                fixture.detectChanges();
+
+                                const headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
+
+                                expect(headers).toBeDefined();
+                                expect(headers.length).toEqual(6, 'Not all columns rendered');
+
+                                expect(
+                                    fixture.debugElement.query(By.css('.mat-select')).nativeElement,
+                                ).toBe(document.activeElement, 'Menu is not selected');
+
+                                discardPeriodicTasks();
+                                flush();
+                            }),
+                        );
+                    });
+
+                    it('should be able to enable all options after focusing on Reset',
+                        fakeAsync(
+                            async () => {
+                                const toggleComponent = fixture.debugElement.query(By.css('.ui-grid-toggle-columns'));
+                                let reset = fixture.debugElement.query(By.css('.ui-grid-toggle-reset'));
+
+                                expect(
+                                    reset.nativeElement === document.activeElement,
+                                ).toBe(false, 'Reset is already focused');
+
+                                toggleComponent.nativeElement.dispatchEvent(
+                                    EventGenerator.keyDown(Key.ArrowUp),
+                                );
+                                fixture.detectChanges();
+
+                                expect(
+                                    reset.nativeElement,
+                                ).toBe(document.activeElement, 'Reset is NOT focused!');
+
+                                toggleComponent.nativeElement.dispatchEvent(
+                                    EventGenerator.keyDown(Key.ArrowDown),
+                                );
+                                fixture.detectChanges();
+
+                                expect(
+                                    reset.nativeElement === document.activeElement,
+                                ).toBe(false, 'Reset is still focused');
+
+                                const highlightedOption = fixture.debugElement.query(By.css('.mat-option.mat-active'));
+                                const checkbox = highlightedOption.query(By.css('.mat-pseudo-checkbox'));
+
+                                checkbox.nativeElement.dispatchEvent(EventGenerator.click);
+
+                                tick(GRID_COLUMN_CHANGE_DELAY);
+                                fixture.detectChanges();
+                                await fixture.whenStable();
+
+                                reset = fixture.debugElement.query(By.css('.ui-grid-toggle-reset'));
+                                expect(reset).toBeNull('Reset still available after restoring full selection');
+                                discardPeriodicTasks();
+                                flush();
+                            },
+                        ),
+                    );
                 });
             });
         });

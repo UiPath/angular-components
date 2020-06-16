@@ -10,6 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { UiAutoAccessibleLabelModule } from '@uipath/angular/a11y';
 import { UiSuggestModule } from '@uipath/angular/components/ui-suggest';
 import { UiVirtualScrollViewportResizeModule } from '@uipath/angular/directives/ui-virtual-scroll-viewport-resize';
 
@@ -43,6 +44,7 @@ import { UiGridComponent } from './ui-grid.component';
         UiSuggestModule,
         A11yModule,
         UiVirtualScrollViewportResizeModule,
+        UiAutoAccessibleLabelModule,
     ],
     declarations: [
         UiGridComponent,
