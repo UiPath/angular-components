@@ -22,11 +22,15 @@
 <text text-anchor="start" x="429.7258" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_UiGridToggleColumnsModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="125,-70 125,-268 371,-268 371,-70 125,-70"/>
+<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="17,-70 17,-268 479,-268 479,-70 17,-70"/>
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_UiGridToggleColumnsModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="134,-78 134,-130 362,-130 362,-78 134,-78"/>
+<polygon fill="none" stroke="#000000" points="243,-78 243,-130 471,-130 471,-78 243,-78"/>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_UiGridToggleColumnsModule_imports</title>
+<polygon fill="none" stroke="#000000" points="25,-78 25,-130 235,-130 235,-78 25,-78"/>
 </g>
 <g id="clust5" class="cluster">
 <title>cluster_UiGridToggleColumnsModule_exports</title>
@@ -35,8 +39,8 @@
 <!-- UiGridToggleColumnsComponent -->
 <g id="node1" class="node">
 <title>UiGridToggleColumnsComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="353.7077,-122 142.2923,-122 142.2923,-86 353.7077,-86 353.7077,-122"/>
-<text text-anchor="middle" x="248" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">UiGridToggleColumnsComponent</text>
+<polygon fill="#ffffb3" stroke="#000000" points="462.7077,-122 251.2923,-122 251.2923,-86 462.7077,-86 462.7077,-122"/>
+<text text-anchor="middle" x="357" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">UiGridToggleColumnsComponent</text>
 </g>
 <!-- UiGridToggleColumnsModule -->
 <g id="node2" class="node">
@@ -47,20 +51,32 @@
 <!-- UiGridToggleColumnsComponent&#45;&gt;UiGridToggleColumnsModule -->
 <g id="edge1" class="edge">
 <title>UiGridToggleColumnsComponent&#45;&gt;UiGridToggleColumnsModule</title>
-<path fill="none" stroke="#000000" d="M248,-122.1061C248,-122.1061 248,-140.991 248,-140.991"/>
-<polygon fill="#000000" stroke="#000000" points="244.5001,-140.9909 248,-150.991 251.5001,-140.991 244.5001,-140.9909"/>
+<path fill="none" stroke="#000000" d="M297.0544,-122.1061C297.0544,-122.1061 297.0544,-140.991 297.0544,-140.991"/>
+<polygon fill="#000000" stroke="#000000" points="293.5544,-140.9909 297.0544,-150.991 300.5544,-140.991 293.5544,-140.9909"/>
 </g>
 <!-- UiGridToggleColumnsComponent  -->
-<g id="node3" class="node">
+<g id="node4" class="node">
 <title>UiGridToggleColumnsComponent </title>
 <polygon fill="#fb8072" stroke="#000000" points="355.2078,-252 140.7922,-252 140.7922,-216 355.2078,-216 355.2078,-252"/>
 <text text-anchor="middle" x="248" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">UiGridToggleColumnsComponent </text>
 </g>
 <!-- UiGridToggleColumnsModule&#45;&gt;UiGridToggleColumnsComponent  -->
-<g id="edge2" class="edge">
+<g id="edge3" class="edge">
 <title>UiGridToggleColumnsModule&#45;&gt;UiGridToggleColumnsComponent </title>
 <path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M248,-187.1061C248,-187.1061 248,-205.991 248,-205.991"/>
 <polygon fill="#000000" stroke="#000000" points="244.5001,-205.9909 248,-215.991 251.5001,-205.991 244.5001,-205.9909"/>
+</g>
+<!-- UiAutoAccessibleLabelModule -->
+<g id="node3" class="node">
+<title>UiAutoAccessibleLabelModule</title>
+<polygon fill="#8dd3c7" stroke="#000000" points="227.052,-122 224.052,-126 203.052,-126 200.052,-122 32.948,-122 32.948,-86 227.052,-86 227.052,-122"/>
+<text text-anchor="middle" x="130" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">UiAutoAccessibleLabelModule</text>
+</g>
+<!-- UiAutoAccessibleLabelModule&#45;&gt;UiGridToggleColumnsModule -->
+<g id="edge2" class="edge">
+<title>UiAutoAccessibleLabelModule&#45;&gt;UiGridToggleColumnsModule</title>
+<path fill="none" stroke="#000000" d="M190.1567,-122.1061C190.1567,-122.1061 190.1567,-140.991 190.1567,-140.991"/>
+<polygon fill="#000000" stroke="#000000" points="186.6568,-140.9909 190.1567,-150.991 193.6568,-140.991 186.6568,-140.9909"/>
 </g>
 </g>
 </svg>
