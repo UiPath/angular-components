@@ -7,4 +7,5 @@ export {
     ISuggestValues,
     SuggestDirection,
     SuggestDisplayPriority,
+    SuggestSearchStrategy,
 } from './models';
