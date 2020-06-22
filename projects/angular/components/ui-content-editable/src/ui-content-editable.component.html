@@ -1,0 +1,40 @@
+<div (focusout)="handleContainerFocusOut()"
+     (mouseenter)="isHovered=true"
+     (mouseleave)="isHovered=false"
+     class="ui-editable"
+     data-cy="editable-container">
+     <div [class.readonly]="readonly"
+          class="ui-editable-content">
+          <div [class.is-single-line]="isSingleLine"
+               [class.hide-content]="isEditMode"
+               [matTooltip]="value"
+               (click)="!readonly && (isEditMode=true)"
+               class="ui-editable-content-view"
+               data-cy="content-editable-view">
+               {{value}}
+          </div>
+          <input *ngIf="isEditMode && !readonly"
+                 [(ngModel)]="value"
+                 [uiAutofocus]
+                 [selectionLocation]="'end'"
+                 (keydown.enter)="handleEnterKey($event)"
+                 matInput
+                 class="ui-editable-content-edit"
+                 data-cy="content-editable-input"
+                 type="text">
+     </div>
+     <button *ngIf="!readonly"
+             [class.hide-element]="!(isHovered || isEditMode)"
+             (click)="handleIconClick()"
+             mat-icon-button
+             class="edit-button"
+             data-cy="content-editable-edit-button">
+          <mat-icon [color]="errorMessage ? 'warn' : 'accent'"
+                    [matTooltip]="errorMessage
+                                   ? errorMessage
+                                   : ( isEditMode ? saveLabel : cancelLabel)"
+                    data-cy="content-icon">
+               {{errorMessage ? 'close' : (isEditMode ? 'check' : 'edit')}}
+          </mat-icon>
+     </button>
+</div>
