@@ -24,6 +24,7 @@ module.exports = {
                 'testing',
                 'password-toggle',
                 'password-indicator',
+                'content-editable'
             ];
 
             return [2, 'always', scopeList];

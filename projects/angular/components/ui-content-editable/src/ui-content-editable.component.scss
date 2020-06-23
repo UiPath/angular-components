@@ -1,0 +1,50 @@
+$edit-button-width: 40px;
+$edit-button-margin-left: 10px;
+
+.ui-content-editable {
+    width: 100%;
+
+    .ui-editable {
+        display: flex;
+        align-items: center;
+
+        &-content {
+            position: relative;
+            display: flex;
+            max-width: calc(100% - #{$edit-button-width + $edit-button-margin-left});
+
+            &:not(.readonly) {
+                .ui-editable-content-view {
+                    cursor: pointer;
+                }
+            }
+
+            &.readonly {
+                max-width: 100%;
+            }
+
+            .hide-content {
+                opacity: 0;
+            }
+
+            &-edit {
+                max-width: 100%;
+                position: absolute;
+            }
+
+            .is-single-line {
+                text-overflow: ellipsis;
+                white-space: pre;
+                overflow: hidden;
+            }
+        }
+
+        button.edit-button {
+            margin-left: $edit-button-margin-left;
+        }
+
+        button.hide-element:not(:focus) {
+            opacity: 0;
+        }
+    }
+}

@@ -30,7 +30,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod",
     "build:theme": "scss-bundle -c scss-bundle.config.json",
     "build:readme": "cpx ./README.md ./dist/angular",
     "build:prod": "npm-run-all lint build build:theme build:readme",
