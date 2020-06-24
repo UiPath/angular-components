@@ -41,7 +41,7 @@ class ClickOutsideFixtureComponent {
     }
 }
 
-describe('Directive: UiClipboard', () => {
+describe('Directive: UiClickOutside', () => {
     let component: ClickOutsideFixtureComponent;
     let fixture: ComponentFixture<ClickOutsideFixtureComponent>;
     let handlerSpy: jasmine.Spy;
@@ -66,211 +66,219 @@ describe('Directive: UiClipboard', () => {
         fixture.destroy();
     });
 
-    describe('Action: click on outer container', () => {
+    [
+        EventGenerator.click,
+        EventGenerator.contextmenu,
 
-        describe('Context: self', () => {
-            it('should emit when clicking the parent', () => {
-                fixture.detectChanges();
+    ].forEach(e => {
+        describe(`Action: ${e.type}`, () => {
+            describe(`Scenario: on outer container`, () => {
 
-                const containerDgbEl = fixture.debugElement.query(By.css(`#${OUTER_CONTAINER_ID}`));
+                describe('Context: self', () => {
+                    it(`should emit when ${e.type}-ing the parent`, () => {
+                        fixture.detectChanges();
 
-                containerDgbEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
+                        const containerDgbEl = fixture.debugElement.query(By.css(`#${OUTER_CONTAINER_ID}`));
 
-                expect(handlerSpy).toHaveBeenCalled();
-                expect(handlerSpy).toHaveBeenCalledTimes(1);
+                        containerDgbEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
 
-                const ev: MouseEvent = handlerSpy.calls.mostRecent().returnValue;
-                expect(ev.constructor).toBe(MouseEvent);
-                expect(ev.target).toBe(containerDgbEl.nativeElement);
-            });
-        });
+                        expect(handlerSpy).toHaveBeenCalled();
+                        expect(handlerSpy).toHaveBeenCalledTimes(1);
 
-        describe('Context: children', () => {
-            it('should emit when clicking the button', () => {
-                fixture.detectChanges();
+                        const ev: MouseEvent = handlerSpy.calls.mostRecent().returnValue;
+                        expect(ev.constructor).toBe(MouseEvent);
+                        expect(ev.target).toBe(containerDgbEl.nativeElement);
+                    });
+                });
 
-                const containerDgbEl = fixture.debugElement.query(By.css(`#${OUTER_CONTAINER_ID}`));
-                const buttonDbgEl = containerDgbEl.query(By.css(`.${BTN_CLASS}`));
+                describe('Context: children', () => {
+                    it(`should emit when ${e.type}-ing the button`, () => {
+                        fixture.detectChanges();
 
-                buttonDbgEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
+                        const containerDgbEl = fixture.debugElement.query(By.css(`#${OUTER_CONTAINER_ID}`));
+                        const buttonDbgEl = containerDgbEl.query(By.css(`.${BTN_CLASS}`));
 
-                expect(handlerSpy).toHaveBeenCalled();
-                expect(handlerSpy).toHaveBeenCalledTimes(1);
+                        buttonDbgEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
 
-                const ev: MouseEvent = handlerSpy.calls.mostRecent().returnValue;
-                expect(ev.constructor).toBe(MouseEvent);
-                expect(ev.target).toBe(buttonDbgEl.nativeElement);
-            });
+                        expect(handlerSpy).toHaveBeenCalled();
+                        expect(handlerSpy).toHaveBeenCalledTimes(1);
 
-            it('should emit when clicking the text wrapper', () => {
-                fixture.detectChanges();
+                        const ev: MouseEvent = handlerSpy.calls.mostRecent().returnValue;
+                        expect(ev.constructor).toBe(MouseEvent);
+                        expect(ev.target).toBe(buttonDbgEl.nativeElement);
+                    });
 
-                const containerDgbEl = fixture.debugElement.query(By.css(`#${OUTER_CONTAINER_ID}`));
-                const txtWrapperDebugEl = containerDgbEl.query(By.css(`.${TEXT_WRAPPER_CLASS}`));
+                    it(`should emit when ${e.type}-ing the text wrapper`, () => {
+                        fixture.detectChanges();
 
-                txtWrapperDebugEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
+                        const containerDgbEl = fixture.debugElement.query(By.css(`#${OUTER_CONTAINER_ID}`));
+                        const txtWrapperDebugEl = containerDgbEl.query(By.css(`.${TEXT_WRAPPER_CLASS}`));
 
-                expect(handlerSpy).toHaveBeenCalled();
-                expect(handlerSpy).toHaveBeenCalledTimes(1);
+                        txtWrapperDebugEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
 
-                const ev: MouseEvent = handlerSpy.calls.mostRecent().returnValue;
-                expect(ev.constructor).toBe(MouseEvent);
-                expect(ev.target).toBe(txtWrapperDebugEl.nativeElement);
-            });
+                        expect(handlerSpy).toHaveBeenCalled();
+                        expect(handlerSpy).toHaveBeenCalledTimes(1);
 
-            it('should emit when clicking the text', () => {
-                fixture.detectChanges();
+                        const ev: MouseEvent = handlerSpy.calls.mostRecent().returnValue;
+                        expect(ev.constructor).toBe(MouseEvent);
+                        expect(ev.target).toBe(txtWrapperDebugEl.nativeElement);
+                    });
 
-                const containerDgbEl = fixture.debugElement.query(By.css(`#${OUTER_CONTAINER_ID}`));
-                const txtDebugEl = containerDgbEl.query(By.css(TEXT_ELEMENT_SELECTOR));
+                    it(`should emit when ${e.type}-ing the text`, () => {
+                        fixture.detectChanges();
 
-                txtDebugEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
+                        const containerDgbEl = fixture.debugElement.query(By.css(`#${OUTER_CONTAINER_ID}`));
+                        const txtDebugEl = containerDgbEl.query(By.css(TEXT_ELEMENT_SELECTOR));
 
-                expect(handlerSpy).toHaveBeenCalled();
-                expect(handlerSpy).toHaveBeenCalledTimes(1);
+                        txtDebugEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
 
-                const ev: MouseEvent = handlerSpy.calls.mostRecent().returnValue;
-                expect(ev.constructor).toBe(MouseEvent);
-                expect(ev.target).toBe(txtDebugEl.nativeElement);
-            });
+                        expect(handlerSpy).toHaveBeenCalled();
+                        expect(handlerSpy).toHaveBeenCalledTimes(1);
 
-            it('should emit when clicking the ALL the children', fakeAsync(() => {
-                const THROTTLE = 1000 / 3 + 1;
+                        const ev: MouseEvent = handlerSpy.calls.mostRecent().returnValue;
+                        expect(ev.constructor).toBe(MouseEvent);
+                        expect(ev.target).toBe(txtDebugEl.nativeElement);
+                    });
 
-                let ev: MouseEvent;
-                fixture.detectChanges();
+                    it(`should emit when ${e.type}-ing the ALL the children`, fakeAsync(() => {
+                        const THROTTLE = 1000 / 3 + 1;
 
-                // BUTTON CLICK
-                const containerDgbEl = fixture.debugElement.query(By.css(`#${OUTER_CONTAINER_ID}`));
+                        let ev: MouseEvent;
+                        fixture.detectChanges();
 
-                const buttonDbgEl = containerDgbEl.query(By.css(`.${BTN_CLASS}`));
-                buttonDbgEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
-                tick(THROTTLE);
+                        // BUTTON CLICK
+                        const containerDgbEl = fixture.debugElement.query(By.css(`#${OUTER_CONTAINER_ID}`));
 
-                expect(handlerSpy).toHaveBeenCalled();
-                expect(handlerSpy).toHaveBeenCalledTimes(1);
+                        const buttonDbgEl = containerDgbEl.query(By.css(`.${BTN_CLASS}`));
+                        buttonDbgEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
+                        tick(THROTTLE);
 
-                ev = handlerSpy.calls.mostRecent().returnValue;
-                expect(ev.constructor).toBe(MouseEvent);
-                expect(ev.target).toBe(buttonDbgEl.nativeElement);
+                        expect(handlerSpy).toHaveBeenCalled();
+                        expect(handlerSpy).toHaveBeenCalledTimes(1);
 
-                // TEXT WRAPPER CLICK
-                const txtWrapperDebugEl = containerDgbEl.query(By.css(`.${TEXT_WRAPPER_CLASS}`));
-                txtWrapperDebugEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
-                tick(THROTTLE);
+                        ev = handlerSpy.calls.mostRecent().returnValue;
+                        expect(ev.constructor).toBe(MouseEvent);
+                        expect(ev.target).toBe(buttonDbgEl.nativeElement);
 
-                expect(handlerSpy).toHaveBeenCalled();
-                expect(handlerSpy).toHaveBeenCalledTimes(2);
+                        // TEXT WRAPPER CLICK
+                        const txtWrapperDebugEl = containerDgbEl.query(By.css(`.${TEXT_WRAPPER_CLASS}`));
+                        txtWrapperDebugEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
+                        tick(THROTTLE);
 
-                ev = handlerSpy.calls.mostRecent().returnValue;
-                expect(ev.constructor).toBe(MouseEvent);
-                expect(ev.target).toBe(txtWrapperDebugEl.nativeElement);
+                        expect(handlerSpy).toHaveBeenCalled();
+                        expect(handlerSpy).toHaveBeenCalledTimes(2);
 
-                // TEXT CLICK
-                const txtDebugEl = containerDgbEl.query(By.css(TEXT_ELEMENT_SELECTOR));
+                        ev = handlerSpy.calls.mostRecent().returnValue;
+                        expect(ev.constructor).toBe(MouseEvent);
+                        expect(ev.target).toBe(txtWrapperDebugEl.nativeElement);
 
-                txtDebugEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
-                tick(THROTTLE);
+                        // TEXT CLICK
+                        const txtDebugEl = containerDgbEl.query(By.css(TEXT_ELEMENT_SELECTOR));
 
-                expect(handlerSpy).toHaveBeenCalled();
-                expect(handlerSpy).toHaveBeenCalledTimes(3);
+                        txtDebugEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
+                        tick(THROTTLE);
 
-                ev = handlerSpy.calls.mostRecent().returnValue;
-                expect(ev.constructor).toBe(MouseEvent);
-                expect(ev.target).toBe(txtDebugEl.nativeElement);
-            }));
-        });
-    });
+                        expect(handlerSpy).toHaveBeenCalled();
+                        expect(handlerSpy).toHaveBeenCalledTimes(3);
 
-    describe('Action: click on decorated container', () => {
-        describe('Context: self', () => {
-            it('should NOT emit when clicking the container', () => {
-                fixture.detectChanges();
-
-                const containerDgbEl = fixture.debugElement.query(By.css(`#${CONTAINER_ID}`));
-                containerDgbEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
-
-                expect(handlerSpy).not.toHaveBeenCalled();
-            });
-        });
-
-        describe('Context: children', () => {
-            it('should NOT emit when clicking the button', () => {
-                fixture.detectChanges();
-
-                const containerDgbEl = fixture.debugElement.query(By.css(`#${CONTAINER_ID}`));
-                const buttonDbgEl = containerDgbEl.query(By.css(`.${BTN_CLASS}`));
-
-                buttonDbgEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
-
-                expect(handlerSpy).not.toHaveBeenCalled();
+                        ev = handlerSpy.calls.mostRecent().returnValue;
+                        expect(ev.constructor).toBe(MouseEvent);
+                        expect(ev.target).toBe(txtDebugEl.nativeElement);
+                    }));
+                });
             });
 
-            it('should NOT emit when clicking the text wrapper', () => {
-                fixture.detectChanges();
+            describe(`Scenario: on decorated container`, () => {
+                describe('Context: self', () => {
+                    it('should NOT emit when ${e.type}-ing the container', () => {
+                        fixture.detectChanges();
 
-                const containerDgbEl = fixture.debugElement.query(By.css(`#${CONTAINER_ID}`));
-                const txtWrapperDebugEl = containerDgbEl.query(By.css(`.${TEXT_WRAPPER_CLASS}`));
+                        const containerDgbEl = fixture.debugElement.query(By.css(`#${CONTAINER_ID}`));
+                        containerDgbEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
 
-                txtWrapperDebugEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
+                        expect(handlerSpy).not.toHaveBeenCalled();
+                    });
+                });
 
-                expect(handlerSpy).not.toHaveBeenCalled();
+                describe('Context: children', () => {
+                    it(`should NOT emit when ${e.type}-ing the button`, () => {
+                        fixture.detectChanges();
+
+                        const containerDgbEl = fixture.debugElement.query(By.css(`#${CONTAINER_ID}`));
+                        const buttonDbgEl = containerDgbEl.query(By.css(`.${BTN_CLASS}`));
+
+                        buttonDbgEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
+
+                        expect(handlerSpy).not.toHaveBeenCalled();
+                    });
+
+                    it(`should NOT emit when ${e.type}-ing the text wrapper`, () => {
+                        fixture.detectChanges();
+
+                        const containerDgbEl = fixture.debugElement.query(By.css(`#${CONTAINER_ID}`));
+                        const txtWrapperDebugEl = containerDgbEl.query(By.css(`.${TEXT_WRAPPER_CLASS}`));
+
+                        txtWrapperDebugEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
+
+                        expect(handlerSpy).not.toHaveBeenCalled();
+                    });
+
+                    it(`should NOT emit when ${e.type}-ing the text`, () => {
+                        fixture.detectChanges();
+
+                        const containerDgbEl = fixture.debugElement.query(By.css(`#${CONTAINER_ID}`));
+                        const txtDebugEl = containerDgbEl.query(By.css(TEXT_ELEMENT_SELECTOR));
+
+                        txtDebugEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
+
+                        expect(handlerSpy).not.toHaveBeenCalled();
+                    });
+
+                    it(`should NOT emit when ${e.type}-ing the ALL the children`, fakeAsync(() => {
+                        const THROTTLE = 1000 / 3 + 1;
+
+                        fixture.detectChanges();
+
+                        // BUTTON CLICK
+                        const containerDgbEl = fixture.debugElement.query(By.css(`#${CONTAINER_ID}`));
+
+                        const buttonDbgEl = containerDgbEl.query(By.css(`.${BTN_CLASS}`));
+                        buttonDbgEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
+                        tick(THROTTLE);
+
+                        expect(handlerSpy).not.toHaveBeenCalled();
+
+                        // TEXT WRAPPER CLICK
+                        const txtWrapperDebugEl = containerDgbEl.query(By.css(`.${TEXT_WRAPPER_CLASS}`));
+                        txtWrapperDebugEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
+                        tick(THROTTLE);
+
+                        expect(handlerSpy).not.toHaveBeenCalled();
+
+                        // TEXT CLICK
+                        const txtDebugEl = containerDgbEl.query(By.css(TEXT_ELEMENT_SELECTOR));
+
+                        txtDebugEl.nativeElement.dispatchEvent(e);
+                        fixture.detectChanges();
+                        tick(THROTTLE);
+
+                        expect(handlerSpy).not.toHaveBeenCalled();
+                    }));
+                });
             });
-
-            it('should NOT emit when clicking the text', () => {
-                fixture.detectChanges();
-
-                const containerDgbEl = fixture.debugElement.query(By.css(`#${CONTAINER_ID}`));
-                const txtDebugEl = containerDgbEl.query(By.css(TEXT_ELEMENT_SELECTOR));
-
-                txtDebugEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
-
-                expect(handlerSpy).not.toHaveBeenCalled();
-            });
-
-            it('should NOT emit when clicking the ALL the children', fakeAsync(() => {
-                const THROTTLE = 1000 / 3 + 1;
-
-                fixture.detectChanges();
-
-                // BUTTON CLICK
-                const containerDgbEl = fixture.debugElement.query(By.css(`#${CONTAINER_ID}`));
-
-                const buttonDbgEl = containerDgbEl.query(By.css(`.${BTN_CLASS}`));
-                buttonDbgEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
-                tick(THROTTLE);
-
-                expect(handlerSpy).not.toHaveBeenCalled();
-
-                // TEXT WRAPPER CLICK
-                const txtWrapperDebugEl = containerDgbEl.query(By.css(`.${TEXT_WRAPPER_CLASS}`));
-                txtWrapperDebugEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
-                tick(THROTTLE);
-
-                expect(handlerSpy).not.toHaveBeenCalled();
-
-                // TEXT CLICK
-                const txtDebugEl = containerDgbEl.query(By.css(TEXT_ELEMENT_SELECTOR));
-
-                txtDebugEl.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
-                tick(THROTTLE);
-
-                expect(handlerSpy).not.toHaveBeenCalled();
-            }));
         });
     });
 });

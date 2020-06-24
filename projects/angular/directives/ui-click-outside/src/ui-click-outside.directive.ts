@@ -10,6 +10,7 @@ import {
 
 import {
     fromEvent,
+    merge,
     Observable,
     Subject,
 } from 'rxjs';
@@ -44,22 +45,31 @@ const MAX_CLICKS_PER_SECOND = 3;
 })
 export class UiClickOutsideService implements OnDestroy {
     /**
-   * The `global` event handler for `click` events.
-   *
-   */
+     * The `global` event handler for `click` and `contextmenu` events.
+     *
+     */
     public source: Observable<MouseEvent>;
+
     private _destroyed$ = new Subject();
 
     /**
     * @ignore
     */
     constructor(
-    @Inject(DOCUMENT)
+        @Inject(DOCUMENT)
         document: any,
     ) {
-        this.source = fromEvent<MouseEvent>((document as Document).body, 'click', {
+        const click = fromEvent<MouseEvent>((document as Document).body, 'click', {
             capture: true,
-        })
+        });
+        const contextmenu = fromEvent<MouseEvent>((document as Document).body, 'contextmenu', {
+            capture: true,
+        });
+
+        this.source = merge(
+            click,
+            contextmenu,
+        )
             .pipe(
                 throttleTime(1000 / MAX_CLICKS_PER_SECOND),
                 takeUntil(this._destroyed$),
@@ -76,7 +86,7 @@ export class UiClickOutsideService implements OnDestroy {
 }
 
 /**
- * A directive that emits when a click event occurs outside of the decorated element.
+ * A directive that emits when a left OR right click event occurs outside of the decorated element.
  *
  * @export
  */
@@ -84,28 +94,28 @@ export class UiClickOutsideService implements OnDestroy {
     selector: '[uiClickOutside]',
 })
 export class UiClickOutsideDirective {
-  /**
-   * Emits the original `MouseEvent` when the click occurs outside of the decorated element.
-   *
-   */
-  @Output()
+    /**
+     * Emits the original `MouseEvent` when a left OR right click click occurs outside of the decorated element.
+     *
+     */
+    @Output()
     public uiClickOutside: Observable<MouseEvent>;
 
-  /**
-    * @ignore
-    */
-  constructor(
-      ref: ElementRef,
-      private _clickService: UiClickOutsideService,
-  ) {
-      const element: HTMLElement = ref.nativeElement;
+    /**
+      * @ignore
+      */
+    constructor(
+        ref: ElementRef,
+        private _clickService: UiClickOutsideService,
+    ) {
+        const element: HTMLElement = ref.nativeElement;
 
-      this.uiClickOutside = this._clickService
-          .source
-          .pipe(
-              filter(ev =>
-                  !element.contains((ev.target as Element)),
-              ),
-          );
-  }
+        this.uiClickOutside = this._clickService
+            .source
+            .pipe(
+                filter(ev =>
+                    !element.contains((ev.target as Element)),
+                ),
+            );
+    }
 }

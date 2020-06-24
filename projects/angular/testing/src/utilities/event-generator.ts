@@ -51,6 +51,16 @@ export class EventGenerator {
     };
 
     /**
+     * Gets a `contextmenu` event.
+     *
+     */
+    static get contextmenu(): MouseEvent {
+        const event = document.createEvent('MouseEvent');
+        event.initEvent('contextmenu', true, true);
+        return event;
+    }
+
+    /**
      * Gets a `click` event.
      *
      */
