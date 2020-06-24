@@ -1,3 +1,6 @@
+# v9.1.0 (2020-06-24)
+* **click-outside** `(uiClickOutside)` emits for right or left click outside
+
 # v9.0.7 (2020-06-16)
 * **grid** fix a11y issue on toggle visibility column reset button
 * **a11y** add automatic aria-label support
