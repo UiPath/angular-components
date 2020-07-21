@@ -5,6 +5,7 @@ import {
     tick,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { UiSuggestComponent } from '@uipath/angular/components/ui-suggest';
 import {
     EventGenerator,
     Key,
@@ -145,11 +146,21 @@ export class IntegrationUtils<T> {
         this.fixture.detectChanges();
     }
 
-    public selectNthUiSuggestItem = async (selector: string, nth: number) => {
+    public selectNthUiSuggestItem = async (selector: string, nth: number, config?: {
+        httpMock: HttpTestingController,
+        stub: IStubEndpoint,
+    }) => {
         const suggest = this.getDebugElement(selector);
 
         this.click(`.display`, suggest);
         this.fixture.detectChanges();
+
+        // maybe add a getter along the setter for fetchStrategy ?
+        const strategy = (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$'].value;
+
+        if (!!config && strategy === 'onOpen') {
+            this.expectAndFlush(config.stub, config.httpMock);
+        }
 
         const listItems = suggest.queryAll(By.css('.mat-list-item'));
 
@@ -160,6 +171,10 @@ export class IntegrationUtils<T> {
         listItem.dispatchEvent(EventGenerator.click);
         this.fixture.detectChanges();
         await this.fixture.whenStable();
+
+        if (!!config && strategy === 'eager') {
+            this.expectAndFlush(config.stub, config.httpMock);
+        }
     }
 
     public getUiSuggestValue = (selector: string, debugEl = this.fixture.debugElement) =>
