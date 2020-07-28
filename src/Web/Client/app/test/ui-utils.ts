@@ -242,6 +242,12 @@ export class IntegrationUtils<T> {
             this.getDebugElement(selector, debugEl),
         )
 
+    public openGridContextMenu = (rowNumber: number) => {
+        const selector = `${`[data-row-index="${rowNumber - 1}"]`} ${`[data-cy="grid-action-menu"]`}`;
+        const button = this.fixture.debugElement.query(By.css(selector));
+        button.nativeElement.dispatchEvent(EventGenerator.click);
+    }
+
     private _isRadioButtonElementDisabled = (debugEl: DebugElement) =>
         debugEl.nativeElement.classList.contains('mat-radio-disabled')
 }
