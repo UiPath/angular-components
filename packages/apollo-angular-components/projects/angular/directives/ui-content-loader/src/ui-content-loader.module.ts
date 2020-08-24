@@ -14,9 +14,6 @@ import { UiContentLoaderDirective } from './ui-content-loader.directive';
         UiContentLoaderDirective,
         UiContentSpinnerComponent,
     ],
-    entryComponents: [
-        UiContentSpinnerComponent,
-    ],
     exports: [
         UiContentLoaderDirective,
     ],
