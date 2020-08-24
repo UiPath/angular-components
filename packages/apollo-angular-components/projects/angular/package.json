@@ -46,5 +46,8 @@
     "object-hash": "2.0.1",
     "rxjs": "~6.5.2",
     "scroll-into-view-if-needed": "~2.2.20"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
   }
 }
