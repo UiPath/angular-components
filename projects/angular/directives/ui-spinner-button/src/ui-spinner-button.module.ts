@@ -10,7 +10,6 @@ import { UiSpinnerButtonDirective } from './ui-spinner-button.directive';
         CommonModule,
         MatProgressSpinnerModule,
     ],
-    entryComponents: [UiButtonProgressSpinnerComponent],
     declarations: [
         UiButtonProgressSpinnerComponent,
         UiSpinnerButtonDirective,
