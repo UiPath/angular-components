@@ -146,6 +146,12 @@ export class IntegrationUtils<T> {
         this.fixture.detectChanges();
     }
 
+    public getUiSuggestFetchStrategy = (selector: string) => {
+        const suggest = this.getDebugElement(selector);
+        // maybe add a getter along the setter for fetchStrategy ?
+        return (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$'].value;
+    }
+
     public selectNthUiSuggestItem = async (selector: string, nth: number, config?: {
         httpMock: HttpTestingController,
         stub: IStubEndpoint,
@@ -155,8 +161,7 @@ export class IntegrationUtils<T> {
         this.click(`.display`, suggest);
         this.fixture.detectChanges();
 
-        // maybe add a getter along the setter for fetchStrategy ?
-        const strategy = (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$'].value;
+        const strategy = this.getUiSuggestFetchStrategy(selector);
 
         if (!!config && strategy === 'onOpen') {
             this.expectAndFlush(config.stub, config.httpMock);
