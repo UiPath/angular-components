@@ -21,9 +21,9 @@ import {
     panelClass,
     SnackbarAction,
     SnackBarType,
-    UI_MAT_SNACK_BAR_DEFAULT_OPTIONS,
     UiMatSnackBarConfig,
     UiSnackBarService,
+    UI_MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from './ui-snackbar.component';
 import { UiSnackBarModule } from './ui-snackbar.module';
 

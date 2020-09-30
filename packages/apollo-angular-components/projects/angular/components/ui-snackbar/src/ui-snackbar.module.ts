@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {
-    MAT_SNACK_BAR_DEFAULT_OPTIONS,
     MatSnackBarModule,
+    MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 import { UiPipeModule } from '@uipath/angular/pipes';
 

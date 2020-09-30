@@ -1,3 +1,4 @@
+// tslint:disable: ordered-imports
 
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 import 'core-js/es7/reflect';
@@ -5,6 +6,7 @@ import 'zone.js/dist/zone';
 import 'zone.js/dist/zone-testing';
 import 'jasmine-expect';
 
+// tslint:enable: ordered-imports
 import { getTestBed } from '@angular/core/testing';
 import {
     BrowserDynamicTestingModule,
@@ -33,7 +35,7 @@ const reseed = () => {
     faker.seed(SEED);
     // overwrite Math.radom again in each global context
     Math.random = () => faker.random.number({ min: 0, max: 100000 }) / 100000;
-}
+};
 
 beforeEach(reseed);
 
@@ -41,12 +43,12 @@ const __describe = describe;
 (global as any).describe = function () {
     reseed();
     __describe.apply(this, arguments as any);
-}
+};
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
     BrowserDynamicTestingModule,
-    platformBrowserDynamicTesting()
+    platformBrowserDynamicTesting(),
 );
 
 // Then we find all the tests.

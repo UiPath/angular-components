@@ -15,8 +15,8 @@ import { take } from 'rxjs/operators';
 
 import {
     ISecondFormatOptions,
-    UI_SECONDFORMAT_OPTIONS,
     UiSecondFormatDirective,
+    UI_SECONDFORMAT_OPTIONS,
 } from './ui-secondformat.directive';
 import { UiSecondFormatModule } from './ui-secondformat.module';
 
