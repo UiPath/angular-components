@@ -125,12 +125,11 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
                     ),
                 ),
                 debounceTime(100),
+                // filter early, in case of false emissions like { 0,0 }
+                filter(([{ start, end }]) => this._isValidRange({ start, end })),
                 distinctUntilChanged(([list1], [list2]) => `${list1.start}${list1.end}` === `${list2.start}${list2.end}`),
-                map(([range, items]) => ({
-                    ...range,
-                    items,
-                })),
-                map(({ start, end, items }) => ({
+                filter(this._filterTouchedRange),
+                map(([{ start, end }, items]) => ({
                     ...this._adjustLoadingRange(start, end, this.buffer, items),
                     items,
                 })),
@@ -154,6 +153,13 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
         this._destroyed$.next();
         this._destroyed$.complete();
     }
+
+    private _filterTouchedRange = (
+        [{ start, end }, items]: [ListRange, VirtualScrollItem[] | ReadonlyArray<VirtualScrollItem>],
+    ) =>
+        items
+            .slice(start, end)
+            .some(({ loading }) => loading === VirtualScrollItemStatus.initial)
 
     private _isValidRange = ({ start, end }: ListRange) => end >= 0 && start >= 0 && end - start >= 0;
     private _reverseIndex({ start, end }: ListRange, count: number) {
