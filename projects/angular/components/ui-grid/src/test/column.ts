@@ -4,8 +4,12 @@ import * as faker from 'faker';
 import { of } from 'rxjs';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
-import { UiGridDropdownFilterDirective } from '../filters/ui-grid-dropdown-filter.directive';
-import { UiGridSearchFilterDirective } from '../filters/ui-grid-search-filter.directive';
+import {
+    UiGridDropdownFilterDirective,
+} from '../filters/ui-grid-dropdown-filter.directive';
+import {
+    UiGridSearchFilterDirective,
+} from '../filters/ui-grid-search-filter.directive';
 import { ITestEntity } from '../test/testEntity';
 
 export const generateColumn = () => {

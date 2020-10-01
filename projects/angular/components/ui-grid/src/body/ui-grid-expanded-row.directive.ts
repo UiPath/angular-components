@@ -13,12 +13,12 @@ import {
     selector: '[uiGridExpandedRow], ui-grid-expanded-row',
 })
 export class UiGridExpandedRowDirective {
-  /**
-   * @internal
-   * @ignore
-   */
-  @ContentChild(TemplateRef, {
-      static: true,
-  })
+    /**
+     * @internal
+     * @ignore
+     */
+    @ContentChild(TemplateRef, {
+        static: true,
+    })
     public html?: TemplateRef<any>;
 }

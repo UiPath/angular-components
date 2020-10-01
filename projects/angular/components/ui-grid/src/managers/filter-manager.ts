@@ -8,7 +8,9 @@ import {
     IDropdownOption,
     UiGridDropdownFilterDirective,
 } from '../filters/ui-grid-dropdown-filter.directive';
-import { UiGridSearchFilterDirective } from '../filters/ui-grid-search-filter.directive';
+import {
+    UiGridSearchFilterDirective,
+} from '../filters/ui-grid-search-filter.directive';
 import { UiGridHeaderDirective } from '../header/ui-grid-header.directive';
 import { IFilterModel } from '../models';
 

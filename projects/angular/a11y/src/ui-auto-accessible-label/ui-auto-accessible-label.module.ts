@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 
-import { UiAutoAccessibleLabelDirective } from './ui-auto-accessible-label.directive';
+import {
+    UiAutoAccessibleLabelDirective,
+} from './ui-auto-accessible-label.directive';
 
 @NgModule({
     declarations: [

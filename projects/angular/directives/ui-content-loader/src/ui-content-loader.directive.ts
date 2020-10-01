@@ -20,7 +20,9 @@ import {
     filter,
 } from 'rxjs/operators';
 
-import { UiContentSpinnerComponent } from './internal/ui-content-spinner.component';
+import {
+    UiContentSpinnerComponent,
+} from './internal/ui-content-spinner.component';
 
 @Directive({
     selector: '[uiContentLoading]',

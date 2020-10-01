@@ -1,4 +1,3 @@
-
 import {
     ComponentFactoryResolver,
     Directive,
@@ -11,7 +10,9 @@ import { MatButton } from '@angular/material/button';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { UiLoaderButtonDirective } from '@uipath/angular/directives/internal';
 
-import { UiButtonProgressSpinnerComponent } from './internal/ui-button-progress-spinner.component';
+import {
+    UiButtonProgressSpinnerComponent,
+} from './internal/ui-button-progress-spinner.component';
 
 export const enum SpinnerButtonClass {
     Base = 'ui-spinner-button',

@@ -12,4 +12,4 @@ describe('Service: UiSnackbarIntlService', () => {
         expect(service).toBeTruthy();
         expect(service.closeAriaLabel).toEqual('Close');
     });
- });
+});
