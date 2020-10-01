@@ -30,7 +30,9 @@ import {
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { VirtualScrollItemStatus } from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
+import {
+    VirtualScrollItemStatus,
+} from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
 
 import cloneDeep from 'lodash-es/cloneDeep';
 import isEqual from 'lodash-es/isEqual';

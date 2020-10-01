@@ -14,10 +14,10 @@ import { IGridDataEntry } from '../models';
     selector: '[uiGridRowConfig], ui-grid-row-config',
 })
 export class UiGridRowConfigDirective<T extends IGridDataEntry> {
-  /**
-   * Class function factory, used to apply `ngClass` on rows.
-   *
-   */
-  @Input()
+    /**
+     * Class function factory, used to apply `ngClass` on rows.
+     *
+     */
+    @Input()
     public ngClassFn: (entry: T) => Record<string, boolean> = (_) => ({} as Record<string, boolean>)
 }

@@ -51,7 +51,7 @@ describe('Component: UiGrid', () => {
             undefined, null, NaN,
         ].forEach(total => {
             it(`should announce new data after page change with unknown (${total}) total number of items`, () => {
-                pageChange$.next({...pageChange, length: total});
+                pageChange$.next({ ...pageChange, length: total });
                 data$.next(PAGE_DATA);
 
                 expect(announceSpy.calls.all()[0].args).toEqual([intl.loadingPage(PAGE_NO)]);

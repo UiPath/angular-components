@@ -12,11 +12,11 @@ import {
     selector: '[uiGridRowAction], ui-grid-row-action',
 })
 export class UiGridRowActionDirective {
-  /**
-   * @ignore
-   */
-  @ContentChild(TemplateRef, {
-      static: true,
-  })
+    /**
+     * @ignore
+     */
+    @ContentChild(TemplateRef, {
+        static: true,
+    })
     public html?: TemplateRef<any>;
 }

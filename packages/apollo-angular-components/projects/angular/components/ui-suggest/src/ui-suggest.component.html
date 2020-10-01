@@ -124,7 +124,8 @@
             <ng-container *ngTemplateOutlet="customValueTemplate; context: { $implicit: 'down' }">
             </ng-container>
 
-            <ng-container *cdkVirtualFor="let item of renderItems; let index = index; trackBy: trackById; templateCacheSize: disableTooltip ? 20 : 0">
+            <ng-container
+                          *cdkVirtualFor="let item of renderItems; let index = index; trackBy: trackById; templateCacheSize: disableTooltip ? 20 : 0">
                 <mat-list-item [class.active]="index === activeIndex"
                                [class.is-loading]="item.loading !== VirtualScrollItemStatus.loaded"
                                [class.readonly]="item.loading !== VirtualScrollItemStatus.loaded"

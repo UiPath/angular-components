@@ -43,7 +43,9 @@ import {
 } from 'rxjs/operators';
 
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
-import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
+import {
+    UiGridExpandedRowDirective,
+} from './body/ui-grid-expanded-row.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
