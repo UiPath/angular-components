@@ -9,11 +9,11 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    MAT_SNACK_BAR_DATA,
-    MAT_SNACK_BAR_DEFAULT_OPTIONS,
     MatSnackBar,
     MatSnackBarConfig,
     MatSnackBarRef,
+    MAT_SNACK_BAR_DATA,
+    MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 
 import { Observable } from 'rxjs';
@@ -48,6 +48,12 @@ interface ISnackBarAlert {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiSnackBarComponent {
+
+    constructor(
+        @Inject(MAT_SNACK_BAR_DATA)
+        public data: ISnackBarAlert,
+        public snackBarRef: MatSnackBarRef<UiSnackBarComponent>,
+    ) { }
     /**
      * @internal
      * @ignore
@@ -55,12 +61,6 @@ export class UiSnackBarComponent {
     public isPropertyString(property: string | TemplateRef<any>): property is string {
         return typeof property === 'string';
     }
-
-    constructor(
-        @Inject(MAT_SNACK_BAR_DATA)
-        public data: ISnackBarAlert,
-        public snackBarRef: MatSnackBarRef<UiSnackBarComponent>,
-    ) { }
 }
 
 export enum SnackBarType {
@@ -102,7 +102,6 @@ export const panelClass = (type: SnackBarType) =>
     providedIn: 'root',
 })
 export class UiSnackBarService {
-    private _ref?: MatSnackBarRef<UiSnackBarComponent>;
 
     /**
      * Display an info snackbar
@@ -128,6 +127,7 @@ export class UiSnackBarService {
      * @param duration How long to remain on the screen
     */
     public warning: SnackbarAction;
+    private _ref?: MatSnackBarRef<UiSnackBarComponent>;
 
     constructor(
         private _snackBar: MatSnackBar,

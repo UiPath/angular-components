@@ -19,9 +19,9 @@ export const ResizeManagerFactory =
             case ResizeStrategy.PassiveNeighbourPush:
                 console.warn(`The ${
                     ResizeStrategy[type]
-                } strategy is not yet supported. It will default to ${
+                    } strategy is not yet supported. It will default to ${
                     ResizeStrategy[ResizeStrategy.AggresiveNeighbourPush]
-                }`);
+                    }`);
                 return new AggresiveNeighbourPushResizer(grid);
             case ResizeStrategy.AggresiveNeighbourPush:
                 return new AggresiveNeighbourPushResizer(grid);

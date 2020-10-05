@@ -10,9 +10,9 @@ import {
  */
 export interface ISuggestValue extends VirtualScrollItem {
     /**
-  * Unique identifier associated to the entry.
-  *
-  */
+    * Unique identifier associated to the entry.
+    *
+    */
     id: number | string;
     /**
    * Text associated to the entry.

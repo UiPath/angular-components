@@ -25,7 +25,9 @@ import {
 } from '@uipath/angular/testing';
 
 import * as faker from 'faker';
-import { VirtualScrollItemStatus } from 'projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api';
+import {
+    VirtualScrollItemStatus,
+} from 'projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api';
 import {
     Observable,
     of,

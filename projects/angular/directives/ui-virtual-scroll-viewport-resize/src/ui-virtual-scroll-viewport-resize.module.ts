@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 
-import { UiVirtualScrollViewportResizeDirective } from './ui-virtual-scroll-viewport-resize.directive';
+import {
+    UiVirtualScrollViewportResizeDirective,
+} from './ui-virtual-scroll-viewport-resize.directive';
 
 @NgModule({
     declarations: [UiVirtualScrollViewportResizeDirective],

@@ -1,3 +1,8 @@
+# v10.0.0-rc.0 (2020-10-01)
+* **BREAKING CHANGE** Upgrade to Angular 10
+* **extensions** define recommended extensions.json
+* **virtual-scroll-range-loader** prevent range emit when raw is range is empty or touched
+
 # v9.0.7 (2020-06-16)
 * **grid** fix a11y issue on toggle visibility column reset button
 * **a11y** add automatic aria-label support
