@@ -260,65 +260,65 @@ import * as Clipboard from &#x27;clipboard&#x27;;
     selector: &#x27;[uiClipboard]&#x27;,
 })
 export class UiClipboardDirective implements OnInit, OnDestroy {
-  /**
-   * The element reference what will serve as a &#x60;copy&#x60; trigger.
-   *
-   */
-  @Input()
+    /**
+     * The element reference what will serve as a &#x60;copy&#x60; trigger.
+     *
+     */
+    @Input()
     public uiClipboard?: Element;
 
-  /**
-   * Event that emits when the content is copied succesfully to the clipboard.
-   *
-   */
-  @Output()
-  public clipboardSuccess: EventEmitter&lt;Clipboard.Event&gt; &#x3D; new EventEmitter();
+    /**
+     * Event that emits when the content is copied succesfully to the clipboard.
+     *
+     */
+    @Output()
+    public clipboardSuccess: EventEmitter&lt;Clipboard.Event&gt; &#x3D; new EventEmitter();
 
-  /**
-   * Event that emits when the content could not be copied to the clipboard.
-   *
-   */
-  @Output()
-  public clipboardError: EventEmitter&lt;Clipboard.Event&gt; &#x3D; new EventEmitter();
+    /**
+     * Event that emits when the content could not be copied to the clipboard.
+     *
+     */
+    @Output()
+    public clipboardError: EventEmitter&lt;Clipboard.Event&gt; &#x3D; new EventEmitter();
 
-  private _clipboard!: Clipboard;
+    private _clipboard!: Clipboard;
 
-  /**
-    * @ignore
-    */
-  constructor(private _eltRef: ElementRef) { }
+    /**
+      * @ignore
+      */
+    constructor(private _eltRef: ElementRef) { }
 
-  /**
-    * @ignore
-    */
-  ngOnInit() {
-      if (!this.uiClipboard) {
-          throw new Error(&#x27;Missing uiClipboard reference&#x27;);
-      }
+    /**
+      * @ignore
+      */
+    ngOnInit() {
+        if (!this.uiClipboard) {
+            throw new Error(&#x27;Missing uiClipboard reference&#x27;);
+        }
 
-      this._clipboard &#x3D; new Clipboard(this._eltRef.nativeElement, {
-          target: () &#x3D;&gt; {
-              return this.uiClipboard!;
-          },
-      });
+        this._clipboard &#x3D; new Clipboard(this._eltRef.nativeElement, {
+            target: () &#x3D;&gt; {
+                return this.uiClipboard!;
+            },
+        });
 
-      this._clipboard.on(&#x27;success&#x27;, (e) &#x3D;&gt; {
-          this.clipboardSuccess.emit(e);
-      });
+        this._clipboard.on(&#x27;success&#x27;, (e) &#x3D;&gt; {
+            this.clipboardSuccess.emit(e);
+        });
 
-      this._clipboard.on(&#x27;error&#x27;, (e) &#x3D;&gt; {
-          this.clipboardError.emit(e);
-      });
-  }
+        this._clipboard.on(&#x27;error&#x27;, (e) &#x3D;&gt; {
+            this.clipboardError.emit(e);
+        });
+    }
 
-  /**
-    * @ignore
-    */
-  ngOnDestroy() {
-      if (this._clipboard) {
-          this._clipboard.destroy();
-      }
-  }
+    /**
+      * @ignore
+      */
+    ngOnDestroy() {
+        if (this._clipboard) {
+            this._clipboard.destroy();
+        }
+    }
 }
 </code></pre>
     </div>

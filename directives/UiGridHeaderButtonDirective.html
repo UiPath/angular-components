@@ -201,28 +201,28 @@
     selector: &#x27;[uiHeaderButton], ui-header-button&#x27;,
 })
 export class UiGridHeaderButtonDirective {
-  /**
-   * Configure if the button is the grid main action, or a selection action.
-   *
-   */
-  @Input()
+    /**
+     * Configure if the button is the grid main action, or a selection action.
+     *
+     */
+    @Input()
     public type?: &#x27;action&#x27; | &#x27;main&#x27; | &#x27;inline&#x27;;
 
-  /**
-   * Configure if the button is visible or not.
-   *
-   */
-  @Input()
-  public visible &#x3D; true;
+    /**
+     * Configure if the button is visible or not.
+     *
+     */
+    @Input()
+    public visible &#x3D; true;
 
-  /**
-   * @internal
-   * @ignore
-   */
-  @ContentChild(TemplateRef, {
-      static: true,
-  })
-  public html?: TemplateRef&lt;any&gt;;
+    /**
+     * @internal
+     * @ignore
+     */
+    @ContentChild(TemplateRef, {
+        static: true,
+    })
+    public html?: TemplateRef&lt;any&gt;;
 }
 </code></pre>
     </div>

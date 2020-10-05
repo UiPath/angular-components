@@ -177,11 +177,11 @@ import { IGridDataEntry } from &#x27;../models&#x27;;
     selector: &#x27;[uiGridRowConfig], ui-grid-row-config&#x27;,
 })
 export class UiGridRowConfigDirective&lt;T extends IGridDataEntry&gt; {
-  /**
-   * Class function factory, used to apply &#x60;ngClass&#x60; on rows.
-   *
-   */
-  @Input()
+    /**
+     * Class function factory, used to apply &#x60;ngClass&#x60; on rows.
+     *
+     */
+    @Input()
     public ngClassFn: (entry: T) &#x3D;&gt; Record&lt;string, boolean&gt; &#x3D; (_) &#x3D;&gt; ({} as Record&lt;string, boolean&gt;)
 }
 </code></pre>

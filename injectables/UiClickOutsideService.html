@@ -207,7 +207,7 @@ export class UiClickOutsideService implements OnDestroy {
     * @ignore
     */
     constructor(
-    @Inject(DOCUMENT)
+        @Inject(DOCUMENT)
         document: any,
     ) {
         this.source &#x3D; fromEvent&lt;MouseEvent&gt;((document as Document).body, &#x27;click&#x27;, {
@@ -237,30 +237,30 @@ export class UiClickOutsideService implements OnDestroy {
     selector: &#x27;[uiClickOutside]&#x27;,
 })
 export class UiClickOutsideDirective {
-  /**
-   * Emits the original &#x60;MouseEvent&#x60; when the click occurs outside of the decorated element.
-   *
-   */
-  @Output()
+    /**
+     * Emits the original &#x60;MouseEvent&#x60; when the click occurs outside of the decorated element.
+     *
+     */
+    @Output()
     public uiClickOutside: Observable&lt;MouseEvent&gt;;
 
-  /**
-    * @ignore
-    */
-  constructor(
-      ref: ElementRef,
-      private _clickService: UiClickOutsideService,
-  ) {
-      const element: HTMLElement &#x3D; ref.nativeElement;
+    /**
+      * @ignore
+      */
+    constructor(
+        ref: ElementRef,
+        private _clickService: UiClickOutsideService,
+    ) {
+        const element: HTMLElement &#x3D; ref.nativeElement;
 
-      this.uiClickOutside &#x3D; this._clickService
-          .source
-          .pipe(
-              filter(ev &#x3D;&gt;
-                  !element.contains((ev.target as Element)),
-              ),
-          );
-  }
+        this.uiClickOutside &#x3D; this._clickService
+            .source
+            .pipe(
+                filter(ev &#x3D;&gt;
+                    !element.contains((ev.target as Element)),
+                ),
+            );
+    }
 }
 </code></pre>
     </div>

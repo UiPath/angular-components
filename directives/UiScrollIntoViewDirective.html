@@ -359,54 +359,54 @@ type Boundary &#x3D; &#x27;parent&#x27; | Element;
     selector: &#x27;[uiScrollIntoView]&#x27;,
 })
 export class UiScrollIntoViewDirective {
-  /**
-   * The boundary of the &#x60;scroll&#x60; effect.
-   *
-   */
-  @Input()
+    /**
+     * The boundary of the &#x60;scroll&#x60; effect.
+     *
+     */
+    @Input()
     public boundary: Boundary &#x3D; &#x27;parent&#x27;;
 
-  /**
-   * Configures if the decorated element should be scrolled into view.
-   * eg: &#x60;[uiScrollIntoView]&#x3D;&quot;isFocused&quot;&#x60;
-   *
-   */
-  @Input()
-  public set uiScrollIntoView(condition: boolean) {
-      this._zone.runOutsideAngular(() &#x3D;&gt; {
-          if (!condition) { return; }
-          merge(
-              this._zone.onMicrotaskEmpty,
-              this._zone.onStable,
-          ).
-              pipe(
-                  take(1),
-              ).subscribe(() &#x3D;&gt; {
-                  this.scrollIntoViewIfNeeded(
-                      this._element.nativeElement, {
-                          block: &#x27;start&#x27;,
-                          boundary: this.boundary &#x3D;&#x3D;&#x3D; &#x27;parent&#x27; ?
-                              this._element.nativeElement.parentElement :
-                              this.boundary,
-                      },
-                  );
-              });
-      });
-  }
+    /**
+     * Configures if the decorated element should be scrolled into view.
+     * eg: &#x60;[uiScrollIntoView]&#x3D;&quot;isFocused&quot;&#x60;
+     *
+     */
+    @Input()
+    public set uiScrollIntoView(condition: boolean) {
+        this._zone.runOutsideAngular(() &#x3D;&gt; {
+            if (!condition) { return; }
+            merge(
+                this._zone.onMicrotaskEmpty,
+                this._zone.onStable,
+            ).
+                pipe(
+                    take(1),
+                ).subscribe(() &#x3D;&gt; {
+                    this.scrollIntoViewIfNeeded(
+                        this._element.nativeElement, {
+                        block: &#x27;start&#x27;,
+                        boundary: this.boundary &#x3D;&#x3D;&#x3D; &#x27;parent&#x27; ?
+                            this._element.nativeElement.parentElement :
+                            this.boundary,
+                    },
+                    );
+                });
+        });
+    }
 
-  /**
-   * Method that scrolls to the the provided &#x60;target&#x60;.
-   *
-   */
-  public scrollIntoViewIfNeeded &#x3D; scrollIntoViewIfNeeded;
+    /**
+     * Method that scrolls to the the provided &#x60;target&#x60;.
+     *
+     */
+    public scrollIntoViewIfNeeded &#x3D; scrollIntoViewIfNeeded;
 
-  /**
-    * @ignore
-    */
-  constructor(
-      private _element: ElementRef,
-      private _zone: NgZone,
-  ) { }
+    /**
+      * @ignore
+      */
+    constructor(
+        private _element: ElementRef,
+        private _zone: NgZone,
+    ) { }
 }
 </code></pre>
     </div>

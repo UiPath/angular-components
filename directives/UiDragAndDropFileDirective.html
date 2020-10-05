@@ -654,249 +654,249 @@ import { isInternetExplorer } from &#x27;@uipath/angular/utilities&#x27;;
     selector: &#x27;[uiDragAndDropFile]&#x27;,
 })
 export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnDestroy {
-  /**
-   * The accepted &#x60;file-type&#x60;.
-   *
-   */
-  @Input()
+    /**
+     * The accepted &#x60;file-type&#x60;.
+     *
+     */
+    @Input()
     public fileType?: string;
 
-  /**
-   * The element reference that triggers file &#x60;browsing&#x60;.
-   *
-   */
-  @Input()
-  public fileBrowseRef?: Element;
+    /**
+     * The element reference that triggers file &#x60;browsing&#x60;.
+     *
+     */
+    @Input()
+    public fileBrowseRef?: Element;
 
-  /**
-   * The element reference that serve as a &#x60;clear&#x60; trigger for the selected files.
-   *
-   */
-  @Input()
-  public fileClearRef?: Element;
+    /**
+     * The element reference that serve as a &#x60;clear&#x60; trigger for the selected files.
+     *
+     */
+    @Input()
+    public fileClearRef?: Element;
 
-  /**
-   * Configures if the &#x60;file area&#x60; accepts multiple files.
-   *
-   */
-  @Input()
-  public multiple &#x3D; false;
+    /**
+     * Configures if the &#x60;file area&#x60; accepts multiple files.
+     *
+     */
+    @Input()
+    public multiple &#x3D; false;
 
-  /**
-   * Configures the &#x60;disabled&#x60; state of the &#x60;file area&#x60;.
-   *
-   */
-  @Input()
-  public disabled &#x3D; false;
+    /**
+     * Configures the &#x60;disabled&#x60; state of the &#x60;file area&#x60;.
+     *
+     */
+    @Input()
+    public disabled &#x3D; false;
 
-  /**
-   * An event that emits when the file selection state &#x60;changes&#x60;.
-   *
-   */
-  @Output()
-  public fileChange &#x3D; new EventEmitter&lt;File[]&gt;();
+    /**
+     * An event that emits when the file selection state &#x60;changes&#x60;.
+     *
+     */
+    @Output()
+    public fileChange &#x3D; new EventEmitter&lt;File[]&gt;();
 
-  /**
-   * An event that emits when the file selection is &#x60;cleared&#x60;.
-   *
-   */
-  @Output()
-  public fileClear &#x3D; new EventEmitter();
+    /**
+     * An event that emits when the file selection is &#x60;cleared&#x60;.
+     *
+     */
+    @Output()
+    public fileClear &#x3D; new EventEmitter();
 
-  @HostBinding(&#x27;class.file-dragging&#x27;)
-  protected _isDragging &#x3D; false;
+    @HostBinding(&#x27;class.file-dragging&#x27;)
+    protected _isDragging &#x3D; false;
 
-  private _disposalCallbacks: Array&lt;() &#x3D;&gt; void&gt; &#x3D; [];
-  private _fileInput: HTMLInputElement;
+    private _disposalCallbacks: Array&lt;() &#x3D;&gt; void&gt; &#x3D; [];
+    private _fileInput: HTMLInputElement;
 
-  /**
-    * @ignore
-    */
-  constructor(
-      private _elementRef: ElementRef,
-      private _renderer: Renderer2,
-  ) {
-      this._fileInput &#x3D; this._renderer.createElement(&#x27;input&#x27;) as HTMLInputElement;
-      this._renderer.setProperty(this._fileInput, &#x27;type&#x27;, &#x27;file&#x27;);
-      this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
-      this._renderer.setAttribute(this._fileInput, &#x27;hidden&#x27;, &#x27;&#x27;);
-      this._renderer.appendChild(this._elementRef.nativeElement, this._fileInput);
-  }
+    /**
+      * @ignore
+      */
+    constructor(
+        private _elementRef: ElementRef,
+        private _renderer: Renderer2,
+    ) {
+        this._fileInput &#x3D; this._renderer.createElement(&#x27;input&#x27;) as HTMLInputElement;
+        this._renderer.setProperty(this._fileInput, &#x27;type&#x27;, &#x27;file&#x27;);
+        this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
+        this._renderer.setAttribute(this._fileInput, &#x27;hidden&#x27;, &#x27;&#x27;);
+        this._renderer.appendChild(this._elementRef.nativeElement, this._fileInput);
+    }
 
-  /**
-   * @ignore
-   */
-  ngOnChanges(changes: SimpleChanges) {
-      if (changes.fileType) {
-          const fileType &#x3D; changes.fileType.currentValue;
-          this._renderer.setProperty(this._fileInput, &#x27;accept&#x27;, fileType || &#x27;&#x27;);
-      }
-  }
+    /**
+     * @ignore
+     */
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.fileType) {
+            const fileType &#x3D; changes.fileType.currentValue;
+            this._renderer.setProperty(this._fileInput, &#x27;accept&#x27;, fileType || &#x27;&#x27;);
+        }
+    }
 
-  /**
-    * @ignore
-    */
-  ngAfterViewInit() {
-      if (this.multiple) {
-          this._renderer.setProperty(this._fileInput, &#x27;multiple&#x27;, &#x27;true&#x27;);
-      }
+    /**
+      * @ignore
+      */
+    ngAfterViewInit() {
+        if (this.multiple) {
+            this._renderer.setProperty(this._fileInput, &#x27;multiple&#x27;, &#x27;true&#x27;);
+        }
 
-      this._preventEnterOnChildren(this._elementRef.nativeElement);
+        this._preventEnterOnChildren(this._elementRef.nativeElement);
 
-      if (!this.fileBrowseRef) {
-          this.fileBrowseRef &#x3D; this._elementRef.nativeElement;
-      }
+        if (!this.fileBrowseRef) {
+            this.fileBrowseRef &#x3D; this._elementRef.nativeElement;
+        }
 
-      this._renderer.setStyle(this.fileBrowseRef, &#x27;cursor&#x27;, &#x27;pointer&#x27;);
+        this._renderer.setStyle(this.fileBrowseRef, &#x27;cursor&#x27;, &#x27;pointer&#x27;);
 
-      const browse &#x3D; this._renderer
-          .listen(this.fileBrowseRef, &#x27;click&#x27;, () &#x3D;&gt; {
-              if (this.disabled) { return; }
-              this._fileInput.click();
-          });
-      this._disposalCallbacks.push(browse);
+        const browse &#x3D; this._renderer
+            .listen(this.fileBrowseRef, &#x27;click&#x27;, () &#x3D;&gt; {
+                if (this.disabled) { return; }
+                this._fileInput.click();
+            });
+        this._disposalCallbacks.push(browse);
 
-      const change &#x3D; this._renderer.listen(this._fileInput, &#x27;change&#x27;, (ev) &#x3D;&gt; {
-          this._preventAll(ev);
-          if (this.disabled) { return; }
-          const target &#x3D; ev.target as HTMLInputElement;
-          if (target.files) {
-              this._emitFiles(target.files);
-              this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
-          }
-      });
-      this._disposalCallbacks.push(change);
+        const change &#x3D; this._renderer.listen(this._fileInput, &#x27;change&#x27;, (ev) &#x3D;&gt; {
+            this._preventAll(ev);
+            if (this.disabled) { return; }
+            const target &#x3D; ev.target as HTMLInputElement;
+            if (target.files) {
+                this._emitFiles(target.files);
+                this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
+            }
+        });
+        this._disposalCallbacks.push(change);
 
-      if (this.fileClearRef) {
-          const clear &#x3D; this._renderer
-              .listen(this.fileClearRef, &#x27;click&#x27;, () &#x3D;&gt; {
-                  if (this.disabled) { return; }
-                  this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
-                  this.fileClear.emit();
-              });
-          this._disposalCallbacks.push(clear);
-      }
-  }
+        if (this.fileClearRef) {
+            const clear &#x3D; this._renderer
+                .listen(this.fileClearRef, &#x27;click&#x27;, () &#x3D;&gt; {
+                    if (this.disabled) { return; }
+                    this._renderer.setProperty(this._fileInput, &#x27;value&#x27;, null);
+                    this.fileClear.emit();
+                });
+            this._disposalCallbacks.push(clear);
+        }
+    }
 
-  /**
-    * @ignore
-    */
-  ngOnDestroy() {
-      this._disposalCallbacks.forEach(dispose &#x3D;&gt; {
-          dispose();
-      });
-  }
+    /**
+      * @ignore
+      */
+    ngOnDestroy() {
+        this._disposalCallbacks.forEach(dispose &#x3D;&gt; {
+            dispose();
+        });
+    }
 
-  /**
-   * Reacts to &#x60;drop&#x60; events.
-   *
-   * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;drop&#x60;.
-   */
-  @HostListener(&#x27;drop&#x27;, [&#x27;$event&#x27;])
-  protected _onDrop(ev: DragEvent) {
-      this._preventAll(ev);
-      if (this.disabled) { return; }
-      this._isDragging &#x3D; false;
-      this._emitFiles(ev.dataTransfer!.files);
-  }
+    /**
+     * Reacts to &#x60;drop&#x60; events.
+     *
+     * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;drop&#x60;.
+     */
+    @HostListener(&#x27;drop&#x27;, [&#x27;$event&#x27;])
+    protected _onDrop(ev: DragEvent) {
+        this._preventAll(ev);
+        if (this.disabled) { return; }
+        this._isDragging &#x3D; false;
+        this._emitFiles(ev.dataTransfer!.files);
+    }
 
-  /**
-   * Marks the &#x60;state&#x60; as &#x60;dragging&#x60; when a &#x60;dragover&#x60; event occurs.
-   *
-   * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;dragover&#x60;.
-   */
-  @HostListener(&#x27;dragover&#x27;, [&#x27;$event&#x27;])
-  protected _onDragOver(ev: DragEvent) {
-      this._preventAll(ev);
-    if (
-      this.disabled ||
-      !this.multiple &amp;&amp;
-      ev.dataTransfer &amp;&amp;
-      ev.dataTransfer.items &amp;&amp;
-      ev.dataTransfer.items.length &gt; 1
-    ) { return; }
-      this._isDragging &#x3D; true;
-  }
+    /**
+     * Marks the &#x60;state&#x60; as &#x60;dragging&#x60; when a &#x60;dragover&#x60; event occurs.
+     *
+     * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;dragover&#x60;.
+     */
+    @HostListener(&#x27;dragover&#x27;, [&#x27;$event&#x27;])
+    protected _onDragOver(ev: DragEvent) {
+        this._preventAll(ev);
+        if (
+            this.disabled ||
+            !this.multiple &amp;&amp;
+            ev.dataTransfer &amp;&amp;
+            ev.dataTransfer.items &amp;&amp;
+            ev.dataTransfer.items.length &gt; 1
+        ) { return; }
+        this._isDragging &#x3D; true;
+    }
 
-  /**
-   * Clears the &#x60;dragging&#x60; &#x60;state&#x60; when a &#x60;dragleave&#x60; event occurs.
-   *
-   * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;dragover&#x60;.
-   */
-  @HostListener(&#x27;dragleave&#x27;, [&#x27;$event&#x27;])
-  protected _onDragLeave(ev: DragEvent) {
-      this._preventAll(ev);
-      if (this.disabled) { return; }
-      this._isDragging &#x3D; false;
-  }
+    /**
+     * Clears the &#x60;dragging&#x60; &#x60;state&#x60; when a &#x60;dragleave&#x60; event occurs.
+     *
+     * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;dragover&#x60;.
+     */
+    @HostListener(&#x27;dragleave&#x27;, [&#x27;$event&#x27;])
+    protected _onDragLeave(ev: DragEvent) {
+        this._preventAll(ev);
+        if (this.disabled) { return; }
+        this._isDragging &#x3D; false;
+    }
 
-  /**
-   * Clears the &#x60;dragging&#x60; &#x60;state&#x60; when a &#x60;dragleave&#x60; event occurs.
-   *
-   * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;dragend&#x60;.
-   */
-  @HostListener(&#x27;dragend&#x27;)
-  protected _onDragEnd() {
-      if (this.disabled) { return; }
-      this._isDragging &#x3D; false;
-  }
+    /**
+     * Clears the &#x60;dragging&#x60; &#x60;state&#x60; when a &#x60;dragleave&#x60; event occurs.
+     *
+     * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;dragend&#x60;.
+     */
+    @HostListener(&#x27;dragend&#x27;)
+    protected _onDragEnd() {
+        if (this.disabled) { return; }
+        this._isDragging &#x3D; false;
+    }
 
-  /**
-   * Prevents weird flickering &#x60;cross-browser&#x60;.
-   *
-   * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;dragenter&#x60;.
-   */
-  @HostListener(&#x27;dragenter&#x27;, [&#x27;$event&#x27;])
-  protected _onDragEnter(ev: DragEvent) {
-      this._preventAll(ev);
-      if (this.disabled) { return; }
-  }
+    /**
+     * Prevents weird flickering &#x60;cross-browser&#x60;.
+     *
+     * @param ev The &#x60;DragEvent&#x60; data associated to the &#x60;dragenter&#x60;.
+     */
+    @HostListener(&#x27;dragenter&#x27;, [&#x27;$event&#x27;])
+    protected _onDragEnter(ev: DragEvent) {
+        this._preventAll(ev);
+        if (this.disabled) { return; }
+    }
 
-  private _emitFiles(files: FileList) {
-      if (
-          !files ||
-      !files.length ||
-      this.disabled
-      ) { return; }
+    private _emitFiles(files: FileList) {
+        if (
+            !files ||
+            !files.length ||
+            this.disabled
+        ) { return; }
 
-      const acceptedExtensions &#x3D; (this.fileType ?? &#x27;&#x27;)
-          .split(&#x27;,&#x27;)
-          .map(e &#x3D;&gt; e.trim().toLowerCase());
-      const isAccepted &#x3D; (file: File) &#x3D;&gt; this.fileType
-          ? acceptedExtensions.some(extension &#x3D;&gt; file.name.toLowerCase().endsWith(extension))
-          : true;
-      const emittedFiles &#x3D; Array.from(files).filter(isAccepted);
+        const acceptedExtensions &#x3D; (this.fileType ?? &#x27;&#x27;)
+            .split(&#x27;,&#x27;)
+            .map(e &#x3D;&gt; e.trim().toLowerCase());
+        const isAccepted &#x3D; (file: File) &#x3D;&gt; this.fileType
+            ? acceptedExtensions.some(extension &#x3D;&gt; file.name.toLowerCase().endsWith(extension))
+            : true;
+        const emittedFiles &#x3D; Array.from(files).filter(isAccepted);
 
-    if (
-      !emittedFiles.length ||
-      emittedFiles.length &gt; 1 &amp;&amp; !this.multiple
-    ) { return; }
+        if (
+            !emittedFiles.length ||
+            emittedFiles.length &gt; 1 &amp;&amp; !this.multiple
+        ) { return; }
 
-      this.fileChange.emit(emittedFiles);
-  }
+        this.fileChange.emit(emittedFiles);
+    }
 
-  private _preventEnterOnChildren(element: Element) {
-      if (!isInternetExplorer()) { return; }
+    private _preventEnterOnChildren(element: Element) {
+        if (!isInternetExplorer()) { return; }
 
-      if (!!element.children.length) {
-          const children: Element[] &#x3D; Array.from(element.children);
+        if (!!element.children.length) {
+            const children: Element[] &#x3D; Array.from(element.children);
 
-          for (const child of children) {
-              const dragenter &#x3D; this._renderer.listen(child, &#x27;dragenter&#x27;, this._preventAll);
-              const dragleave &#x3D; this._renderer.listen(child, &#x27;dragleave&#x27;, this._preventAll);
+            for (const child of children) {
+                const dragenter &#x3D; this._renderer.listen(child, &#x27;dragenter&#x27;, this._preventAll);
+                const dragleave &#x3D; this._renderer.listen(child, &#x27;dragleave&#x27;, this._preventAll);
 
-              this._disposalCallbacks.push(
-                  dragenter,
-                  dragleave,
-              );
-          }
-      }
-  }
+                this._disposalCallbacks.push(
+                    dragenter,
+                    dragleave,
+                );
+            }
+        }
+    }
 
-  private _preventAll(ev: Event) {
-      ev.preventDefault();
-      ev.stopPropagation();
-  }
+    private _preventAll(ev: Event) {
+        ev.preventDefault();
+        ev.stopPropagation();
+    }
 }
 </code></pre>
     </div>
