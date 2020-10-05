@@ -1,0 +1,27 @@
+{
+    "groupRules": [
+        {
+            "flag": "scripts",
+            "sort": {
+                "paths": "none",
+                "names": "none"
+            }
+        },
+        "^[@]",
+        {},
+        "^[.]"
+    ],
+    "sortRules": {
+        "paths": [
+            "aA",
+            "_"
+        ],
+        "names": [
+            "aA",
+            "_"
+        ]
+    },
+    "tabSize": 4,
+    "quoteMark": "single",
+    "trailingComma": "multiLine"
+}

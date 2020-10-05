@@ -1,9 +1,9 @@
 export {
-    SnackBarType,
     SnackbarAction,
-    UiSnackBarService,
-    UiSnackBarComponent,
+    SnackBarType,
     UiMatSnackBarConfig,
+    UiSnackBarComponent,
+    UiSnackBarService,
     UI_MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from './ui-snackbar.component';
 

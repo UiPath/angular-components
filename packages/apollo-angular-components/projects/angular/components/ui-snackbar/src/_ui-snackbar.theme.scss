@@ -1,33 +1,50 @@
 $light-gray: rgb(234, 238, 240);
 $dark-gray: rgb(51, 51, 51);
-$red: rgb(207,41,41);
+$red: rgb(207, 41, 41);
 $dark-orange: rgb(255, 99, 37);
 $green: rgb(124, 199, 108);
 
-$default-success: ('text': $light-gray, 'background': mix($green, $dark-gray, 80));
-$default-warning: ('text':  $light-gray, 'background': mix($dark-orange, $dark-gray, 80));
-$default-error: ('text':  $light-gray, 'background': mix($red, $dark-gray, 80));
-$default-info: ('text': null, 'background': null);
-$default-snackbar-theme: ('success': $default-success, 'warning': $default-warning, 'error': $default-error, 'info': $default-info);
+$default-success: (
+    "text": $light-gray,
+    "background": mix($green, $dark-gray, 80),
+);
+$default-warning: (
+    "text": $light-gray,
+    "background": mix($dark-orange, $dark-gray, 80),
+);
+$default-error: (
+    "text": $light-gray,
+    "background": mix($red, $dark-gray, 80),
+);
+$default-info: (
+    "text": null,
+    "background": null,
+);
+$default-snackbar-theme: (
+    "success": $default-success,
+    "warning": $default-warning,
+    "error": $default-error,
+    "info": $default-info,
+);
 
 @mixin ui-snackbar-theme($theme, $snackbar-theme) {
     @if $snackbar-theme == null {
         $snackbar-theme: $default-snackbar-theme;
     }
 
-    $success: map-get($snackbar-theme, 'success');
-    $warning: map-get($snackbar-theme, 'warning');
-    $error: map-get($snackbar-theme, 'error');
-    $info: map-get($snackbar-theme, 'info');
+    $success: map-get($snackbar-theme, "success");
+    $warning: map-get($snackbar-theme, "warning");
+    $error: map-get($snackbar-theme, "error");
+    $info: map-get($snackbar-theme, "info");
 
-    $success-text-color: map-get($success, 'text');
-    $success-background-color: map-get($success, 'background');
-    $warning-text-color: map-get($warning, 'text');
-    $warning-background-color: map-get($warning, 'background');
-    $error-text-color: map-get($error, 'text');
-    $error-background-color: map-get($error, 'background');
-    $info-text-color: map-get($info, 'text');
-    $info-background-color: map-get($info, 'background');
+    $success-text-color: map-get($success, "text");
+    $success-background-color: map-get($success, "background");
+    $warning-text-color: map-get($warning, "text");
+    $warning-background-color: map-get($warning, "background");
+    $error-text-color: map-get($error, "text");
+    $error-background-color: map-get($error, "background");
+    $info-text-color: map-get($info, "text");
+    $info-background-color: map-get($info, "background");
 
     .ui-snackbar {
         &-success,

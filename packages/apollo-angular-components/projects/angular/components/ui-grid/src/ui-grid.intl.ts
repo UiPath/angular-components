@@ -1,4 +1,7 @@
-import { OnDestroy } from '@angular/core';
+import {
+    Injectable,
+    OnDestroy,
+} from '@angular/core';
 
 import { Subject } from 'rxjs';
 
@@ -9,6 +12,7 @@ import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
  *
  * @export
  */
+@Injectable()
 export class UiGridIntl implements OnDestroy {
     /**
      * Notify if changes have occured that require that the labels be updated.
@@ -106,7 +110,7 @@ export class UiGridIntl implements OnDestroy {
      * @param count The total selection count.
      */
     public translateMultiPageSelectionCount =
-    (count: number) => `You have selected ${count} items.`
+        (count: number) => `You have selected ${count} items.`
 
     /**
      * Live announcer page loaded state notification.
@@ -137,7 +141,7 @@ export class UiGridIntl implements OnDestroy {
      * @param option The current dropdown option.
      */
     public translateDropdownOption =
-    (option: IDropdownOption) => option.label
+        (option: IDropdownOption) => option.label
 
     /**
      * Live announcer sort ascending notification.

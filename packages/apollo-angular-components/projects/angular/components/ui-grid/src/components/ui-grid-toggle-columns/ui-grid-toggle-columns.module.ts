@@ -6,7 +6,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UiAutoAccessibleLabelModule } from '@uipath/angular/a11y';
 
-import { UiGridToggleColumnsComponent } from './ui-grid-toggle-columns.component';
+import {
+    UiGridToggleColumnsComponent,
+} from './ui-grid-toggle-columns.component';
 
 @NgModule({
     imports: [

@@ -1,5 +1,7 @@
 import { isDevMode } from '@angular/core';
-import { VirtualScrollItemStatus } from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
+import {
+    VirtualScrollItemStatus,
+} from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
 
 import cloneDeep from 'lodash-es/cloneDeep';
 import sortBy from 'lodash-es/sortBy';

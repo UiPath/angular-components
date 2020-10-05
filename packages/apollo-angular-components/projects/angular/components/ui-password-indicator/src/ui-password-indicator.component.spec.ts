@@ -18,7 +18,9 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { UiPasswordIndicatorComponent } from './ui-password-indicator.component';
+import {
+    UiPasswordIndicatorComponent,
+} from './ui-password-indicator.component';
 import { UiPasswordComplexityIntl } from './ui-password-indicator.intl';
 import { UiPasswordIndicatorModule } from './ui-password-indicator.module';
 import { complexityValidator } from './ui-password-indicator.validator';

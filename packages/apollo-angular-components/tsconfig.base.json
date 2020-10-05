@@ -1,0 +1,80 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "module": "es2020",
+        "moduleResolution": "node",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitAny": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "importHelpers": true,
+        "target": "es2015",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2018",
+            "dom"
+        ],
+        "paths": {
+            "@uipath/angular/a11y": [
+                "./projects/angular/a11y/src/public_api.ts"
+            ],
+            "@uipath/angular/components/ui-suggest": [
+                "./projects/angular/components/ui-suggest/src/public_api.ts"
+            ],
+            "@uipath/angular/components/ui-grid": [
+                "./projects/angular/components/ui-grid/src/public_api.ts"
+            ],
+            "@uipath/angular/utilities": [
+                "./projects/angular/utilities/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/internal": [
+                "projects/angular/directives/internal/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-autofocus": [
+                "projects/angular/directives/ui-autofocus/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-clipboard": [
+                "projects/angular/directives/ui-clipboard/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-drag-and-drop-file": [
+                "projects/angular/directives/ui-drag-and-drop-file/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-scroll-into-view": [
+                "projects/angular/directives/ui-scroll-into-view/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-virtual-scroll-range-loader": [
+                "projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-click-outside": [
+                "projects/angular/directives/ui-click-outside/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-dateformat": [
+                "projects/angular/directives/ui-dateformat/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-ng-let": [
+                "projects/angular/directives/ui-ng-let/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-secondformat": [
+                "projects/angular/directives/ui-secondformat/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-virtual-scroll-viewport-resize": [
+                "projects/angular/directives/ui-virtual-scroll-viewport-resize/src/public_api.ts"
+            ],
+            "@uipath/angular/testing": [
+                "./projects/angular/testing/src/public_api.ts"
+            ],
+            "@uipath/angular/pipes": [
+                "./projects/angular/pipes/src/public_api.ts"
+            ],
+        }
+    }
+}

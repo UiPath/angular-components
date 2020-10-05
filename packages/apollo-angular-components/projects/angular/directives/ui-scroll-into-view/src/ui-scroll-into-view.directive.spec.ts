@@ -15,12 +15,12 @@ import { UiScrollIntoViewDirective } from './ui-scroll-into-view.directive';
     template: `<div [uiScrollIntoView]="editing"></div>`,
 })
 class TestScrollIntoViewComponent {
-  @ViewChild(UiScrollIntoViewDirective, {
-      static: true,
-  })
+    @ViewChild(UiScrollIntoViewDirective, {
+        static: true,
+    })
     public directive!: UiScrollIntoViewDirective;
 
-  public editing = false;
+    public editing = false;
 }
 
 describe('Directive: ScrollIntoView', () => {

@@ -19,8 +19,8 @@ import {
     DisplayType,
     IDateFormatOptions,
     resolveTimezone,
-    UI_DATEFORMAT_OPTIONS,
     UiDateFormatDirective,
+    UI_DATEFORMAT_OPTIONS,
 } from './ui-dateformat.directive';
 
 const defaultDateFormat = 'L LTS';
