@@ -3,13 +3,10 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
     "types": [
-      "jasmine",
-      "jasmine_dom_matchers",
       "node"
     ]
   },
   "files": [
-    "./test.ts"
   ],
   "include": [
     "**/test/*.ts",

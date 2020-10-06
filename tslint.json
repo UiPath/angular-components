@@ -8,11 +8,6 @@
   "extends": [
     "rxjs-tslint-rules"
   ],
-  "linterOptions": {
-    "exclude": [
-      "./projects/angular/test.ts"
-    ]
-  },
   "rules": {
     "arrow-return-shorthand": true,
     "callable-types": true,
