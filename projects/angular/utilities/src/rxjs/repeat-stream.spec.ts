@@ -30,7 +30,7 @@ describe('Util(rxjs): repeatStream', () => {
         .forEach(repeat => {
             REPEAT_INTERVAL_LIST
                 .forEach(interval => {
-                    it(`should ${repeat} times at an interval of ${interval}`, fakeAsync((done: DoneFn) => {
+                    it(`should ${repeat} times at an interval of ${interval}`, fakeAsync((done: any) => {
                         const callbacks = {
                             emission: (count: number) => expect(count).toEqual(emissionCount),
                         };

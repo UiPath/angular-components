@@ -131,11 +131,7 @@ describe('Component: UiGrid', () => {
                                 const column = columns.find(c => c.property === filter.property);
                                 expect(column).toBeDefined();
 
-                                expect(filter.method).toEqual(column!.method!, {
-                                    column,
-                                    filter,
-                                    msg: 'The filter associated to the requested column is invalid!',
-                                });
+                                expect(filter.method).toEqual(column!.method!);
                             });
                         });
 

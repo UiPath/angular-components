@@ -21,22 +21,6 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/angular/test.ts",
-            "tsConfig": "projects/angular/tsconfig.spec.json",
-            "karmaConfig": "projects/angular/karma.conf.js",
-            "codeCoverageExclude": [
-              "**/test/**/*",
-              "**/testing/**/*",
-              "**/internal/**/*"
-            ],
-            "styles": [
-              "test.theme.scss"
-            ]
-          }
-        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {

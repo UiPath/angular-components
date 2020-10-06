@@ -11,42 +11,42 @@ const EDGE_44 = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (K
 
 describe('Util(browser): isInternetExplorer', () => {
     it('should identify IE10', () => {
-        const userAgentSpy = spyOnProperty(window.navigator, 'userAgent', 'get');
+        const userAgentSpy = jest.spyOn(window.navigator, 'userAgent', 'get');
         userAgentSpy.and.returnValue(IE_10);
 
         expect(isInternetExplorer()).toEqual(true);
     });
 
     it('should identify IE11', () => {
-        const userAgentSpy = spyOnProperty(window.navigator, 'userAgent', 'get');
+        const userAgentSpy = jest.spyOn(window.navigator, 'userAgent', 'get');
         userAgentSpy.and.returnValue(IE_11);
 
         expect(isInternetExplorer()).toEqual(true);
     });
 
     it('should NOT identify Chrome', () => {
-        const userAgentSpy = spyOnProperty(window.navigator, 'userAgent', 'get');
+        const userAgentSpy = jest.spyOn(window.navigator, 'userAgent', 'get');
         userAgentSpy.and.returnValue(CHROME_74);
 
         expect(isInternetExplorer()).toEqual(false);
     });
 
     it('should NOT identify Firefox', () => {
-        const userAgentSpy = spyOnProperty(window.navigator, 'userAgent', 'get');
+        const userAgentSpy = jest.spyOn(window.navigator, 'userAgent', 'get');
         userAgentSpy.and.returnValue(FIREFOX_67);
 
         expect(isInternetExplorer()).toEqual(false);
     });
 
     it('should NOT identify Edge Chromium', () => {
-        const userAgentSpy = spyOnProperty(window.navigator, 'userAgent', 'get');
+        const userAgentSpy = jest.spyOn(window.navigator, 'userAgent', 'get');
         userAgentSpy.and.returnValue(EDGE_76);
 
         expect(isInternetExplorer()).toEqual(false);
     });
 
     it('should NOT identify Edge', () => {
-        const userAgentSpy = spyOnProperty(window.navigator, 'userAgent', 'get');
+        const userAgentSpy = jest.spyOn(window.navigator, 'userAgent', 'get');
         userAgentSpy.and.returnValue(EDGE_44);
 
         expect(isInternetExplorer()).toEqual(false);

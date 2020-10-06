@@ -21,10 +21,10 @@ describe('Component: UiGrid', () => {
         const sort$ = new Subject<ISortModel<{}>>();
 
         let announcer: LiveAnnouncerManager<{}>;
-        let announceSpy: jasmine.Spy<InferableFunction>;
+        let announceSpy: jest.Mock<any, any>;
 
         beforeEach(() => {
-            announceSpy = jasmine.createSpy();
+            announceSpy = jest.fn();
             // tslint:disable-next-line: no-unused-expression
             announcer = new LiveAnnouncerManager(announceSpy, intl, data$, sort$, refresh$, pageChange$);
         });
@@ -43,8 +43,8 @@ describe('Component: UiGrid', () => {
             pageChange$.next(pageChange);
             data$.next(PAGE_DATA);
 
-            expect(announceSpy.calls.all()[0].args).toEqual([intl.loadingPage(PAGE_NO)]);
-            expect(announceSpy.calls.all()[1].args).toEqual([intl.loadedPage(PAGE_NO, PAGE_SIZE, TOTAL_ITEMS)]);
+            expect(announceSpy.mock.calls[0].args).toEqual([intl.loadingPage(PAGE_NO)]);
+            expect(announceSpy.mock.calls[1].args).toEqual([intl.loadedPage(PAGE_NO, PAGE_SIZE, TOTAL_ITEMS)]);
         });
 
         [
@@ -54,8 +54,8 @@ describe('Component: UiGrid', () => {
                 pageChange$.next({ ...pageChange, length: total });
                 data$.next(PAGE_DATA);
 
-                expect(announceSpy.calls.all()[0].args).toEqual([intl.loadingPage(PAGE_NO)]);
-                expect(announceSpy.calls.all()[1].args).toEqual([intl.loadedPage(PAGE_NO, PAGE_SIZE)]);
+                expect(announceSpy.mock.calls[0].args).toEqual([intl.loadingPage(PAGE_NO)]);
+                expect(announceSpy.mock.calls[1].args).toEqual([intl.loadedPage(PAGE_NO, PAGE_SIZE)]);
             });
         });
 

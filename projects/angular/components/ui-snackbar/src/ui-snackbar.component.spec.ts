@@ -330,7 +330,7 @@ describe('Service: UiSnackBarService', () => {
 
         const snack = getSnack();
 
-        expect(snack!.querySelectorAll('a').length).toEqual(0, 'an anchor creeped into the message');
-        expect(snack!.querySelectorAll('img').length).toEqual(0, 'an img creeped into the message');
+        expect(snack!.querySelectorAll('a').length).toEqual(0);
+        expect(snack!.querySelectorAll('img').length).toEqual(0);
     });
 });

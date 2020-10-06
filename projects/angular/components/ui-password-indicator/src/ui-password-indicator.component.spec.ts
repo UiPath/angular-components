@@ -154,7 +154,7 @@ describe('Component: UiPasswordIndicator', () => {
 
                 ruleList.forEach((rule, idx) => {
                     const ruleKey = ruleKeys[idx];
-                    expect(rule.nativeElement).toHaveAttr('data-rule-name', ruleKey);
+                    expect(rule.nativeElement).toHaveAttribute('data-rule-name', ruleKey);
                     expect(rule.nativeElement).toHaveClass('ui-password-rule-invalid');
 
                     const label = getLabel(rule);

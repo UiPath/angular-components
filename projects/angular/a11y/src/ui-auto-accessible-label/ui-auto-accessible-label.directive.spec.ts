@@ -65,7 +65,7 @@ function describeTestsFor(buttonType: ButtonType) {
 
     describe(`for ${buttonType}`, () => {
         const getButton = (fixture: ComponentFixture<unknown>) => fixture.debugElement.query(By.css('button'));
-        let warn: jasmine.Spy<Console['warn']>;
+        let warn: jest.SpyInstance;
 
         const createComponent: TestBed['createComponent'] = component => {
             TestBed.configureTestingModule({
@@ -88,7 +88,7 @@ function describeTestsFor(buttonType: ButtonType) {
                 ],
             });
 
-            warn = spyOn(console, 'warn');
+            warn = jest.spyOn(console, 'warn');
         });
 
         it(`should set the button's accessible label to the tooltip's content`, fakeAsync(() => {
@@ -99,17 +99,19 @@ function describeTestsFor(buttonType: ButtonType) {
             const button = getButton(fixture).nativeElement;
 
             fixture.detectChanges();
+            const input = getByTestId('element-to-focus');
 
             expect(warn).not.toHaveBeenCalled();
-            expect(button).not.toHaveAttr('aria-label');
+            expect(toHaveFocus('link')).not.toHaveFocus();
+            expect(button).not.toHaveAttribute('aria-label');
 
             tick(tooltipDelay - 1);
             fixture.detectChanges();
-            expect(button).not.toHaveAttr('aria-label');
+            expect(button).not.toHaveAttribute('aria-label');
 
             tick(1);
             fixture.detectChanges();
-            expect(button).toHaveAttr('aria-label', tooltip);
+            expect(button).toHaveAttribute('aria-label', tooltip);
 
             fixture.destroy();
         }));
@@ -121,7 +123,7 @@ function describeTestsFor(buttonType: ButtonType) {
             fixture.detectChanges();
 
             expect(warn).toHaveBeenCalledWith(MAT_TOOLTIP_MISSING_WARNING, button);
-            expect(button).not.toHaveAttr('aria-label');
+            expect(button).not.toHaveAttribute('aria-label');
 
             fixture.destroy();
         });
@@ -135,11 +137,11 @@ function describeTestsFor(buttonType: ButtonType) {
             fixture.detectChanges();
 
             expect(warn).not.toHaveBeenCalled();
-            expect(button).not.toHaveAttr('aria-label');
+            expect(button).not.toHaveAttribute('aria-label');
 
             fixture.componentInstance.ariaLabel = ariaLabel;
             fixture.detectChanges();
-            expect(button).toHaveAttr('aria-label', ariaLabel);
+            expect(button).toHaveAttribute('aria-label', ariaLabel);
 
             fixture.destroy();
         }));

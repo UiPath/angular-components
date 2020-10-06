@@ -74,7 +74,7 @@
             ],
             "@uipath/angular/pipes": [
                 "./projects/angular/pipes/src/public_api.ts"
-            ],
+            ]
         }
     }
 }
