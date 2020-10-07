@@ -36,6 +36,7 @@
     "build:prod": "npm-run-all lint build build:theme build:readme",
     "test:watch": "ng test",
     "test:lib": "jest",
+    "test:lib2": "jest --testRegex ui-password-toggle[.]component[.]spec[.]ts",
     "test:headless": "ng test --watch=false --browsers ChromeHeadless",
     "test:coverage": "ng test --code-coverage --watch=false --browsers ChromeHeadless",
     "lint": "ng lint",

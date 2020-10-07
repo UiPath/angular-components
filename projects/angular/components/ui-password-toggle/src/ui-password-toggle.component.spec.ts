@@ -58,7 +58,8 @@ export class TestPasswordToggleIntl extends UiPasswordToggleIntl {
     }
 }
 
-describe('Component: UiPasswordToggle', () => {
+// tslint:disable-next-line: no-focused-tests
+fdescribe('Component: UiPasswordToggle', () => {
     let fixture: ComponentFixture<TestHostComponent>;
     let component: TestHostComponent;
     let intl: TestPasswordToggleIntl;

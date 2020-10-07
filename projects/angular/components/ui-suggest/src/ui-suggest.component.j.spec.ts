@@ -24,10 +24,10 @@ import {
     Key,
 } from '@uipath/angular/testing';
 
-import * as faker from 'faker';
 import {
     VirtualScrollItemStatus,
-} from 'projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api';
+} from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
+import faker from 'faker';
 import {
     Observable,
     of,
@@ -52,6 +52,8 @@ import { UiSuggestComponent } from './ui-suggest.component';
 import { UiSuggestModule } from './ui-suggest.module';
 
 type SuggestProperties = 'disabled' | 'readonly';
+
+HTMLElement.prototype.scrollTo = () => console.log('Yey');
 
 @Directive()
 class UiSuggestFixtureDirective {
@@ -1122,10 +1124,8 @@ const sharedSpecifications = (
                 fixture.detectChanges();
 
                 const word = faker.random.word();
-                const wordWithWhitespace = `${
-                    Array(6).fill(' ').join('')
-                    }${word}${
-                    Array(6).fill(' ').join('')
+                const wordWithWhitespace = `${Array(6).fill(' ').join('')
+                    }${word}${Array(6).fill(' ').join('')
                     }`;
 
                 searchFor(wordWithWhitespace, fixture);
@@ -1347,13 +1347,15 @@ const sharedSpecifications = (
                 );
         };
 
-        let sourceSpy: jasmine.Spy<(query: string, fetchSize: number, start: number) => Observable<ISuggestValues<any>>>;
+        let sourceSpy: jest.SpyInstance<
+            Observable<ISuggestValues<any>>,
+            [(string | undefined)?, (number | undefined)?, (number | undefined)?]
+        >;
 
         beforeEach(() => {
             overrideItems = undefined;
             uiSuggest.searchSourceFactory = asyncSearchFactory;
-            sourceSpy = spyOn<UiSuggestComponent, any>(uiSuggest, 'searchSourceFactory');
-            sourceSpy.and.callThrough();
+            sourceSpy = jest.spyOn(uiSuggest, 'searchSourceFactory');
             component.searchable = true;
             uiSuggest.displayCount = 10;
         });
@@ -1449,8 +1451,10 @@ const sharedSpecifications = (
             await fixture.whenStable();
 
             expect(uiSuggest.items.length).toBe(items.length);
-            const response = await sourceSpy.calls.mostRecent().returnValue.toPromise();
-            expect(uiSuggest.items.length).toEqual(response.total!);
+            const x = last(sourceSpy.mock.results);
+            assertIsReturn(x);
+            const response = await x.value.toPromise();
+            expect(uiSuggest.items.length).toEqual(response.total);
         }));
 
         it('should load an additional chunk if navigating out of range', fakeAsync(() => {
@@ -1570,7 +1574,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const [query] = sourceSpy.calls.mostRecent().args;
+                const [query] = last(sourceSpy.mock.calls);
                 expect(query).toBe(randomString);
 
                 const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
@@ -2106,3 +2110,13 @@ describe('Component: UiSuggest', () => {
         });
     });
 });
+
+function last<T>(xs: T[]): T {
+    return xs[xs.length - 1];
+}
+
+function assertIsReturn<T>(x: any): asserts x is jest.MockResultReturn<T> {
+    if (x?.type !== 'return') {
+        throw new Error('Unexpected ...');
+    }
+}

@@ -20,6 +20,13 @@ import { UiContentLoaderModule } from './ui-content-loader.module';
 @Component({
     template: `
         <div class="test-container">
+            <ng-container *uiContentLoading="loading$ | async"
+                        [uiContentLoadingColor]="color"
+                        [uiContentLoadingMode]="mode"
+                        [uiContentLoadingValue]="value"
+                        [uiContentLoadingDiameter]="diameter">
+                <button>I am a button!</button>
+            </ng-container>
         </div>
     `,
 })

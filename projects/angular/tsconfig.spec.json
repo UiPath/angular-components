@@ -1,17 +1,20 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "allowJs": true,
     "outDir": "../../out-tsc/spec",
     "types": [
       "jest",
+      "testing-library__jest-dom",
       "node"
-    ]
+    ],
+    "esModuleInterop": true
   },
   "emitDecoratorMetadata": true,
   "include": [
-    "**/test/*.ts",
-    "**/*.spec.ts",
+    // "**/test/*.ts",
+    // "**/*.spec.ts",
+    "**/*.j.spec.ts",
     "**/*.d.ts"
-  ],
-  "esModuleInterop": true
+  ]
 }
