@@ -12,6 +12,7 @@ import { UiProgressButtonDirective } from './ui-progress-button.directive';
         CommonModule,
         MatProgressBarModule,
     ],
+    entryComponents: [UiButtonProgressBarComponent],
     declarations: [
         UiButtonProgressBarComponent,
         UiProgressButtonDirective,

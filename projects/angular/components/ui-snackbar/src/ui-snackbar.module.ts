@@ -22,6 +22,7 @@ const DEFAULT_VERTICAL = 'top';
         UiPipeModule,
         CommonModule,
     ],
+    entryComponents: [UiSnackBarComponent],
     declarations: [UiSnackBarComponent],
     providers: [{
         provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
