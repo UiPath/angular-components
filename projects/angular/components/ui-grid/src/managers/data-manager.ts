@@ -7,7 +7,7 @@ import get from 'lodash-es/get';
 import isArray from 'lodash-es/isArray';
 import isDate from 'lodash-es/isDate';
 import isObject from 'lodash-es/isObject';
-import * as hash from 'object-hash';
+import hash from 'object-hash';
 import { BehaviorSubject } from 'rxjs';
 
 import { IGridDataEntry } from '../models';

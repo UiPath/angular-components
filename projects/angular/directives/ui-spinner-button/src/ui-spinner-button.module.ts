@@ -19,5 +19,8 @@ import { UiSpinnerButtonDirective } from './ui-spinner-button.directive';
     exports: [
         UiSpinnerButtonDirective,
     ],
+    entryComponents: [
+        UiButtonProgressSpinnerComponent,
+    ],
 })
 export class UiSpinnerButtonModule { }

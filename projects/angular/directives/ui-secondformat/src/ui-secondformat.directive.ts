@@ -7,7 +7,7 @@ import {
     Optional,
 } from '@angular/core';
 
-import * as _moment from 'moment';
+import _moment from 'moment';
 import {
     BehaviorSubject,
     merge,

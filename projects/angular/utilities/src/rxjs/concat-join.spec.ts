@@ -62,7 +62,7 @@ describe('Util(rxjs): concatJoin', () => {
     });
 
     describe('Scenario: async sources', () => {
-        it('should emit the async source aggregate in the provided order', fakeAsync((done: DoneFn) => {
+        it('should emit the async source aggregate in the provided order', fakeAsync((done: () => void) => {
             const first = of(FIRST_PAYLOAD).pipe(delay(100));
             const second = of(SECOND_PAYLOAD).pipe(delay(200));
             const third = of(THIRD_PAYLOAD).pipe(delay(300));
@@ -99,7 +99,7 @@ describe('Util(rxjs): concatJoin', () => {
     });
 
     describe('Scenario: sync and async sources', () => {
-        it('should emit the sync and async aggregate in the provided order', fakeAsync((done: DoneFn) => {
+        it('should emit the sync and async aggregate in the provided order', fakeAsync((done: () => void) => {
             const first = of(FIRST_PAYLOAD).pipe(delay(FIRST_DELAY));
             const second = of(SECOND_PAYLOAD);
             const third = of(THIRD_PAYLOAD).pipe(delay(THIRD_DELAY));
@@ -136,7 +136,7 @@ describe('Util(rxjs): concatJoin', () => {
     });
 
     describe('Scenario: timeout', () => {
-        it('should not emit before the timeout interval if a source takes too long to respond', fakeAsync((done: DoneFn) => {
+        it('should not emit before the timeout interval if a source takes too long to respond', fakeAsync((done: () => void) => {
             const TIMEOUT = 4000;
 
             const first = of(FIRST_PAYLOAD).pipe(delay(FIRST_DELAY));

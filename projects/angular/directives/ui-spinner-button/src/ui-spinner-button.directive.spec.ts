@@ -60,8 +60,8 @@ const describeForButtonType = (type: ButtonType) => {
                 declarations: [SpinnerButtonFixtureComponent],
             });
 
-            TestBed.overrideTemplate(SpinnerButtonFixtureComponent, templateFactory(type));
 
+            TestBed.overrideTemplate(SpinnerButtonFixtureComponent, templateFactory(type));
             fixture = TestBed.createComponent(SpinnerButtonFixtureComponent);
             component = fixture.componentInstance;
             fixture.detectChanges();

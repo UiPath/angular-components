@@ -10,7 +10,7 @@ import {
     IDropEvent,
 } from '@uipath/angular/testing';
 
-import * as faker from 'faker';
+import faker from 'faker';
 
 import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
 

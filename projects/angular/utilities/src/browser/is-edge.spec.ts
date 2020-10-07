@@ -11,43 +11,43 @@ const EDGE_44 = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (K
 
 describe('Util(browser): isEdge', () => {
     it('should identify Edge', () => {
-        const userAgentSpy = spyOnProperty(window.navigator, 'userAgent', 'get');
-        userAgentSpy.and.returnValue(EDGE_44);
+        const userAgentSpy = jest.spyOn(window.navigator, 'userAgent', 'get');
+        userAgentSpy.mockReturnValue(EDGE_44);
 
         expect(isEdge()).toEqual(true);
     });
 
     it('should NOT identify IE10', () => {
-        const userAgentSpy = spyOnProperty(window.navigator, 'userAgent', 'get');
-        userAgentSpy.and.returnValue(IE_10);
+        const userAgentSpy = jest.spyOn(window.navigator, 'userAgent', 'get');
+        userAgentSpy.mockReturnValue(IE_10);
 
         expect(isEdge()).toEqual(false);
     });
 
     it('should NOT identify IE11', () => {
-        const userAgentSpy = spyOnProperty(window.navigator, 'userAgent', 'get');
-        userAgentSpy.and.returnValue(IE_11);
+        const userAgentSpy = jest.spyOn(window.navigator, 'userAgent', 'get');
+        userAgentSpy.mockReturnValue(IE_11);
 
         expect(isEdge()).toEqual(false);
     });
 
     it('should NOT identify Chrome', () => {
-        const userAgentSpy = spyOnProperty(window.navigator, 'userAgent', 'get');
-        userAgentSpy.and.returnValue(CHROME_74);
+        const userAgentSpy = jest.spyOn(window.navigator, 'userAgent', 'get');
+        userAgentSpy.mockReturnValue(CHROME_74);
 
         expect(isEdge()).toEqual(false);
     });
 
     it('should NOT identify Firefox', () => {
-        const userAgentSpy = spyOnProperty(window.navigator, 'userAgent', 'get');
-        userAgentSpy.and.returnValue(FIREFOX_67);
+        const userAgentSpy = jest.spyOn(window.navigator, 'userAgent', 'get');
+        userAgentSpy.mockReturnValue(FIREFOX_67);
 
         expect(isEdge()).toEqual(false);
     });
 
     it('should NOT identify Edge Chromium', () => {
-        const userAgentSpy = spyOnProperty(window.navigator, 'userAgent', 'get');
-        userAgentSpy.and.returnValue(EDGE_76);
+        const userAgentSpy = jest.spyOn(window.navigator, 'userAgent', 'get');
+        userAgentSpy.mockReturnValue(EDGE_76);
 
         expect(isEdge()).toEqual(false);
     });

@@ -1,6 +1,6 @@
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
-import * as faker from 'faker';
+import faker from 'faker';
 import { of } from 'rxjs';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';

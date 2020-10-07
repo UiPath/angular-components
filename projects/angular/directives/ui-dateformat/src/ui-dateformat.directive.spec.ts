@@ -12,7 +12,7 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import * as moment from 'moment';
+import moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 
 import {
@@ -126,7 +126,7 @@ describe('Directive: UiDateFormat', () => {
                 By.css('ui-dateformat'),
             )
             .nativeElement
-            .innerText
+            .textContent
             .trim();
 
         const momentOutputDate = moment.tz(
@@ -164,7 +164,7 @@ describe('Directive: UiDateFormat', () => {
                 By.css('ui-dateformat'),
             )
             .nativeElement
-            .innerText
+            .textContent
             .trim();
 
         const momentOutputDate = moment.tz(
@@ -208,7 +208,7 @@ describe('Directive: UiDateFormat', () => {
                 By.css('ui-dateformat'),
             )
             .nativeElement
-            .innerText
+            .textContent
             .trim();
 
         const momentOutputDate = moment.tz(
@@ -245,7 +245,7 @@ describe('Directive: UiDateFormat', () => {
                 By.css('ui-dateformat'),
             )
             .nativeElement
-            .innerText
+            .textContent
             .trim();
 
         expect(formattedDateText).toContain('2 minutes ago');
@@ -299,12 +299,12 @@ describe('Directive: UiDateFormat', () => {
             )
             .nativeElement;
 
-        expect(textElement.innerText.trim()).toContain('a few seconds ago');
+        expect(textElement.textContent.trim()).toContain('a few seconds ago');
 
         tick(30000);
         fixture.detectChanges();
 
-        expect(textElement.innerText.trim()).toContain('a minute ago');
+        expect(textElement.textContent.trim()).toContain('a minute ago');
         discardPeriodicTasks();
     }));
 
@@ -337,7 +337,7 @@ describe('Directive: UiDateFormat', () => {
             .nativeElement;
 
         const momentOutputDate = moment.tz(
-            textElement.innerText.trim(),
+            textElement.textContent.trim(),
             updatedReferenceFormat,
             resolveTimezone(options),
         );
@@ -378,7 +378,7 @@ describe('Directive: UiDateFormat', () => {
             )
             .nativeElement;
 
-        expect(textElement.innerText.trim()).toContain('数秒前');
+        expect(textElement.textContent.trim()).toContain('数秒前');
         expect(textElement.dataset['title']).toContain('数秒前');
     });
 
@@ -398,7 +398,7 @@ describe('Directive: UiDateFormat', () => {
                 By.css('ui-dateformat'),
             )
             .nativeElement
-            .innerText
+            .textContent
             .trim();
 
         expect(formattedDateText).toBe(inputString);
@@ -430,7 +430,7 @@ describe('Directive: UiDateFormat', () => {
         fixture.detectChanges();
 
         let momentOutputDate = moment.tz(
-            textElement.innerText.trim(),
+            textElement.textContent.trim(),
             defaultDateFormat,
             resolveTimezone(options),
         );
@@ -446,7 +446,7 @@ describe('Directive: UiDateFormat', () => {
 
         fixture.detectChanges();
 
-        expect(textElement.innerText.trim()).toContain('a few seconds ago');
+        expect(textElement.textContent.trim()).toContain('a few seconds ago');
 
         // Lastly, check that changing from relative to absolute formats the text correctly.
         component.contentType = 'absolute';
@@ -454,7 +454,7 @@ describe('Directive: UiDateFormat', () => {
         fixture.detectChanges();
 
         momentOutputDate = moment.tz(
-            textElement.innerText.trim(),
+            textElement.textContent.trim(),
             defaultDateFormat,
             resolveTimezone(options),
         );

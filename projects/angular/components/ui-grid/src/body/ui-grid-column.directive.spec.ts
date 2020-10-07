@@ -8,7 +8,7 @@ import {
 } from '@angular/core/testing';
 import { UiGridModule } from '@uipath/angular/components/ui-grid';
 
-import * as faker from 'faker';
+import faker from 'faker';
 import {
     finalize,
     take,
@@ -90,7 +90,7 @@ describe('Component: UiGridColumn', () => {
                 expect(column).toBeDefined();
             });
             it('should have visible set to false', () => {
-                expect(column.visible).toBeFalse();
+                expect(column.visible).toBe(false);
             });
 
             it('should have all properties undefined', () => {

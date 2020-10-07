@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+import faker from 'faker';
 
 export const generateListFactory = <T>(mapper: () => T) =>
     (count: number | 'random' = 5) =>

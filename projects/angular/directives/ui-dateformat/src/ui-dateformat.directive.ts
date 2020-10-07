@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { UiFormatDirective } from '@uipath/angular/directives/internal';
 
-import * as _moment from 'moment';
+import _moment from 'moment';
 import {
     interval,
     merge,

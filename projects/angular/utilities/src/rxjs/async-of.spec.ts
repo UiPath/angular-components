@@ -23,7 +23,7 @@ interface IDelayedTarget {
 }
 
 describe('Util(rxjs): asyncOf', () => {
-    it('should emit sync stream first, delayed stream (0ms) second and delayed stream (10ms) third', fakeAsync((done: DoneFn) => {
+    it('should emit sync stream first, delayed stream (0ms) second and delayed stream (10ms) third', fakeAsync((done: () => void) => {
         const noDelay = of<IDelayedTarget>({ target: 'noDelay' });
         const delay0 = asyncOf<IDelayedTarget>({ target: 'delay0' });
         const delay10 = asyncOf<IDelayedTarget>({ target: 'delay10' }, 10);

@@ -61,12 +61,12 @@ describe('Directive: UiClipboard', () => {
 
             await fixture.whenStable();
 
-            expect(component.child.nativeElement.innerText).toEqual('');
+            expect(component.child.nativeElement.textContent).toEqual('');
 
             fixture.detectChanges();
 
             expect(component.child).toBeDefined();
-            expect(component.child.nativeElement.innerText).toEqual('smth');
+            expect(component.child.nativeElement.textContent).toEqual('smth');
         });
     });
 
@@ -115,12 +115,12 @@ describe('Directive: UiClipboard', () => {
 
             await fixture.whenStable();
 
-            expect(component.child.nativeElement.innerText).toEqual('');
+            expect(component.child.nativeElement.textContent).toEqual('');
 
             fixture.detectChanges();
 
             expect(component.child).toBeDefined();
-            expect(component.child.nativeElement.innerText).toEqual('smth');
+            expect(component.child.nativeElement.textContent).toEqual('smth');
         });
     });
 });

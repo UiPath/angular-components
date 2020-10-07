@@ -13,7 +13,7 @@ import {
     Key,
 } from '@uipath/angular/testing';
 
-import * as faker from 'faker';
+import faker from 'faker';
 import {
     finalize,
     take,

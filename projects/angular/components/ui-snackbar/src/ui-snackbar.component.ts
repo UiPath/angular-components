@@ -183,7 +183,7 @@ export class UiSnackBarService {
             typeof options.message === 'string'
         ) {
             const span = document.createElement('span');
-            span.innerText = options.message;
+            span.textContent = options.message;
             options.message = span.innerHTML;
             span.remove();
         }

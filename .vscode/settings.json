@@ -12,4 +12,5 @@
     "typescript.preferences.importModuleSpecifier": "non-relative",
     "typescript.preferences.quoteStyle": "single",
     "html.format.wrapAttributes": "force-aligned",
+    "typescript.tsdk": "/Users/mihai/work/angular-components/node_modules/typescript/lib",
 }

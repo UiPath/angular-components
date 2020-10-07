@@ -63,12 +63,6 @@ export class PasswordIndicatorTestComponent {
 
     public hideValidRuleDefinition = false;
 
-    public setValue(value: string) {
-        const password = this.form.get('password')!;
-        password.markAsDirty();
-        password!.setValue(value);
-    }
-
     constructor(fb: FormBuilder) {
         this.form = fb.group({
             password: [
@@ -76,6 +70,12 @@ export class PasswordIndicatorTestComponent {
                 complexityValidator(this.rules, false),
             ],
         });
+    }
+
+    public setValue(value: string) {
+        const password = this.form.get('password')!;
+        password.markAsDirty();
+        password!.setValue(value);
     }
 }
 
@@ -132,7 +132,7 @@ describe('Component: UiPasswordIndicator', () => {
 
             const indicator = getIndicator();
             const labels = getRules(indicator);
-            expect(labels).toBeEmptyArray();
+            expect(labels.length).toBe(0);
         });
     });
 
@@ -148,7 +148,7 @@ describe('Component: UiPasswordIndicator', () => {
 
                 const ruleKeys = Object.keys(component.rules);
 
-                expect(ruleList).toBeArrayOfSize(ruleKeys.length);
+                expect(ruleList.length).toBe(ruleKeys.length);
 
                 const intl: UiPasswordComplexityIntl = TestBed.inject(UiPasswordComplexityIntl);
 
@@ -158,7 +158,8 @@ describe('Component: UiPasswordIndicator', () => {
                     expect(rule.nativeElement).toHaveClass('ui-password-rule-invalid');
 
                     const label = getLabel(rule);
-                    expect(label.nativeElement).toHaveText(intl.ruleLabel(ruleKey));
+                    // TODO: maybe change .textContent to .toHaveTextContent
+                    expect(label.nativeElement).toHaveTextContent(intl.ruleLabel(ruleKey));
                 });
             });
 

@@ -25,7 +25,7 @@ import {
     Key,
 } from '@uipath/angular/testing';
 
-import * as faker from 'faker';
+import faker from 'faker';
 import {
     animationFrameScheduler,
     Observable,
@@ -152,17 +152,17 @@ describe('Component: UiGrid', () => {
                         nestedDateHeader,
                     ] = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
 
-                    expect(numberHeader.nativeElement.innerText).toContain('Number Header'.toUpperCase());
-                    expect(boolHeader.nativeElement.innerText).toContain('Boolean Header'.toUpperCase());
-                    expect(nestedStringHeader.nativeElement.innerText).toContain('Nested String Header'.toUpperCase());
-                    expect(nestedDateHeader.nativeElement.innerText).toContain('Nested Date Header'.toUpperCase());
+                    expect(numberHeader.nativeElement.textContent).toContain('Number Header'.toUpperCase());
+                    expect(boolHeader.nativeElement.textContent).toContain('Boolean Header'.toUpperCase());
+                    expect(nestedStringHeader.nativeElement.textContent).toContain('Nested String Header'.toUpperCase());
+                    expect(nestedDateHeader.nativeElement.textContent).toContain('Nested Date Header'.toUpperCase());
                 });
 
                 it('should render one row that displays no data', () => {
                     const noDataRow = fixture.debugElement.query(By.css('.ui-grid-no-data-container'));
 
                     expect(noDataRow.nativeElement).toBeDefined();
-                    expect(noDataRow.nativeElement.innerText).toContain(intl.noDataMessage);
+                    expect(noDataRow.nativeElement.textContent).toContain(intl.noDataMessage);
                 });
 
                 it('should NOT render checkbox and refresh cells', () => {
@@ -240,10 +240,10 @@ describe('Component: UiGrid', () => {
                             nestedDateCell,
                         ] = row.queryAll(By.css('.ui-grid-cell'));
 
-                        expect(numberCell.nativeElement.innerText).toContain(dataEntry.myNumber);
-                        expect(boolCell.nativeElement.innerText).toContain(dataEntry.myBool.toString());
-                        expect(nestedStringCell.nativeElement.innerText).toContain(dataEntry.myObj.myObjString);
-                        expect(nestedDateCell.nativeElement.innerText).toContain(dataEntry.myObj.myObjDate.toString());
+                        expect(numberCell.nativeElement.textContent).toContain(dataEntry.myNumber);
+                        expect(boolCell.nativeElement.textContent).toContain(dataEntry.myBool.toString());
+                        expect(nestedStringCell.nativeElement.textContent).toContain(dataEntry.myObj.myObjString);
+                        expect(nestedDateCell.nativeElement.textContent).toContain(dataEntry.myObj.myObjDate.toString());
                     });
                 });
             });
@@ -273,17 +273,17 @@ describe('Component: UiGrid', () => {
                         nestedDateHeader,
                     ] = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell:not(.ui-grid-feature-cell)'));
 
-                    expect(numberHeader.nativeElement.innerText).toContain('Number Header'.toUpperCase());
-                    expect(boolHeader.nativeElement.innerText).toContain('Boolean Header'.toUpperCase());
-                    expect(nestedStringHeader.nativeElement.innerText).toContain('Nested String Header'.toUpperCase());
-                    expect(nestedDateHeader.nativeElement.innerText).toContain('Nested Date Header'.toUpperCase());
+                    expect(numberHeader.nativeElement.textContent).toContain('Number Header'.toUpperCase());
+                    expect(boolHeader.nativeElement.textContent).toContain('Boolean Header'.toUpperCase());
+                    expect(nestedStringHeader.nativeElement.textContent).toContain('Nested String Header'.toUpperCase());
+                    expect(nestedDateHeader.nativeElement.textContent).toContain('Nested Date Header'.toUpperCase());
                 });
 
                 it('should render one row that displays no data', () => {
                     const noDataRow = fixture.debugElement.query(By.css('.ui-grid-no-data-container'));
 
                     expect(noDataRow.nativeElement).toBeDefined();
-                    expect(noDataRow.nativeElement.innerText).toContain(intl.noDataMessage);
+                    expect(noDataRow.nativeElement.textContent).toContain(intl.noDataMessage);
                 });
 
                 it('should render checkbox and refresh cells', () => {
@@ -334,10 +334,10 @@ describe('Component: UiGrid', () => {
                             nestedDateCell,
                         ] = row.queryAll(By.css('.ui-grid-cell:not(.ui-grid-feature-cell)'));
 
-                        expect(numberCell.nativeElement.innerText).toContain(dataEntry.myNumber);
-                        expect(boolCell.nativeElement.innerText).toContain(dataEntry.myBool.toString());
-                        expect(nestedStringCell.nativeElement.innerText).toContain(dataEntry.myObj.myObjString);
-                        expect(nestedDateCell.nativeElement.innerText).toContain(dataEntry.myObj.myObjDate.toString());
+                        expect(numberCell.nativeElement.textContent).toContain(dataEntry.myNumber);
+                        expect(boolCell.nativeElement.textContent).toContain(dataEntry.myBool.toString());
+                        expect(nestedStringCell.nativeElement.textContent).toContain(dataEntry.myObj.myObjString);
+                        expect(nestedDateCell.nativeElement.textContent).toContain(dataEntry.myObj.myObjDate.toString());
                     });
                 });
 
@@ -495,7 +495,7 @@ describe('Component: UiGrid', () => {
                         const infoMessage = fixture.debugElement
                             .query(By.css('.ui-grid-selection-info-message'));
 
-                        expect(infoMessage.nativeElement.innerText).toEqual(intl.translateMultiPageSelectionCount(1));
+                        expect(infoMessage.nativeElement.textContent).toEqual(intl.translateMultiPageSelectionCount(1));
                     });
 
 
@@ -554,10 +554,10 @@ describe('Component: UiGrid', () => {
                             nestedDateCell,
                         ] = row.queryAll(By.css('.ui-grid-cell'));
 
-                        expect(numberCell.nativeElement.innerText).toContain(dataEntry.myNumber);
-                        expect(boolCell.nativeElement.innerText).toContain(dataEntry.myBool.toString());
-                        expect(nestedStringCell.nativeElement.innerText).toContain(dataEntry.myObj.myObjString);
-                        expect(nestedDateCell.nativeElement.innerText).toContain(dataEntry.myObj.myObjDate.toString());
+                        expect(numberCell.nativeElement.textContent).toContain(dataEntry.myNumber);
+                        expect(boolCell.nativeElement.textContent).toContain(dataEntry.myBool.toString());
+                        expect(nestedStringCell.nativeElement.textContent).toContain(dataEntry.myObj.myObjString);
+                        expect(nestedDateCell.nativeElement.textContent).toContain(dataEntry.myObj.myObjDate.toString());
                     });
                 });
             });
@@ -689,7 +689,7 @@ describe('Component: UiGrid', () => {
 
                 expect(mainHeaderAction).toBeDefined();
                 expect(mainHeaderAction.nativeElement).toBeDefined();
-                expect(mainHeaderAction.nativeElement.innerText).toEqual('Main Action');
+                expect(mainHeaderAction.nativeElement.textContent).toEqual('Main Action');
             });
 
             it('should display an inline header button', () => {
@@ -697,7 +697,7 @@ describe('Component: UiGrid', () => {
 
                 expect(inlineHeaderAction).toBeDefined();
                 expect(inlineHeaderAction.nativeElement).toBeDefined();
-                expect(inlineHeaderAction.nativeElement.innerText).toEqual('Inline Action');
+                expect(inlineHeaderAction.nativeElement.textContent).toEqual('Inline Action');
             });
 
             it('should NOT display the selection action button if no row is selected', () => {
@@ -719,7 +719,7 @@ describe('Component: UiGrid', () => {
                 const headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
                 expect(headerSelectionAction).toBeDefined();
                 expect(headerSelectionAction.nativeElement).toBeDefined();
-                expect(headerSelectionAction.nativeElement.innerText).toEqual('Selection Action');
+                expect(headerSelectionAction.nativeElement.textContent).toEqual('Selection Action');
             });
 
             it('should NOT display the inline header button if at least one row is selected', () => {
@@ -784,7 +784,7 @@ describe('Component: UiGrid', () => {
                 expect(gridSearch).toBeFalsy();
                 expect(headerSelectionAction).toBeDefined();
                 expect(headerSelectionAction.nativeElement).toBeDefined();
-                expect(headerSelectionAction.nativeElement.innerText).toEqual('Selection Action');
+                expect(headerSelectionAction.nativeElement.textContent).toEqual('Selection Action');
             });
         });
     });
@@ -1124,7 +1124,7 @@ describe('Component: UiGrid', () => {
                 fixture.detectChanges();
 
                 const filterValue = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-value'));
-                expect(filterValue.nativeElement.innerText.trim()).toEqual((menuItem.componentInstance as MatMenuItem).getLabel());
+                expect(filterValue.nativeElement.textContent.trim()).toEqual((menuItem.componentInstance as MatMenuItem).getLabel());
             });
 
             it('should trigger an event emission when the filter changes', (done) => {
@@ -2069,7 +2069,7 @@ describe('Component: UiGrid', () => {
                     const option = fixture.debugElement.query(By.css('.ui-grid-toggle-panel .mat-option-disabled'));
 
                     expect(option).toBeDefined();
-                    expect(option.nativeElement.innerText).toEqual('Prop 2');
+                    expect(option.nativeElement.textContent).toEqual('Prop 2');
                 });
             });
         });

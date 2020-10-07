@@ -8,13 +8,11 @@
       "testing-library__jest-dom",
       "node"
     ],
-    "esModuleInterop": true
   },
   "emitDecoratorMetadata": true,
   "include": [
     // "**/test/*.ts",
-    // "**/*.spec.ts",
-    "**/*.j.spec.ts",
+    "**/*.spec.ts",
     "**/*.d.ts"
   ]
 }

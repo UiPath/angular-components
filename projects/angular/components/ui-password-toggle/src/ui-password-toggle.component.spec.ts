@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { EventGenerator } from '@uipath/angular/testing';
 
-import * as faker from 'faker';
+import faker from 'faker';
 import { take } from 'rxjs/operators';
 
 import { UiPasswordToggleComponent } from './ui-password-toggle.component';
@@ -63,7 +63,7 @@ fdescribe('Component: UiPasswordToggle', () => {
     let fixture: ComponentFixture<TestHostComponent>;
     let component: TestHostComponent;
     let intl: TestPasswordToggleIntl;
-    let toggleButton: any;
+    let toggleButton: HTMLButtonElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -87,7 +87,7 @@ fdescribe('Component: UiPasswordToggle', () => {
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;
         toggleButton = fixture.debugElement
-            .query(By.css('button'));
+            .query(By.css('button')).nativeElement;
 
         fixture.detectChanges();
     });

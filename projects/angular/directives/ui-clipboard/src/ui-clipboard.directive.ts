@@ -8,7 +8,7 @@ import {
     Output,
 } from '@angular/core';
 
-import * as Clipboard from 'clipboard';
+import Clipboard from 'clipboard';
 
 /**
  * A directive that copies the decorated element content into the user clipboard.

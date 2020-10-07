@@ -133,13 +133,13 @@ const sharedSpecifications = (
 
             if (!uiSuggest.isFormControl) {
                 const displayTitle = displayContainer.query(By.css('.display-title'));
-                expect(displayTitle.nativeElement.innerText.trim()).toEqual(`${component.placeholder}:`);
+                expect(displayTitle.nativeElement.textContent.trim()).toEqual(`${component.placeholder}:`);
             } else {
                 const displayTitle = fixture.debugElement.query(By.css('.mat-form-field-label'));
-                expect(displayTitle.nativeElement.innerText.trim()).toEqual(component.placeholder);
+                expect(displayTitle.nativeElement.textContent.trim()).toEqual(component.placeholder);
             }
 
-            expect(displayValue.nativeElement.innerText.trim()).toEqual(component.defaultValue);
+            expect(displayValue.nativeElement.textContent.trim()).toEqual(component.defaultValue);
         });
 
         it('should remove NULL or Undefined entries', () => {
@@ -160,7 +160,7 @@ const sharedSpecifications = (
             const display = fixture.debugElement.query(By.css('.display'));
             const displayIcon = display.query(By.css('.mat-icon'));
 
-            expect(displayIcon.nativeElement.innerText.trim()).toEqual('keyboard_arrow_down');
+            expect(displayIcon.nativeElement.textContent.trim()).toEqual('keyboard_arrow_down');
         });
 
         it('should display the dropdown arrow if it is NOT clearable and has a selected item', () => {
@@ -174,7 +174,7 @@ const sharedSpecifications = (
             const display = fixture.debugElement.query(By.css('.display'));
             const displayIcon = display.query(By.css('.mat-icon'));
 
-            expect(displayIcon.nativeElement.innerText.trim()).toEqual('keyboard_arrow_down');
+            expect(displayIcon.nativeElement.textContent.trim()).toEqual('keyboard_arrow_down');
         });
 
         it('should display the clear icon if clearable and has a selected item', () => {
@@ -963,13 +963,13 @@ const sharedSpecifications = (
 
             if (!uiSuggest.isFormControl) {
                 const displayTitle = displayContainer.query(By.css('.display-title'));
-                expect(displayTitle.nativeElement.innerText.trim()).toBe(`${component.placeholder}:`);
+                expect(displayTitle.nativeElement.textContent.trim()).toBe(`${component.placeholder}:`);
             } else {
                 const displayTitle = fixture.debugElement.query(By.css('.mat-form-field-label'));
-                expect(displayTitle.nativeElement.innerText.trim()).toEqual(component.placeholder);
+                expect(displayTitle.nativeElement.textContent.trim()).toEqual(component.placeholder);
             }
 
-            expect(displayValue.nativeElement.innerText.trim()).toBe(selectedItem.text);
+            expect(displayValue.nativeElement.textContent.trim()).toBe(selectedItem.text);
         });
 
         it('should set the selected item from the list as active when clicked', async(async () => {
@@ -1042,13 +1042,13 @@ const sharedSpecifications = (
 
                 if (!uiSuggest.isFormControl) {
                     const displayTitle = displayContainer.query(By.css('.display-title'));
-                    expect(displayTitle.nativeElement.innerText.trim()).toBe(`${component.placeholder}:`);
+                    expect(displayTitle.nativeElement.textContent.trim()).toBe(`${component.placeholder}:`);
                 } else {
                     const displayTitle = fixture.debugElement.query(By.css('.mat-form-field-label'));
-                    expect(displayTitle.nativeElement.innerText.trim()).toEqual(component.placeholder);
+                    expect(displayTitle.nativeElement.textContent.trim()).toEqual(component.placeholder);
                 }
 
-                expect(displayValue.nativeElement.innerText.trim()).toBe(currentItem.text);
+                expect(displayValue.nativeElement.textContent.trim()).toBe(currentItem.text);
             }
         }));
 
@@ -1156,16 +1156,16 @@ const sharedSpecifications = (
 
             if (!uiSuggest.isFormControl) {
                 const displayTitle = displayContainer.query(By.css('.display-title'));
-                expect(displayTitle.nativeElement.innerText.trim()).toBe(`${component.placeholder}:`);
+                expect(displayTitle.nativeElement.textContent.trim()).toBe(`${component.placeholder}:`);
             } else {
                 const displayTitle = fixture.debugElement.query(By.css('.mat-form-field-label'));
-                expect(displayTitle.nativeElement.innerText.trim()).toEqual(component.placeholder);
+                expect(displayTitle.nativeElement.textContent.trim()).toEqual(component.placeholder);
             }
 
             const expectedText = selectedValues
                 .map(value => value.text)
                 .join(', ');
-            expect(displayValue.nativeElement.innerText.trim()).toBe(expectedText);
+            expect(displayValue.nativeElement.textContent.trim()).toBe(expectedText);
         });
 
         it('should have a checkbox next to each item entry', async(async () => {
@@ -1202,7 +1202,7 @@ const sharedSpecifications = (
 
             for (const itemEntry of itemList) {
                 const label = itemEntry.query(By.css('.text-label'));
-                const labelText = label.nativeElement.innerText.trim();
+                const labelText = label.nativeElement.textContent.trim();
                 if (!!selectedValues.find(value => value.text === labelText)) {
                     const checkbox = itemEntry.query(By.css('input:checked'));
                     expect(checkbox).not.toBeNull();
@@ -1276,7 +1276,7 @@ const sharedSpecifications = (
 
             expectedSelectedItems.forEach(selectedItem => {
                 const label = selectedItem.query(By.css('.text-label'));
-                const labelText = label.nativeElement.innerText.trim();
+                const labelText = label.nativeElement.textContent.trim();
 
                 expect(selectedItems.find(x => x.text === labelText)).toBeDefined();
             });
@@ -1314,7 +1314,7 @@ const sharedSpecifications = (
 
             expectedSelectedItems.forEach(selectedItem => {
                 const label = selectedItem.query(By.css('.text-label'));
-                const labelText = label.nativeElement.innerText.trim();
+                const labelText = label.nativeElement.textContent.trim();
 
                 expect(selectedItems.find(x => x.text === labelText)).toBeDefined();
             });
@@ -2104,7 +2104,7 @@ describe('Component: UiSuggest', () => {
                 expect(items.length).toBe(generatedItems.length);
 
                 items.forEach((item, index) => {
-                    expect(item.text).toBe(generatedItems[index].nativeElement.innerText);
+                    expect(item.text).toBe(generatedItems[index].nativeElement.textContent);
                 });
             }));
         });

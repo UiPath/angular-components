@@ -1,19 +1,19 @@
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import {
-  existsSync,
-  readFileSync,
+    existsSync,
+    readFileSync,
 } from 'fs';
-import * as glob from 'glob';
+import glob from 'glob';
 import {
-  basename,
-  dirname,
-  resolve,
+    basename,
+    dirname,
+    resolve,
 } from 'path';
-import * as ts from 'typescript';
+import ts from 'typescript';
 
 import {
-  getPullRequestHead,
-  statusReporterFactory,
+    getPullRequestHead,
+    statusReporterFactory,
 } from '../common/github';
 
 const reportStatus = statusReporterFactory('public-api-check');

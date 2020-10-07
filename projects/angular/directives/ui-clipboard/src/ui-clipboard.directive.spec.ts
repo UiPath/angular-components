@@ -53,7 +53,7 @@ describe('Directive: UiClipboard', () => {
     let component: ClipboardFixtureComponent;
     let fixture: ComponentFixture<ClipboardFixtureComponent>;
     let button: HTMLButtonElement;
-    let execSpy: jasmine.Spy;
+    let execMock: jest.Mock<boolean, []>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -67,7 +67,7 @@ describe('Directive: UiClipboard', () => {
         fixture = TestBed.createComponent(ClipboardFixtureComponent);
         component = fixture.componentInstance;
         button = fixture.debugElement.query(By.css('button')).nativeElement;
-        execSpy = spyOn(document, 'execCommand');
+        document.execCommand = execMock = jest.fn();
         fixture.detectChanges();
     });
 
@@ -77,7 +77,7 @@ describe('Directive: UiClipboard', () => {
 
     describe('State: success', () => {
         it('should emit success event when trigger is clicked', (done) => {
-            execSpy.and.callFake(() => true);
+            execMock.mockReturnValue(true);
 
             component.event$
                 .pipe(
@@ -99,7 +99,7 @@ describe('Directive: UiClipboard', () => {
 
     describe('State: error', () => {
         it('should emit an error if the execCommand returns false', (done) => {
-            execSpy.and.callFake(() => false);
+            execMock.mockReturnValue(false);
 
             component.event$
                 .pipe(
@@ -119,7 +119,7 @@ describe('Directive: UiClipboard', () => {
         });
 
         it('should emit error event when an error is thrown', (done) => {
-            execSpy.and.throwError('ERROR');
+            execMock.mockImplementation(() => { throw new Error('Error'); });
 
             component.event$
                 .pipe(

@@ -3,7 +3,7 @@ import {
     FormControl,
 } from '@angular/forms';
 
-import * as faker from 'faker';
+import faker from 'faker';
 
 import { complexityValidator } from './ui-password-indicator.validator';
 
