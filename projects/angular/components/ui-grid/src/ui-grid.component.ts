@@ -8,7 +8,6 @@ import {
     ElementRef,
     EventEmitter,
     HostBinding,
-    HostListener,
     Input,
     NgZone,
     OnChanges,
@@ -580,10 +579,10 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     /**
      * Marks if the `Shift` key is pressed.
      */
-    @HostListener('document:keydown.shift', ['$event'])
-    @HostListener('document:keyup.shift', ['$event'])
-    public toggleShift(ev: MouseEvent) {
-        this._isShiftPressed = ev.shiftKey;
+    public checkShift(event: MouseEvent | KeyboardEvent) {
+        event.stopPropagation();
+
+        this._isShiftPressed = event.shiftKey;
     }
 
     /**
@@ -602,16 +601,24 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         const min = Math.min(this._lastCheckboxIdx, idx);
         const max = Math.max(idx, this._lastCheckboxIdx);
 
-        this.selectionManager.deselect(...this.dataManager.data$.getValue());
-        /**
-         * If min = max, the checkbox will be deselected as a consequence of clicking
-         * and will remain rendered as unchecked, even though we selected it
-         * to prevent this invalid render state, we check for changes after deselecting the rows
-         */
-
-        const rows = range(min, max + 1)
+        const rowsForSelection = range(min, max + 1)
             .map(this.dataManager.get);
-        this.selectionManager.select(...rows);
+        const rowsForDeselection = this.dataManager.data$.getValue()
+            .filter(row => !rowsForSelection.find(rowForSelection => rowForSelection.id === row.id));
+
+        /**
+         * To be consistent with the browser, if we click on a row
+         * that was already selected, we unselect it, sync with DOM (detectChanges),
+         * then we select it again (it's included in rowsForSelection).
+         */
+        if (this.selectionManager.isSelected(entry)) {
+            this.selectionManager.deselect(entry);
+            this._cd.detectChanges();
+        }
+
+        this.selectionManager.select(...rowsForSelection.filter(row => !this.selectionManager.isSelected(row)));
+        this.selectionManager.deselect(...rowsForDeselection.filter(row => this.selectionManager.isSelected(row)));
+
         this._cd.detectChanges();
     }
 
