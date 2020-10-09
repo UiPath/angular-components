@@ -5,26 +5,29 @@
               matInput
               type="search"
               autocomplete="off" />
-       <mat-icon (click)="clear()"
-                 (keyup.enter)="clear()"
-                 (keyup.space)="clear()"
-                 [hidden]="!search.value"
-                 [matTooltip]="clearTooltip"
-                 [matTooltipDisabled]="tooltipDisabled"
-                 [attr.aria-label]="clearTooltip"
-                 matSuffix
-                 class="ui-grid-search-cancel"
-                 tabindex="0">
-              <svg width="100%"
-                   height="100%"
-                   viewBox="0 0 20 20"
-                   style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
-                     <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
-                           fill="none"
-                           stroke="currentColor"
-                           stroke-width="2.0011213" />
-              </svg>
-       </mat-icon>
+       <div (click)="clear()"
+            (keyup.enter)="clear()"
+            (keyup.space)="clear()"
+            [hidden]="!search.value"
+            [matTooltip]="clearTooltip"
+            [matTooltipDisabled]="tooltipDisabled"
+            [attr.aria-label]="clearTooltip"
+            role="button"
+            matSuffix
+            class="ui-grid-search-cancel"
+            tabindex="0">
+              <mat-icon>
+                     <svg width="100%"
+                          height="100%"
+                          viewBox="0 0 20 20"
+                          style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
+                            <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2.0011213" />
+                     </svg>
+              </mat-icon>
+       </div>
        <mat-icon *ngIf="!search.value"
                  [matTooltip]="searchTooltip"
                  [matTooltipDisabled]="tooltipDisabled"
