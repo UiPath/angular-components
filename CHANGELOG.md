@@ -1,3 +1,6 @@
+# v10.0.0-rc.1 (2020-10-15)
+* **grid** fix multiple row selection with shift
+
 # v10.0.0-rc.0 (2020-10-01)
 * **BREAKING CHANGE** Upgrade to Angular 10
 * **extensions** define recommended extensions.json
