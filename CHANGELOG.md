@@ -1,3 +1,6 @@
+# v9.0.8 (2020-10-15)
+* **grid** fix multiple row selection with shift
+
 # v9.0.7 (2020-06-16)
 * **grid** fix a11y issue on toggle visibility column reset button
 * **a11y** add automatic aria-label support
