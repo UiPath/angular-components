@@ -467,6 +467,82 @@ describe('Component: UiGrid', () => {
                         expect(matCheckbox.checked).toEqual(false);
                     });
 
+                    it('should select all rows from 0 to the clicked one if shift is pressed', () => {
+                        const rowCheckboxInputList = fixture.debugElement
+                            .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                        const event = document.createEvent('MouseEvent');
+                        event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, true, false, 0, null);
+
+                        fixture.componentInstance.grid.checkShift(event);
+
+                        rowCheckboxInputList[10].nativeElement.dispatchEvent(EventGenerator.click);
+
+                        for (let i = 0; i <= 10; i ++) {
+                            expect(grid.selectionManager.isSelected(data[i])).toBeTrue();
+                        }
+                    });
+
+                    describe('Scenario: shift pressed after a row is selected by click without shift', () => {
+                        beforeEach(() => {
+                            const rowCheckboxInputList = fixture.debugElement
+                                .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                            rowCheckboxInputList[5].nativeElement.dispatchEvent(EventGenerator.click);
+
+                            const event = document.createEvent('MouseEvent');
+                            event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, true, false, 0, null);
+
+                            fixture.componentInstance.grid.checkShift(event);
+                        });
+
+                        it('should select rows between last clicked and current clicked when shift key is pressed', () => {
+                            const rowCheckboxInputList = fixture.debugElement
+                                .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                            rowCheckboxInputList[10].nativeElement.dispatchEvent(EventGenerator.click);
+
+                            fixture.detectChanges();
+
+                            for (let i = 5; i <= 10; i++) {
+                                expect(grid.selectionManager.isSelected(data[i])).toBeTrue();
+                            }
+                        });
+
+                        it('should not unselect row if clicked twice while shift pressed', () => {
+                            const rowCheckboxInputList = fixture.debugElement
+                                .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                            rowCheckboxInputList[5].nativeElement.dispatchEvent(EventGenerator.click);
+
+                            fixture.detectChanges();
+
+                            expect(grid.selectionManager.isSelected(data[5])).toBeTrue();
+                        });
+
+                        it('should correctly deselect and select on range change while shift pressed', () => {
+                            const rowCheckboxInputList = fixture.debugElement
+                                .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                            rowCheckboxInputList[10].nativeElement.dispatchEvent(EventGenerator.click);
+                            fixture.detectChanges();
+
+                            for (let i = 5; i <= 10; i++) {
+                                expect(grid.selectionManager.isSelected(data[i])).toBeTrue();
+                            }
+
+                            rowCheckboxInputList[2].nativeElement.dispatchEvent(EventGenerator.click);
+                            fixture.detectChanges();
+
+                            for (let i = 2; i <= 5; i++) {
+                                expect(grid.selectionManager.isSelected(data[i])).toBeTrue();
+                            }
+                            for (let i = 6; i <= 10; i++) {
+                                expect(grid.selectionManager.isSelected(data[i])).toBeFalse();
+                            }
+                        });
+                    });
+
                     it('should NOT show multi page select info message if multiPageSelect is false and selection is made', () => {
                         grid.multiPageSelect = false;
                         const rowCheckboxInputList = fixture.debugElement

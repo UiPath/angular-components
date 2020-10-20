@@ -286,7 +286,9 @@
              role="gridcell">
             <div *ngIf="selectable"
                  class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
-                <mat-checkbox (click)="$event.stopPropagation()"
+                <mat-checkbox (click)="checkShift($event)"
+                              (keyup.shift.space)="checkShift($event)"
+                              (keyup.space)="checkShift($event)"
                               (change)="handleSelection(index, row)"
                               [checked]="selectionManager.isSelected(row)"
                               [aria-label]="checkboxLabel(row)"
@@ -307,7 +309,9 @@
                     selectable"
              class="ui-grid-cell ui-grid-checkbox-cell ui-grid-feature-cell"
              role="gridcell">
-            <mat-checkbox (click)="$event.stopPropagation()"
+            <mat-checkbox (click)="checkShift($event)"
+                          (keyup.shift.space)="checkShift($event)"
+                          (keyup.space)="checkShift($event)"
                           (change)="handleSelection(index, row)"
                           [checked]="selectionManager.isSelected(row)"
                           [aria-label]="checkboxLabel(row)"
