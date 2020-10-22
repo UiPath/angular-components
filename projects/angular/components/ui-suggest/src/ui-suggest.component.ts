@@ -747,6 +747,9 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         );
 
         this._scrollTo$.next(this.activeIndex);
+        if (!this.loading$.value) {
+            this._announceNavigate();
+        }
     }
 
     /**
@@ -1026,9 +1029,9 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _announceNavigate() {
-        const textToAnnounce = !this._isOnCustomValueIndex ?
-            this.items[this.activeIndex].text :
-            `${this.intl.customValueLiveLabel} ${this.customValueLabelTranslator(this.inputControl.value)}`;
+        const textToAnnounce = !this._isOnCustomValueIndex
+            ? this.items[this.activeIndex].text
+            : `${this.intl.customValueLiveLabel} ${this.customValueLabelTranslator(this.inputControl.value)}`;
         this._liveAnnouncer.announce(this.intl.currentItemLabel(textToAnnounce, this.activeIndex + 1, this._items.length));
     }
 
