@@ -48,7 +48,9 @@ export class SortManager<T> {
 
         this._emitSort(sortedColumn);
     }
-
+    /**
+     * Sort based on user action on column header
+     */
     public changeSort(column: UiGridColumnDirective<T>) {
         if (!column.sortable) { return; }
 
@@ -58,18 +60,19 @@ export class SortManager<T> {
 
         column.sort = SORT_CYCLE_MAP[column.sort];
 
-        this._emitSort(column);
+        this._emitSort(column, true);
     }
 
     public destroy() {
         this.sort$.complete();
     }
 
-    private _emitSort(column: UiGridColumnDirective<T>) {
+    private _emitSort(column: UiGridColumnDirective<T>, userEvent = false) {
         const updatedSort = {
             direction: column.sort,
             field: column.property,
             title: column.title,
+            userEvent,
         } as ISortModel<T>;
 
         if (isEqual(this.sort$.getValue(), updatedSort)) { return; }
