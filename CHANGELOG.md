@@ -1,3 +1,11 @@
+# v9.1.0 (2020-10-21)
+* **grid** differentiate between user sort and programmatic sort events
+* **grid** a11y: announce only user `sort` events
+* **grid** a11y: expose translateable aria-label for checkboxes
+* **grid** added `matTooltip` for checkboxes
+* **suggest** a11y: fixes to title, specify `role` attributes for list
+* **suggest** a11y: announce current `option` on open
+
 # v9.0.8 (2020-10-15)
 * **grid** fix multiple row selection with shift
 
