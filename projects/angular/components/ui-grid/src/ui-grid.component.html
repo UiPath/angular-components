@@ -172,7 +172,6 @@
                         </div>
 
                         <div *ngIf="column.resizeable && !last"
-                             [class.is-resizing]="column.isResizing"
                              (mousedown)="resizeManager.startResize($event, column)"
                              class="ui-grid-resize-anchor">
                             <mat-icon>
