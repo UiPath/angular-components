@@ -32,9 +32,9 @@ import {
 import {
     debounceTime,
     distinctUntilChanged,
+    filter,
     map,
     observeOn,
-    skip,
     switchMap,
     take,
     takeUntil,
@@ -497,7 +497,9 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             msg => this._queuedAnnouncer.enqueue(msg),
             this.intl,
             this.dataManager.data$,
-            this.sortManager.sort$.pipe(skip(1)),
+            this.sortManager.sort$.pipe(
+                filter(({ userEvent }) => !!userEvent),
+            ),
             this.refresh,
             this.footer && this.footer.pageChange,
         );
