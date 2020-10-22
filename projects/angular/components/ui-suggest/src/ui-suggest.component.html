@@ -114,6 +114,7 @@
                    [refocus]="isOpen"
                    selectionLocation="end"
                    autocomplete="off"
+                   aria-autocomplete="list"
                    matInput>
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
@@ -125,7 +126,7 @@
 </div>
 
 <ng-template #resultList>
-    <mat-list>
+    <mat-list [attr.role]="'listbox'">
         <cdk-virtual-scroll-viewport [isDown]="isDown"
                                      [itemSize]="itemSize"
                                      [style.max-height.px]="viewportMaxHeight"
@@ -147,6 +148,7 @@
                                [style.height.px]="!!item ? itemSize : 0"
                                (click)="preventDefault($event);
                                         updateValue(item, !multiple, true);"
+                               [attr.role]="'option'"
                                matRipple>
                     <ng-container *ngIf="!!item">
                         <ng-container *ngIf="itemTemplate; else defaultItem">
@@ -198,6 +200,7 @@
                                   !isCustomValueVisible &&
                                   !(loading$ | async)"
                                [matTooltip]="label"
+                               [attr.role]="'option'"
                                matTooltipPosition="right"
                                class="text-ellipsis no-results-text">
                     <em>{{label}}</em>
@@ -214,6 +217,7 @@
                    [matTooltip]="customValueLabelTranslator(inputControl.value)"
                    [style.height.px]="itemSize"
                    (click)="preventDefault($event); updateValue(inputControl.value, !multiple, true);"
+                   [attr.role]="'option'"
                    matTooltipPosition="right"
                    class="text-ellipsis custom-item">
         <div class="text-label text-ellipsis">
