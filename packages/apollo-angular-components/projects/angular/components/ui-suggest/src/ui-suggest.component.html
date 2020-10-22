@@ -1,16 +1,26 @@
 <div *ngLet="focus$ | async as focus"
-     [attr.aria-label]="placeholder"
      (uiClickOutside)="focused &&
                     close(false)"
      class="ui-suggest-container"
      role="application">
-    <!-- role application to force up & down arrow to generate browser (not screen reader) events -->
+     <!--
+          We use role="application" to opt-out of the screen reader's navigator. Without this,
+          we couldn't highlight correctly the focused option when navigating by keyboard.
+
+          Tested in NVDA.
+      -->
+
     <div [attr.tabindex]="!disabled &&
                         !readonly ?
                         0 : null"
          [uiAutofocus]="!isOpen && focus"
          [refocus]="!isOpen && focus"
          [matRippleDisabled]="isFormControl"
+         [attr.aria-label]="placeholder"
+         [attr.aria-describedby]="describedBy"
+         [attr.aria-required]="required"
+         [attr.aria-disabled]="disabled || readonly"
+         [attr.aria-expanded]="isOpen"
          (click)="toggle()"
          (keyup.enter)="preventDefault($event);"
          (keydown.enter)="preventDefault($event);
@@ -23,11 +33,13 @@
          (focus)="onFocus();"
          (blur)="onBlur()"
          matRipple
-         class="display">
+         class="display"
+         role="combobox">
         <div [matTooltip]="tooltip"
              class="display-container text-ellipsis">
             <span *ngIf="!isFormControl && placeholder"
-                  class="display-title">
+                  class="display-title"
+                  aria-hidden="true">
                 {{ placeholder }}:
             </span>
             <span class="display-value">

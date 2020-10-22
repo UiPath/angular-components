@@ -47,6 +47,7 @@ import {
 import {
     generateSuggestionItem,
     generateSuggetionItemList,
+    UiSuggestAssert,
 } from './test';
 import { UiSuggestComponent } from './ui-suggest.component';
 import { UiSuggestModule } from './ui-suggest.module';
@@ -102,12 +103,14 @@ const sharedSpecifications = (
     let fixture: ComponentFixture<UiSuggestFixtureDirective>;
     let component: UiSuggestFixtureDirective;
     let uiSuggest: UiSuggestComponent;
+    let assert: UiSuggestAssert;
 
     beforeEach(() => {
         const setup = beforeEachFn();
         fixture = setup.fixture;
         component = setup.component;
         uiSuggest = setup.uiSuggest;
+        assert = new UiSuggestAssert(fixture.debugElement, uiSuggest);
     });
 
     describe('Behavior: standard usage', () => {
@@ -506,18 +509,13 @@ const sharedSpecifications = (
 
                 fixture.detectChanges();
 
-                const itemList = fixture.debugElement.query(By.css('.item-list-container'));
-                const itemListClasses = itemList.nativeElement.classList;
-
-                expect(uiSuggest.isOpen).toBeTruthy();
-                expect(itemListClasses.contains('item-list-container-state-open')).toBeTruthy();
+                assert.isOpen();
 
                 component[state] = true;
 
                 fixture.detectChanges();
 
-                expect(uiSuggest.isOpen).toBeFalsy();
-                expect(itemListClasses.contains('item-list-container-state-closed')).toBeTruthy();
+                assert.isClosed();
             });
 
             it(`should not open if the component is ${state}`, () => {
@@ -525,14 +523,14 @@ const sharedSpecifications = (
 
                 fixture.detectChanges();
 
-                expect(uiSuggest.isOpen).toBeFalsy();
+                assert.isClosed();
 
                 fixture.detectChanges();
                 const display = fixture.debugElement.query(By.css('.display'));
 
                 display.nativeElement.dispatchEvent(EventGenerator.click);
 
-                expect(uiSuggest.isOpen).toBeFalsy();
+                assert.isClosed();
             });
         });
 
@@ -545,13 +543,13 @@ const sharedSpecifications = (
 
                 fixture.detectChanges();
 
-                expect(uiSuggest.disabled).toBeTruthy();
+                assert.isDisabled();
                 expect(uiSuggest.loading$.value).toBeFalsy();
 
                 component.disabled = false;
                 fixture.detectChanges();
 
-                expect(uiSuggest.disabled).toBeFalsy();
+                assert.isEnabled();
 
                 const display = fixture.debugElement.query(By.css('.display'));
                 display.nativeElement.dispatchEvent(EventGenerator.click);
@@ -572,11 +570,11 @@ const sharedSpecifications = (
                 };
 
                 fixture.detectChanges();
-                expect(uiSuggest.disabled).toBeTruthy();
+                assert.isDisabled();
 
                 component.disabled = false;
                 fixture.detectChanges();
-                expect(uiSuggest.disabled).toBeFalsy();
+                assert.isEnabled();
 
                 const display = fixture.debugElement.query(By.css('.display'));
                 display.nativeElement.dispatchEvent(EventGenerator.click);
@@ -590,18 +588,22 @@ const sharedSpecifications = (
         it('should not open on first click and close on the second', () => {
             fixture.detectChanges();
 
-            expect(uiSuggest.isOpen).toBeFalsy();
+            assert.isClosed();
 
             fixture.detectChanges();
             const display = fixture.debugElement.query(By.css('.display'));
 
             display.nativeElement.dispatchEvent(EventGenerator.click);
 
-            expect(uiSuggest.isOpen).toBeTruthy();
+            fixture.detectChanges();
+
+            assert.isOpen();
 
             display.nativeElement.dispatchEvent(EventGenerator.click);
 
-            expect(uiSuggest.isOpen).toBeFalsy();
+            fixture.detectChanges();
+
+            assert.isClosed();
         });
     });
 
@@ -626,7 +628,7 @@ const sharedSpecifications = (
         it('should open when pressing Enter', () => {
             fixture.detectChanges();
 
-            expect(uiSuggest.isOpen).toBeFalsy();
+            assert.isClosed();
 
             fixture.detectChanges();
             const display = fixture.debugElement.query(By.css('.display'));
@@ -634,13 +636,15 @@ const sharedSpecifications = (
                 EventGenerator.keyDown(Key.Enter),
             );
 
-            expect(uiSuggest.isOpen).toBeTruthy();
+            fixture.detectChanges();
+
+            assert.isOpen();
         });
 
         it('should open when pressing Space', () => {
             fixture.detectChanges();
 
-            expect(uiSuggest.isOpen).toBeFalsy();
+            assert.isClosed();
 
             fixture.detectChanges();
             const display = fixture.debugElement.query(By.css('.display'));
@@ -648,7 +652,9 @@ const sharedSpecifications = (
                 EventGenerator.keyUp(Key.Space),
             );
 
-            expect(uiSuggest.isOpen).toBeTruthy();
+            fixture.detectChanges();
+
+            assert.isOpen();
         });
 
         it('should have the active index set when opened', () => {
@@ -814,7 +820,7 @@ const sharedSpecifications = (
 
             fixture.detectChanges();
 
-            expect(uiSuggest.isOpen).toBeTruthy();
+            assert.isOpen();
 
             const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
 
@@ -826,7 +832,9 @@ const sharedSpecifications = (
                 EventGenerator.keyDown(Key.Enter),
             );
 
-            expect(uiSuggest.isOpen).toBeFalsy();
+            fixture.detectChanges();
+
+            assert.isClosed();
         });
 
         it('should NOT close if selecting an item via navigation and multiple selection is ENABLED', () => {
@@ -840,7 +848,7 @@ const sharedSpecifications = (
 
             fixture.detectChanges();
 
-            expect(uiSuggest.isOpen).toBeTruthy();
+            assert.isOpen();
 
             const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
 
@@ -852,7 +860,7 @@ const sharedSpecifications = (
                 EventGenerator.keyDown(Key.Enter),
             );
 
-            expect(uiSuggest.isOpen).toBeTruthy();
+            assert.isOpen();
         });
 
         it('should close if Tab is pressed', () => {
@@ -864,7 +872,7 @@ const sharedSpecifications = (
 
             fixture.detectChanges();
 
-            expect(uiSuggest.isOpen).toBeTruthy();
+            assert.isOpen();
 
             const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
 
@@ -872,7 +880,9 @@ const sharedSpecifications = (
                 EventGenerator.keyDown(Key.Tab),
             );
 
-            expect(uiSuggest.isOpen).toBeFalsy();
+            fixture.detectChanges();
+
+            assert.isClosed();
         });
 
         it('should close if Shift + Tab is pressed', () => {
@@ -884,7 +894,7 @@ const sharedSpecifications = (
 
             fixture.detectChanges();
 
-            expect(uiSuggest.isOpen).toBeTruthy();
+            assert.isOpen();
 
             const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
 
@@ -892,7 +902,9 @@ const sharedSpecifications = (
                 EventGenerator.keyDown(Key.Tab, Key.Shift),
             );
 
-            expect(uiSuggest.isOpen).toBeFalsy();
+            fixture.detectChanges();
+
+            assert.isClosed();
         });
 
         it('should close if Esc is pressed', () => {
@@ -904,7 +916,7 @@ const sharedSpecifications = (
 
             fixture.detectChanges();
 
-            expect(uiSuggest.isOpen).toBeTruthy();
+            assert.isOpen();
 
             const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
 
@@ -912,7 +924,9 @@ const sharedSpecifications = (
                 EventGenerator.keyUp(Key.Escape),
             );
 
-            expect(uiSuggest.isOpen).toBeFalsy();
+            fixture.detectChanges();
+
+            assert.isClosed();
         });
 
         it('should clear selection if Esc is pressed', () => {
@@ -1892,6 +1906,7 @@ describe('Component: UiSuggest', () => {
         let fixture: ComponentFixture<UiSuggestFormControlFixtureComponent>;
         let component: UiSuggestFormControlFixtureComponent;
         let uiSuggest: UiSuggestComponent;
+        let assert: UiSuggestAssert;
 
         const beforeEachFn = () => {
             TestBed.configureTestingModule({
@@ -1925,6 +1940,7 @@ describe('Component: UiSuggest', () => {
                 fixture = setup.fixture;
                 component = setup.component;
                 uiSuggest = setup.uiSuggest;
+                assert = new UiSuggestAssert(fixture.debugElement, uiSuggest);
 
                 component.items = generateSuggetionItemList('random');
             });
@@ -1948,7 +1964,7 @@ describe('Component: UiSuggest', () => {
             it('should open the list when clicking the container', () => {
                 fixture.detectChanges();
 
-                expect(uiSuggest.isOpen).toBeFalsy();
+                assert.isClosed();
 
                 const formFieldUnderline = fixture.debugElement.query(By.css('.test-form-field .mat-form-field-label'));
 
@@ -1956,15 +1972,19 @@ describe('Component: UiSuggest', () => {
 
                 fixture.detectChanges();
 
-                expect(uiSuggest.isOpen).toBeTruthy();
+                assert.isOpen();
             });
 
             it('should be marked as disabled when updating state via form', () => {
                 fixture.detectChanges();
 
+                assert.isEnabled();
+
                 component.formControl!.disable();
 
-                expect(uiSuggest.disabled).toBeTruthy();
+                fixture.detectChanges();
+
+                assert.isDisabled();
             });
 
             it('should remove NULL and Undefined entries when updating value via form', () => {
@@ -2012,15 +2032,15 @@ describe('Component: UiSuggest', () => {
                 uiSuggest.required = true;
                 fixture.detectChanges();
 
-                const suggest = fixture.debugElement.query(By.css('ui-suggest')).nativeElement as HTMLElement;
-                expect(suggest.getAttribute('aria-required')).toEqual('true');
+                const combobox = fixture.debugElement.query(By.css('ui-suggest [role=combobox]'));
+                expect(combobox.attributes['aria-required']).toEqual('true');
             });
 
             it('should have aria attribute set to false if it is NOT required', () => {
                 fixture.detectChanges();
 
-                const suggest = fixture.debugElement.query(By.css('ui-suggest')).nativeElement as HTMLElement;
-                expect(suggest.getAttribute('aria-required')).toEqual('false');
+                const combobox = fixture.debugElement.query(By.css('ui-suggest [role=combobox]'));
+                expect(combobox.attributes['aria-required']).toEqual('false');
             });
         });
     });
