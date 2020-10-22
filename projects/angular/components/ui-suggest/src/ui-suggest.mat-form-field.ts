@@ -56,7 +56,6 @@ export abstract class UiSuggestMatFormFieldDirective implements
      * Configure if the input should be marked as `required` inside the form field.
      *
      */
-    @HostBinding('attr.aria-required')
     @Input()
     public get required() {
         return this._required;
@@ -186,9 +185,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
     /**
      * @ignore
      */
-    @HostBinding('attr.aria-describedby')
-    public describedBy = '';
-
+    public describedBy?: string;
 
     /**
      * Emits the selected item value an item is selected.
@@ -282,7 +279,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
      * @ignore
      */
     public setDescribedByIds(ids: string[]) {
-        this.describedBy = ids.join(' ');
+        this.describedBy = ids.join(' ').trim() || undefined;
     }
 
     /**
