@@ -4,26 +4,28 @@ import { By } from '@angular/platform-browser';
 import { UiSuggestComponent } from '../ui-suggest.component';
 
 export class UiSuggestAssert {
-    public constructor(private _root: DebugElement, private _suggest: UiSuggestComponent) {
-    }
+    constructor(
+        private _root: DebugElement,
+        private _suggest: UiSuggestComponent,
+    ) { }
 
-    isOpen(): void {
+    public isOpen(): void {
         this._assertOpenState('open');
     }
 
-    isClosed(): void {
+    public isClosed(): void {
         this._assertOpenState('closed');
     }
 
-    isDisabled(): void {
+    public isDisabled(): void {
         this._assertDisableState('disabled');
     }
 
-    isEnabled(): void {
+    public isEnabled(): void {
         this._assertDisableState('enabled');
     }
 
-    private _assertOpenState(expected: 'open' | 'closed') {
+    private _assertOpenState(expected: 'open' | 'closed'): void {
         const expectedIsOpen = expected === 'open';
 
         expect(this._suggest.isOpen).toBe(expectedIsOpen);
@@ -37,7 +39,7 @@ export class UiSuggestAssert {
         expect(itemListClasses.contains('item-list-container-state-closed')).toBe(!expectedIsOpen);
     }
 
-    private _assertDisableState(expected: 'enabled' | 'disabled') {
+    private _assertDisableState(expected: 'enabled' | 'disabled'): void {
         const expectedIsDisabled = expected === 'disabled';
 
         expect(this._suggest.disabled).toBe(expectedIsDisabled);
