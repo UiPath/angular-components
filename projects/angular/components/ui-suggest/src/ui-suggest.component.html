@@ -1,16 +1,26 @@
 <div *ngLet="focus$ | async as focus"
-     [attr.aria-label]="placeholder"
      (uiClickOutside)="focused &&
                     close(false)"
      class="ui-suggest-container"
      role="application">
-    <!-- role application to force up & down arrow to generate browser (not screen reader) events -->
+     <!--
+          We use role="application" to opt-out of the screen reader's navigator. Without this,
+          we couldn't highlight correctly the focused option when navigating by keyboard.
+
+          Tested in NVDA.
+      -->
+
     <div [attr.tabindex]="!disabled &&
                         !readonly ?
                         0 : null"
          [uiAutofocus]="!isOpen && focus"
          [refocus]="!isOpen && focus"
          [matRippleDisabled]="isFormControl"
+         [attr.aria-label]="placeholder"
+         [attr.aria-describedby]="describedBy"
+         [attr.aria-required]="required"
+         [attr.aria-disabled]="disabled || readonly"
+         [attr.aria-expanded]="isOpen"
          (click)="toggle()"
          (keyup.enter)="preventDefault($event);"
          (keydown.enter)="preventDefault($event);
@@ -23,11 +33,13 @@
          (focus)="onFocus();"
          (blur)="onBlur()"
          matRipple
-         class="display">
+         class="display"
+         role="combobox">
         <div [matTooltip]="tooltip"
              class="display-container text-ellipsis">
             <span *ngIf="!isFormControl && placeholder"
-                  class="display-title">
+                  class="display-title"
+                  aria-hidden="true">
                 {{ placeholder }}:
             </span>
             <span class="display-value">
@@ -102,6 +114,7 @@
                    [refocus]="isOpen"
                    selectionLocation="end"
                    autocomplete="off"
+                   aria-autocomplete="list"
                    matInput>
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
@@ -113,7 +126,7 @@
 </div>
 
 <ng-template #resultList>
-    <mat-list>
+    <mat-list [attr.role]="'listbox'">
         <cdk-virtual-scroll-viewport [isDown]="isDown"
                                      [itemSize]="itemSize"
                                      [style.max-height.px]="viewportMaxHeight"
@@ -124,7 +137,8 @@
             <ng-container *ngTemplateOutlet="customValueTemplate; context: { $implicit: 'down' }">
             </ng-container>
 
-            <ng-container *cdkVirtualFor="let item of renderItems; let index = index; trackBy: trackById; templateCacheSize: disableTooltip ? 20 : 0">
+            <ng-container
+                          *cdkVirtualFor="let item of renderItems; let index = index; trackBy: trackById; templateCacheSize: disableTooltip ? 20 : 0">
                 <mat-list-item [class.active]="index === activeIndex"
                                [class.is-loading]="item.loading !== VirtualScrollItemStatus.loaded"
                                [class.readonly]="item.loading !== VirtualScrollItemStatus.loaded"
@@ -134,6 +148,7 @@
                                [style.height.px]="!!item ? itemSize : 0"
                                (click)="preventDefault($event);
                                         updateValue(item, !multiple, true);"
+                               [attr.role]="'option'"
                                matRipple>
                     <ng-container *ngIf="!!item">
                         <ng-container *ngIf="itemTemplate; else defaultItem">
@@ -185,6 +200,7 @@
                                   !isCustomValueVisible &&
                                   !(loading$ | async)"
                                [matTooltip]="label"
+                               [attr.role]="'option'"
                                matTooltipPosition="right"
                                class="text-ellipsis no-results-text">
                     <em>{{label}}</em>
@@ -201,6 +217,7 @@
                    [matTooltip]="customValueLabelTranslator(inputControl.value)"
                    [style.height.px]="itemSize"
                    (click)="preventDefault($event); updateValue(inputControl.value, !multiple, true);"
+                   [attr.role]="'option'"
                    matTooltipPosition="right"
                    class="text-ellipsis custom-item">
         <div class="text-label text-ellipsis">
