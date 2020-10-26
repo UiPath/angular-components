@@ -1,3 +1,6 @@
+# v9.1.1 (2020-10-26)
+* **suggest** announce "no results" msg if empty, fix error on open if empty
+
 # v9.1.0 (2020-10-21)
 * **grid** differentiate between user sort and programmatic sort events
 * **grid** a11y: announce only user `sort` events
