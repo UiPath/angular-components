@@ -126,7 +126,8 @@
                                       [disabled]="!dataManager.length"
                                       [checked]="isEveryVisibleRowChecked"
                                       [indeterminate]="hasValueOnVisiblePage && !isEveryVisibleRowChecked"
-                                      [aria-label]="checkboxLabel()"
+                                      [matTooltip]="checkboxTooltip()"
+                                      [aria-label]="checkboxTooltip()"
                                       tabindex="0">
                         </mat-checkbox>
                     </div>
@@ -172,7 +173,6 @@
                         </div>
 
                         <div *ngIf="column.resizeable && !last"
-                             [class.is-resizing]="column.isResizing"
                              (mousedown)="resizeManager.startResize($event, column)"
                              class="ui-grid-resize-anchor">
                             <mat-icon>
@@ -291,7 +291,8 @@
                               (keyup.space)="checkShift($event)"
                               (change)="handleSelection(index, row)"
                               [checked]="selectionManager.isSelected(row)"
-                              [aria-label]="checkboxLabel(row)"
+                              [matTooltip]="checkboxTooltip(row)"
+                              [aria-label]="checkboxTooltip(row)"
                               tabindex="0">
                 </mat-checkbox>
             </div>
@@ -314,7 +315,8 @@
                           (keyup.space)="checkShift($event)"
                           (change)="handleSelection(index, row)"
                           [checked]="selectionManager.isSelected(row)"
-                          [aria-label]="checkboxLabel(row)"
+                          [matTooltip]="checkboxTooltip(row)"
+                          [aria-label]="checkboxTooltip(row)"
                           tabindex="0">
             </mat-checkbox>
         </div>

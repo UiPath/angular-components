@@ -99,6 +99,18 @@ export class UiGridIntl implements OnDestroy {
      */
     public descending = 'descending';
 
+    /**
+     * Determines the `checkbox` `matToolTip`.
+     *
+     * @param [rowIndex] The rowIndex for which the label is computed.
+     */
+    public checkboxTooltip(selected: boolean, rowIndex?: number): string {
+        if (rowIndex == null) {
+            return `${selected ? 'Deselect' : 'Select'} all`;
+        }
+        return `${selected ? 'Deselect' : 'Select'} row ${rowIndex}`;
+    }
+
 
     /**
      * Generates a selection label for the given count.
