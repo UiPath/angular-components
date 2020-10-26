@@ -345,15 +345,33 @@ describe('Component: UiGrid', () => {
                 });
 
                 describe('Feature: checkbox', () => {
-                    it('should check all rows if the header checkbox is clicked', () => {
+                    it('should have ariaLabel set correctly for toggle selection', () => {
                         const checkboxHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell.ui-grid-checkbox-cell'));
+                        const matCheckbox = checkboxHeader.query(By.css('mat-checkbox')).componentInstance as MatCheckbox;
+
+                        expect(matCheckbox.checked).toEqual(false);
+                        expect(matCheckbox.ariaLabel).toEqual('Select all');
 
                         const checkboxInput = checkboxHeader.query(By.css('input'));
                         checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
 
                         fixture.detectChanges();
 
+
+                        expect(matCheckbox.checked).toEqual(true);
+                        expect(matCheckbox.ariaLabel).toEqual('Deselect all');
+                    });
+
+                    it('should check all rows if the header checkbox is clicked', () => {
+                        const checkboxHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell.ui-grid-checkbox-cell'));
                         const matCheckbox = checkboxHeader.query(By.css('mat-checkbox')).componentInstance as MatCheckbox;
+
+                        expect(matCheckbox.checked).toEqual(false);
+
+                        const checkboxInput = checkboxHeader.query(By.css('input'));
+                        checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+
+                        fixture.detectChanges();
 
                         expect(matCheckbox.checked).toEqual(true);
 
@@ -388,7 +406,10 @@ describe('Component: UiGrid', () => {
 
                         expect(rowCheckboxList.length).toEqual(data.length);
 
-                        rowCheckboxList.forEach(checkbox => expect(checkbox.checked).toEqual(true));
+                        rowCheckboxList.forEach((checkbox, i) => {
+                            expect(checkbox.checked).toEqual(true);
+                            expect(checkbox.ariaLabel).toEqual(`Deselect row ${i}`);
+                        });
 
                         expect(grid.selectionManager.selected.length).toEqual(data.length);
                         expect(grid.selectionManager.selected).toEqual(data);
@@ -398,7 +419,10 @@ describe('Component: UiGrid', () => {
                         fixture.detectChanges();
 
                         expect(matCheckbox.checked).toEqual(false);
-                        rowCheckboxList.forEach(checkbox => expect(checkbox.checked).toEqual(false));
+                        rowCheckboxList.forEach((checkbox, i) => {
+                             expect(checkbox.checked).toEqual(false);
+                             expect(checkbox.ariaLabel).toEqual(`Select row ${i}`);
+                        });
                         expect(grid.hasValueOnVisiblePage).toEqual(false);
                     });
 
@@ -478,7 +502,7 @@ describe('Component: UiGrid', () => {
 
                         rowCheckboxInputList[10].nativeElement.dispatchEvent(EventGenerator.click);
 
-                        for (let i = 0; i <= 10; i ++) {
+                        for (let i = 0; i <= 10; i++) {
                             expect(grid.selectionManager.isSelected(data[i])).toBeTrue();
                         }
                     });
