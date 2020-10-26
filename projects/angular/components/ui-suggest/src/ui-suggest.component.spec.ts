@@ -605,6 +605,44 @@ const sharedSpecifications = (
         });
     });
 
+    describe('Behavior: a11y on open', () => {
+        it(`should announce if empty`, () => {
+            const spy = spyOn(uiSuggest['_liveAnnouncer'], 'announce');
+            const display = fixture.debugElement.query(By.css('.display'));
+            display.nativeElement.dispatchEvent(EventGenerator.click);
+
+            fixture.detectChanges();
+
+            expect(spy).toHaveBeenCalledWith('No results');
+        });
+
+        it(`should NOT annuonce a highlight if in loading state`, () => {
+            component.items = generateSuggetionItemList('random');
+            fixture.detectChanges();
+
+            const spy = spyOn(uiSuggest['_liveAnnouncer'], 'announce');
+            uiSuggest.loading$.next(true);
+
+            const display = fixture.debugElement.query(By.css('.display'));
+            display.nativeElement.dispatchEvent(EventGenerator.click);
+
+            fixture.detectChanges();
+            expect(spy).toHaveBeenCalledTimes(0);
+        });
+
+        it(`should announce as highlighted first item`, () => {
+            component.items = generateSuggetionItemList('random');
+            fixture.detectChanges();
+
+            const spy = spyOn(uiSuggest['_liveAnnouncer'], 'announce');
+            const display = fixture.debugElement.query(By.css('.display'));
+            display.nativeElement.dispatchEvent(EventGenerator.click);
+
+            fixture.detectChanges();
+            expect(spy).toHaveBeenCalledWith(`${component.items[0].text} item 1 out of ${component.items.length}`);
+        });
+    });
+
     describe('Behavior: keyboard navigation', () => {
         let items: ISuggestValue[];
 

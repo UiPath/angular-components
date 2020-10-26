@@ -1027,6 +1027,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _announceNavigate() {
+        if (!this.items.length && !this._isOnCustomValueIndex) {
+            this._liveAnnouncer.announce(this.intl.noResultsLabel);
+            return;
+        }
         const textToAnnounce = !this._isOnCustomValueIndex
             ? this.items[this.activeIndex].text
             : `${this.intl.customValueLiveLabel} ${this.customValueLabelTranslator(this.inputControl.value)}`;
