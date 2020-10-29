@@ -32,9 +32,9 @@ import {
 import {
     debounceTime,
     distinctUntilChanged,
+    filter,
     map,
     observeOn,
-    skip,
     switchMap,
     take,
     takeUntil,
@@ -114,7 +114,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     public get isEveryVisibleRowChecked() {
-        return this.dataManager.length &&
+        return !!this.dataManager.length &&
             this.dataManager.every(row => this.selectionManager.isSelected(row!));
     }
 
@@ -499,7 +499,9 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             msg => this._queuedAnnouncer.enqueue(msg),
             this.intl,
             this.dataManager.data$,
-            this.sortManager.sort$.pipe(skip(1)),
+            this.sortManager.sort$.pipe(
+                filter(({ userEvent }) => !!userEvent),
+            ),
             this.refresh,
             this.footer && this.footer.pageChange,
         );
@@ -638,8 +640,21 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     }
 
     /**
-     * Determines the `checkbox` `aria-label`.
+     * Determines the `checkbox` `matToolTip`.
      *
+     * @param [row] The row for which the label is computed.
+     */
+    public checkboxTooltip(row?: T): string {
+        if (!row) {
+            return this.intl.checkboxTooltip(this.isEveryVisibleRowChecked);
+        }
+
+        return this.intl.checkboxTooltip(this.selectionManager.isSelected(row), this.dataManager.indexOf(row));
+    }
+
+    /**
+     * Determines the `checkbox` aria-label`.
+     * **DEPRECATED**
      * @param [row] The row for which the label is computed.
      */
     public checkboxLabel(row?: T): string {

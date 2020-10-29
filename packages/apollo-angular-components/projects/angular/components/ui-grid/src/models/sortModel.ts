@@ -21,4 +21,9 @@ export interface ISortModel<T> {
      *
      */
     title: string;
+    /**
+     * Sort event as a result of direct user intent to sort by a column.
+     *
+     */
+    userEvent?: boolean;
 }
