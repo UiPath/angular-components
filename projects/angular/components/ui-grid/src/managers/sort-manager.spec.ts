@@ -52,7 +52,19 @@ describe('Component: UiGrid', () => {
                 expect(manager.columns).toBe(columns);
             });
 
-            describe('Event: sort change', () => {
+            it('should update sort event if columns change', () => {
+                const cols = generateColumnList('random');
+                cols.forEach(column => {
+                    column.sortable = true;
+                    column.sort = 'asc';
+                });
+
+                manager.columns = cols;
+                expect(Object.keys(manager.sort$.getValue()).length).toBe(4);
+                expect(manager.sort$.getValue().userEvent).toBeFalse();
+            });
+
+            describe('Event: user sort change', () => {
                 it(`should cycle column sort from '' to 'asc'`, () => {
                     const column = faker.helpers.randomize(columns);
                     column.sort = '';
@@ -110,6 +122,7 @@ describe('Component: UiGrid', () => {
                         ).subscribe(sort => {
                             expect(sort.field).toEqual(column.property!);
                             expect(sort.direction).toEqual(column.sort);
+                            expect(sort.userEvent).toBeTrue();
                         });
 
                     manager.changeSort(column);
@@ -129,6 +142,7 @@ describe('Component: UiGrid', () => {
                         ).subscribe(sort => {
                             expect(sort.field).toEqual(first.property!);
                             expect(sort.direction).toEqual(first.sort);
+                            expect(sort.userEvent).toBeTrue();
                         });
 
                     manager.sort$
@@ -139,6 +153,7 @@ describe('Component: UiGrid', () => {
                         ).subscribe(sort => {
                             expect(sort.field).toEqual(second.property!);
                             expect(sort.direction).toEqual(second.sort);
+                            expect(sort.userEvent).toBeTrue();
                         });
 
                     manager.changeSort(first);
