@@ -1,3 +1,4 @@
+import type { QueryList } from '@angular/core';
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
@@ -14,7 +15,6 @@ import {
     OnDestroy,
     Optional,
     Output,
-    QueryList,
     SimpleChanges,
     ViewEncapsulation,
 } from '@angular/core';

@@ -1,6 +1,6 @@
 import { isDevMode } from '@angular/core';
 
-import { isEqual } from 'lodash-es';
+import isEqual from 'lodash-es/isEqual';
 import { BehaviorSubject } from 'rxjs';
 import {
     filter,

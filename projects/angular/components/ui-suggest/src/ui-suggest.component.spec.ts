@@ -4,12 +4,12 @@ import {
     ViewChild,
 } from '@angular/core';
 import {
-    async,
     ComponentFixture,
     discardPeriodicTasks,
     fakeAsync,
     TestBed,
     tick,
+    waitForAsync,
 } from '@angular/core/testing';
 import {
     FormBuilder,
@@ -206,7 +206,7 @@ const sharedSpecifications = (
             expect(input).not.toBeNull();
         });
 
-        it('should display a list item with the noResultsPlaceholder if searchable and empty', async(async () => {
+        it('should display a list item with the noResultsPlaceholder if searchable and empty', waitForAsync(async () => {
             component.searchable = true;
             fixture.detectChanges();
 
@@ -445,7 +445,7 @@ const sharedSpecifications = (
             clearIcon.nativeElement.dispatchEvent(EventGenerator.click);
         });
 
-        it('should display no items if the source throws an error', async(async () => {
+        it('should display no items if the source throws an error', waitForAsync(async () => {
             const items = generateSuggetionItemList('random');
 
             component.searchable = true;
@@ -986,7 +986,7 @@ const sharedSpecifications = (
     });
 
     describe('Selection: single value', () => {
-        it('should have one list item entry for each item provided', async(async () => {
+        it('should have one list item entry for each item provided', waitForAsync(async () => {
             component.items = generateSuggetionItemList(10);
             fixture.detectChanges();
 
@@ -1022,7 +1022,7 @@ const sharedSpecifications = (
             expect(displayValue.nativeElement.innerText.trim()).toBe(selectedItem.text);
         });
 
-        it('should set the selected item from the list as active when clicked', async(async () => {
+        it('should set the selected item from the list as active when clicked', waitForAsync(async () => {
             component.items = generateSuggetionItemList(10);
             const randomItem = faker.helpers.randomize(component.items);
             const randomIdx = component.items.indexOf(randomItem);
@@ -1066,7 +1066,7 @@ const sharedSpecifications = (
             expect(uiSuggest.value.length).toBe(0);
         });
 
-        it('should replace the current value if selecting a new one', async(async () => {
+        it('should replace the current value if selecting a new one', waitForAsync(async () => {
             component.items = generateSuggetionItemList(10);
             component.value = [];
             component.defaultValue = undefined;
@@ -1112,7 +1112,7 @@ const sharedSpecifications = (
                 component.items = items;
             });
 
-            it('should append the value to the list if there is no full match', async(async () => {
+            it('should append the value to the list if there is no full match', waitForAsync(async () => {
                 fixture.detectChanges();
 
                 searchFor(faker.random.uuid(), fixture);
@@ -1129,7 +1129,7 @@ const sharedSpecifications = (
                 expect(icon).toBeTruthy();
             }));
 
-            it('should be active if partial matches exist', async(async () => {
+            it('should be active if partial matches exist', waitForAsync(async () => {
                 fixture.detectChanges();
 
                 const [longestTextItem] = component.items!.slice()
@@ -1150,7 +1150,7 @@ const sharedSpecifications = (
                 expect(icon).toBeTruthy();
             }));
 
-            it('should have the custom text match the input value if reopened', async(async () => {
+            it('should have the custom text match the input value if reopened', waitForAsync(async () => {
                 fixture.detectChanges();
 
                 const word = faker.random.uuid();
@@ -1170,7 +1170,7 @@ const sharedSpecifications = (
                 expect(uiSuggest.inputControl.value).toBe(word);
             }));
 
-            it('should trim the text when added', async(async () => {
+            it('should trim the text when added', waitForAsync(async () => {
                 fixture.detectChanges();
 
                 const word = faker.random.word();
@@ -1220,7 +1220,7 @@ const sharedSpecifications = (
             expect(displayValue.nativeElement.innerText.trim()).toBe(expectedText);
         });
 
-        it('should have a checkbox next to each item entry', async(async () => {
+        it('should have a checkbox next to each item entry', waitForAsync(async () => {
             fixture.detectChanges();
 
             const display = fixture.debugElement.query(By.css('.display'));
@@ -1239,7 +1239,7 @@ const sharedSpecifications = (
             }
         }));
 
-        it('should have the chechbox checked for selected items', async(async () => {
+        it('should have the chechbox checked for selected items', waitForAsync(async () => {
             const selectedValues = component.items!.slice(0, 5);
             component.value = selectedValues;
             fixture.detectChanges();
@@ -1265,7 +1265,7 @@ const sharedSpecifications = (
             expect(checkedCheckboxes.length).toBe(selectedValues.length);
         }));
 
-        it('should remove a selected item if clicked', async(async () => {
+        it('should remove a selected item if clicked', waitForAsync(async () => {
             component.displayPriority = 'selected';
             const selectedValues = faker.helpers.shuffle(component.items!).slice(0, 3);
             component.value = selectedValues;
@@ -1411,14 +1411,14 @@ const sharedSpecifications = (
         });
 
         describe('Feature: fetchStrategy', () => {
-            it('should make fetch call if fetchStrategy is `eager`', async(async () => {
+            it('should make fetch call if fetchStrategy is `eager`', waitForAsync(async () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
                 expect(sourceSpy).toHaveBeenCalled();
             }));
 
-            it('should not fetch if fetchStrategy is `onOpen`', async(async () => {
+            it('should not fetch if fetchStrategy is `onOpen`', waitForAsync(async () => {
                 component.fetchStrategy = 'onOpen';
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -1426,7 +1426,7 @@ const sharedSpecifications = (
                 expect(sourceSpy).toHaveBeenCalledTimes(0);
             }));
 
-            it('should call fetch if fetchStrategy is `onOpen` and suggest gets opened', async(async () => {
+            it('should call fetch if fetchStrategy is `onOpen` and suggest gets opened', waitForAsync(async () => {
                 component.fetchStrategy = 'onOpen';
 
                 fixture.detectChanges();
@@ -1443,7 +1443,7 @@ const sharedSpecifications = (
                 expect(sourceSpy).toHaveBeenCalled();
             }));
 
-            it(`should fetch call after the 'minChars' is met`, async(async () => {
+            it(`should fetch call after the 'minChars' is met`, waitForAsync(async () => {
                 const MIN_CHARS = 5;
                 component.minChars = MIN_CHARS;
 
@@ -1490,7 +1490,7 @@ const sharedSpecifications = (
             }));
         });
 
-        it('should generate the same number of items as those in total if displayCount is set to a lower limit ', async(async () => {
+        it('should generate the same number of items as those in total if displayCount is set to a lower limit ', waitForAsync(async () => {
             uiSuggest.displayCount = 5;
             fixture.detectChanges();
 
@@ -1609,7 +1609,7 @@ const sharedSpecifications = (
                 randomString = faker.random.uuid();
             });
 
-            it('should set value', async(async () => {
+            it('should set value', waitForAsync(async () => {
                 fixture.detectChanges();
 
                 const display = fixture.debugElement.query(By.css('.display'));
@@ -1634,7 +1634,7 @@ const sharedSpecifications = (
                 expect(uiSuggest.value[0].text).toBe(randomString);
             }));
 
-            it('should render new item if reversed', async(async () => {
+            it('should render new item if reversed', waitForAsync(async () => {
                 component.direction = 'up';
                 fixture.detectChanges();
 
@@ -1652,7 +1652,7 @@ const sharedSpecifications = (
                 expect(!!customItem).toBe(true);
             }));
 
-            it('should NOT render if reversed and search matches results', async(async () => {
+            it('should NOT render if reversed and search matches results', waitForAsync(async () => {
                 uiSuggest.direction = 'up';
                 const customString = faker.helpers.randomize(items).text;
                 fixture.detectChanges();
