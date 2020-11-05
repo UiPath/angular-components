@@ -1,3 +1,4 @@
+import type { QueryList } from '@angular/core';
 import {
     AfterViewInit,
     ContentChildren,
@@ -6,7 +7,6 @@ import {
     Input,
     OnDestroy,
     Output,
-    QueryList,
 } from '@angular/core';
 
 import { IFilterModel } from '../models';
