@@ -6,7 +6,7 @@ import {
     OnInit,
     ViewEncapsulation,
 } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import type { AbstractControl } from '@angular/forms';
 
 import {
     combineLatest,

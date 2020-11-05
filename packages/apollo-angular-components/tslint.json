@@ -164,7 +164,6 @@
       "single"
     ],
     "radix": true,
-    "rxjs-collapse-imports": true,
     "rxjs-no-compat": true,
     "rxjs-no-nested-subscribe": true,
     "rxjs-no-static-observable-methods": true,

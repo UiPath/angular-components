@@ -1,4 +1,4 @@
-import { AbstractControl } from '@angular/forms';
+import type { AbstractControl } from '@angular/forms';
 
 export type IPasswordValidationFn = (value: string) => boolean;
 export interface IRegexLike {
