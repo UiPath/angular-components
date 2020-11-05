@@ -1,3 +1,9 @@
+# v10.0.0-rc.3 (2020-11-05)
+* **ng** update to `10.2`
+* **rxjs** version bump
+* **chore** update peerDependencies
+* **chore** update import types
+
 # v10.0.0-rc.2 (2020-10-28)
 * **grid** differentiate between user sort and programmatic sort events
 * **grid** a11y: announce only user `sort` events
