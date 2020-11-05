@@ -3,13 +3,13 @@ import {
     ViewChild,
 } from '@angular/core';
 import {
-    async,
     ComponentFixture,
     discardPeriodicTasks,
     fakeAsync,
     flush,
     TestBed,
     tick,
+    waitForAsync,
 } from '@angular/core/testing';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatMenuItem } from '@angular/material/menu';
@@ -420,8 +420,8 @@ describe('Component: UiGrid', () => {
 
                         expect(matCheckbox.checked).toEqual(false);
                         rowCheckboxList.forEach((checkbox, i) => {
-                             expect(checkbox.checked).toEqual(false);
-                             expect(checkbox.ariaLabel).toEqual(`Select row ${i}`);
+                            expect(checkbox.checked).toEqual(false);
+                            expect(checkbox.ariaLabel).toEqual(`Select row ${i}`);
                         });
                         expect(grid.hasValueOnVisiblePage).toEqual(false);
                     });
@@ -1164,7 +1164,7 @@ describe('Component: UiGrid', () => {
         });
 
         describe('Filter: search', () => {
-            it(`should have the items in the custom value list`, async(async () => {
+            it(`should have the items in the custom value list`, waitForAsync(async () => {
                 const items = generateListFactory(() => ({
                     label: faker.random.word(),
                     value: faker.random.number(),
@@ -1184,7 +1184,7 @@ describe('Component: UiGrid', () => {
                 searchFilter.items.forEach((item, idx) => expect(item.text).toEqual(items[idx].label));
             }));
 
-            it(`should NOT have any filter options`, async(async () => {
+            it(`should NOT have any filter options`, waitForAsync(async () => {
                 fixture.detectChanges();
 
                 const searchFilter = fixture.debugElement.query(By.css('.ui-grid-search-filter')).componentInstance as UiSuggestComponent;
@@ -1271,7 +1271,7 @@ describe('Component: UiGrid', () => {
                 fixture.detectChanges();
             });
 
-            it('should trigger an event emission when the filter changes', async(async () => {
+            it('should trigger an event emission when the filter changes', waitForAsync(async () => {
                 const items = generateListFactory(() => ({
                     label: faker.random.word(),
                     value: faker.random.number(),

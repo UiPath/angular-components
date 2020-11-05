@@ -1,4 +1,4 @@
-import {
+import type {
     ChangeDetectorRef,
     ElementRef,
     EventEmitter,
@@ -6,12 +6,14 @@ import {
     SimpleChanges,
 } from '@angular/core';
 
-import {
+import type {
     Observable,
     Subject,
 } from 'rxjs';
 
-import { UiGridColumnDirective } from '../../../body/ui-grid-column.directive';
+import type {
+    UiGridColumnDirective,
+} from '../../../body/ui-grid-column.directive';
 
 /**
  * @internal

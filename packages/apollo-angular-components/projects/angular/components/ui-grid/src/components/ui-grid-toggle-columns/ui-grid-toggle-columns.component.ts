@@ -12,7 +12,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
-import { MatAnchor } from '@angular/material/button';
+import type { MatAnchor } from '@angular/material/button';
 import {
     MatSelect,
     MatSelectChange,

@@ -8,9 +8,9 @@ import {
     Output,
 } from '@angular/core';
 
+import type { Observable } from 'rxjs';
 import {
     fromEvent,
-    Observable,
     Subject,
 } from 'rxjs';
 import {

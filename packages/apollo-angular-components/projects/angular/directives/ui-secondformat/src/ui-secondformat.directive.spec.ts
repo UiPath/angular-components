@@ -3,9 +3,9 @@ import {
     ViewChild,
 } from '@angular/core';
 import {
-    async,
     ComponentFixture,
     TestBed,
+    waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -44,7 +44,7 @@ describe('Directive: UiSecondFormat', () => {
         redraw$: new BehaviorSubject<void>(void 0),
     };
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         moment.locale('en');
 
         TestBed.configureTestingModule({
