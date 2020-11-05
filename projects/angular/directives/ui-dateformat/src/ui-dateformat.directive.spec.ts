@@ -3,12 +3,12 @@ import {
     ViewChild,
 } from '@angular/core';
 import {
-    async,
     ComponentFixture,
     discardPeriodicTasks,
     fakeAsync,
     TestBed,
     tick,
+    waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -56,7 +56,7 @@ describe('Directive: UiDateFormat', () => {
         redraw$: new BehaviorSubject<void>(void 0),
     };
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         moment.updateLocale('en', {
             longDateFormat: {
                 LT: 'h:mm A',

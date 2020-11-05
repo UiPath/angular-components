@@ -5,11 +5,11 @@ import {
     ViewChild,
 } from '@angular/core';
 import {
-    async,
     ComponentFixture,
     fakeAsync,
     TestBed,
     tick,
+    waitForAsync,
 } from '@angular/core/testing';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -69,7 +69,7 @@ describe('Service: UiSnackBarService', () => {
         }
     };
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         securitySettings = {
             restrictHtml: false,
         };
