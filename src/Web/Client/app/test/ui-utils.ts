@@ -135,6 +135,7 @@ export class IntegrationUtils<T> {
 
             if (httpRequest) { httpRequest(); }
         }
+        this.fixture.detectChanges();
 
         const listItems = suggest.queryAll(By.css('.mat-list-item'));
 
