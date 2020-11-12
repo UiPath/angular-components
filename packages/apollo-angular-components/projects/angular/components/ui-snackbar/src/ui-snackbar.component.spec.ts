@@ -13,9 +13,8 @@ import {
 } from '@angular/core/testing';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
+import { EventGenerator } from '@uipath/angular/testing';
 import * as faker from 'faker';
-
 import {
     ICON_MAP,
     panelClass,
@@ -166,11 +165,55 @@ describe('Service: UiSnackBarService', () => {
                 expect(icon!.innerText).toEqual('close');
             });
 
+            it('should display an action button', () => {
+                const method = getMethodFor(type);
+                method(faker.lorem.paragraph(), { actionMessage: 'my-custom-button' });
+
+                const snack = getSnack()!;
+                const button = snack.querySelector<HTMLElement>('.ui-snackbar-action');
+
+                expect(button).toBeDefined();
+                expect(button!.innerText).toEqual('my-custom-button');
+            });
+
+            it('should emit `dismissedByAction:true` on action click', async (done) => {
+                const method = getMethodFor(type);
+
+                method(faker.lorem.paragraph(), { actionMessage: 'my-custom-button' })
+                    .afterDismissed()
+                    .subscribe(response => {
+
+                        expect(response.dismissedByAction).toBeTrue(`dismissedByAction is false`);
+                        done();
+                    });
+
+                const button = getSnack()!.querySelector<HTMLElement>('.ui-snackbar-action')!;
+
+                button.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+            });
+
+            it('should emit `dismissedByAction:false` on close icon click', async (done) => {
+                const method = getMethodFor(type);
+
+                method(faker.lorem.paragraph(), { actionMessage: 'my-custom-button' })
+                    .afterDismissed()
+                    .subscribe(response => {
+
+                        expect(response.dismissedByAction).toBeFalse(`dismissedByAction is true`);
+                        done();
+                    });
+                const close = getSnack()!.querySelector<HTMLElement>('.ui-snackbar-close')!;
+
+                close.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+            });
+
             it('should dismiss after 1000ms', fakeAsync(() => {
                 const method = getMethodFor(type);
 
                 const timeout = 1000;
-                method(faker.lorem.paragraph(), timeout);
+                method(faker.lorem.paragraph(), { duration: timeout });
                 fixture.detectChanges();
 
                 tick(timeout - 1);
@@ -186,7 +229,7 @@ describe('Service: UiSnackBarService', () => {
                 const method = getMethodFor(type);
 
                 const firstTimeout = 5000;
-                method(faker.lorem.paragraph(), firstTimeout);
+                method(faker.lorem.paragraph(), { duration: firstTimeout });
                 fixture.detectChanges();
 
                 tick(firstTimeout - 1);
@@ -198,7 +241,7 @@ describe('Service: UiSnackBarService', () => {
                 expect(firstSnackAfterTimeout).toBeNull();
 
                 const secondTimeout = 1000;
-                method(faker.lorem.paragraph(), secondTimeout);
+                method(faker.lorem.paragraph(), { duration: secondTimeout });
                 fixture.detectChanges();
 
                 tick(secondTimeout - 1);
@@ -228,7 +271,7 @@ describe('Service: UiSnackBarService', () => {
             it('should not dismiss after the default duration if the duration is zero', fakeAsync(() => {
                 const method = getMethodFor(type);
 
-                method(faker.lorem.paragraph(), 0);
+                method(faker.lorem.paragraph(), { duration: 0 });
                 fixture.detectChanges();
 
                 tick(DEFAULT_DURATION + 1);
