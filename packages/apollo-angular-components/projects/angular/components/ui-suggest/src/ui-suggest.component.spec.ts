@@ -73,11 +73,20 @@ class UiSuggestFixtureDirective {
     public readonly?: boolean;
     public enableCustomValue?: boolean;
     public items?: ISuggestValue[];
-    public value?: ISuggestValue[];
     public direction: 'up' | 'down' = 'down';
     public displayPriority: 'default' | 'selected' = 'default';
     public fetchStrategy: 'eager' | 'onOpen' = 'eager';
     public minChars = 0;
+
+    public set value(value: ISuggestValue[] | undefined) {
+        this._value = value;
+    }
+
+    public get value(): ISuggestValue[] | undefined {
+        return this._value;
+    }
+
+    private _value?: ISuggestValue[];
 }
 
 const searchFor = (value: string, fixture: ComponentFixture<UiSuggestFixtureDirective>) => {
