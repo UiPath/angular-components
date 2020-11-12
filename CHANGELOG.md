@@ -1,3 +1,7 @@
+# v11.0.0-rc.1 (2020-11-12)
+* **BREAKING CHANGE** Upgrade to Angular 11
+* **snackbar** expose action button
+
 # v10.0.0 (2020-11-12)
 
 # v10.0.0-rc.3 (2020-11-05)
