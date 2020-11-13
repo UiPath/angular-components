@@ -8,9 +8,19 @@
                           [ngTemplateOutletContext]="{ $implicit: snackBarRef }"></ng-container>
         </ng-template>
     </div>
+
     <div class="ui-snackbar-dismiss">
+        <button *ngIf="data.actionMessage"
+                (click)="snackBarRef.dismissWithAction()"
+                class="ui-snackbar-action"
+                type="button"
+                mat-button>
+            {{ data.actionMessage }}
+        </button>
+
         <button [attr.aria-label]="data.closeAriaLabel"
                 (click)="snackBarRef.dismiss()"
+                class="ui-snackbar-close"
                 type="button"
                 mat-icon-button>
             <mat-icon>close</mat-icon>
