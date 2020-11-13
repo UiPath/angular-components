@@ -30,11 +30,11 @@ import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
     `,
 })
 class TestDragAndDropFileComponent {
-    public fileType = '.txt';
     public disabled = false;
     public multiple = false;
 
     public files?: File[];
+    public fileType?: string;
 
     onFileChange(files: FileList) {
         this.files = Array.from(files);
@@ -46,7 +46,7 @@ class TestDragAndDropFileComponent {
 
     fakeFiles({ accepted = 0, rejected = 0 }): File[] {
         const randomArray = <T>(size: number, source: T[]) => new Array(size).fill(0).map(() => faker.random.arrayElement(source));
-        const acceptedFileExtensions = this.fileType.split(', ');
+        const acceptedFileExtensions = this.fileType!.split(', ');
         const rejectedFileEstensions = ['.jpg', '.png', '.tiff'];
 
         return faker.helpers
@@ -75,6 +75,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
         });
         fixture = TestBed.createComponent(TestDragAndDropFileComponent);
         component = fixture.componentInstance;
+        component.fileType = '.txt';
         fixture.detectChanges();
         fileInput = fixture.debugElement.query(By.css('input[type="file"]')).nativeElement as HTMLInputElement;
     });
@@ -96,7 +97,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
         });
 
         it('should accept files of the specified type if single file type', () => {
-            expect(fileInput.getAttribute('accept')).toBe(component.fileType);
+            expect(fileInput.getAttribute('accept')).toBe(component.fileType!);
         });
 
         it('should accept files of any of the specified types if multiple file types', () => {

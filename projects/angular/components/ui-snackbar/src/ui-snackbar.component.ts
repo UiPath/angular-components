@@ -16,8 +16,6 @@ import {
     MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 
-import { Observable } from 'rxjs';
-
 import { UiSnackbarIntl } from './ui-snackbar.intl';
 
 interface ISnackBarAlert {
@@ -25,6 +23,11 @@ interface ISnackBarAlert {
      * Alert message
      */
     message: string | TemplateRef<any>;
+    /**
+     * Optional action button message,
+     * will emit `dismissWithAction` on click
+     */
+    actionMessage?: string;
     /**
     * How long to remain on the screen
     */
@@ -77,8 +80,13 @@ export const ICON_MAP: Map<SnackBarType, string> = new Map([
     [SnackBarType.Warning, 'warning'],
     [SnackBarType.Error, 'info'],
 ]);
-
-export type SnackbarAction = (message: string | TemplateRef<any>, duration?: number) => Observable<void>;
+export type SnackbarAction = (
+    message: string | TemplateRef<any>,
+    config?: {
+        actionMessage?: string,
+        duration?: number,
+    },
+) => MatSnackBarRef<UiSnackBarComponent>;
 
 export class UiMatSnackBarConfig {
     public restrictHtml = false;
@@ -106,25 +114,25 @@ export class UiSnackBarService {
     /**
      * Display an info snackbar
      * @param message The message to be displayed
-     * @param duration How long to remain on the screen
+     * @param config  `{ actionMessage, duration }`
     */
     public info: SnackbarAction;
     /**
      * Display an error snackbar
      * @param message The message to be displayed
-     * @param duration How long to remain on the screen
+     * @param config  `{ actionMessage, duration }`
     */
     public error: SnackbarAction;
     /**
      * Display an success snackbar
      * @param message The message to be displayed
-     * @param duration How long to remain on the screen
+     * @param config  `{ actionMessage, duration }`
     */
     public success: SnackbarAction;
     /**
      * Display an warning snackbar
      * @param message The message to be displayed
-     * @param duration How long to remain on the screen
+     * @param config  `{ actionMessage, duration }`
     */
     public warning: SnackbarAction;
     private _ref?: MatSnackBarRef<UiSnackBarComponent>;
@@ -171,10 +179,13 @@ export class UiSnackBarService {
     }
 
     private _alertFactory = (type: SnackBarType) =>
-        (message: string | TemplateRef<any>, duration?: number) => this._alert(type, {
+        (message: string | TemplateRef<any>, config?: { actionMessage?: string, duration?: number }) => this._alert(type, {
             message,
+            actionMessage: config?.actionMessage,
             icon: ICON_MAP.get(type),
-            duration: duration || duration === 0 ? duration : this._options.duration!,
+            duration: config?.duration || config?.duration === 0
+                ? config.duration
+                : this._options.duration!,
         })
 
     private _alert(type: SnackBarType, options: ISnackBarAlert) {
@@ -197,6 +208,6 @@ export class UiSnackBarService {
             panelClass: panelClass(type),
         });
 
-        return this._ref.afterOpened();
+        return this._ref;
     }
 }
