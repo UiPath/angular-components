@@ -1,4 +1,8 @@
-import type { QueryList } from '@angular/core';
+import {
+    Inject,
+    InjectionToken,
+    QueryList,
+} from '@angular/core';
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
@@ -51,6 +55,7 @@ import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 import {
     DataManager,
+    DataManagerOptions,
     FilterManager,
     LiveAnnouncerManager,
     PerformanceMonitor,
@@ -67,6 +72,8 @@ import {
     ISortModel,
 } from './models';
 import { UiGridIntl } from './ui-grid.intl';
+
+export const UI_GRID_OPTIONS = new InjectionToken<DataManagerOptions<unknown>>('UiGrid DataManager options.');
 
 @Component({
     selector: 'ui-grid',
@@ -333,7 +340,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * Data manager, used to optimize row rendering.
      *
      */
-    public dataManager = new DataManager<T>();
+    public dataManager = new DataManager<T>(this._dataManagerOptions);
 
     /**
      * Filter manager, used to manage filter state changes.
@@ -430,6 +437,9 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         protected _cd: ChangeDetectorRef,
         private _zone: NgZone,
         private _queuedAnnouncer: QueuedAnnouncer,
+        @Inject(UI_GRID_OPTIONS)
+        @Optional()
+        private _dataManagerOptions?: DataManagerOptions<T>,
     ) {
         super();
 
