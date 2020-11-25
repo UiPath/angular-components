@@ -1,6 +1,6 @@
 export { UiGridModule } from './ui-grid.module';
 export { UiGridIntl } from './ui-grid.intl';
-export { UiGridComponent } from './ui-grid.component';
+export { UiGridComponent, UI_GRID_OPTIONS } from './ui-grid.component';
 export {
     IDropdownOption,
     UiGridDropdownFilterDirective,
