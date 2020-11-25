@@ -1,3 +1,6 @@
+# v11.0.0-rc.2 (2020-11-25)
+* **BREAKING CHANGE** grid no longer uses cache for IE by default
+
 # v11.0.0-rc.1 (2020-11-12)
 * **BREAKING CHANGE** Upgrade to Angular 11
 * **snackbar** expose action button
