@@ -30,6 +30,7 @@ import {
 import {
     UiGridToggleColumnsModule,
 } from './components/ui-grid-toggle-columns/ui-grid-toggle-columns.module';
+import { UiGridNoContentDirective } from './content/ui-grid-no-content.directive';
 import {
     UiGridDropdownFilterDirective,
 } from './filters/ui-grid-dropdown-filter.directive';
@@ -68,6 +69,7 @@ import { UiGridComponent } from './ui-grid.component';
         UiGridColumnDirective,
         UiGridHeaderDirective,
         UiGridHeaderButtonDirective,
+        UiGridNoContentDirective,
         UiGridFooterDirective,
         UiGridSearchFilterDirective,
         UiGridDropdownFilterDirective,
@@ -80,6 +82,7 @@ import { UiGridComponent } from './ui-grid.component';
         UiGridColumnDirective,
         UiGridHeaderDirective,
         UiGridHeaderButtonDirective,
+        UiGridNoContentDirective,
         UiGridFooterDirective,
         UiGridSearchFilterDirective,
         UiGridDropdownFilterDirective,

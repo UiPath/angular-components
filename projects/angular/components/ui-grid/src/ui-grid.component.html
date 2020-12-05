@@ -22,6 +22,8 @@
 
     <ng-container *ngIf="!selectionManager.hasValue() ||
                    !header?.actionButtons?.length">
+                   <!-- TODO: wtf check search show if  ||
+                   header?.search -->
         <ui-grid-search *ngIf="header?.search"
                         [debounce]="header!.searchDebounce"
                         [maxLength]="header!.searchMaxLength"
@@ -84,7 +86,7 @@
         </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="!selectionManager.hasValue()">
+    <ng-container *ngIf="!selectionManager.hasValue() else actionBtns">
         <ng-container *ngFor="let button of header?.inlineButtons">
             <ng-container *ngIf="button.visible">
                 <ng-container *ngTemplateOutlet="button.html">
@@ -93,24 +95,26 @@
         </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="selectionManager.hasValue()"
-                  class="ui-grid-action-buttons">
+    <ng-template #actionBtns>
         <ng-container *ngFor="let button of header?.actionButtons">
             <ng-container *ngIf="button.visible">
                 <ng-container *ngTemplateOutlet="button.html">
                 </ng-container>
             </ng-container>
         </ng-container>
-    </ng-container>
+    </ng-template>
 </div>
 
-<div class="ui-grid-container">
+<div [class.ui-grid-projected]="isProjected"
+     class="ui-grid-container">
     <div class="ui-grid-table-container">
-        <div *ngIf="header?.mainButton?.visible"
-             class="ui-grid-action-button">
-            <ng-container *ngTemplateOutlet="header?.mainButton?.html">
-            </ng-container>
-        </div>
+        <ng-container *ngFor="let action of header?.mainButtons">
+            <div *ngIf="action?.visible"
+                 class="ui-grid-action-button">
+                <ng-container *ngTemplateOutlet="action?.html">
+                </ng-container>
+            </div>
+        </ng-container>
 
         <div [class.ui-grid-table-refreshable]="refreshable"
              class="ui-grid-table"
@@ -277,11 +281,11 @@
          [class.ui-grid-row-state-expanded]="expanded?.id === row?.id"
          [class.ui-grid-border-none]="!footer && last"
          [ngClass]="rowConfig?.ngClassFn(row)"
-         [tabIndex]="0"
+         [tabIndex]="isProjected ? -1: 0"
          [attr.data-row-index]="index"
          role="row">
 
-        <div *ngIf="isProjected"
+        <div *ngIf="isProjected && (selectable || actions)"
              class="ui-grid-cell ui-grid-feature-cell ui-grid-mobile-feature-cell"
              role="gridcell">
             <div *ngIf="selectable"
@@ -348,23 +352,25 @@
              class="ui-grid-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">
         </div>
 
-        <div *ngIf="!isProjected &&
+        <ng-container *ngIf="!isProjected">
+            <div *ngIf="
                     refreshable"
-             class="ui-grid-cell ui-grid-refresh-cell ui-grid-feature-cell">
-        </div>
+                 class="ui-grid-cell ui-grid-refresh-cell ui-grid-feature-cell">
+            </div>
 
-        <div *ngIf="!isProjected &&
-                    !!actions"
-             class="ui-grid-cell ui-grid-action-cell ui-grid-feature-cell">
-            <div class="ui-grid-action-cell-container">
-                <ng-container *ngTemplateOutlet="actions.html; context: {
+            <div *ngIf="actions"
+                 class="ui-grid-cell ui-grid-action-cell ui-grid-feature-cell">
+                <div class="ui-grid-action-cell-container">
+                    <ng-container *ngTemplateOutlet="actions.html; context: {
                         data: row,
                         index: index
                     }">
-                </ng-container>
+                    </ng-container>
+                </div>
             </div>
-        </div>
+        </ng-container>
     </div>
+
     <div *ngIf="expanded?.id === row?.id"
          [class.ui-grid-row-state-expanded]="expanded?.id === row?.id"
          [class.ui-grid-border-none]="!footer && last"
@@ -387,12 +393,20 @@
 </ng-template>
 
 <ng-template #noData>
-    <div *ngIf="!dataManager.pristine"
-         class="ui-grid-row ui-grid-no-data-container"
-         [class.ui-grid-border-none]="!footer">
-        <mat-icon>list</mat-icon>
-        <p>{{noDataMessage || intl.noDataMessage}}</p>
-    </div>
+    <!-- no data template -->
+    <ng-container *ngIf="noContent; else defaultNoData">
+        <ng-container *ngTemplateOutlet="noContent.html">
+        </ng-container>
+    </ng-container>
+
+    <ng-template #defaultNoData>
+        <div *ngIf="!dataManager.pristine"
+             class="ui-grid-row ui-grid-no-data-container"
+             [class.ui-grid-border-none]="!footer">
+            <mat-icon>list</mat-icon>
+            <p>{{noDataMessage || intl.noDataMessage}}</p>
+        </div>
+    </ng-template>
 </ng-template>
 
 <ng-template #multiPageSelectionRow>

@@ -11,6 +11,9 @@ export {
 export {
     UiGridHeaderButtonDirective,
 } from './header/ui-grid-header-button.directive';
+export {
+    UiGridNoContentDirective,
+} from './content/ui-grid-no-content.directive';
 export { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 export { UiGridColumnDirective } from './body/ui-grid-column.directive';
 export {
