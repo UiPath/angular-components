@@ -1,5 +1,9 @@
 {
     "compileOnSave": false,
+    "angularCompilerOptions": {
+        "strictTemplates": true,
+        "fullTemplateTypeCheck": true
+    },
     "compilerOptions": {
         "baseUrl": "./",
         "outDir": "./dist/out-tsc",
@@ -16,13 +20,8 @@
         "strictNullChecks": true,
         "importHelpers": true,
         "target": "es2015",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "lib": [
-            "es2018",
-            "dom"
-        ],
+        "typeRoots": ["node_modules/@types"],
+        "lib": ["es2018", "dom"],
         "paths": {
             "@uipath/angular/a11y": [
                 "./projects/angular/a11y/src/public_api.ts"
@@ -74,7 +73,7 @@
             ],
             "@uipath/angular/pipes": [
                 "./projects/angular/pipes/src/public_api.ts"
-            ],
+            ]
         }
     }
 }
