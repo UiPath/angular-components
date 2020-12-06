@@ -1,6 +1,6 @@
-<img src="https://raw.githubusercontent.com/UiPath/angular-components/master/logo.png" width="135" />
-
 # Angular Components Library
+
+<img src="https://raw.githubusercontent.com/UiPath/angular-components/master/logo.png" width="135" />
 
 A great set of reusable `@angular` components, directives and testing utilities.
 
