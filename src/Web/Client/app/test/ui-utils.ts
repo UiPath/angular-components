@@ -76,7 +76,7 @@ export class IntegrationUtils<T> {
     }
 
     public clickGridRowItem = (gridSelector: string, rowNumber: number, selector: string, debugEl = this.fixture.debugElement) => {
-        return this.getNativeElement(`${gridSelector} [data-row-index="${rowNumber - 1}"] ${selector}`, debugEl)!
+        return this.getGridRowItem(gridSelector, rowNumber, selector, debugEl).nativeElement
             .dispatchEvent(EventGenerator.click);
     }
 
