@@ -247,6 +247,10 @@ export class IntegrationUtils<T> {
         this._isRadioButtonElementDisabled(
             this.getDebugElement(selector, debugEl),
         )
+    public isCheckBoxDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
+        this._isCheckBoxDisabled(
+            this.getDebugElement(selector, debugEl),
+        )
 
     public openGridContextMenu = (rowNumber: number) => {
         const selector = `${`[data-row-index="${rowNumber - 1}"]`} ${`[data-cy="grid-action-menu"]`}`;
@@ -256,4 +260,7 @@ export class IntegrationUtils<T> {
 
     private _isRadioButtonElementDisabled = (debugEl: DebugElement) =>
         debugEl.nativeElement.classList.contains('mat-radio-disabled')
+
+    private _isCheckBoxDisabled = (debugEl: DebugElement) =>
+        debugEl.nativeElement.classList.contains('mat-checkbox-disabled')
 }
