@@ -1,30 +1,3 @@
-import {
-    Inject,
-    InjectionToken,
-    QueryList,
-} from '@angular/core';
-import {
-    AfterContentInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    Optional,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation,
-} from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { QueuedAnnouncer } from '@uipath/angular/a11y';
-
 import range from 'lodash-es/range';
 import {
     animationFrameScheduler,
@@ -45,6 +18,31 @@ import {
     tap,
 } from 'rxjs/operators';
 
+import {
+    AfterContentInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChild,
+    ContentChildren,
+    ElementRef,
+    EventEmitter,
+    HostBinding,
+    Inject,
+    InjectionToken,
+    Input,
+    NgZone,
+    OnChanges,
+    OnDestroy,
+    Optional,
+    Output,
+    QueryList,
+    SimpleChanges,
+    ViewEncapsulation,
+} from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { QueuedAnnouncer } from '@uipath/angular/a11y';
+
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import {
     UiGridExpandedRowDirective,
@@ -55,7 +53,6 @@ import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 import {
     DataManager,
-    DataManagerOptions,
     FilterManager,
     LiveAnnouncerManager,
     PerformanceMonitor,
@@ -68,12 +65,13 @@ import {
 } from './managers';
 import { ResizableGrid } from './managers/resize/types';
 import {
+    GridOptions,
     IGridDataEntry,
     ISortModel,
 } from './models';
 import { UiGridIntl } from './ui-grid.intl';
 
-export const UI_GRID_OPTIONS = new InjectionToken<DataManagerOptions<unknown>>('UiGrid DataManager options.');
+export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid DataManager options.');
 
 @Component({
     selector: 'ui-grid',
@@ -174,6 +172,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @Input()
     public selectable = true;
+
+    /**
+     * Option to select an alternate layout for footer pagination.
+     *
+     */
+    @Input()
+    public useAlternateDesign: boolean;
 
     /**
      * Configure if the grid allows to toggle column visibility.
@@ -340,7 +345,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * Data manager, used to optimize row rendering.
      *
      */
-    public dataManager = new DataManager<T>(this._dataManagerOptions);
+    public dataManager = new DataManager<T>(this._gridOptions);
 
     /**
      * Filter manager, used to manage filter state changes.
@@ -439,10 +444,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         private _queuedAnnouncer: QueuedAnnouncer,
         @Inject(UI_GRID_OPTIONS)
         @Optional()
-        private _dataManagerOptions?: DataManagerOptions<T>,
+        private _gridOptions?: GridOptions<T>,
     ) {
         super();
 
+        this.useAlternateDesign = _gridOptions?.useAlternateDesign ?? false;
         this.isProjected = this._ref.nativeElement.classList.contains('ui-grid-state-responsive');
 
         this.intl = intl || new UiGridIntl();
