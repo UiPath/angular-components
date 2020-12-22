@@ -1,0 +1,100 @@
+<div class="mat-paginator-outer-container">
+    <div class="mat-paginator-container">
+        <div class="mat-paginator-range-label">
+            {{_intl.getRangeLabel(pageIndex, pageSize, length)}}
+        </div>
+
+        <div class="mat-paginator-range-actions">
+            <button *ngIf="showFirstLastButtons"
+                    [attr.aria-label]="_intl.firstPageLabel"
+                    [matTooltip]="_intl.firstPageLabel"
+                    [matTooltipDisabled]="_previousButtonsDisabled()"
+                    [matTooltipPosition]="'above'"
+                    [disabled]="_previousButtonsDisabled()"
+                    (click)="firstPage()"
+                    mat-icon-button
+                    type="button"
+                    class="mat-paginator-navigation-first">
+                <svg class="mat-paginator-icon"
+                     viewBox="0 0 24 24"
+                     focusable="false">
+                    <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z" />
+                </svg>
+            </button>
+            <button [attr.aria-label]="_intl.previousPageLabel"
+                    [matTooltip]="_intl.previousPageLabel"
+                    [matTooltipDisabled]="_previousButtonsDisabled()"
+                    [matTooltipPosition]="'above'"
+                    [disabled]="_previousButtonsDisabled()"
+                    (click)="previousPage()"
+                    mat-icon-button
+                    type="button"
+                    class="mat-paginator-navigation-previous">
+                <svg class="mat-paginator-icon"
+                     viewBox="0 0 24 24"
+                     focusable="false">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                </svg>
+            </button>
+            <div class="mat-paginator-page-label">
+                {{_intl.getPageLabel(pageIndex+1, pageCount)}}
+            </div>
+            <button [attr.aria-label]="_intl.nextPageLabel"
+                    [matTooltip]="_intl.nextPageLabel"
+                    [matTooltipDisabled]="_nextButtonsDisabled()"
+                    [matTooltipPosition]="'above'"
+                    [disabled]="_nextButtonsDisabled()"
+                    (click)="nextPage()"
+                    mat-icon-button
+                    type="button"
+                    class="mat-paginator-navigation-next">
+                <svg class="mat-paginator-icon"
+                     viewBox="0 0 24 24"
+                     focusable="false">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                </svg>
+            </button>
+            <button *ngIf="showFirstLastButtons"
+                    [attr.aria-label]="_intl.lastPageLabel"
+                    [matTooltip]="_intl.lastPageLabel"
+                    [matTooltipDisabled]="_nextButtonsDisabled()"
+                    [matTooltipPosition]="'above'"
+                    [disabled]="_nextButtonsDisabled()"
+                    (click)="lastPage()"
+                    mat-icon-button
+                    type="button"
+                    class="mat-paginator-navigation-last">
+                <svg class="mat-paginator-icon"
+                     viewBox="0 0 24 24"
+                     focusable="false">
+                    <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z" />
+                </svg>
+            </button>
+        </div>
+
+        <div *ngIf="!hidePageSize"
+             class="mat-paginator-page-size">
+            <div class="mat-paginator-page-size-label">
+                {{_intl.itemsPerPageLabel}}
+            </div>
+
+            <mat-form-field *ngIf="_displayedPageSizeOptions.length > 1"
+                            [appearance]="_formFieldAppearance!"
+                            [color]="color"
+                            class="mat-paginator-page-size-select">
+                <mat-select (selectionChange)="_changePageSize($event.value)"
+                            [value]="pageSize"
+                            [disabled]="disabled"
+                            [aria-label]="_intl.itemsPerPageLabel">
+                    <mat-option *ngFor="let pageSizeOption of _displayedPageSizeOptions"
+                                [value]="pageSizeOption">
+                        {{ pageSizeOption }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div *ngIf="_displayedPageSizeOptions.length <= 1"
+                 class="mat-paginator-page-size-value">{{pageSize}}</div>
+        </div>
+    </div>
+</div>

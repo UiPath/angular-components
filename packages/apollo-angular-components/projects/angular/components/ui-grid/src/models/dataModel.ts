@@ -11,3 +11,13 @@ export interface IGridDataEntry {
      */
     id: number | string;
 }
+/**
+ * Grid options.
+ *
+ * @export
+ */
+export interface GridOptions<T> {
+    useCache?: boolean;
+    useAlternateDesign?: boolean;
+    idProperty?: keyof T;
+}

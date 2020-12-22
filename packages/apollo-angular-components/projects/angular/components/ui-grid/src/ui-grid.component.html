@@ -44,7 +44,8 @@
                         class="ui-grid-dropdown-filter-button">
                     <span class="ui-grid-dropdown-filter-title">{{ column.title }}: </span>
                     <span class="ui-grid-dropdown-filter-value">
-                        {{ !!column.dropdown.value ? intl.translateDropdownOption(column.dropdown.value) : intl.noFilterPlaceholder }}
+                        {{ !!column.dropdown.value ? intl.translateDropdownOption(column.dropdown.value) :
+                        intl.noFilterPlaceholder }}
                     </span>
                     <mat-icon>keyboard_arrow_down</mat-icon>
                 </button>
@@ -253,16 +254,7 @@
         </div>
     </div>
     <div class="ui-grid-footer-container">
-        <mat-paginator *ngIf="!!footer"
-                       [pageIndex]="footer?.state?.pageIndex"
-                       [pageSize]="footer?.state?.pageSize"
-                       [pageSizeOptions]="footer?.pageSizes"
-                       [length]="footer?.length"
-                       [disabled]="disabled"
-                       [showFirstLastButtons]="true"
-                       [hidePageSize]="footer?.hidePageSize"
-                       (page)="footer?.pageChange?.next($event)">
-        </mat-paginator>
+        <ng-container *ngTemplateOutlet="useAlternateDesign ? alternativeFooter : classicFooter"></ng-container>
     </div>
 </div>
 
@@ -435,4 +427,30 @@
     <span class="ui-grid-selection-info-message">
         {{ intl.noSelectionMessage }}
     </span>
+</ng-template>
+
+<ng-template #classicFooter>
+    <mat-paginator *ngIf="!!footer"
+                   [pageIndex]="footer?.state?.pageIndex"
+                   [pageSize]="footer?.state?.pageSize"
+                   [pageSizeOptions]="footer?.pageSizes"
+                   [length]="footer?.length"
+                   [disabled]="disabled"
+                   [showFirstLastButtons]="true"
+                   [hidePageSize]="footer?.hidePageSize"
+                   (page)="footer?.pageChange?.next($event)">
+    </mat-paginator>
+</ng-template>
+
+<ng-template #alternativeFooter>
+    <ui-grid-custom-paginator *ngIf="!!footer"
+                              [pageIndex]="footer?.state?.pageIndex"
+                              [pageSize]="footer?.state?.pageSize"
+                              [pageSizeOptions]="footer?.pageSizes"
+                              [length]="footer?.length"
+                              [disabled]="disabled"
+                              [showFirstLastButtons]="true"
+                              [hidePageSize]="footer?.hidePageSize"
+                              (page)="footer?.pageChange?.next($event)">
+    </ui-grid-custom-paginator>
 </ng-template>

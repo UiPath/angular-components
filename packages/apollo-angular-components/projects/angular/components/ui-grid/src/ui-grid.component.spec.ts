@@ -1,3 +1,15 @@
+import * as faker from 'faker';
+import {
+    animationFrameScheduler,
+    Observable,
+    of,
+} from 'rxjs';
+import {
+    finalize,
+    skip,
+    take,
+} from 'rxjs/operators';
+
 import {
     Component,
     ViewChild,
@@ -25,25 +37,22 @@ import {
     Key,
 } from '@uipath/angular/testing';
 
-import * as faker from 'faker';
 import {
-    animationFrameScheduler,
-    Observable,
-    of,
-} from 'rxjs';
+    UiMatPaginatorIntl,
+} from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.component';
 import {
-    finalize,
-    skip,
-    take,
-} from 'rxjs/operators';
-
+    UiGridCustomPaginatorModule,
+} from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.module';
 import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
 import {
     generateEntity,
     generateListFactory,
     ITestEntity,
 } from './test';
-import { UiGridComponent } from './ui-grid.component';
+import {
+    UiGridComponent,
+    UI_GRID_OPTIONS,
+} from './ui-grid.component';
 import { UiGridIntl } from './ui-grid.intl';
 import { UiGridModule } from './ui-grid.module';
 
@@ -1354,33 +1363,32 @@ describe('Component: UiGrid', () => {
             ];
 
             SORT_TRANSITIONS.forEach(sortTransition => {
-                it(`should emit sort event when clicked ('${
-                    sortTransition.from}' to '${sortTransition.to}')`, (done) => {
-                        const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
-                        const headerTitle = sortableHeader.query(By.css('.ui-grid-header-title'));
+                it(`should emit sort event when clicked ('${sortTransition.from}' to '${sortTransition.to}')`, (done) => {
+                    const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
+                    const headerTitle = sortableHeader.query(By.css('.ui-grid-header-title'));
 
-                        const [column] = grid.columns.toArray();
+                    const [column] = grid.columns.toArray();
 
-                        column.sort = '';
-                        fixture.detectChanges();
+                    column.sort = '';
+                    fixture.detectChanges();
 
-                        grid.sortChange
-                            .pipe(
-                                take(1),
-                                finalize(done),
-                            ).subscribe(sort => {
-                                expect(sort.direction).toBe('asc');
-                                expect(sort.direction).toBe(column.sort);
-                                expect(sort.field).toBe(column.property!);
-                            });
+                    grid.sortChange
+                        .pipe(
+                            take(1),
+                            finalize(done),
+                        ).subscribe(sort => {
+                            expect(sort.direction).toBe('asc');
+                            expect(sort.direction).toBe(column.sort);
+                            expect(sort.field).toBe(column.property!);
+                        });
 
-                        headerTitle.nativeElement.dispatchEvent(EventGenerator.click);
-                        fixture.detectChanges();
-                    });
+                    headerTitle.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+                });
 
                 SORT_KEY_EVENTS.forEach(ev => {
-                    it(`should emit sort event when key '${ev.key}' is pressed ('${
-                        sortTransition.from}' to '${sortTransition.to}')`, (done) => {
+                    it(`should emit sort event when key '${ev.key}' is pressed ` +
+                        `('${sortTransition.from}' to '${sortTransition.to}')`, (done) => {
                             const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
                             const [column] = grid.columns.toArray();
 
@@ -1989,10 +1997,9 @@ describe('Component: UiGrid', () => {
                         EventGenerator.keyDown(Key.Space),
                         EventGenerator.click,
                     ].forEach(e => {
-                        it(`should be able to reset on (${
-                            e instanceof KeyboardEvent
-                                ? `keydown."` + e.code.toLowerCase() + `"`
-                                : 'click'
+                        it(`should be able to reset on (${e instanceof KeyboardEvent
+                            ? `keydown."` + e.code.toLowerCase() + `"`
+                            : 'click'
                             })`,
                             fakeAsync(() => {
                                 const reset = fixture.debugElement.query(By.css('.ui-grid-toggle-reset'));
@@ -2174,6 +2181,106 @@ describe('Component: UiGrid', () => {
                     expect(option).toBeDefined();
                     expect(option.nativeElement.innerText).toEqual('Prop 2');
                 });
+            });
+        });
+    });
+
+    describe('Scenario: alternate design', () => {
+        describe('Behavior: use injection token value', () => {
+            @Component({
+                template: `
+                <ui-grid>
+                    <ui-grid-footer [length]="5"
+                                    [pageSize]="5">
+                    </ui-grid-footer>
+                </ui-grid>
+                `,
+            })
+            class TestFixtureAlternateDesignGridComponent {
+            }
+
+            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        UiGridCustomPaginatorModule,
+                    ],
+                    providers: [
+                        UiMatPaginatorIntl,
+                        {
+                            provide: UI_GRID_OPTIONS,
+                            useValue: {
+                                useAlternateDesign: true,
+                            },
+                        },
+                    ],
+                    declarations: [
+                        TestFixtureAlternateDesignGridComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should use injection token value', () => {
+                const customFooter = fixture.debugElement.query(By.css('ui-grid-custom-paginator'));
+                expect(customFooter).toBeTruthy();
+            });
+        });
+
+        describe('Behavior: override injection token value', () => {
+            @Component({
+                template: `
+                <ui-grid [useAlternateDesign]="false">
+                    <ui-grid-footer [length]="5"
+                                    [pageSize]="5">
+                    </ui-grid-footer>
+                </ui-grid>
+                `,
+            })
+            class TestFixtureAlternateDesignGridComponent {
+            }
+
+            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        UiGridCustomPaginatorModule,
+                    ],
+                    providers: [
+                        UiMatPaginatorIntl,
+                        {
+                            provide: UI_GRID_OPTIONS,
+                            useValue: {
+                                useAlternateDesign: true,
+                            },
+                        },
+                    ],
+                    declarations: [
+                        TestFixtureAlternateDesignGridComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should override injection token value', () => {
+                const customFooter = fixture.debugElement.query(By.css('ui-grid-custom-paginator'));
+                expect(customFooter).toBeFalsy();
             });
         });
     });

@@ -1,9 +1,9 @@
+import { Subject } from 'rxjs';
+
 import {
     Injectable,
     OnDestroy,
 } from '@angular/core';
-
-import { Subject } from 'rxjs';
 
 import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
 
