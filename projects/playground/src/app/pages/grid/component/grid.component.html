@@ -1,0 +1,71 @@
+<ui-grid [data]="data$ | async"
+         [useAlternateDesign]="inputs.useAlternateDesign"
+         [collapsibleFilters]="inputs.collapsibleFilters"
+         [isProjected]="inputs.isProjected"
+         [loading]="inputs.loading"
+         [disabled]="inputs.disabled"
+         [selectable]="inputs.selectable"
+         [toggleColumns]="inputs.toggleColumns"
+         [multiPageSelect]="inputs.multiPageSelect"
+         [refreshable]="inputs.refreshable"
+         [virtualScroll]="inputs.virtualScroll"
+         [showPaintTime]="inputs.showPaintTime"
+         [showHeaderRow]="inputs.showHeaderRow">
+
+    <ui-grid-header [search]="header.searchable">
+        <ui-header-button *ngFor="let button of generateButtons(header.main)"
+                          type="main">
+            <ng-template>
+                <button mat-icon-button
+                        color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </ng-template>
+        </ui-header-button>
+
+        <ui-header-button *ngFor="let button of generateButtons(header.action)"
+                          type="action">
+            <ng-template>
+                <button mat-icon-button
+                        color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </ng-template>
+        </ui-header-button>
+
+        <ui-header-button *ngFor="let button of generateButtons(header.inline)"
+                          type="inline">
+            <ng-template>
+                <button mat-icon-button
+                        color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </ng-template>
+        </ui-header-button>
+    </ui-grid-header>
+
+    <ui-grid-column [property]="'id'"
+                    [sortable]="true"
+                    title="Id"
+                    width="33%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'name'"
+                    [searchable]="true"
+                    method="eq"
+                    title="Name"
+                    width="34%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="33%">
+        <ui-grid-dropdown-filter [visible]="header.showFilter"
+                                 [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
+        </ui-grid-dropdown-filter>
+    </ui-grid-column>
+    <ui-grid-footer [length]="total"
+                    [pageSize]="footer.pageSize"
+                    [pageSizes]="pageSizes"
+                    [hidePageSize]="footer.hidePageSize"
+                    (pageChange)="onPageChange($event)">
+    </ui-grid-footer>
+</ui-grid>
