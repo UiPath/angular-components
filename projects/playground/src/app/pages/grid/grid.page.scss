@@ -1,0 +1,22 @@
+.grid-playground {
+    &-actions {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+
+        &-inputs, &-header, &-data {
+            margin-right: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-search-checkbox {
+            margin-bottom: 8px;
+        }
+    }
+}
+
+ui-grid-component {
+    margin: 0 50px;
+}
