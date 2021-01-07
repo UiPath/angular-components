@@ -1,0 +1,33 @@
+<mat-toolbar color="primary">
+    <button (click)="isSidenavOpen = !isSidenavOpen"
+            mat-icon-button
+            aria-label="Toggle Sidenav Button">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span>Angular Components Playground</span>
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav [opened]="isSidenavOpen"
+                 mode="side">
+
+        <div class="sidenav-title">
+            <h3> Component Playground </h3>
+        </div>
+
+        <div class="sidenav-links">
+            <a *ngFor="let componentLink of componentLinks"
+               [routerLink]="componentLink.link"
+               mat-button
+               color="primary">
+                {{componentLink.name}}
+            </a>
+        </div>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>.
+
+</mat-sidenav-container>
