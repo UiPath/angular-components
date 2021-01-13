@@ -159,14 +159,15 @@ export class UiSnackBarService {
     /**
      * Display a snackbar (customizable)
      * @param message The message to be displayed
-     * @param options Customize default options: snackbar type, icon, display duration
+     * @param options Customize default options: snackbar type, icon, display duration, and action message
      */
-    public show = (message: string, { type, duration, icon }
+    public show = (message: string | TemplateRef<any>, { type, duration, icon, actionMessage }
         : ISnackBarOptions = {}) =>
         this._alert(type || SnackBarType.None, {
             message,
             icon: icon || ICON_MAP.get(type!),
             duration: duration || duration === 0 ? duration : this._options.duration!,
+            actionMessage,
         })
 
     /**
