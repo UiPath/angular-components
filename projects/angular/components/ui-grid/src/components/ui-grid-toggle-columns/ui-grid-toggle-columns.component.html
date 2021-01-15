@@ -1,19 +1,20 @@
 <ng-container *ngIf="options!.length">
-    <button [matTooltip]="togglePlaceholderTitle"
+    <button *ngIf="useAlternateDesign; else classicColumnToggleTmpl"
             [color]="dirty ? 'primary' : undefined"
             (click)="selectColumns!.open(); selectColumns!.focus()"
-            matTooltipPosition="right"
             type="button"
-            mat-icon-button>
+            mat-button>
         <mat-icon>view_column</mat-icon>
+        <span>{{togglePlaceholderTitle}}</span>
     </button>
 
     <mat-select [value]="selected"
                 [aria-label]="togglePlaceholderTitle"
-                (selectionChange)="selectionChange($event)"
                 [disableOptionCentering]="true"
+                [class.use-alternate]="useAlternateDesign"
+                [panelClass]="['ui-grid-toggle-panel', useAlternateDesign ? 'ui-grid-toggle-panel-alternate': '']"
+                (selectionChange)="selectionChange($event)"
                 tabIndex="-1"
-                panelClass="ui-grid-toggle-panel"
                 multiple>
         <mat-optgroup>
             <span>
@@ -40,3 +41,14 @@
         </mat-optgroup>
     </mat-select>
 </ng-container>
+
+<ng-template #classicColumnToggleTmpl>
+    <button [matTooltip]="togglePlaceholderTitle"
+            [color]="dirty ? 'primary' : undefined"
+            (click)="selectColumns!.open(); selectColumns!.focus()"
+            matTooltipPosition="right"
+            type="button"
+            mat-icon-button>
+        <mat-icon>view_column</mat-icon>
+    </button>
+</ng-template>
