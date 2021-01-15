@@ -23,6 +23,8 @@ import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import {
     UiGridExpandedRowDirective,
 } from './body/ui-grid-expanded-row.directive';
+import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
+import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
 import {
@@ -79,6 +81,8 @@ import { UiGridComponent } from './ui-grid.component';
         UiGridDropdownFilterDirective,
         UiGridRowConfigDirective,
         UiGridExpandedRowDirective,
+        UiGridNoContentDirective,
+        UiGridLoadingDirective,
     ],
     exports: [
         UiGridComponent,
@@ -91,6 +95,8 @@ import { UiGridComponent } from './ui-grid.component';
         UiGridDropdownFilterDirective,
         UiGridRowConfigDirective,
         UiGridExpandedRowDirective,
+        UiGridNoContentDirective,
+        UiGridLoadingDirective,
     ],
 })
 export class UiGridModule { }

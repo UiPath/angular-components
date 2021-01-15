@@ -1,5 +1,12 @@
 import isEqual from 'lodash-es/isEqual';
-import { BehaviorSubject } from 'rxjs';
+import {
+    BehaviorSubject,
+    combineLatest,
+} from 'rxjs';
+import {
+    distinctUntilChanged,
+    map,
+} from 'rxjs/operators';
 
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
@@ -23,6 +30,35 @@ import { IFilterModel } from '../models';
  */
 export class FilterManager<T> {
     public filter$ = new BehaviorSubject<IFilterModel<T>[]>([]);
+
+    public dirty$ = this.filter$.pipe(
+        map(filters =>
+            !!this._initialFilters
+            && !isEqual(
+                this._sortByProperty(filters),
+                this._sortByProperty(this._initialFilters),
+            ),
+        ),
+        distinctUntilChanged(),
+    );
+
+    public activeCount$ = combineLatest([
+        this.filter$,
+        this.dirty$,
+    ]).pipe(
+        map(([filters, dirty]) => {
+            if (!dirty) {
+                return 0;
+            }
+
+            return filters.filter(current =>
+                !this._initialFilters?.find(initial => isEqual(initial, current)),
+            ).length;
+        }),
+        distinctUntilChanged(),
+    );
+
+    private _initialFilters: IFilterModel<T>[] | null = null;
 
     constructor(
         private _columns: UiGridColumnDirective<T>[] = [],
@@ -93,9 +129,12 @@ export class FilterManager<T> {
 
         const updatedFilters = [...dropdownFilters, ...searchableFilters];
 
+        if (!this._initialFilters) {
+            this._initialFilters = updatedFilters;
+        }
         if (isEqual(this.filter$.getValue(), updatedFilters)) { return; }
 
-        this.filter$.next([...dropdownFilters, ...searchableFilters]);
+        this.filter$.next(updatedFilters);
     }
 
     private _hasFilterValue = (dropdown?: UiGridSearchFilterDirective<T> | UiGridDropdownFilterDirective<T>) =>
@@ -113,4 +152,8 @@ export class FilterManager<T> {
         property: column.searchableDropdown!.property || column.property,
         value: column.searchableDropdown!.value!.id,
     }) as IFilterModel<T>
+
+    private _sortByProperty(filters: IFilterModel<T>[]): any {
+        return filters.sort((a, b) => (a.property > b.property) ? 1 : -1);
+    }
 }
