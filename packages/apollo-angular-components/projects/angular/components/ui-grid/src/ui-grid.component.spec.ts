@@ -2284,4 +2284,186 @@ describe('Component: UiGrid', () => {
             });
         });
     });
+
+    describe('Scenario: Grid State Templates', () => {
+        @Component({
+            template: `
+            <ui-grid [data]="data" [loading]="loading">
+                <ui-grid-header [search]="true">
+                </ui-grid-header>
+                <ui-grid-column [searchable]="true"
+                                [sortable]="true"
+                                property="id"
+                                title="Id">
+                    <ui-grid-dropdown-filter [items]="filterItems">
+                    </ui-grid-dropdown-filter>
+                </ui-grid-column>
+                <ui-grid-no-content>
+                    <ng-template let-search="search"
+                                 let-activeCount="activeCount">
+                        <div id="no-data-template">No data</div>
+                        <div id="search-text">{{search}}</div>
+                        <div id="active-count">{{activeCount}}</div>
+                    </ng-template>
+                </ui-grid-no-content>
+                <ui-grid-loading>
+                    <ng-template>
+                        <div id="loading-template">
+                            Loading ...
+                        </div>
+                    </ng-template>
+                </ui-grid-loading>
+            </ui-grid>
+            `,
+        })
+        class TestFixtureCustomStatesComponent {
+            @ViewChild(UiGridComponent, {
+                static: true,
+            })
+            public grid!: UiGridComponent<ITestEntity>;
+            public data: ITestEntity[] = [];
+            public loading = false;
+
+            public get filterItems(): IDropdownOption[] {
+                return [1, 2, 3].map(count => ({
+                    value: count,
+                    label: count.toString(),
+                }));
+            }
+        }
+
+        describe('Behavior: custom templates', () => {
+            let fixture: ComponentFixture<TestFixtureCustomStatesComponent>;
+            let component: TestFixtureCustomStatesComponent;
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        NoopAnimationsModule,
+                    ],
+                    declarations: [
+                        TestFixtureCustomStatesComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureCustomStatesComponent);
+                component = fixture.componentInstance;
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should display custom no data template', () => {
+                const noDataElement = fixture.debugElement.query(By.css('#no-data-template'));
+                expect(noDataElement).toBeTruthy();
+            });
+
+            it('should display custom loading template', () => {
+                component.loading = true;
+                fixture.detectChanges();
+
+                const loadingElement = fixture.debugElement.query(By.css('#loading-template'));
+                expect(loadingElement).toBeTruthy();
+            });
+
+            it('should hide default spiner on loading', () => {
+                component.loading = true;
+                fixture.detectChanges();
+
+                const defaultSpinner = fixture.debugElement.query(By.css('mat-progress-bar'));
+                expect(defaultSpinner).toBeFalsy();
+            });
+
+            it('should hide no data template on loading', () => {
+                component.loading = true;
+                fixture.detectChanges();
+
+                const loadingElement = fixture.debugElement.query(By.css('#no-data-template'));
+                expect(loadingElement).toBeFalsy();
+            });
+
+            it('should provide correct number of filters', () => {
+                const activeFiltersCount = fixture.debugElement.query(By.css('#active-count'));
+                expect(activeFiltersCount.nativeElement.innerText).toBe('0');
+
+                const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                expect(activeFiltersCount.nativeElement.innerText).toBe('1');
+            });
+
+            it('should provide search context', <any>fakeAsync(() => {
+                const debounceTime = 500;
+                const searchString = fixture.debugElement.query(By.css('#search-text'));
+                const searchInput = fixture.debugElement.query(By.css('input.mat-input-element'));
+                const randomInput = faker.random.alphaNumeric(10);
+
+                searchInput.nativeElement.value = randomInput;
+                searchInput.nativeElement.dispatchEvent(EventGenerator.input());
+
+                tick(debounceTime);
+                fixture.detectChanges();
+
+                expect(searchInput).toBeDefined();
+                expect(searchString.nativeElement.innerText).toBe(randomInput);
+
+                discardPeriodicTasks();
+            }));
+        });
+
+        @Component({
+            template: `
+            <ui-grid [data]="data" [loading]="loading">
+            </ui-grid>
+            `,
+        })
+        class TestFixtureDefaultStatesComponent {
+            @ViewChild(UiGridComponent, {
+                static: true,
+            })
+            public grid!: UiGridComponent<ITestEntity>;
+            public data: ITestEntity[] = [];
+            public loading = false;
+        }
+        describe('Behavior: default state templates', () => {
+            let fixture: ComponentFixture<TestFixtureDefaultStatesComponent>;
+            let component: TestFixtureDefaultStatesComponent;
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        NoopAnimationsModule,
+                    ],
+                    declarations: [
+                        TestFixtureCustomStatesComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureCustomStatesComponent);
+                component = fixture.componentInstance;
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should hide default no data state on loading', () => {
+                component.loading = true;
+                fixture.detectChanges();
+
+                const defaultNoData = fixture.debugElement.query(By.css('ui-grid-no-data-container'));
+                expect(defaultNoData).toBeFalsy();
+            });
+        });
+    });
 });
