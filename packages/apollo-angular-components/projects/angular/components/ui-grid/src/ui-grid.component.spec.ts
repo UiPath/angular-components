@@ -2190,7 +2190,11 @@ describe('Component: UiGrid', () => {
         describe('Behavior: use injection token value', () => {
             @Component({
                 template: `
-                <ui-grid>
+                <ui-grid [toggleColumns]="true">
+                    <ui-grid-header>
+                    </ui-grid-header>
+                    <ui-grid-column property="id">
+                    </ui-grid-column>
                     <ui-grid-footer [length]="5"
                                     [pageSize]="5">
                     </ui-grid-footer>
@@ -2207,6 +2211,7 @@ describe('Component: UiGrid', () => {
                     imports: [
                         UiGridModule,
                         UiGridCustomPaginatorModule,
+                        NoopAnimationsModule,
                     ],
                     providers: [
                         UiMatPaginatorIntl,
@@ -2233,13 +2238,21 @@ describe('Component: UiGrid', () => {
             it('should use injection token value', () => {
                 const customFooter = fixture.debugElement.query(By.css('ui-grid-custom-paginator'));
                 expect(customFooter).toBeTruthy();
+
+                const customFilters = fixture.debugElement.query(By.css('ui-grid-toggle-columns .mat-button-wrapper span'));
+                expect(customFilters.nativeElement.innerText).toBe('Columns');
             });
         });
 
         describe('Behavior: override injection token value', () => {
             @Component({
                 template: `
-                <ui-grid [useAlternateDesign]="false">
+                <ui-grid [toggleColumns]="true"
+                         [useAlternateDesign]="false">
+                    <ui-grid-header>
+                    </ui-grid-header>
+                    <ui-grid-column property="id">
+                    </ui-grid-column>
                     <ui-grid-footer [length]="5"
                                     [pageSize]="5">
                     </ui-grid-footer>
@@ -2282,8 +2295,12 @@ describe('Component: UiGrid', () => {
             it('should override injection token value', () => {
                 const customFooter = fixture.debugElement.query(By.css('ui-grid-custom-paginator'));
                 expect(customFooter).toBeFalsy();
+
+                const customFilters = fixture.debugElement.query(By.css('ui-grid-toggle-columns .mat-button-wrapper span'));
+                expect(customFilters).toBeFalsy();
             });
         });
+    });
 
     describe('Scenario: collapsible filters', () => {
         describe('Behavior: collapsible filters', () => {

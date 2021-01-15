@@ -11,6 +11,11 @@ $toggle-col-width: 10em;
         position: relative;
         top: -10px;
         left: -4px;
+
+        &.use-alternate {
+            top: -10px;
+            left: -67px;
+        }
     }
 }
 
@@ -28,6 +33,12 @@ $toggle-col-width: 10em;
 
         .mat-icon {
             margin-right: 0;
+        }
+    }
+
+    &-alternate {
+        .mat-optgroup-label {
+            padding-right: 3px;
         }
     }
 }
