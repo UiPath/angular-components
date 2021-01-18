@@ -1,3 +1,28 @@
+import cloneDeep from 'lodash-es/cloneDeep';
+import isEqual from 'lodash-es/isEqual';
+import {
+    BehaviorSubject,
+    combineLatest,
+    merge,
+    Observable,
+    of,
+    Subject,
+    Subscription,
+} from 'rxjs';
+import {
+    debounceTime,
+    delay,
+    distinctUntilChanged,
+    filter,
+    finalize,
+    map,
+    retry,
+    startWith,
+    switchMap,
+    takeUntil,
+    tap,
+} from 'rxjs/operators';
+
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ListRange } from '@angular/cdk/collections';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -33,31 +58,6 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 import {
     VirtualScrollItemStatus,
 } from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
-
-import cloneDeep from 'lodash-es/cloneDeep';
-import isEqual from 'lodash-es/isEqual';
-import {
-    BehaviorSubject,
-    combineLatest,
-    merge,
-    Observable,
-    of,
-    Subject,
-    Subscription,
-} from 'rxjs';
-import {
-    debounceTime,
-    delay,
-    distinctUntilChanged,
-    filter,
-    finalize,
-    map,
-    retry,
-    startWith,
-    switchMap,
-    takeUntil,
-    tap,
-} from 'rxjs/operators';
 
 import {
     ISuggestValue,

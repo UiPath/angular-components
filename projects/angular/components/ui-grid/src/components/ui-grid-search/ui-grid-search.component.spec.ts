@@ -1,3 +1,9 @@
+import * as faker from 'faker';
+import {
+    finalize,
+    take,
+} from 'rxjs/operators';
+
 import {
     Component,
     ViewChild,
@@ -12,12 +18,6 @@ import {
     EventGenerator,
     Key,
 } from '@uipath/angular/testing';
-
-import * as faker from 'faker';
-import {
-    finalize,
-    take,
-} from 'rxjs/operators';
 
 import { UiGridSearchComponent } from './ui-grid-search.component';
 import { UiGridSearchModule } from './ui-grid-search.module';

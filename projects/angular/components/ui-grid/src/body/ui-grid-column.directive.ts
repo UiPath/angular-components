@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 import {
     ContentChild,
     Directive,
@@ -11,8 +13,6 @@ import {
 } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
 import { identifier } from '@uipath/angular/utilities';
-
-import { Subject } from 'rxjs';
 
 import {
     UiGridDropdownFilterDirective,

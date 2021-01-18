@@ -1,7 +1,7 @@
-import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
-
 import isEqual from 'lodash-es/isEqual';
 import { BehaviorSubject } from 'rxjs';
+
+import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import {

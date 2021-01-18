@@ -1,3 +1,15 @@
+import { Subject } from 'rxjs';
+import {
+    debounceTime,
+    distinctUntilChanged,
+    filter,
+    map,
+    startWith,
+    takeUntil,
+    tap,
+    withLatestFrom,
+} from 'rxjs/operators';
+
 import { ListRange } from '@angular/cdk/collections';
 import {
     CdkVirtualForOf,
@@ -14,18 +26,6 @@ import {
     Output,
     Self,
 } from '@angular/core';
-
-import { Subject } from 'rxjs';
-import {
-    debounceTime,
-    distinctUntilChanged,
-    filter,
-    map,
-    startWith,
-    takeUntil,
-    tap,
-    withLatestFrom,
-} from 'rxjs/operators';
 
 /**
  * Used for marking the loading state of items

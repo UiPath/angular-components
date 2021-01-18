@@ -1,3 +1,19 @@
+import * as faker from 'faker';
+import {
+    VirtualScrollItemStatus,
+} from 'projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api';
+import {
+    Observable,
+    of,
+} from 'rxjs';
+import {
+    delay,
+    finalize,
+    map,
+    skip,
+    take,
+} from 'rxjs/operators';
+
 import {
     Component,
     Directive,
@@ -23,22 +39,6 @@ import {
     EventGenerator,
     Key,
 } from '@uipath/angular/testing';
-
-import * as faker from 'faker';
-import {
-    VirtualScrollItemStatus,
-} from 'projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api';
-import {
-    Observable,
-    of,
-} from 'rxjs';
-import {
-    delay,
-    finalize,
-    map,
-    skip,
-    take,
-} from 'rxjs/operators';
 
 import {
     ISuggestValue,
@@ -1183,10 +1183,8 @@ const sharedSpecifications = (
                 fixture.detectChanges();
 
                 const word = faker.random.word();
-                const wordWithWhitespace = `${
-                    Array(6).fill(' ').join('')
-                    }${word}${
-                    Array(6).fill(' ').join('')
+                const wordWithWhitespace = `${Array(6).fill(' ').join('')
+                    }${word}${Array(6).fill(' ').join('')
                     }`;
 
                 searchFor(wordWithWhitespace, fixture);

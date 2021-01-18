@@ -1,11 +1,11 @@
-import { isDevMode } from '@angular/core';
-
 import isEqual from 'lodash-es/isEqual';
 import { BehaviorSubject } from 'rxjs';
 import {
     filter,
     map,
 } from 'rxjs/operators';
+
+import { isDevMode } from '@angular/core';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import {

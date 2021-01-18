@@ -1,3 +1,7 @@
+import cloneDeep from 'lodash-es/cloneDeep';
+import isEqual from 'lodash-es/isEqual';
+import { Subject } from 'rxjs';
+
 import {
     ChangeDetectorRef,
     Directive,
@@ -20,10 +24,6 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { identifier } from '@uipath/angular/utilities';
-
-import cloneDeep from 'lodash-es/cloneDeep';
-import isEqual from 'lodash-es/isEqual';
-import { Subject } from 'rxjs';
 
 import {
     ISuggestValue,

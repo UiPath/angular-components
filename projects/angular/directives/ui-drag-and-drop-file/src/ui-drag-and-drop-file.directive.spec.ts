@@ -1,3 +1,5 @@
+import * as faker from 'faker';
+
 import { Component } from '@angular/core';
 import {
     ComponentFixture,
@@ -9,8 +11,6 @@ import {
     FakeFileList,
     IDropEvent,
 } from '@uipath/angular/testing';
-
-import * as faker from 'faker';
 
 import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
 

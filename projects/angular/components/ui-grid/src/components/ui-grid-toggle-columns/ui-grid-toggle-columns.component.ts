@@ -1,3 +1,13 @@
+import isEqual from 'lodash-es/isEqual';
+import {
+    fromEvent,
+    Subject,
+} from 'rxjs';
+import {
+    filter,
+    takeUntil,
+} from 'rxjs/operators';
+
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -17,16 +27,6 @@ import {
     MatSelect,
     MatSelectChange,
 } from '@angular/material/select';
-
-import isEqual from 'lodash-es/isEqual';
-import {
-    fromEvent,
-    Subject,
-} from 'rxjs';
-import {
-    filter,
-    takeUntil,
-} from 'rxjs/operators';
 
 import {
     IGridDataEntry,

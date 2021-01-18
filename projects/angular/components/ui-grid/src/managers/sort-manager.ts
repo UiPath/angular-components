@@ -1,7 +1,7 @@
-import { SortDirection } from '@angular/material/sort';
-
 import isEqual from 'lodash-es/isEqual';
 import { BehaviorSubject } from 'rxjs';
+
+import { SortDirection } from '@angular/material/sort';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import { ISortModel } from '../models';

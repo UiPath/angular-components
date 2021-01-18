@@ -1,3 +1,5 @@
+import { BehaviorSubject } from 'rxjs';
+
 import {
     ChangeDetectionStrategy,
     Component,
@@ -5,8 +7,6 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
     selector: 'ui-button-progress-spinner',
