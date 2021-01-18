@@ -1,14 +1,3 @@
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { DOCUMENT } from '@angular/common';
-import {
-    Directive,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Self,
-} from '@angular/core';
-
 import {
     fromEvent,
     merge,
@@ -20,6 +9,17 @@ import {
     takeUntil,
     tap,
 } from 'rxjs/operators';
+
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { DOCUMENT } from '@angular/common';
+import {
+    Directive,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Self,
+} from '@angular/core';
 
 /**
  * A directive that is designed to work alongside CdkVirtualScrollViewport

@@ -1,5 +1,3 @@
-import { isDevMode } from '@angular/core';
-
 import assignWith from 'lodash-es/assignWith';
 import cloneDeep from 'lodash-es/cloneDeep';
 import difference from 'lodash-es/difference';
@@ -10,7 +8,12 @@ import isObject from 'lodash-es/isObject';
 import * as hash from 'object-hash';
 import { BehaviorSubject } from 'rxjs';
 
-import { IGridDataEntry } from '../models';
+import { isDevMode } from '@angular/core';
+
+import {
+    GridOptions,
+    IGridDataEntry,
+} from '../models';
 
 /**
  * @ignore
@@ -32,10 +35,6 @@ const customPatch = (left: any, right: any): any => {
  */
 type PropertyMap<T> = { [Key in keyof T]?: PropertyMap<T[Key]> };
 
-export interface DataManagerOptions<T> {
-    useCache?: boolean;
-    idProperty?: keyof T;
-}
 
 type StringOrNumberKeyOf<T> = keyof T & (string | number);
 
@@ -58,7 +57,7 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
         return this.data$.value.length;
     }
 
-    constructor(options?: DataManagerOptions<T>) {
+    constructor(options?: GridOptions<T>) {
         this.useCache = options?.useCache ?? false;
         this.idProperty = options?.idProperty as unknown as K ?? 'id';
     }

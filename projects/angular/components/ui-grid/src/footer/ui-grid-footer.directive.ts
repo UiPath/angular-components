@@ -1,3 +1,5 @@
+import { tap } from 'rxjs/operators';
+
 import {
     Directive,
     EventEmitter,
@@ -6,8 +8,6 @@ import {
     OnInit,
     Output,
 } from '@angular/core';
-
-import { tap } from 'rxjs/operators';
 
 import { PageChangeEvent } from '../events/page-change-event';
 

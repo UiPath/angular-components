@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UiAutoAccessibleLabelModule } from '@uipath/angular/a11y';
 import { UiSuggestModule } from '@uipath/angular/components/ui-suggest';
@@ -24,6 +25,9 @@ import {
 } from './body/ui-grid-expanded-row.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
+import {
+    UiGridCustomPaginatorModule,
+} from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.module';
 import {
     UiGridSearchModule,
 } from './components/ui-grid-search/ui-grid-search.module';
@@ -51,12 +55,14 @@ import { UiGridComponent } from './ui-grid.component';
         MatButtonModule,
         MatIconModule,
         MatMenuModule,
+        MatSelectModule,
         MatTooltipModule,
         MatProgressBarModule,
         ScrollingModule,
         XScrollingModule,
         UiGridSearchModule,
         UiGridToggleColumnsModule,
+        UiGridCustomPaginatorModule,
         UiSuggestModule,
         A11yModule,
         UiVirtualScrollViewportResizeModule,
