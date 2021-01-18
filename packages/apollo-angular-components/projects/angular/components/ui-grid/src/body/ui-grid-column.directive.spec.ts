@@ -1,3 +1,9 @@
+import * as faker from 'faker';
+import {
+    finalize,
+    take,
+} from 'rxjs/operators';
+
 import {
     Component,
     ViewChild,
@@ -7,12 +13,6 @@ import {
     TestBed,
 } from '@angular/core/testing';
 import { UiGridModule } from '@uipath/angular/components/ui-grid';
-
-import * as faker from 'faker';
-import {
-    finalize,
-    take,
-} from 'rxjs/operators';
 
 import { UiGridColumnDirective } from './ui-grid-column.directive';
 

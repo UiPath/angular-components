@@ -1,14 +1,4 @@
 import {
-    ChangeDetectionStrategy,
-    Component,
-    Input,
-    OnDestroy,
-    OnInit,
-    ViewEncapsulation,
-} from '@angular/core';
-import type { AbstractControl } from '@angular/forms';
-
-import {
     combineLatest,
     Observable,
     Subject,
@@ -18,6 +8,16 @@ import {
     map,
     takeUntil,
 } from 'rxjs/operators';
+
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnDestroy,
+    OnInit,
+    ViewEncapsulation,
+} from '@angular/core';
+import type { AbstractControl } from '@angular/forms';
 
 import {
     PROGRESS_ANIMATION,

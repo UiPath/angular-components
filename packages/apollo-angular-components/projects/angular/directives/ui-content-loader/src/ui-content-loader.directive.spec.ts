@@ -1,3 +1,5 @@
+import { BehaviorSubject } from 'rxjs';
+
 import { CommonModule } from '@angular/common';
 import {
     Component,
@@ -9,8 +11,6 @@ import {
 } from '@angular/core/testing';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { By } from '@angular/platform-browser';
-
-import { BehaviorSubject } from 'rxjs';
 
 import {
     UiContentSpinnerComponent,

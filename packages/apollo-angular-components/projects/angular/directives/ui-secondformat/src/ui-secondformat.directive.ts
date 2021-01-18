@@ -1,12 +1,3 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    Inject,
-    InjectionToken,
-    Input,
-    Optional,
-} from '@angular/core';
-
 import * as _moment from 'moment';
 import {
     BehaviorSubject,
@@ -18,6 +9,15 @@ import {
     distinctUntilChanged,
     map,
 } from 'rxjs/operators';
+
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Inject,
+    InjectionToken,
+    Input,
+    Optional,
+} from '@angular/core';
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670

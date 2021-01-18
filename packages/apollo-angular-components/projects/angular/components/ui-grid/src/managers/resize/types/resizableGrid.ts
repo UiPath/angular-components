@@ -1,15 +1,15 @@
 import type {
+    Observable,
+    Subject,
+} from 'rxjs';
+
+import type {
     ChangeDetectorRef,
     ElementRef,
     EventEmitter,
     QueryList,
     SimpleChanges,
 } from '@angular/core';
-
-import type {
-    Observable,
-    Subject,
-} from 'rxjs';
 
 import type {
     UiGridColumnDirective,
