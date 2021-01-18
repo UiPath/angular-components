@@ -1,11 +1,11 @@
+import cloneDeep from 'lodash-es/cloneDeep';
+import differenceBy from 'lodash-es/differenceBy';
+import { Subject } from 'rxjs';
+
 import {
     SelectionChange,
     SelectionModel,
 } from '@angular/cdk/collections';
-
-import cloneDeep from 'lodash-es/cloneDeep';
-import differenceBy from 'lodash-es/differenceBy';
-import { Subject } from 'rxjs';
 
 import {
     IGridDataEntry,

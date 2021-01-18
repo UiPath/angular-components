@@ -1,3 +1,7 @@
+import * as moment from 'moment';
+import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
+
 import {
     Component,
     ViewChild,
@@ -8,10 +12,6 @@ import {
     waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
-import * as moment from 'moment';
-import { BehaviorSubject } from 'rxjs';
-import { take } from 'rxjs/operators';
 
 import {
     ISecondFormatOptions,

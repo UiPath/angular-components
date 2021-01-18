@@ -1,15 +1,4 @@
 import {
-    ChangeDetectionStrategy,
-    Component,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Renderer2,
-} from '@angular/core';
-
-import {
     BehaviorSubject,
     combineLatest,
     Observable,
@@ -20,6 +9,17 @@ import {
     startWith,
     takeUntil,
 } from 'rxjs/operators';
+
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    Renderer2,
+} from '@angular/core';
 
 import { UiPasswordToggleIntl } from './ui-password-toggle.intl';
 

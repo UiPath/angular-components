@@ -1,16 +1,5 @@
 import 'moment-timezone';
 
-import {
-    Directive,
-    ElementRef,
-    Inject,
-    InjectionToken,
-    Input,
-    Optional,
-    Renderer2,
-} from '@angular/core';
-import { UiFormatDirective } from '@uipath/angular/directives/internal';
-
 import * as _moment from 'moment';
 import {
     interval,
@@ -22,6 +11,17 @@ import {
     filter,
     takeUntil,
 } from 'rxjs/operators';
+
+import {
+    Directive,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Input,
+    Optional,
+    Renderer2,
+} from '@angular/core';
+import { UiFormatDirective } from '@uipath/angular/directives/internal';
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670

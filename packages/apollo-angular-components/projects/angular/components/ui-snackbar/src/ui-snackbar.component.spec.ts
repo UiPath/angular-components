@@ -1,3 +1,5 @@
+import * as faker from 'faker';
+
 import { OverlayContainer } from '@angular/cdk/overlay';
 import {
     Component,
@@ -14,7 +16,7 @@ import {
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EventGenerator } from '@uipath/angular/testing';
-import * as faker from 'faker';
+
 import {
     ICON_MAP,
     panelClass,

@@ -1,5 +1,8 @@
 export { UiGridModule } from './ui-grid.module';
 export { UiGridIntl } from './ui-grid.intl';
+export {
+    UiMatPaginatorIntl,
+} from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.component';
 export { UiGridComponent, UI_GRID_OPTIONS } from './ui-grid.component';
 export {
     IDropdownOption,

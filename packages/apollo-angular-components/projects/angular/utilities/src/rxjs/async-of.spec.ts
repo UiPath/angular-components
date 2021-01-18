@@ -1,9 +1,4 @@
 import {
-    fakeAsync,
-    tick,
-} from '@angular/core/testing';
-
-import {
     merge,
     of,
 } from 'rxjs';
@@ -15,6 +10,11 @@ import {
     startWith,
     take,
 } from 'rxjs/operators';
+
+import {
+    fakeAsync,
+    tick,
+} from '@angular/core/testing';
 
 import { asyncOf } from './async-of';
 

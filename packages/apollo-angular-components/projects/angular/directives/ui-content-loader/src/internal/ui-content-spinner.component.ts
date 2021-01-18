@@ -1,3 +1,6 @@
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import {
     ChangeDetectionStrategy,
     Component,
@@ -6,9 +9,6 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-
-import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'ui-content-spinner',
