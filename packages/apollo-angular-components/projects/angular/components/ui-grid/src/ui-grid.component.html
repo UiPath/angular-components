@@ -208,7 +208,7 @@
                          class="ui-grid-header-cell ui-grid-action-cell ui-grid-feature-cell">
                     </div>
                 </div>
-                <mat-progress-bar *ngIf="loading"
+                <mat-progress-bar *ngIf="loading && !loadingState"
                                   mode="query"
                                   class="ui-grid-loader">
                 </mat-progress-bar>
@@ -250,6 +250,10 @@
                         </ng-container>
                     </ng-container>
                 </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="loading && !!loadingState">
+                <ng-container *ngTemplateOutlet="loadingState.html"></ng-container>
             </ng-container>
         </div>
     </div>
@@ -379,6 +383,18 @@
 </ng-template>
 
 <ng-template #noData>
+    <ng-container *ngIf="!loading">
+        <ng-container *ngIf="noContent; else defaultNoData">
+            <ng-container *ngTemplateOutlet="noContent.html; context: {
+                search: header?.searchValue,
+                activeCount: filterManager.activeCount$ | async
+            }">
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</ng-template>
+
+<ng-template #defaultNoData>
     <div *ngIf="!dataManager.pristine"
          class="ui-grid-row ui-grid-no-data-container"
          [class.ui-grid-border-none]="!footer">

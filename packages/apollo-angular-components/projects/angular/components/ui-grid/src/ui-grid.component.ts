@@ -47,6 +47,8 @@ import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import {
     UiGridExpandedRowDirective,
 } from './body/ui-grid-expanded-row.directive';
+import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
+import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
@@ -329,6 +331,25 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     })
     public expandedRow?: UiGridExpandedRowDirective;
 
+    /**
+     * No content custom template reference.
+     *
+     * @ignore
+     */
+    @ContentChild(UiGridNoContentDirective, {
+        static: true,
+    })
+    public noContent?: UiGridNoContentDirective;
+
+    /**
+     * Custom loading template reference.
+     *
+     * @ignore
+     */
+    @ContentChild(UiGridLoadingDirective, {
+        static: true,
+    })
+    public loadingState?: UiGridLoadingDirective;
     /**
      * Live announcer manager, used to emit notification via `aria-live`.
      *
