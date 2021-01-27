@@ -4,6 +4,7 @@
     </div>
 </ng-container>
 <div *ngIf="toggleColumns ||
+            header?.mainButtons?.length ||
             header?.actionButtons?.length ||
             header?.inlineButtons?.length ||
             header?.search ||
@@ -36,24 +37,35 @@
         <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
     </ng-container>
 
-    <ng-container *ngIf="!selectionManager.hasValue()">
+    <div *ngIf="!selectionManager.hasValue()"
+         class="ui-grid-action-buttons ui-grid-action-buttons-inline">
         <ng-container *ngFor="let button of header?.inlineButtons">
             <ng-container *ngIf="button.visible">
                 <ng-container *ngTemplateOutlet="button.html">
                 </ng-container>
             </ng-container>
         </ng-container>
-    </ng-container>
+    </div>
 
-    <ng-container *ngIf="selectionManager.hasValue()"
-                  class="ui-grid-action-buttons">
+    <div *ngIf="selectionManager.hasValue()"
+         class="ui-grid-action-buttons ui-grid-action-buttons-selection">
         <ng-container *ngFor="let button of header?.actionButtons">
             <ng-container *ngIf="button.visible">
                 <ng-container *ngTemplateOutlet="button.html">
                 </ng-container>
             </ng-container>
         </ng-container>
-    </ng-container>
+    </div>
+
+    <div *ngIf="useAlternateDesign || header?.mainButtons?.length > 1"
+         class="ui-grid-action-buttons ui-grid-action-buttons-main">
+        <ng-container *ngFor="let button of header?.mainButtons">
+            <ng-container *ngIf="button.visible">
+                <ng-container *ngTemplateOutlet="button.html">
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
 </div>
 
 <div *ngIf="showFilters"
@@ -64,9 +76,13 @@
 
 <div class="ui-grid-container">
     <div class="ui-grid-table-container">
-        <div *ngIf="header?.mainButton?.visible"
+        <div *ngIf="!useAlternateDesign && header?.mainButtons?.length === 1"
              class="ui-grid-action-button">
-            <ng-container *ngTemplateOutlet="header?.mainButton?.html">
+            <ng-container *ngIf="header!.mainButtons![0] as mainBtn">
+                <ng-container *ngIf="mainBtn.visible">
+                    <ng-container *ngTemplateOutlet="mainBtn.html">
+                    </ng-container>
+                </ng-container>
             </ng-container>
         </div>
 
@@ -357,6 +373,14 @@
          [class.ui-grid-border-none]="!footer">
         <mat-icon>list</mat-icon>
         <p>{{noDataMessage || intl.noDataMessage}}</p>
+    </div>
+</ng-template>
+
+<ng-template #multiPageSelectionAlternate>
+    <div *ngIf="!isProjected &&
+                showMultiPageSelectionInfo"
+         class="ui-grid-selection-info-container ui-grid-selection-info-container-alternate">
+        <ng-container *ngTemplateOutlet="multiPageSelectionInfo"></ng-container>
     </div>
 </ng-template>
 
