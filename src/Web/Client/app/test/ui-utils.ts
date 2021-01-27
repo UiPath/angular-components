@@ -165,6 +165,7 @@ export class IntegrationUtils<T> {
         const strategy = this.getUiSuggestFetchStrategy(selector);
 
         if (!!config && strategy === 'onOpen') {
+            await this.fixture.whenStable();
             this.expectAndFlush(config.stub, config.httpMock);
         }
 
