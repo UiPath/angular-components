@@ -19,5 +19,6 @@ export interface IGridDataEntry {
 export interface GridOptions<T> {
     useCache?: boolean;
     useAlternateDesign?: boolean;
+    collapsibleFilters?: boolean;
     idProperty?: keyof T;
 }

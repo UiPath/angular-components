@@ -9,16 +9,9 @@
             header?.search ||
             (isAnyFilterDefined$ | async)"
      class="ui-grid-filter-container">
-    <ui-grid-toggle-columns *ngIf="toggleColumns && !selectionManager.hasValue()"
-                            [options]="visibilityManager.options$ | async"
-                            [dirty]="visibilityManager.isDirty$ | async"
-                            [toggleTooltip]="intl.toggleTooltip"
-                            [resetToDefaults]="intl.toggleResetToDefaults"
-                            [toggleTitle]="intl.toggleTitle"
-                            [togglePlaceholderTitle]="intl.togglePlaceholderTitle"
-                            (visibleColumns)="visibilityManager.update($event)"
-                            (resetColumns)="visibilityManager.reset()">
-    </ui-grid-toggle-columns>
+    <ng-container *ngIf="!useAlternateDesign">
+        <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
+    </ng-container>
 
     <ng-container *ngIf="!selectionManager.hasValue() ||
                    !header?.actionButtons?.length">
@@ -34,55 +27,13 @@
                         class="ui-grid-search ui-grid-filter-option">
         </ui-grid-search>
 
-        <ng-container *ngFor="let column of columns$ | async">
-            <div *ngIf="column.dropdown?.visible$ | async"
-                 class="ui-grid-dropdown-filter-container ui-grid-filter-option">
-                <button [matMenuTriggerFor]="filterOptions"
-                        [disabled]="column.dropdown.disabled || disabled"
-                        mat-button
-                        type="button"
-                        class="ui-grid-dropdown-filter-button">
-                    <span class="ui-grid-dropdown-filter-title">{{ column.title }}: </span>
-                    <span class="ui-grid-dropdown-filter-value">
-                        {{ !!column.dropdown.value ? intl.translateDropdownOption(column.dropdown.value) :
-                        intl.noFilterPlaceholder }}
-                    </span>
-                    <mat-icon>keyboard_arrow_down</mat-icon>
-                </button>
-                <mat-menu #filterOptions="matMenu"
-                          [overlapTrigger]="true">
-                    <button *ngIf="column.dropdown.showAllOption"
-                            [class.active]="column.dropdown.value == null"
-                            (click)="filterManager.dropdownUpdate(column!, undefined)"
-                            type="button"
-                            mat-menu-item>
-                        {{ intl.noFilterPlaceholder }}
-                    </button>
-                    <button *ngFor="let dropdownItem of column.dropdown.items"
-                            [class.active]="column.dropdown.value?.label === dropdownItem.label"
-                            (click)="filterManager.dropdownUpdate(column, dropdownItem)"
-                            type="button"
-                            mat-menu-item>
-                        {{ intl.translateDropdownOption(dropdownItem) }}
-                    </button>
-                </mat-menu>
-            </div>
-
-            <ng-container *ngIf="column.searchableDropdown?.visible$ | async">
-                <ui-suggest #suggest
-                            [placeholder]="column.title"
-                            [defaultValue]="column.searchableDropdown.noFilterPlaceholder || intl.noFilterPlaceholder"
-                            [searchSourceFactory]="column.searchableDropdown.searchSourceFactory"
-                            [value]="[column.searchableDropdown.value]"
-                            [disabled]="column.searchableDropdown.disabled || disabled"
-                            [maxLength]="64"
-                            (selected)="filterManager.searchableDropdownUpdate(column, $event)"
-                            (opened)="column.refetch && suggest.fetch()"
-                            width="230px"
-                            class="ui-grid-search-filter ui-grid-filter-option">
-                </ui-suggest>
-            </ng-container>
+        <ng-container *ngTemplateOutlet="filtersTmpl">
         </ng-container>
+
+    </ng-container>
+
+    <ng-container *ngIf="useAlternateDesign">
+        <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
     </ng-container>
 
     <ng-container *ngIf="!selectionManager.hasValue()">
@@ -103,6 +54,12 @@
             </ng-container>
         </ng-container>
     </ng-container>
+</div>
+
+<div *ngIf="showFilters"
+     [@filters-container]
+     class="ui-grid-filter-container">
+    <ng-container *ngTemplateOutlet="classicFiltersTmpl"></ng-container>
 </div>
 
 <div class="ui-grid-container">
@@ -469,4 +426,83 @@
                               [hidePageSize]="footer?.hidePageSize"
                               (page)="footer?.pageChange?.next($event)">
     </ui-grid-custom-paginator>
+</ng-template>
+
+<ng-template #filtersTmpl>
+    <ng-container *ngIf="collapsibleFilters; else classicFiltersTmpl">
+        <button mat-button
+                class="ui-grid-collapsible-filters-toggle"
+                (click)="showFilters = !showFilters">
+            <mat-icon>filter_list</mat-icon>
+            <span>{{ intl.filters(filterManager.activeCount$ | async)}}</span>
+            <mat-icon>{{ showFilters ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+    </ng-container>
+</ng-template>
+
+<ng-template #classicFiltersTmpl>
+    <ng-container *ngFor="let column of columns$ | async">
+        <div *ngIf="column.dropdown?.visible$ | async"
+             [ngClass]="{'ui-grid-alternate-filter-container': collapsibleFilters}"
+             class="ui-grid-dropdown-filter-container ui-grid-filter-option">
+            <button [matMenuTriggerFor]="filterOptions"
+                    [disabled]="column.dropdown.disabled || disabled"
+                    mat-button
+                    type="button"
+                    class="ui-grid-dropdown-filter-button">
+                <span class="ui-grid-dropdown-filter-title">{{ column.title }}: </span>
+                <span class="ui-grid-dropdown-filter-value">
+                    {{ !!column.dropdown.value ? intl.translateDropdownOption(column.dropdown.value) :
+                    intl.noFilterPlaceholder }}
+                </span>
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+            <mat-menu #filterOptions="matMenu"
+                      [overlapTrigger]="true">
+                <button *ngIf="column.dropdown.showAllOption"
+                        [class.active]="column.dropdown.value == null"
+                        (click)="filterManager.dropdownUpdate(column!, undefined)"
+                        type="button"
+                        mat-menu-item>
+                    {{ intl.noFilterPlaceholder }}
+                </button>
+                <button *ngFor="let dropdownItem of column.dropdown.items"
+                        [class.active]="column.dropdown.value?.label === dropdownItem.label"
+                        (click)="filterManager.dropdownUpdate(column, dropdownItem)"
+                        type="button"
+                        mat-menu-item>
+                    {{ intl.translateDropdownOption(dropdownItem) }}
+                </button>
+            </mat-menu>
+        </div>
+
+        <ng-container *ngIf="column.searchableDropdown?.visible$ | async">
+            <ui-suggest #suggest
+                        [placeholder]="column.title"
+                        [defaultValue]="column.searchableDropdown.noFilterPlaceholder || intl.noFilterPlaceholder"
+                        [searchSourceFactory]="column.searchableDropdown.searchSourceFactory"
+                        [value]="[column.searchableDropdown.value]"
+                        [disabled]="column.searchableDropdown.disabled || disabled"
+                        [maxLength]="64"
+                        (selected)="filterManager.searchableDropdownUpdate(column, $event)"
+                        (opened)="column.refetch && suggest.fetch()"
+                        width="230px"
+                        class="ui-grid-search-filter ui-grid-filter-option">
+            </ui-suggest>
+        </ng-container>
+    </ng-container>
+</ng-template>
+
+<ng-template #toggleColumnsTmpl>
+    <ui-grid-toggle-columns *ngIf="toggleColumns && !selectionManager.hasValue()"
+                            [options]="visibilityManager.options$ | async"
+                            [dirty]="visibilityManager.isDirty$ | async"
+                            [toggleTooltip]="intl.toggleTooltip"
+                            [resetToDefaults]="intl.toggleResetToDefaults"
+                            [toggleTitle]="intl.toggleTitle"
+                            [togglePlaceholderTitle]="intl.togglePlaceholderTitle"
+                            (visibleColumns)="visibilityManager.update($event)"
+                            (resetColumns)="visibilityManager.reset()"
+                            [useAlternateDesign]="useAlternateDesign">
+    </ui-grid-toggle-columns>
 </ng-template>

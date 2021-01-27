@@ -19,6 +19,12 @@ import {
 } from 'rxjs/operators';
 
 import {
+    animate,
+    style,
+    transition,
+    trigger,
+} from '@angular/animations';
+import {
     AfterContentInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -80,6 +86,34 @@ export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid 
     templateUrl: './ui-grid.component.html',
     styleUrls: [
         './ui-grid.component.scss',
+    ],
+    animations: [
+        trigger('filters-container', [
+            transition(':enter', [
+                style({
+                    minHeight: '0',
+                    height: '0',
+                    opacity: '0',
+                }),
+                animate('0.15s ease-in', style({
+                    opacity: '*',
+                    minHeight: '*',
+                    height: '*',
+                    display: '*',
+                })),
+            ]),
+            transition(':leave', [
+                style({
+                    minHeight: '*',
+                    height: '*',
+                }),
+                animate('0.15s ease-in', style({
+                    opacity: '0',
+                    minHeight: '0',
+                    height: '0',
+                })),
+            ]),
+        ]),
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
@@ -181,6 +215,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @Input()
     public useAlternateDesign: boolean;
+
+    /**
+     * Option to have collapsible filters.
+     *
+     */
+    @Input()
+    public collapsibleFilters: boolean;
 
     /**
      * Configure if the grid allows to toggle column visibility.
@@ -351,6 +392,12 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     })
     public loadingState?: UiGridLoadingDirective;
     /**
+     * Toggle filters row display state
+     *
+     */
+    public showFilters = false;
+
+    /**
      * Live announcer manager, used to emit notification via `aria-live`.
      *
      */
@@ -470,6 +517,8 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         super();
 
         this.useAlternateDesign = _gridOptions?.useAlternateDesign ?? false;
+        this.collapsibleFilters = _gridOptions?.collapsibleFilters ?? false;
+
         this.isProjected = this._ref.nativeElement.classList.contains('ui-grid-state-responsive');
 
         this.intl = intl || new UiGridIntl();

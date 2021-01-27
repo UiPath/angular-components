@@ -147,6 +147,11 @@ export class UiGridIntl implements OnDestroy {
     public loadingPage = (page: number) =>
         `Loading page number ${page}`
 
+    public filters = (filtersCount?: number | null) =>
+        (filtersCount && filtersCount > 0)
+            ? `Filters (${filtersCount})`
+            : 'Filters'
+
     /**
      * Handles dropdown label transaltions.
      *
