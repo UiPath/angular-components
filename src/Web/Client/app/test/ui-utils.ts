@@ -109,9 +109,10 @@ export class IntegrationUtils<T> {
             .dispatchEvent(EventGenerator.keyDown(Key.Enter))
 
     public expectAndFlush = (stub: IStubEndpoint, httpClient: HttpTestingController) => {
-        httpClient
-            .expectOne(request => request.url.includes(stub.url))
-            .flush(stub.response);
+        const testReq = httpClient.expectOne(request => request.url.includes(stub.url));
+        testReq.flush(stub.response);
+
+        return testReq;
     }
 
     public setInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
