@@ -176,6 +176,14 @@ ui-grid {
                     }
                 }
             }
+
+            &.use-alternate-design {
+                .ui-grid-selection-info {
+                    &-clear-button {
+                        order: 1;
+                    }
+                }
+            }
         }
 
         &-table-container {
