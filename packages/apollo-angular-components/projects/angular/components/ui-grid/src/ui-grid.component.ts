@@ -2,8 +2,10 @@ import range from 'lodash-es/range';
 import {
     animationFrameScheduler,
     BehaviorSubject,
+    combineLatest,
     merge,
     Observable,
+    of,
     Subject,
 } from 'rxjs';
 import {
@@ -12,6 +14,8 @@ import {
     filter,
     map,
     observeOn,
+    shareReplay,
+    startWith,
     switchMap,
     take,
     takeUntil,
@@ -445,10 +449,16 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     public paintTime$: Observable<string>;
 
     /**
-     * Emits with information wether filters are defined.
+     * Emits with information whether filters are defined.
      *
      */
     public isAnyFilterDefined$ = new BehaviorSubject<boolean>(false);
+
+    /**
+     * Emits with information whether any filter is visible.
+     *
+     */
+    public hasAnyFiltersVisible$: Observable<boolean>;
 
     /**
      * Emits the visible column definitions when their definition changes.
@@ -533,6 +543,19 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
                 debounceTime(10),
                 tap(() => this.isResizing && this.resizeManager.stop()),
             );
+
+        this.hasAnyFiltersVisible$ = this.rendered.pipe(
+            switchMap(() => this.columns.changes),
+            startWith('Initial emission'),
+            switchMap(() =>
+                combineLatest(this.columns.map((column: UiGridColumnDirective<T>) =>
+                    column.dropdown?.visible$ ?? column.searchableDropdown?.visible$ ?? of(false),
+                )),
+            ),
+            map(areVisible => areVisible.some(visible => visible)),
+            distinctUntilChanged(),
+            shareReplay(),
+        );
 
         const sort$ = this.sortManager
             .sort$

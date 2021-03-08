@@ -68,7 +68,7 @@
     </div>
 </div>
 
-<div *ngIf="showFilters"
+<div *ngIf="showFilters && (hasAnyFiltersVisible$ | async)"
      [@filters-container]
      class="ui-grid-filter-container">
     <ng-container *ngTemplateOutlet="classicFiltersTmpl"></ng-container>
@@ -461,9 +461,11 @@
 
 <ng-template #filtersTmpl>
     <ng-container *ngIf="collapsibleFilters; else classicFiltersTmpl">
-        <button mat-button
-                class="ui-grid-collapsible-filters-toggle"
-                (click)="showFilters = !showFilters">
+        <button *ngIf="hasAnyFiltersVisible$ | async"
+                [disabled]="disabled"
+                (click)="showFilters = !showFilters"
+                mat-button
+                class="ui-grid-collapsible-filters-toggle">
             <mat-icon>filter_list</mat-icon>
             <span>{{ intl.filters(filterManager.activeCount$ | async)}}</span>
             <mat-icon>{{ showFilters ? 'expand_less' : 'expand_more' }}</mat-icon>
