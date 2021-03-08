@@ -2404,10 +2404,10 @@ describe('Component: UiGrid', () => {
     });
 
     describe('Scenario: collapsible filters', () => {
-        describe('Behavior: collapsible filters', () => {
+        describe('Behavior: grid disabled', () => {
             @Component({
                 template: `
-                <ui-grid>
+                <ui-grid disabled>
                     <ui-grid-header [search]="true">
                     </ui-grid-header>
                     <ui-grid-column [searchable]="true"
@@ -2465,9 +2465,91 @@ describe('Component: UiGrid', () => {
                 fixture.destroy();
             });
 
+            it('should have collapsible toggle disabled', () => {
+                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+
+                expect(collapisbleFiltersToggle).toBeTruthy();
+                expect(collapisbleFiltersToggle.nativeElement.getAttribute('disabled')).toBeTruthy();
+            });
+        });
+
+        describe('Behavior: collapsible filters', () => {
+            @Component({
+                template: `
+                <ui-grid>
+                    <ui-grid-header [search]="true">
+                    </ui-grid-header>
+                    <ui-grid-column [searchable]="true"
+                                    [sortable]="true"
+                                    [disableToggle]="true"
+                                    property="id"
+                                    title="Id">
+                        <ui-grid-dropdown-filter [items]="filterItems"
+                                                 [visible]="visible">
+                        </ui-grid-dropdown-filter>
+                    </ui-grid-column>
+                    <ui-grid-footer [length]="5"
+                                    [pageSize]="5">
+                    </ui-grid-footer>
+                </ui-grid>
+                `,
+            })
+            class TestFixtureAlternateDesignGridComponent {
+                public get filterItems(): IDropdownOption[] {
+                    return [1, 2, 3].map(count => ({
+                        value: count,
+                        label: count.toString(),
+                    }));
+                }
+
+                public visible = true;
+            }
+
+            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+            let component: TestFixtureAlternateDesignGridComponent;
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        UiGridCustomPaginatorModule,
+                        NoopAnimationsModule,
+                    ],
+                    providers: [
+                        UiMatPaginatorIntl,
+                        {
+                            provide: UI_GRID_OPTIONS,
+                            useValue: {
+                                useAlternateDesign: true,
+                                collapsibleFilters: true,
+                            },
+                        },
+                    ],
+                    declarations: [
+                        TestFixtureAlternateDesignGridComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                component = fixture.componentInstance;
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
             it('should use collapsible filters', () => {
                 const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
                 expect(collapisbleFiltersToggle).toBeTruthy();
+            });
+
+            it('should not display collapsible toggle button if no filter visible', () => {
+                component.visible = false;
+                fixture.detectChanges();
+
+                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                expect(collapisbleFiltersToggle).toBeFalsy();
             });
 
             it('should display the correct filter label', () => {
