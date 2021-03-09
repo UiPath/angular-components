@@ -1,9 +1,10 @@
-﻿<ng-container *ngIf="showPaintTime && (paintTime$ | async) as paintTime">
+<ng-container *ngIf="showPaintTime && (paintTime$ | async) as paintTime">
     <div class="ui-grid-debug-information">
         Painted {{ dataManager?.length }} rows in {{ paintTime }}ms
     </div>
 </ng-container>
 <div *ngIf="toggleColumns ||
+            header?.mainButtons?.length ||
             header?.actionButtons?.length ||
             header?.inlineButtons?.length ||
             header?.search ||
@@ -36,24 +37,35 @@
         <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
     </ng-container>
 
-    <ng-container *ngIf="!selectionManager.hasValue()">
+    <div *ngIf="!selectionManager.hasValue()"
+         class="ui-grid-action-buttons ui-grid-action-buttons-inline">
         <ng-container *ngFor="let button of header?.inlineButtons">
             <ng-container *ngIf="button.visible">
                 <ng-container *ngTemplateOutlet="button.html">
                 </ng-container>
             </ng-container>
         </ng-container>
-    </ng-container>
+    </div>
 
-    <ng-container *ngIf="selectionManager.hasValue()"
-                  class="ui-grid-action-buttons">
+    <div *ngIf="selectionManager.hasValue()"
+         class="ui-grid-action-buttons ui-grid-action-buttons-selection">
         <ng-container *ngFor="let button of header?.actionButtons">
             <ng-container *ngIf="button.visible">
                 <ng-container *ngTemplateOutlet="button.html">
                 </ng-container>
             </ng-container>
         </ng-container>
-    </ng-container>
+    </div>
+
+    <div *ngIf="useAlternateDesign || header?.mainButtons?.length > 1"
+         class="ui-grid-action-buttons ui-grid-action-buttons-main">
+        <ng-container *ngFor="let button of header?.mainButtons">
+            <ng-container *ngIf="button.visible">
+                <ng-container *ngTemplateOutlet="button.html">
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
 </div>
 
 <div *ngIf="showFilters"
@@ -62,11 +74,19 @@
     <ng-container *ngTemplateOutlet="classicFiltersTmpl"></ng-container>
 </div>
 
+<ng-container *ngIf="useAlternateDesign && multiPageSelect then multiPageSelectionRow">
+</ng-container>
+
 <div class="ui-grid-container">
+
     <div class="ui-grid-table-container">
-        <div *ngIf="header?.mainButton?.visible"
+        <div *ngIf="!useAlternateDesign && header?.mainButtons?.length === 1"
              class="ui-grid-action-button">
-            <ng-container *ngTemplateOutlet="header?.mainButton?.html">
+            <ng-container *ngIf="header!.mainButtons![0] as mainBtn">
+                <ng-container *ngIf="mainBtn.visible">
+                    <ng-container *ngTemplateOutlet="mainBtn.html">
+                    </ng-container>
+                </ng-container>
             </ng-container>
         </div>
 
@@ -90,7 +110,7 @@
                         </mat-checkbox>
                     </div>
 
-                    <ng-container *ngIf="multiPageSelect then multiPageSelectionHeaderCell">
+                    <ng-container *ngIf="multiPageSelect then multiPageSelectionProjectedHeaderCell">
                     </ng-container>
 
                     <div *ngFor="let column of visible$ | async; let last = last"
@@ -170,7 +190,7 @@
                                   class="ui-grid-loader">
                 </mat-progress-bar>
             </div>
-            <ng-container *ngIf="multiPageSelect then multiPageSelectionRow">
+            <ng-container *ngIf="!useAlternateDesign && multiPageSelect then multiPageSelectionRow">
             </ng-container>
 
             <ng-container *ngIf="dataManager?.length; else noData">
@@ -360,15 +380,24 @@
     </div>
 </ng-template>
 
-<ng-template #multiPageSelectionRow>
+<ng-template #multiPageSelectionAlternate>
     <div *ngIf="!isProjected &&
                 showMultiPageSelectionInfo"
-         class="ui-grid-row ui-grid-selection-info-container">
+         class="ui-grid-selection-info-container ui-grid-selection-info-container-alternate">
         <ng-container *ngTemplateOutlet="multiPageSelectionInfo"></ng-container>
     </div>
 </ng-template>
 
-<ng-template #multiPageSelectionHeaderCell>
+<ng-template #multiPageSelectionRow>
+    <div *ngIf="!isProjected &&
+                showMultiPageSelectionInfo"
+         class="ui-grid-row ui-grid-selection-info-container"
+         [class.ui-grid-selection-info-container-alternate]="useAlternateDesign">
+        <ng-container *ngTemplateOutlet="multiPageSelectionInfo"></ng-container>
+    </div>
+</ng-template>
+
+<ng-template #multiPageSelectionProjectedHeaderCell>
     <div *ngIf="isProjected &&
                 showMultiPageSelectionInfo"
          class="ui-grid-header-cell ui-grid-feature-cell ui-grid-selection-info-container">
@@ -383,7 +412,8 @@
                 (click)="selectionManager.clear()"
                 mat-icon-button
                 type="button"
-                color="warn">
+                color="warn"
+                class="ui-grid-selection-clear-button">
             <mat-icon>clear</mat-icon>
         </button>
         <span class="ui-grid-selection-info-message">
@@ -393,7 +423,8 @@
 </ng-template>
 
 <ng-template #noSelectionTmpl>
-    <mat-icon [matTooltip]="intl.multiPageSelectionInfoTooltip"
+    <mat-icon *ngIf="!useAlternateDesign"
+              [matTooltip]="intl.multiPageSelectionInfoTooltip"
               [matTooltipDisabled]="resizeManager.isResizing"
               class="ui-grid-selection-info-icon"
               tabindex="0">info</mat-icon>
