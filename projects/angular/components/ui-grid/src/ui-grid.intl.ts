@@ -83,11 +83,6 @@ export class UiGridIntl implements OnDestroy {
      */
     public togglePlaceholderTitle = 'Columns';
     /**
-     * No data row message.
-     *
-     */
-    public noDataMessage = 'No data is available.';
-    /**
      * No selection text (for multi-page selection).
      *
      */
@@ -102,7 +97,11 @@ export class UiGridIntl implements OnDestroy {
      *
      */
     public descending = 'descending';
-
+    /**
+     * No data row message.
+     *
+     */
+    public noDataMessage = (_searchValue: string, _activeFilters: number | null) => 'No data is available.';
     /**
      * Determines the `checkbox` `matToolTip`.
      *

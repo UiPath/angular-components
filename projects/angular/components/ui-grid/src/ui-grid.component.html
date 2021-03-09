@@ -374,9 +374,10 @@
 <ng-template #defaultNoData>
     <div *ngIf="!dataManager.pristine"
          class="ui-grid-row ui-grid-no-data-container"
+         [class.ui-grid-no-content-available]="!header?.searchValue && !(filterManager.activeCount$ | async)"
          [class.ui-grid-border-none]="!footer">
-        <mat-icon>list</mat-icon>
-        <p>{{noDataMessage || intl.noDataMessage}}</p>
+        <mat-icon *ngIf="!useAlternateDesign">list</mat-icon>
+        <p>{{noDataMessage || intl.noDataMessage(header?.searchValue, filterManager.activeCount$ | async)}}</p>
     </div>
 </ng-template>
 
