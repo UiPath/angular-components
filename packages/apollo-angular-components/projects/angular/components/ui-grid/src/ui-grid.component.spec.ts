@@ -2300,6 +2300,107 @@ describe('Component: UiGrid', () => {
                 expect(customFilters).toBeFalsy();
             });
         });
+
+       describe('Scenario: multi page selection', () => {
+            @Component({
+                template: `
+                <ui-grid [data]="data"
+                         [toggleColumns]="true"
+                         [multiPageSelect]="true">
+                    <ui-grid-header>
+                        <ui-header-button type="action">
+                            <ng-template>
+                                <button class="action">action</button>
+                            </ng-template>
+                        </ui-header-button>
+                        <ui-header-button type="action">
+                            <ng-template>
+                                <button class="action">action</button>
+                            </ng-template>
+                        </ui-header-button>
+                        <ui-header-button type="inline">
+                            <ng-template>
+                                <button class="inline">inline</button>
+                            </ng-template>
+                        </ui-header-button>
+                        <ui-header-button type="main">
+                            <ng-template>
+                                <button class="main">main</button>
+                            </ng-template>
+                        </ui-header-button>
+                    </ui-grid-header>
+                    <ui-grid-column property="id">
+                    </ui-grid-column>
+                    <ui-grid-column property="name">
+                    </ui-grid-column>
+                    <ui-grid-footer [length]="5"
+                                    [pageSize]="5">
+                    </ui-grid-footer>
+                </ui-grid>
+                `,
+            })
+            class TestFixtureAlternateDesignGridComponent {
+                public data: ITestEntity[] = [];
+            }
+
+            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+            let data: ITestEntity[];
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        UiGridCustomPaginatorModule,
+                        NoopAnimationsModule,
+                    ],
+                    providers: [
+                        UiMatPaginatorIntl,
+                        {
+                            provide: UI_GRID_OPTIONS,
+                            useValue: {
+                                useAlternateDesign: true,
+                            },
+                        },
+                    ],
+                    declarations: [
+                        TestFixtureAlternateDesignGridComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                data = generateListFactory(generateEntity)(6);
+                fixture.componentInstance.data = data;
+
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should render selection', () => {
+                const selectionInfoContainer = fixture.debugElement.query(By.css('.ui-grid-selection-info-container'));
+                expect(selectionInfoContainer).toBeTruthy();
+            });
+
+            it('should render correct text', () => {
+                const selectAll = fixture.debugElement.query(By.css('.ui-grid-header mat-checkbox input'));
+                selectAll.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const selectionInfoMessage = fixture.debugElement.query(By.css('.ui-grid-selection-info-message'));
+                expect(selectionInfoMessage.nativeElement).toContainText('You have selected 6 items.');
+            });
+
+            it('should hide inline buttons on selection', () => {
+                const selectAll = fixture.debugElement.query(By.css('.ui-grid-header mat-checkbox input'));
+                selectAll.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const buttons = fixture.debugElement.queryAll(By.css('.ui-grid-filter-container button'));
+                buttons.forEach(button => expect(button.classes['inline']).toBeFalsy());
+            });
+        });
     });
 
     describe('Scenario: collapsible filters', () => {
@@ -2639,6 +2740,96 @@ describe('Component: UiGrid', () => {
                 const defaultNoData = fixture.debugElement.query(By.css('ui-grid-no-data-container'));
                 expect(defaultNoData).toBeFalsy();
             });
+        });
+    });
+
+    describe('Scenario: multiple main actions', () => {
+        @Component({
+            template: `
+            <ui-grid [data]="data"
+                     [toggleColumns]="true"
+                     [multiPageSelect]="false">
+                <ui-grid-header>
+                    <ui-header-button type="action">
+                        <ng-template>
+                            <button class="action">action</button>
+                        </ng-template>
+                    </ui-header-button>
+                    <ui-header-button type="action">
+                        <ng-template>
+                            <button class="action">action</button>
+                        </ng-template>
+                    </ui-header-button>
+                    <ui-header-button type="inline">
+                        <ng-template>
+                            <button class="inline">inline</button>
+                        </ng-template>
+                    </ui-header-button>
+                    <ui-header-button type="main">
+                        <ng-template>
+                            <button class="main">main</button>
+                        </ng-template>
+                    </ui-header-button>
+                    <ui-header-button type="main">
+                        <ng-template>
+                            <button class="main">main 2</button>
+                        </ng-template>
+                    </ui-header-button>
+                </ui-grid-header>
+                <ui-grid-column property="id">
+                </ui-grid-column>
+                <ui-grid-column property="name">
+                </ui-grid-column>
+                <ui-grid-footer [length]="5"
+                                [pageSize]="5">
+                </ui-grid-footer>
+            </ui-grid>
+            `,
+        })
+        class TestFixtureAlternateDesignGridComponent {
+            public data: ITestEntity[] = [];
+        }
+
+        let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+        let data: ITestEntity[];
+
+        beforeEach(async () => {
+            TestBed.configureTestingModule({
+                imports: [
+                    UiGridModule,
+                    UiGridCustomPaginatorModule,
+                    NoopAnimationsModule,
+                ],
+                providers: [
+                    UiMatPaginatorIntl,
+                    {
+                        provide: UI_GRID_OPTIONS,
+                        useValue: {
+                            useAlternateDesign: true,
+                        },
+                    },
+                ],
+                declarations: [
+                    TestFixtureAlternateDesignGridComponent,
+                ],
+            });
+
+            fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+            data = generateListFactory(generateEntity)(6);
+            fixture.componentInstance.data = data;
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should have multiple main actions', () => {
+            const buttons = fixture.debugElement.queryAll(By.css('.ui-grid-action-buttons-main button'));
+            expect(buttons.length).toEqual(2);
         });
     });
 });

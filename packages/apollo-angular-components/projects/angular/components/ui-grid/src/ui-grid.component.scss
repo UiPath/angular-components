@@ -139,6 +139,20 @@ ui-grid {
             flex-wrap: wrap;
         }
 
+        // single main button on default design
+        &-action-button {
+            position: absolute;
+            right: $ui-grid-button-size;
+            top: -21px;
+            z-index: 2;
+        }
+
+        &-action-buttons {
+            &-main {
+                margin-left: auto;
+            }
+        }
+
         &-container {
             border-radius: $ui-border-radius;
 
@@ -159,6 +173,14 @@ ui-grid {
 
                     .mat-select {
                         padding: 0.4375em 0;
+                    }
+                }
+            }
+
+            &.use-alternate-design {
+                .ui-grid-selection-info {
+                    &-clear-button {
+                        order: 1;
                     }
                 }
             }
@@ -184,6 +206,19 @@ ui-grid {
         }
 
         &-selection-info-container {
+            &-alternate {
+                min-height: $ui-grid-button-size;
+                padding: $ui-grid-default-spacing 0;
+                display: flex;
+                align-items: center;
+
+                .ui-grid-selection {
+                    &-clear-button {
+                        order: 1;
+                    }
+                }
+            }
+
             button.mat-icon-button,
             .ui-grid-selection-info-icon {
                 margin-left: 5px;
@@ -412,13 +447,6 @@ ui-grid {
             .ui-grid-header-cell-sortable {
                 cursor: pointer;
             }
-        }
-
-        &-action-button {
-            position: absolute;
-            right: $ui-grid-button-size;
-            top: -21px;
-            z-index: 2;
         }
     }
 }
