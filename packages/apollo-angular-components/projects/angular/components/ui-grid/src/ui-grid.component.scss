@@ -183,6 +183,17 @@ ui-grid {
                         order: 1;
                     }
                 }
+
+                .ui-grid-no-data-container {
+                    height: 4 * $ui-grid-row-height;
+                    align-items: flex-start;
+
+                    &.ui-grid-no-content-available {
+                        align-items: center;
+                        justify-content: center;
+                        flex-direction: column;
+                    }
+                }
             }
         }
 
