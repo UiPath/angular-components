@@ -77,7 +77,8 @@
 <ng-container *ngIf="useAlternateDesign && multiPageSelect then multiPageSelectionRow">
 </ng-container>
 
-<div class="ui-grid-container">
+<div [class.use-alternate-design]="useAlternateDesign"
+     class="ui-grid-container">
 
     <div class="ui-grid-table-container">
         <div *ngIf="!useAlternateDesign && header?.mainButtons?.length === 1"
@@ -372,12 +373,26 @@
 </ng-template>
 
 <ng-template #defaultNoData>
-    <div *ngIf="!dataManager.pristine"
-         class="ui-grid-row ui-grid-no-data-container"
-         [class.ui-grid-border-none]="!footer">
-        <mat-icon>list</mat-icon>
-        <p>{{noDataMessage || intl.noDataMessage}}</p>
-    </div>
+    <ng-container *ngIf="!useAlternateDesign; else defaultNoDataAlternative">
+        <div *ngIf="!dataManager.pristine"
+             class="ui-grid-row ui-grid-no-data-container"
+             [class.ui-grid-border-none]="!footer">
+            <mat-icon>list</mat-icon>
+            <p>{{noDataMessage || intl.noDataMessage }}</p>
+        </div>
+    </ng-container>
+</ng-template>
+
+<ng-template #defaultNoDataAlternative>
+    <ng-container *ngLet="(filterManager.activeCount$ | async) as activeFilterCount">
+        <div *ngIf="!dataManager.pristine"
+             class="ui-grid-row ui-grid-no-data-container"
+             [class.ui-grid-no-content-available]="!header?.searchValue && !activeFilterCount"
+             [class.ui-grid-border-none]="!footer">
+            <mat-icon *ngIf="!header?.searchValue && !activeFilterCount">visibility_off</mat-icon>
+            <p>{{ intl.noDataMessageAlternative(header?.searchValue, activeFilterCount) }}</p>
+        </div>
+    </ng-container>
 </ng-template>
 
 <ng-template #multiPageSelectionAlternate>

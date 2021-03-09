@@ -2244,6 +2244,148 @@ describe('Component: UiGrid', () => {
             });
         });
 
+        describe('Behavior: grid with no data', () => {
+            @Component({
+                template: `
+                <ui-grid [data]="data"
+                         [toggleColumns]="true">
+                    <ui-grid-header [search]="true">
+                    </ui-grid-header>
+                    <ui-grid-column [searchable]="true"
+                                    property="id">
+                        <ui-grid-dropdown-filter [items]="filterItems">
+                        </ui-grid-dropdown-filter>
+                    </ui-grid-column>
+                    <ui-grid-footer [length]="5"
+                                    [pageSize]="5">
+                    </ui-grid-footer>
+                </ui-grid>
+                `,
+            })
+            class TestFixtureAlternateDesignGridComponent {
+                public data: ITestEntity[] = [];
+
+                public get filterItems(): IDropdownOption[] {
+                    return [1, 2, 3].map(count => ({
+                        value: count,
+                        label: count.toString(),
+                    }));
+                }
+            }
+
+            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+            const intl = new UiGridIntl();
+            intl.noDataMessageAlternative = (searchValue, activeFilters) => {
+                return 'table_no_data'.concat(
+                    searchValue ? '_search' : '',
+                    activeFilters ? '_filters' : '',
+                );
+            };
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        UiGridCustomPaginatorModule,
+                        NoopAnimationsModule,
+                    ],
+                    providers: [
+                        {
+                            provide: UiGridIntl,
+                            useValue: intl,
+                        },
+                        {
+                            provide: UI_GRID_OPTIONS,
+                            useValue: {
+                                useAlternateDesign: true,
+                            },
+                        },
+                    ],
+                    declarations: [
+                        TestFixtureAlternateDesignGridComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should use proper template when no data', () => {
+                const noDataContent = fixture.debugElement.query(By.css('.ui-grid-row.ui-grid-no-data-container'));
+                expect(noDataContent).toBeTruthy();
+                expect(noDataContent.classes['ui-grid-no-content-available']).toBeTrue();
+                expect(noDataContent.nativeElement.innerText).toContain('table_no_data');
+            });
+
+            it('should use proper template when no data for search', fakeAsync(() => {
+                const debounceTime = 500;
+                const searchInput = fixture.debugElement.query(By.css('input.mat-input-element'));
+                const randomInput = faker.random.alphaNumeric(10);
+
+                searchInput.nativeElement.value = randomInput;
+                searchInput.nativeElement.dispatchEvent(EventGenerator.input());
+
+                tick(debounceTime);
+                fixture.detectChanges();
+
+                const noDataContent = fixture.debugElement.query(By.css('.ui-grid-row.ui-grid-no-data-container'));
+                expect(noDataContent).toBeTruthy();
+                expect(noDataContent.classes['ui-grid-no-content-available']).toBeFalsy();
+
+                expect(noDataContent.nativeElement.innerText).toContain('table_no_data_search');
+
+                discardPeriodicTasks();
+            }));
+
+            it('should use proper template when no data with filters', () => {
+                const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const noDataContent = fixture.debugElement.query(By.css('.ui-grid-row.ui-grid-no-data-container'));
+                expect(noDataContent).toBeTruthy();
+                expect(noDataContent.classes['ui-grid-no-content-available']).toBeFalsy();
+                expect(noDataContent.nativeElement.innerText).toContain('table_no_data_filters');
+            });
+
+            it('should use proper template when no data with filters and search', fakeAsync(() => {
+
+                const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const debounceTime = 500;
+                const searchInput = fixture.debugElement.query(By.css('input.mat-input-element'));
+                const randomInput = faker.random.alphaNumeric(10);
+
+                searchInput.nativeElement.value = randomInput;
+                searchInput.nativeElement.dispatchEvent(EventGenerator.input());
+
+                tick(debounceTime);
+                fixture.detectChanges();
+                flush();
+
+                const noDataContent = fixture.debugElement.query(By.css('.ui-grid-row.ui-grid-no-data-container'));
+                expect(noDataContent).toBeTruthy();
+                expect(noDataContent.classes['ui-grid-no-content-available']).toBeFalsy();
+                expect(noDataContent.nativeElement.innerText).toContain('table_no_data_search_filters');
+
+                discardPeriodicTasks();
+            }));
+        });
+
         describe('Behavior: override injection token value', () => {
             @Component({
                 template: `
@@ -2301,7 +2443,7 @@ describe('Component: UiGrid', () => {
             });
         });
 
-       describe('Scenario: multi page selection', () => {
+        describe('Scenario: multi page selection', () => {
             @Component({
                 template: `
                 <ui-grid [data]="data"
