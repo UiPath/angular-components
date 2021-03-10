@@ -1,3 +1,6 @@
+# v11.0.0-rc.4 (2021-03-10)
+**grid** update no content template
+
 # v11.0.0-rc.3 (2021-03-10)
 **grid** collapsible filters when disabled/not visible
 **grid** render multi page selection above grid for alternate design
