@@ -121,6 +121,9 @@ This behavior results in weird jumps in certain scenarios, using <code>scroll-in
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#block">block</a>
+                            </li>
+                            <li>
                                 <a href="#boundary">boundary</a>
                             </li>
                             <li>
@@ -154,6 +157,26 @@ This behavior results in weird jumps in certain scenarios, using <code>scroll-in
 
             <section>
     <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="block"></a>
+                        <b>block</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;start&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">projects/angular/directives/ui-scroll-into-view/src/ui-scroll-into-view.directive.ts:37</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -202,7 +225,7 @@ This behavior results in weird jumps in certain scenarios, using <code>scroll-in
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">projects/angular/directives/ui-scroll-into-view/src/ui-scroll-into-view.directive.ts:42</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/angular/directives/ui-scroll-into-view/src/ui-scroll-into-view.directive.ts:45</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -244,7 +267,7 @@ eg: <code>[uiScrollIntoView]=&quot;isFocused&quot;</code></p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/angular/directives/ui-scroll-into-view/src/ui-scroll-into-view.directive.ts:68</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/angular/directives/ui-scroll-into-view/src/ui-scroll-into-view.directive.ts:71</a></div>
                             </td>
                         </tr>
 
@@ -280,7 +303,7 @@ eg: <code>[uiScrollIntoView]=&quot;isFocused&quot;</code></p>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">projects/angular/directives/ui-scroll-into-view/src/ui-scroll-into-view.directive.ts:42</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/angular/directives/ui-scroll-into-view/src/ui-scroll-into-view.directive.ts:45</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -340,7 +363,7 @@ eg: <code>[uiScrollIntoView]=&quot;isFocused&quot;</code></p>
 
 import { merge } from &#x27;rxjs&#x27;;
 import { take } from &#x27;rxjs/operators&#x27;;
-import scrollIntoViewIfNeeded from &#x27;scroll-into-view-if-needed&#x27;;
+import scrollIntoViewIfNeeded, { Options } from &#x27;scroll-into-view-if-needed&#x27;;
 
 type Boundary &#x3D; &#x27;parent&#x27; | Element;
 
@@ -366,6 +389,9 @@ export class UiScrollIntoViewDirective {
     @Input()
     public boundary: Boundary &#x3D; &#x27;parent&#x27;;
 
+    @Input()
+    public block: Options[&#x27;block&#x27;] &#x3D; &#x27;start&#x27;;
+
     /**
      * Configures if the decorated element should be scrolled into view.
      * eg: &#x60;[uiScrollIntoView]&#x3D;&quot;isFocused&quot;&#x60;
@@ -384,7 +410,7 @@ export class UiScrollIntoViewDirective {
                 ).subscribe(() &#x3D;&gt; {
                     this.scrollIntoViewIfNeeded(
                         this._element.nativeElement, {
-                        block: &#x27;start&#x27;,
+                        block: this.block,
                         boundary: this.boundary &#x3D;&#x3D;&#x3D; &#x27;parent&#x27; ?
                             this._element.nativeElement.parentElement :
                             this.boundary,
