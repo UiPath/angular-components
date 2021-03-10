@@ -7,7 +7,7 @@ import {
 
 import { merge } from 'rxjs';
 import { take } from 'rxjs/operators';
-import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed';
+import scrollIntoViewIfNeeded, { Options } from 'scroll-into-view-if-needed';
 
 type Boundary = 'parent' | Element;
 
@@ -33,6 +33,9 @@ export class UiScrollIntoViewDirective {
     @Input()
     public boundary: Boundary = 'parent';
 
+    @Input()
+    public block: Options['block'] = 'start';
+
     /**
      * Configures if the decorated element should be scrolled into view.
      * eg: `[uiScrollIntoView]="isFocused"`
@@ -51,7 +54,7 @@ export class UiScrollIntoViewDirective {
                 ).subscribe(() => {
                     this.scrollIntoViewIfNeeded(
                         this._element.nativeElement, {
-                        block: 'start',
+                        block: this.block,
                         boundary: this.boundary === 'parent' ?
                             this._element.nativeElement.parentElement :
                             this.boundary,
