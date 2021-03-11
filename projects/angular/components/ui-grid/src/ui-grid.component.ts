@@ -84,6 +84,7 @@ import {
 import { UiGridIntl } from './ui-grid.intl';
 
 export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid DataManager options.');
+const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
 
 @Component({
     selector: 'ui-grid',
@@ -255,6 +256,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @Input()
     public virtualScroll = false;
+
+    /**
+     * Configure the row item size for virtualScroll
+     *
+     */
+    @Input()
+    public rowSize: number;
 
     /**
      * Show paint time stats
@@ -528,6 +536,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
 
         this.useAlternateDesign = _gridOptions?.useAlternateDesign ?? false;
         this.collapsibleFilters = _gridOptions?.collapsibleFilters ?? false;
+        this.rowSize = _gridOptions?.rowSize ?? DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
 
         this.isProjected = this._ref.nativeElement.classList.contains('ui-grid-state-responsive');
 
