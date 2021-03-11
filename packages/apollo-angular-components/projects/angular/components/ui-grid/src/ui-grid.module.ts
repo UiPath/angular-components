@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UiAutoAccessibleLabelModule } from '@uipath/angular/a11y';
 import { UiSuggestModule } from '@uipath/angular/components/ui-suggest';
+import { UiNgLetModule } from '@uipath/angular/directives/ui-ng-let';
 import {
     UiVirtualScrollViewportResizeModule,
 } from '@uipath/angular/directives/ui-virtual-scroll-viewport-resize';
@@ -69,6 +70,7 @@ import { UiGridComponent } from './ui-grid.component';
         A11yModule,
         UiVirtualScrollViewportResizeModule,
         UiAutoAccessibleLabelModule,
+        UiNgLetModule,
     ],
     declarations: [
         UiGridComponent,
