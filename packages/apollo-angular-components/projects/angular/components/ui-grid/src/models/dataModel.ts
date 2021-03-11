@@ -21,4 +21,5 @@ export interface GridOptions<T> {
     useAlternateDesign?: boolean;
     collapsibleFilters?: boolean;
     idProperty?: keyof T;
+    rowSize?: number;
 }
