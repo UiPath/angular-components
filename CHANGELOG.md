@@ -3,16 +3,16 @@
 * **grid** update no content template
 
 # v11.0.0-rc.3 (2021-03-10)
-**grid** collapsible filters when disabled/not visible
-**grid** render multi page selection above grid for alternate design
-**grid** enable support for multiple main actions
-**grid** column filter redesign
-**grid** collapsible filters
-**grid** add directives for custom no-data and loading states
-**grid** apollo footer redesign
-**snackbar** add action support to `show` method
-**chore** ng update
-**chore** fix formatting issues due to import sort order
+* **grid** collapsible filters when disabled/not visible
+* **grid** render multi page selection above grid for alternate design
+* **grid** enable support for multiple main actions
+* **grid** column filter redesign
+* **grid** collapsible filters
+* **grid** add directives for custom no-data and loading states
+* **grid** apollo footer redesign
+* **snackbar** add action support to `show` method
+* **chore** ng update
+* **chore** fix formatting issues due to import sort order
 
 # v11.0.0-rc.2 (2020-11-25)
 * **BREAKING CHANGE** grid no longer uses cache for IE by default
