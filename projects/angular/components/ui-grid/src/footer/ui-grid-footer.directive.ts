@@ -37,6 +37,15 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
     }
 
     /**
+     * The active page index
+     *
+     */
+    @Input()
+    public set pageIndex(value: number) {
+        this._state.pageIndex = value;
+    }
+
+    /**
      * The available page size options.
      *
      */
