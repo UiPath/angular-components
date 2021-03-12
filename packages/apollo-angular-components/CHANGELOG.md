@@ -1,4 +1,4 @@
-# v11.0.0-rc.4 (2021-03-10)
+# v11.0.0-rc.4 (2021-03-12)
 * **BREAKING CHANGE** grid remove cdk experimental, add rowSize
 * **grid** update no content template
 
