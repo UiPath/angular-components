@@ -1419,6 +1419,7 @@ describe('Component: UiGrid', () => {
                 </ui-grid-column>
                 <ui-grid-footer [length]="data.length"
                                 [pageSize]="pageSize"
+                                [pageIndex]="pageIndex"
                                 [pageSizes]="[pageSize, pageSize+1]"
                                 [hidePageSize]="hidePageSize"
                                 (pageChange)="lastPageChange = $event">
@@ -1434,6 +1435,7 @@ describe('Component: UiGrid', () => {
         public data: ITestEntity[] = [];
         public total = 0;
         public pageSize = 2;
+        public pageIndex = 0;
         public hidePageSize = true;
         public lastPageChange?: PageEvent;
     }
@@ -1477,6 +1479,14 @@ describe('Component: UiGrid', () => {
 
                 const pageSize = fixture.debugElement.query(By.css('.mat-paginator-page-size'));
                 expect(pageSize).toBeDefined();
+            });
+
+            it('should render page range when pageIndex is set', () => {
+                component.pageIndex = 1;
+                fixture.detectChanges();
+
+                const pageIndexRange = fixture.debugElement.query(By.css('.mat-paginator-range-label'));
+                expect(pageIndexRange.nativeElement.textContent.trim()).toBe('3 – 4 of 6');
             });
 
             it('should NOT render pageSize if input [hidePageSize]="true"', () => {
