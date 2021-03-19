@@ -6,9 +6,11 @@ import {
 import {
     distinctUntilChanged,
     map,
+    share,
     takeUntil,
 } from 'rxjs/operators';
 
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -65,6 +67,7 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
 
     constructor(
         public intl: UiPasswordComplexityIntl,
+        private _announcer: LiveAnnouncer,
     ) { }
 
     ngOnInit() {
@@ -72,6 +75,7 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
             .valueChanges
             .pipe(
                 map(() => this.control.getError(VALIDATION_RULE_NAME) || {}),
+                share(),
                 takeUntil(this._destroyed$),
             );
 
@@ -85,12 +89,15 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
         this.rules$ = this.state$
             .pipe(
                 map(() => Object.keys(this.passwordRules || {})),
+                share(),
             );
 
         const rulesAndState$ = combineLatest([
             this.rules$,
             this.state$,
-        ]);
+        ]).pipe(
+            share(),
+        );
 
         this.visibleRules$ = rulesAndState$
             .pipe(
@@ -102,6 +109,13 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
                 map(this._calculatePercentage),
                 distinctUntilChanged(),
             );
+
+        this.state$.pipe(
+            distinctUntilChanged(
+                (left, right) => Object.values(left).join('') === Object.values(right).join(''),
+            ),
+            takeUntil(this._destroyed$),
+        ).subscribe(this._announceChanges);
     }
 
     ngOnDestroy() {
@@ -113,7 +127,6 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
 
     private _mapDirtyState = () => this.control.dirty &&
         this.control.hasError(VALIDATION_RULE_NAME)
-
 
     private _calculatePercentage = ([rules, state]: RulesAndStates) => {
         if (!state) { return 100; }
@@ -133,4 +146,20 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
         rules.filter(rule => state[rule]) :
         rules
 
+    private _announceChanges = (state: IRuleValidationState) => {
+        const rulesNotMet = Object.keys(this.passwordRules || {})
+            .filter(
+                rule => state[rule],
+            )
+            .map(
+                rule => this.intl.ruleLabel(rule),
+            );
+
+        this._announcer.announce(
+            rulesNotMet.length
+                ? `${this.intl.notMet} ${rulesNotMet.join(', ')}`
+                : this.intl.allMet,
+            'polite',
+        );
+    }
 }
