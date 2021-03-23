@@ -22,7 +22,8 @@ You can disable this directive using the boolean ${DISABLE_AUTO_ACCESSIBLE_LABEL
     // tslint:disable-next-line: directive-selector
     selector: ` [mat-fab]:not([${DISABLE_AUTO_ACCESSIBLE_LABEL_ATTRIBUTE}]),
                 [mat-mini-fab]:not([${DISABLE_AUTO_ACCESSIBLE_LABEL_ATTRIBUTE}]),
-                [mat-icon-button]:not([${DISABLE_AUTO_ACCESSIBLE_LABEL_ATTRIBUTE}])`,
+                [mat-icon-button]:not([${DISABLE_AUTO_ACCESSIBLE_LABEL_ATTRIBUTE}]),
+                mat-icon[tabindex]:not([${DISABLE_AUTO_ACCESSIBLE_LABEL_ATTRIBUTE}])`,
 })
 export class UiAutoAccessibleLabelDirective {
     @HostBinding('attr.aria-label')
