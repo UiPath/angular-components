@@ -10,6 +10,7 @@ import {
     EventGenerator,
     FakeFileList,
     IDropEvent,
+    Key,
 } from '@uipath/angular/testing';
 
 import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
@@ -109,15 +110,20 @@ describe('Directive: UiDragAndDropFileDirective', () => {
             expect(fileInput.getAttribute('accept')).toBe(fileTypes);
         });
 
+        [
+            { name: 'click', obj: EventGenerator.click },
+            { name: 'Keydown.Enter', obj: EventGenerator.keyDown(Key.Enter) },
+            { name: 'Keydown.Space', obj: EventGenerator.keyDown(Key.Space) },
+        ].forEach(event => {
+            it(`should trigger browse when ${event.name} is triggered on the parent container`, () => {
+                const spy = spyOn(fileInput, 'click');
 
-        it('should trigger browse when parent container is clicked', () => {
-            const spy = spyOn(fileInput, 'click');
+                const container = fixture.debugElement.query(By.css('div'));
 
-            const container = fixture.debugElement.query(By.css('div'));
+                container.nativeElement.dispatchEvent(event.obj);
 
-            container.nativeElement.dispatchEvent(EventGenerator.click);
-
-            expect(spy).toHaveBeenCalled();
+                expect(spy).toHaveBeenCalledTimes(1);
+            });
         });
 
         it('should be hidden', () => {
