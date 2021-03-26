@@ -124,22 +124,22 @@ export class EventGenerator {
      * KeyDown event generator helper.
      *
      * @param key The pressed key.
-     * @param [modifier] The active modifier, if any.
+     * @param [modifiers] The active modifiers, if any.
      * @returns A `keydown` event with the provided key and modifier metadata.
      */
-    static keyDown(key: KeyOrKeyName, modifier?: IKeyModifier): KeyboardEvent {
-        return EventGenerator._key('keydown', key, modifier);
+    static keyDown(key: KeyOrKeyName, ...modifiers: IKeyModifier[]): KeyboardEvent {
+        return EventGenerator._key('keydown', key, modifiers);
     }
 
     /**
      * KeyUp event generator helper.
      *
      * @param key The pressed key.
-     * @param [modifier] The active modifier, if any.
+     * @param [modifiers] The active modifier, if any.
      * @returns A `keyup` event with the provided key and modifier metadata.
      */
-    static keyUp(key: KeyOrKeyName, modifier?: IKeyModifier): KeyboardEvent {
-        return EventGenerator._key('keyup', key, modifier);
+    static keyUp(key: KeyOrKeyName, ...modifiers: IKeyModifier[]): KeyboardEvent {
+        return EventGenerator._key('keyup', key, modifiers);
     }
 
     /**
@@ -241,15 +241,15 @@ export class EventGenerator {
         return event;
     }
 
-    private static _key(type: string, key: IKey | keyof Key, modifier = {} as IKeyModifier) {
+    private static _key(type: string, key: IKey | keyof Key, modifiers = [] as IKeyModifier[]) {
         const safeKey = EventGenerator._getKey(key) as IKey;
         const options: KeyboardEventInit & { keyCode: number } = {
             code: `${safeKey.code}`,
             key: safeKey.name,
             keyCode: safeKey.keyCode,
-            shiftKey: modifier === Key.Shift,
-            altKey: modifier === Key.Alt,
-            ctrlKey: modifier === Key.Control,
+            shiftKey: modifiers.includes(Key.Shift),
+            altKey: modifiers.includes(Key.Alt),
+            ctrlKey: modifiers.includes(Key.Control),
         };
 
         return new KeyboardEvent(type, options);
