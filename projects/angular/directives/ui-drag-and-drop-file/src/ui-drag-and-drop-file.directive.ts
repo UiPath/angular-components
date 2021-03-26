@@ -118,12 +118,14 @@ export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnD
 
         this._renderer.setStyle(this.fileBrowseRef, 'cursor', 'pointer');
 
-        const browse = this._renderer
-            .listen(this.fileBrowseRef, 'click', () => {
-                if (this.disabled) { return; }
-                this._fileInput.click();
-            });
-        this._disposalCallbacks.push(browse);
+        ['click', 'keydown.enter', 'keydown.space'].forEach(eventName => {
+            const browse = this._renderer
+                .listen(this.fileBrowseRef, eventName, () => {
+                    if (this.disabled) { return; }
+                    this._fileInput.click();
+                });
+            this._disposalCallbacks.push(browse);
+        });
 
         const change = this._renderer.listen(this._fileInput, 'change', (ev) => {
             this._preventAll(ev);
