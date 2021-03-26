@@ -255,6 +255,27 @@ describe('Component: UiGrid', () => {
                         expect(nestedDateCell.nativeElement.innerText).toContain(dataEntry.myObj.myObjDate.toString());
                     });
                 });
+
+                it('should mark first column cells as row headers when no primary column is set', () => {
+                    fixture.detectChanges();
+                    const firstRow = fixture.debugElement.query(By.css('.ui-grid-row'));
+                    const [firstCell, secondCell, thirdCell] = firstRow.queryAll(By.css('.ui-grid-cell'));
+                    expect(firstCell.nativeElement.getAttribute('role')).toBe('rowheader');
+                    expect(secondCell.nativeElement.getAttribute('role')).toBe('gridcell');
+                    expect(thirdCell.nativeElement.getAttribute('role')).toBe('gridcell');
+                });
+
+                it('should mark only one column cell as row header when there are multiple primary columns', fakeAsync(() => {
+                    grid.columns.forEach((col, idx) => col.primary = idx > 0);
+                    fixture.detectChanges();
+                    tick(GRID_COLUMN_CHANGE_DELAY);
+                    fixture.detectChanges();
+                    const firstRow = fixture.debugElement.query(By.css('.ui-grid-row'));
+                    const [firstCell, secondCell, thirdCell] = firstRow.queryAll(By.css('.ui-grid-cell'));
+                    expect(firstCell.nativeElement.getAttribute('role')).toBe('gridcell');
+                    expect(secondCell.nativeElement.getAttribute('role')).toBe('rowheader');
+                    expect(thirdCell.nativeElement.getAttribute('role')).toBe('gridcell');
+                }));
             });
         });
 

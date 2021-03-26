@@ -271,6 +271,7 @@
                 </mat-checkbox>
             </div>
             <div *ngIf="!!actions"
+                 role="gridcell"
                  class="ui-grid-mobile-feature-container ui-grid-mobile-action-container">
                 <ng-container *ngTemplateOutlet="actions.html; context: {
                     data: row,
@@ -294,24 +295,25 @@
                           tabindex="0">
             </mat-checkbox>
         </div>
-        <ng-container *ngFor="let column of visible$ | async">
-            <div [class.ui-grid-primary]="column.primary"
-                 [class.ui-grid-secondary]="!column.primary"
-                 [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
-                 [attr.data-property]="column.property"
-                 [attr.data-identifier]="column.identifier"
-                 [style.width.%]="column.width"
-                 class="ui-grid-cell"
-                 role="gridcell">
+
+        <ng-container *ngFor="let column of renderedColumns$ | async">
+            <div [class.ui-grid-primary]="column.directive.primary"
+                 [class.ui-grid-secondary]="!column.directive.primary"
+                 [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
+                 [attr.data-property]="column.directive.property"
+                 [attr.data-identifier]="column.directive.identifier"
+                 [style.width.%]="column.directive.width"
+                 [attr.role]="column.role"
+                 class="ui-grid-cell">
                 <div *ngIf="isProjected"
-                     [matTooltip]="column.title"
+                     [matTooltip]="column.directive.title"
                      [matTooltipDisabled]="resizeManager.isResizing"
-                     class="ui-grid-cell-mobile-title">{{column.title}}</div>
+                     class="ui-grid-cell-mobile-title">{{column.directive.title}}</div>
                 <div class="ui-grid-cell-content">
-                    <ng-container *ngTemplateOutlet="column.html || textCellTemplate; context: {
+                    <ng-container *ngTemplateOutlet="column.directive.html || textCellTemplate; context: {
                             data: row,
                             index: index,
-                            property: column.property
+                            property: column.directive.property
                         }">
                     </ng-container>
                 </div>
@@ -329,6 +331,7 @@
 
         <div *ngIf="!isProjected &&
                     !!actions"
+             role="gridcell"
              class="ui-grid-cell ui-grid-action-cell ui-grid-feature-cell">
             <div class="ui-grid-action-cell-container">
                 <ng-container *ngTemplateOutlet="actions.html; context: {

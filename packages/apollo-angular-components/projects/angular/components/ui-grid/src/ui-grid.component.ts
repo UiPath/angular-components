@@ -496,6 +496,19 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         tap(compensationWidth => this.scrollCompensationWidth = compensationWidth),
     );
 
+
+    public renderedColumns$ = this.visible$.pipe(
+        map(columns => {
+            const firstIndex = columns.findIndex(c => c.primary);
+            const rowHeaderIndex = firstIndex > -1 ? firstIndex : 0;
+
+            return columns.map((directive, index) => ({
+                directive,
+                role: index === rowHeaderIndex ? 'rowheader' : 'gridcell',
+            }));
+        }),
+    );
+
     /**
      * Determines if the multi-page selection row should be displayed.
      *
