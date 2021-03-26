@@ -1,6 +1,10 @@
 import cloneDeep from 'lodash-es/cloneDeep';
 import differenceBy from 'lodash-es/differenceBy';
-import { Subject } from 'rxjs';
+import {
+    BehaviorSubject,
+    Subject,
+} from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 import {
     SelectionChange,
@@ -33,6 +37,10 @@ export class SelectionManager<T extends IGridDataEntry> {
     }
 
     public changed$: Subject<SelectionChange<T>> = new Subject();
+
+    private _hasValue$ = new BehaviorSubject(false);
+
+    public hasValue$ = this._hasValue$.pipe(distinctUntilChanged());
 
     private _selection = new Map<number | string, T>();
 
@@ -93,6 +101,7 @@ export class SelectionManager<T extends IGridDataEntry> {
     private _updateState = (predicate: (value: T) => void, values: T[]) => {
         values.forEach(predicate);
         this._emitChangeEvent();
+        this._hasValue$.next(this.hasValue());
     }
 
     private _emitChangeEvent() {

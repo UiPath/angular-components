@@ -103,6 +103,11 @@ export class UiGridIntl implements OnDestroy {
      */
     public descending = 'descending';
     /**
+     * Live announced text when new action buttons are revealed on selection
+     *
+     */
+    public gridHeaderActionsNotice = 'Grid header actions updated. Press Shift + Alt + Arrow Up to move there.';
+    /**
      * No data row message alternative function.
      *
      */
