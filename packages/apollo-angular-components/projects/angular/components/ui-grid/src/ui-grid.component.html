@@ -14,7 +14,7 @@
         <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
     </ng-container>
 
-    <ng-container *ngIf="!selectionManager.hasValue() ||
+    <ng-container *ngIf="!(hasSelection$ | async) ||
                    !header?.actionButtons?.length">
         <ui-grid-search *ngIf="header?.search"
                         [debounce]="header!.searchDebounce"
@@ -37,7 +37,7 @@
         <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
     </ng-container>
 
-    <div *ngIf="!selectionManager.hasValue()"
+    <div *ngIf="!(hasSelection$ | async)"
          class="ui-grid-action-buttons ui-grid-action-buttons-inline">
         <ng-container *ngFor="let button of header?.inlineButtons">
             <ng-container *ngIf="button.visible">
@@ -47,7 +47,8 @@
         </ng-container>
     </div>
 
-    <div *ngIf="selectionManager.hasValue()"
+    <div #gridActionButtons
+         *ngIf="hasSelection$ | async"
          class="ui-grid-action-buttons ui-grid-action-buttons-selection">
         <ng-container *ngFor="let button of header?.actionButtons">
             <ng-container *ngIf="button.visible">
@@ -78,6 +79,7 @@
 </ng-container>
 
 <div [class.use-alternate-design]="useAlternateDesign"
+     (keydown.shift.alt.arrowup)="focusRowHeader()"
      class="ui-grid-container">
 
     <div class="ui-grid-table-container">
@@ -545,7 +547,7 @@
 </ng-template>
 
 <ng-template #toggleColumnsTmpl>
-    <ui-grid-toggle-columns *ngIf="toggleColumns && !selectionManager.hasValue()"
+    <ui-grid-toggle-columns *ngIf="toggleColumns && !(hasSelection$ | async)"
                             [options]="visibilityManager.options$ | async"
                             [dirty]="visibilityManager.isDirty$ | async"
                             [toggleTooltip]="intl.toggleTooltip"

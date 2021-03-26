@@ -856,6 +856,59 @@ describe('Component: UiGrid', () => {
                 expect(headerSelectionAction.nativeElement.innerText).toEqual('Selection Action');
             });
 
+            it('should be able to move focus to selection action button if at least one row is selected', () => {
+                const rowCheckboxInputList = fixture.debugElement
+                    .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                const checkboxInput = faker.helpers.randomize(rowCheckboxInputList);
+
+                checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+
+                const headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
+                expect(headerSelectionAction).toBeDefined();
+
+                const gridContainer = fixture.debugElement.query(By.css('.ui-grid-container'));
+                gridContainer.nativeElement.dispatchEvent(
+                    EventGenerator.keyDown(Key.ArrowUp, Key.Shift, Key.Alt),
+                );
+                fixture.detectChanges();
+                expect(document.activeElement).toEqual(headerSelectionAction.nativeElement);
+            });
+
+            it('should live announce the header actions when there is a selection in the grid', () => {
+                const intl = new UiGridIntl();
+                spyOn<any>(component.grid['_queuedAnnouncer'], 'enqueue');
+
+                const rowCheckboxInputList = fixture.debugElement
+                    .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                const checkboxInput = faker.helpers.randomize(rowCheckboxInputList);
+
+                checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+
+                expect(component.grid['_queuedAnnouncer']['enqueue']).toHaveBeenCalledTimes(1);
+                expect(component.grid['_queuedAnnouncer']['enqueue']).toHaveBeenCalledWith(intl.gridHeaderActionsNotice);
+            });
+
+            it('should live announce the header actions only once if there are multiple items selected and deselected', () => {
+                spyOn<any>(component.grid['_queuedAnnouncer'], 'enqueue');
+
+                const rowCheckboxInputList = fixture.debugElement
+                    .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                rowCheckboxInputList.forEach(row => row.nativeElement.dispatchEvent(EventGenerator.click));
+
+                fixture.detectChanges();
+
+                rowCheckboxInputList.forEach(row => row.nativeElement.dispatchEvent(EventGenerator.click));
+
+                expect(component.grid['_queuedAnnouncer']['enqueue']).toHaveBeenCalledTimes(1);
+            });
+
             it('should NOT display the inline header button if at least one row is selected', () => {
                 const rowCheckboxInputList = fixture.debugElement
                     .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
