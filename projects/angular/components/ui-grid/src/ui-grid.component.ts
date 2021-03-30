@@ -14,6 +14,7 @@ import {
     filter,
     map,
     observeOn,
+    share,
     shareReplay,
     startWith,
     switchMap,
@@ -48,6 +49,7 @@ import {
     Output,
     QueryList,
     SimpleChanges,
+    ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -85,6 +87,7 @@ import { UiGridIntl } from './ui-grid.intl';
 
 export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid DataManager options.');
 const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
+const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), textarea, select, details, [tabindex]:not([tabindex="-1"])';
 
 @Component({
     selector: 'ui-grid',
@@ -404,6 +407,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     })
     public loadingState?: UiGridLoadingDirective;
     /**
+     * Reference to the grid action buttons container
+     *
+     * @ignore
+     */
+    @ViewChild('gridActionButtons')
+    public gridActionButtons!: ElementRef;
+    /**
      * Toggle filters row display state
      *
      */
@@ -494,6 +504,27 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         map(view => view ? view.offsetWidth - view.clientWidth : 0),
         // tslint:disable-next-line: deprecation
         tap(compensationWidth => this.scrollCompensationWidth = compensationWidth),
+    );
+
+    public hasSelection$ = this.selectionManager.hasValue$.pipe(
+        tap(hasSelection => {
+            if (hasSelection && !!this.header?.actionButtons?.length) {
+                this._announceGridHeaderActions();
+            }
+        }),
+        share(),
+    );
+
+    public renderedColumns$ = this.visible$.pipe(
+        map(columns => {
+            const firstIndex = columns.findIndex(c => c.primary);
+            const rowHeaderIndex = firstIndex > -1 ? firstIndex : 0;
+
+            return columns.map((directive, index) => ({
+                directive,
+                role: index === rowHeaderIndex ? 'rowheader' : 'gridcell',
+            }));
+        }),
     );
 
     /**
@@ -780,5 +811,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             return `${this.isEveryVisibleRowChecked ? 'select' : 'deselect'} all`;
         }
         return `${this.selectionManager.isSelected(row) ? 'deselect' : 'select'} row ${this.dataManager.indexOf(row)}`;
+    }
+
+    public focusRowHeader() {
+        this.gridActionButtons?.nativeElement.querySelector(FOCUSABLE_ELEMENTS_QUERY)?.focus();
+    }
+
+    private _announceGridHeaderActions() {
+        this._queuedAnnouncer.enqueue(this.intl.gridHeaderActionsNotice);
     }
 }
