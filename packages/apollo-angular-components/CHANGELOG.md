@@ -1,3 +1,11 @@
+# v11.0.0-rc.5 (2021-03-30)
+* **password-indicator**  implement proper a11y support
+* **a11y** add mat-icon[tabindex] to auto-accessible-label directive
+* **testing**  allow multiple modifiers on key up & down
+* **drag-and-drop-file** add keyboard usability to drag & drop
+* **grid** add row headers for a11y
+* **grid** announce header actions on selection
+
 # v11.0.0-rc.4 (2021-03-12)
 * **BREAKING CHANGE** grid remove cdk experimental, add rowSize
 * **grid** update no content template

@@ -49,7 +49,7 @@ class TestFixtureComponent {
     public method?: string;
     public sort?: 'asc' | 'desc' | '';
     public refetch?: boolean;
-    public primary?: boolean;
+    public primary = false;
     public minWidth?: number;
 }
 
@@ -92,6 +92,9 @@ describe('Component: UiGridColumn', () => {
             it('should have visible set to false', () => {
                 expect(column.visible).toBeFalse();
             });
+            it('should have primary set to false', () => {
+                expect(column.primary).toBeFalse();
+            });
 
             it('should have all properties undefined', () => {
                 expect(column.width).toBeNaN();
@@ -103,7 +106,6 @@ describe('Component: UiGridColumn', () => {
                 expect(column.property).toBeUndefined();
                 expect(column.method).toBeUndefined();
                 expect(column.sort).toBeUndefined();
-                expect(column.primary).toBeUndefined();
                 expect(column.minWidth).toBeUndefined();
             });
         });
