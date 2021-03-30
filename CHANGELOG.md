@@ -1,3 +1,6 @@
+# v11.0.0-rc.6 (2021-03-31)
+* **grid** fix hasValue stream
+
 # v11.0.0-rc.5 (2021-03-30)
 * **password-indicator**  implement proper a11y support
 * **a11y** add mat-icon[tabindex] to auto-accessible-label directive
