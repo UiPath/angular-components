@@ -96,15 +96,16 @@ export class SelectionManager<T extends IGridDataEntry> {
     public destroy() {
         this._selection.clear();
         this._selectionSnapshot.clear();
+        this._hasValue$.next(false);
     }
 
     private _updateState = (predicate: (value: T) => void, values: T[]) => {
         values.forEach(predicate);
         this._emitChangeEvent();
-        this._hasValue$.next(this.hasValue());
     }
 
     private _emitChangeEvent() {
+        this._hasValue$.next(this.hasValue());
         if (this._selectedToEmit.length || this._deselectedToEmit.length) {
             this.changed$.next({
                 source: {} as SelectionModel<T>,

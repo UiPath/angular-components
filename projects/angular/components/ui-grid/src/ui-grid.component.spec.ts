@@ -856,6 +856,28 @@ describe('Component: UiGrid', () => {
                 expect(headerSelectionAction.nativeElement.innerText).toEqual('Selection Action');
             });
 
+            it('should reset grid header actions when grid data changes', fakeAsync(() => {
+                const rowCheckboxInputList = fixture.debugElement
+                    .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                const checkboxInput = faker.helpers.randomize(rowCheckboxInputList);
+
+                checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+                let headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
+                expect(headerSelectionAction).toBeDefined();
+                expect(grid.selectionManager['_hasValue$'].getValue()).toBe(true);
+
+                component.data = generateListFactory(generateEntity)();
+                fixture.detectChanges();
+
+                headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
+
+                expect(headerSelectionAction).toBeFalsy();
+                expect(grid.selectionManager['_hasValue$'].getValue()).toBe(false);
+            }));
+
             it('should be able to move focus to selection action button if at least one row is selected', () => {
                 const rowCheckboxInputList = fixture.debugElement
                     .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
