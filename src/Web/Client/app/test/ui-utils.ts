@@ -53,7 +53,7 @@ export class IntegrationUtils<T> {
         return rowEl
             .queryAll(By.css('.ui-grid-cell'))
             .filter((_, index) => cellNumbers.includes(index + 1))
-            .map((cellEl) => cellEl.nativeElement.innerText);
+            .map((cellEl) => cellEl.nativeElement.innerText as string);
     }
 
     public getGridHeaders = (gridSelector: string, debugEl = this.fixture.debugElement) => {
