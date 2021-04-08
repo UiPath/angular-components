@@ -500,6 +500,7 @@
              class="ui-grid-dropdown-filter-container ui-grid-filter-option">
             <button [matMenuTriggerFor]="filterOptions"
                     [disabled]="column.dropdown.disabled || disabled"
+                    [attr.data-column-name]="'ui-grid-dropdown-filter-' + (column.property || 'na')"
                     mat-button
                     type="button"
                     class="ui-grid-dropdown-filter-button">
@@ -537,6 +538,7 @@
                         [value]="[column.searchableDropdown.value]"
                         [disabled]="column.searchableDropdown.disabled || disabled"
                         [maxLength]="64"
+                        [attr.data-cy]="'ui-grid-search-filter-' + (column.property || 'na')"
                         (selected)="filterManager.searchableDropdownUpdate(column, $event)"
                         (opened)="column.refetch && suggest.fetch()"
                         width="230px"
