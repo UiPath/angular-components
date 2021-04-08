@@ -160,6 +160,7 @@
                     </ng-container>
                     <ng-template #defaultItem>
                         <div [matTooltip]="disableTooltip ? null : intl.translateLabel(item.text)"
+                             [attr.data-item-id]="item.id"
                              matTooltipPosition="right"
                              class="ui-suggest-item">
                             <mat-checkbox *ngIf="multiple"
