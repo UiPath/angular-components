@@ -1,15 +1,15 @@
+import { cloneDeep } from 'lodash';
+import {
+    IFooter,
+    IHeader,
+    IInputs,
+} from 'projects/playground/src/app/pages/grid/grid.models';
 import { MockData } from 'projects/playground/src/app/pages/grid/grid.page';
 import {
     BehaviorSubject,
     combineLatest,
     Subject,
 } from 'rxjs';
-import {
-    IFooter,
-    IHeader,
-    IInputs,
-} from 'projects/playground/src/app/pages/grid/grid.models';
-import { cloneDeep } from 'lodash';
 import { startWith } from 'rxjs/operators';
 
 import {
@@ -24,7 +24,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { UiGridComponent } from '@uipath/angular/components/ui-grid';
 
 @Component({
-    selector: 'ui-grid-component',
+    selector: 'app-grid-component',
     styleUrls: ['./grid.component.scss'],
     templateUrl: './grid.component.html',
 })
@@ -79,17 +79,17 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
             this.filteredData = cloneDeep(this.allData);
 
             searchFilters.forEach(filter => {
-                this.filteredData = this.filteredData.filter((row: any) => row[filter.property].includes(filter.value))
-            })
+                this.filteredData = this.filteredData.filter((row: any) => row[filter.property].includes(filter.value));
+            });
 
             filters.forEach(filter => {
-                this.filteredData = this.filteredData.filter((row: any) => row[filter.property].includes(filter.value))
-            })
+                this.filteredData = this.filteredData.filter((row: any) => row[filter.property].includes(filter.value));
+            });
 
             this.total = this.filteredData.length;
 
             this.paginateData(this.filteredData, this.pageIndex, this.footer.pageSize);
-        })
+        });
     }
 
     public paginateData(data: MockData[], pageIndex: number, pageSize: number) {

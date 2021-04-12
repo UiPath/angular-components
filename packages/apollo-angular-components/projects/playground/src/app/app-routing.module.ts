@@ -1,4 +1,6 @@
-import { GridPage } from 'projects/playground/src/app/pages/grid/grid.page';
+import {
+    GridPageComponent,
+} from 'projects/playground/src/app/pages/grid/grid.page';
 import { HomePage } from 'projects/playground/src/app/pages/home/home.page';
 
 import { NgModule } from '@angular/core';
@@ -14,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'grid',
-    component: GridPage,
+    component: GridPageComponent,
   },
   {
     path: '**',
