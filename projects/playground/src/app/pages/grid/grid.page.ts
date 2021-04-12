@@ -1,13 +1,13 @@
 import {
+    IFooter,
+    IHeader,
+    IInputs,
+} from 'projects/playground/src/app/pages/grid/grid.models';
+import {
     BehaviorSubject,
     of,
 } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import {
-    IInputs,
-    IHeader,
-    IFooter,
-} from 'projects/playground/src/app/pages/grid/grid.models';
 
 import { Component } from '@angular/core';
 import {
@@ -28,7 +28,7 @@ export interface MockData {
     templateUrl: './grid.page.html',
     styleUrls: ['./grid.page.scss'],
 })
-export class GridPage {
+export class GridPageComponent {
     public allData: MockData[] = [];
     public data$ = new BehaviorSubject<MockData[]>([]);
     public lastPageChange?: PageEvent;
@@ -98,7 +98,7 @@ export class GridPage {
             data: this._fb.group({
                 totalData: [this.footer.total, [Validators.min(0), Validators.max(1000)]],
                 pageSize: [this.footer.pageSize, [Validators.min(0), Validators.max(1000)]],
-            })
+            }),
         });
     }
 
@@ -115,16 +115,16 @@ export class GridPage {
     public generateGrid() {
         this.generatedGrid = false;
 
-        if (this.actionsForm.invalid) return;
+        if (this.actionsForm.invalid) { return; }
 
         this.inputs = this.actionsForm.get('inputs')!.value;
         this.header = this.actionsForm.get('header')!.value;
         this.generateData(this.actionsForm.get('data')!.value);
 
         of(0).pipe(
-            delay(0)
+            delay(0),
         ).subscribe(() => {
             this.generatedGrid = true;
-        })
+        });
     }
 }

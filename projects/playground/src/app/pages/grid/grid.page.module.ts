@@ -21,11 +21,11 @@ import {
     UiGridModule,
 } from '@uipath/angular/components/ui-grid';
 
-import { GridPage } from './grid.page';
+import { GridPageComponent } from './grid.page';
 
 @NgModule({
     declarations: [
-        GridPage,
+        GridPageComponent,
         GridComponent,
     ],
     imports: [
