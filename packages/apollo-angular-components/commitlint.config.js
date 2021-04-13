@@ -16,6 +16,7 @@ module.exports = {
                 'nl2br',
                 'password-indicator',
                 'password-toggle',
+                'playground',
                 'progress-button',
                 'scroll-into-view',
                 'secondformat',

@@ -1,3 +1,5 @@
+import * as faker from 'faker';
+
 import { Component } from '@angular/core';
 import {
     ComponentFixture,
@@ -8,9 +10,8 @@ import {
     EventGenerator,
     FakeFileList,
     IDropEvent,
+    Key,
 } from '@uipath/angular/testing';
-
-import * as faker from 'faker';
 
 import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
 
@@ -30,11 +31,11 @@ import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
     `,
 })
 class TestDragAndDropFileComponent {
-    public fileType = '.txt';
     public disabled = false;
     public multiple = false;
 
     public files?: File[];
+    public fileType?: string;
 
     onFileChange(files: FileList) {
         this.files = Array.from(files);
@@ -46,7 +47,7 @@ class TestDragAndDropFileComponent {
 
     fakeFiles({ accepted = 0, rejected = 0 }): File[] {
         const randomArray = <T>(size: number, source: T[]) => new Array(size).fill(0).map(() => faker.random.arrayElement(source));
-        const acceptedFileExtensions = this.fileType.split(', ');
+        const acceptedFileExtensions = this.fileType!.split(', ');
         const rejectedFileEstensions = ['.jpg', '.png', '.tiff'];
 
         return faker.helpers
@@ -75,6 +76,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
         });
         fixture = TestBed.createComponent(TestDragAndDropFileComponent);
         component = fixture.componentInstance;
+        component.fileType = '.txt';
         fixture.detectChanges();
         fileInput = fixture.debugElement.query(By.css('input[type="file"]')).nativeElement as HTMLInputElement;
     });
@@ -96,7 +98,7 @@ describe('Directive: UiDragAndDropFileDirective', () => {
         });
 
         it('should accept files of the specified type if single file type', () => {
-            expect(fileInput.getAttribute('accept')).toBe(component.fileType);
+            expect(fileInput.getAttribute('accept')).toBe(component.fileType!);
         });
 
         it('should accept files of any of the specified types if multiple file types', () => {
@@ -108,15 +110,20 @@ describe('Directive: UiDragAndDropFileDirective', () => {
             expect(fileInput.getAttribute('accept')).toBe(fileTypes);
         });
 
+        [
+            { name: 'click', obj: EventGenerator.click },
+            { name: 'Keydown.Enter', obj: EventGenerator.keyDown(Key.Enter) },
+            { name: 'Keydown.Space', obj: EventGenerator.keyDown(Key.Space) },
+        ].forEach(event => {
+            it(`should trigger browse when ${event.name} is triggered on the parent container`, () => {
+                const spy = spyOn(fileInput, 'click');
 
-        it('should trigger browse when parent container is clicked', () => {
-            const spy = spyOn(fileInput, 'click');
+                const container = fixture.debugElement.query(By.css('div'));
 
-            const container = fixture.debugElement.query(By.css('div'));
+                container.nativeElement.dispatchEvent(event.obj);
 
-            container.nativeElement.dispatchEvent(EventGenerator.click);
-
-            expect(spy).toHaveBeenCalled();
+                expect(spy).toHaveBeenCalledTimes(1);
+            });
         });
 
         it('should be hidden', () => {

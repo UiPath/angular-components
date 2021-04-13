@@ -1,3 +1,6 @@
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
+
 import {
     Component,
     ElementRef,
@@ -7,9 +10,6 @@ import {
     ComponentFixture,
     TestBed,
 } from '@angular/core/testing';
-
-import { of } from 'rxjs';
-import { delay } from 'rxjs/operators';
 
 import { UiNgLetModule } from './ui-ng-let.module';
 

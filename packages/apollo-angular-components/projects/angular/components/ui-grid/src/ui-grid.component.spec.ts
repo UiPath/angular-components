@@ -1,3 +1,15 @@
+import * as faker from 'faker';
+import {
+    animationFrameScheduler,
+    Observable,
+    of,
+} from 'rxjs';
+import {
+    finalize,
+    skip,
+    take,
+} from 'rxjs/operators';
+
 import {
     Component,
     ViewChild,
@@ -25,25 +37,22 @@ import {
     Key,
 } from '@uipath/angular/testing';
 
-import * as faker from 'faker';
 import {
-    animationFrameScheduler,
-    Observable,
-    of,
-} from 'rxjs';
+    UiMatPaginatorIntl,
+} from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.component';
 import {
-    finalize,
-    skip,
-    take,
-} from 'rxjs/operators';
-
+    UiGridCustomPaginatorModule,
+} from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.module';
 import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
 import {
     generateEntity,
     generateListFactory,
     ITestEntity,
 } from './test';
-import { UiGridComponent } from './ui-grid.component';
+import {
+    UiGridComponent,
+    UI_GRID_OPTIONS,
+} from './ui-grid.component';
 import { UiGridIntl } from './ui-grid.intl';
 import { UiGridModule } from './ui-grid.module';
 
@@ -246,6 +255,27 @@ describe('Component: UiGrid', () => {
                         expect(nestedDateCell.nativeElement.innerText).toContain(dataEntry.myObj.myObjDate.toString());
                     });
                 });
+
+                it('should mark first column cells as row headers when no primary column is set', () => {
+                    fixture.detectChanges();
+                    const firstRow = fixture.debugElement.query(By.css('.ui-grid-row'));
+                    const [firstCell, secondCell, thirdCell] = firstRow.queryAll(By.css('.ui-grid-cell'));
+                    expect(firstCell.nativeElement.getAttribute('role')).toBe('rowheader');
+                    expect(secondCell.nativeElement.getAttribute('role')).toBe('gridcell');
+                    expect(thirdCell.nativeElement.getAttribute('role')).toBe('gridcell');
+                });
+
+                it('should mark only one column cell as row header when there are multiple primary columns', fakeAsync(() => {
+                    grid.columns.forEach((col, idx) => col.primary = idx > 0);
+                    fixture.detectChanges();
+                    tick(GRID_COLUMN_CHANGE_DELAY);
+                    fixture.detectChanges();
+                    const firstRow = fixture.debugElement.query(By.css('.ui-grid-row'));
+                    const [firstCell, secondCell, thirdCell] = firstRow.queryAll(By.css('.ui-grid-cell'));
+                    expect(firstCell.nativeElement.getAttribute('role')).toBe('gridcell');
+                    expect(secondCell.nativeElement.getAttribute('role')).toBe('rowheader');
+                    expect(thirdCell.nativeElement.getAttribute('role')).toBe('gridcell');
+                }));
             });
         });
 
@@ -754,6 +784,7 @@ describe('Component: UiGrid', () => {
         public data: ITestEntity[] = [];
         public search?: boolean;
     }
+
     describe('Scenario: grid with header actions', () => {
         let fixture: ComponentFixture<TestFixtureGridHeaderActionsComponent>;
         let component: TestFixtureGridHeaderActionsComponent;
@@ -823,6 +854,81 @@ describe('Component: UiGrid', () => {
                 expect(headerSelectionAction).toBeDefined();
                 expect(headerSelectionAction.nativeElement).toBeDefined();
                 expect(headerSelectionAction.nativeElement.innerText).toEqual('Selection Action');
+            });
+
+            it('should reset grid header actions when grid data changes', fakeAsync(() => {
+                const rowCheckboxInputList = fixture.debugElement
+                    .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                const checkboxInput = faker.helpers.randomize(rowCheckboxInputList);
+
+                checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+                let headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
+                expect(headerSelectionAction).toBeDefined();
+                expect(grid.selectionManager['_hasValue$'].getValue()).toBe(true);
+
+                component.data = generateListFactory(generateEntity)();
+                fixture.detectChanges();
+
+                headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
+
+                expect(headerSelectionAction).toBeFalsy();
+                expect(grid.selectionManager['_hasValue$'].getValue()).toBe(false);
+            }));
+
+            it('should be able to move focus to selection action button if at least one row is selected', () => {
+                const rowCheckboxInputList = fixture.debugElement
+                    .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                const checkboxInput = faker.helpers.randomize(rowCheckboxInputList);
+
+                checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+
+                const headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
+                expect(headerSelectionAction).toBeDefined();
+
+                const gridContainer = fixture.debugElement.query(By.css('.ui-grid-container'));
+                gridContainer.nativeElement.dispatchEvent(
+                    EventGenerator.keyDown(Key.ArrowUp, Key.Shift, Key.Alt),
+                );
+                fixture.detectChanges();
+                expect(document.activeElement).toEqual(headerSelectionAction.nativeElement);
+            });
+
+            it('should live announce the header actions when there is a selection in the grid', () => {
+                const intl = new UiGridIntl();
+                spyOn<any>(component.grid['_queuedAnnouncer'], 'enqueue');
+
+                const rowCheckboxInputList = fixture.debugElement
+                    .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                const checkboxInput = faker.helpers.randomize(rowCheckboxInputList);
+
+                checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+
+                expect(component.grid['_queuedAnnouncer']['enqueue']).toHaveBeenCalledTimes(1);
+                expect(component.grid['_queuedAnnouncer']['enqueue']).toHaveBeenCalledWith(intl.gridHeaderActionsNotice);
+            });
+
+            it('should live announce the header actions only once if there are multiple items selected and deselected', () => {
+                spyOn<any>(component.grid['_queuedAnnouncer'], 'enqueue');
+
+                const rowCheckboxInputList = fixture.debugElement
+                    .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
+
+                rowCheckboxInputList.forEach(row => row.nativeElement.dispatchEvent(EventGenerator.click));
+
+                fixture.detectChanges();
+
+                rowCheckboxInputList.forEach(row => row.nativeElement.dispatchEvent(EventGenerator.click));
+
+                expect(component.grid['_queuedAnnouncer']['enqueue']).toHaveBeenCalledTimes(1);
             });
 
             it('should NOT display the inline header button if at least one row is selected', () => {
@@ -1354,33 +1460,32 @@ describe('Component: UiGrid', () => {
             ];
 
             SORT_TRANSITIONS.forEach(sortTransition => {
-                it(`should emit sort event when clicked ('${
-                    sortTransition.from}' to '${sortTransition.to}')`, (done) => {
-                        const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
-                        const headerTitle = sortableHeader.query(By.css('.ui-grid-header-title'));
+                it(`should emit sort event when clicked ('${sortTransition.from}' to '${sortTransition.to}')`, (done) => {
+                    const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
+                    const headerTitle = sortableHeader.query(By.css('.ui-grid-header-title'));
 
-                        const [column] = grid.columns.toArray();
+                    const [column] = grid.columns.toArray();
 
-                        column.sort = '';
-                        fixture.detectChanges();
+                    column.sort = '';
+                    fixture.detectChanges();
 
-                        grid.sortChange
-                            .pipe(
-                                take(1),
-                                finalize(done),
-                            ).subscribe(sort => {
-                                expect(sort.direction).toBe('asc');
-                                expect(sort.direction).toBe(column.sort);
-                                expect(sort.field).toBe(column.property!);
-                            });
+                    grid.sortChange
+                        .pipe(
+                            take(1),
+                            finalize(done),
+                        ).subscribe(sort => {
+                            expect(sort.direction).toBe('asc');
+                            expect(sort.direction).toBe(column.sort);
+                            expect(sort.field).toBe(column.property!);
+                        });
 
-                        headerTitle.nativeElement.dispatchEvent(EventGenerator.click);
-                        fixture.detectChanges();
-                    });
+                    headerTitle.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+                });
 
                 SORT_KEY_EVENTS.forEach(ev => {
-                    it(`should emit sort event when key '${ev.key}' is pressed ('${
-                        sortTransition.from}' to '${sortTransition.to}')`, (done) => {
+                    it(`should emit sort event when key '${ev.key}' is pressed ` +
+                        `('${sortTransition.from}' to '${sortTransition.to}')`, (done) => {
                             const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
                             const [column] = grid.columns.toArray();
 
@@ -1999,10 +2104,9 @@ describe('Component: UiGrid', () => {
                         EventGenerator.keyDown(Key.Space),
                         EventGenerator.click,
                     ].forEach(e => {
-                        it(`should be able to reset on (${
-                            e instanceof KeyboardEvent
-                                ? `keydown."` + e.code.toLowerCase() + `"`
-                                : 'click'
+                        it(`should be able to reset on (${e instanceof KeyboardEvent
+                            ? `keydown."` + e.code.toLowerCase() + `"`
+                            : 'click'
                             })`,
                             fakeAsync(() => {
                                 const reset = fixture.debugElement.query(By.css('.ui-grid-toggle-reset'));
@@ -2185,6 +2289,877 @@ describe('Component: UiGrid', () => {
                     expect(option.nativeElement.innerText).toEqual('Prop 2');
                 });
             });
+        });
+    });
+
+    describe('Scenario: alternate design', () => {
+        describe('Behavior: use injection token value', () => {
+            @Component({
+                template: `
+                <ui-grid [toggleColumns]="true">
+                    <ui-grid-header>
+                    </ui-grid-header>
+                    <ui-grid-column property="id">
+                    </ui-grid-column>
+                    <ui-grid-footer [length]="5"
+                                    [pageSize]="5">
+                    </ui-grid-footer>
+                </ui-grid>
+                `,
+            })
+            class TestFixtureAlternateDesignGridComponent {
+            }
+
+            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        UiGridCustomPaginatorModule,
+                        NoopAnimationsModule,
+                    ],
+                    providers: [
+                        UiMatPaginatorIntl,
+                        {
+                            provide: UI_GRID_OPTIONS,
+                            useValue: {
+                                useAlternateDesign: true,
+                            },
+                        },
+                    ],
+                    declarations: [
+                        TestFixtureAlternateDesignGridComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should use injection token value', () => {
+                const customFooter = fixture.debugElement.query(By.css('ui-grid-custom-paginator'));
+                expect(customFooter).toBeTruthy();
+
+                const customFilters = fixture.debugElement.query(By.css('ui-grid-toggle-columns .mat-button-wrapper span'));
+                expect(customFilters.nativeElement.innerText).toBe('Columns');
+            });
+        });
+
+        describe('Behavior: grid with no data', () => {
+            @Component({
+                template: `
+                <ui-grid [data]="data"
+                         [toggleColumns]="true">
+                    <ui-grid-header [search]="true">
+                    </ui-grid-header>
+                    <ui-grid-column [searchable]="true"
+                                    property="id">
+                        <ui-grid-dropdown-filter [items]="filterItems">
+                        </ui-grid-dropdown-filter>
+                    </ui-grid-column>
+                    <ui-grid-footer [length]="5"
+                                    [pageSize]="5">
+                    </ui-grid-footer>
+                </ui-grid>
+                `,
+            })
+            class TestFixtureAlternateDesignGridComponent {
+                public data: ITestEntity[] = [];
+
+                public get filterItems(): IDropdownOption[] {
+                    return [1, 2, 3].map(count => ({
+                        value: count,
+                        label: count.toString(),
+                    }));
+                }
+            }
+
+            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+            const intl = new UiGridIntl();
+            intl.noDataMessageAlternative = (searchValue, activeFilters) => {
+                return 'table_no_data'.concat(
+                    searchValue ? '_search' : '',
+                    activeFilters ? '_filters' : '',
+                );
+            };
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        UiGridCustomPaginatorModule,
+                        NoopAnimationsModule,
+                    ],
+                    providers: [
+                        {
+                            provide: UiGridIntl,
+                            useValue: intl,
+                        },
+                        {
+                            provide: UI_GRID_OPTIONS,
+                            useValue: {
+                                useAlternateDesign: true,
+                            },
+                        },
+                    ],
+                    declarations: [
+                        TestFixtureAlternateDesignGridComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should use proper template when no data', () => {
+                const noDataContent = fixture.debugElement.query(By.css('.ui-grid-row.ui-grid-no-data-container'));
+                expect(noDataContent).toBeTruthy();
+                expect(noDataContent.classes['ui-grid-no-content-available']).toBeTrue();
+                expect(noDataContent.nativeElement.innerText).toContain('table_no_data');
+            });
+
+            it('should use proper template when no data for search', fakeAsync(() => {
+                const debounceTime = 500;
+                const searchInput = fixture.debugElement.query(By.css('input.mat-input-element'));
+                const randomInput = faker.random.alphaNumeric(10);
+
+                searchInput.nativeElement.value = randomInput;
+                searchInput.nativeElement.dispatchEvent(EventGenerator.input());
+
+                tick(debounceTime);
+                fixture.detectChanges();
+
+                const noDataContent = fixture.debugElement.query(By.css('.ui-grid-row.ui-grid-no-data-container'));
+                expect(noDataContent).toBeTruthy();
+                expect(noDataContent.classes['ui-grid-no-content-available']).toBeFalsy();
+
+                expect(noDataContent.nativeElement.innerText).toContain('table_no_data_search');
+
+                discardPeriodicTasks();
+            }));
+
+            it('should use proper template when no data with filters', () => {
+                const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const noDataContent = fixture.debugElement.query(By.css('.ui-grid-row.ui-grid-no-data-container'));
+                expect(noDataContent).toBeTruthy();
+                expect(noDataContent.classes['ui-grid-no-content-available']).toBeFalsy();
+                expect(noDataContent.nativeElement.innerText).toContain('table_no_data_filters');
+            });
+
+            it('should use proper template when no data with filters and search', fakeAsync(() => {
+
+                const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const debounceTime = 500;
+                const searchInput = fixture.debugElement.query(By.css('input.mat-input-element'));
+                const randomInput = faker.random.alphaNumeric(10);
+
+                searchInput.nativeElement.value = randomInput;
+                searchInput.nativeElement.dispatchEvent(EventGenerator.input());
+
+                tick(debounceTime);
+                fixture.detectChanges();
+                flush();
+
+                const noDataContent = fixture.debugElement.query(By.css('.ui-grid-row.ui-grid-no-data-container'));
+                expect(noDataContent).toBeTruthy();
+                expect(noDataContent.classes['ui-grid-no-content-available']).toBeFalsy();
+                expect(noDataContent.nativeElement.innerText).toContain('table_no_data_search_filters');
+
+                discardPeriodicTasks();
+            }));
+        });
+
+        describe('Behavior: override injection token value', () => {
+            @Component({
+                template: `
+                <ui-grid [toggleColumns]="true"
+                         [useAlternateDesign]="false">
+                    <ui-grid-header>
+                    </ui-grid-header>
+                    <ui-grid-column property="id">
+                    </ui-grid-column>
+                    <ui-grid-footer [length]="5"
+                                    [pageSize]="5">
+                    </ui-grid-footer>
+                </ui-grid>
+                `,
+            })
+            class TestFixtureAlternateDesignGridComponent {
+            }
+
+            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        UiGridCustomPaginatorModule,
+                    ],
+                    providers: [
+                        UiMatPaginatorIntl,
+                        {
+                            provide: UI_GRID_OPTIONS,
+                            useValue: {
+                                useAlternateDesign: true,
+                            },
+                        },
+                    ],
+                    declarations: [
+                        TestFixtureAlternateDesignGridComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should override injection token value', () => {
+                const customFooter = fixture.debugElement.query(By.css('ui-grid-custom-paginator'));
+                expect(customFooter).toBeFalsy();
+
+                const customFilters = fixture.debugElement.query(By.css('ui-grid-toggle-columns .mat-button-wrapper span'));
+                expect(customFilters).toBeFalsy();
+            });
+        });
+
+        describe('Scenario: multi page selection', () => {
+            @Component({
+                template: `
+                <ui-grid [data]="data"
+                         [toggleColumns]="true"
+                         [multiPageSelect]="true">
+                    <ui-grid-header>
+                        <ui-header-button type="action">
+                            <ng-template>
+                                <button class="action">action</button>
+                            </ng-template>
+                        </ui-header-button>
+                        <ui-header-button type="action">
+                            <ng-template>
+                                <button class="action">action</button>
+                            </ng-template>
+                        </ui-header-button>
+                        <ui-header-button type="inline">
+                            <ng-template>
+                                <button class="inline">inline</button>
+                            </ng-template>
+                        </ui-header-button>
+                        <ui-header-button type="main">
+                            <ng-template>
+                                <button class="main">main</button>
+                            </ng-template>
+                        </ui-header-button>
+                    </ui-grid-header>
+                    <ui-grid-column property="id">
+                    </ui-grid-column>
+                    <ui-grid-column property="name">
+                    </ui-grid-column>
+                    <ui-grid-footer [length]="5"
+                                    [pageSize]="5">
+                    </ui-grid-footer>
+                </ui-grid>
+                `,
+            })
+            class TestFixtureAlternateDesignGridComponent {
+                public data: ITestEntity[] = [];
+            }
+
+            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+            let data: ITestEntity[];
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        UiGridCustomPaginatorModule,
+                        NoopAnimationsModule,
+                    ],
+                    providers: [
+                        UiMatPaginatorIntl,
+                        {
+                            provide: UI_GRID_OPTIONS,
+                            useValue: {
+                                useAlternateDesign: true,
+                            },
+                        },
+                    ],
+                    declarations: [
+                        TestFixtureAlternateDesignGridComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                data = generateListFactory(generateEntity)(6);
+                fixture.componentInstance.data = data;
+
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should render selection', () => {
+                const selectionInfoContainer = fixture.debugElement.query(By.css('.ui-grid-selection-info-container'));
+                expect(selectionInfoContainer).toBeTruthy();
+            });
+
+            it('should render correct text', () => {
+                const selectAll = fixture.debugElement.query(By.css('.ui-grid-header mat-checkbox input'));
+                selectAll.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const selectionInfoMessage = fixture.debugElement.query(By.css('.ui-grid-selection-info-message'));
+                expect(selectionInfoMessage.nativeElement).toContainText('You have selected 6 items.');
+            });
+
+            it('should hide inline buttons on selection', () => {
+                const selectAll = fixture.debugElement.query(By.css('.ui-grid-header mat-checkbox input'));
+                selectAll.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const buttons = fixture.debugElement.queryAll(By.css('.ui-grid-filter-container button'));
+                buttons.forEach(button => expect(button.classes['inline']).toBeFalsy());
+            });
+        });
+    });
+
+    describe('Scenario: collapsible filters', () => {
+        describe('Behavior: grid disabled', () => {
+            @Component({
+                template: `
+                <ui-grid disabled>
+                    <ui-grid-header [search]="true">
+                    </ui-grid-header>
+                    <ui-grid-column [searchable]="true"
+                                    [sortable]="true"
+                                    [disableToggle]="true"
+                                    property="id"
+                                    title="Id">
+                        <ui-grid-dropdown-filter [items]="filterItems">
+                        </ui-grid-dropdown-filter>
+                    </ui-grid-column>
+                    <ui-grid-footer [length]="5"
+                                    [pageSize]="5">
+                    </ui-grid-footer>
+                </ui-grid>
+                `,
+            })
+            class TestFixtureAlternateDesignGridComponent {
+                public get filterItems(): IDropdownOption[] {
+                    return [1, 2, 3].map(count => ({
+                        value: count,
+                        label: count.toString(),
+                    }));
+                }
+            }
+
+            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        UiGridCustomPaginatorModule,
+                        NoopAnimationsModule,
+                    ],
+                    providers: [
+                        UiMatPaginatorIntl,
+                        {
+                            provide: UI_GRID_OPTIONS,
+                            useValue: {
+                                useAlternateDesign: true,
+                                collapsibleFilters: true,
+                            },
+                        },
+                    ],
+                    declarations: [
+                        TestFixtureAlternateDesignGridComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should have collapsible toggle disabled', () => {
+                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+
+                expect(collapisbleFiltersToggle).toBeTruthy();
+                expect(collapisbleFiltersToggle.nativeElement.getAttribute('disabled')).toBeTruthy();
+            });
+        });
+
+        describe('Behavior: collapsible filters', () => {
+            @Component({
+                template: `
+                <ui-grid>
+                    <ui-grid-header [search]="true">
+                    </ui-grid-header>
+                    <ui-grid-column [searchable]="true"
+                                    [sortable]="true"
+                                    [disableToggle]="true"
+                                    property="id"
+                                    title="Id">
+                        <ui-grid-dropdown-filter [items]="filterItems"
+                                                 [visible]="visible">
+                        </ui-grid-dropdown-filter>
+                    </ui-grid-column>
+                    <ui-grid-footer [length]="5"
+                                    [pageSize]="5">
+                    </ui-grid-footer>
+                </ui-grid>
+                `,
+            })
+            class TestFixtureAlternateDesignGridComponent {
+                public get filterItems(): IDropdownOption[] {
+                    return [1, 2, 3].map(count => ({
+                        value: count,
+                        label: count.toString(),
+                    }));
+                }
+
+                public visible = true;
+            }
+
+            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+            let component: TestFixtureAlternateDesignGridComponent;
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        UiGridCustomPaginatorModule,
+                        NoopAnimationsModule,
+                    ],
+                    providers: [
+                        UiMatPaginatorIntl,
+                        {
+                            provide: UI_GRID_OPTIONS,
+                            useValue: {
+                                useAlternateDesign: true,
+                                collapsibleFilters: true,
+                            },
+                        },
+                    ],
+                    declarations: [
+                        TestFixtureAlternateDesignGridComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                component = fixture.componentInstance;
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should use collapsible filters', () => {
+                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                expect(collapisbleFiltersToggle).toBeTruthy();
+            });
+
+            it('should not display collapsible toggle button if no filter visible', () => {
+                component.visible = false;
+                fixture.detectChanges();
+
+                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                expect(collapisbleFiltersToggle).toBeFalsy();
+            });
+
+            it('should display the correct filter label', () => {
+                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                const collapisbleFiltersToggleText = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle span span'));
+                collapisbleFiltersToggle.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                expect(collapisbleFiltersToggleText.nativeElement.innerText).toBe('Filters (1)');
+            });
+
+            it('should toggle filters', () => {
+                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                let filtersRow = fixture.debugElement.query(By.css('.ui-grid-alternate-filter-container'));
+                expect(filtersRow).toBeFalsy();
+
+                collapisbleFiltersToggle.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                filtersRow = fixture.debugElement.query(By.css('.ui-grid-alternate-filter-container'));
+                expect(filtersRow).toBeTruthy();
+            });
+        });
+
+        describe('Behavior: override injection token value', () => {
+            @Component({
+                template: `
+                <ui-grid [collapsibleFilters]="false">
+                    <ui-grid-header>
+                    </ui-grid-header>
+                    <ui-grid-column property="id"
+                                    title="Id">
+                        <ui-grid-dropdown-filter [items]="filterItems">
+                        </ui-grid-dropdown-filter>
+                    </ui-grid-column>
+                </ui-grid>
+                `,
+            })
+            class TestFixtureAlternateDesignGridComponent {
+                public get filterItems(): IDropdownOption[] {
+                    return [1, 2, 3].map(count => ({
+                        value: count,
+                        label: count.toString(),
+                    }));
+                }
+            }
+
+            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        UiGridCustomPaginatorModule,
+                        NoopAnimationsModule,
+                    ],
+                    providers: [
+                        UiMatPaginatorIntl,
+                        {
+                            provide: UI_GRID_OPTIONS,
+                            useValue: {
+                                collapsibleFilters: true,
+                            },
+                        },
+                    ],
+                    declarations: [
+                        TestFixtureAlternateDesignGridComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should overrind injection token value', () => {
+                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                expect(collapisbleFiltersToggle).toBeFalsy();
+            });
+        });
+    });
+
+    describe('Scenario: Grid State Templates', () => {
+        @Component({
+            template: `
+            <ui-grid [data]="data" [loading]="loading">
+                <ui-grid-header [search]="true">
+                </ui-grid-header>
+                <ui-grid-column [searchable]="true"
+                                [sortable]="true"
+                                property="id"
+                                title="Id">
+                    <ui-grid-dropdown-filter [items]="filterItems">
+                    </ui-grid-dropdown-filter>
+                </ui-grid-column>
+                <ui-grid-no-content>
+                    <ng-template let-search="search"
+                                 let-activeCount="activeCount">
+                        <div id="no-data-template">No data</div>
+                        <div id="search-text">{{search}}</div>
+                        <div id="active-count">{{activeCount}}</div>
+                    </ng-template>
+                </ui-grid-no-content>
+                <ui-grid-loading>
+                    <ng-template>
+                        <div id="loading-template">
+                            Loading ...
+                        </div>
+                    </ng-template>
+                </ui-grid-loading>
+            </ui-grid>
+            `,
+        })
+        class TestFixtureCustomStatesComponent {
+            @ViewChild(UiGridComponent, {
+                static: true,
+            })
+            public grid!: UiGridComponent<ITestEntity>;
+            public data: ITestEntity[] = [];
+            public loading = false;
+
+            public get filterItems(): IDropdownOption[] {
+                return [1, 2, 3].map(count => ({
+                    value: count,
+                    label: count.toString(),
+                }));
+            }
+        }
+
+        describe('Behavior: custom templates', () => {
+            let fixture: ComponentFixture<TestFixtureCustomStatesComponent>;
+            let component: TestFixtureCustomStatesComponent;
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        NoopAnimationsModule,
+                    ],
+                    declarations: [
+                        TestFixtureCustomStatesComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureCustomStatesComponent);
+                component = fixture.componentInstance;
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should display custom no data template', () => {
+                const noDataElement = fixture.debugElement.query(By.css('#no-data-template'));
+                expect(noDataElement).toBeTruthy();
+            });
+
+            it('should display custom loading template', () => {
+                component.loading = true;
+                fixture.detectChanges();
+
+                const loadingElement = fixture.debugElement.query(By.css('#loading-template'));
+                expect(loadingElement).toBeTruthy();
+            });
+
+            it('should hide default spiner on loading', () => {
+                component.loading = true;
+                fixture.detectChanges();
+
+                const defaultSpinner = fixture.debugElement.query(By.css('mat-progress-bar'));
+                expect(defaultSpinner).toBeFalsy();
+            });
+
+            it('should hide no data template on loading', () => {
+                component.loading = true;
+                fixture.detectChanges();
+
+                const loadingElement = fixture.debugElement.query(By.css('#no-data-template'));
+                expect(loadingElement).toBeFalsy();
+            });
+
+            it('should provide correct number of filters', () => {
+                const activeFiltersCount = fixture.debugElement.query(By.css('#active-count'));
+                expect(activeFiltersCount.nativeElement.innerText).toBe('0');
+
+                const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                expect(activeFiltersCount.nativeElement.innerText).toBe('1');
+            });
+
+            it('should provide search context', <any>fakeAsync(() => {
+                const debounceTime = 500;
+                const searchString = fixture.debugElement.query(By.css('#search-text'));
+                const searchInput = fixture.debugElement.query(By.css('input.mat-input-element'));
+                const randomInput = faker.random.alphaNumeric(10);
+
+                searchInput.nativeElement.value = randomInput;
+                searchInput.nativeElement.dispatchEvent(EventGenerator.input());
+
+                tick(debounceTime);
+                fixture.detectChanges();
+
+                expect(searchInput).toBeDefined();
+                expect(searchString.nativeElement.innerText).toBe(randomInput);
+
+                discardPeriodicTasks();
+            }));
+        });
+
+        @Component({
+            template: `
+            <ui-grid [data]="data" [loading]="loading">
+            </ui-grid>
+            `,
+        })
+        class TestFixtureDefaultStatesComponent {
+            @ViewChild(UiGridComponent, {
+                static: true,
+            })
+            public grid!: UiGridComponent<ITestEntity>;
+            public data: ITestEntity[] = [];
+            public loading = false;
+        }
+        describe('Behavior: default state templates', () => {
+            let fixture: ComponentFixture<TestFixtureDefaultStatesComponent>;
+            let component: TestFixtureDefaultStatesComponent;
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        NoopAnimationsModule,
+                    ],
+                    declarations: [
+                        TestFixtureCustomStatesComponent,
+                    ],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureCustomStatesComponent);
+                component = fixture.componentInstance;
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should hide default no data state on loading', () => {
+                component.loading = true;
+                fixture.detectChanges();
+
+                const defaultNoData = fixture.debugElement.query(By.css('ui-grid-no-data-container'));
+                expect(defaultNoData).toBeFalsy();
+            });
+        });
+    });
+
+    describe('Scenario: multiple main actions', () => {
+        @Component({
+            template: `
+            <ui-grid [data]="data"
+                     [toggleColumns]="true"
+                     [multiPageSelect]="false">
+                <ui-grid-header>
+                    <ui-header-button type="action">
+                        <ng-template>
+                            <button class="action">action</button>
+                        </ng-template>
+                    </ui-header-button>
+                    <ui-header-button type="action">
+                        <ng-template>
+                            <button class="action">action</button>
+                        </ng-template>
+                    </ui-header-button>
+                    <ui-header-button type="inline">
+                        <ng-template>
+                            <button class="inline">inline</button>
+                        </ng-template>
+                    </ui-header-button>
+                    <ui-header-button type="main">
+                        <ng-template>
+                            <button class="main">main</button>
+                        </ng-template>
+                    </ui-header-button>
+                    <ui-header-button type="main">
+                        <ng-template>
+                            <button class="main">main 2</button>
+                        </ng-template>
+                    </ui-header-button>
+                </ui-grid-header>
+                <ui-grid-column property="id">
+                </ui-grid-column>
+                <ui-grid-column property="name">
+                </ui-grid-column>
+                <ui-grid-footer [length]="5"
+                                [pageSize]="5">
+                </ui-grid-footer>
+            </ui-grid>
+            `,
+        })
+        class TestFixtureAlternateDesignGridComponent {
+            public data: ITestEntity[] = [];
+        }
+
+        let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+        let data: ITestEntity[];
+
+        beforeEach(async () => {
+            TestBed.configureTestingModule({
+                imports: [
+                    UiGridModule,
+                    UiGridCustomPaginatorModule,
+                    NoopAnimationsModule,
+                ],
+                providers: [
+                    UiMatPaginatorIntl,
+                    {
+                        provide: UI_GRID_OPTIONS,
+                        useValue: {
+                            useAlternateDesign: true,
+                        },
+                    },
+                ],
+                declarations: [
+                    TestFixtureAlternateDesignGridComponent,
+                ],
+            });
+
+            fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+            data = generateListFactory(generateEntity)(6);
+            fixture.componentInstance.data = data;
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should have multiple main actions', () => {
+            const buttons = fixture.debugElement.queryAll(By.css('.ui-grid-action-buttons-main button'));
+            expect(buttons.length).toEqual(2);
         });
     });
 });

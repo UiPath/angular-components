@@ -1,0 +1,86 @@
+$mat-paginator-padding: 0 8px;
+$mat-paginator-page-size-margin-right: 8px;
+$mat-paginator-range-label-margin-right: 8px;
+
+$mat-paginator-items-per-page-label-margin: 0 4px;
+$mat-paginator-selector-margin: 6px 4px 0 4px;
+$mat-paginator-selector-trigger-width: 56px;
+$mat-paginator-selector-trigger-outline-width: 64px;
+$mat-paginator-selector-trigger-fill-width: 64px;
+
+$mat-paginator-page-label-margin: 0 32px 0 24px;
+$mat-paginator-button-icon-size: 28px;
+
+ui-grid-custom-paginator {
+    .mat-paginator {
+        display: block;
+    }
+
+    // Note: this wrapper element is only used to get the flexbox vertical centering to work
+    // with the `min-height` on IE11. It can be removed if we drop support for IE.
+    .mat-paginator-outer-container {
+        display: flex;
+        font-size: 14px;
+    }
+
+    .mat-paginator-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: $mat-paginator-padding;
+        flex-wrap: wrap-reverse;
+        width: 100%;
+    }
+
+    .mat-paginator-page-size {
+        display: flex;
+        align-items: baseline;
+        margin-right: $mat-paginator-page-size-margin-right;
+        margin [dir="rtl"] & {
+            margin-right: 0;
+            margin-left: $mat-paginator-page-size-margin-right;
+        }
+    }
+
+    .mat-paginator-page-size-label {
+        margin: $mat-paginator-items-per-page-label-margin;
+    }
+
+    .mat-paginator-page-size-select {
+        margin: $mat-paginator-selector-margin;
+        width: $mat-paginator-selector-trigger-width;
+
+        &.mat-form-field-appearance-outline {
+            width: $mat-paginator-selector-trigger-outline-width;
+        }
+
+        &.mat-form-field-appearance-fill {
+            width: $mat-paginator-selector-trigger-fill-width;
+        }
+    }
+
+    .mat-paginator-range-actions .mat-paginator-page-label {
+        margin: $mat-paginator-page-label-margin;
+        min-width: 7em;
+        text-align: center;
+    }
+
+    .mat-paginator-range-label {
+        margin-left: $mat-paginator-range-label-margin-right;
+        min-width: 7em;
+    }
+
+    .mat-paginator-range-actions {
+        display: flex;
+        align-items: center;
+    }
+
+    .mat-paginator-icon {
+        width: $mat-paginator-button-icon-size;
+        fill: currentColor;
+
+        [dir="rtl"] & {
+            transform: rotate(180deg);
+        }
+    }
+}

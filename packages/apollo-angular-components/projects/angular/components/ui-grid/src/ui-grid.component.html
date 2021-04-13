@@ -1,26 +1,20 @@
-﻿<ng-container *ngIf="showPaintTime && (paintTime$ | async) as paintTime">
+<ng-container *ngIf="showPaintTime && (paintTime$ | async) as paintTime">
     <div class="ui-grid-debug-information">
         Painted {{ dataManager?.length }} rows in {{ paintTime }}ms
     </div>
 </ng-container>
 <div *ngIf="toggleColumns ||
+            header?.mainButtons?.length ||
             header?.actionButtons?.length ||
             header?.inlineButtons?.length ||
             header?.search ||
             (isAnyFilterDefined$ | async)"
      class="ui-grid-filter-container">
-    <ui-grid-toggle-columns *ngIf="toggleColumns && !selectionManager.hasValue()"
-                            [options]="visibilityManager.options$ | async"
-                            [dirty]="visibilityManager.isDirty$ | async"
-                            [toggleTooltip]="intl.toggleTooltip"
-                            [resetToDefaults]="intl.toggleResetToDefaults"
-                            [toggleTitle]="intl.toggleTitle"
-                            [togglePlaceholderTitle]="intl.togglePlaceholderTitle"
-                            (visibleColumns)="visibilityManager.update($event)"
-                            (resetColumns)="visibilityManager.reset()">
-    </ui-grid-toggle-columns>
+    <ng-container *ngIf="!useAlternateDesign">
+        <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
+    </ng-container>
 
-    <ng-container *ngIf="!selectionManager.hasValue() ||
+    <ng-container *ngIf="!(hasSelection$ | async) ||
                    !header?.actionButtons?.length">
         <ui-grid-search *ngIf="header?.search"
                         [debounce]="header!.searchDebounce"
@@ -34,81 +28,68 @@
                         class="ui-grid-search ui-grid-filter-option">
         </ui-grid-search>
 
-        <ng-container *ngFor="let column of columns$ | async">
-            <div *ngIf="column.dropdown?.visible$ | async"
-                 class="ui-grid-dropdown-filter-container ui-grid-filter-option">
-                <button [matMenuTriggerFor]="filterOptions"
-                        [disabled]="column.dropdown.disabled || disabled"
-                        mat-button
-                        type="button"
-                        class="ui-grid-dropdown-filter-button">
-                    <span class="ui-grid-dropdown-filter-title">{{ column.title }}: </span>
-                    <span class="ui-grid-dropdown-filter-value">
-                        {{ !!column.dropdown.value ? intl.translateDropdownOption(column.dropdown.value) : intl.noFilterPlaceholder }}
-                    </span>
-                    <mat-icon>keyboard_arrow_down</mat-icon>
-                </button>
-                <mat-menu #filterOptions="matMenu"
-                          [overlapTrigger]="true">
-                    <button *ngIf="column.dropdown.showAllOption"
-                            [class.active]="column.dropdown.value == null"
-                            (click)="filterManager.dropdownUpdate(column!, undefined)"
-                            type="button"
-                            mat-menu-item>
-                        {{ intl.noFilterPlaceholder }}
-                    </button>
-                    <button *ngFor="let dropdownItem of column.dropdown.items"
-                            [class.active]="column.dropdown.value?.label === dropdownItem.label"
-                            (click)="filterManager.dropdownUpdate(column, dropdownItem)"
-                            type="button"
-                            mat-menu-item>
-                        {{ intl.translateDropdownOption(dropdownItem) }}
-                    </button>
-                </mat-menu>
-            </div>
-
-            <ng-container *ngIf="column.searchableDropdown?.visible$ | async">
-                <ui-suggest #suggest
-                            [placeholder]="column.title"
-                            [defaultValue]="column.searchableDropdown.noFilterPlaceholder || intl.noFilterPlaceholder"
-                            [searchSourceFactory]="column.searchableDropdown.searchSourceFactory"
-                            [value]="[column.searchableDropdown.value]"
-                            [disabled]="column.searchableDropdown.disabled || disabled"
-                            [maxLength]="64"
-                            (selected)="filterManager.searchableDropdownUpdate(column, $event)"
-                            (opened)="column.refetch && suggest.fetch()"
-                            width="230px"
-                            class="ui-grid-search-filter ui-grid-filter-option">
-                </ui-suggest>
-            </ng-container>
+        <ng-container *ngTemplateOutlet="filtersTmpl">
         </ng-container>
+
     </ng-container>
 
-    <ng-container *ngIf="!selectionManager.hasValue()">
+    <ng-container *ngIf="useAlternateDesign">
+        <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
+    </ng-container>
+
+    <div *ngIf="!(hasSelection$ | async)"
+         class="ui-grid-action-buttons ui-grid-action-buttons-inline">
         <ng-container *ngFor="let button of header?.inlineButtons">
             <ng-container *ngIf="button.visible">
                 <ng-container *ngTemplateOutlet="button.html">
                 </ng-container>
             </ng-container>
         </ng-container>
-    </ng-container>
+    </div>
 
-    <ng-container *ngIf="selectionManager.hasValue()"
-                  class="ui-grid-action-buttons">
+    <div #gridActionButtons
+         *ngIf="hasSelection$ | async"
+         class="ui-grid-action-buttons ui-grid-action-buttons-selection">
         <ng-container *ngFor="let button of header?.actionButtons">
             <ng-container *ngIf="button.visible">
                 <ng-container *ngTemplateOutlet="button.html">
                 </ng-container>
             </ng-container>
         </ng-container>
-    </ng-container>
+    </div>
+
+    <div *ngIf="useAlternateDesign || header?.mainButtons?.length > 1"
+         class="ui-grid-action-buttons ui-grid-action-buttons-main">
+        <ng-container *ngFor="let button of header?.mainButtons">
+            <ng-container *ngIf="button.visible">
+                <ng-container *ngTemplateOutlet="button.html">
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
 </div>
 
-<div class="ui-grid-container">
+<div *ngIf="showFilters && (hasAnyFiltersVisible$ | async)"
+     [@filters-container]
+     class="ui-grid-filter-container">
+    <ng-container *ngTemplateOutlet="classicFiltersTmpl"></ng-container>
+</div>
+
+<ng-container *ngIf="useAlternateDesign && multiPageSelect then multiPageSelectionRow">
+</ng-container>
+
+<div [class.use-alternate-design]="useAlternateDesign"
+     (keydown.shift.alt.arrowup)="focusRowHeader()"
+     class="ui-grid-container">
+
     <div class="ui-grid-table-container">
-        <div *ngIf="header?.mainButton?.visible"
+        <div *ngIf="!useAlternateDesign && header?.mainButtons?.length === 1"
              class="ui-grid-action-button">
-            <ng-container *ngTemplateOutlet="header?.mainButton?.html">
+            <ng-container *ngIf="header!.mainButtons![0] as mainBtn">
+                <ng-container *ngIf="mainBtn.visible">
+                    <ng-container *ngTemplateOutlet="mainBtn.html">
+                    </ng-container>
+                </ng-container>
             </ng-container>
         </div>
 
@@ -132,7 +113,7 @@
                         </mat-checkbox>
                     </div>
 
-                    <ng-container *ngIf="multiPageSelect then multiPageSelectionHeaderCell">
+                    <ng-container *ngIf="multiPageSelect then multiPageSelectionProjectedHeaderCell">
                     </ng-container>
 
                     <div *ngFor="let column of visible$ | async; let last = last"
@@ -207,18 +188,18 @@
                          class="ui-grid-header-cell ui-grid-action-cell ui-grid-feature-cell">
                     </div>
                 </div>
-                <mat-progress-bar *ngIf="loading"
+                <mat-progress-bar *ngIf="loading && !loadingState"
                                   mode="query"
                                   class="ui-grid-loader">
                 </mat-progress-bar>
             </div>
-            <ng-container *ngIf="multiPageSelect then multiPageSelectionRow">
+            <ng-container *ngIf="!useAlternateDesign && multiPageSelect then multiPageSelectionRow">
             </ng-container>
 
             <ng-container *ngIf="dataManager?.length; else noData">
                 <ng-container *ngIf="virtualScroll">
                     <cdk-virtual-scroll-viewport [total]="dataManager.length"
-                                                 autosize
+                                                 [itemSize]="rowSize"
                                                  uiVirtualScrollViewportResize
                                                  class="ui-grid-viewport">
                         <ng-container *cdkVirtualFor="let row of dataManager.data$ | async;
@@ -250,19 +231,14 @@
                     </ng-container>
                 </ng-container>
             </ng-container>
+
+            <ng-container *ngIf="loading && !!loadingState">
+                <ng-container *ngTemplateOutlet="loadingState.html"></ng-container>
+            </ng-container>
         </div>
     </div>
     <div class="ui-grid-footer-container">
-        <mat-paginator *ngIf="!!footer"
-                       [pageIndex]="footer?.state?.pageIndex"
-                       [pageSize]="footer?.state?.pageSize"
-                       [pageSizeOptions]="footer?.pageSizes"
-                       [length]="footer?.length"
-                       [disabled]="disabled"
-                       [showFirstLastButtons]="true"
-                       [hidePageSize]="footer?.hidePageSize"
-                       (page)="footer?.pageChange?.next($event)">
-        </mat-paginator>
+        <ng-container *ngTemplateOutlet="useAlternateDesign ? alternativeFooter : classicFooter"></ng-container>
     </div>
 </div>
 
@@ -297,6 +273,7 @@
                 </mat-checkbox>
             </div>
             <div *ngIf="!!actions"
+                 role="gridcell"
                  class="ui-grid-mobile-feature-container ui-grid-mobile-action-container">
                 <ng-container *ngTemplateOutlet="actions.html; context: {
                     data: row,
@@ -320,24 +297,25 @@
                           tabindex="0">
             </mat-checkbox>
         </div>
-        <ng-container *ngFor="let column of visible$ | async">
-            <div [class.ui-grid-primary]="column.primary"
-                 [class.ui-grid-secondary]="!column.primary"
-                 [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
-                 [attr.data-property]="column.property"
-                 [attr.data-identifier]="column.identifier"
-                 [style.width.%]="column.width"
-                 class="ui-grid-cell"
-                 role="gridcell">
+
+        <ng-container *ngFor="let column of renderedColumns$ | async">
+            <div [class.ui-grid-primary]="column.directive.primary"
+                 [class.ui-grid-secondary]="!column.directive.primary"
+                 [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
+                 [attr.data-property]="column.directive.property"
+                 [attr.data-identifier]="column.directive.identifier"
+                 [style.width.%]="column.directive.width"
+                 [attr.role]="column.role"
+                 class="ui-grid-cell">
                 <div *ngIf="isProjected"
-                     [matTooltip]="column.title"
+                     [matTooltip]="column.directive.title"
                      [matTooltipDisabled]="resizeManager.isResizing"
-                     class="ui-grid-cell-mobile-title">{{column.title}}</div>
+                     class="ui-grid-cell-mobile-title">{{column.directive.title}}</div>
                 <div class="ui-grid-cell-content">
-                    <ng-container *ngTemplateOutlet="column.html || textCellTemplate; context: {
+                    <ng-container *ngTemplateOutlet="column.directive.html || textCellTemplate; context: {
                             data: row,
                             index: index,
-                            property: column.property
+                            property: column.directive.property
                         }">
                     </ng-container>
                 </div>
@@ -355,6 +333,7 @@
 
         <div *ngIf="!isProjected &&
                     !!actions"
+             role="gridcell"
              class="ui-grid-cell ui-grid-action-cell ui-grid-feature-cell">
             <div class="ui-grid-action-cell-container">
                 <ng-container *ngTemplateOutlet="actions.html; context: {
@@ -387,23 +366,58 @@
 </ng-template>
 
 <ng-template #noData>
-    <div *ngIf="!dataManager.pristine"
-         class="ui-grid-row ui-grid-no-data-container"
-         [class.ui-grid-border-none]="!footer">
-        <mat-icon>list</mat-icon>
-        <p>{{noDataMessage || intl.noDataMessage}}</p>
+    <ng-container *ngIf="!loading">
+        <ng-container *ngIf="noContent; else defaultNoData">
+            <ng-container *ngTemplateOutlet="noContent.html; context: {
+                search: header?.searchValue,
+                activeCount: filterManager.activeCount$ | async
+            }">
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</ng-template>
+
+<ng-template #defaultNoData>
+    <ng-container *ngIf="!useAlternateDesign; else defaultNoDataAlternative">
+        <div *ngIf="!dataManager.pristine"
+             class="ui-grid-row ui-grid-no-data-container"
+             [class.ui-grid-border-none]="!footer">
+            <mat-icon>list</mat-icon>
+            <p>{{noDataMessage || intl.noDataMessage }}</p>
+        </div>
+    </ng-container>
+</ng-template>
+
+<ng-template #defaultNoDataAlternative>
+    <ng-container *ngLet="(filterManager.activeCount$ | async) as activeFilterCount">
+        <div *ngIf="!dataManager.pristine"
+             class="ui-grid-row ui-grid-no-data-container"
+             [class.ui-grid-no-content-available]="!header?.searchValue && !activeFilterCount"
+             [class.ui-grid-border-none]="!footer">
+            <mat-icon *ngIf="!header?.searchValue && !activeFilterCount">visibility_off</mat-icon>
+            <p>{{ intl.noDataMessageAlternative(header?.searchValue, activeFilterCount) }}</p>
+        </div>
+    </ng-container>
+</ng-template>
+
+<ng-template #multiPageSelectionAlternate>
+    <div *ngIf="!isProjected &&
+                showMultiPageSelectionInfo"
+         class="ui-grid-selection-info-container ui-grid-selection-info-container-alternate">
+        <ng-container *ngTemplateOutlet="multiPageSelectionInfo"></ng-container>
     </div>
 </ng-template>
 
 <ng-template #multiPageSelectionRow>
     <div *ngIf="!isProjected &&
                 showMultiPageSelectionInfo"
-         class="ui-grid-row ui-grid-selection-info-container">
+         class="ui-grid-row ui-grid-selection-info-container"
+         [class.ui-grid-selection-info-container-alternate]="useAlternateDesign">
         <ng-container *ngTemplateOutlet="multiPageSelectionInfo"></ng-container>
     </div>
 </ng-template>
 
-<ng-template #multiPageSelectionHeaderCell>
+<ng-template #multiPageSelectionProjectedHeaderCell>
     <div *ngIf="isProjected &&
                 showMultiPageSelectionInfo"
          class="ui-grid-header-cell ui-grid-feature-cell ui-grid-selection-info-container">
@@ -418,7 +432,8 @@
                 (click)="selectionManager.clear()"
                 mat-icon-button
                 type="button"
-                color="warn">
+                color="warn"
+                class="ui-grid-selection-clear-button">
             <mat-icon>clear</mat-icon>
         </button>
         <span class="ui-grid-selection-info-message">
@@ -428,11 +443,121 @@
 </ng-template>
 
 <ng-template #noSelectionTmpl>
-    <mat-icon [matTooltip]="intl.multiPageSelectionInfoTooltip"
+    <mat-icon *ngIf="!useAlternateDesign"
+              [matTooltip]="intl.multiPageSelectionInfoTooltip"
               [matTooltipDisabled]="resizeManager.isResizing"
               class="ui-grid-selection-info-icon"
               tabindex="0">info</mat-icon>
     <span class="ui-grid-selection-info-message">
         {{ intl.noSelectionMessage }}
     </span>
+</ng-template>
+
+<ng-template #classicFooter>
+    <mat-paginator *ngIf="!!footer"
+                   [pageIndex]="footer?.state?.pageIndex"
+                   [pageSize]="footer?.state?.pageSize"
+                   [pageSizeOptions]="footer?.pageSizes"
+                   [length]="footer?.length"
+                   [disabled]="disabled"
+                   [showFirstLastButtons]="true"
+                   [hidePageSize]="footer?.hidePageSize"
+                   (page)="footer?.pageChange?.next($event)">
+    </mat-paginator>
+</ng-template>
+
+<ng-template #alternativeFooter>
+    <ui-grid-custom-paginator *ngIf="!!footer"
+                              [pageIndex]="footer?.state?.pageIndex"
+                              [pageSize]="footer?.state?.pageSize"
+                              [pageSizeOptions]="footer?.pageSizes"
+                              [length]="footer?.length"
+                              [disabled]="disabled"
+                              [showFirstLastButtons]="true"
+                              [hidePageSize]="footer?.hidePageSize"
+                              (page)="footer?.pageChange?.next($event)">
+    </ui-grid-custom-paginator>
+</ng-template>
+
+<ng-template #filtersTmpl>
+    <ng-container *ngIf="collapsibleFilters; else classicFiltersTmpl">
+        <button *ngIf="hasAnyFiltersVisible$ | async"
+                [disabled]="disabled"
+                (click)="showFilters = !showFilters"
+                mat-button
+                class="ui-grid-collapsible-filters-toggle">
+            <mat-icon>filter_list</mat-icon>
+            <span>{{ intl.filters(filterManager.activeCount$ | async)}}</span>
+            <mat-icon>{{ showFilters ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+    </ng-container>
+</ng-template>
+
+<ng-template #classicFiltersTmpl>
+    <ng-container *ngFor="let column of columns$ | async">
+        <div *ngIf="column.dropdown?.visible$ | async"
+             [ngClass]="{'ui-grid-alternate-filter-container': collapsibleFilters}"
+             class="ui-grid-dropdown-filter-container ui-grid-filter-option">
+            <button [matMenuTriggerFor]="filterOptions"
+                    [disabled]="column.dropdown.disabled || disabled"
+                    [attr.data-column-name]="'ui-grid-dropdown-filter-' + (column.property || 'na')"
+                    mat-button
+                    type="button"
+                    class="ui-grid-dropdown-filter-button">
+                <span class="ui-grid-dropdown-filter-title">{{ column.title }}: </span>
+                <span class="ui-grid-dropdown-filter-value">
+                    {{ !!column.dropdown.value ? intl.translateDropdownOption(column.dropdown.value) :
+                    intl.noFilterPlaceholder }}
+                </span>
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+            <mat-menu #filterOptions="matMenu"
+                      [overlapTrigger]="true">
+                <button *ngIf="column.dropdown.showAllOption"
+                        [class.active]="column.dropdown.value == null"
+                        (click)="filterManager.dropdownUpdate(column!, undefined)"
+                        type="button"
+                        mat-menu-item>
+                    {{ intl.noFilterPlaceholder }}
+                </button>
+                <button *ngFor="let dropdownItem of column.dropdown.items"
+                        [class.active]="column.dropdown.value?.label === dropdownItem.label"
+                        (click)="filterManager.dropdownUpdate(column, dropdownItem)"
+                        type="button"
+                        mat-menu-item>
+                    {{ intl.translateDropdownOption(dropdownItem) }}
+                </button>
+            </mat-menu>
+        </div>
+
+        <ng-container *ngIf="column.searchableDropdown?.visible$ | async">
+            <ui-suggest #suggest
+                        [placeholder]="column.title"
+                        [defaultValue]="column.searchableDropdown.noFilterPlaceholder || intl.noFilterPlaceholder"
+                        [searchSourceFactory]="column.searchableDropdown.searchSourceFactory"
+                        [value]="[column.searchableDropdown.value]"
+                        [disabled]="column.searchableDropdown.disabled || disabled"
+                        [maxLength]="64"
+                        [attr.data-cy]="'ui-grid-search-filter-' + (column.property || 'na')"
+                        (selected)="filterManager.searchableDropdownUpdate(column, $event)"
+                        (opened)="column.refetch && suggest.fetch()"
+                        width="230px"
+                        class="ui-grid-search-filter ui-grid-filter-option">
+            </ui-suggest>
+        </ng-container>
+    </ng-container>
+</ng-template>
+
+<ng-template #toggleColumnsTmpl>
+    <ui-grid-toggle-columns *ngIf="toggleColumns && !(hasSelection$ | async)"
+                            [options]="visibilityManager.options$ | async"
+                            [dirty]="visibilityManager.isDirty$ | async"
+                            [toggleTooltip]="intl.toggleTooltip"
+                            [resetToDefaults]="intl.toggleResetToDefaults"
+                            [toggleTitle]="intl.toggleTitle"
+                            [togglePlaceholderTitle]="intl.togglePlaceholderTitle"
+                            (visibleColumns)="visibilityManager.update($event)"
+                            (resetColumns)="visibilityManager.reset()"
+                            [useAlternateDesign]="useAlternateDesign">
+    </ui-grid-toggle-columns>
 </ng-template>

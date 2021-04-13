@@ -1,3 +1,11 @@
+import { Subject } from 'rxjs';
+import {
+    debounceTime,
+    distinctUntilChanged,
+    map,
+    takeUntil,
+} from 'rxjs/operators';
+
 import {
     ChangeDetectionStrategy,
     Component,
@@ -9,14 +17,6 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-
-import { Subject } from 'rxjs';
-import {
-    debounceTime,
-    distinctUntilChanged,
-    map,
-    takeUntil,
-} from 'rxjs/operators';
 
 /**
  * The grid search component.
