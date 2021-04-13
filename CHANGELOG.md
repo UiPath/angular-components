@@ -1,7 +1,10 @@
+# v11.0.0 (2021-04-13)
+
 # v11.0.0-rc.7 (2021-04-08)
 * **grid** style updates for alternate design
 * **grid** expose data attribute for column property
 * **suggest** expose data attribute for each rendered element
+
 # v11.0.0-rc.6 (2021-03-31)
 * **grid** fix hasValue stream
 
