@@ -237,7 +237,9 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import * as Clipboard from &#x27;clipboard&#x27;;
+
+import {
     Directive,
     ElementRef,
     EventEmitter,
@@ -246,8 +248,6 @@
     OnInit,
     Output,
 } from &#x27;@angular/core&#x27;;
-
-import * as Clipboard from &#x27;clipboard&#x27;;
 
 /**
  * A directive that copies the decorated element content into the user clipboard.

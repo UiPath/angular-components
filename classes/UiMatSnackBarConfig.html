@@ -122,7 +122,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:84</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:92</a></div>
                             </td>
                         </tr>
 
@@ -159,8 +159,6 @@ import {
     MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from &#x27;@angular/material/snack-bar&#x27;;
 
-import { Observable } from &#x27;rxjs&#x27;;
-
 import { UiSnackbarIntl } from &#x27;./ui-snackbar.intl&#x27;;
 
 interface ISnackBarAlert {
@@ -168,6 +166,11 @@ interface ISnackBarAlert {
      * Alert message
      */
     message: string | TemplateRef&lt;any&gt;;
+    /**
+     * Optional action button message,
+     * will emit &#x60;dismissWithAction&#x60; on click
+     */
+    actionMessage?: string;
     /**
     * How long to remain on the screen
     */
@@ -220,8 +223,13 @@ export const ICON_MAP: Map&lt;SnackBarType, string&gt; &#x3D; new Map([
     [SnackBarType.Warning, &#x27;warning&#x27;],
     [SnackBarType.Error, &#x27;info&#x27;],
 ]);
-
-export type SnackbarAction &#x3D; (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; Observable&lt;void&gt;;
+export type SnackbarAction &#x3D; (
+    message: string | TemplateRef&lt;any&gt;,
+    config?: {
+        actionMessage?: string,
+        duration?: number,
+    },
+) &#x3D;&gt; MatSnackBarRef&lt;UiSnackBarComponent&gt;;
 
 export class UiMatSnackBarConfig {
     public restrictHtml &#x3D; false;
@@ -249,25 +257,25 @@ export class UiSnackBarService {
     /**
      * Display an info snackbar
      * @param message The message to be displayed
-     * @param duration How long to remain on the screen
+     * @param config  &#x60;{ actionMessage, duration }&#x60;
     */
     public info: SnackbarAction;
     /**
      * Display an error snackbar
      * @param message The message to be displayed
-     * @param duration How long to remain on the screen
+     * @param config  &#x60;{ actionMessage, duration }&#x60;
     */
     public error: SnackbarAction;
     /**
      * Display an success snackbar
      * @param message The message to be displayed
-     * @param duration How long to remain on the screen
+     * @param config  &#x60;{ actionMessage, duration }&#x60;
     */
     public success: SnackbarAction;
     /**
      * Display an warning snackbar
      * @param message The message to be displayed
-     * @param duration How long to remain on the screen
+     * @param config  &#x60;{ actionMessage, duration }&#x60;
     */
     public warning: SnackbarAction;
     private _ref?: MatSnackBarRef&lt;UiSnackBarComponent&gt;;
@@ -294,14 +302,15 @@ export class UiSnackBarService {
     /**
      * Display a snackbar (customizable)
      * @param message The message to be displayed
-     * @param options Customize default options: snackbar type, icon, display duration
+     * @param options Customize default options: snackbar type, icon, display duration, and action message
      */
-    public show &#x3D; (message: string, { type, duration, icon }
+    public show &#x3D; (message: string | TemplateRef&lt;any&gt;, { type, duration, icon, actionMessage }
         : ISnackBarOptions &#x3D; {}) &#x3D;&gt;
         this._alert(type || SnackBarType.None, {
             message,
             icon: icon || ICON_MAP.get(type!),
             duration: duration || duration &#x3D;&#x3D;&#x3D; 0 ? duration : this._options.duration!,
+            actionMessage,
         })
 
     /**
@@ -314,10 +323,13 @@ export class UiSnackBarService {
     }
 
     private _alertFactory &#x3D; (type: SnackBarType) &#x3D;&gt;
-        (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; this._alert(type, {
+        (message: string | TemplateRef&lt;any&gt;, config?: { actionMessage?: string, duration?: number }) &#x3D;&gt; this._alert(type, {
             message,
+            actionMessage: config?.actionMessage,
             icon: ICON_MAP.get(type),
-            duration: duration || duration &#x3D;&#x3D;&#x3D; 0 ? duration : this._options.duration!,
+            duration: config?.duration || config?.duration &#x3D;&#x3D;&#x3D; 0
+                ? config.duration
+                : this._options.duration!,
         })
 
     private _alert(type: SnackBarType, options: ISnackBarAlert) {
@@ -340,7 +352,7 @@ export class UiSnackBarService {
             panelClass: panelClass(type),
         });
 
-        return this._ref.afterOpened();
+        return this._ref;
     }
 }
 </code></pre>

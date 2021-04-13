@@ -438,8 +438,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="208"
-                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:208</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="210"
+                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:210</a></div>
                 </td>
             </tr>
 
@@ -480,8 +480,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="219"
-                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:219</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="221"
+                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:221</a></div>
                 </td>
             </tr>
 
@@ -522,8 +522,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="196"
-                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:196</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="198"
+                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:198</a></div>
                 </td>
             </tr>
 
@@ -564,8 +564,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="178"
-                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:178</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="180"
+                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:180</a></div>
                 </td>
             </tr>
 
@@ -606,8 +606,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="165"
-                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:165</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="167"
+                            class="link-to-prism">projects/angular/directives/ui-drag-and-drop-file/src/ui-drag-and-drop-file.directive.ts:167</a></div>
                 </td>
             </tr>
 
@@ -749,12 +749,14 @@ export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnD
 
         this._renderer.setStyle(this.fileBrowseRef, &#x27;cursor&#x27;, &#x27;pointer&#x27;);
 
-        const browse &#x3D; this._renderer
-            .listen(this.fileBrowseRef, &#x27;click&#x27;, () &#x3D;&gt; {
-                if (this.disabled) { return; }
-                this._fileInput.click();
-            });
-        this._disposalCallbacks.push(browse);
+        [&#x27;click&#x27;, &#x27;keydown.enter&#x27;, &#x27;keydown.space&#x27;].forEach(eventName &#x3D;&gt; {
+            const browse &#x3D; this._renderer
+                .listen(this.fileBrowseRef, eventName, () &#x3D;&gt; {
+                    if (this.disabled) { return; }
+                    this._fileInput.click();
+                });
+            this._disposalCallbacks.push(browse);
+        });
 
         const change &#x3D; this._renderer.listen(this._fileInput, &#x27;change&#x27;, (ev) &#x3D;&gt; {
             this._preventAll(ev);

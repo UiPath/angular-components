@@ -505,7 +505,9 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { tap } from &#x27;rxjs/operators&#x27;;
+
+import {
     Directive,
     EventEmitter,
     Input,
@@ -513,8 +515,6 @@
     OnInit,
     Output,
 } from &#x27;@angular/core&#x27;;
-
-import { tap } from &#x27;rxjs/operators&#x27;;
 
 import { PageChangeEvent } from &#x27;../events/page-change-event&#x27;;
 

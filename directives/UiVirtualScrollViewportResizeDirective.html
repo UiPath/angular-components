@@ -245,18 +245,7 @@ or when the input length is changed.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CdkVirtualScrollViewport } from &#x27;@angular/cdk/scrolling&#x27;;
-import { DOCUMENT } from &#x27;@angular/common&#x27;;
-import {
-    Directive,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Self,
-} from &#x27;@angular/core&#x27;;
-
-import {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
     fromEvent,
     merge,
     Subject,
@@ -267,6 +256,17 @@ import {
     takeUntil,
     tap,
 } from &#x27;rxjs/operators&#x27;;
+
+import { CdkVirtualScrollViewport } from &#x27;@angular/cdk/scrolling&#x27;;
+import { DOCUMENT } from &#x27;@angular/common&#x27;;
+import {
+    Directive,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Self,
+} from &#x27;@angular/core&#x27;;
 
 /**
  * A directive that is designed to work alongside CdkVirtualScrollViewport

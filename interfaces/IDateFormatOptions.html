@@ -179,17 +179,6 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import &#x27;moment-timezone&#x27;;
 
-import {
-    Directive,
-    ElementRef,
-    Inject,
-    InjectionToken,
-    Input,
-    Optional,
-    Renderer2,
-} from &#x27;@angular/core&#x27;;
-import { UiFormatDirective } from &#x27;@uipath/angular/directives/internal&#x27;;
-
 import * as _moment from &#x27;moment&#x27;;
 import {
     interval,
@@ -201,6 +190,17 @@ import {
     filter,
     takeUntil,
 } from &#x27;rxjs/operators&#x27;;
+
+import {
+    Directive,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Input,
+    Optional,
+    Renderer2,
+} from &#x27;@angular/core&#x27;;
+import { UiFormatDirective } from &#x27;@uipath/angular/directives/internal&#x27;;
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670

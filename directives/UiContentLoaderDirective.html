@@ -511,6 +511,15 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    BehaviorSubject,
+    Subject,
+} from &#x27;rxjs&#x27;;
+import {
+    distinctUntilChanged,
+    filter,
+} from &#x27;rxjs/operators&#x27;;
+
+import {
     ComponentFactoryResolver,
     ComponentRef,
     Directive,
@@ -522,15 +531,6 @@
     ViewContainerRef,
 } from &#x27;@angular/core&#x27;;
 import { MatProgressSpinner } from &#x27;@angular/material/progress-spinner&#x27;;
-
-import {
-    BehaviorSubject,
-    Subject,
-} from &#x27;rxjs&#x27;;
-import {
-    distinctUntilChanged,
-    filter,
-} from &#x27;rxjs/operators&#x27;;
 
 import {
     UiContentSpinnerComponent,

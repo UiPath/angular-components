@@ -38,7 +38,7 @@
 
 <ol class="breadcrumb">
   <li>Injectables</li>
-  <li>QueuedAnnouncer</li>
+  <li>UiMatPaginatorIntl</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -56,10 +56,16 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/angular/a11y/src/queued-announcer/queued-announcer.ts</code>
+            <code>projects/angular/components/ui-grid/src/components/ui-grid-custom-paginator/ui-grid-custom-paginator.component.ts</code>
         </p>
 
 
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                    <code>MatPaginatorIntl</code>
+            </p>
 
 
             <section>
@@ -77,7 +83,7 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#enqueue">enqueue</a>
+                                <a href="#getPageLabel">getPageLabel</a>
                             </li>
                         </ul>
                     </td>
@@ -91,54 +97,6 @@
     </table>
 </section>
 
-            <section>
-    <h3 id="constructor">Constructor</h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-<code>constructor(_liveAnnouncer: LiveAnnouncer)</code>
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">projects/angular/a11y/src/queued-announcer/queued-announcer.ts:12</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                            <div>
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>_liveAnnouncer</td>
-                                                  
-                                                        <td>
-                                                                    <code>LiveAnnouncer</code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-</section>
 
             <section>
     
@@ -149,28 +107,28 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="enqueue"></a>
+                    <a name="getPageLabel"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Public</span>
-                            enqueue
+                            getPageLabel
                         </b>
-                        <a href="#enqueue"><span class="icon ion-ios-link"></span></a>
+                        <a href="#getPageLabel"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>enqueue(msg: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>getPageLabel(currentPage: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, pageCount?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="16"
-                            class="link-to-prism">projects/angular/a11y/src/queued-announcer/queued-announcer.ts:16</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="21"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/components/ui-grid-custom-paginator/ui-grid-custom-paginator.component.ts:21</a></div>
                 </td>
             </tr>
 
@@ -190,13 +148,25 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>msg</td>
+                                    <td>currentPage</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
                                     </td>
 
                                     <td>
                                         No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>pageCount</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
                                     </td>
 
 
@@ -207,7 +177,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                     </div>
                     <div class="io-description">
@@ -223,42 +193,69 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { of } from &#x27;rxjs&#x27;;
-import { delay } from &#x27;rxjs/operators&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    HostBinding,
+    Inject,
+    Injectable,
+    Optional,
+    ViewEncapsulation,
+} from &#x27;@angular/core&#x27;;
+import { MatFormFieldAppearance } from &#x27;@angular/material/form-field&#x27;;
+import {
+    MatPaginatorDefaultOptions,
+    MatPaginatorIntl,
+    MAT_PAGINATOR_DEFAULT_OPTIONS,
+    _MatPaginatorBase,
+} from &#x27;@angular/material/paginator&#x27;;
 
-import { LiveAnnouncer } from &#x27;@angular/cdk/a11y&#x27;;
-import { Injectable } from &#x27;@angular/core&#x27;;
-
-@Injectable({
-    providedIn: &#x27;root&#x27;,
-})
-export class QueuedAnnouncer {
-    private _msgQueue: string[] &#x3D; [];
-    private _isAnnouncing &#x3D; false;
-
-    constructor(private _liveAnnouncer: LiveAnnouncer) { }
-
-    public enqueue(msg: string) {
-        this._msgQueue.push(msg);
-
-        if (!this._isAnnouncing) {
-            this._isAnnouncing &#x3D; true;
-            this._announceNext();
+@Injectable()
+export class UiMatPaginatorIntl extends MatPaginatorIntl {
+    public getPageLabel(currentPage: number, pageCount?: number): string {
+        if (!pageCount) {
+            return &#x60;Page ${currentPage}&#x60;;
         }
+        return &#x60;Page ${currentPage} / ${pageCount}&#x60;;
+    }
+}
+
+@Component({
+    selector: &#x27;ui-grid-custom-paginator&#x27;,
+    templateUrl: &#x27;./ui-grid-custom-paginator.component.html&#x27;,
+    styleUrls: [&#x27;./ui-grid-custom-paginator.component.scss&#x27;],
+    // tslint:disable-next-line: no-inputs-metadata-property
+    inputs: [&#x27;disabled&#x27;],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+})
+export class UiGridCustomPaginatorComponent extends _MatPaginatorBase&lt;MatPaginatorDefaultOptions&gt; {
+    // tslint:disable-next-line: naming-convention
+    public _formFieldAppearance?: MatFormFieldAppearance;
+    // tslint:disable-next-line: naming-convention
+    public _intl!: UiMatPaginatorIntl;
+
+    @HostBinding(&#x27;class&#x27;)
+    public hostClass &#x3D; &#x27;mat-paginator&#x27;;
+
+    public get pageCount(): number {
+        return Math.ceil(this.length / this.pageSize);
     }
 
-    private _announceNext &#x3D; () &#x3D;&gt; {
-        if (!this._msgQueue.length) {
-            this._isAnnouncing &#x3D; false;
-            return;
-        }
+    constructor(
+        changeDetectorRef: ChangeDetectorRef,
+        @Optional()
+        intl?: UiMatPaginatorIntl,
+        @Optional()
+        @Inject(MAT_PAGINATOR_DEFAULT_OPTIONS)
+        defaults?: MatPaginatorDefaultOptions,
+    ) {
+        super(intl ?? new UiMatPaginatorIntl(), changeDetectorRef, defaults);
 
-        this._liveAnnouncer.announce(this._msgQueue.shift()!)
-            // announcements end up in an aria-live element
-            // a delay is needed before setting the next announcement so they are both picked up by the screen reader
-            .then(() &#x3D;&gt; of(void 0).pipe(delay(50)).toPromise())
-            .then(this._announceNext)
-            .catch(this._announceNext);
+        if (defaults &amp;&amp; defaults.formFieldAppearance !&#x3D; null) {
+            this._formFieldAppearance &#x3D; defaults.formFieldAppearance;
+        }
     }
 }
 </code></pre>
@@ -294,7 +291,7 @@ export class QueuedAnnouncer {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'QueuedAnnouncer.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'UiMatPaginatorIntl.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

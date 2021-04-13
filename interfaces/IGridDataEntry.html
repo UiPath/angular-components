@@ -148,6 +148,18 @@
      */
     id: number | string;
 }
+/**
+ * Grid options.
+ *
+ * @export
+ */
+export interface GridOptions&lt;T&gt; {
+    useCache?: boolean;
+    useAlternateDesign?: boolean;
+    collapsibleFilters?: boolean;
+    idProperty?: keyof T;
+    rowSize?: number;
+}
 </code></pre>
     </div>
 </div>

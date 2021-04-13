@@ -159,7 +159,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:50</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:53</a></div>
                             </td>
                         </tr>
 
@@ -249,7 +249,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:54</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:57</a></div>
                             </td>
                         </tr>
 
@@ -277,7 +277,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:55</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:58</a></div>
                             </td>
                         </tr>
 
@@ -308,8 +308,6 @@ import {
     MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from &#x27;@angular/material/snack-bar&#x27;;
 
-import { Observable } from &#x27;rxjs&#x27;;
-
 import { UiSnackbarIntl } from &#x27;./ui-snackbar.intl&#x27;;
 
 interface ISnackBarAlert {
@@ -317,6 +315,11 @@ interface ISnackBarAlert {
      * Alert message
      */
     message: string | TemplateRef&lt;any&gt;;
+    /**
+     * Optional action button message,
+     * will emit &#x60;dismissWithAction&#x60; on click
+     */
+    actionMessage?: string;
     /**
     * How long to remain on the screen
     */
@@ -369,8 +372,13 @@ export const ICON_MAP: Map&lt;SnackBarType, string&gt; &#x3D; new Map([
     [SnackBarType.Warning, &#x27;warning&#x27;],
     [SnackBarType.Error, &#x27;info&#x27;],
 ]);
-
-export type SnackbarAction &#x3D; (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; Observable&lt;void&gt;;
+export type SnackbarAction &#x3D; (
+    message: string | TemplateRef&lt;any&gt;,
+    config?: {
+        actionMessage?: string,
+        duration?: number,
+    },
+) &#x3D;&gt; MatSnackBarRef&lt;UiSnackBarComponent&gt;;
 
 export class UiMatSnackBarConfig {
     public restrictHtml &#x3D; false;
@@ -398,25 +406,25 @@ export class UiSnackBarService {
     /**
      * Display an info snackbar
      * @param message The message to be displayed
-     * @param duration How long to remain on the screen
+     * @param config  &#x60;{ actionMessage, duration }&#x60;
     */
     public info: SnackbarAction;
     /**
      * Display an error snackbar
      * @param message The message to be displayed
-     * @param duration How long to remain on the screen
+     * @param config  &#x60;{ actionMessage, duration }&#x60;
     */
     public error: SnackbarAction;
     /**
      * Display an success snackbar
      * @param message The message to be displayed
-     * @param duration How long to remain on the screen
+     * @param config  &#x60;{ actionMessage, duration }&#x60;
     */
     public success: SnackbarAction;
     /**
      * Display an warning snackbar
      * @param message The message to be displayed
-     * @param duration How long to remain on the screen
+     * @param config  &#x60;{ actionMessage, duration }&#x60;
     */
     public warning: SnackbarAction;
     private _ref?: MatSnackBarRef&lt;UiSnackBarComponent&gt;;
@@ -443,14 +451,15 @@ export class UiSnackBarService {
     /**
      * Display a snackbar (customizable)
      * @param message The message to be displayed
-     * @param options Customize default options: snackbar type, icon, display duration
+     * @param options Customize default options: snackbar type, icon, display duration, and action message
      */
-    public show &#x3D; (message: string, { type, duration, icon }
+    public show &#x3D; (message: string | TemplateRef&lt;any&gt;, { type, duration, icon, actionMessage }
         : ISnackBarOptions &#x3D; {}) &#x3D;&gt;
         this._alert(type || SnackBarType.None, {
             message,
             icon: icon || ICON_MAP.get(type!),
             duration: duration || duration &#x3D;&#x3D;&#x3D; 0 ? duration : this._options.duration!,
+            actionMessage,
         })
 
     /**
@@ -463,10 +472,13 @@ export class UiSnackBarService {
     }
 
     private _alertFactory &#x3D; (type: SnackBarType) &#x3D;&gt;
-        (message: string | TemplateRef&lt;any&gt;, duration?: number) &#x3D;&gt; this._alert(type, {
+        (message: string | TemplateRef&lt;any&gt;, config?: { actionMessage?: string, duration?: number }) &#x3D;&gt; this._alert(type, {
             message,
+            actionMessage: config?.actionMessage,
             icon: ICON_MAP.get(type),
-            duration: duration || duration &#x3D;&#x3D;&#x3D; 0 ? duration : this._options.duration!,
+            duration: config?.duration || config?.duration &#x3D;&#x3D;&#x3D; 0
+                ? config.duration
+                : this._options.duration!,
         })
 
     private _alert(type: SnackBarType, options: ISnackBarAlert) {
@@ -489,7 +501,7 @@ export class UiSnackBarService {
             panelClass: panelClass(type),
         });
 
-        return this._ref.afterOpened();
+        return this._ref;
     }
 }
 </code></pre>
@@ -506,9 +518,19 @@ export class UiSnackBarService {
                           [ngTemplateOutletContext]&#x3D;&quot;{ $implicit: snackBarRef }&quot;&gt;&lt;/ng-container&gt;
         &lt;/ng-template&gt;
     &lt;/div&gt;
+
     &lt;div class&#x3D;&quot;ui-snackbar-dismiss&quot;&gt;
+        &lt;button *ngIf&#x3D;&quot;data.actionMessage&quot;
+                (click)&#x3D;&quot;snackBarRef.dismissWithAction()&quot;
+                class&#x3D;&quot;ui-snackbar-action&quot;
+                type&#x3D;&quot;button&quot;
+                mat-button&gt;
+            {{ data.actionMessage }}
+        &lt;/button&gt;
+
         &lt;button [attr.aria-label]&#x3D;&quot;data.closeAriaLabel&quot;
                 (click)&#x3D;&quot;snackBarRef.dismiss()&quot;
+                class&#x3D;&quot;ui-snackbar-close&quot;
                 type&#x3D;&quot;button&quot;
                 mat-icon-button&gt;
             &lt;mat-icon&gt;close&lt;/mat-icon&gt;
@@ -532,6 +554,10 @@ export class UiSnackBarService {
     &amp;-dismiss {
         display: flex;
         align-items: center;
+    }
+
+    &amp;-action {
+        margin-right: 10px;
     }
 
     &amp;-message {
@@ -575,9 +601,9 @@ export class UiSnackBarService {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="ui-snackbar-container">    <div class="ui-snackbar-message">        <mat-icon *ngIf="data.icon">{{data.icon}}</mat-icon>        <span *ngIf="isPropertyString(data.message); else renderTemplate"              [innerHTML]="data.message | nl2br"></span>        <ng-template #renderTemplate>            <ng-container [ngTemplateOutlet]="data.message"                          [ngTemplateOutletContext]="{ $implicit: snackBarRef }"></ng-container>        </ng-template>    </div>    <div class="ui-snackbar-dismiss">        <button [attr.aria-label]="data.closeAriaLabel"                (click)="snackBarRef.dismiss()"                type="button"                mat-icon-button>            <mat-icon>close</mat-icon>        </button>    </div></div></div>'
-    var COMPONENTS = [{'name': 'UiButtonProgressBarComponent', 'selector': 'ui-button-progress-bar'},{'name': 'UiButtonProgressSpinnerComponent', 'selector': 'ui-button-progress-spinner'},{'name': 'UiContentSpinnerComponent', 'selector': 'ui-content-spinner'},{'name': 'UiGridComponent', 'selector': 'ui-grid'},{'name': 'UiGridSearchComponent', 'selector': 'ui-grid-search'},{'name': 'UiGridToggleColumnsComponent', 'selector': 'COMPONENT_SELECTOR'},{'name': 'UiPasswordIndicatorComponent', 'selector': 'ui-password-indicator'},{'name': 'UiPasswordToggleComponent', 'selector': 'ui-password-toggle'},{'name': 'UiSecondFormatDirective', 'selector': 'ui-secondformat'},{'name': 'UiSnackBarComponent', 'selector': ''}];
-    var DIRECTIVES = [{'name': 'UiAutoAccessibleLabelDirective', 'selector': ''},{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiContentLoaderDirective', 'selector': '[uiContentLoading]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiProgressButtonDirective', 'selector': '
+        var COMPONENT_TEMPLATE = '<div><div class="ui-snackbar-container">    <div class="ui-snackbar-message">        <mat-icon *ngIf="data.icon">{{data.icon}}</mat-icon>        <span *ngIf="isPropertyString(data.message); else renderTemplate"              [innerHTML]="data.message | nl2br"></span>        <ng-template #renderTemplate>            <ng-container [ngTemplateOutlet]="data.message"                          [ngTemplateOutletContext]="{ $implicit: snackBarRef }"></ng-container>        </ng-template>    </div>    <div class="ui-snackbar-dismiss">        <button *ngIf="data.actionMessage"                (click)="snackBarRef.dismissWithAction()"                class="ui-snackbar-action"                type="button"                mat-button>            {{ data.actionMessage }}        </button>        <button [attr.aria-label]="data.closeAriaLabel"                (click)="snackBarRef.dismiss()"                class="ui-snackbar-close"                type="button"                mat-icon-button>            <mat-icon>close</mat-icon>        </button>    </div></div></div>'
+    var COMPONENTS = [{'name': 'UiButtonProgressBarComponent', 'selector': 'ui-button-progress-bar'},{'name': 'UiButtonProgressSpinnerComponent', 'selector': 'ui-button-progress-spinner'},{'name': 'UiContentSpinnerComponent', 'selector': 'ui-content-spinner'},{'name': 'UiGridComponent', 'selector': 'ui-grid'},{'name': 'UiGridCustomPaginatorComponent', 'selector': 'ui-grid-custom-paginator'},{'name': 'UiGridSearchComponent', 'selector': 'ui-grid-search'},{'name': 'UiGridToggleColumnsComponent', 'selector': 'COMPONENT_SELECTOR'},{'name': 'UiPasswordIndicatorComponent', 'selector': 'ui-password-indicator'},{'name': 'UiPasswordToggleComponent', 'selector': 'ui-password-toggle'},{'name': 'UiSecondFormatDirective', 'selector': 'ui-secondformat'},{'name': 'UiSnackBarComponent', 'selector': ''}];
+    var DIRECTIVES = [{'name': 'UiAutoAccessibleLabelDirective', 'selector': ''},{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiContentLoaderDirective', 'selector': '[uiContentLoading]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridLoadingDirective', 'selector': '[uiGridLoading], ui-grid-loading'},{'name': 'UiGridNoContentDirective', 'selector': '[uiGridNoContent], ui-grid-no-content'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiProgressButtonDirective', 'selector': '
         button[mat-button][ui-progress-button],
         button[mat-raised-button][ui-progress-button],
         button[mat-stroked-button][ui-progress-button],

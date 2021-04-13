@@ -354,16 +354,16 @@ eg: <code>[uiScrollIntoView]=&quot;isFocused&quot;</code></p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { merge } from &#x27;rxjs&#x27;;
+import { take } from &#x27;rxjs/operators&#x27;;
+import scrollIntoViewIfNeeded, { Options } from &#x27;scroll-into-view-if-needed&#x27;;
+
+import {
     Directive,
     ElementRef,
     Input,
     NgZone,
 } from &#x27;@angular/core&#x27;;
-
-import { merge } from &#x27;rxjs&#x27;;
-import { take } from &#x27;rxjs/operators&#x27;;
-import scrollIntoViewIfNeeded, { Options } from &#x27;scroll-into-view-if-needed&#x27;;
 
 type Boundary &#x3D; &#x27;parent&#x27; | Element;
 

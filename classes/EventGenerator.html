@@ -553,7 +553,7 @@ by providing a collection of methods and properties that create the most often r
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>keyDown(key: <a href="../classes/Key.html">KeyOrKeyName</a>, modifier?: <a href="../interfaces/IKeyModifier.html">IKeyModifier</a>)</code>
+                    <code>keyDown(key: <a href="../classes/Key.html">KeyOrKeyName</a>, modifiers: <a href="../classes/Key.html">IKeyModifier[]</a>)</code>
                 </td>
             </tr>
 
@@ -600,18 +600,18 @@ by providing a collection of methods and properties that create the most often r
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>modifier</td>
+                                    <td>modifiers</td>
                                     <td>
-                                                <code><a href="../interfaces/IKeyModifier.html" target="_self" >IKeyModifier</a></code>
+                                                <code><a href="../classes/Key.html" target="_self" >IKeyModifier[]</a></code>
                                     </td>
 
                                     <td>
-                                        Yes
+                                        No
                                     </td>
 
 
                                     <td>
-                                        <p>The active modifier, if any.</p>
+                                        <p>The active modifiers, if any.</p>
 
                                     </td>
                                 </tr>
@@ -649,7 +649,7 @@ by providing a collection of methods and properties that create the most often r
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>keyUp(key: <a href="../classes/Key.html">KeyOrKeyName</a>, modifier?: <a href="../interfaces/IKeyModifier.html">IKeyModifier</a>)</code>
+                    <code>keyUp(key: <a href="../classes/Key.html">KeyOrKeyName</a>, modifiers: <a href="../classes/Key.html">IKeyModifier[]</a>)</code>
                 </td>
             </tr>
 
@@ -696,13 +696,13 @@ by providing a collection of methods and properties that create the most often r
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>modifier</td>
+                                    <td>modifiers</td>
                                     <td>
-                                                <code><a href="../interfaces/IKeyModifier.html" target="_self" >IKeyModifier</a></code>
+                                                <code><a href="../classes/Key.html" target="_self" >IKeyModifier[]</a></code>
                                     </td>
 
                                     <td>
-                                        Yes
+                                        No
                                     </td>
 
 
@@ -1184,22 +1184,22 @@ export class EventGenerator {
      * KeyDown event generator helper.
      *
      * @param key The pressed key.
-     * @param [modifier] The active modifier, if any.
+     * @param [modifiers] The active modifiers, if any.
      * @returns A &#x60;keydown&#x60; event with the provided key and modifier metadata.
      */
-    static keyDown(key: KeyOrKeyName, modifier?: IKeyModifier): KeyboardEvent {
-        return EventGenerator._key(&#x27;keydown&#x27;, key, modifier);
+    static keyDown(key: KeyOrKeyName, ...modifiers: IKeyModifier[]): KeyboardEvent {
+        return EventGenerator._key(&#x27;keydown&#x27;, key, modifiers);
     }
 
     /**
      * KeyUp event generator helper.
      *
      * @param key The pressed key.
-     * @param [modifier] The active modifier, if any.
+     * @param [modifiers] The active modifier, if any.
      * @returns A &#x60;keyup&#x60; event with the provided key and modifier metadata.
      */
-    static keyUp(key: KeyOrKeyName, modifier?: IKeyModifier): KeyboardEvent {
-        return EventGenerator._key(&#x27;keyup&#x27;, key, modifier);
+    static keyUp(key: KeyOrKeyName, ...modifiers: IKeyModifier[]): KeyboardEvent {
+        return EventGenerator._key(&#x27;keyup&#x27;, key, modifiers);
     }
 
     /**
@@ -1301,15 +1301,15 @@ export class EventGenerator {
         return event;
     }
 
-    private static _key(type: string, key: IKey | keyof Key, modifier &#x3D; {} as IKeyModifier) {
+    private static _key(type: string, key: IKey | keyof Key, modifiers &#x3D; [] as IKeyModifier[]) {
         const safeKey &#x3D; EventGenerator._getKey(key) as IKey;
         const options: KeyboardEventInit &amp; { keyCode: number } &#x3D; {
             code: &#x60;${safeKey.code}&#x60;,
             key: safeKey.name,
             keyCode: safeKey.keyCode,
-            shiftKey: modifier &#x3D;&#x3D;&#x3D; Key.Shift,
-            altKey: modifier &#x3D;&#x3D;&#x3D; Key.Alt,
-            ctrlKey: modifier &#x3D;&#x3D;&#x3D; Key.Control,
+            shiftKey: modifiers.includes(Key.Shift),
+            altKey: modifiers.includes(Key.Alt),
+            ctrlKey: modifiers.includes(Key.Control),
         };
 
         return new KeyboardEvent(type, options);
