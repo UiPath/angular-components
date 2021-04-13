@@ -1,11 +1,15 @@
+import cloneDeep from 'lodash-es/cloneDeep';
+import differenceBy from 'lodash-es/differenceBy';
+import {
+    BehaviorSubject,
+    Subject,
+} from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
+
 import {
     SelectionChange,
     SelectionModel,
 } from '@angular/cdk/collections';
-
-import cloneDeep from 'lodash-es/cloneDeep';
-import differenceBy from 'lodash-es/differenceBy';
-import { Subject } from 'rxjs';
 
 import {
     IGridDataEntry,
@@ -33,6 +37,10 @@ export class SelectionManager<T extends IGridDataEntry> {
     }
 
     public changed$: Subject<SelectionChange<T>> = new Subject();
+
+    private _hasValue$ = new BehaviorSubject(false);
+
+    public hasValue$ = this._hasValue$.pipe(distinctUntilChanged());
 
     private _selection = new Map<number | string, T>();
 
@@ -88,6 +96,7 @@ export class SelectionManager<T extends IGridDataEntry> {
     public destroy() {
         this._selection.clear();
         this._selectionSnapshot.clear();
+        this._hasValue$.next(false);
     }
 
     private _updateState = (predicate: (value: T) => void, values: T[]) => {
@@ -96,6 +105,7 @@ export class SelectionManager<T extends IGridDataEntry> {
     }
 
     private _emitChangeEvent() {
+        this._hasValue$.next(this.hasValue());
         if (this._selectedToEmit.length || this._deselectedToEmit.length) {
             this.changed$.next({
                 source: {} as SelectionModel<T>,

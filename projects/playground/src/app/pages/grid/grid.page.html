@@ -1,0 +1,75 @@
+<mat-card>
+    <mat-card-title> Grid </mat-card-title>
+    <mat-card-subtitle>Playground</mat-card-subtitle>
+
+    <mat-card-content>
+        <div class="grid-playground">
+            <form [formGroup]="actionsForm"
+                  (submit)="generateGrid()">
+                <div class="grid-playground-actions">
+                    <div [formGroup]="actionsForm.get('inputs')"
+                         class="grid-playground-actions-inputs">
+                        <h4>Grid Inputs</h4>
+                        <mat-checkbox *ngFor="let inputKey of inputKeys"
+                                      [formControlName]="inputKey">
+                            {{inputKey}}
+                        </mat-checkbox>
+                    </div>
+
+                    <div [formGroup]="actionsForm.get('header')"
+                         class="grid-playground-actions-header">
+                        <h4>Grid Header</h4>
+
+                        <mat-checkbox class="header-search-checkbox"
+                                      formControlName="searchable">
+                            Header search
+                        </mat-checkbox>
+
+                        <mat-checkbox class="header-search-checkbox"
+                                      formControlName="showFilter">
+                            Show Filter
+                        </mat-checkbox>
+
+                        <mat-form-field *ngFor="let button of buttonKeys">
+                            <mat-label>generate {{ button }} buttons</mat-label>
+                            <input [formControlName]="button"
+                                   required
+                                   matInput
+                                   type="number">
+                            <mat-error>Enter a value between 0 and 5</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div [formGroup]="actionsForm.get('data')"
+                         class="grid-playground-actions-data">
+                        <h4>Grid Data</h4>
+
+                        <mat-form-field *ngFor="let dataAction of dataActions">
+                            <mat-label>Generate {{dataAction}}: </mat-label>
+                            <input [formControlName]="dataAction"
+                                   required
+                                   matInput
+                                   type="number">
+                            <mat-error>Enter a value between 0 and 1000</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <button [disabled]="actionsForm.invalid"
+                        type="submit"
+                        color="primary"
+                        mat-button>
+                    Generate Grid
+                </button>
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<app-grid-component *ngIf="generatedGrid"
+                   [allData]="allData"
+                   [inputs]="inputs"
+                   [header]="header"
+                   [footer]="footer"
+                   [inputKeys]="inputKeys">
+</app-grid-component>

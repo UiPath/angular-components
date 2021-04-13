@@ -1,5 +1,3 @@
-import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
-
 import * as faker from 'faker';
 import isArray from 'lodash-es/isArray';
 import { BehaviorSubject } from 'rxjs';
@@ -10,6 +8,8 @@ import {
     take,
     toArray,
 } from 'rxjs/operators';
+
+import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import { IDropdownOption } from '../filters/ui-grid-dropdown-filter.directive';

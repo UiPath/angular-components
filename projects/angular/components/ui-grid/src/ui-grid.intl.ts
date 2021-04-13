@@ -1,9 +1,9 @@
+import { Subject } from 'rxjs';
+
 import {
     Injectable,
     OnDestroy,
 } from '@angular/core';
-
-import { Subject } from 'rxjs';
 
 import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
 
@@ -102,7 +102,17 @@ export class UiGridIntl implements OnDestroy {
      *
      */
     public descending = 'descending';
-
+    /**
+     * Live announced text when new action buttons are revealed on selection
+     *
+     */
+    public gridHeaderActionsNotice = 'Grid header actions updated. Press Shift + Alt + Arrow Up to move there.';
+    /**
+     * No data row message alternative function.
+     *
+     */
+    public noDataMessageAlternative = (searchValue?: string, activeFilters?: number | null) =>
+        `No data is available ${searchValue ? `for ${searchValue}` : '' } ${activeFilters ? ' for applied filters' : ''}.`
     /**
      * Determines the `checkbox` `matToolTip`.
      *
@@ -146,6 +156,11 @@ export class UiGridIntl implements OnDestroy {
      */
     public loadingPage = (page: number) =>
         `Loading page number ${page}`
+
+    public filters = (filtersCount?: number | null) =>
+        (filtersCount && filtersCount > 0)
+            ? `Filters (${filtersCount})`
+            : 'Filters'
 
     /**
      * Handles dropdown label transaltions.

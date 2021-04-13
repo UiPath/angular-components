@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 import {
     Directive,
     ElementRef,
@@ -5,8 +7,6 @@ import {
     OnDestroy,
     Renderer2,
 } from '@angular/core';
-
-import { Subject } from 'rxjs';
 
 @Directive()
 export abstract class UiFormatDirective implements OnChanges, OnDestroy {

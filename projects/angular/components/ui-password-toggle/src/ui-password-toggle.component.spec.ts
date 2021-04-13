@@ -1,3 +1,6 @@
+import * as faker from 'faker';
+import { take } from 'rxjs/operators';
+
 import {
     Component,
     Injectable,
@@ -10,9 +13,6 @@ import {
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { EventGenerator } from '@uipath/angular/testing';
-
-import * as faker from 'faker';
-import { take } from 'rxjs/operators';
 
 import { UiPasswordToggleComponent } from './ui-password-toggle.component';
 import { UiPasswordToggleIntl } from './ui-password-toggle.intl';
