@@ -68,7 +68,7 @@
 <p><code>npm i @uipath/angular</code></p>
 <h2 id="documentation">Documentation</h2>
 <p>Visit our docs page <a href="https://uipath.github.io/angular-components">here</a>. Thanks go to the <a href="https://compodoc.app/">@compodoc</a> team! 👌</p>
-<h1 id="git-conventions">Git Conventions</h1>
+<h1 id="contributing">Contributing</h1>
 <h3 id="commit-messages">Commit Messages</h3>
 <p>We initially started off by using a <code>custom</code> commit message convention, now that we&#39;ve gone OS, we realize it will be much easier for everyone if we adhere to the <code>conventional-commit</code> standard.</p>
 <p>The project comes preconfigured with <code>commitlint</code> and <code>husky</code> hooks in order to automate checks.</p>
@@ -79,6 +79,8 @@
 <p>We personally prefer that branches get <code>rebased</code>, and usually stay away from <code>merge</code> commits as they mostly end up polluting the history needlessly. At this point, most of you are probabily thinking: <code>Yeah, but it&#39;s not a good practice to rebase if multiple people are working on the same branch!</code>.</p>
 <p>True, it&#39;s not recommended to <code>rebase</code> when multiple people are active on the same <code>branch</code>, but in this scenario <code>git</code> offers a very elegant solution: <code>fixup</code> commits. By using <code>fixup commits</code>, the branch can later go through an <code>interactive rebase</code> once the <code>review</code> process is done and the <code>PR</code> is approved.</p>
 <p>For example: after you make your changes and stage them you can run a <code>git commit --fixup HEAD~</code> to add the changes in the last but one commit. Before the merge, you can then simply <code>git rebase -i &lt;ref&gt; --autosquash</code> and every change will be squashed in the correct commit.</p>
+<h3 id="environment-setup">Environment setup</h3>
+<p>Before contributing you will need to add the environment variable GH_NPM_REGISTRY_TOKEN with a dummy (empty) value. We are distributing the packages both publicly and internally and unfortunately npmrc uses an ini file format which doesn&#39;t allows us to provide a fallback automatically.</p>
 <h3 id="why">Why?</h3>
 <p><strong>Q:</strong> Why all the hassle, does it really matter?</p>
 <p><strong>A:</strong> We&#39;ve seen too many branches where <code>merge commits</code> get introduced without a good reason, too many branches that have almost the same number <code>merge commits</code> as <code>commits</code> so we want to enforce a git usage guidline that promotes responsibility. 🐱‍👤</p>
