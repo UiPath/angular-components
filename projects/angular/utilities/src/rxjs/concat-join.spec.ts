@@ -1,8 +1,3 @@
-import {
-    fakeAsync,
-    tick,
-} from '@angular/core/testing';
-
 import { of } from 'rxjs';
 import {
     catchError,
@@ -10,6 +5,11 @@ import {
     finalize,
     timeout,
 } from 'rxjs/operators';
+
+import {
+    fakeAsync,
+    tick,
+} from '@angular/core/testing';
 
 import { concatJoin } from './concat-join';
 

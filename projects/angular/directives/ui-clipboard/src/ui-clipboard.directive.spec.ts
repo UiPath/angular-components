@@ -1,3 +1,9 @@
+import { Subject } from 'rxjs';
+import {
+    finalize,
+    first,
+} from 'rxjs/operators';
+
 import { Component } from '@angular/core';
 import {
     ComponentFixture,
@@ -5,12 +11,6 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { EventGenerator } from '@uipath/angular/testing';
-
-import { Subject } from 'rxjs';
-import {
-    finalize,
-    first,
-} from 'rxjs/operators';
 
 import { UiClipboardModule } from './ui-clipboard.module';
 

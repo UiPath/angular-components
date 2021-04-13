@@ -1,4 +1,13 @@
 import {
+    BehaviorSubject,
+    Subject,
+} from 'rxjs';
+import {
+    distinctUntilChanged,
+    filter,
+} from 'rxjs/operators';
+
+import {
     ComponentFactoryResolver,
     ComponentRef,
     Directive,
@@ -10,15 +19,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-
-import {
-    BehaviorSubject,
-    Subject,
-} from 'rxjs';
-import {
-    distinctUntilChanged,
-    filter,
-} from 'rxjs/operators';
 
 import {
     UiContentSpinnerComponent,

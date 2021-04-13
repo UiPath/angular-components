@@ -1,9 +1,9 @@
+import { Subject } from 'rxjs';
+
 import {
     Injectable,
     OnDestroy,
 } from '@angular/core';
-
-import { Subject } from 'rxjs';
 
 /**
  * Internationalization service definition for `UiSuggest`.

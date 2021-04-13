@@ -1,10 +1,10 @@
+import { BehaviorSubject } from 'rxjs';
+
 import {
     Directive,
     Input,
     OnDestroy,
 } from '@angular/core';
-
-import { BehaviorSubject } from 'rxjs';
 
 import { UiGridFilterDirective } from './ui-grid-filter';
 

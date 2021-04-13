@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 import {
     ContentChild,
     Directive,
@@ -11,8 +13,6 @@ import {
 } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
 import { identifier } from '@uipath/angular/utilities';
-
-import { Subject } from 'rxjs';
 
 import {
     UiGridDropdownFilterDirective,
@@ -34,7 +34,7 @@ const ARIA_SORT_MAP: Record<SortDirection, string> = {
  * @ignore
  */
 const REACTIVE_INPUT_LIST: (keyof UiGridColumnDirective<{}>)[]
-    = ['sort', 'visible', 'title'];
+    = ['sort', 'visible', 'title', 'primary'];
 
 /**
  * The grid column definition directive.
@@ -144,7 +144,17 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      *
      */
     @Input()
-    public primary = false;
+    public get primary() {
+        return this._primary;
+    }
+    public set primary(primary: boolean) {
+        if (primary === this._primary) { return; }
+        this._primary = !!primary;
+
+        this.change$.next({
+            primary: new SimpleChange(!primary, primary, false),
+        });
+    }
 
     /**
      * If the column can have visibility toggled.
@@ -219,6 +229,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
 
     private _width = NaN;
     private _visible = true;
+    private _primary = false;
 
     /**
      * @ignore

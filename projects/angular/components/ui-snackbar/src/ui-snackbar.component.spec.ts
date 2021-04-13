@@ -1,3 +1,5 @@
+import * as faker from 'faker';
+
 import { OverlayContainer } from '@angular/cdk/overlay';
 import {
     Component,
@@ -13,8 +15,7 @@ import {
 } from '@angular/core/testing';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
-import * as faker from 'faker';
+import { EventGenerator } from '@uipath/angular/testing';
 
 import {
     ICON_MAP,
@@ -52,22 +53,6 @@ describe('Service: UiSnackBarService', () => {
         overlayContainer
             .getContainerElement()
             .querySelector('.mat-snack-bar-container');
-
-    const getMethodFor = (type: SnackBarType): SnackbarAction => {
-        switch (type) {
-            case SnackBarType.Info:
-                return service.info;
-            case SnackBarType.Success:
-                return service.success;
-            case SnackBarType.Warning:
-                return service.warning;
-            case SnackBarType.Error:
-                return service.error;
-
-            default:
-                throw new Error(`No method found for type ${type}.`);
-        }
-    };
 
     beforeEach(waitForAsync(() => {
         securitySettings = {
@@ -111,131 +96,175 @@ describe('Service: UiSnackBarService', () => {
         expect(service).toBeDefined();
     });
 
-    [
+    ([
         SnackBarType.Info,
         SnackBarType.Success,
         SnackBarType.Warning,
         SnackBarType.Error,
-    ].forEach(type => {
+    ] as const).forEach(type => {
         describe(`Type: ${type}`, () => {
-            it('should display the snack via generic show', () => {
-                service.show(faker.lorem.paragraph(), { type });
+            [
+                { label: 'Via: show method', useGenericShow: true },
+                { label: `Via: ${type} method`, useGenericShow: false },
+            ].forEach(viaCase => {
+                describe(viaCase.label, () => {
+                    let showSnackbar: SnackbarAction;
 
-                const snack = getSnack();
-                expect(snack).toBeDefined();
-                expect(snack!.classList.contains(panelClass(type))).toBeTruthy();
+                    beforeEach(() => {
+                        const showMethodAdapter: SnackbarAction = (message, configuration) =>
+                            service.show(message, { ...configuration, type });
+                        showSnackbar = viaCase.useGenericShow
+                            ? showMethodAdapter
+                            : service[type];
+                    });
+
+                    it('should display the correct message', () => {
+                        const message = faker.lorem.paragraph();
+
+                        showSnackbar(message);
+
+                        const snack = getSnack();
+                        expect(snack).toBeDefined();
+                        expect(snack!.querySelector<HTMLElement>('.ui-snackbar-message span')!.innerText.trim()).toBe(message);
+                    });
+
+                    it('should display the correct type', () => {
+                        showSnackbar(faker.lorem.paragraph());
+
+                        const snack = getSnack();
+                        expect(snack).toBeDefined();
+                        expect(snack!.classList.contains(panelClass(type))).toBeTruthy();
+                    });
+
+                    it('should display the correct icon', () => {
+                        showSnackbar(faker.lorem.paragraph());
+
+                        const snack = getSnack()!;
+                        const icon = snack.querySelector<HTMLElement>('.ui-snackbar-message mat-icon');
+
+                        expect(icon).toBeDefined();
+                        expect(icon!.innerText).toEqual(ICON_MAP.get(type)!);
+                    });
+
+                    it('should display the close icon', () => {
+                        showSnackbar(faker.lorem.paragraph());
+
+                        const snack = getSnack()!;
+                        const icon = snack.querySelector<HTMLElement>('.ui-snackbar-dismiss mat-icon');
+
+                        expect(icon).toBeDefined();
+                        expect(icon!.innerText).toEqual('close');
+                    });
+
+                    it('should display an action button', () => {
+                        showSnackbar(faker.lorem.paragraph(), { actionMessage: 'my-custom-button' });
+
+                        const snack = getSnack()!;
+                        const button = snack.querySelector<HTMLElement>('.ui-snackbar-action');
+
+                        expect(button).toBeDefined();
+                        expect(button!.innerText).toEqual('my-custom-button');
+                    });
+
+                    it('should emit `dismissedByAction:true` on action click', async (done) => {
+
+                        showSnackbar(faker.lorem.paragraph(), { actionMessage: 'my-custom-button' })
+                            .afterDismissed()
+                            .subscribe(response => {
+
+                                expect(response.dismissedByAction).toBeTrue(`dismissedByAction is false`);
+                                done();
+                            });
+
+                        const button = getSnack()!.querySelector<HTMLElement>('.ui-snackbar-action')!;
+
+                        button.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+                    });
+
+                    it('should emit `dismissedByAction:false` on close icon click', async (done) => {
+
+                        showSnackbar(faker.lorem.paragraph(), { actionMessage: 'my-custom-button' })
+                            .afterDismissed()
+                            .subscribe(response => {
+
+                                expect(response.dismissedByAction).toBeFalse(`dismissedByAction is true`);
+                                done();
+                            });
+                        const close = getSnack()!.querySelector<HTMLElement>('.ui-snackbar-close')!;
+
+                        close.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+                    });
+
+                    it('should dismiss after 1000ms', fakeAsync(() => {
+
+                        const timeout = 1000;
+                        showSnackbar(faker.lorem.paragraph(), { duration: timeout });
+                        fixture.detectChanges();
+
+                        tick(timeout - 1);
+                        const snack = getSnack();
+                        expect(snack).toBeDefined();
+
+                        tick(1);
+                        const snackAfterTimeout = getSnack();
+                        expect(snackAfterTimeout).toBeNull();
+                    }));
+
+                    it('should dismiss after 5000ms and then after 1000ms', fakeAsync(() => {
+
+                        const firstTimeout = 5000;
+                        showSnackbar(faker.lorem.paragraph(), { duration: firstTimeout });
+                        fixture.detectChanges();
+
+                        tick(firstTimeout - 1);
+                        const firstSnack = getSnack();
+                        expect(firstSnack).toBeDefined();
+
+                        tick(1);
+                        const firstSnackAfterTimeout = getSnack();
+                        expect(firstSnackAfterTimeout).toBeNull();
+
+                        const secondTimeout = 1000;
+                        showSnackbar(faker.lorem.paragraph(), { duration: secondTimeout });
+                        fixture.detectChanges();
+
+                        tick(secondTimeout - 1);
+                        const secondSnack = getSnack();
+                        expect(secondSnack).toBeDefined();
+
+                        tick(1);
+                        const secondSnackAfterTimeout = getSnack();
+                        expect(secondSnackAfterTimeout).toBeNull();
+                    }));
+
+                    it('should dismiss after the default duration', fakeAsync(() => {
+
+                        showSnackbar(faker.lorem.paragraph());
+                        fixture.detectChanges();
+
+                        tick(DEFAULT_DURATION - 1);
+                        const snackBeforeTimeout = getSnack();
+                        expect(snackBeforeTimeout).not.toBeNull();
+
+                        tick(1);
+                        const snackAfterTimeout = getSnack();
+                        expect(snackAfterTimeout).toBeNull();
+                    }));
+
+                    it('should not dismiss after the default duration if the duration is zero', fakeAsync(() => {
+
+                        showSnackbar(faker.lorem.paragraph(), { duration: 0 });
+                        fixture.detectChanges();
+
+                        tick(DEFAULT_DURATION + 1);
+
+                        const snackAfterDefaultTimeout = getSnack();
+                        expect(snackAfterDefaultTimeout).not.toBeNull();
+                    }));
+                });
             });
-
-            it('should display the snack via generic show with correct message', () => {
-                const message = faker.lorem.paragraph();
-                service.show(message, { type });
-
-                const snack = getSnack();
-                expect(snack).toBeDefined();
-                expect(snack!.querySelector<HTMLElement>('.ui-snackbar-message span')!.innerText.trim()).toBe(message);
-            });
-
-            it('should display the snack via the helper method', () => {
-                const method = getMethodFor(type);
-                method(faker.lorem.paragraph());
-
-                const snack = getSnack();
-                expect(snack).toBeDefined();
-                expect(snack!.classList.contains(panelClass(type))).toBeTruthy();
-            });
-
-            it('should display the correct icon', () => {
-                const method = getMethodFor(type);
-                method(faker.lorem.paragraph());
-
-                const snack = getSnack()!;
-                const icon = snack.querySelector<HTMLElement>('.ui-snackbar-message mat-icon');
-
-                expect(icon).toBeDefined();
-                expect(icon!.innerText).toEqual(ICON_MAP.get(type)!);
-            });
-
-            it('should display the close icon', () => {
-                const method = getMethodFor(type);
-                method(faker.lorem.paragraph());
-
-                const snack = getSnack()!;
-                const icon = snack.querySelector<HTMLElement>('.ui-snackbar-dismiss mat-icon');
-
-                expect(icon).toBeDefined();
-                expect(icon!.innerText).toEqual('close');
-            });
-
-            it('should dismiss after 1000ms', fakeAsync(() => {
-                const method = getMethodFor(type);
-
-                const timeout = 1000;
-                method(faker.lorem.paragraph(), timeout);
-                fixture.detectChanges();
-
-                tick(timeout - 1);
-                const snack = getSnack();
-                expect(snack).toBeDefined();
-
-                tick(1);
-                const snackAfterTimeout = getSnack();
-                expect(snackAfterTimeout).toBeNull();
-            }));
-
-            it('should dismiss after 5000ms and then after 1000ms', fakeAsync(() => {
-                const method = getMethodFor(type);
-
-                const firstTimeout = 5000;
-                method(faker.lorem.paragraph(), firstTimeout);
-                fixture.detectChanges();
-
-                tick(firstTimeout - 1);
-                const firstSnack = getSnack();
-                expect(firstSnack).toBeDefined();
-
-                tick(1);
-                const firstSnackAfterTimeout = getSnack();
-                expect(firstSnackAfterTimeout).toBeNull();
-
-                const secondTimeout = 1000;
-                method(faker.lorem.paragraph(), secondTimeout);
-                fixture.detectChanges();
-
-                tick(secondTimeout - 1);
-                const secondSnack = getSnack();
-                expect(secondSnack).toBeDefined();
-
-                tick(1);
-                const secondSnackAfterTimeout = getSnack();
-                expect(secondSnackAfterTimeout).toBeNull();
-            }));
-
-            it('should dismiss after the default duration', fakeAsync(() => {
-                const method = getMethodFor(type);
-
-                method(faker.lorem.paragraph());
-                fixture.detectChanges();
-
-                tick(DEFAULT_DURATION - 1);
-                const snackBeforeTimeout = getSnack();
-                expect(snackBeforeTimeout).not.toBeNull();
-
-                tick(1);
-                const snackAfterTimeout = getSnack();
-                expect(snackAfterTimeout).toBeNull();
-            }));
-
-            it('should not dismiss after the default duration if the duration is zero', fakeAsync(() => {
-                const method = getMethodFor(type);
-
-                method(faker.lorem.paragraph(), 0);
-                fixture.detectChanges();
-
-                tick(DEFAULT_DURATION + 1);
-
-                const snackAfterDefaultTimeout = getSnack();
-                expect(snackAfterDefaultTimeout).not.toBeNull();
-            }));
         });
 
     });
