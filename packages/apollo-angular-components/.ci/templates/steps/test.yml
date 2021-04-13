@@ -12,6 +12,8 @@ steps:
 
     - script: |
         npm run test:coverage
+      env:
+        GH_NPM_REGISTRY_TOKEN: ''
       displayName: 'Run Tests and Generate Coverage Report'
 
     - script: |
