@@ -10,9 +10,13 @@ jobs:
       - template: .ci/templates/steps/install-dependencies.yml
       - script: |
           npm run check:commits
+        env:
+          GH_NPM_REGISTRY_TOKEN: ''
         displayName: 'Linting Commits'
       - script: |
           npm run check:exports
+        env:
+          GH_NPM_REGISTRY_TOKEN: ''
         displayName: 'Check Public API'
     condition: eq(variables['Build.SourceBranchName'], 'merge')
 
@@ -54,6 +58,8 @@ jobs:
       - template: .ci/templates/steps/install-dependencies.yml
       - script: |
           npm run docs
+        env:
+          GH_NPM_REGISTRY_TOKEN: ''
         displayName: 'Generating Docs'
       - script: |
           git config user.email azp@uipath.com
