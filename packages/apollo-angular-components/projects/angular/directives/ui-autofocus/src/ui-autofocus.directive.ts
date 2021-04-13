@@ -1,3 +1,9 @@
+import { merge } from 'rxjs';
+import {
+    delay,
+    take,
+} from 'rxjs/operators';
+
 import { InteractivityChecker } from '@angular/cdk/a11y';
 import {
     ChangeDetectorRef,
@@ -7,12 +13,6 @@ import {
     NgZone,
     OnInit,
 } from '@angular/core';
-
-import { merge } from 'rxjs';
-import {
-    delay,
-    take,
-} from 'rxjs/operators';
 
 /**
  * @ignore

@@ -1,8 +1,8 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Injectable } from '@angular/core';
-
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root',

@@ -1,9 +1,9 @@
+import * as faker from 'faker';
+
 import {
     AbstractControl,
     FormControl,
 } from '@angular/forms';
-
-import * as faker from 'faker';
 
 import { complexityValidator } from './ui-password-indicator.validator';
 

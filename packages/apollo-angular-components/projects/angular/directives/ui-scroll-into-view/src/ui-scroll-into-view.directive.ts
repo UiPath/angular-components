@@ -1,13 +1,13 @@
+import { merge } from 'rxjs';
+import { take } from 'rxjs/operators';
+import scrollIntoViewIfNeeded, { Options } from 'scroll-into-view-if-needed';
+
 import {
     Directive,
     ElementRef,
     Input,
     NgZone,
 } from '@angular/core';
-
-import { merge } from 'rxjs';
-import { take } from 'rxjs/operators';
-import scrollIntoViewIfNeeded, { Options } from 'scroll-into-view-if-needed';
 
 type Boundary = 'parent' | Element;
 

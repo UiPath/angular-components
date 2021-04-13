@@ -1,6 +1,3 @@
-import {
-    ScrollingModule as XScrollingModule,
-} from '@angular/cdk-experimental/scrolling';
 import { A11yModule } from '@angular/cdk/a11y';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
@@ -11,9 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UiAutoAccessibleLabelModule } from '@uipath/angular/a11y';
 import { UiSuggestModule } from '@uipath/angular/components/ui-suggest';
+import { UiNgLetModule } from '@uipath/angular/directives/ui-ng-let';
 import {
     UiVirtualScrollViewportResizeModule,
 } from '@uipath/angular/directives/ui-virtual-scroll-viewport-resize';
@@ -22,8 +21,13 @@ import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import {
     UiGridExpandedRowDirective,
 } from './body/ui-grid-expanded-row.directive';
+import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
+import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
+import {
+    UiGridCustomPaginatorModule,
+} from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.module';
 import {
     UiGridSearchModule,
 } from './components/ui-grid-search/ui-grid-search.module';
@@ -51,16 +55,18 @@ import { UiGridComponent } from './ui-grid.component';
         MatButtonModule,
         MatIconModule,
         MatMenuModule,
+        MatSelectModule,
         MatTooltipModule,
         MatProgressBarModule,
         ScrollingModule,
-        XScrollingModule,
         UiGridSearchModule,
         UiGridToggleColumnsModule,
+        UiGridCustomPaginatorModule,
         UiSuggestModule,
         A11yModule,
         UiVirtualScrollViewportResizeModule,
         UiAutoAccessibleLabelModule,
+        UiNgLetModule,
     ],
     declarations: [
         UiGridComponent,
@@ -73,6 +79,8 @@ import { UiGridComponent } from './ui-grid.component';
         UiGridDropdownFilterDirective,
         UiGridRowConfigDirective,
         UiGridExpandedRowDirective,
+        UiGridNoContentDirective,
+        UiGridLoadingDirective,
     ],
     exports: [
         UiGridComponent,
@@ -85,6 +93,8 @@ import { UiGridComponent } from './ui-grid.component';
         UiGridDropdownFilterDirective,
         UiGridRowConfigDirective,
         UiGridExpandedRowDirective,
+        UiGridNoContentDirective,
+        UiGridLoadingDirective,
     ],
 })
 export class UiGridModule { }

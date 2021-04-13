@@ -1,13 +1,3 @@
-import { DOCUMENT } from '@angular/common';
-import {
-    Directive,
-    ElementRef,
-    Inject,
-    Injectable,
-    OnDestroy,
-    Output,
-} from '@angular/core';
-
 import type { Observable } from 'rxjs';
 import {
     fromEvent,
@@ -19,6 +9,16 @@ import {
     takeUntil,
     throttleTime,
 } from 'rxjs/operators';
+
+import { DOCUMENT } from '@angular/common';
+import {
+    Directive,
+    ElementRef,
+    Inject,
+    Injectable,
+    OnDestroy,
+    Output,
+} from '@angular/core';
 
 /**
   *   Info:

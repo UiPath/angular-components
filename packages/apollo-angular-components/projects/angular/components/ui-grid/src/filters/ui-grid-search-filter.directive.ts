@@ -1,4 +1,9 @@
 import {
+    BehaviorSubject,
+    Observable,
+} from 'rxjs';
+
+import {
     Directive,
     Input,
     OnDestroy,
@@ -7,11 +12,6 @@ import {
     ISuggestValue,
     ISuggestValues,
 } from '@uipath/angular/components/ui-suggest';
-
-import {
-    BehaviorSubject,
-    Observable,
-} from 'rxjs';
 
 import { UiGridFilterDirective } from './ui-grid-filter';
 

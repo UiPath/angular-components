@@ -1,0 +1,26 @@
+mat-sidenav-container {
+    h3 {
+        text-align: center;
+    }
+
+    height: 100vh;
+
+    mat-sidenav {
+        min-width: 300px;
+
+        .sidenav-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sidenav-links {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    mat-sidenav-content {
+        padding: 24px;
+    }
+}

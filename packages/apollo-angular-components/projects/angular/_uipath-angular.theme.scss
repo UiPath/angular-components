@@ -4,11 +4,11 @@
 @import "./components/ui-password-indicator/src/ui-password-indicator.theme";
 
 @mixin uipath-angular-theme($theme) {
-  @include ui-suggest-theme($theme);
-  @include ui-grid-theme($theme);
-  @include ui-password-indicator-theme($theme);
+    @include ui-suggest-theme($theme);
+    @include ui-grid-theme($theme);
+    @include ui-password-indicator-theme($theme);
 }
 
 @mixin uipath-snackbar-theme($theme, $snackbar-theme: null) {
-  @include ui-snackbar-theme($theme, $snackbar-theme);
+    @include ui-snackbar-theme($theme, $snackbar-theme);
 }

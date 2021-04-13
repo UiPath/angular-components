@@ -2,6 +2,7 @@
 
 ui-grid {
     $ui-grid-header-row-height: 56px;
+    $ui-grid-header-alternate-row-height: 52px;
     $ui-grid-row-height: 48px;
     $ui-grid-row-horizontal-padding: 24px;
     $ui-feature-cell-width: 50px;
@@ -139,6 +140,20 @@ ui-grid {
             flex-wrap: wrap;
         }
 
+        // single main button on default design
+        &-action-button {
+            position: absolute;
+            right: $ui-grid-button-size;
+            top: -21px;
+            z-index: 2;
+        }
+
+        &-action-buttons {
+            &-main {
+                margin-left: auto;
+            }
+        }
+
         &-container {
             border-radius: $ui-border-radius;
 
@@ -159,6 +174,46 @@ ui-grid {
 
                     .mat-select {
                         padding: 0.4375em 0;
+                    }
+                }
+            }
+
+            &.use-alternate-design {
+                .ui-grid-header {
+                    &-row,
+                    &-cell {
+                        height: $ui-grid-header-alternate-row-height;
+                    }
+                }
+
+                .ui-grid-selection-info {
+                    &-clear-button {
+                        order: 1;
+                    }
+                }
+
+                .ui-grid-no-data-container {
+                    height: 4 * $ui-grid-row-height;
+                    align-items: flex-start;
+
+                    &.ui-grid-no-content-available {
+                        align-items: center;
+                        justify-content: center;
+                        flex-direction: column;
+                    }
+                }
+
+                ui-grid-custom-paginator {
+                    .mat-paginator-page-label {
+                        font-size: $ui-grid-secondary-font-size;
+                    }
+                    .mat-paginator-page-size .mat-form-field {
+                        padding: unset;
+                        margin: unset;
+
+                        .mat-select {
+                            padding: 0.4375em 0;
+                        }
                     }
                 }
             }
@@ -184,6 +239,19 @@ ui-grid {
         }
 
         &-selection-info-container {
+            &-alternate {
+                min-height: $ui-grid-button-size;
+                padding: $ui-grid-default-spacing 0;
+                display: flex;
+                align-items: center;
+
+                .ui-grid-selection {
+                    &-clear-button {
+                        order: 1;
+                    }
+                }
+            }
+
             button.mat-icon-button,
             .ui-grid-selection-info-icon {
                 margin-left: 5px;
@@ -412,13 +480,6 @@ ui-grid {
             .ui-grid-header-cell-sortable {
                 cursor: pointer;
             }
-        }
-
-        &-action-button {
-            position: absolute;
-            right: $ui-grid-button-size;
-            top: -21px;
-            z-index: 2;
         }
     }
 }

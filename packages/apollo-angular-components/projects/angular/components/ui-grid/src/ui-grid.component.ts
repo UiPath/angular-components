@@ -1,4 +1,34 @@
-import type { QueryList } from '@angular/core';
+import range from 'lodash-es/range';
+import {
+    animationFrameScheduler,
+    BehaviorSubject,
+    combineLatest,
+    merge,
+    Observable,
+    of,
+    Subject,
+} from 'rxjs';
+import {
+    debounceTime,
+    distinctUntilChanged,
+    filter,
+    map,
+    observeOn,
+    share,
+    shareReplay,
+    startWith,
+    switchMap,
+    take,
+    takeUntil,
+    tap,
+} from 'rxjs/operators';
+
+import {
+    animate,
+    style,
+    transition,
+    trigger,
+} from '@angular/animations';
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
@@ -9,42 +39,28 @@ import {
     ElementRef,
     EventEmitter,
     HostBinding,
+    Inject,
+    InjectionToken,
     Input,
     NgZone,
     OnChanges,
     OnDestroy,
     Optional,
     Output,
+    QueryList,
     SimpleChanges,
+    ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
 
-import range from 'lodash-es/range';
-import {
-    animationFrameScheduler,
-    BehaviorSubject,
-    merge,
-    Observable,
-    Subject,
-} from 'rxjs';
-import {
-    debounceTime,
-    distinctUntilChanged,
-    filter,
-    map,
-    observeOn,
-    switchMap,
-    take,
-    takeUntil,
-    tap,
-} from 'rxjs/operators';
-
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import {
     UiGridExpandedRowDirective,
 } from './body/ui-grid-expanded-row.directive';
+import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
+import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
@@ -63,16 +79,49 @@ import {
 } from './managers';
 import { ResizableGrid } from './managers/resize/types';
 import {
+    GridOptions,
     IGridDataEntry,
     ISortModel,
 } from './models';
 import { UiGridIntl } from './ui-grid.intl';
+
+export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid DataManager options.');
+const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
+const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), textarea, select, details, [tabindex]:not([tabindex="-1"])';
 
 @Component({
     selector: 'ui-grid',
     templateUrl: './ui-grid.component.html',
     styleUrls: [
         './ui-grid.component.scss',
+    ],
+    animations: [
+        trigger('filters-container', [
+            transition(':enter', [
+                style({
+                    minHeight: '0',
+                    height: '0',
+                    opacity: '0',
+                }),
+                animate('0.15s ease-in', style({
+                    opacity: '*',
+                    minHeight: '*',
+                    height: '*',
+                    display: '*',
+                })),
+            ]),
+            transition(':leave', [
+                style({
+                    minHeight: '*',
+                    height: '*',
+                }),
+                animate('0.15s ease-in', style({
+                    opacity: '0',
+                    minHeight: '0',
+                    height: '0',
+                })),
+            ]),
+        ]),
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
@@ -169,6 +218,20 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     public selectable = true;
 
     /**
+     * Option to select an alternate layout for footer pagination.
+     *
+     */
+    @Input()
+    public useAlternateDesign: boolean;
+
+    /**
+     * Option to have collapsible filters.
+     *
+     */
+    @Input()
+    public collapsibleFilters: boolean;
+
+    /**
      * Configure if the grid allows to toggle column visibility.
      *
      */
@@ -196,6 +259,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @Input()
     public virtualScroll = false;
+
+    /**
+     * Configure the row item size for virtualScroll
+     *
+     */
+    @Input()
+    public rowSize: number;
 
     /**
      * Show paint time stats
@@ -318,6 +388,38 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     public expandedRow?: UiGridExpandedRowDirective;
 
     /**
+     * No content custom template reference.
+     *
+     * @ignore
+     */
+    @ContentChild(UiGridNoContentDirective, {
+        static: true,
+    })
+    public noContent?: UiGridNoContentDirective;
+
+    /**
+     * Custom loading template reference.
+     *
+     * @ignore
+     */
+    @ContentChild(UiGridLoadingDirective, {
+        static: true,
+    })
+    public loadingState?: UiGridLoadingDirective;
+    /**
+     * Reference to the grid action buttons container
+     *
+     * @ignore
+     */
+    @ViewChild('gridActionButtons')
+    public gridActionButtons!: ElementRef;
+    /**
+     * Toggle filters row display state
+     *
+     */
+    public showFilters = false;
+
+    /**
      * Live announcer manager, used to emit notification via `aria-live`.
      *
      */
@@ -333,7 +435,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * Data manager, used to optimize row rendering.
      *
      */
-    public dataManager = new DataManager<T>();
+    public dataManager = new DataManager<T>(this._gridOptions);
 
     /**
      * Filter manager, used to manage filter state changes.
@@ -365,10 +467,16 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     public paintTime$: Observable<string>;
 
     /**
-     * Emits with information wether filters are defined.
+     * Emits with information whether filters are defined.
      *
      */
     public isAnyFilterDefined$ = new BehaviorSubject<boolean>(false);
+
+    /**
+     * Emits with information whether any filter is visible.
+     *
+     */
+    public hasAnyFiltersVisible$: Observable<boolean>;
 
     /**
      * Emits the visible column definitions when their definition changes.
@@ -396,6 +504,27 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         map(view => view ? view.offsetWidth - view.clientWidth : 0),
         // tslint:disable-next-line: deprecation
         tap(compensationWidth => this.scrollCompensationWidth = compensationWidth),
+    );
+
+    public hasSelection$ = this.selectionManager.hasValue$.pipe(
+        tap(hasSelection => {
+            if (hasSelection && !!this.header?.actionButtons?.length) {
+                this._announceGridHeaderActions();
+            }
+        }),
+        share(),
+    );
+
+    public renderedColumns$ = this.visible$.pipe(
+        map(columns => {
+            const firstIndex = columns.findIndex(c => c.primary);
+            const rowHeaderIndex = firstIndex > -1 ? firstIndex : 0;
+
+            return columns.map((directive, index) => ({
+                directive,
+                role: index === rowHeaderIndex ? 'rowheader' : 'gridcell',
+            }));
+        }),
     );
 
     /**
@@ -430,8 +559,15 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         protected _cd: ChangeDetectorRef,
         private _zone: NgZone,
         private _queuedAnnouncer: QueuedAnnouncer,
+        @Inject(UI_GRID_OPTIONS)
+        @Optional()
+        private _gridOptions?: GridOptions<T>,
     ) {
         super();
+
+        this.useAlternateDesign = _gridOptions?.useAlternateDesign ?? false;
+        this.collapsibleFilters = _gridOptions?.collapsibleFilters ?? false;
+        this.rowSize = _gridOptions?.rowSize ?? DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
 
         this.isProjected = this._ref.nativeElement.classList.contains('ui-grid-state-responsive');
 
@@ -447,6 +583,19 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
                 debounceTime(10),
                 tap(() => this.isResizing && this.resizeManager.stop()),
             );
+
+        this.hasAnyFiltersVisible$ = this.rendered.pipe(
+            switchMap(() => this.columns.changes),
+            startWith('Initial emission'),
+            switchMap(() =>
+                combineLatest(this.columns.map((column: UiGridColumnDirective<T>) =>
+                    column.dropdown?.visible$ ?? column.searchableDropdown?.visible$ ?? of(false),
+                )),
+            ),
+            map(areVisible => areVisible.some(visible => visible)),
+            distinctUntilChanged(),
+            shareReplay(),
+        );
 
         const sort$ = this.sortManager
             .sort$
@@ -662,5 +811,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             return `${this.isEveryVisibleRowChecked ? 'select' : 'deselect'} all`;
         }
         return `${this.selectionManager.isSelected(row) ? 'deselect' : 'select'} row ${this.dataManager.indexOf(row)}`;
+    }
+
+    public focusRowHeader() {
+        this.gridActionButtons?.nativeElement.querySelector(FOCUSABLE_ELEMENTS_QUERY)?.focus();
+    }
+
+    private _announceGridHeaderActions() {
+        this._queuedAnnouncer.enqueue(this.intl.gridHeaderActionsNotice);
     }
 }

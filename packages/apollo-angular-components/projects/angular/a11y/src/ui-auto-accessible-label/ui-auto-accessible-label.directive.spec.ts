@@ -1,3 +1,10 @@
+import {
+    EMPTY,
+    Observable,
+    of,
+} from 'rxjs';
+import { delay } from 'rxjs/operators';
+
 import { Component } from '@angular/core';
 import {
     ComponentFixture,
@@ -10,13 +17,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
-import {
-    EMPTY,
-    Observable,
-    of,
-} from 'rxjs';
-import { delay } from 'rxjs/operators';
 
 import {
     DISABLE_AUTO_ACCESSIBLE_LABEL_ATTRIBUTE,
