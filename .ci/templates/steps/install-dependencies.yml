@@ -1,4 +1,6 @@
   steps:
     - script: |
         npm ci
+      env:
+        GH_NPM_REGISTRY_TOKEN: ''
       displayName: 'Install NPM Dependencies'
