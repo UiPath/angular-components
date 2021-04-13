@@ -30,7 +30,7 @@ One of our main goals is to allow easy integration with the great collection of 
 
 Visit our docs page [here](https://uipath.github.io/angular-components). Thanks go to the [@compodoc](https://compodoc.app/) team! 👌
 
-# Git Conventions
+# Contributing
 
 ### Commit Messages
 
@@ -51,6 +51,9 @@ We personally prefer that branches get `rebased`, and usually stay away from `me
 True, it's not recommended to `rebase` when multiple people are active on the same `branch`, but in this scenario `git` offers a very elegant solution: `fixup` commits. By using `fixup commits`, the branch can later go through an `interactive rebase` once the `review` process is done and the `PR` is approved.
 
 For example: after you make your changes and stage them you can run a `git commit --fixup HEAD~` to add the changes in the last but one commit. Before the merge, you can then simply `git rebase -i <ref> --autosquash` and every change will be squashed in the correct commit.
+
+### Environment setup
+Before contributing you will need to add the environment variable GH_NPM_REGISTRY_TOKEN with a dummy (empty) value. We are distributing the packages both publicly and internally and unfortunately npmrc uses an ini file format which doesn't allows us to provide a fallback automatically.
 
 ### Why?
 
