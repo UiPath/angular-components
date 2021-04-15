@@ -485,6 +485,7 @@
                 [disabled]="disabled"
                 (click)="showFilters = !showFilters"
                 mat-button
+                type="button"
                 class="ui-grid-collapsible-filters-toggle">
             <mat-icon>filter_list</mat-icon>
             <span>{{ intl.filters(filterManager.activeCount$ | async)}}</span>
