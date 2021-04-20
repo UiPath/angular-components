@@ -260,6 +260,13 @@ export class IntegrationUtils<T> {
         button.nativeElement.dispatchEvent(EventGenerator.click);
     }
 
+    public changeTheme = (theme: 'light' | 'dark') => {
+        window.document.body.classList.remove('light');
+        window.document.body.classList.remove('dark');
+        window.document.body.classList.add(theme);
+        this.fixture.detectChanges();
+    }
+
     private _isRadioButtonElementDisabled = (debugEl: DebugElement) =>
         debugEl.nativeElement.classList.contains('mat-radio-disabled')
 
