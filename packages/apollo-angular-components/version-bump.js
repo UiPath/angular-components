@@ -2,7 +2,7 @@ const fs = require('fs');
 const moment = require('moment');
 const { execSync } = require('child_process');
 
-const allowedBumps = ['patch', 'minor', 'major', 'pre', 'stable'];
+const allowedBumps = ['fix-changelog-order', 'patch', 'minor', 'major', 'pre', 'stable'];
 const allowedRcBumps = ['patch', 'minor', 'major'];
 
 const bumpType = process.argv[2];
@@ -18,7 +18,12 @@ if (rcType && !allowedRcBumps.includes(rcType)) {
     process.exit(1);
 }
 
-changeLog(bumpVersion());
+if (bumpType !== 'fix-changelog-order') {
+    changeLog(bumpVersion());
+} else {
+    fixChangelogOrder();
+}
+
 
 function bumpVersion() {
     const content = fs.readFileSync('./package.json', 'utf-8');
@@ -93,6 +98,40 @@ function changeLog([initialVersion, bumpedVersion]) {
     const changeLogContent = fs.readFileSync('CHANGELOG.md', 'utf-8');
 
     fs.writeFileSync('CHANGELOG.md', `${initialChangeLog}\n${changeLogContent}`);
+}
+
+function fixChangelogOrder() {
+    const content = fs.readFileSync('CHANGELOG.md', 'utf-8');
+
+    const sortedItems = content.match(new RegExp(/# v.*\((.*)(.|\n(?!# v))*/g));
+
+    sortedItems.sort((prevItem, nextItem) => {
+        const dateRegex = new RegExp(/# v.*\((.*)\)/);
+
+        const prevDate = prevItem.match(dateRegex)[1];
+        const nextDate = nextItem.match(dateRegex)[1];
+
+        if (prevDate === nextDate) {
+            const versionRegex = new RegExp(/# v(.*) /);
+
+            const prevVersion = prevItem.match(versionRegex)[1];
+            const nextVersion = nextItem.match(versionRegex)[1];
+
+            if (prevVersion < nextVersion) {
+                return 1;
+            }
+
+            return -1;
+        }
+
+        if (new Date(prevDate) < new Date(nextDate)) {
+            return 1;
+        }
+
+        return -1;
+    });
+
+    fs.writeFileSync('CHANGELOG.md', sortedItems.join('\n'));
 }
 
 function generateNextVersion (type, version) {

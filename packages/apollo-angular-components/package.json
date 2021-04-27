@@ -45,6 +45,7 @@
     "commit": "git-cz",
     "check:exports": "ts-node --project ./tsconfig.node.json ./.build/check-public-exports",
     "check:commits": "node ./.build/commitlint",
+    "fix-changelog-order": "node version-bump.js fix-changelog-order",
     "bump:patch": "node version-bump.js patch",
     "bump:minor": "node version-bump.js minor",
     "bump:major": "node version-bump.js major",
