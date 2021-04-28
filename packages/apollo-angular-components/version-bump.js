@@ -58,6 +58,11 @@ function bumpVersion() {
 
     fs.writeFileSync('./projects/angular/package.json', updatedAngularProject);
 
+    const packageLock = fs.readFileSync('./package-lock.json', 'utf-8');
+    const updatedPackageLock = packageLock.replace(initialVersionLine, updatedVersionLine);
+
+    fs.writeFileSync('./package-lock.json', updatedPackageLock);
+
     execSync(`git tag v${bumpedVersion}`);
 
     return [initialVersion, bumpedVersion];
