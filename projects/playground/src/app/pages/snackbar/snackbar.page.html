@@ -1,0 +1,13 @@
+<mat-card>
+    <mat-card-title> Snackbar </mat-card-title>
+    <mat-card-subtitle>Playground</mat-card-subtitle>
+
+    <mat-card-content>
+        <button *ngFor="let icon of iconType"
+                (click)="openSnackbar(icon)"
+                class="snackbar-toggle-button"
+                mat-stroked-button>
+            <mat-icon>{{IconMap.get(icon)}}</mat-icon> {{icon}}
+        </button>
+    </mat-card-content>
+</mat-card>
