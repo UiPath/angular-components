@@ -17,5 +17,9 @@ export class AppComponent {
             name: 'Grid',
             link: '/grid',
         },
+        {
+            name: 'Snackbar',
+            link: '/snackbar',
+        },
     ];
 }
