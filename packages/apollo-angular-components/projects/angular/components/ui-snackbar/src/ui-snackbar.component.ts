@@ -75,10 +75,10 @@ export enum SnackBarType {
 }
 
 export const ICON_MAP: Map<SnackBarType, string> = new Map([
-    [SnackBarType.Info, 'message'],
+    [SnackBarType.Info, 'info'],
     [SnackBarType.Success, 'check_circle'],
     [SnackBarType.Warning, 'warning'],
-    [SnackBarType.Error, 'info'],
+    [SnackBarType.Error, 'error'],
 ]);
 export type SnackbarAction = (
     message: string | TemplateRef<any>,
