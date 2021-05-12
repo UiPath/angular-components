@@ -75,6 +75,25 @@ export class IntegrationUtils<T> {
         return this.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"] ${selector}`, debugEl);
     }
 
+    public getGridMenuItems = (
+        gridSelector: string,
+        rowNumber: number,
+        menu = '[data-cy="grid-action-menu"]',
+        debugEl = this.fixture.debugElement,
+    ) => {
+        this.click(`${gridSelector} [data-row-index="${rowNumber}"] ${menu}`, debugEl);
+        this.fixture.detectChanges();
+
+        const nodes = this.getAllNativeElements<HTMLButtonElement | HTMLAnchorElement>
+            ('.cdk-overlay-container .mat-menu-item', debugEl);
+
+        return nodes.map(item => ({
+            text: item.innerText,
+            href: (item as HTMLAnchorElement).href as string | undefined,
+            disabled: item.getAttribute('aria-disabled') === 'true',
+        }));
+    }
+
     public clickGridRowItem = (gridSelector: string, rowNumber: number, selector: string, debugEl = this.fixture.debugElement) => {
         return this.getGridRowItem(gridSelector, rowNumber, selector, debugEl).nativeElement
             .dispatchEvent(EventGenerator.click);
