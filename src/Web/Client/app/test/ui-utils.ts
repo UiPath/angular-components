@@ -72,7 +72,7 @@ export class IntegrationUtils<T> {
     }
 
     public getGridRowItem = (gridSelector: string, rowNumber: number, selector: string, debugEl = this.fixture.debugElement) => {
-        return this.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"] ${selector}`, debugEl);
+        return this.getDebugElement(`${gridSelector} [data-row-index="${rowNumber}"] ${selector}`, debugEl);
     }
 
     public getGridMenuItems = (
@@ -92,6 +92,30 @@ export class IntegrationUtils<T> {
             href: (item as HTMLAnchorElement).href as string | undefined,
             disabled: item.getAttribute('aria-disabled') === 'true',
         }));
+    }
+
+    public clickGridMenuItem = (
+        rowIndex: number,
+        actionSelector: string,
+        {
+            gridSelector,
+            inlineMenuSelector,
+            debugEl,
+        }: {
+            gridSelector?: string,
+            inlineMenuSelector?: string,
+            debugEl?: DebugElement,
+        } = {},
+    ) => {
+        debugEl = debugEl ?? this.fixture.debugElement;
+        gridSelector = gridSelector ?? 'ui-grid';
+        inlineMenuSelector = inlineMenuSelector ?? '[data-cy="grid-action-menu"]';
+
+        this.clickGridRowItem(gridSelector, rowIndex, inlineMenuSelector, debugEl);
+        this.fixture.detectChanges();
+
+        this.click(actionSelector, debugEl);
+        this.fixture.detectChanges();
     }
 
     public clickGridRowItem = (gridSelector: string, rowNumber: number, selector: string, debugEl = this.fixture.debugElement) => {
