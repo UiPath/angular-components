@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root',
 })
 export class UiPasswordComplexityIntl {
-    public changes = new Subject();
+    public changes = new Subject<void>();
     public notMet = 'Complexity rules not met:';
     public allMet = 'All complexity rules are met';
 

@@ -36,7 +36,7 @@ export class SelectionManager<T extends IGridDataEntry> {
         };
     }
 
-    public changed$: Subject<SelectionChange<T>> = new Subject();
+    public changed$ = new Subject<SelectionChange<T>>();
 
     private _hasValue$ = new BehaviorSubject(false);
 

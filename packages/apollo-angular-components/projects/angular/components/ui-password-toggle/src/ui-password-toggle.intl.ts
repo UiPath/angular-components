@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class UiPasswordToggleIntl {
-    public changes = new Subject();
+    public changes = new Subject<void>();
 
     public tooltipShow = 'Show';
     public tooltipHide = 'Hide';

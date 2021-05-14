@@ -85,7 +85,7 @@
     "moment": "2.24.0",
     "moment-timezone": "0.5.25",
     "object-hash": "2.0.1",
-    "rxjs": "6.6.6",
+    "rxjs": "7.0.1",
     "scroll-into-view-if-needed": "2.2.20",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"

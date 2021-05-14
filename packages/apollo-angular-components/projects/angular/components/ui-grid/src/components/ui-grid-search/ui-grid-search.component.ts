@@ -92,7 +92,7 @@ export class UiGridSearchComponent implements OnInit, OnDestroy {
     @Output()
     public searchChange = new EventEmitter<string>();
 
-    private _destroyed$ = new Subject();
+    private _destroyed$ = new Subject<void>();
 
     /**
      * @ignore

@@ -1,6 +1,8 @@
 import * as moment from 'moment';
-import { BehaviorSubject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import {
+    BehaviorSubject,
+    firstValueFrom,
+} from 'rxjs';
 
 import {
     Component,
@@ -98,7 +100,7 @@ describe('Directive: UiSecondFormat', () => {
 
             expect(text.nativeElement.innerText)
                 .toBe('2 days');
-            const tooltip = await component.uiSecondFormat.tooltip$.pipe(take(1)).toPromise();
+            const tooltip = await firstValueFrom(component.uiSecondFormat.tooltip$);
             expect(tooltip).toBe('PT51H1M3S');
         });
 
@@ -116,7 +118,7 @@ describe('Directive: UiSecondFormat', () => {
 
             expect(text.nativeElement.innerText)
                 .toBe('a day');
-            const tooltip = await component.uiSecondFormat.tooltip$.pipe(take(1)).toPromise();
+            const tooltip = await firstValueFrom(component.uiSecondFormat.tooltip$);
             expect(tooltip).toBe('PT25H1M1S');
         });
 
@@ -129,7 +131,7 @@ describe('Directive: UiSecondFormat', () => {
 
             expect(text.nativeElement.innerText)
                 .toBe('a few seconds');
-            const tooltip = await component.uiSecondFormat.tooltip$.pipe(take(1)).toPromise();
+            const tooltip = await firstValueFrom(component.uiSecondFormat.tooltip$);
             expect(tooltip).toBe('P0D');
         });
     });
@@ -143,14 +145,14 @@ describe('Directive: UiSecondFormat', () => {
 
             const text = fixture.debugElement.query(By.directive(UiSecondFormatDirective));
             expect(text.nativeElement.innerText).toBe('a few seconds');
-            const enTooltip = await component.uiSecondFormat.tooltip$.pipe(take(1)).toPromise();
+            const enTooltip = await firstValueFrom(component.uiSecondFormat.tooltip$);
 
             moment.locale('ja');
             (options.redraw$ as BehaviorSubject<void>).next();
 
             fixture.detectChanges();
             expect(text.nativeElement.innerText).toBe('数秒');
-            const jaTooltip = await component.uiSecondFormat.tooltip$.pipe(take(1)).toPromise();
+            const jaTooltip = await firstValueFrom(component.uiSecondFormat.tooltip$);
             expect(enTooltip).toBe(jaTooltip);
         });
     });
