@@ -2,6 +2,8 @@ import { HttpTestingController } from '@angular/common/http/testing';
 import { DebugElement } from '@angular/core';
 import {
     ComponentFixture,
+    discardPeriodicTasks,
+    flush,
     tick,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -18,6 +20,11 @@ export interface IStubEndpoint {
     response: any;
 }
 
+const selectors = {
+    grid: 'ui-grid',
+    inlineMenu: '[data-cy="grid-action-menu"]',
+};
+
 export class IntegrationUtils<T> {
     public get component() {
         return this.fixture.componentInstance;
@@ -26,6 +33,18 @@ export class IntegrationUtils<T> {
     constructor(
         public fixture: ComponentFixture<T>,
     ) { }
+
+    public flushGrid = (stub: IStubEndpoint, httpClient: HttpTestingController) => {
+        this.fixture.detectChanges();
+        tick(500);
+        this.fixture.detectChanges();
+
+        this.expectAndFlush(stub, httpClient);
+        this.fixture.detectChanges();
+
+        flush();
+        discardPeriodicTasks();
+    }
 
     public getDebugElement = (selector: string, debugEl = this.fixture.debugElement) =>
         debugEl.query(By.css(selector))
@@ -47,21 +66,45 @@ export class IntegrationUtils<T> {
         const debugElement = this.getDebugElement(selector, debugEl);
         return !!debugElement ? debugElement.componentInstance : null;
     }
-
-    public getGridCellsText = (gridSelector: string, rowNumber: number, cellNumbers: number[], debugEl = this.fixture.debugElement) => {
-        const rowEl = this.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"]`, debugEl);
+    /**
+     *
+     * @param rowNumber - The Grid row
+     * @param start The beginning of the specified portion of the array.
+     * @param end The end of the specified portion of the array. This is exclusive of the element at the index 'end'.
+     */
+    public getGridCellsText = (
+        rowNumber: number,
+        start?: number,
+        end?: number,
+        {
+            gridSelector,
+            debugEl,
+        }: {
+            gridSelector?: string,
+            debugEl?: DebugElement,
+        } = {},
+    ) => {
+        const rowEl = this.getDebugElement(`${gridSelector ?? selectors.grid} [data-row-index="${rowNumber - 1}"]`, debugEl);
         return rowEl
             .queryAll(By.css('.ui-grid-cell'))
-            .filter((_, index) => cellNumbers.includes(index + 1))
+            .map(x => {
+                console.log({ x, start, end });
+                return x;
+            })
+            .slice(start, end)
+            .map(s => {
+                console.log({ s });
+                return s;
+            })
             .map((cellEl) => cellEl.nativeElement.innerText as string);
     }
 
-    public getGridHeaders = (gridSelector: string, debugEl = this.fixture.debugElement) => {
+    public getGridHeaders = (gridSelector = selectors.grid, debugEl = this.fixture.debugElement) => {
         return this.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
             .filter(el => this.getDebugElement('.ui-grid-header-title', el));
     }
 
-    public getGridColumnsProperties = (gridSelector: string, debugEl = this.fixture.debugElement) => {
+    public getGridColumnsProperties = (gridSelector = selectors.grid, debugEl = this.fixture.debugElement) => {
         return this.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
             .filter(el => this.getDebugElement('.ui-grid-header-title', el))
             .map(el => el.attributes['data-property']);
@@ -76,9 +119,9 @@ export class IntegrationUtils<T> {
     }
 
     public getGridMenuItems = (
-        gridSelector: string,
         rowNumber: number,
-        menu = '[data-cy="grid-action-menu"]',
+        gridSelector = selectors.grid,
+        menu = selectors.inlineMenu,
         debugEl = this.fixture.debugElement,
     ) => {
         this.click(`${gridSelector} [data-row-index="${rowNumber}"] ${menu}`, debugEl);
@@ -108,8 +151,8 @@ export class IntegrationUtils<T> {
         } = {},
     ) => {
         debugEl = debugEl ?? this.fixture.debugElement;
-        gridSelector = gridSelector ?? 'ui-grid';
-        inlineMenuSelector = inlineMenuSelector ?? '[data-cy="grid-action-menu"]';
+        gridSelector = gridSelector ?? selectors.grid;
+        inlineMenuSelector = inlineMenuSelector ?? selectors.inlineMenu;
 
         this.clickGridRowItem(gridSelector, rowIndex, inlineMenuSelector, debugEl);
         this.fixture.detectChanges();
