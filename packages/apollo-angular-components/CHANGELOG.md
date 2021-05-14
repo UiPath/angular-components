@@ -1,3 +1,8 @@
+# v12.0.0-rc.0 (2021-05-14)
+* **chore** bump rx to 7.0.1
+* **chore** bump angular material to 12
+* **chore** bump angular to 12
+
 # v11.0.1 (2021-04-28)
 * **snackbar** correctly map icons to type & playground
 * **fix** add fix changelog script if merge issues
