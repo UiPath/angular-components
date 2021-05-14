@@ -545,7 +545,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
 
     private _resizeStrategy = ResizeStrategy.ImmediateNeighbourHalt;
     private _performanceMonitor: PerformanceMonitor;
-    private _configure$ = new Subject();
+    private _configure$ = new Subject<void>();
     private _isShiftPressed = false;
     private _lastCheckboxIdx = 0;
 

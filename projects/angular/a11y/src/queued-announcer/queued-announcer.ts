@@ -1,4 +1,7 @@
-import { of } from 'rxjs';
+import {
+    firstValueFrom,
+    of,
+} from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 import { LiveAnnouncer } from '@angular/cdk/a11y';
@@ -31,7 +34,7 @@ export class QueuedAnnouncer {
         this._liveAnnouncer.announce(this._msgQueue.shift()!)
             // announcements end up in an aria-live element
             // a delay is needed before setting the next announcement so they are both picked up by the screen reader
-            .then(() => of(void 0).pipe(delay(50)).toPromise())
+            .then(() => firstValueFrom(of(void 0).pipe(delay(50))))
             .then(this._announceNext)
             .catch(this._announceNext);
     }

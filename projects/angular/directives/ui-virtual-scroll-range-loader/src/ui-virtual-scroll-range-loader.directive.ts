@@ -102,7 +102,7 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
     })
     private readonly _cdkVirtualForOf!: CdkVirtualForOf<VirtualScrollItem>;
 
-    private readonly _destroyed$ = new Subject();
+    private readonly _destroyed$ = new Subject<void>();
 
     /**
      * @ignore

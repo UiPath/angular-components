@@ -56,7 +56,7 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
     public editedEntity?: any;
     public editedIndex?: number;
 
-    private _destroyed$ = new Subject();
+    private _destroyed$ = new Subject<void>();
 
     constructor() { }
 
