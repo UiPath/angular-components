@@ -30,21 +30,12 @@ export class IntegrationUtils<T> {
         return this.fixture.componentInstance;
     }
 
+    public grid = new GridUtils<T>(this);
+    public suggest = new SuggestUtils<T>(this);
+
     constructor(
         public fixture: ComponentFixture<T>,
     ) { }
-
-    public flushGrid = (stub: IStubEndpoint, httpClient: HttpTestingController) => {
-        this.fixture.detectChanges();
-        tick(500);
-        this.fixture.detectChanges();
-
-        this.expectAndFlush(stub, httpClient);
-        this.fixture.detectChanges();
-
-        flush();
-        discardPeriodicTasks();
-    }
 
     public getDebugElement = (selector: string, debugEl = this.fixture.debugElement) =>
         debugEl.query(By.css(selector))
@@ -66,120 +57,12 @@ export class IntegrationUtils<T> {
         const debugElement = this.getDebugElement(selector, debugEl);
         return !!debugElement ? debugElement.componentInstance : null;
     }
-    /**
-     *
-     * @param rowNumber - The Grid row
-     * @param start The beginning of the specified portion of the array.
-     * @param end The end of the specified portion of the array. This is exclusive of the element at the index 'end'.
-     */
-    public getGridCellsText = (
-        rowNumber: number,
-        start?: number,
-        end?: number,
-        {
-            gridSelector,
-            debugEl,
-        }: {
-            gridSelector?: string,
-            debugEl?: DebugElement,
-        } = {},
-    ) => {
-        const rowEl = this.getDebugElement(`${gridSelector ?? selectors.grid} [data-row-index="${rowNumber - 1}"]`, debugEl);
-        return rowEl
-            .queryAll(By.css('.ui-grid-cell'))
-            .map(x => {
-                console.log({ x, start, end });
-                return x;
-            })
-            .slice(start, end)
-            .map(s => {
-                console.log({ s });
-                return s;
-            })
-            .map((cellEl) => cellEl.nativeElement.innerText as string);
-    }
-
-    public getGridHeaders = (gridSelector = selectors.grid, debugEl = this.fixture.debugElement) => {
-        return this.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
-            .filter(el => this.getDebugElement('.ui-grid-header-title', el));
-    }
-
-    public getGridColumnsProperties = (gridSelector = selectors.grid, debugEl = this.fixture.debugElement) => {
-        return this.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
-            .filter(el => this.getDebugElement('.ui-grid-header-title', el))
-            .map(el => el.attributes['data-property']);
-    }
-
-    public getGridHeader = (property: string, debugEl = this.fixture.debugElement) => {
-        return this.getDebugElement(`.ui-grid-header-cell[data-property="${property}"] .ui-grid-header-title`, debugEl);
-    }
-
-    public getGridRowItem = (gridSelector: string, rowNumber: number, selector: string, debugEl = this.fixture.debugElement) => {
-        return this.getDebugElement(`${gridSelector} [data-row-index="${rowNumber}"] ${selector}`, debugEl);
-    }
-
-    public getGridMenuItems = (
-        rowNumber: number,
-        gridSelector = selectors.grid,
-        menu = selectors.inlineMenu,
-        debugEl = this.fixture.debugElement,
-    ) => {
-        this.click(`${gridSelector} [data-row-index="${rowNumber}"] ${menu}`, debugEl);
-        this.fixture.detectChanges();
-
-        const nodes = this.getAllNativeElements<HTMLButtonElement | HTMLAnchorElement>
-            ('.cdk-overlay-container .mat-menu-item', debugEl);
-
-        return nodes.map(item => ({
-            text: item.innerText,
-            href: (item as HTMLAnchorElement).href as string | undefined,
-            disabled: item.getAttribute('aria-disabled') === 'true',
-        }));
-    }
-
-    public clickGridMenuItem = (
-        rowIndex: number,
-        actionSelector: string,
-        {
-            gridSelector,
-            inlineMenuSelector,
-            debugEl,
-        }: {
-            gridSelector?: string,
-            inlineMenuSelector?: string,
-            debugEl?: DebugElement,
-        } = {},
-    ) => {
-        debugEl = debugEl ?? this.fixture.debugElement;
-        gridSelector = gridSelector ?? selectors.grid;
-        inlineMenuSelector = inlineMenuSelector ?? selectors.inlineMenu;
-
-        this.clickGridRowItem(gridSelector, rowIndex, inlineMenuSelector, debugEl);
-        this.fixture.detectChanges();
-
-        this.click(actionSelector, debugEl);
-        this.fixture.detectChanges();
-    }
-
-    public clickGridRowItem = (gridSelector: string, rowNumber: number, selector: string, debugEl = this.fixture.debugElement) => {
-        return this.getGridRowItem(gridSelector, rowNumber, selector, debugEl).nativeElement
-            .dispatchEvent(EventGenerator.click);
-    }
 
     public switchToTab = async (number: number, debugEl = this.fixture.debugElement) => {
         const tab = this.getDebugElement(`.mat-tab-label:nth-of-type(${number}) .mat-tab-label-content`, debugEl);
         tab.nativeElement.dispatchEvent(EventGenerator.click);
         this.fixture.detectChanges();
         await this.fixture.whenRenderingDone();
-        this.fixture.detectChanges();
-    }
-
-    public checkGridRow = (gridSelector: string, rowNumber: number, debugEl = this.fixture.debugElement) => {
-        const rowEl = this.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"]`, debugEl);
-
-        const rowCheckbox = this.getDebugElement(`mat-checkbox input`, rowEl);
-
-        rowCheckbox.nativeElement.dispatchEvent(EventGenerator.click);
         this.fixture.detectChanges();
     }
 
@@ -207,74 +90,6 @@ export class IntegrationUtils<T> {
         input.dispatchEvent(EventGenerator.input());
         this.fixture.detectChanges();
     }
-
-    public searchAndSelect = (selector: string, httpRequest?: Function, searchStr = '', nth = 0) => {
-        const suggest = this.getDebugElement(selector);
-
-        this.click(`.display`, suggest);
-        this.fixture.detectChanges();
-
-        const searchInput = this.getDebugElement('input', suggest);
-
-        if (searchInput) {
-            this.setInput('input', searchStr, suggest);
-            tick(SUGGEST_DEBOUNCE);
-
-            if (httpRequest) { httpRequest(); }
-        }
-        this.fixture.detectChanges();
-
-        const listItems = suggest.queryAll(By.css('.mat-list-item'));
-
-        const reverseOrder = !!suggest.query(By.css('.item-list-container-direction-up'));
-
-        const listItem = listItems[reverseOrder ? listItems.length - nth - 1 : nth].nativeElement;
-
-        listItem.dispatchEvent(EventGenerator.click);
-        this.fixture.detectChanges();
-    }
-
-    public getUiSuggestFetchStrategy = (selector: string) => {
-        const suggest = this.getDebugElement(selector);
-        // maybe add a getter along the setter for fetchStrategy ?
-        return (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$'].value;
-    }
-
-    public selectNthUiSuggestItem = async (selector: string, nth: number, config?: {
-        httpMock: HttpTestingController,
-        stub: IStubEndpoint,
-    }) => {
-        const suggest = this.getDebugElement(selector);
-
-        this.click(`.display`, suggest);
-        this.fixture.detectChanges();
-
-        const strategy = this.getUiSuggestFetchStrategy(selector);
-
-        if (!!config && strategy === 'onOpen') {
-            await this.fixture.whenStable();
-            this.expectAndFlush(config.stub, config.httpMock);
-        }
-
-        const listItems = suggest.queryAll(By.css('.mat-list-item'));
-
-        const reverseOrder = !!suggest.query(By.css('.item-list-container-direction-up'));
-
-        const listItem = listItems[reverseOrder ? listItems.length - nth - 1 : nth].nativeElement;
-
-        listItem.dispatchEvent(EventGenerator.click);
-        this.fixture.detectChanges();
-        await this.fixture.whenStable();
-
-        if (!!config && strategy === 'eager') {
-            this.expectAndFlush(config.stub, config.httpMock);
-        }
-    }
-
-    public getUiSuggestValue = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.getNativeElement(`${selector} .display-value`, debugEl)!
-            .innerText
-            .trim()
 
     public isCheckboxChecked = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
@@ -340,12 +155,6 @@ export class IntegrationUtils<T> {
             this.getDebugElement(selector, debugEl),
         )
 
-    public openGridContextMenu = (rowNumber: number) => {
-        const selector = `${`[data-row-index="${rowNumber - 1}"]`} ${`[data-cy="grid-action-menu"]`}`;
-        const button = this.fixture.debugElement.query(By.css(selector));
-        button.nativeElement.dispatchEvent(EventGenerator.click);
-    }
-
     public changeTheme = (theme: 'light' | 'dark') => {
         window.document.body.classList.remove('light');
         window.document.body.classList.remove('dark');
@@ -358,4 +167,235 @@ export class IntegrationUtils<T> {
 
     private _isCheckBoxDisabled = (debugEl: DebugElement) =>
         debugEl.nativeElement.classList.contains('mat-checkbox-disabled')
+}
+
+class GridUtils<T> {
+    constructor(
+        private _utils: IntegrationUtils<T>,
+    ) { }
+
+    public flush = (stub: IStubEndpoint, httpClient: HttpTestingController) => {
+        this._utils.fixture.detectChanges();
+        tick(500);
+        this._utils.fixture.detectChanges();
+
+        this._utils.expectAndFlush(stub, httpClient);
+        this._utils.fixture.detectChanges();
+
+        flush();
+        discardPeriodicTasks();
+    }
+
+    /**
+     *
+     * @param rowNumber The Grid row
+     *
+     * ---
+     *
+     * @param startColumn The beginning of the specified portion of the array.
+     * @param endColumn The end of the specified portion of the array. This is exclusive of the element at the index 'end'.
+     */
+    public getCellsText = (
+        rowNumber: number,
+        {
+            startColumn,
+            endColumn,
+            gridSelector,
+            debugEl,
+        }: {
+            startColumn?: number,
+            endColumn?: number,
+            gridSelector?: string,
+            debugEl?: DebugElement,
+        } = {},
+    ) => {
+        const rowEl = this._utils.getDebugElement(`${gridSelector ?? selectors.grid} [data-row-index="${rowNumber - 1}"]`, debugEl);
+        return rowEl
+            .queryAll(By.css('.ui-grid-cell'))
+            .slice(startColumn, endColumn)
+            .map((cellEl) => cellEl.nativeElement.innerText as string);
+    }
+
+    public getHeaders = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
+        return this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
+            .filter(el => this._utils.getDebugElement('.ui-grid-header-title', el));
+    }
+
+    public getColumnsProperties = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
+        return this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
+            .filter(el => this._utils.getDebugElement('.ui-grid-header-title', el))
+            .map(el => el.attributes['data-property']);
+    }
+
+    public getHeader = (property: string, debugEl = this._utils.fixture.debugElement) => {
+        return this._utils.getDebugElement(`.ui-grid-header-cell[data-property="${property}"] .ui-grid-header-title`, debugEl);
+    }
+
+    public getRowItem = (
+        rowNumber: number,
+        selector: string,
+        {
+            gridSelector,
+            debugEl,
+        }: {
+            gridSelector?: string,
+            debugEl?: DebugElement,
+        } = {}) => {
+        return this._utils.getDebugElement(
+            `${gridSelector ?? selectors.grid} [data-row-index="${rowNumber}"] ${selector}`,
+            debugEl ?? this._utils.fixture.debugElement,
+        );
+    }
+
+    public getMenuItems = (
+        rowNumber: number,
+        {
+            gridSelector,
+            menu,
+            debugEl,
+        }: {
+            gridSelector?: string;
+            menu?: string;
+            debugEl?: DebugElement;
+        } = {},
+    ) => {
+        gridSelector = gridSelector ?? selectors.grid;
+        menu = menu ?? selectors.inlineMenu;
+
+        this._utils.click(`${gridSelector} [data-row-index="${rowNumber}"] ${menu}`, debugEl);
+        this._utils.fixture.detectChanges();
+
+        const nodes = this._utils.getAllNativeElements<HTMLButtonElement | HTMLAnchorElement>
+            ('.cdk-overlay-container .mat-menu-item', debugEl);
+
+        return nodes.map(item => ({
+            text: item.innerText,
+            href: (item as HTMLAnchorElement).href as string | undefined,
+        }));
+    }
+
+    public clickMenuItem = (
+        rowIndex: number,
+        actionSelector: string,
+        {
+            gridSelector,
+            inlineMenuSelector,
+            debugEl,
+        }: {
+            gridSelector?: string,
+            inlineMenuSelector?: string,
+            debugEl?: DebugElement,
+        } = {},
+    ) => {
+        inlineMenuSelector = inlineMenuSelector ?? selectors.inlineMenu;
+
+        this.clickRowItem(rowIndex, inlineMenuSelector, { gridSelector, debugEl });
+        this._utils.fixture.detectChanges();
+
+        this._utils.click(actionSelector, debugEl);
+        this._utils.fixture.detectChanges();
+    }
+
+    public clickRowItem = (
+        rowNumber: number,
+        selector: string,
+        {
+            gridSelector,
+            debugEl,
+        }: {
+            gridSelector?: string,
+            debugEl?: DebugElement,
+        } = {}) => {
+        return this.getRowItem(rowNumber, selector, { debugEl, gridSelector }).nativeElement
+            .dispatchEvent(EventGenerator.click);
+    }
+
+    public checkRow = (rowNumber: number, gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
+        const rowEl = this._utils.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"]`, debugEl);
+
+        const rowCheckbox = this._utils.getDebugElement(`mat-checkbox input`, rowEl);
+
+        rowCheckbox.nativeElement.dispatchEvent(EventGenerator.click);
+        this._utils.fixture.detectChanges();
+    }
+
+    public openContextMenu = (rowNumber: number) => {
+        const selector = `${`[data-row-index="${rowNumber - 1}"]`} ${`[data-cy="grid-action-menu"]`}`;
+        const button = this._utils.fixture.debugElement.query(By.css(selector));
+        button.nativeElement.dispatchEvent(EventGenerator.click);
+    }
+}
+
+class SuggestUtils<T> {
+    constructor(
+        private _utils: IntegrationUtils<T>,
+    ) { }
+
+    public searchAndSelect = (selector: string, httpRequest?: Function, searchStr = '', nth = 0) => {
+        const suggest = this._utils.getDebugElement(selector);
+
+        this._utils.click(`.display`, suggest);
+        this._utils.fixture.detectChanges();
+
+        const searchInput = this._utils.getDebugElement('input', suggest);
+
+        if (searchInput) {
+            this._utils.setInput('input', searchStr, suggest);
+            tick(SUGGEST_DEBOUNCE);
+
+            if (httpRequest) { httpRequest(); }
+        }
+        this._utils.fixture.detectChanges();
+
+        const listItems = suggest.queryAll(By.css('.mat-list-item'));
+
+        const reverseOrder = !!suggest.query(By.css('.item-list-container-direction-up'));
+
+        const listItem = listItems[reverseOrder ? listItems.length - nth - 1 : nth].nativeElement;
+
+        listItem.dispatchEvent(EventGenerator.click);
+        this._utils.fixture.detectChanges();
+    }
+
+    public getFetchStrategy = (selector: string) => {
+        const suggest = this._utils.getDebugElement(selector);
+        // maybe add a getter along the setter for fetchStrategy ?
+        return (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$'].value;
+    }
+
+    public selectNthItem = async (selector: string, nth: number, config?: {
+        httpMock: HttpTestingController,
+        stub: IStubEndpoint,
+    }) => {
+        const suggest = this._utils.getDebugElement(selector);
+
+        this._utils.click(`.display`, suggest);
+        this._utils.fixture.detectChanges();
+
+        const strategy = this.getFetchStrategy(selector);
+
+        if (!!config && strategy === 'onOpen') {
+            await this._utils.fixture.whenStable();
+            this._utils.expectAndFlush(config.stub, config.httpMock);
+        }
+
+        const listItems = suggest.queryAll(By.css('.mat-list-item'));
+
+        const reverseOrder = !!suggest.query(By.css('.item-list-container-direction-up'));
+
+        const listItem = listItems[reverseOrder ? listItems.length - nth - 1 : nth].nativeElement;
+
+        listItem.dispatchEvent(EventGenerator.click);
+        this._utils.fixture.detectChanges();
+        await this._utils.fixture.whenStable();
+
+        if (!!config && strategy === 'eager') {
+            this._utils.expectAndFlush(config.stub, config.httpMock);
+        }
+    }
+
+    public getValue = (selector: string, debugEl = this._utils.fixture.debugElement) =>
+        this._utils.getNativeElement(`${selector} .display-value`, debugEl)!
+            .innerText
+            .trim()
 }
