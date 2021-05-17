@@ -1,5 +1,5 @@
 import * as faker from 'faker';
-import { take } from 'rxjs/operators';
+import { firstValueFrom } from 'rxjs';
 
 import {
     Component,
@@ -130,7 +130,7 @@ describe('Component: UiPasswordToggle', () => {
     });
 
     it('should update the show tooltip if the intl emits changes', async () => {
-        const show = await component.toggle.tooltip$.pipe(take(1)).toPromise();
+        const show = await firstValueFrom(component.toggle.tooltip$);
 
         expect(show).toEqual(intl.originalTooltipShow);
         fixture.detectChanges();
@@ -138,7 +138,7 @@ describe('Component: UiPasswordToggle', () => {
 
         intl.changeLabels();
 
-        const translatedShow = await component.toggle.tooltip$.pipe(take(1)).toPromise();
+        const translatedShow = await firstValueFrom(component.toggle.tooltip$);
 
         expect(translatedShow).toEqual(intl.translatedTooltipShow);
         fixture.detectChanges();
@@ -148,7 +148,7 @@ describe('Component: UiPasswordToggle', () => {
     it('should update the hide tooltip if the intl emits changes', async () => {
         toggleButton.dispatchEvent(EventGenerator.click);
 
-        const hide = await component.toggle.tooltip$.pipe(take(1)).toPromise();
+        const hide = await firstValueFrom(component.toggle.tooltip$);
 
         expect(hide).toEqual(intl.originalTooltipHide);
         fixture.detectChanges();
@@ -156,7 +156,7 @@ describe('Component: UiPasswordToggle', () => {
 
         intl.changeLabels();
 
-        const translatedHide = await component.toggle.tooltip$.pipe(take(1)).toPromise();
+        const translatedHide = await firstValueFrom(component.toggle.tooltip$);
 
         expect(translatedHide).toEqual(intl.translatedTooltipHide);
         fixture.detectChanges();

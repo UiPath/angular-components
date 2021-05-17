@@ -498,7 +498,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _hasCustomValue$ = new BehaviorSubject(false);
-    private _reset$ = new Subject();
+    private _reset$ = new Subject<void>();
 
     private get _isOpenDisabled() {
         return this.isOpen ||
@@ -521,7 +521,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     private _enableCustomValue = false;
 
     private _triggerViewportRefresh$ = new BehaviorSubject<null>(null);
-    private _destroyed$ = new Subject();
+    private _destroyed$ = new Subject<void>();
     private _scrollTo$ = new Subject<number>();
     private _rangeLoad$ = new Subject<ListRange>();
     private _fetchStrategy$ = new BehaviorSubject<'eager' | 'onOpen'>('eager');
@@ -923,17 +923,20 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                 tap(this._checkCustomValue(searchValue)),
                 tap(this._setActiveIndex),
                 takeUntil(this._destroyed$),
-            ).subscribe(_ => {
-                this.loading$.next(false);
-                this._scrollToFirst();
-                this._cd.detectChanges();
-            }, (error) => {
-                if (isDevMode()) {
-                    console.warn('UiSuggest fetch failed, more info: ', error);
-                }
+            ).subscribe({
+                next: _ => {
+                    this.loading$.next(false);
+                    this._scrollToFirst();
+                    this._cd.detectChanges();
+                },
+                error: (error) => {
+                    if (isDevMode()) {
+                        console.warn('UiSuggest fetch failed, more info: ', error);
+                    }
 
-                this.loading$.next(false);
-                this._items = [];
+                    this.loading$.next(false);
+                    this._items = [];
+                },
             });
     }
 

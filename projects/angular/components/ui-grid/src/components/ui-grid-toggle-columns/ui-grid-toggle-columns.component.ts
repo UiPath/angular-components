@@ -115,7 +115,7 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
 
     private _selected: Array<string | keyof T> = [];
     private _options: IVisibleModel<T>[] = [];
-    private _destroyed$ = new Subject();
+    private _destroyed$ = new Subject<void>();
 
     constructor(
         private _elementRef: ElementRef<HTMLElement>,

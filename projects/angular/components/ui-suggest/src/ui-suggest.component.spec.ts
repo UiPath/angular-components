@@ -3,6 +3,7 @@ import {
     VirtualScrollItemStatus,
 } from 'projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api';
 import {
+    firstValueFrom,
     Observable,
     of,
 } from 'rxjs';
@@ -1508,7 +1509,7 @@ const sharedSpecifications = (
             await fixture.whenStable();
 
             expect(uiSuggest.items.length).toBe(items.length);
-            const response = await sourceSpy.calls.mostRecent().returnValue.toPromise();
+            const response = await firstValueFrom(sourceSpy.calls.mostRecent().returnValue);
             expect(uiSuggest.items.length).toEqual(response.total!);
         }));
 

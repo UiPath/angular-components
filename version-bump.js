@@ -90,7 +90,7 @@ function changeLog([initialVersion, bumpedVersion]) {
             const [, subject, message] = match;
 
             // skip commits of type "chore: version bump"
-            if (subject === 'chore' && message === 'version bump') {
+            if (subject === 'chore' && ( message === 'version bump' || message === "bump version" )) {
                 return;
             }
 

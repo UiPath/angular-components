@@ -1,6 +1,7 @@
 import * as faker from 'faker';
 import {
     animationFrameScheduler,
+    firstValueFrom,
     Observable,
     of,
 } from 'rxjs';
@@ -1397,8 +1398,7 @@ describe('Component: UiGrid', () => {
 
                 fixture.detectChanges();
 
-                const [filter] = await grid.filterManager.filter$
-                    .pipe(take(1)).toPromise();
+                const [filter] = await firstValueFrom(grid.filterManager.filter$);
 
                 const [value] = searchFilter.value;
 

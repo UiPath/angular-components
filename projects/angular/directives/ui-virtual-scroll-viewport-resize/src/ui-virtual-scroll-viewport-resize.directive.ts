@@ -32,7 +32,7 @@ import {
     selector: '[uiVirtualScrollViewportResize], ui-virtual-scroll-viewport-resize',
 })
 export class UiVirtualScrollViewportResizeDirective implements OnInit, OnDestroy {
-    private readonly _destroy$ = new Subject();
+    private readonly _destroy$ = new Subject<void>();
     private readonly _total$ = new Subject<number>();
 
     /**
