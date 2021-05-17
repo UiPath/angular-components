@@ -37,7 +37,7 @@ export class UiSuggestIntl implements OnDestroy {
      * Notify if changes have occurred that require that the labels be updated.
      *
      */
-    public changes = new Subject();
+    public changes = new Subject<void>();
 
     protected _destroyed$ = new Subject<void>();
 

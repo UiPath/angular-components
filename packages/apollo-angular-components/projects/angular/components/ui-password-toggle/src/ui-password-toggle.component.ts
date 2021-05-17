@@ -55,7 +55,7 @@ export class UiPasswordToggleComponent implements OnInit, OnDestroy {
      */
     public tooltip$: Observable<string>;
 
-    private _destroyed$ = new Subject();
+    private _destroyed$ = new Subject<void>();
 
     private get _isVisible() {
         return this.isVisible$.value;

@@ -48,7 +48,7 @@ export class UiClickOutsideService implements OnDestroy {
    *
    */
     public source: Observable<MouseEvent>;
-    private _destroyed$ = new Subject();
+    private _destroyed$ = new Subject<void>();
 
     /**
     * @ignore

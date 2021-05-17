@@ -18,7 +18,7 @@ export class UiGridIntl implements OnDestroy {
      * Notify if changes have occured that require that the labels be updated.
      *
      */
-    public changes = new Subject();
+    public changes = new Subject<void>();
 
     /**
      * Live announcer refresh message.

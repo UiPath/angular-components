@@ -63,7 +63,7 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
     public percentage$!: Observable<number>;
     public isErrorState$!: Observable<boolean>;
 
-    private _destroyed$ = new Subject();
+    private _destroyed$ = new Subject<void>();
 
     constructor(
         public intl: UiPasswordComplexityIntl,
