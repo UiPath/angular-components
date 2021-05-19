@@ -1,3 +1,6 @@
+# v12.0.0-rc.1 (2021-05-19)
+* **fix** tmp fix for scroll viewport test
+
 # v12.0.0-rc.0 (2021-05-14)
 * **chore** bump rx to 7.0.1
 * **chore** bump angular material to 12
