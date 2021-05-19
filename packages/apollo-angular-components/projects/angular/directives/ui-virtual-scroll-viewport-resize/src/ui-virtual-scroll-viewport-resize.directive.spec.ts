@@ -151,7 +151,8 @@ describe('Directive: UiVirtualScrollViewportResize', () => {
     });
 
     describe('Trigger: window resize', () => {
-        const DEBOUNCE_TIME = 1000 / 60;
+        /* FIXME: https://github.com/ReactiveX/rxjs/issues/6382 */
+        const DEBOUNCE_TIME = 1001 / 60;
 
         it('should redraw the viewport if the window is resized', fakeAsync(() => {
             fixture.detectChanges();
