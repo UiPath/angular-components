@@ -58,7 +58,7 @@ export class IntegrationUtils<T> {
         return debugElement ? debugElement.componentInstance : null;
     };
 
-    public switchToTab = async(number: number, debugEl = this.fixture.debugElement) => {
+    public switchToTab = async (number: number, debugEl = this.fixture.debugElement) => {
         const tab = this.getDebugElement(`.mat-tab-label:nth-of-type(${number}) .mat-tab-label-content`, debugEl);
         tab.nativeElement.dispatchEvent(EventGenerator.click);
         this.fixture.detectChanges();
@@ -266,7 +266,7 @@ class GridUtils<T> {
         this._utils.fixture.detectChanges();
 
         const nodes = this._utils.getAllNativeElements<HTMLButtonElement | HTMLAnchorElement>
-        ('.cdk-overlay-container .mat-menu-item', debugEl);
+            ('.cdk-overlay-container .mat-menu-item', debugEl);
 
         return nodes.map(item => ({
             text: item.innerText,
@@ -363,7 +363,7 @@ class SuggestUtils<T> {
         return (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$'].value;
     };
 
-    public selectNthItem = async(selector: string, nth: number, config?: {
+    public selectNthItem = async (selector: string, nth: number, config?: {
         httpMock: HttpTestingController;
         stub: IStubEndpoint;
     }) => {
