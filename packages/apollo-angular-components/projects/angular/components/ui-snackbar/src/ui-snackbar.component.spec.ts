@@ -1,4 +1,8 @@
 import * as faker from 'faker';
+import {
+    a11y,
+    axe,
+} from 'projects/angular/axe-helper';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
 import {
@@ -16,6 +20,7 @@ import {
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EventGenerator } from '@uipath/angular/testing';
+import { asyncOf } from '@uipath/angular/utilities';
 
 import {
     ICON_MAP,
@@ -29,7 +34,7 @@ import {
 import { UiSnackBarModule } from './ui-snackbar.module';
 
 const DEFAULT_DURATION = 2500;
-
+const ANGULAR_ARIA_DELAY = 150;
 @Component({
     template: `<ng-template #richContent>
                 <div class="rich-class">Some Rich</div>
@@ -116,6 +121,16 @@ describe('Service: UiSnackBarService', () => {
                         showSnackbar = viaCase.useGenericShow
                             ? showMethodAdapter
                             : service[type];
+                    });
+
+                    a11y.suite((runOptions) => {
+                        a11y.it('should have no violations', async () => {
+                            showSnackbar(faker.lorem.paragraph());
+                            const snack = getSnack();
+                            // Angular attaches aria-hidden to a snackbar right when shown, and removes it after a delay.
+                            await asyncOf(null, ANGULAR_ARIA_DELAY).toPromise();
+                            expect(await axe(snack as Element, runOptions)).toHaveNoViolations();
+                        });
                     });
 
                     it('should display the correct message', () => {
