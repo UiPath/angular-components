@@ -84,6 +84,14 @@ export class IntegrationUtils<T> {
         return testReq;
     };
 
+    public flushDiscardAndDetect = (times = 1) => {
+        new Array(times).fill(0).forEach(() => {
+            flush();
+            discardPeriodicTasks();
+            this.fixture.detectChanges();
+        });
+    };
+
     public setInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
         const input = this.getNativeElement<HTMLInputElement>(selector, debugEl)!;
         input.value = value;
