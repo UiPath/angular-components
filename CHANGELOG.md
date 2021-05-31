@@ -1,3 +1,8 @@
+# v12.0.0-rc.2 (2021-05-31)
+* **a11y** add basic a11y test cases
+* **a11y** setup testing for a11y
+* **a11y** add jasmine to project
+
 # v12.0.0-rc.1 (2021-05-19)
 * **fix** tmp fix for scroll viewport test
 
