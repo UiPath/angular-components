@@ -89,6 +89,7 @@ export class IntegrationUtils<T> {
         input.value = value;
         input.dispatchEvent(EventGenerator.input());
         this.fixture.detectChanges();
+        return input;
     };
 
     public isCheckboxChecked = (selector: string, debugEl = this.fixture.debugElement) =>
