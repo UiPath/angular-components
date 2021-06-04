@@ -361,7 +361,6 @@ class SuggestUtils<T> {
         const reverseOrder = !!suggest.query(By.css('.item-list-container-direction-up'));
 
         const listItem = listItems[reverseOrder ? listItems.length - nth - 1 : nth].nativeElement;
-
         listItem.dispatchEvent(EventGenerator.click);
         this._utils.fixture.detectChanges();
     };
@@ -372,7 +371,7 @@ class SuggestUtils<T> {
         return (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$'].value;
     };
 
-    public selectNthItem = async (selector: string, nth: number, config?: {
+    public selectNthItem = async (selector: string, nth = 0, config?: {
         httpMock: HttpTestingController;
         stub: IStubEndpoint;
     }) => {
