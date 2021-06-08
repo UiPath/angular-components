@@ -170,9 +170,9 @@ export class UiDateFormatDirective extends UiFormatDirective {
             elementRef,
         );
 
-        _options = _options || {};
+        this._options = _options || {};
 
-        const redraw$ = _options.redraw$ || of(null);
+        const redraw$ = this._options.redraw$ || of(null);
 
         merge(
             redraw$,
