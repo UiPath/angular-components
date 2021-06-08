@@ -211,6 +211,19 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     public disabled = false;
 
     /**
+     * Configure if the grid search filters are eager or on open.
+     *
+     */
+    @Input()
+    public set fetchStrategy(fetchStrategy: 'eager' | 'onOpen') {
+        if (fetchStrategy === this.fetchStrategy) { return; }
+        this._fetchStrategy = fetchStrategy;
+    }
+    public get fetchStrategy() {
+        return this._fetchStrategy;
+    }
+
+    /**
      * Configure if the grid allows item selection.
      *
      */
@@ -543,6 +556,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     protected _destroyed$ = new Subject<void>();
     protected _columnChanges$: Observable<SimpleChanges>;
 
+    private _fetchStrategy!: 'eager' | 'onOpen';
     private _resizeStrategy = ResizeStrategy.ImmediateNeighbourHalt;
     private _performanceMonitor: PerformanceMonitor;
     private _configure$ = new Subject<void>();
@@ -567,6 +581,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
 
         this.useAlternateDesign = _gridOptions?.useAlternateDesign ?? false;
         this.collapsibleFilters = _gridOptions?.collapsibleFilters ?? false;
+        this._fetchStrategy = _gridOptions?.fetchStrategy ?? 'onOpen';
         this.rowSize = _gridOptions?.rowSize ?? DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
 
         this.isProjected = this._ref.nativeElement.classList.contains('ui-grid-state-responsive');

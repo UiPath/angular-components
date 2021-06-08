@@ -2676,6 +2676,10 @@ describe('Component: UiGrid', () => {
                         <ui-grid-dropdown-filter [items]="filterItems">
                         </ui-grid-dropdown-filter>
                     </ui-grid-column>
+                    <ui-grid-column property="name"
+                                    title="Name">
+                        <ui-grid-search-filter [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
+                    </ui-grid-column>
                     <ui-grid-footer [length]="5"
                                     [pageSize]="5">
                     </ui-grid-footer>
@@ -2689,6 +2693,17 @@ describe('Component: UiGrid', () => {
                         label: count.toString(),
                     }));
                 }
+
+                public searchFactory = (): Observable<ISuggestValues<any>> => of({
+                    data: this.filterItems
+                        .map(
+                            option => ({
+                                id: +option.value,
+                                text: option.label,
+                            }),
+                        ),
+                    total: this.filterItems.length,
+                })
             }
 
             let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
@@ -2780,6 +2795,7 @@ describe('Component: UiGrid', () => {
                             useValue: {
                                 useAlternateDesign: true,
                                 collapsibleFilters: true,
+                                fetchStrategy: 'eager',
                             },
                         },
                     ],
@@ -2843,13 +2859,17 @@ describe('Component: UiGrid', () => {
         describe('Behavior: override injection token value', () => {
             @Component({
                 template: `
-                <ui-grid [collapsibleFilters]="false">
+                <ui-grid [collapsibleFilters]="false" [fetchStrategy]="'onOpen'">
                     <ui-grid-header>
                     </ui-grid-header>
                     <ui-grid-column property="id"
                                     title="Id">
                         <ui-grid-dropdown-filter [items]="filterItems">
                         </ui-grid-dropdown-filter>
+                    </ui-grid-column>
+                    <ui-grid-column property="name"
+                                    title="Name">
+                        <ui-grid-search-filter [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
                     </ui-grid-column>
                 </ui-grid>
                 `,
@@ -2861,6 +2881,17 @@ describe('Component: UiGrid', () => {
                         label: count.toString(),
                     }));
                 }
+
+                public searchFactory = (): Observable<ISuggestValues<any>> => of({
+                    data: this.filterItems
+                        .map(
+                            option => ({
+                                id: +option.value,
+                                text: option.label,
+                            }),
+                        ),
+                    total: this.filterItems.length,
+                })
             }
 
             let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
@@ -2894,9 +2925,14 @@ describe('Component: UiGrid', () => {
                 fixture.destroy();
             });
 
-            it('should overrind injection token value', () => {
+            it('should override injection token value for collapsible filters', () => {
                 const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
                 expect(collapisbleFiltersToggle).toBeFalsy();
+            });
+
+            it('should override injection token value for fetchStrategy on searchable', () => {
+                const suggestOnOpen = fixture.debugElement.query(By.css('[data-cy="ui-grid-search-filter-name"][ng-reflect-fetch-strategy="onOpen"]'));
+                expect(suggestOnOpen).toBeTruthy();
             });
         });
     });

@@ -539,6 +539,7 @@
                         [value]="[column.searchableDropdown.value]"
                         [disabled]="column.searchableDropdown.disabled || disabled"
                         [maxLength]="64"
+                        [fetchStrategy]="column.searchableDropdown.fetchStrategy || fetchStrategy"
                         [attr.data-cy]="'ui-grid-search-filter-' + (column.property || 'na')"
                         (selected)="filterManager.searchableDropdownUpdate(column, $event)"
                         (opened)="column.refetch && suggest.fetch()"
