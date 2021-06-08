@@ -1,5 +1,9 @@
 import * as faker from 'faker';
 import {
+    a11y,
+    axe,
+} from 'projects/angular/axe-helper';
+import {
     VirtualScrollItemStatus,
 } from 'projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api';
 import {
@@ -127,6 +131,14 @@ const sharedSpecifications = (
         it('should be initialized', () => {
             expect(uiSuggest).toBeDefined();
         });
+
+        a11y.suite((runOptions) => {
+            a11y.it('should have no violations', async () => {
+                fixture.detectChanges();
+                expect(await axe(fixture.nativeElement, runOptions)).toHaveNoViolations();
+            });
+        });
+
 
         it('should have value set to an empty array if NULL or Undefined is provided', () => {
             component.value = undefined;

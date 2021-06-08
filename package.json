@@ -1,6 +1,6 @@
 {
   "name": "angular-components",
-  "version": "12.0.0-rc.1",
+  "version": "12.0.0-rc.2",
   "author": {
     "name": "UiPath Inc",
     "url": "https://uipath.com"
@@ -119,6 +119,7 @@
     "gh-pages": "2.0.1",
     "glob": "^7.1.4",
     "husky": "2.3.0",
+    "jasmine-axe": "^1.0.0",
     "jasmine-core": "~3.5.0",
     "jasmine-expect": "^4.0.3",
     "jasmine-spec-reporter": "~5.0.0",
