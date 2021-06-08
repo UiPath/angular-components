@@ -1,5 +1,9 @@
 import * as faker from 'faker';
 import {
+    a11y,
+    axe,
+} from 'projects/angular/axe-helper';
+import {
     animationFrameScheduler,
     firstValueFrom,
     Observable,
@@ -817,6 +821,12 @@ describe('Component: UiGrid', () => {
             beforeEach(() => {
                 component.search = false;
                 fixture.detectChanges();
+            });
+
+            a11y.suite((runOptions) => {
+                a11y.it('should have no violations', async () => {
+                    expect(await axe(fixture.nativeElement, runOptions)).toHaveNoViolations();
+                });
             });
 
             it('should display the main header action button', () => {

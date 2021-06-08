@@ -6,14 +6,16 @@ import 'zone.js';
 import 'zone.js/testing';
 import 'jasmine-expect';
 
+import * as faker from 'faker';
+import { toHaveNoViolations } from 'jasmine-axe';
+import { setSpecFn } from 'projects/angular/axe-helper';
+
 // tslint:enable: ordered-imports
 import { getTestBed } from '@angular/core/testing';
 import {
     BrowserDynamicTestingModule,
     platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
-
-import * as faker from 'faker';
 
 import { JASMINE_STYLES } from './test.theme';
 
@@ -37,6 +39,8 @@ const reseed = () => {
     Math.random = () => faker.random.number({ min: 0, max: 100000 }) / 100000;
 };
 
+beforeAll(() => jasmine.addMatchers(toHaveNoViolations));
+
 beforeEach(reseed);
 
 const __describe = describe;
@@ -44,6 +48,8 @@ const __describe = describe;
     reseed();
     __describe.apply(this, arguments as any);
 };
+
+setSpecFn(it, fit, xit);
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
