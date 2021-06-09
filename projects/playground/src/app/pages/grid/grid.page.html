@@ -10,10 +10,27 @@
                     <div [formGroup]="actionsForm.get('inputs')"
                          class="grid-playground-actions-inputs">
                         <h4>Grid Inputs</h4>
-                        <mat-checkbox *ngFor="let inputKey of inputKeys"
-                                      [formControlName]="inputKey">
-                            {{inputKey}}
-                        </mat-checkbox>
+                        <ng-container *ngFor="let inputKey of inputKeys">
+                            <ng-container *ngIf="actionsForm.get('inputs.'+inputKey) as inputControl">
+                                <ng-container
+                                              *ngIf="inputControl.value === true || inputControl.value === false; else numberTmpl">
+                                    <mat-checkbox [formControlName]="inputKey">
+                                        {{inputKey}}
+                                    </mat-checkbox>
+                                </ng-container>
+
+                                <ng-template #numberTmpl>
+                                    <mat-form-field>
+                                        <mat-label>{{ inputKey }}</mat-label>
+                                        <input [formControlName]="inputKey"
+                                               required
+                                               matInput
+                                               type="number">
+                                    </mat-form-field>
+                                </ng-template>
+                            </ng-container>
+                        </ng-container>
+
                     </div>
 
                     <div [formGroup]="actionsForm.get('header')"
@@ -67,9 +84,9 @@
 </mat-card>
 
 <app-grid-component *ngIf="generatedGrid"
-                   [allData]="allData"
-                   [inputs]="inputs"
-                   [header]="header"
-                   [footer]="footer"
-                   [inputKeys]="inputKeys">
+                    [allData]="allData"
+                    [inputs]="inputs"
+                    [header]="header"
+                    [footer]="footer"
+                    [inputKeys]="inputKeys">
 </app-grid-component>
