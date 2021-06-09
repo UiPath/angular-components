@@ -215,6 +215,19 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     @Input()
+    public set collapseFiltersCount(count: number) {
+        if (count === this._collapseFiltersCount$.value) { return; }
+        this._collapseFiltersCount$.next(count);
+    }
+    public get collapseFiltersCount() {
+        return this._collapseFiltersCount$.value;
+    }
+
+    /**
+     * Configure if the grid search filters are eager or on open.
+     *
+     */
+    @Input()
     public set fetchStrategy(fetchStrategy: 'eager' | 'onOpen') {
         if (fetchStrategy === this.fetchStrategy) { return; }
         this._fetchStrategy = fetchStrategy;
@@ -240,9 +253,15 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     /**
      * Option to have collapsible filters.
      *
+     * @deprecated - use `[collapseFiltersCount]="0" to render collapsed or leave out to always render inline`
      */
     @Input()
-    public collapsibleFilters: boolean;
+    public set collapsibleFilters(collapse: boolean) {
+        this._collapseFiltersCount$.next(collapse ? 0 : Number.POSITIVE_INFINITY);
+    }
+    public get collapsibleFilters() {
+        return !this._collapseFiltersCount$.value;
+    }
 
     /**
      * Configure if the grid allows to toggle column visibility.
@@ -540,6 +559,8 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         }),
     );
 
+    public areFilersCollapsed$: Observable<boolean>;
+
     /**
      * Determines if the multi-page selection row should be displayed.
      *
@@ -557,6 +578,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     protected _columnChanges$: Observable<SimpleChanges>;
 
     private _fetchStrategy!: 'eager' | 'onOpen';
+    private _collapseFiltersCount$!: BehaviorSubject<number>;
     private _resizeStrategy = ResizeStrategy.ImmediateNeighbourHalt;
     private _performanceMonitor: PerformanceMonitor;
     private _configure$ = new Subject<void>();
@@ -580,9 +602,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         super();
 
         this.useAlternateDesign = _gridOptions?.useAlternateDesign ?? false;
-        this.collapsibleFilters = _gridOptions?.collapsibleFilters ?? false;
         this._fetchStrategy = _gridOptions?.fetchStrategy ?? 'onOpen';
         this.rowSize = _gridOptions?.rowSize ?? DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
+        this._collapseFiltersCount$ = new BehaviorSubject(
+            _gridOptions?.collapseFiltersCount ?? (_gridOptions?.collapsibleFilters === true ? 0 : Number.POSITIVE_INFINITY),
+        );
 
         this.isProjected = this._ref.nativeElement.classList.contains('ui-grid-state-responsive');
 
@@ -599,7 +623,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
                 tap(() => this.isResizing && this.resizeManager.stop()),
             );
 
-        this.hasAnyFiltersVisible$ = this.rendered.pipe(
+        const visibleFilterCount$ = this.rendered.pipe(
             switchMap(() => this.columns.changes),
             startWith('Initial emission'),
             switchMap(() =>
@@ -607,9 +631,22 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
                     column.dropdown?.visible$ ?? column.searchableDropdown?.visible$ ?? of(false),
                 )),
             ),
-            map(areVisible => areVisible.some(visible => visible)),
+            map(areVisible => areVisible.filter(visible => visible).length),
             distinctUntilChanged(),
             shareReplay(),
+        );
+
+        this.hasAnyFiltersVisible$ = visibleFilterCount$.pipe(
+            map(Boolean),
+            distinctUntilChanged(),
+        );
+
+        this.areFilersCollapsed$ = combineLatest([
+            visibleFilterCount$,
+            this._collapseFiltersCount$,
+        ]).pipe(
+            map(([visible, minCollapse]) => visible > minCollapse),
+            distinctUntilChanged(),
         );
 
         const sort$ = this.sortManager
