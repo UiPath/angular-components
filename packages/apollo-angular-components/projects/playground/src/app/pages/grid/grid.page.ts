@@ -36,7 +36,7 @@ export class GridPageComponent {
 
     public inputKeys = [
         'useAlternateDesign',
-        'collapsibleFilters',
+        'collapseFiltersCount',
         'loading',
         'isProjected',
         'disabled',
@@ -76,7 +76,7 @@ export class GridPageComponent {
         this.actionsForm = this._fb.group({
             inputs: this._fb.group({
                 useAlternateDesign: [false],
-                collapsibleFilters: [false],
+                collapseFiltersCount: [20, [Validators.min(0), Validators.max(500)]],
                 loading: [false],
                 isProjected: [false],
                 disabled: [false],

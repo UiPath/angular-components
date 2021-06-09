@@ -14,7 +14,9 @@ export interface IHeader {
 
 export interface IInputs {
     useAlternateDesign: boolean;
-    collapsibleFilters: boolean;
+    collapseFiltersCount: number;
+    // deprecated
+    collapsibleFilters?: boolean;
     loading: boolean;
     isProjected: boolean;
     disabled: boolean;

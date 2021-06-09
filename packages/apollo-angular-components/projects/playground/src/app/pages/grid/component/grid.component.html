@@ -1,6 +1,7 @@
 <ui-grid [data]="data$ | async"
          [useAlternateDesign]="inputs.useAlternateDesign"
          [collapsibleFilters]="inputs.collapsibleFilters"
+         [collapseFiltersCount]="inputs.collapseFiltersCount"
          [isProjected]="inputs.isProjected"
          [loading]="inputs.loading"
          [disabled]="inputs.disabled"
@@ -50,12 +51,18 @@
                     [sortable]="true"
                     title="Id"
                     width="33%">
+        <ui-grid-dropdown-filter [visible]="header.showFilter"
+                                 [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
+        </ui-grid-dropdown-filter>
     </ui-grid-column>
     <ui-grid-column [property]="'name'"
                     [searchable]="true"
                     method="eq"
                     title="Name"
                     width="34%">
+        <ui-grid-dropdown-filter [visible]="header.showFilter"
+                                 [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
+        </ui-grid-dropdown-filter>
     </ui-grid-column>
     <ui-grid-column [property]="'parity'"
                     title="Parity"
