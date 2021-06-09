@@ -2661,10 +2661,11 @@ describe('Component: UiGrid', () => {
         });
     });
 
-    describe('Scenario: collapsible filters', () => {
-        describe('Behavior: grid disabled', () => {
-            @Component({
-                template: `
+    describe('Scenario: collapse filters', () => {
+        describe('Legacy: collapsible', () => {
+            describe('Behavior: grid disabled', () => {
+                @Component({
+                    template: `
                 <ui-grid disabled>
                     <ui-grid-header [search]="true">
                     </ui-grid-header>
@@ -2685,70 +2686,70 @@ describe('Component: UiGrid', () => {
                     </ui-grid-footer>
                 </ui-grid>
                 `,
-            })
-            class TestFixtureAlternateDesignGridComponent {
-                public get filterItems(): IDropdownOption[] {
-                    return [1, 2, 3].map(count => ({
-                        value: count,
-                        label: count.toString(),
-                    }));
+                })
+                class TestFixtureAlternateDesignGridComponent {
+                    public get filterItems(): IDropdownOption[] {
+                        return [1, 2, 3].map(count => ({
+                            value: count,
+                            label: count.toString(),
+                        }));
+                    }
+
+                    public searchFactory = (): Observable<ISuggestValues<any>> => of({
+                        data: this.filterItems
+                            .map(
+                                option => ({
+                                    id: +option.value,
+                                    text: option.label,
+                                }),
+                            ),
+                        total: this.filterItems.length,
+                    })
                 }
 
-                public searchFactory = (): Observable<ISuggestValues<any>> => of({
-                    data: this.filterItems
-                        .map(
-                            option => ({
-                                id: +option.value,
-                                text: option.label,
-                            }),
-                        ),
-                    total: this.filterItems.length,
-                })
-            }
+                let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
 
-            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
-
-            beforeEach(() => {
-                TestBed.configureTestingModule({
-                    imports: [
-                        UiGridModule,
-                        UiGridCustomPaginatorModule,
-                        NoopAnimationsModule,
-                    ],
-                    providers: [
-                        UiMatPaginatorIntl,
-                        {
-                            provide: UI_GRID_OPTIONS,
-                            useValue: {
-                                useAlternateDesign: true,
-                                collapsibleFilters: true,
+                beforeEach(() => {
+                    TestBed.configureTestingModule({
+                        imports: [
+                            UiGridModule,
+                            UiGridCustomPaginatorModule,
+                            NoopAnimationsModule,
+                        ],
+                        providers: [
+                            UiMatPaginatorIntl,
+                            {
+                                provide: UI_GRID_OPTIONS,
+                                useValue: {
+                                    useAlternateDesign: true,
+                                    collapsibleFilters: true,
+                                },
                             },
-                        },
-                    ],
-                    declarations: [
-                        TestFixtureAlternateDesignGridComponent,
-                    ],
+                        ],
+                        declarations: [
+                            TestFixtureAlternateDesignGridComponent,
+                        ],
+                    });
+
+                    fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                    fixture.detectChanges();
                 });
 
-                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
-                fixture.detectChanges();
+                afterEach(() => {
+                    fixture.destroy();
+                });
+
+                it('should have collapsible toggle disabled', () => {
+                    const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+
+                    expect(collapisbleFiltersToggle).toBeTruthy();
+                    expect(collapisbleFiltersToggle.nativeElement.getAttribute('disabled')).toBeTruthy();
+                });
             });
 
-            afterEach(() => {
-                fixture.destroy();
-            });
-
-            it('should have collapsible toggle disabled', () => {
-                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
-
-                expect(collapisbleFiltersToggle).toBeTruthy();
-                expect(collapisbleFiltersToggle.nativeElement.getAttribute('disabled')).toBeTruthy();
-            });
-        });
-
-        describe('Behavior: collapsible filters', () => {
-            @Component({
-                template: `
+            describe('Behavior: collapsible filters', () => {
+                @Component({
+                    template: `
                 <ui-grid>
                     <ui-grid-header [search]="true">
                     </ui-grid-header>
@@ -2766,100 +2767,386 @@ describe('Component: UiGrid', () => {
                     </ui-grid-footer>
                 </ui-grid>
                 `,
-            })
-            class TestFixtureAlternateDesignGridComponent {
-                public get filterItems(): IDropdownOption[] {
-                    return [1, 2, 3].map(count => ({
-                        value: count,
-                        label: count.toString(),
-                    }));
+                })
+                class TestFixtureAlternateDesignGridComponent {
+                    public get filterItems(): IDropdownOption[] {
+                        return [1, 2, 3].map(count => ({
+                            value: count,
+                            label: count.toString(),
+                        }));
+                    }
+
+                    public visible = true;
                 }
 
-                public visible = true;
-            }
+                let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+                let component: TestFixtureAlternateDesignGridComponent;
 
-            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
-            let component: TestFixtureAlternateDesignGridComponent;
-
-            beforeEach(() => {
-                TestBed.configureTestingModule({
-                    imports: [
-                        UiGridModule,
-                        UiGridCustomPaginatorModule,
-                        NoopAnimationsModule,
-                    ],
-                    providers: [
-                        UiMatPaginatorIntl,
-                        {
-                            provide: UI_GRID_OPTIONS,
-                            useValue: {
-                                useAlternateDesign: true,
-                                collapsibleFilters: true,
-                                fetchStrategy: 'eager',
+                beforeEach(() => {
+                    TestBed.configureTestingModule({
+                        imports: [
+                            UiGridModule,
+                            UiGridCustomPaginatorModule,
+                            NoopAnimationsModule,
+                        ],
+                        providers: [
+                            UiMatPaginatorIntl,
+                            {
+                                provide: UI_GRID_OPTIONS,
+                                useValue: {
+                                    useAlternateDesign: true,
+                                    collapsibleFilters: true,
+                                    fetchStrategy: 'eager',
+                                },
                             },
-                        },
-                    ],
-                    declarations: [
-                        TestFixtureAlternateDesignGridComponent,
-                    ],
+                        ],
+                        declarations: [
+                            TestFixtureAlternateDesignGridComponent,
+                        ],
+                    });
+
+                    fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                    component = fixture.componentInstance;
+                    fixture.detectChanges();
                 });
 
-                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
-                component = fixture.componentInstance;
-                fixture.detectChanges();
+                afterEach(() => {
+                    fixture.destroy();
+                });
+
+                it('should use collapsible filters', () => {
+                    const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                    expect(collapisbleFiltersToggle).toBeTruthy();
+                });
+
+                it('should not display collapsible toggle button if no filter visible', () => {
+                    component.visible = false;
+                    fixture.detectChanges();
+
+                    const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                    expect(collapisbleFiltersToggle).toBeFalsy();
+                });
+
+                it('should display the correct filter label', () => {
+                    const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                    const collapisbleFiltersToggleText = fixture.debugElement
+                        .query(By.css('.ui-grid-collapsible-filters-toggle span span'));
+                    collapisbleFiltersToggle.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+
+                    const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+                    filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+
+                    const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                    filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+
+                    expect(collapisbleFiltersToggleText.nativeElement.innerText).toBe('Filters (1)');
+                });
+
+                it('should toggle filters', () => {
+                    const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                    let filtersRow = fixture.debugElement.query(By.css('.ui-grid-alternate-filter-container'));
+                    expect(filtersRow).toBeFalsy();
+
+                    collapisbleFiltersToggle.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+
+                    filtersRow = fixture.debugElement.query(By.css('.ui-grid-alternate-filter-container'));
+                    expect(filtersRow).toBeTruthy();
+                });
             });
 
-            afterEach(() => {
-                fixture.destroy();
-            });
+            describe('Behavior: override injection token value', () => {
+                @Component({
+                    template: `
+                <ui-grid [collapsibleFilters]="false" [fetchStrategy]="'onOpen'">
+                    <ui-grid-header>
+                    </ui-grid-header>
+                    <ui-grid-column property="id"
+                                    title="Id">
+                        <ui-grid-dropdown-filter [items]="filterItems">
+                        </ui-grid-dropdown-filter>
+                    </ui-grid-column>
+                    <ui-grid-column property="name"
+                                    title="Name">
+                        <ui-grid-search-filter [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
+                    </ui-grid-column>
+                    <ui-grid-column property="another"
+                                    title="Another">
+                        <ui-grid-search-filter [fetchStrategy]="'eager'" [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
+                    </ui-grid-column>
+                </ui-grid>
+                `,
+                })
+                class TestFixtureAlternateDesignGridComponent {
+                    public get filterItems(): IDropdownOption[] {
+                        return [1, 2, 3].map(count => ({
+                            value: count,
+                            label: count.toString(),
+                        }));
+                    }
 
-            it('should use collapsible filters', () => {
-                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
-                expect(collapisbleFiltersToggle).toBeTruthy();
-            });
+                    public searchFactory = (): Observable<ISuggestValues<any>> => of({
+                        data: this.filterItems
+                            .map(
+                                option => ({
+                                    id: +option.value,
+                                    text: option.label,
+                                }),
+                            ),
+                        total: this.filterItems.length,
+                    })
+                }
 
-            it('should not display collapsible toggle button if no filter visible', () => {
-                component.visible = false;
-                fixture.detectChanges();
+                let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
 
-                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
-                expect(collapisbleFiltersToggle).toBeFalsy();
-            });
+                beforeEach(() => {
+                    TestBed.configureTestingModule({
+                        imports: [
+                            UiGridModule,
+                            UiGridCustomPaginatorModule,
+                            NoopAnimationsModule,
+                        ],
+                        providers: [
+                            UiMatPaginatorIntl,
+                            {
+                                provide: UI_GRID_OPTIONS,
+                                useValue: {
+                                    collapsibleFilters: true,
+                                },
+                            },
+                        ],
+                        declarations: [
+                            TestFixtureAlternateDesignGridComponent,
+                        ],
+                    });
 
-            it('should display the correct filter label', () => {
-                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
-                const collapisbleFiltersToggleText = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle span span'));
-                collapisbleFiltersToggle.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
+                    fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                    fixture.detectChanges();
+                });
 
-                const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
-                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
+                afterEach(() => {
+                    fixture.destroy();
+                });
 
-                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
-                filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
+                it('should override injection token value for collapsible filters', () => {
+                    const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                    expect(collapisbleFiltersToggle).toBeFalsy();
+                });
 
-                expect(collapisbleFiltersToggleText.nativeElement.innerText).toBe('Filters (1)');
-            });
+                it('should override injection token value for fetchStrategy by grid and directive input', () => {
+                    const nameSuggestStrategy = fixture.debugElement
+                        .query(By.css('[data-cy="ui-grid-search-filter-name"][ng-reflect-fetch-strategy="onOpen"]'));
+                    expect(nameSuggestStrategy).toBeTruthy();
 
-            it('should toggle filters', () => {
-                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
-                let filtersRow = fixture.debugElement.query(By.css('.ui-grid-alternate-filter-container'));
-                expect(filtersRow).toBeFalsy();
-
-                collapisbleFiltersToggle.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
-
-                filtersRow = fixture.debugElement.query(By.css('.ui-grid-alternate-filter-container'));
-                expect(filtersRow).toBeTruthy();
+                    const otherSuggestStrategy = fixture.debugElement
+                        .query(By.css('[data-cy="ui-grid-search-filter-another"][ng-reflect-fetch-strategy="onOpen"]'));
+                    expect(otherSuggestStrategy).toBeTruthy();
+                });
             });
         });
 
-        describe('Behavior: override injection token value', () => {
-            @Component({
-                template: `
-                <ui-grid [collapsibleFilters]="false" [fetchStrategy]="'onOpen'">
+        describe('Recommended: collapseFiltersCount', () => {
+            describe('Behavior: grid disabled', () => {
+                @Component({
+                    template: `
+                            <ui-grid disabled>
+                                <ui-grid-header [search]="true">
+                                </ui-grid-header>
+                                <ui-grid-column [searchable]="true"
+                                                [sortable]="true"
+                                                [disableToggle]="true"
+                                                property="id"
+                                                title="Id">
+                                    <ui-grid-dropdown-filter [items]="filterItems">
+                                    </ui-grid-dropdown-filter>
+                                </ui-grid-column>
+                                <ui-grid-column property="name"
+                                                title="Name">
+                                    <ui-grid-search-filter [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
+                                </ui-grid-column>
+                                <ui-grid-footer [length]="5"
+                                                [pageSize]="5">
+                                </ui-grid-footer>
+                            </ui-grid>
+                `,
+                })
+                class TestFixtureAlternateDesignGridComponent {
+                    public get filterItems(): IDropdownOption[] {
+                        return [1, 2, 3].map(count => ({
+                            value: count,
+                            label: count.toString(),
+                        }));
+                    }
+
+                    public searchFactory = (): Observable<ISuggestValues<any>> => of({
+                        data: this.filterItems
+                            .map(
+                                option => ({
+                                    id: +option.value,
+                                    text: option.label,
+                                }),
+                            ),
+                        total: this.filterItems.length,
+                    })
+                }
+
+                let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+
+                beforeEach(() => {
+                    TestBed.configureTestingModule({
+                        imports: [
+                            UiGridModule,
+                            UiGridCustomPaginatorModule,
+                            NoopAnimationsModule,
+                        ],
+                        providers: [
+                            UiMatPaginatorIntl,
+                            {
+                                provide: UI_GRID_OPTIONS,
+                                useValue: {
+                                    useAlternateDesign: true,
+                                    collapseFiltersCount: 0,
+                                },
+                            },
+                        ],
+                        declarations: [
+                            TestFixtureAlternateDesignGridComponent,
+                        ],
+                    });
+
+                    fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                    fixture.detectChanges();
+                });
+
+                afterEach(() => {
+                    fixture.destroy();
+                });
+
+                it('should have collapsible toggle disabled', () => {
+                    const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+
+                    expect(collapisbleFiltersToggle).toBeTruthy();
+                    expect(collapisbleFiltersToggle.nativeElement.getAttribute('disabled')).toBeTruthy();
+                });
+            });
+
+            describe('Behavior: collapsible filters', () => {
+                @Component({
+                    template: `
+                            <ui-grid>
+                                <ui-grid-header [search]="true">
+                                </ui-grid-header>
+                                <ui-grid-column [searchable]="true"
+                                                [sortable]="true"
+                                                [disableToggle]="true"
+                                                property="id"
+                                                title="Id">
+                                    <ui-grid-dropdown-filter [items]="filterItems"
+                                                            [visible]="visible">
+                                    </ui-grid-dropdown-filter>
+                                </ui-grid-column>
+                                <ui-grid-footer [length]="5"
+                                                [pageSize]="5">
+                                </ui-grid-footer>
+                            </ui-grid>
+                `,
+                })
+                class TestFixtureAlternateDesignGridComponent {
+                    public get filterItems(): IDropdownOption[] {
+                        return [1, 2, 3].map(count => ({
+                            value: count,
+                            label: count.toString(),
+                        }));
+                    }
+
+                    public visible = true;
+                }
+
+                let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+                let component: TestFixtureAlternateDesignGridComponent;
+
+                beforeEach(() => {
+                    TestBed.configureTestingModule({
+                        imports: [
+                            UiGridModule,
+                            UiGridCustomPaginatorModule,
+                            NoopAnimationsModule,
+                        ],
+                        providers: [
+                            UiMatPaginatorIntl,
+                            {
+                                provide: UI_GRID_OPTIONS,
+                                useValue: {
+                                    useAlternateDesign: true,
+                                    collapseFiltersCount: 0,
+                                },
+                            },
+                        ],
+                        declarations: [
+                            TestFixtureAlternateDesignGridComponent,
+                        ],
+                    });
+
+                    fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                    component = fixture.componentInstance;
+                    fixture.detectChanges();
+                });
+
+                afterEach(() => {
+                    fixture.destroy();
+                });
+
+                it('should use collapsible filters', () => {
+                    const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                    expect(collapisbleFiltersToggle).toBeTruthy();
+                });
+
+                it('should not display collapsible toggle button if no filter visible', () => {
+                    component.visible = false;
+                    fixture.detectChanges();
+
+                    const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                    expect(collapisbleFiltersToggle).toBeFalsy();
+                });
+
+                it('should display the correct filter label', () => {
+                    const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                    const collapisbleFiltersToggleText = fixture.debugElement
+                        .query(By.css('.ui-grid-collapsible-filters-toggle span span'));
+                    collapisbleFiltersToggle.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+
+                    const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+                    filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+
+                    const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                    filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+
+                    expect(collapisbleFiltersToggleText.nativeElement.innerText).toBe('Filters (1)');
+                });
+
+                it('should toggle filters', () => {
+                    const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                    let filtersRow = fixture.debugElement.query(By.css('.ui-grid-alternate-filter-container'));
+                    expect(filtersRow).toBeFalsy();
+
+                    collapisbleFiltersToggle.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+
+                    filtersRow = fixture.debugElement.query(By.css('.ui-grid-alternate-filter-container'));
+                    expect(filtersRow).toBeTruthy();
+                });
+            });
+
+            describe('Behavior: override injection token value', () => {
+                @Component({
+                    template: `
+                <ui-grid [collapseFiltersCount]="2" [fetchStrategy]="'onOpen'">
                     <ui-grid-header>
                     </ui-grid-header>
                     <ui-grid-column property="id"
@@ -2873,66 +3160,68 @@ describe('Component: UiGrid', () => {
                     </ui-grid-column>
                 </ui-grid>
                 `,
-            })
-            class TestFixtureAlternateDesignGridComponent {
-                public get filterItems(): IDropdownOption[] {
-                    return [1, 2, 3].map(count => ({
-                        value: count,
-                        label: count.toString(),
-                    }));
+                })
+                class TestFixtureAlternateDesignGridComponent {
+                    public get filterItems(): IDropdownOption[] {
+                        return [1, 2, 3].map(count => ({
+                            value: count,
+                            label: count.toString(),
+                        }));
+                    }
+
+                    public searchFactory = (): Observable<ISuggestValues<any>> => of({
+                        data: this.filterItems
+                            .map(
+                                option => ({
+                                    id: +option.value,
+                                    text: option.label,
+                                }),
+                            ),
+                        total: this.filterItems.length,
+                    })
                 }
 
-                public searchFactory = (): Observable<ISuggestValues<any>> => of({
-                    data: this.filterItems
-                        .map(
-                            option => ({
-                                id: +option.value,
-                                text: option.label,
-                            }),
-                        ),
-                    total: this.filterItems.length,
-                })
-            }
+                let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
 
-            let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
-
-            beforeEach(() => {
-                TestBed.configureTestingModule({
-                    imports: [
-                        UiGridModule,
-                        UiGridCustomPaginatorModule,
-                        NoopAnimationsModule,
-                    ],
-                    providers: [
-                        UiMatPaginatorIntl,
-                        {
-                            provide: UI_GRID_OPTIONS,
-                            useValue: {
-                                collapsibleFilters: true,
+                beforeEach(() => {
+                    TestBed.configureTestingModule({
+                        imports: [
+                            UiGridModule,
+                            UiGridCustomPaginatorModule,
+                            NoopAnimationsModule,
+                        ],
+                        providers: [
+                            UiMatPaginatorIntl,
+                            {
+                                provide: UI_GRID_OPTIONS,
+                                useValue: {
+                                    collapseFiltersCount: 0,
+                                },
                             },
-                        },
-                    ],
-                    declarations: [
-                        TestFixtureAlternateDesignGridComponent,
-                    ],
+                        ],
+                        declarations: [
+                            TestFixtureAlternateDesignGridComponent,
+                        ],
+                    });
+
+                    fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                    fixture.detectChanges();
                 });
 
-                fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
-                fixture.detectChanges();
-            });
+                afterEach(() => {
+                    fixture.destroy();
+                });
 
-            afterEach(() => {
-                fixture.destroy();
-            });
+                it('should override injection token value for collapsible filters', () => {
+                    const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                    expect(collapisbleFiltersToggle).toBeFalsy();
+                });
 
-            it('should override injection token value for collapsible filters', () => {
-                const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
-                expect(collapisbleFiltersToggle).toBeFalsy();
-            });
-
-            it('should override injection token value for fetchStrategy on searchable', () => {
-                const suggestOnOpen = fixture.debugElement.query(By.css('[data-cy="ui-grid-search-filter-name"][ng-reflect-fetch-strategy="onOpen"]'));
-                expect(suggestOnOpen).toBeTruthy();
+                it('should override injection token value for fetchStrategy on searchable', () => {
+                    const suggestStrategy = fixture.debugElement
+                        .query(By.css('[data-cy="ui-grid-search-filter-name"][ng-reflect-fetch-strategy="onOpen"]'));
+                    expect(suggestStrategy).toBeTruthy();
+                });
             });
         });
     });

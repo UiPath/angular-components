@@ -3,6 +3,7 @@
         Painted {{ dataManager?.length }} rows in {{ paintTime }}ms
     </div>
 </ng-container>
+
 <div *ngIf="toggleColumns ||
             header?.mainButtons?.length ||
             header?.actionButtons?.length ||
@@ -72,7 +73,7 @@
 <div *ngIf="showFilters && (hasAnyFiltersVisible$ | async)"
      [@filters-container]
      class="ui-grid-filter-container">
-    <ng-container *ngTemplateOutlet="classicFiltersTmpl"></ng-container>
+    <ng-container *ngTemplateOutlet="inlineFiltersTmpl"></ng-container>
 </div>
 
 <ng-container *ngIf="useAlternateDesign && multiPageSelect then multiPageSelectionRow">
@@ -480,7 +481,7 @@
 </ng-template>
 
 <ng-template #filtersTmpl>
-    <ng-container *ngIf="collapsibleFilters; else classicFiltersTmpl">
+    <ng-container *ngIf="areFilersCollapsed$ | async; else inlineFiltersTmpl">
         <button *ngIf="hasAnyFiltersVisible$ | async"
                 [disabled]="disabled"
                 (click)="showFilters = !showFilters"
@@ -488,13 +489,13 @@
                 type="button"
                 class="ui-grid-collapsible-filters-toggle">
             <mat-icon>filter_list</mat-icon>
-            <span>{{ intl.filters(filterManager.activeCount$ | async)}}</span>
+            <span>{{ intl.filters(filterManager.activeCount$ | async) }}</span>
             <mat-icon>{{ showFilters ? 'expand_less' : 'expand_more' }}</mat-icon>
         </button>
     </ng-container>
 </ng-template>
 
-<ng-template #classicFiltersTmpl>
+<ng-template #inlineFiltersTmpl>
     <ng-container *ngFor="let column of columns$ | async">
         <div *ngIf="column.dropdown?.visible$ | async"
              [ngClass]="{'ui-grid-alternate-filter-container': collapsibleFilters}"

@@ -21,7 +21,9 @@ export interface GridOptions<T> {
     useCache?: boolean;
     fetchStrategy?: 'eager' | 'onOpen';
     useAlternateDesign?: boolean;
+    // deprecated, use `collapseFiltersCount` instead
     collapsibleFilters?: boolean;
+    collapseFiltersCount?: number;
     idProperty?: keyof T;
     rowSize?: number;
 }
