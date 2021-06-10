@@ -77,8 +77,12 @@ export class IntegrationUtils<T> {
         this.getNativeElement(selector, debugEl)!
             .dispatchEvent(EventGenerator.keyDown(Key.Enter));
 
-    public expectAndFlush = (stub: IStubEndpoint, httpClient: HttpTestingController) => {
-        const testReq = httpClient.expectOne(request => request.url.includes(stub.url));
+    public expectAndFlush = (stub: IStubEndpoint, httpClient: HttpTestingController, params: Record<string, string> = {}) => {
+        const testReq = httpClient.expectOne(request => {
+            const urlMatch = request.url.includes(stub.url);
+            const paramMatch = Object.entries(params).every(([key, value]) => request.params.get(key) === value);
+            return urlMatch && paramMatch;
+        });
         testReq.flush(stub.response);
 
         return testReq;
