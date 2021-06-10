@@ -8,7 +8,7 @@ import {
     templateUrl: './home.page.html',
     styleUrls: ['./home.page.scss'],
 })
-// tslint:disable-next-line
+// eslint-disable-next-line
 export class HomePage implements OnInit {
 
     constructor() { }

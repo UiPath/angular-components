@@ -1,0 +1,32 @@
+{
+  "extends": "../../.eslintrc.json",
+  "ignorePatterns": [
+    "!**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "projects/playground/tsconfig.app.json",
+          "projects/playground/tsconfig.spec.json",
+          "projects/playground/e2e/tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "plugins": [
+        "sonarjs",
+        "eslint-plugin-rxjs"
+      ],
+      "rules": {}
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "rules": {}
+    }
+  ]
+}

@@ -4,9 +4,9 @@ const IE_10 = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Triden
 const IE_11 = 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko';
 const CHROME_74 = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36';
 const FIREFOX_67 = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0';
-// tslint:disable-next-line: max-line-length
+// eslint-disable-next-line max-len
 const EDGE_76 = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3786.0 Safari/537.36 Edg/76.0.155.0';
-// tslint:disable-next-line: max-line-length
+// eslint-disable-next-line max-len
 const EDGE_44 = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17704';
 
 describe('Util(browser): isEdge', () => {

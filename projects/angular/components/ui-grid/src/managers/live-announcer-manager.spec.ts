@@ -25,7 +25,7 @@ describe('Component: UiGrid', () => {
 
         beforeEach(() => {
             announceSpy = jasmine.createSpy();
-            // tslint:disable-next-line: no-unused-expression
+            // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
             announcer = new LiveAnnouncerManager(announceSpy, intl, data$, sort$, refresh$, pageChange$);
         });
 

@@ -22,7 +22,7 @@ class NgLetContext {
  * @export
  */
 @Directive({
-    // tslint:disable-next-line: directive-selector
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[ngLet]',
 })
 export class UiNgLetDirective {
