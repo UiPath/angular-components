@@ -30,15 +30,15 @@ export class UiMatPaginatorIntl extends MatPaginatorIntl {
     selector: 'ui-grid-custom-paginator',
     templateUrl: './ui-grid-custom-paginator.component.html',
     styleUrls: ['./ui-grid-custom-paginator.component.scss'],
-    // tslint:disable-next-line: no-inputs-metadata-property
+    // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
     inputs: ['disabled'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
 export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginatorDefaultOptions> {
-    // tslint:disable-next-line: naming-convention
+    // eslint-disable-next-line 
     public _formFieldAppearance?: MatFormFieldAppearance;
-    // tslint:disable-next-line: naming-convention
+    // eslint-disable-next-line
     public _intl!: UiMatPaginatorIntl;
 
     @HostBinding('class')

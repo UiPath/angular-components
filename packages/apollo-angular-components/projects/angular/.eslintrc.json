@@ -1,0 +1,18 @@
+{
+    "extends": "../../.eslintrc.json",
+    "ignorePatterns": ["!**/*"],
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "parserOptions": {
+                "project": [
+                    "projects/angular/tsconfig.lib.json",
+                    "projects/angular/tsconfig.spec.json"
+                ],
+                "createDefaultProgram": true
+            },
+            "plugins": ["sonarjs", "eslint-plugin-rxjs"],
+            "rules": {}
+        }
+    ]
+}

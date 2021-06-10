@@ -1,4 +1,4 @@
-// tslint:disable: ordered-imports
+/* eslint-disable import/order */
 
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 import 'core-js/es7/reflect';
@@ -10,7 +10,7 @@ import * as faker from 'faker';
 import { toHaveNoViolations } from 'jasmine-axe';
 import { setSpecFn } from 'projects/angular/axe-helper';
 
-// tslint:enable: ordered-imports
+/* eslint-enable import/order */
 import { getTestBed } from '@angular/core/testing';
 import {
     BrowserDynamicTestingModule,

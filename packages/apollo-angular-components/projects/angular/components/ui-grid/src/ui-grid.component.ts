@@ -534,7 +534,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         debounceTime(0),
         map(() => this._ref.nativeElement.querySelector('.ui-grid-viewport')),
         map(view => view ? view.offsetWidth - view.clientWidth : 0),
-        // tslint:disable-next-line: deprecation
+        // eslint-disable-next-line import/no-deprecated
         tap(compensationWidth => this.scrollCompensationWidth = compensationWidth),
     );
 

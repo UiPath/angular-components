@@ -66,7 +66,7 @@ class UiSuggestFixtureDirective {
     })
     public uiSuggest!: UiSuggestComponent;
 
-    // tslint:disable-next-line: no-inferrable-types
+    // eslint-disable-next-line @typescript-eslint/no-inferrable-types
     public defaultValue?: string = 'All';
     public placeholder = 'My Field';
 

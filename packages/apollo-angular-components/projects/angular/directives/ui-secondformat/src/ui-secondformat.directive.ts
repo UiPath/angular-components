@@ -62,7 +62,7 @@ export const UI_SECONDFORMAT_OPTIONS = new InjectionToken<Observable<void>>('UiS
     template: `<span [matTooltip]="tooltip$ | async">{{ text$ | async }}</span>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-// tslint:disable-next-line: component-class-suffix
+// eslint-disable-next-line @angular-eslint/component-class-suffix
 export class UiSecondFormatDirective {
     /**
      * The number of `seconds` that need to be formatted.

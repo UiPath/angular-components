@@ -5,7 +5,7 @@
     "extensions.ignoreRecommendations": false,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "editor.codeActionsOnSave": {
-        "source.fixAll.tslint": true,
+        "source.fixAll.eslint": true,
     },
     "javascript.preferences.importModuleSpecifier": "non-relative",
     "javascript.preferences.quoteStyle": "single",
