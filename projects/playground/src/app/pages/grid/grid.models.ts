@@ -13,7 +13,7 @@ export interface IHeader {
 }
 
 export interface IInputs {
-    useAlternateDesign: boolean;
+    useLegacyDesign: boolean;
     collapseFiltersCount: number;
     // deprecated
     collapsibleFilters?: boolean;

@@ -11,7 +11,7 @@
             header?.search ||
             (isAnyFilterDefined$ | async)"
      class="ui-grid-filter-container">
-    <ng-container *ngIf="!useAlternateDesign">
+    <ng-container *ngIf="useLegacyDesign">
         <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
     </ng-container>
 
@@ -34,7 +34,7 @@
 
     </ng-container>
 
-    <ng-container *ngIf="useAlternateDesign">
+    <ng-container *ngIf="!useLegacyDesign">
         <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
     </ng-container>
 
@@ -59,7 +59,7 @@
         </ng-container>
     </div>
 
-    <div *ngIf="useAlternateDesign || header?.mainButtons?.length > 1"
+    <div *ngIf="!useLegacyDesign || header?.mainButtons?.length > 1"
          class="ui-grid-action-buttons ui-grid-action-buttons-main">
         <ng-container *ngFor="let button of header?.mainButtons">
             <ng-container *ngIf="button.visible">
@@ -76,15 +76,15 @@
     <ng-container *ngTemplateOutlet="inlineFiltersTmpl"></ng-container>
 </div>
 
-<ng-container *ngIf="useAlternateDesign && multiPageSelect then multiPageSelectionRow">
+<ng-container *ngIf="!useLegacyDesign && multiPageSelect then multiPageSelectionRow">
 </ng-container>
 
-<div [class.use-alternate-design]="useAlternateDesign"
+<div [class.use-alternate-design]="!useLegacyDesign"
      (keydown.shift.alt.arrowup)="focusRowHeader()"
      class="ui-grid-container">
 
     <div class="ui-grid-table-container">
-        <div *ngIf="!useAlternateDesign && header?.mainButtons?.length === 1"
+        <div *ngIf="useLegacyDesign && header?.mainButtons?.length === 1"
              class="ui-grid-action-button">
             <ng-container *ngIf="header!.mainButtons![0] as mainBtn">
                 <ng-container *ngIf="mainBtn.visible">
@@ -194,7 +194,7 @@
                                   class="ui-grid-loader">
                 </mat-progress-bar>
             </div>
-            <ng-container *ngIf="!useAlternateDesign && multiPageSelect then multiPageSelectionRow">
+            <ng-container *ngIf="useLegacyDesign && multiPageSelect then multiPageSelectionRow">
             </ng-container>
 
             <ng-container *ngIf="dataManager?.length; else noData">
@@ -239,7 +239,7 @@
         </div>
     </div>
     <div class="ui-grid-footer-container">
-        <ng-container *ngTemplateOutlet="useAlternateDesign ? alternativeFooter : classicFooter"></ng-container>
+        <ng-container *ngTemplateOutlet="useLegacyDesign ? classicFooter  : alternativeFooter"></ng-container>
     </div>
 </div>
 
@@ -379,7 +379,7 @@
 </ng-template>
 
 <ng-template #defaultNoData>
-    <ng-container *ngIf="!useAlternateDesign; else defaultNoDataAlternative">
+    <ng-container *ngIf="useLegacyDesign; else defaultNoDataAlternative">
         <div *ngIf="!dataManager.pristine"
              class="ui-grid-row ui-grid-no-data-container"
              [class.ui-grid-border-none]="!footer">
@@ -413,7 +413,7 @@
     <div *ngIf="!isProjected &&
                 showMultiPageSelectionInfo"
          class="ui-grid-row ui-grid-selection-info-container"
-         [class.ui-grid-selection-info-container-alternate]="useAlternateDesign">
+         [class.ui-grid-selection-info-container-alternate]="!useLegacyDesign">
         <ng-container *ngTemplateOutlet="multiPageSelectionInfo"></ng-container>
     </div>
 </ng-template>
@@ -444,7 +444,7 @@
 </ng-template>
 
 <ng-template #noSelectionTmpl>
-    <mat-icon *ngIf="!useAlternateDesign"
+    <mat-icon *ngIf="useLegacyDesign"
               [matTooltip]="intl.multiPageSelectionInfoTooltip"
               [matTooltipDisabled]="resizeManager.isResizing"
               class="ui-grid-selection-info-icon"
@@ -561,6 +561,6 @@
                             [togglePlaceholderTitle]="intl.togglePlaceholderTitle"
                             (visibleColumns)="visibilityManager.update($event)"
                             (resetColumns)="visibilityManager.reset()"
-                            [useAlternateDesign]="useAlternateDesign">
+                            [useLegacyDesign]="useLegacyDesign">
     </ui-grid-toggle-columns>
 </ng-template>

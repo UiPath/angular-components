@@ -35,7 +35,7 @@ export class GridPageComponent {
     public generatedGrid = false;
 
     public inputKeys = [
-        'useAlternateDesign',
+        'useLegacyDesign',
         'collapseFiltersCount',
         'loading',
         'isProjected',
@@ -75,7 +75,7 @@ export class GridPageComponent {
     ) {
         this.actionsForm = this._fb.group({
             inputs: this._fb.group({
-                useAlternateDesign: [false],
+                useLegacyDesign: [true],
                 collapseFiltersCount: [20, [Validators.min(0), Validators.max(500)]],
                 loading: [false],
                 isProjected: [false],

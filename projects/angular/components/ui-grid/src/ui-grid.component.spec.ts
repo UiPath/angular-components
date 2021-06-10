@@ -1850,12 +1850,10 @@ describe('Component: UiGrid', () => {
                 expect(toggleComponent).toBeDefined();
             });
 
-            it('should render toggle icon button', () => {
-                const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
-                const intl = new UiGridIntl();
+            it('should render toggle button', () => {
+                const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
 
                 expect(buttonToggle).toBeDefined();
-                expect(buttonToggle).toHaveAttr('aria-label', intl.togglePlaceholderTitle);
             });
 
             describe('Scenario: Open', () => {
@@ -1864,7 +1862,7 @@ describe('Component: UiGrid', () => {
                 beforeEach(async () => {
                     fixture.detectChanges();
 
-                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
                     buttonToggle.dispatchEvent(EventGenerator.click);
 
                     await fixture.whenStable();
@@ -1979,7 +1977,7 @@ describe('Component: UiGrid', () => {
                 beforeEach(async () => {
                     fixture.detectChanges();
 
-                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
                     buttonToggle.dispatchEvent(EventGenerator.click);
 
                     await fixture.whenStable();
@@ -2042,7 +2040,7 @@ describe('Component: UiGrid', () => {
                         expect(headers).toBeDefined();
                         expect(headers.length).toEqual(6, 'Not all columns rendered');
 
-                        buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                        buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
                         buttonToggle.dispatchEvent(EventGenerator.click);
 
                         fixture.detectChanges();
@@ -2266,7 +2264,7 @@ describe('Component: UiGrid', () => {
             });
 
             it('should render toggle icon button', () => {
-                const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
                 expect(buttonToggle).toBeDefined();
             });
 
@@ -2276,7 +2274,7 @@ describe('Component: UiGrid', () => {
                 beforeEach(async () => {
                     fixture.detectChanges();
 
-                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-icon-button')).nativeElement;
+                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
                     buttonToggle.dispatchEvent(EventGenerator.click);
 
                     await fixture.whenStable();
@@ -2334,7 +2332,7 @@ describe('Component: UiGrid', () => {
                         {
                             provide: UI_GRID_OPTIONS,
                             useValue: {
-                                useAlternateDesign: true,
+                                useLegacyDesign: false,
                             },
                         },
                     ],
@@ -2413,7 +2411,7 @@ describe('Component: UiGrid', () => {
                         {
                             provide: UI_GRID_OPTIONS,
                             useValue: {
-                                useAlternateDesign: true,
+                                useLegacyDesign: false,
                             },
                         },
                     ],
@@ -2506,7 +2504,7 @@ describe('Component: UiGrid', () => {
             @Component({
                 template: `
                 <ui-grid [toggleColumns]="true"
-                         [useAlternateDesign]="false">
+                         [useLegacyDesign]="true">
                     <ui-grid-header>
                     </ui-grid-header>
                     <ui-grid-column property="id">
@@ -2533,7 +2531,7 @@ describe('Component: UiGrid', () => {
                         {
                             provide: UI_GRID_OPTIONS,
                             useValue: {
-                                useAlternateDesign: true,
+                                useLegacyDesign: false,
                             },
                         },
                     ],
@@ -2616,7 +2614,7 @@ describe('Component: UiGrid', () => {
                         {
                             provide: UI_GRID_OPTIONS,
                             useValue: {
-                                useAlternateDesign: true,
+                                useLegacyDesign: false,
                             },
                         },
                     ],
@@ -2721,7 +2719,7 @@ describe('Component: UiGrid', () => {
                             {
                                 provide: UI_GRID_OPTIONS,
                                 useValue: {
-                                    useAlternateDesign: true,
+                                    useLegacyDesign: false,
                                     collapsibleFilters: true,
                                 },
                             },
@@ -2794,7 +2792,7 @@ describe('Component: UiGrid', () => {
                             {
                                 provide: UI_GRID_OPTIONS,
                                 useValue: {
-                                    useAlternateDesign: true,
+                                    useLegacyDesign: false,
                                     collapsibleFilters: true,
                                     fetchStrategy: 'eager',
                                 },
@@ -2939,11 +2937,11 @@ describe('Component: UiGrid', () => {
                 it('should override injection token value for fetchStrategy by grid and directive input', () => {
                     const nameSuggestStrategy = fixture.debugElement
                         .query(By.css('[data-cy="ui-grid-search-filter-name"][ng-reflect-fetch-strategy="onOpen"]'));
-                    expect(nameSuggestStrategy).toBeTruthy();
+                    expect(nameSuggestStrategy).toBeTruthy('NO name filter');
 
                     const otherSuggestStrategy = fixture.debugElement
-                        .query(By.css('[data-cy="ui-grid-search-filter-another"][ng-reflect-fetch-strategy="onOpen"]'));
-                    expect(otherSuggestStrategy).toBeTruthy();
+                        .query(By.css('[data-cy="ui-grid-search-filter-another"][ng-reflect-fetch-strategy="eager"]'));
+                    expect(otherSuggestStrategy).toBeTruthy('NO another filter');
                 });
             });
         });
@@ -3007,7 +3005,7 @@ describe('Component: UiGrid', () => {
                             {
                                 provide: UI_GRID_OPTIONS,
                                 useValue: {
-                                    useAlternateDesign: true,
+                                    useLegacyDesign: false,
                                     collapseFiltersCount: 0,
                                 },
                             },
@@ -3080,7 +3078,7 @@ describe('Component: UiGrid', () => {
                             {
                                 provide: UI_GRID_OPTIONS,
                                 useValue: {
-                                    useAlternateDesign: true,
+                                    useLegacyDesign: false,
                                     collapseFiltersCount: 0,
                                 },
                             },
@@ -3470,7 +3468,7 @@ describe('Component: UiGrid', () => {
                     {
                         provide: UI_GRID_OPTIONS,
                         useValue: {
-                            useAlternateDesign: true,
+                            useLegacyDesign: false,
                         },
                     },
                 ],
