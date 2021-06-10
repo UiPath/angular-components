@@ -248,7 +248,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     @Input()
-    public useAlternateDesign: boolean;
+    public useLegacyDesign: boolean;
 
     /**
      * Option to have collapsible filters.
@@ -601,7 +601,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     ) {
         super();
 
-        this.useAlternateDesign = _gridOptions?.useAlternateDesign ?? false;
+        this.useLegacyDesign = _gridOptions?.useLegacyDesign ?? false;
         this._fetchStrategy = _gridOptions?.fetchStrategy ?? 'onOpen';
         this.rowSize = _gridOptions?.rowSize ?? DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
         this._collapseFiltersCount$ = new BehaviorSubject(

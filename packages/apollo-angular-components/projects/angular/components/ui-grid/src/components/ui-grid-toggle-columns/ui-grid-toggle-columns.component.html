@@ -1,5 +1,5 @@
 <ng-container *ngIf="options!.length">
-    <button *ngIf="useAlternateDesign; else classicColumnToggleTmpl"
+    <button *ngIf="!useLegacyDesign; else classicColumnToggleTmpl"
             [color]="dirty ? 'primary' : undefined"
             (click)="selectColumns!.open(); selectColumns!.focus()"
             type="button"
@@ -11,8 +11,8 @@
     <mat-select [value]="selected"
                 [aria-label]="togglePlaceholderTitle"
                 [disableOptionCentering]="true"
-                [class.use-alternate]="useAlternateDesign"
-                [panelClass]="['ui-grid-toggle-panel', useAlternateDesign ? 'ui-grid-toggle-panel-alternate': '']"
+                [class.use-alternate]="!useLegacyDesign"
+                [panelClass]="['ui-grid-toggle-panel', useLegacyDesign ?  '' : 'ui-grid-toggle-panel-alternate']"
                 (selectionChange)="selectionChange($event)"
                 tabIndex="-1"
                 multiple>
