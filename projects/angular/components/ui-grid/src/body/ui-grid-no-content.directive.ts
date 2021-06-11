@@ -8,8 +8,8 @@ import {
     selector: '[uiGridNoContent], ui-grid-no-content',
 })
 export class UiGridNoContentDirective {
-  @ContentChild(TemplateRef, {
-      static: true,
-  })
-  public html?: TemplateRef<any>;
+    @ContentChild(TemplateRef, {
+        static: true,
+    })
+    public html?: TemplateRef<any>;
 }

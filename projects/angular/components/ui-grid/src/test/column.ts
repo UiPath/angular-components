@@ -55,8 +55,10 @@ export const generateSearchFilterDefinition = (): ISearchableDropdownFilterDefin
         }));
 
     dropdown.method = faker.helpers.randomize(['eq', 'neq', 'ge', 'gt']);
-    dropdown.searchSourceFactory = () => of({ data: items,
-        total: items.length });
+    dropdown.searchSourceFactory = () => of({
+        data: items,
+        total: items.length,
+    });
 
     return {
         dropdown,

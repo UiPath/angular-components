@@ -35,8 +35,10 @@ document.head.appendChild(customStyle);
 const reseed = () => {
     faker.seed(SEED);
     // overwrite Math.radom again in each global context
-    Math.random = () => faker.random.number({ min: 0,
-        max: 100000 }) / 100000;
+    Math.random = () => faker.random.number({
+        min: 0,
+        max: 100000
+    }) / 100000;
 };
 
 beforeAll(() => jasmine.addMatchers(toHaveNoViolations));
@@ -44,7 +46,7 @@ beforeAll(() => jasmine.addMatchers(toHaveNoViolations));
 beforeEach(reseed);
 
 const __describe = describe;
-(global as any).describe = function() {
+(global as any).describe = function () {
     reseed();
     __describe.apply(this, arguments as any);
 };

@@ -8,8 +8,8 @@ import {
     selector: '[uiGridLoading], ui-grid-loading',
 })
 export class UiGridLoadingDirective {
-  @ContentChild(TemplateRef, {
-      static: true,
-  })
-  public html?: TemplateRef<any>;
+    @ContentChild(TemplateRef, {
+        static: true,
+    })
+    public html?: TemplateRef<any>;
 }

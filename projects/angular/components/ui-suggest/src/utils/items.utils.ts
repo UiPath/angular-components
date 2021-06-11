@@ -180,8 +180,10 @@ export function mapInitialItems(
     isDown: boolean,
 ) {
     const loadingLength = total - data.length;
-    const queryResponse = data.map(r => ({ ...r,
-        loading: VirtualScrollItemStatus.loaded }));
+    const queryResponse = data.map(r => ({
+        ...r,
+        loading: VirtualScrollItemStatus.loaded,
+    }));
     const mappedItems = applyDisplayPriority(queryResponse, displayPriority, value);
     const loadingItems = generateLoadingInitialCollection(loadingLabel, loadingLength);
 
@@ -214,8 +216,10 @@ export function generateLoadingInitialCollection(text: string, total = 0): ISugg
 export function setLoadedState(data: ISuggestValueData<any>[], start: number, currentItems: ISuggestValue[]) {
     const items = [...currentItems];
     data
-        .map(r => ({ ...r,
-            loading: VirtualScrollItemStatus.loaded }))
+        .map(r => ({
+            ...r,
+            loading: VirtualScrollItemStatus.loaded,
+        }))
         .forEach((item, chunkIndex) => {
             const itemIndex = chunkIndex + start;
             if (items[itemIndex] && items[itemIndex].loading !== VirtualScrollItemStatus.loaded) {

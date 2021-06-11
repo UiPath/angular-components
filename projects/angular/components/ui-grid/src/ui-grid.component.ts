@@ -1,3 +1,28 @@
+import range from 'lodash-es/range';
+import {
+    animationFrameScheduler,
+    BehaviorSubject,
+    combineLatest,
+    merge,
+    Observable,
+    of,
+    Subject,
+} from 'rxjs';
+import {
+    debounceTime,
+    distinctUntilChanged,
+    filter,
+    map,
+    observeOn,
+    share,
+    shareReplay,
+    startWith,
+    switchMap,
+    take,
+    takeUntil,
+    tap,
+} from 'rxjs/operators';
+
 import {
     animate,
     style,
@@ -29,31 +54,6 @@ import {
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
-
-import range from 'lodash-es/range';
-import {
-    animationFrameScheduler,
-    BehaviorSubject,
-    combineLatest,
-    merge,
-    Observable,
-    of,
-    Subject,
-} from 'rxjs';
-import {
-    debounceTime,
-    distinctUntilChanged,
-    filter,
-    map,
-    observeOn,
-    share,
-    shareReplay,
-    startWith,
-    switchMap,
-    take,
-    takeUntil,
-    tap,
-} from 'rxjs/operators';
 
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import {

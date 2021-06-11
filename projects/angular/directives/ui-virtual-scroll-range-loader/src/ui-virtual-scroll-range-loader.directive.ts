@@ -128,22 +128,30 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
                 ),
                 debounceTime(100),
                 // filter early, in case of false emissions like { 0,0 }
-                filter(([{ start, end }]) => this._isValidRange({ start,
-                    end })),
+                filter(([{ start, end }]) => this._isValidRange({
+                    start,
+                    end,
+                })),
                 distinctUntilChanged(([list1], [list2]) => `${list1.start}${list1.end}` === `${list2.start}${list2.end}`),
                 filter(this._filterTouchedRange),
                 map(([{ start, end }, items]) => ({
                     ...this._adjustLoadingRange(start, end, this.buffer, items),
                     items,
                 })),
-                filter(({ start, end }) => this._isValidRange({ start,
-                    end })),
+                filter(({ start, end }) => this._isValidRange({
+                    start,
+                    end,
+                })),
                 map(({ start, end, items }) =>
                     this.isDown ?
-                        { start,
-                            end } :
-                        this._reverseIndex({ start,
-                            end }, items.length),
+                        {
+                            start,
+                            end,
+                        } :
+                        this._reverseIndex({
+                            start,
+                            end,
+                        }, items.length),
                 ),
                 filter(this._isValidRange),
                 tap(range => this.rangeLoad.emit(range)),
@@ -193,8 +201,10 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
 
         if (start > end) {
             // kill the request
-            return { start,
-                end: -1 };
+            return {
+                start,
+                end: -1,
+            };
         }
 
         const isNotTrimmedAtBothEnds = !isTrimmedBefore || !isTrimmedAfter;
@@ -223,15 +233,19 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
             end = -1;
         }
 
-        return { start,
-            end };
+        return {
+            start,
+            end,
+        };
     }
 
     private _addSafeBuffer(start: number, end: number, buffer: number, items: VirtualScrollItem[] | readonly VirtualScrollItem[]) {
         end = Math.min(end + buffer, items.length - 1);
         start = Math.max(start - buffer, 0);
-        return { start,
-            end };
+        return {
+            start,
+            end,
+        };
     }
 
     private _trimInterval(start: number, end: number, items: VirtualScrollItem[] | readonly VirtualScrollItem[]) {
@@ -247,9 +261,11 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
             isTrimmedAfter = true;
             end -= 1;
         }
-        return { start,
+        return {
+            start,
             end,
             isTrimmedBefore,
-            isTrimmedAfter };
+            isTrimmedAfter,
+        };
     }
 }

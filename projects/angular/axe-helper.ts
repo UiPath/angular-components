@@ -3,7 +3,7 @@ import * as jasmineAxe from 'jasmine-axe';
 
 /* eslint-disable */
 export const axe = jasmineAxe.configureAxe({
-        globalOptions: {
+    globalOptions: {
         standards: {
             ariaRoles: {
                 combobox: {
