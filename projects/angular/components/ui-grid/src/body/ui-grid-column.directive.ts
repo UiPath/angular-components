@@ -33,7 +33,7 @@ const ARIA_SORT_MAP: Record<SortDirection, string> = {
 /**
  * @ignore
  */
-const REACTIVE_INPUT_LIST: (keyof UiGridColumnDirective<{}>)[]
+const REACTIVE_INPUT_LIST: (keyof UiGridColumnDirective<Record<string, unknown>>)[]
     = ['sort', 'visible', 'title', 'primary'];
 
 /**

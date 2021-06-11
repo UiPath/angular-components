@@ -199,7 +199,7 @@
             ) as label">
                 <mat-list-item *ngIf="hasNoResults &&
                                   !isCustomValueVisible &&
-                                  !(loading$ | async)"
+                                  (loading$ | async) === false"
                                [matTooltip]="label"
                                [attr.role]="'option'"
                                matTooltipPosition="right"

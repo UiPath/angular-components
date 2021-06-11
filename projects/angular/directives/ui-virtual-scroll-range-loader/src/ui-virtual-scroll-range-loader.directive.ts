@@ -138,6 +138,7 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
                     ...this._adjustLoadingRange(start, end, this.buffer, items),
                     items,
                 })),
+                // eslint-disable-next-line sonarjs/no-identical-functions
                 filter(({ start, end }) => this._isValidRange({
                     start,
                     end,

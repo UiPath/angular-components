@@ -722,6 +722,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     public toggle() {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.isOpen ? this.close() : this.open();
     }
 
@@ -1139,7 +1140,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             .pipe(
                 retry(1),
                 map(res => this.isDown ? res : {
-                    data: (res.data || []).reverse(),
+                    data: (res.data ?? []).reverse(),
                     total: res.total,
                 }),
                 tap(this._resetIfTotalCountChange),

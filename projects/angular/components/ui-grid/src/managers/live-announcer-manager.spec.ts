@@ -16,16 +16,16 @@ describe('Component: UiGrid', () => {
             length: TOTAL_ITEMS,
             pageIndex: PAGE_NO - 1,
             pageSize: PAGE_SIZE,
-            previousPageIndex: 0
+            previousPageIndex: 0,
         };
 
         const intl = new UiGridIntl();
         const refresh$ = new Subject<void>();
         const pageChange$ = new Subject<PageChangeEvent>();
-        const data$ = new Subject<{}[]>();
-        const sort$ = new Subject<ISortModel<{}>>();
+        const data$ = new Subject<any[]>();
+        const sort$ = new Subject<ISortModel<any>>();
 
-        let announcer: LiveAnnouncerManager<{}>;
+        let announcer: LiveAnnouncerManager<any>;
         let announceSpy: jasmine.Spy;
 
         beforeEach(() => {
@@ -58,7 +58,7 @@ describe('Component: UiGrid', () => {
             it(`should announce new data after page change with unknown (${total}) total number of items`, () => {
                 pageChange$.next({
                     ...pageChange,
-                    length: total
+                    length: total,
                 });
                 data$.next(PAGE_DATA);
 

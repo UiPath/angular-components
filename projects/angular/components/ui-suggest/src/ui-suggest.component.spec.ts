@@ -622,7 +622,7 @@ const sharedSpecifications = (
 
     describe('Behavior: a11y on open', () => {
         it(`should announce if empty`, () => {
-            const spy = spyOn(uiSuggest._liveAnnouncer, 'announce');
+            const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
             const display = fixture.debugElement.query(By.css('.display'));
             display.nativeElement.dispatchEvent(EventGenerator.click);
 
@@ -635,7 +635,7 @@ const sharedSpecifications = (
             component.items = generateSuggetionItemList('random');
             fixture.detectChanges();
 
-            const spy = spyOn(uiSuggest._liveAnnouncer, 'announce');
+            const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
             uiSuggest.loading$.next(true);
 
             const display = fixture.debugElement.query(By.css('.display'));
@@ -649,7 +649,7 @@ const sharedSpecifications = (
             component.items = generateSuggetionItemList('random');
             fixture.detectChanges();
 
-            const spy = spyOn(uiSuggest._liveAnnouncer, 'announce');
+            const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
             const display = fixture.debugElement.query(By.css('.display'));
             display.nativeElement.dispatchEvent(EventGenerator.click);
 
@@ -1187,8 +1187,8 @@ const sharedSpecifications = (
 
                 const word = faker.random.word();
                 const wordWithWhitespace = `${Array(6).fill(' ').join('')
-                    }${word}${Array(6).fill(' ').join('')
-                    }`;
+                }${word}${Array(6).fill(' ').join('')
+                }`;
 
                 searchFor(wordWithWhitespace, fixture);
                 await fixture.whenStable();
@@ -1391,7 +1391,7 @@ const sharedSpecifications = (
         let overrideItems: ISuggestValue[] | undefined;
 
         const asyncSearchFactory = (query = '', fetchSize = 10, start = 0) => {
-            const source = overrideItems || items;
+            const source = overrideItems ?? items;
 
             const results = query !== '' ?
                 source.filter(i => i.text.toLowerCase().includes(query.toLowerCase())) :
@@ -1688,15 +1688,15 @@ const sharedSpecifications = (
                     ...items,
                     {
                         id: 'QQ_1',
-                        text: 'QQ_1'
+                        text: 'QQ_1',
                     },
                     {
                         id: 'QQ_2',
-                        text: 'QQ_2'
+                        text: 'QQ_2',
                     },
                     {
                         id: 'QQ_3',
-                        text: 'QQ_3'
+                        text: 'QQ_3',
                     },
                 ];
                 fixture.detectChanges();
@@ -1746,15 +1746,15 @@ const sharedSpecifications = (
                     ...items,
                     {
                         id: 'QQ_1',
-                        text: 'QQ_1'
+                        text: 'QQ_1',
                     },
                     {
                         id: 'QQ_2',
-                        text: 'QQ_2'
+                        text: 'QQ_2',
                     },
                     {
                         id: 'QQ_3',
-                        text: 'QQ_3'
+                        text: 'QQ_3',
                     },
                 ];
                 fixture.detectChanges();
@@ -1798,15 +1798,15 @@ const sharedSpecifications = (
                     ...items,
                     {
                         id: 'QQ_1',
-                        text: 'QQ_1'
+                        text: 'QQ_1',
                     },
                     {
                         id: 'QQ_2',
-                        text: 'QQ_2'
+                        text: 'QQ_2',
                     },
                     {
                         id: 'QQ_3',
-                        text: 'QQ_3'
+                        text: 'QQ_3',
                     },
                 ];
                 fixture.detectChanges();

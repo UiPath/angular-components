@@ -14,28 +14,28 @@ import {
 import { concatJoin } from './concat-join';
 
 interface IPayload {
-    number: number;
+    no: number;
 }
 
 const FIRST_DELAY = 100;
 const SECOND_DELAY = 200;
 const THIRD_DELAY = 300;
 
-const FIRST_PAYLOAD: IPayload = { number: 1 };
-const SECOND_PAYLOAD: IPayload = { number: 2 };
-const THIRD_PAYLOAD: IPayload = { number: 3 };
+const FIRST_PAYLOAD: IPayload = { no: 1 };
+const SECOND_PAYLOAD: IPayload = { no: 2 };
+const THIRD_PAYLOAD: IPayload = { no: 3 };
 
 describe('Util(rxjs): concatJoin', () => {
     describe('Scenario: sync sources', () => {
         it('should emit the sync source aggregate in the provided order', (done) => {
-            const first = of(FIRST_PAYLOAD);
-            const second = of(SECOND_PAYLOAD);
-            const third = of(THIRD_PAYLOAD);
+            const first$ = of(FIRST_PAYLOAD);
+            const second$ = of(SECOND_PAYLOAD);
+            const third$ = of(THIRD_PAYLOAD);
 
             const aggregate$ = concatJoin(
-                first,
-                third,
-                second,
+                first$,
+                third$,
+                second$,
             );
 
             const callbacks = {
@@ -63,14 +63,14 @@ describe('Util(rxjs): concatJoin', () => {
 
     describe('Scenario: async sources', () => {
         it('should emit the async source aggregate in the provided order', fakeAsync((done: DoneFn) => {
-            const first = of(FIRST_PAYLOAD).pipe(delay(100));
-            const second = of(SECOND_PAYLOAD).pipe(delay(200));
-            const third = of(THIRD_PAYLOAD).pipe(delay(300));
+            const first$ = of(FIRST_PAYLOAD).pipe(delay(100));
+            const second$ = of(SECOND_PAYLOAD).pipe(delay(200));
+            const third$ = of(THIRD_PAYLOAD).pipe(delay(300));
 
             const aggregate$ = concatJoin(
-                first,
-                third,
-                second,
+                first$,
+                third$,
+                second$,
             );
 
             const callbacks = {
@@ -100,14 +100,14 @@ describe('Util(rxjs): concatJoin', () => {
 
     describe('Scenario: sync and async sources', () => {
         it('should emit the sync and async aggregate in the provided order', fakeAsync((done: DoneFn) => {
-            const first = of(FIRST_PAYLOAD).pipe(delay(FIRST_DELAY));
-            const second = of(SECOND_PAYLOAD);
-            const third = of(THIRD_PAYLOAD).pipe(delay(THIRD_DELAY));
+            const first$ = of(FIRST_PAYLOAD).pipe(delay(FIRST_DELAY));
+            const second$ = of(SECOND_PAYLOAD);
+            const third$ = of(THIRD_PAYLOAD).pipe(delay(THIRD_DELAY));
 
             const aggregate$ = concatJoin(
-                first,
-                third,
-                second,
+                first$,
+                third$,
+                second$,
             );
 
             const callbacks = {
@@ -139,14 +139,14 @@ describe('Util(rxjs): concatJoin', () => {
         it('should not emit before the timeout interval if a source takes too long to respond', fakeAsync((done: DoneFn) => {
             const TIMEOUT = 4000;
 
-            const first = of(FIRST_PAYLOAD).pipe(delay(FIRST_DELAY));
-            const second = of(SECOND_PAYLOAD);
-            const third = of(THIRD_PAYLOAD).pipe(delay(TIMEOUT + THIRD_DELAY));
+            const first$ = of(FIRST_PAYLOAD).pipe(delay(FIRST_DELAY));
+            const second$ = of(SECOND_PAYLOAD);
+            const third$ = of(THIRD_PAYLOAD).pipe(delay(TIMEOUT + THIRD_DELAY));
 
             const aggregate$ = concatJoin(
-                first,
-                third,
-                second,
+                first$,
+                third$,
+                second$,
             );
 
             const callbacks = {

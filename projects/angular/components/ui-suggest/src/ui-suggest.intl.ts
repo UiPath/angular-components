@@ -37,6 +37,7 @@ export class UiSuggestIntl implements OnDestroy {
      * Notify if changes have occurred that require that the labels be updated.
      *
      */
+    // eslint-disable-next-line rxjs/finnish
     public changes = new Subject<void>();
 
     protected _destroyed$ = new Subject<void>();

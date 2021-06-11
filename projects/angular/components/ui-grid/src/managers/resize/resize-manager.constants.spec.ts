@@ -24,7 +24,7 @@ describe('Manager: ResizeManager', () => {
                 column: {
                     minWidth: 70,
                 },
-            } as IResizeInfo<{}>;
+            } as IResizeInfo<any>;
 
             expect(isMinWidth(entry)).toEqual(false);
         });
@@ -39,7 +39,7 @@ describe('Manager: ResizeManager', () => {
                 column: {
                     minWidth: 100,
                 },
-            } as IResizeInfo<{}>;
+            } as IResizeInfo<any>;
 
             expect(isMinWidth(entry)).toEqual(true);
         });
@@ -54,7 +54,7 @@ describe('Manager: ResizeManager', () => {
                 previous: {
                     direction: 'right',
                 },
-            } as unknown as IResizeEvent<object>;
+            } as unknown as IResizeEvent<any>;
 
             expect(isDirectionChanged(state)).toEqual(true);
         });
@@ -67,7 +67,7 @@ describe('Manager: ResizeManager', () => {
                 previous: {
                     direction: 'right',
                 },
-            } as unknown as IResizeEvent<object>;
+            } as unknown as IResizeEvent<any>;
 
             expect(isDirectionChanged(state)).toEqual(false);
         });
@@ -84,7 +84,7 @@ describe('Manager: ResizeManager', () => {
                     width: 100,
                     minWidth: 50,
                 },
-            } as IResizeInfo<{}>;
+            } as IResizeInfo<any>;
 
             expect(clampOffset(entry, -30)).toEqual(-30);
         });
@@ -95,7 +95,7 @@ describe('Manager: ResizeManager', () => {
                     width: 40,
                     minWidth: 50,
                 },
-            } as IResizeInfo<{}>;
+            } as IResizeInfo<any>;
 
             expect(clampOffset(entry, -30)).toEqual(10);
         });

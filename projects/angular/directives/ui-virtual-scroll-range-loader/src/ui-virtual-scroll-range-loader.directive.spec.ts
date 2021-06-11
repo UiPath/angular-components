@@ -193,7 +193,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
             fakeAsync(() => {
                 component.items = component.items.map(_ => ({
                     loading: VirtualScrollItemStatus.loaded,
-                    text: 'Loaded'
+                    text: 'Loaded',
                 }));
                 fixture.detectChanges();
 
@@ -241,7 +241,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
             }),
         );
 
-        it('should emit  RangeLoad without the last item index if that is loaded',
+        it('should emit RangeLoad without the last item index if that is loaded',
             fakeAsync(() => {
                 const targetRange = {
                     start: 0,

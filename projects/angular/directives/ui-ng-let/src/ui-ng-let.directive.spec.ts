@@ -87,7 +87,7 @@ describe('Directive: UiClipboard', () => {
             value: 'smth',
         }).pipe(delay(100));
     }
-    describe('QueryStrategy: static', () => {
+    describe('QueryStrategy: static false', () => {
         let fixture: ComponentFixture<NgLetDynamicFixtureComponent>;
         let component: NgLetDynamicFixtureComponent;
 

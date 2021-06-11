@@ -1,7 +1,9 @@
 import {
     GridPageComponent,
 } from 'projects/playground/src/app/pages/grid/grid.page';
-import { HomePage } from 'projects/playground/src/app/pages/home/home.page';
+import {
+    HomePageComponent,
+} from 'projects/playground/src/app/pages/home/home.page';
 import {
     SnackbarPageComponent,
 } from 'projects/playground/src/app/pages/snackbar/snackbar.page';
@@ -15,7 +17,7 @@ import {
 const routes: Routes = [
     {
         path: 'home',
-        component: HomePage,
+        component: HomePageComponent,
     },
     {
         path: 'grid',

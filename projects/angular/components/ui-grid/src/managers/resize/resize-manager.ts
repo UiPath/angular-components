@@ -92,11 +92,13 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     constructor(
         private _grid: ResizableGrid<T>,
     ) {
-        this._gridElement = _grid._ref.nativeElement;
+        // eslint-disable-next-line no-underscore-dangle
+        this._gridElement = (_grid as any)._ref.nativeElement;
 
         merge(
             _grid.rendered,
-            _grid._columnChanges$,
+            // eslint-disable-next-line no-underscore-dangle
+            (_grid as any)._columnChanges$,
         ).pipe(
             map(() => {
                 this._table = this._gridElement.querySelector<HTMLTableElement>('.ui-grid-container');
@@ -119,7 +121,8 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
                     console.warn(`Table header sum is currently ${headerWidth} ( < 100 ) please update column definitions.`);
                 }
             }),
-            takeUntil(_grid._destroyed$),
+            // eslint-disable-next-line no-underscore-dangle
+            takeUntil((_grid as any)._destroyed$),
         ).subscribe();
     }
 
@@ -148,8 +151,10 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             .subscribe(moveEv => this.handleResize(moveEv));
 
         // detection is required in order to update cell resize state
-        this._grid._cd.detectChanges();
-        this._grid._cd.detach();
+        // eslint-disable-next-line no-underscore-dangle
+        (this._grid as any)._cd.detectChanges();
+        // eslint-disable-next-line no-underscore-dangle
+        (this._grid as any)._cd.detach();
     }
 
     public stop() {
@@ -158,8 +163,10 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         this.isResizing = false;
 
         // detection is required in order to update cell resize state
-        this._grid._cd.reattach();
-        this._grid._cd.detectChanges();
+        // eslint-disable-next-line no-underscore-dangle
+        (this._grid as any)._cd.reattach();
+        // eslint-disable-next-line no-underscore-dangle
+        (this._grid as any)._cd.detectChanges();
     }
 
     public setupState(ev: MouseEvent, column: UiGridColumnDirective<T>) {

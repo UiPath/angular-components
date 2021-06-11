@@ -18,6 +18,7 @@ export class UiGridIntl implements OnDestroy {
      * Notify if changes have occured that require that the labels be updated.
      *
      */
+    // eslint-disable-next-line rxjs/finnish
     public changes = new Subject<void>();
 
     /**

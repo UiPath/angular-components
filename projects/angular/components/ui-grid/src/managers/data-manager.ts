@@ -56,11 +56,6 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
         return this.data$.value.length;
     }
 
-    constructor(options?: GridOptions<T>) {
-        this.useCache = options?.useCache ?? false;
-        this.idProperty = options?.idProperty as unknown as K ?? 'id';
-    }
-
     public pristine = true;
 
     public data$ = new BehaviorSubject<T[]>([]);
@@ -68,6 +63,11 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
     public getProperty = get;
 
     private _hashMap = new Map<string, string>();
+
+    constructor(options?: GridOptions<T>) {
+        this.useCache = options?.useCache ?? false;
+        this.idProperty = options?.idProperty as unknown as K ?? 'id';
+    }
 
     public forEach = (callbackfn: (value: T, index: number, array: T[]) => void) =>
         this.data$.value.forEach(callbackfn);
@@ -173,6 +173,6 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
         this._hashMap.set(`${entry[this.idProperty]}`, hash.MD5(entry));
 
     private _emit(data?: T[]) {
-        this.data$.next([...(data || this.data$.value)]);
+        this.data$.next([...(data ?? this.data$.value)]);
     }
 }

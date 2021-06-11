@@ -37,7 +37,7 @@ const reseed = () => {
     // overwrite Math.radom again in each global context
     Math.random = () => faker.random.number({
         min: 0,
-        max: 100000
+        max: 100000,
     }) / 100000;
 };
 
@@ -45,12 +45,15 @@ beforeAll(() => jasmine.addMatchers(toHaveNoViolations));
 
 beforeEach(reseed);
 
+// eslint-disable-next-line no-underscore-dangle
 const __describe = describe;
-(global as any).describe = function () {
+(global as any).describe = function() {
     reseed();
+    // eslint-disable-next-line prefer-rest-params
     __describe.apply(this, arguments as any);
 };
 
+// eslint-disable-next-line no-restricted-globals
 setSpecFn(it, fit, xit);
 
 // First, initialize the Angular testing environment.

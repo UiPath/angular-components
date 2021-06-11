@@ -137,7 +137,7 @@ export class UiAutofocusDirective implements OnInit {
         }
 
         const children = el.children || el.childNodes;
-
+        // eslint-disable-next-line @typescript-eslint/prefer-for-of
         for (let i = 0; i < children.length; i++) {
             const focusable = children[i].nodeType === ELEMENT_NODE ?
                 this._getFocusableNode(children[i] as HTMLElement) :

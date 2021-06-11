@@ -40,6 +40,7 @@ export class SelectionManager<T extends IGridDataEntry> {
 
     private _hasValue$ = new BehaviorSubject(false);
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     public hasValue$ = this._hasValue$.pipe(distinctUntilChanged());
 
     private _selection = new Map<number | string, T>();
@@ -55,7 +56,7 @@ export class SelectionManager<T extends IGridDataEntry> {
         private _emitChanges = true,
     ) {
 
-        if (initiallySelectedValues && initiallySelectedValues.length) {
+        if (initiallySelectedValues?.length) {
             initiallySelectedValues.forEach(value => this._markSelected(value));
             this._selectedToEmit.length = 0;
         }
@@ -68,6 +69,7 @@ export class SelectionManager<T extends IGridDataEntry> {
         this._updateState(this._unmarkSelected, values);
 
     public toggle(value: T): void {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.isSelected(value) ? this.deselect(value) : this.select(value);
     }
 

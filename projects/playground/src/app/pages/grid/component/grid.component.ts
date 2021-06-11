@@ -25,7 +25,7 @@ import { UiGridComponent } from '@uipath/angular/components/ui-grid';
 
 // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
-    selector: 'app-grid-component',
+    selector: 'ui-app-grid-component',
     styleUrls: ['./grid.component.scss'],
     templateUrl: './grid.component.html',
 })
@@ -45,9 +45,6 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input()
     public readonly inputKeys!: string[];
 
-    @ViewChild(UiGridComponent)
-    private _grid!: UiGridComponent<MockData>;
-
     public pageSizes = [5, 10, 20];
     public pageIndex = 0;
     public data$ = new BehaviorSubject<MockData[]>([]);
@@ -56,6 +53,9 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
 
     public editedEntity?: any;
     public editedIndex?: number;
+
+    @ViewChild(UiGridComponent)
+    private _grid!: UiGridComponent<MockData>;
 
     private _destroyed$ = new Subject<void>();
 
