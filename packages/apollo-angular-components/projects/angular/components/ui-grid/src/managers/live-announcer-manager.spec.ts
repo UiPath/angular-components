@@ -12,10 +12,12 @@ describe('Component: UiGrid', () => {
         const PAGE_SIZE = 100;
         const PAGE_DATA = Array(PAGE_SIZE).fill({});
         const PAGE_NO = 2;
-        const pageChange = { length: TOTAL_ITEMS,
+        const pageChange = {
+            length: TOTAL_ITEMS,
             pageIndex: PAGE_NO - 1,
             pageSize: PAGE_SIZE,
-            previousPageIndex: 0 };
+            previousPageIndex: 0
+        };
 
         const intl = new UiGridIntl();
         const refresh$ = new Subject<void>();
@@ -54,8 +56,10 @@ describe('Component: UiGrid', () => {
             undefined, null, NaN,
         ].forEach(total => {
             it(`should announce new data after page change with unknown (${total}) total number of items`, () => {
-                pageChange$.next({ ...pageChange,
-                    length: total });
+                pageChange$.next({
+                    ...pageChange,
+                    length: total
+                });
                 data$.next(PAGE_DATA);
 
                 expect(announceSpy.calls.all()[0].args).toEqual([intl.loadingPage(PAGE_NO)]);

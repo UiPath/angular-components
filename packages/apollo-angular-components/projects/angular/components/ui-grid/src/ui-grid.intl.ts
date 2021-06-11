@@ -112,7 +112,7 @@ export class UiGridIntl implements OnDestroy {
      *
      */
     public noDataMessageAlternative = (searchValue?: string, activeFilters?: number | null) =>
-        `No data is available ${searchValue ? `for ${searchValue}` : '' } ${activeFilters ? ' for applied filters' : ''}.`;
+        `No data is available ${searchValue ? `for ${searchValue}` : ''} ${activeFilters ? ' for applied filters' : ''}.`;
     /**
      * Determines the `checkbox` `matToolTip`.
      *

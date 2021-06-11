@@ -191,8 +191,10 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
 
         it('should not emit RangeLoad if all items are loaded',
             fakeAsync(() => {
-                component.items = component.items.map(_ => ({ loading: VirtualScrollItemStatus.loaded,
-                    text: 'Loaded' }));
+                component.items = component.items.map(_ => ({
+                    loading: VirtualScrollItemStatus.loaded,
+                    text: 'Loaded'
+                }));
                 fixture.detectChanges();
 
                 tick(RANGE_LOAD_DEBOUNCE);

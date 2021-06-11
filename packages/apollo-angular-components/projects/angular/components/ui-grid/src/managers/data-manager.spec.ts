@@ -22,10 +22,14 @@ describe('Component: UiGrid', () => {
     });
 
     [
-        { useCache: true,
-            idProperty: 'id' as const },
-        { useCache: false,
-            idProperty: 'id' as const },
+        {
+            useCache: true,
+            idProperty: 'id' as const,
+        },
+        {
+            useCache: false,
+            idProperty: 'id' as const,
+        },
     ].forEach((config) => {
         describe(`Manager: DataManager, useCache: ${config.useCache}, idProperty: ${config.idProperty}`, () => {
             let manager: DataManager<ITestEntity>;

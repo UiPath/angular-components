@@ -111,12 +111,18 @@ describe('Directive: UiDragAndDropFileDirective', () => {
         });
 
         [
-            { name: 'click',
-                obj: EventGenerator.click },
-            { name: 'Keydown.Enter',
-                obj: EventGenerator.keyDown(Key.Enter) },
-            { name: 'Keydown.Space',
-                obj: EventGenerator.keyDown(Key.Space) },
+            {
+                name: 'click',
+                obj: EventGenerator.click,
+            },
+            {
+                name: 'Keydown.Enter',
+                obj: EventGenerator.keyDown(Key.Enter),
+            },
+            {
+                name: 'Keydown.Space',
+                obj: EventGenerator.keyDown(Key.Space),
+            },
         ].forEach(event => {
             it(`should trigger browse when ${event.name} is triggered on the parent container`, () => {
                 const spy = spyOn(fileInput, 'click');
@@ -233,8 +239,10 @@ describe('Directive: UiDragAndDropFileDirective', () => {
                 fixture.detectChanges();
 
                 dropEvent.dataTransfer.files.add(
-                    ...component.fakeFiles({ accepted: 3,
-                        rejected: 5 }),
+                    ...component.fakeFiles({
+                        accepted: 3,
+                        rejected: 5,
+                    }),
                 );
 
                 container.dispatchEvent(dropEvent);
@@ -320,8 +328,10 @@ describe('Directive: UiDragAndDropFileDirective', () => {
                 fixture.detectChanges();
 
                 targetElement.files.add(
-                    ...component.fakeFiles({ accepted: 3,
-                        rejected: 5 }),
+                    ...component.fakeFiles({
+                        accepted: 3,
+                        rejected: 5,
+                    }),
                 );
 
                 fileInput.dispatchEvent(changeEvent);

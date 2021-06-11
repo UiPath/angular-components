@@ -23,6 +23,7 @@ import {
 import { PageEvent } from '@angular/material/paginator';
 import { UiGridComponent } from '@uipath/angular/components/ui-grid';
 
+// eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
     selector: 'app-grid-component',
     styleUrls: ['./grid.component.scss'],

@@ -1686,12 +1686,18 @@ const sharedSpecifications = (
                 const customString = 'QQ_';
                 overrideItems = [
                     ...items,
-                    { id: 'QQ_1',
-                        text: 'QQ_1' },
-                    { id: 'QQ_2',
-                        text: 'QQ_2' },
-                    { id: 'QQ_3',
-                        text: 'QQ_3' },
+                    {
+                        id: 'QQ_1',
+                        text: 'QQ_1'
+                    },
+                    {
+                        id: 'QQ_2',
+                        text: 'QQ_2'
+                    },
+                    {
+                        id: 'QQ_3',
+                        text: 'QQ_3'
+                    },
                 ];
                 fixture.detectChanges();
 
@@ -1738,12 +1744,18 @@ const sharedSpecifications = (
                 const customString = 'QQ_';
                 overrideItems = [
                     ...items,
-                    { id: 'QQ_1',
-                        text: 'QQ_1' },
-                    { id: 'QQ_2',
-                        text: 'QQ_2' },
-                    { id: 'QQ_3',
-                        text: 'QQ_3' },
+                    {
+                        id: 'QQ_1',
+                        text: 'QQ_1'
+                    },
+                    {
+                        id: 'QQ_2',
+                        text: 'QQ_2'
+                    },
+                    {
+                        id: 'QQ_3',
+                        text: 'QQ_3'
+                    },
                 ];
                 fixture.detectChanges();
 
@@ -1784,12 +1796,18 @@ const sharedSpecifications = (
                 const customString = 'QQ_';
                 overrideItems = [
                     ...items,
-                    { id: 'QQ_1',
-                        text: 'QQ_1' },
-                    { id: 'QQ_2',
-                        text: 'QQ_2' },
-                    { id: 'QQ_3',
-                        text: 'QQ_3' },
+                    {
+                        id: 'QQ_1',
+                        text: 'QQ_1'
+                    },
+                    {
+                        id: 'QQ_2',
+                        text: 'QQ_2'
+                    },
+                    {
+                        id: 'QQ_3',
+                        text: 'QQ_3'
+                    },
                 ];
                 fixture.detectChanges();
 

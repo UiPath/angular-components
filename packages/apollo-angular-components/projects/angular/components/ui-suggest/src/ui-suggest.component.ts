@@ -202,8 +202,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         }
 
         this._items = this._sortItems(items)
-            .map(r => ({ ...r,
-                loading: VirtualScrollItemStatus.loaded }));
+            .map(r => ({
+                ...r,
+                loading: VirtualScrollItemStatus.loaded,
+            }));
     }
 
     /**
@@ -494,8 +496,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             .pipe(
                 takeUntil(this._destroyed$),
             )
-            .subscribe(start => this._visibleRange = { start,
-                end: start + this.displayCount });
+            .subscribe(start => this._visibleRange = {
+                start,
+                end: start + this.displayCount,
+            });
     }
 
     private _hasCustomValue$ = new BehaviorSubject(false);
@@ -529,8 +533,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     private _isOpen$ = new BehaviorSubject(false);
 
     private _virtualScroller?: CdkVirtualScrollViewport;
-    private _visibleRange = { start: Number.NEGATIVE_INFINITY,
-        end: Number.POSITIVE_INFINITY };
+    private _visibleRange = {
+        start: Number.NEGATIVE_INFINITY,
+        end: Number.POSITIVE_INFINITY,
+    };
 
     private _inputChange$: Observable<string>;
 
@@ -774,8 +780,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         this.isOpen = false;
         this.activeIndex = -1;
-        this._visibleRange = { start: Number.NEGATIVE_INFINITY,
-            end: Number.POSITIVE_INFINITY };
+        this._visibleRange = {
+            start: Number.NEGATIVE_INFINITY,
+            end: Number.POSITIVE_INFINITY,
+        };
         this.closed.emit();
 
         this.focus$.next(refocus);
@@ -1010,8 +1018,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         const end = start + this.displayCount;
 
-        this._visibleRange = { start,
-            end };
+        this._visibleRange = {
+            start,
+            end,
+        };
 
         vs.setRenderedRange({
             start,

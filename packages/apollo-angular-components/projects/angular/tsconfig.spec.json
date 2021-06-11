@@ -1,19 +1,19 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../../out-tsc/spec",
-    "types": [
-      "jasmine",
-      "jasmine_dom_matchers",
-      "node"
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../out-tsc/spec",
+        "types": [
+            "jasmine",
+            "jasmine_dom_matchers",
+            "node"
+        ]
+    },
+    "files": [
+        "./test.ts"
+    ],
+    "include": [
+        "**/test/*.ts",
+        "**/*.spec.ts",
+        "**/*.d.ts"
     ]
-  },
-  "files": [
-    "./test.ts"
-  ],
-  "include": [
-    "**/test/*.ts",
-    "**/*.spec.ts",
-    "**/*.d.ts"
-  ]
 }
