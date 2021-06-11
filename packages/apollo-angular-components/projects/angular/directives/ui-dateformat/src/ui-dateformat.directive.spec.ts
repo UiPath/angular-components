@@ -272,7 +272,7 @@ describe('Directive: UiDateFormat', () => {
                 By.css('ui-dateformat'),
             )
             .nativeElement
-            .dataset['title'];
+            .dataset.title;
 
         expect(formattedDateText).toContain('2 minutes ago');
     });
@@ -347,7 +347,7 @@ describe('Directive: UiDateFormat', () => {
         expect(momentOutputDate.year()).toEqual(momentInputDate.year());
         expect(momentOutputDate.hour()).toEqual(momentInputDate.hour());
         expect(momentOutputDate.minute()).toEqual(momentInputDate.minute());
-        expect(textElement.dataset['title'].trim()).toEqual(textElement.textContent.trim());
+        expect(textElement.dataset.title.trim()).toEqual(textElement.textContent.trim());
     });
 
     it('should update the relative time format when the locale is changed', () => {
@@ -379,7 +379,7 @@ describe('Directive: UiDateFormat', () => {
             .nativeElement;
 
         expect(textElement.innerText.trim()).toContain('数秒前');
-        expect(textElement.dataset['title']).toContain('数秒前');
+        expect(textElement.dataset.title).toContain('数秒前');
     });
 
     it('should return the input when it is not a Date object', () => {
@@ -492,7 +492,7 @@ describe('Directive: UiDateFormat', () => {
         fixture.detectChanges();
 
         let momentOutputDate = moment.tz(
-            textElement.dataset['title'],
+            textElement.dataset.title,
             defaultDateFormat,
             resolveTimezone(options),
         );
@@ -508,7 +508,7 @@ describe('Directive: UiDateFormat', () => {
 
         fixture.detectChanges();
 
-        expect(textElement.dataset['title']).toContain('a few seconds ago');
+        expect(textElement.dataset.title).toContain('a few seconds ago');
 
         // Lastly, check that changing from relative to absolute formats the text correctly.
         component.titleType = 'absolute';
@@ -516,7 +516,7 @@ describe('Directive: UiDateFormat', () => {
         fixture.detectChanges();
 
         momentOutputDate = moment.tz(
-            textElement.dataset['title'],
+            textElement.dataset.title,
             defaultDateFormat,
             resolveTimezone(options),
         );

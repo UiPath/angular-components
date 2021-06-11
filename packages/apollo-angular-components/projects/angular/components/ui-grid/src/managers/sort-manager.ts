@@ -12,8 +12,8 @@ import { ISortModel } from '../models';
  */
 const SORT_CYCLE_MAP: Record<SortDirection, SortDirection> = {
     '': 'asc',
-    'asc': 'desc',
-    'desc': '',
+    asc: 'desc',
+    desc: '',
 };
 
 /**

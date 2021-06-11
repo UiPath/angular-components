@@ -1,28 +1,3 @@
-import range from 'lodash-es/range';
-import {
-    animationFrameScheduler,
-    BehaviorSubject,
-    combineLatest,
-    merge,
-    Observable,
-    of,
-    Subject,
-} from 'rxjs';
-import {
-    debounceTime,
-    distinctUntilChanged,
-    filter,
-    map,
-    observeOn,
-    share,
-    shareReplay,
-    startWith,
-    switchMap,
-    take,
-    takeUntil,
-    tap,
-} from 'rxjs/operators';
-
 import {
     animate,
     style,
@@ -54,6 +29,31 @@ import {
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
+
+import range from 'lodash-es/range';
+import {
+    animationFrameScheduler,
+    BehaviorSubject,
+    combineLatest,
+    merge,
+    Observable,
+    of,
+    Subject,
+} from 'rxjs';
+import {
+    debounceTime,
+    distinctUntilChanged,
+    filter,
+    map,
+    observeOn,
+    share,
+    shareReplay,
+    startWith,
+    switchMap,
+    take,
+    takeUntil,
+    tap,
+} from 'rxjs/operators';
 
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import {
@@ -732,7 +732,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * @ignore
      */
     ngOnChanges(changes: SimpleChanges) {
-        const selectableChange = changes['selectable'];
+        const selectableChange = changes.selectable;
         if (
             selectableChange &&
             !selectableChange.firstChange &&
@@ -742,7 +742,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             this._configure$.next();
         }
 
-        const dataChange = changes['data'];
+        const dataChange = changes.data;
 
         if (
             dataChange &&
@@ -856,6 +856,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     /**
      * Determines the `checkbox` aria-label`.
      * **DEPRECATED**
+     *
      * @param [row] The row for which the label is computed.
      */
     public checkboxLabel(row?: T): string {

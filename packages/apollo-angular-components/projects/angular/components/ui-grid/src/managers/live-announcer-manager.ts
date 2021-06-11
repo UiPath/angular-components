@@ -49,11 +49,14 @@ export class LiveAnnouncerManager<T> {
             ),
         );
 
-        this._bindAnnouncement(sort$, sortEvent => {
-            return sortEvent.direction === 'asc' ? intl.columnSortedAscending(sortEvent.title)
-                : sortEvent.direction === 'desc' ? intl.columnSortedDescending(sortEvent.title)
-                    : intl.columnUnsorted(sortEvent.title);
-        });
+        this._bindAnnouncement(
+            sort$,
+            sortEvent => sortEvent.direction === 'asc'
+                ? intl.columnSortedAscending(sortEvent.title)
+                : sortEvent.direction === 'desc'
+                    ? intl.columnSortedDescending(sortEvent.title)
+                    : intl.columnUnsorted(sortEvent.title),
+        );
     }
 
     public destroy() {

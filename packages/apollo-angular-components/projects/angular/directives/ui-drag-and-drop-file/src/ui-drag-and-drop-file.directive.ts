@@ -75,12 +75,12 @@ export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnD
     @HostBinding('class.file-dragging')
     protected _isDragging = false;
 
-    private _disposalCallbacks: Array<() => void> = [];
+    private _disposalCallbacks: (() => void)[] = [];
     private _fileInput: HTMLInputElement;
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     constructor(
         private _elementRef: ElementRef,
         private _renderer: Renderer2,
@@ -103,8 +103,8 @@ export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnD
     }
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     ngAfterViewInit() {
         if (this.multiple) {
             this._renderer.setProperty(this._fileInput, 'multiple', 'true');
@@ -150,8 +150,8 @@ export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnD
     }
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     ngOnDestroy() {
         this._disposalCallbacks.forEach(dispose => {
             dispose();
@@ -249,7 +249,7 @@ export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnD
     private _preventEnterOnChildren(element: Element) {
         if (!isInternetExplorer()) { return; }
 
-        if (!!element.children.length) {
+        if (element.children.length) {
             const children: Element[] = Array.from(element.children);
 
             for (const child of children) {

@@ -71,8 +71,8 @@ export class UiScrollIntoViewDirective {
     public scrollIntoViewIfNeeded = scrollIntoViewIfNeeded;
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     constructor(
         private _element: ElementRef,
         private _zone: NgZone,

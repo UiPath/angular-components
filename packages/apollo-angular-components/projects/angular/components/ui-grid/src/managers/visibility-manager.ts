@@ -66,7 +66,7 @@ export class VisibilityManger<T extends IGridDataEntry> {
         );
     }
 
-    public update(visibleColumnsByProps: Array<string | keyof T>) {
+    public update(visibleColumnsByProps: (string | keyof T)[]) {
         // changing the visible attribute will trigger a SimpleChange Emission
         this._columns$.getValue()
             .forEach(c => c.visible = visibleColumnsByProps.includes(c.property!));
@@ -77,15 +77,15 @@ export class VisibilityManger<T extends IGridDataEntry> {
         label: column.title,
         checked: column.visible,
         disabled: column.disableToggle,
-    }) as IVisibleModel<T>
+    }) as IVisibleModel<T>;
 
     private _mapToVisibleDiff = ({ checked, property }: IVisibleModel<T>) => ({
         property,
         checked,
-    } as IVisibleDiff)
+    } as IVisibleDiff);
 
     private _mapInitial = (columns: UiGridColumnDirective<T>[]) =>
-        this._mapOptions(columns).map(this._mapToVisibleDiff)
+        this._mapOptions(columns).map(this._mapToVisibleDiff);
 
     private _mapOptions = (columns: UiGridColumnDirective<T>[]) =>
         columns
@@ -93,7 +93,7 @@ export class VisibilityManger<T extends IGridDataEntry> {
                 // discard locked and hidden columns from toggle-able options
                 && (!c.disableToggle || c.visible),
             )
-            .map(this._mapColumnOption)
+            .map(this._mapColumnOption);
 
     private _mapToRenderedOptions = (columns: UiGridColumnDirective<T>[]) => {
         const columnOptions = this._mapOptions(columns);
@@ -113,5 +113,5 @@ export class VisibilityManger<T extends IGridDataEntry> {
         }
 
         return columnOptions;
-    }
+    };
 }

@@ -15,7 +15,8 @@ export const generateSuggetionItemList =
     (count: number | 'random' = 5): ISuggestValue[] =>
         Array(
             count === 'random' ?
-                faker.random.number({ min: 5, max: 50 }) :
+                faker.random.number({ min: 5,
+                    max: 50 }) :
                 count,
         )
             .fill(0)

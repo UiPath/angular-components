@@ -126,7 +126,7 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
     public trackByKey = (_id: number, key: string) => key;
 
     private _mapDirtyState = () => this.control.dirty &&
-        this.control.hasError(VALIDATION_RULE_NAME)
+        this.control.hasError(VALIDATION_RULE_NAME);
 
     private _calculatePercentage = ([rules, state]: RulesAndStates) => {
         if (!state) { return 100; }
@@ -140,11 +140,11 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
             );
 
         return validationPercentage;
-    }
+    };
 
     private _mapVisibleRules = ([rules, state]: RulesAndStates) => this.hideValidRuleDefinition ?
         rules.filter(rule => state[rule]) :
-        rules
+        rules;
 
     private _announceChanges = (state: IRuleValidationState) => {
         const rulesNotMet = Object.keys(this.passwordRules || {})
@@ -161,5 +161,5 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
                 : this.intl.allMet,
             'polite',
         );
-    }
+    };
 }

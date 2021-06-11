@@ -392,7 +392,6 @@ describe('Component: UiGrid', () => {
 
                         fixture.detectChanges();
 
-
                         expect(matCheckbox.checked).toEqual(true);
                         expect(matCheckbox.ariaLabel).toEqual('Deselect all');
                     });
@@ -636,7 +635,6 @@ describe('Component: UiGrid', () => {
                         expect(infoMessage.nativeElement.innerText).toEqual(intl.translateMultiPageSelectionCount(1));
                     });
 
-
                 });
             });
         });
@@ -878,7 +876,7 @@ describe('Component: UiGrid', () => {
                 fixture.detectChanges();
                 let headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
                 expect(headerSelectionAction).toBeDefined();
-                expect(grid.selectionManager['_hasValue$'].getValue()).toBe(true);
+                expect(grid.selectionManager._hasValue$.getValue()).toBe(true);
 
                 component.data = generateListFactory(generateEntity)();
                 fixture.detectChanges();
@@ -886,7 +884,7 @@ describe('Component: UiGrid', () => {
                 headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
 
                 expect(headerSelectionAction).toBeFalsy();
-                expect(grid.selectionManager['_hasValue$'].getValue()).toBe(false);
+                expect(grid.selectionManager._hasValue$.getValue()).toBe(false);
             }));
 
             it('should be able to move focus to selection action button if at least one row is selected', () => {
@@ -912,7 +910,7 @@ describe('Component: UiGrid', () => {
 
             it('should live announce the header actions when there is a selection in the grid', () => {
                 const intl = new UiGridIntl();
-                spyOn<any>(component.grid['_queuedAnnouncer'], 'enqueue');
+                spyOn<any>(component.grid._queuedAnnouncer, 'enqueue');
 
                 const rowCheckboxInputList = fixture.debugElement
                     .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
@@ -923,12 +921,12 @@ describe('Component: UiGrid', () => {
 
                 fixture.detectChanges();
 
-                expect(component.grid['_queuedAnnouncer']['enqueue']).toHaveBeenCalledTimes(1);
-                expect(component.grid['_queuedAnnouncer']['enqueue']).toHaveBeenCalledWith(intl.gridHeaderActionsNotice);
+                expect(component.grid._queuedAnnouncer.enqueue).toHaveBeenCalledTimes(1);
+                expect(component.grid._queuedAnnouncer.enqueue).toHaveBeenCalledWith(intl.gridHeaderActionsNotice);
             });
 
             it('should live announce the header actions only once if there are multiple items selected and deselected', () => {
-                spyOn<any>(component.grid['_queuedAnnouncer'], 'enqueue');
+                spyOn<any>(component.grid._queuedAnnouncer, 'enqueue');
 
                 const rowCheckboxInputList = fixture.debugElement
                     .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
@@ -939,7 +937,7 @@ describe('Component: UiGrid', () => {
 
                 rowCheckboxInputList.forEach(row => row.nativeElement.dispatchEvent(EventGenerator.click));
 
-                expect(component.grid['_queuedAnnouncer']['enqueue']).toHaveBeenCalledTimes(1);
+                expect(component.grid._queuedAnnouncer.enqueue).toHaveBeenCalledTimes(1);
             });
 
             it('should NOT display the inline header button if at least one row is selected', () => {
@@ -970,7 +968,7 @@ describe('Component: UiGrid', () => {
                 const search = fixture.debugElement.query(By.css('ui-grid-search'));
                 const input = search.query(By.css('input'));
 
-                const maxLength = input.attributes['maxlength'];
+                const maxLength = input.attributes.maxlength;
 
                 expect(maxLength).toEqual(`${max}`);
             });
@@ -1051,7 +1049,7 @@ describe('Component: UiGrid', () => {
                     }),
                 ),
             total: this.dropdownItemList.length,
-        })
+        });
     }
 
     describe('Scenario: grid with header, no header actions and column filters', () => {
@@ -1496,25 +1494,25 @@ describe('Component: UiGrid', () => {
                 SORT_KEY_EVENTS.forEach(ev => {
                     it(`should emit sort event when key '${ev.key}' is pressed ` +
                         `('${sortTransition.from}' to '${sortTransition.to}')`, (done) => {
-                            const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
-                            const [column] = grid.columns.toArray();
+                        const sortableHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell-sortable'));
+                        const [column] = grid.columns.toArray();
 
-                            column.sort = '';
-                            fixture.detectChanges();
+                        column.sort = '';
+                        fixture.detectChanges();
 
-                            grid.sortChange
-                                .pipe(
-                                    take(1),
-                                    finalize(done),
-                                ).subscribe(sort => {
-                                    expect(sort.direction).toBe('asc');
-                                    expect(sort.direction).toBe(column.sort);
-                                    expect(sort.field).toBe(column.property!);
-                                });
+                        grid.sortChange
+                            .pipe(
+                                take(1),
+                                finalize(done),
+                            ).subscribe(sort => {
+                                expect(sort.direction).toBe('asc');
+                                expect(sort.direction).toBe(column.sort);
+                                expect(sort.field).toBe(column.property!);
+                            });
 
-                            sortableHeader.nativeElement.dispatchEvent(ev);
-                            fixture.detectChanges();
-                        });
+                        sortableHeader.nativeElement.dispatchEvent(ev);
+                        fixture.detectChanges();
+                    });
                 });
             });
         });
@@ -1732,7 +1730,7 @@ describe('Component: UiGrid', () => {
                 component.grid.filterManager,
                 component.grid.visibilityManager,
                 component.grid.liveAnnouncerManager!,
-                component.grid['_performanceMonitor'],
+                component.grid._performanceMonitor,
             ].map(destroyableClass => spyOn(destroyableClass, 'destroy'));
 
             const completeSpyList = [
@@ -1740,8 +1738,8 @@ describe('Component: UiGrid', () => {
                 component.grid.isAnyFilterDefined$,
                 component.grid.sortChange,
                 component.grid.rendered,
-                component.grid['_destroyed$'],
-                component.grid['_configure$'],
+                component.grid._destroyed$,
+                component.grid._configure$,
             ].map(completableStream => spyOn(completableStream, 'complete'));
 
             component.grid.ngOnDestroy();
@@ -1822,7 +1820,7 @@ describe('Component: UiGrid', () => {
                     component.grid.filterManager,
                     component.grid.visibilityManager,
                     component.grid.liveAnnouncerManager!,
-                    component.grid['_performanceMonitor'],
+                    component.grid._performanceMonitor,
                 ].map(destroyableClass => spyOn(destroyableClass, 'destroy'));
 
                 const completeSpyList = [
@@ -1830,8 +1828,8 @@ describe('Component: UiGrid', () => {
                     component.grid.isAnyFilterDefined$,
                     component.grid.sortChange,
                     component.grid.rendered,
-                    component.grid['_destroyed$'],
-                    component.grid['_configure$'],
+                    component.grid._destroyed$,
+                    component.grid._configure$,
                 ].map(completableStream => spyOn(completableStream, 'complete'));
 
                 component.grid.ngOnDestroy();
@@ -2115,27 +2113,27 @@ describe('Component: UiGrid', () => {
                         it(`should be able to reset on (${e instanceof KeyboardEvent
                             ? `keydown."` + e.code.toLowerCase() + `"`
                             : 'click'
-                            })`,
-                            fakeAsync(() => {
-                                const reset = fixture.debugElement.query(By.css('.ui-grid-toggle-reset'));
+                        })`,
+                        fakeAsync(() => {
+                            const reset = fixture.debugElement.query(By.css('.ui-grid-toggle-reset'));
 
-                                reset.nativeElement.dispatchEvent(e);
+                            reset.nativeElement.dispatchEvent(e);
 
-                                tick(GRID_COLUMN_CHANGE_DELAY);
-                                fixture.detectChanges();
+                            tick(GRID_COLUMN_CHANGE_DELAY);
+                            fixture.detectChanges();
 
-                                const headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
+                            const headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
 
-                                expect(headers).toBeDefined();
-                                expect(headers.length).toEqual(6, 'Not all columns rendered');
+                            expect(headers).toBeDefined();
+                            expect(headers.length).toEqual(6, 'Not all columns rendered');
 
-                                expect(
-                                    fixture.debugElement.query(By.css('.mat-select')).nativeElement,
-                                ).toBe(document.activeElement, 'Menu is not selected');
+                            expect(
+                                fixture.debugElement.query(By.css('.mat-select')).nativeElement,
+                            ).toBe(document.activeElement, 'Menu is not selected');
 
-                                discardPeriodicTasks();
-                                flush();
-                            }),
+                            discardPeriodicTasks();
+                            flush();
+                        }),
                         );
                     });
 
@@ -2389,12 +2387,10 @@ describe('Component: UiGrid', () => {
 
             let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
             const intl = new UiGridIntl();
-            intl.noDataMessageAlternative = (searchValue, activeFilters) => {
-                return 'table_no_data'.concat(
-                    searchValue ? '_search' : '',
-                    activeFilters ? '_filters' : '',
-                );
-            };
+            intl.noDataMessageAlternative = (searchValue, activeFilters) => 'table_no_data'.concat(
+                searchValue ? '_search' : '',
+                activeFilters ? '_filters' : '',
+            );
 
             beforeEach(() => {
                 TestBed.configureTestingModule({
@@ -2654,7 +2650,7 @@ describe('Component: UiGrid', () => {
                 fixture.detectChanges();
 
                 const buttons = fixture.debugElement.queryAll(By.css('.ui-grid-filter-container button'));
-                buttons.forEach(button => expect(button.classes['inline']).toBeFalsy());
+                buttons.forEach(button => expect(button.classes.inline).toBeFalsy());
             });
         });
     });
@@ -2702,7 +2698,7 @@ describe('Component: UiGrid', () => {
                                 }),
                             ),
                         total: this.filterItems.length,
-                    })
+                    });
                 }
 
                 let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
@@ -2895,7 +2891,7 @@ describe('Component: UiGrid', () => {
                                 }),
                             ),
                         total: this.filterItems.length,
-                    })
+                    });
                 }
 
                 let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
@@ -2988,7 +2984,7 @@ describe('Component: UiGrid', () => {
                                 }),
                             ),
                         total: this.filterItems.length,
-                    })
+                    });
                 }
 
                 let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
@@ -3176,7 +3172,7 @@ describe('Component: UiGrid', () => {
                                 }),
                             ),
                         total: this.filterItems.length,
-                    })
+                    });
                 }
 
                 let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;

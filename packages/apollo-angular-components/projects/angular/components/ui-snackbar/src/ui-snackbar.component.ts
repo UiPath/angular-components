@@ -29,8 +29,8 @@ interface ISnackBarAlert {
      */
     actionMessage?: string;
     /**
-    * How long to remain on the screen
-    */
+     * How long to remain on the screen
+     */
     duration: number;
     /**
      * Material icon to be used in snackbar
@@ -83,8 +83,8 @@ export const ICON_MAP: Map<SnackBarType, string> = new Map([
 export type SnackbarAction = (
     message: string | TemplateRef<any>,
     config?: {
-        actionMessage?: string,
-        duration?: number,
+        actionMessage?: string;
+        duration?: number;
     },
 ) => MatSnackBarRef<UiSnackBarComponent>;
 
@@ -113,27 +113,31 @@ export class UiSnackBarService {
 
     /**
      * Display an info snackbar
+     *
      * @param message The message to be displayed
      * @param config  `{ actionMessage, duration }`
-    */
+     */
     public info: SnackbarAction;
     /**
      * Display an error snackbar
+     *
      * @param message The message to be displayed
      * @param config  `{ actionMessage, duration }`
-    */
+     */
     public error: SnackbarAction;
     /**
      * Display an success snackbar
+     *
      * @param message The message to be displayed
      * @param config  `{ actionMessage, duration }`
-    */
+     */
     public success: SnackbarAction;
     /**
      * Display an warning snackbar
+     *
      * @param message The message to be displayed
      * @param config  `{ actionMessage, duration }`
-    */
+     */
     public warning: SnackbarAction;
     private _ref?: MatSnackBarRef<UiSnackBarComponent>;
 
@@ -158,17 +162,17 @@ export class UiSnackBarService {
 
     /**
      * Display a snackbar (customizable)
+     *
      * @param message The message to be displayed
      * @param options Customize default options: snackbar type, icon, display duration, and action message
      */
-    public show = (message: string | TemplateRef<any>, { type, duration, icon, actionMessage }
-        : ISnackBarOptions = {}) =>
+    public show = (message: string | TemplateRef<any>, { type, duration, icon, actionMessage }: ISnackBarOptions = {}) =>
         this._alert(type || SnackBarType.None, {
             message,
             icon: icon || ICON_MAP.get(type!),
             duration: duration || duration === 0 ? duration : this._options.duration!,
             actionMessage,
-        })
+        });
 
     /**
      * Dismiss the displayed snackbar
@@ -180,14 +184,14 @@ export class UiSnackBarService {
     }
 
     private _alertFactory = (type: SnackBarType) =>
-        (message: string | TemplateRef<any>, config?: { actionMessage?: string, duration?: number }) => this._alert(type, {
+        (message: string | TemplateRef<any>, config?: { actionMessage?: string; duration?: number }) => this._alert(type, {
             message,
             actionMessage: config?.actionMessage,
             icon: ICON_MAP.get(type),
             duration: config?.duration || config?.duration === 0
                 ? config.duration
                 : this._options.duration!,
-        })
+        });
 
     private _alert(type: SnackBarType, options: ISnackBarAlert) {
         if (

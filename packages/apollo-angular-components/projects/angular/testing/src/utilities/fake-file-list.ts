@@ -17,6 +17,7 @@ export class FakeFileList implements FileList {
 
     /**
      * Creates a `mock` for `FileList` in order to easily test file centric scenarios with `input`s.
+     *
      * @param [files=[]] A list of files.
      * @returns The mocked `FileList` instance.
      */

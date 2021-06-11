@@ -15,5 +15,5 @@ export class UiGridTable extends UiGridIntl {
         }
 
         return 'No results to display';
-    }
+    };
 }

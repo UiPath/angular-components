@@ -21,6 +21,7 @@ import {
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670
+ *
  * @ignore
  */
 const moment = _moment;

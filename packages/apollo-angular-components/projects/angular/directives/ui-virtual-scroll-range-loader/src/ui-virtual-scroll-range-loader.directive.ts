@@ -54,6 +54,7 @@ export enum VirtualScrollItemStatus {
  * Item with loading state to be used
  * if lazily loading results to reduce events emitted
  * and intervals emitted within events on `rangeLoad` Output
+ *
  * @export
  */
 export interface VirtualScrollItem {
@@ -63,6 +64,7 @@ export interface VirtualScrollItem {
 /**
  * A directive that is designed to work alongside CdkVirtualScrollViewport
  * which can be used to lazy load in chunks depending on what is in view
+ *
  * @export
  */
 @Directive({
@@ -126,18 +128,22 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
                 ),
                 debounceTime(100),
                 // filter early, in case of false emissions like { 0,0 }
-                filter(([{ start, end }]) => this._isValidRange({ start, end })),
+                filter(([{ start, end }]) => this._isValidRange({ start,
+                    end })),
                 distinctUntilChanged(([list1], [list2]) => `${list1.start}${list1.end}` === `${list2.start}${list2.end}`),
                 filter(this._filterTouchedRange),
                 map(([{ start, end }, items]) => ({
                     ...this._adjustLoadingRange(start, end, this.buffer, items),
                     items,
                 })),
-                filter(({ start, end }) => this._isValidRange({ start, end })),
+                filter(({ start, end }) => this._isValidRange({ start,
+                    end })),
                 map(({ start, end, items }) =>
                     this.isDown ?
-                        { start, end } :
-                        this._reverseIndex({ start, end }, items.length),
+                        { start,
+                            end } :
+                        this._reverseIndex({ start,
+                            end }, items.length),
                 ),
                 filter(this._isValidRange),
                 tap(range => this.rangeLoad.emit(range)),
@@ -155,11 +161,11 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
     }
 
     private _filterTouchedRange = (
-        [{ start, end }, items]: [ListRange, VirtualScrollItem[] | ReadonlyArray<VirtualScrollItem>],
+        [{ start, end }, items]: [ListRange, VirtualScrollItem[] | readonly VirtualScrollItem[]],
     ) =>
         items
             .slice(start, end)
-            .some(({ loading }) => loading === VirtualScrollItemStatus.initial)
+            .some(({ loading }) => loading === VirtualScrollItemStatus.initial);
 
     private _isValidRange = ({ start, end }: ListRange) => end >= 0 && start >= 0 && end - start >= 0;
     private _reverseIndex({ start, end }: ListRange, count: number) {
@@ -173,7 +179,7 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
         start: number,
         end: number,
         buffer: number,
-        items: VirtualScrollItem[] | ReadonlyArray<VirtualScrollItem>): ListRange {
+        items: VirtualScrollItem[] | readonly VirtualScrollItem[]): ListRange {
         (
             { start, end } = this._addSafeBuffer(start, end, buffer, items)
         );
@@ -187,7 +193,8 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
 
         if (start > end) {
             // kill the request
-            return { start, end: -1 };
+            return { start,
+                end: -1 };
         }
 
         const isNotTrimmedAtBothEnds = !isTrimmedBefore || !isTrimmedAfter;
@@ -216,16 +223,18 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
             end = -1;
         }
 
-        return { start, end };
+        return { start,
+            end };
     }
 
-    private _addSafeBuffer(start: number, end: number, buffer: number, items: VirtualScrollItem[] | ReadonlyArray<VirtualScrollItem>) {
+    private _addSafeBuffer(start: number, end: number, buffer: number, items: VirtualScrollItem[] | readonly VirtualScrollItem[]) {
         end = Math.min(end + buffer, items.length - 1);
         start = Math.max(start - buffer, 0);
-        return { start, end };
+        return { start,
+            end };
     }
 
-    private _trimInterval(start: number, end: number, items: VirtualScrollItem[] | ReadonlyArray<VirtualScrollItem>) {
+    private _trimInterval(start: number, end: number, items: VirtualScrollItem[] | readonly VirtualScrollItem[]) {
         let isTrimmedBefore = false;
         let isTrimmedAfter = false;
         while (start <= end &&
@@ -238,6 +247,9 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
             isTrimmedAfter = true;
             end -= 1;
         }
-        return { start, end, isTrimmedBefore, isTrimmedAfter };
+        return { start,
+            end,
+            isTrimmedBefore,
+            isTrimmedAfter };
     }
 }

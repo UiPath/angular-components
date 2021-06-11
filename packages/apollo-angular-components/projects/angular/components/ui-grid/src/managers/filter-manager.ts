@@ -78,13 +78,13 @@ export class FilterManager<T> {
     }
 
     public searchableDropdownUpdate = (column?: UiGridColumnDirective<T>, value?: ISuggestValue) =>
-        this._updateFilterValue(column, value, this._mapSearchableDropdownItem)
+        this._updateFilterValue(column, value, this._mapSearchableDropdownItem);
 
     public dropdownUpdate = (column?: UiGridColumnDirective<T>, value?: IDropdownOption) =>
-        this._updateFilterValue(column, value, this._mapDropdownItem)
+        this._updateFilterValue(column, value, this._mapDropdownItem);
 
     public searchChange(term: string | undefined, header: UiGridHeaderDirective<T>) {
-        const searchFilterCollection: IFilterModel<T>[] = !!term ?
+        const searchFilterCollection: IFilterModel<T>[] = term ?
             this._columns
                 .filter(column => column.searchable)
                 .map(column => ({
@@ -111,12 +111,12 @@ export class FilterManager<T> {
         if (!dropdown) { return; }
 
         (dropdown as {
-            updateValue: (value: ISuggestValue | IDropdownOption | undefined) => void,
+            updateValue: (value: ISuggestValue | IDropdownOption | undefined) => void;
         }).updateValue(value);
         dropdown.filterChange.emit(value ? mapper(column) : null);
 
         this._emitFilterOptions();
-    }
+    };
 
     private _emitFilterOptions = () => {
         const dropdownFilters = this._columns
@@ -135,23 +135,23 @@ export class FilterManager<T> {
         if (isEqual(this.filter$.getValue(), updatedFilters)) { return; }
 
         this.filter$.next(updatedFilters);
-    }
+    };
 
     private _hasFilterValue = (dropdown?: UiGridSearchFilterDirective<T> | UiGridDropdownFilterDirective<T>) =>
         !!dropdown &&
-        dropdown.value
+        dropdown.value;
 
     private _mapDropdownItem = (column: UiGridColumnDirective<T>) => ({
         method: column.dropdown!.method,
         property: column.property,
         value: column.dropdown!.value!.value,
-    }) as IFilterModel<T>
+    }) as IFilterModel<T>;
 
     private _mapSearchableDropdownItem = (column: UiGridColumnDirective<T>): IFilterModel<T> => ({
         method: column.searchableDropdown!.method,
         property: column.searchableDropdown!.property || column.property,
         value: column.searchableDropdown!.value!.id,
-    }) as IFilterModel<T>
+    }) as IFilterModel<T>;
 
     private _sortByProperty(filters: IFilterModel<T>[]): any {
         return filters.sort((a, b) => (a.property > b.property) ? 1 : -1);

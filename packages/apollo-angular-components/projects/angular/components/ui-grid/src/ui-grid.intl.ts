@@ -112,7 +112,7 @@ export class UiGridIntl implements OnDestroy {
      *
      */
     public noDataMessageAlternative = (searchValue?: string, activeFilters?: number | null) =>
-        `No data is available ${searchValue ? `for ${searchValue}` : '' } ${activeFilters ? ' for applied filters' : ''}.`
+        `No data is available ${searchValue ? `for ${searchValue}` : '' } ${activeFilters ? ' for applied filters' : ''}.`;
     /**
      * Determines the `checkbox` `matToolTip`.
      *
@@ -125,14 +125,13 @@ export class UiGridIntl implements OnDestroy {
         return `${selected ? 'Deselect' : 'Select'} row ${rowIndex}`;
     }
 
-
     /**
      * Generates a selection label for the given count.
      *
      * @param count The total selection count.
      */
     public translateMultiPageSelectionCount =
-        (count: number) => `You have selected ${count} items.`
+        (count: number) => `You have selected ${count} items.`;
 
     /**
      * Live announcer page loaded state notification.
@@ -147,7 +146,7 @@ export class UiGridIntl implements OnDestroy {
         }
 
         return `Loaded page number ${page} containing ${renderedItemCount} out of ${total} items`;
-    }
+    };
 
     /**
      * Live announcer page loading state notification.
@@ -155,12 +154,12 @@ export class UiGridIntl implements OnDestroy {
      * @param page The current loaded page number.
      */
     public loadingPage = (page: number) =>
-        `Loading page number ${page}`
+        `Loading page number ${page}`;
 
     public filters = (filtersCount?: number | null) =>
         (filtersCount && filtersCount > 0)
             ? `Filters (${filtersCount})`
-            : 'Filters'
+            : 'Filters';
 
     /**
      * Handles dropdown label transaltions.
@@ -168,7 +167,7 @@ export class UiGridIntl implements OnDestroy {
      * @param option The current dropdown option.
      */
     public translateDropdownOption =
-        (option: IDropdownOption) => option.label
+        (option: IDropdownOption) => option.label;
 
     /**
      * Live announcer sort ascending notification.
@@ -176,7 +175,7 @@ export class UiGridIntl implements OnDestroy {
      * @param columnTitle The sorted column title.
      */
     public columnSortedAscending = (columnTitle: string) =>
-        `Column ${columnTitle} sorted ` + this.ascending
+        `Column ${columnTitle} sorted ` + this.ascending;
 
     /**
      * Live announcer sort descending notification.
@@ -184,7 +183,7 @@ export class UiGridIntl implements OnDestroy {
      * @param columnTitle The sorted column title.
      */
     public columnSortedDescending = (columnTitle: string) =>
-        `Column ${columnTitle} sorted ` + this.descending
+        `Column ${columnTitle} sorted ` + this.descending;
 
     /**
      * Live announcer sort unsorted notification.
@@ -192,7 +191,7 @@ export class UiGridIntl implements OnDestroy {
      * @param columnTitle The sorted column title.
      */
     public columnUnsorted = (columnTtile: string) =>
-        `Column ${columnTtile} unsorted`
+        `Column ${columnTtile} unsorted`;
 
     /**
      * @ignore

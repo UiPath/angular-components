@@ -25,6 +25,7 @@ import { UiFormatDirective } from '@uipath/angular/directives/internal';
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670
+ *
  * @ignore
  */
 const moment = _moment;
@@ -230,9 +231,9 @@ export class UiDateFormatDirective extends UiFormatDirective {
     private _timeForTypeChanged = (type: DisplayType) =>
         this._isRelative(type) ?
             this._lastRelativeTime !== this._relativeTime :
-            this._lastAbsoluteTime !== this._absoluteTime
+            this._lastAbsoluteTime !== this._absoluteTime;
 
     private _timeForType = (type: DisplayType) => this._isRelative(type) ?
         this._relativeTime :
-        this._absoluteTime
+        this._absoluteTime;
 }

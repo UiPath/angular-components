@@ -89,9 +89,11 @@ describe('Component: UiGridColumn', () => {
             it('should create an instance of the directive', () => {
                 expect(column).toBeDefined();
             });
+
             it('should have visible set to false', () => {
                 expect(column.visible).toBeFalse();
             });
+
             it('should have primary set to false', () => {
                 expect(column.primary).toBeFalse();
             });

@@ -58,12 +58,12 @@ export class UiSuggestIntl implements OnDestroy {
     public customValueLabel = (text: string) => text;
 
     /**
-   * Label displayed when minimum number of characters to trigger the search is not met.
-   *
-   */
+     * Label displayed when minimum number of characters to trigger the search is not met.
+     *
+     */
     public minCharsLength = (length: number) => length === 1
         ? 'Please start typing to search'
-        : `Please type at least ${length} characters to search`
+        : `Please type at least ${length} characters to search`;
 
     /**
      * Value label generator function.

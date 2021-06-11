@@ -28,8 +28,8 @@ import { UiClipboardModule } from './ui-clipboard.module';
 class ClipboardFixtureComponent {
     public text = 'qwertyiop';
     public event$ = new Subject<{
-        type: 'error' | 'success',
-        ev: ClipboardJS.Event,
+        type: 'error' | 'success';
+        ev: ClipboardJS.Event;
     }>();
 
     public onClipboardCopy(ev: ClipboardJS.Event) {

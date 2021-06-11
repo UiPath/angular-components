@@ -35,7 +35,6 @@ const customPatch = (left: any, right: any): any => {
  */
 type PropertyMap<T> = { [Key in keyof T]?: PropertyMap<T[Key]> };
 
-
 type StringOrNumberKeyOf<T> = keyof T & (string | number);
 
 /**
@@ -71,23 +70,23 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
     private _hashMap = new Map<string, string>();
 
     public forEach = (callbackfn: (value: T, index: number, array: T[]) => void) =>
-        this.data$.value.forEach(callbackfn)
+        this.data$.value.forEach(callbackfn);
 
     public some = (callbackfn: (value: T, index: number, array: T[]) => boolean) =>
-        this.data$.value.some(callbackfn)
+        this.data$.value.some(callbackfn);
 
     public every = (callbackfn: (value: T, index: number, array: T[]) => boolean) =>
-        this.data$.value.every(callbackfn)
+        this.data$.value.every(callbackfn);
 
     public indexOf(entry: T) {
         return this.data$.value.indexOf(entry);
     }
 
     public find = <R extends T[K]>(entryId: R) =>
-        this.data$.value.find(e => e[this.idProperty] === entryId)
+        this.data$.value.find(e => e[this.idProperty] === entryId);
 
     public get = (index: number) =>
-        this.data$.value[index]
+        this.data$.value[index];
 
     public patchRow(id: T[K], patch: PropertyMap<T>) {
         const entry = this.data$.value.find(e => e[this.idProperty] === id);
@@ -171,7 +170,7 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
     public hashTrack = (_: number | undefined | null, entry: T) => this._hashMap.get(`${entry[this.idProperty]}`);
 
     private _hash = (entry: T) =>
-        this._hashMap.set(`${entry[this.idProperty]}`, hash.MD5(entry))
+        this._hashMap.set(`${entry[this.idProperty]}`, hash.MD5(entry));
 
     private _emit(data?: T[]) {
         this.data$.next([...(data || this.data$.value)]);

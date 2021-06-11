@@ -88,14 +88,14 @@ export class UiContentLoaderDirective implements OnInit, OnChanges, OnDestroy {
         } else {
             this._container.createEmbeddedView(this._ref);
         }
-    }
+    };
 
     private _updateSpinner = (spinner: UiContentSpinnerComponent) => {
         this._emitIfChanged(spinner.mode$, this.uiContentLoadingMode);
         this._emitIfChanged(spinner.diameter$, this.uiContentLoadingDiameter);
         this._emitIfChanged(spinner.color$, this.uiContentLoadingColor);
         this._emitIfChanged(spinner.value$, this.uiContentLoadingValue);
-    }
+    };
 
     private _emitIfChanged = <T>(
         source: BehaviorSubject<T>,
@@ -107,12 +107,12 @@ export class UiContentLoaderDirective implements OnInit, OnChanges, OnDestroy {
         ) { return; }
 
         source.next(value);
-    }
+    };
 
     private _destroySpinner = () => {
         if (!this._spinner) { return; }
 
         this._spinner.destroy();
         this._spinner = undefined;
-    }
+    };
 }
