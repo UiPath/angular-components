@@ -704,7 +704,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
                 filter(({ userEvent }) => !!userEvent),
             ),
             this.refresh,
-            this.footer && this.footer.pageChange,
+            this.footer?.pageChange,
         );
 
         this._configure$.next();

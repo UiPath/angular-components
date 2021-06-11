@@ -106,7 +106,7 @@ export class FilterManager<T> {
     ): void => {
         if (!column) { return; }
 
-        const dropdown = column.dropdown || column.searchableDropdown;
+        const dropdown = column.dropdown ?? column.searchableDropdown;
 
         if (!dropdown) { return; }
 
@@ -149,7 +149,7 @@ export class FilterManager<T> {
 
     private _mapSearchableDropdownItem = (column: UiGridColumnDirective<T>): IFilterModel<T> => ({
         method: column.searchableDropdown!.method,
-        property: column.searchableDropdown!.property || column.property,
+        property: column.searchableDropdown!.property ?? column.property,
         value: column.searchableDropdown!.value!.id,
     }) as IFilterModel<T>;
 

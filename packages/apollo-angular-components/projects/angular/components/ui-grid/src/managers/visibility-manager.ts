@@ -25,22 +25,18 @@ export class VisibilityManger<T extends IGridDataEntry> {
     private _columns$ = new BehaviorSubject<UiGridColumnDirective<T>[]>([]);
     private _initial?: IVisibleDiff[];
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     public columns$ = this._columns$.pipe(
         map(cols => cols.filter(c => !!c.visible)),
     );
-
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     public options$ = this._columns$.pipe(
         map(cols => this._mapToRenderedOptions(cols)),
     );
-
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     public isDirty$ = this.options$.pipe(
         filter(() => !!this._initial),
-        map(o =>
-            ([
-                o.map(this._mapToVisibleDiff),
-                this._initial,
-            ]),
-        ),
+        map(o => ([o.map(this._mapToVisibleDiff), this._initial])),
         map(([current, initial]) => !isEqual(current, initial)),
     );
 

@@ -128,6 +128,7 @@ export class EventGenerator {
      * @returns A `keydown` event with the provided key and modifier metadata.
      */
     static keyDown(key: KeyOrKeyName, ...modifiers: IKeyModifier[]): KeyboardEvent {
+        // eslint-disable-next-line no-underscore-dangle
         return EventGenerator._key('keydown', key, modifiers);
     }
 
@@ -139,6 +140,7 @@ export class EventGenerator {
      * @returns A `keyup` event with the provided key and modifier metadata.
      */
     static keyUp(key: KeyOrKeyName, ...modifiers: IKeyModifier[]): KeyboardEvent {
+        // eslint-disable-next-line no-underscore-dangle
         return EventGenerator._key('keyup', key, modifiers);
     }
 
@@ -175,7 +177,7 @@ export class EventGenerator {
         changeEvent.initEvent('change', true, true);
 
         Object.defineProperty(changeEvent, 'target', {
-            value: changeEvent.target || {},
+            value: changeEvent.target ?? {},
         });
 
         Object.defineProperty(changeEvent.target, 'files', {
@@ -240,6 +242,7 @@ export class EventGenerator {
     }
 
     private static _key(type: string, key: IKey | keyof Key, modifiers = [] as IKeyModifier[]) {
+        // eslint-disable-next-line no-underscore-dangle
         const safeKey = EventGenerator._getKey(key) as IKey;
         const options: KeyboardEventInit & { keyCode: number } = {
             code: `${safeKey.code}`,

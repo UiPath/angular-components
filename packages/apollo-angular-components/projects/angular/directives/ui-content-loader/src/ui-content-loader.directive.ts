@@ -51,7 +51,7 @@ export class UiContentLoaderDirective implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         private _resolver: ComponentFactoryResolver,
-        private _ref: TemplateRef<{}>,
+        private _ref: TemplateRef<any>,
         private _container: ViewContainerRef,
     ) { }
 

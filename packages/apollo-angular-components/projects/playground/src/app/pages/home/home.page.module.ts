@@ -4,11 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
-import { HomePage } from './home.page';
+import { HomePageComponent } from './home.page';
 
 @NgModule({
     declarations: [
-        HomePage,
+        HomePageComponent,
     ],
     imports: [
         CommonModule,

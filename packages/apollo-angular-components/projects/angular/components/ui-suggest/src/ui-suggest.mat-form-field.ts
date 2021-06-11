@@ -212,6 +212,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
     /**
      * @ignore
      */
+    // eslint-disable-next-line rxjs/finnish
     public stateChanges = new Subject<void>();
 
     protected _direction: SuggestDirection = 'down';
@@ -307,7 +308,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
     /**
      * @ignore
      */
-    public registerOnChange(fn: (_: ISuggestValue[]) => {}) {
+    public registerOnChange(fn: (_: ISuggestValue[]) => any) {
         this.registerChange = fn;
     }
 

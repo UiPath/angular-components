@@ -96,11 +96,13 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
 
     private get _currentIndex() {
         if (!this.selectColumns) { return null; }
+        // eslint-disable-next-line no-underscore-dangle
         return this.selectColumns._keyManager.activeItemIndex;
     }
 
     private set _currentIndex(i: number | null) {
         if (i == null || !this.selectColumns) { return; }
+        // eslint-disable-next-line no-underscore-dangle
         this.selectColumns._keyManager.setActiveItem(i);
     }
 
@@ -172,6 +174,7 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
             e.stopImmediatePropagation();
 
             this.selectColumns?.focus();
+            // eslint-disable-next-line no-underscore-dangle
             this.selectColumns?._keyManager.setFirstItemActive();
             this._cd.detectChanges();
         }

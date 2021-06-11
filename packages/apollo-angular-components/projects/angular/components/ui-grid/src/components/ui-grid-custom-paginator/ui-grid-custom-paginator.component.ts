@@ -58,7 +58,7 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginat
     ) {
         super(intl ?? new UiMatPaginatorIntl(), changeDetectorRef, defaults);
 
-        if (defaults && defaults.formFieldAppearance != null) {
+        if (defaults?.formFieldAppearance != null) {
             this._formFieldAppearance = defaults.formFieldAppearance;
         }
     }

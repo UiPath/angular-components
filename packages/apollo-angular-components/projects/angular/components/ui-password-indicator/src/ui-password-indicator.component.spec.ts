@@ -63,12 +63,6 @@ export class PasswordIndicatorTestComponent {
 
     public hideValidRuleDefinition = false;
 
-    public setValue(value: string) {
-        const password = this.form.get('password')!;
-        password.markAsDirty();
-        password!.setValue(value);
-    }
-
     constructor(fb: FormBuilder) {
         this.form = fb.group({
             password: [
@@ -76,6 +70,12 @@ export class PasswordIndicatorTestComponent {
                 complexityValidator(this.rules, false),
             ],
         });
+    }
+
+    public setValue(value: string) {
+        const password = this.form.get('password')!;
+        password.markAsDirty();
+        password!.setValue(value);
     }
 }
 

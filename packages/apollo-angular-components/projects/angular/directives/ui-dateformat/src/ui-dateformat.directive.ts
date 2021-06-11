@@ -147,7 +147,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
         if (!(this.date instanceof Date)) { return this.date; }
 
         return moment(this.date)
-            .tz(this.timezone || resolveTimezone(this._options))
+            .tz(this.timezone ?? resolveTimezone(this._options))
             .format(this.dateFormat);
     }
 

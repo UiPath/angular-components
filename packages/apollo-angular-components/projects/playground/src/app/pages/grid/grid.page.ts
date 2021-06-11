@@ -23,8 +23,9 @@ export interface MockData {
     parity: string;
 }
 
+// eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
-    selector: 'app-grid',
+    selector: 'ui-app-grid',
     templateUrl: './grid.page.html',
     styleUrls: ['./grid.page.scss'],
 })

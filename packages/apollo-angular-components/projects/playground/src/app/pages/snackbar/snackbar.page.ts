@@ -6,8 +6,9 @@ import {
 
 import { Component } from '@angular/core';
 
+// eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
-    selector: 'app-snackbar',
+    selector: 'ui-app-snackbar',
     templateUrl: './snackbar.page.html',
     styleUrls: ['snackbar.page.scss'],
 })
