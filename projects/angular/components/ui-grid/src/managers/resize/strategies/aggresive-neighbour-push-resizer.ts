@@ -47,7 +47,7 @@ export class AggresiveNeighbourPushResizer<T extends IGridDataEntry> extends Res
         }
 
         return true;
-    }
+    };
 
     protected _resizeLeftFilter = (state: IResizeEvent<T>) => {
         if (state.current.direction !== ResizeDirection.Left) { return true; }
@@ -72,7 +72,7 @@ export class AggresiveNeighbourPushResizer<T extends IGridDataEntry> extends Res
         }
 
         return true;
-    }
+    };
 
     protected _resizeRightFilter = (state: IResizeEvent<T>) => {
         if (state.current.direction !== ResizeDirection.Right) { return true; }
@@ -89,7 +89,7 @@ export class AggresiveNeighbourPushResizer<T extends IGridDataEntry> extends Res
         }
 
         return true;
-    }
+    };
 
     protected _stateUpdate = (state: IResizeEvent<T>) => {
         if (state.current.direction === ResizeDirection.Left) {
@@ -114,5 +114,5 @@ export class AggresiveNeighbourPushResizer<T extends IGridDataEntry> extends Res
             // add the stolen width to the actively resized column
             this._applyOffsetFor(state.current.resized, offset);
         }
-    }
+    };
 }

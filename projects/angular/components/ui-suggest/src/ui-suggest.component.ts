@@ -156,7 +156,6 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         this._cd.detectChanges();
     }
 
-
     /**
      * If true, the item list will render open and will not close on selection
      *
@@ -203,7 +202,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         }
 
         this._items = this._sortItems(items)
-            .map(r => ({ ...r, loading: VirtualScrollItemStatus.loaded }));
+            .map(r => ({ ...r,
+                loading: VirtualScrollItemStatus.loaded }));
     }
 
     /**
@@ -494,7 +494,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             .pipe(
                 takeUntil(this._destroyed$),
             )
-            .subscribe(start => this._visibleRange = { start, end: start + this.displayCount });
+            .subscribe(start => this._visibleRange = { start,
+                end: start + this.displayCount });
     }
 
     private _hasCustomValue$ = new BehaviorSubject(false);
@@ -528,7 +529,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     private _isOpen$ = new BehaviorSubject(false);
 
     private _virtualScroller?: CdkVirtualScrollViewport;
-    private _visibleRange = { start: Number.NEGATIVE_INFINITY, end: Number.POSITIVE_INFINITY };
+    private _visibleRange = { start: Number.NEGATIVE_INFINITY,
+        end: Number.POSITIVE_INFINITY };
 
     private _inputChange$: Observable<string>;
 
@@ -772,7 +774,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         this.isOpen = false;
         this.activeIndex = -1;
-        this._visibleRange = { start: Number.NEGATIVE_INFINITY, end: Number.POSITIVE_INFINITY };
+        this._visibleRange = { start: Number.NEGATIVE_INFINITY,
+            end: Number.POSITIVE_INFINITY };
         this.closed.emit();
 
         this.focus$.next(refocus);
@@ -938,7 +941,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                     this._items = [];
                 },
             });
-    }
+    };
 
     /**
      * `NgFor` track method.
@@ -956,7 +959,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _findItemIndex = (searchValue: string) =>
-        () => this._items.findIndex(({ text }) => caseInsensitiveCompare(text, searchValue))
+        () => this._items.findIndex(({ text }) => caseInsensitiveCompare(text, searchValue));
 
     private _safeCycleIncrement(increment: number) {
         let newIndex = this.activeIndex + increment;
@@ -1007,7 +1010,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         const end = start + this.displayCount;
 
-        this._visibleRange = { start, end };
+        this._visibleRange = { start,
+            end };
 
         vs.setRenderedRange({
             start,
@@ -1029,7 +1033,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
             vs.scrollToIndex(targetIndex);
         }
-    }
+    };
 
     private _announceNavigate() {
         if (!this.items.length && !this._isOnCustomValueIndex) {
@@ -1063,7 +1067,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             this.sourceInitialized.complete();
         }
         this.sourceUpdated.emit(this.items);
-    }
+    };
 
     private _setActiveIndex = (itemIndex: number) => {
         this.activeIndex = itemIndex > -1 ?
@@ -1071,7 +1075,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             this.isDown ?
                 this._itemLowerBound
                 : this._itemUpperBound;
-    }
+    };
 
     private _scrollToFirst() {
         this._scrollTo$.next(this.isDown ?
@@ -1149,7 +1153,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                 );
                 this._cd.detectChanges();
             });
-    }
+    };
 
     private _resetIfTotalCountChange = ({ total }: ISuggestValues<any>) => {
         const totalCountHasChanged = this._items.length > 0 && total !== this._items.length;
@@ -1157,10 +1161,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             return;
         }
         this._items = generateLoadingInitialCollection(this.intl.loadingLabel, total);
-        if (!!total) {
+        if (total) {
             this._triggerViewportRefresh$.next(null);
         }
-    }
+    };
 
     private _gotoBottomAsync(element: HTMLElement) {
         setTimeout(() => element.scrollTop = element.scrollHeight - element.clientHeight, 0);

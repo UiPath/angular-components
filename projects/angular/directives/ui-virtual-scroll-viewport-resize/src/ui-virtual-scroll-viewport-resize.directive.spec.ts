@@ -109,7 +109,6 @@ describe('Directive: UiVirtualScrollViewportResize', () => {
             expect(viewportSizeSpy).toHaveBeenCalledTimes(1);
         }));
 
-
         it('should redraw EVERY time the item count changs at a rapid pace', fakeAsync(() => {
             fixture.detectChanges();
             tick(DELAY_TIME);

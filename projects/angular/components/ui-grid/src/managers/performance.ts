@@ -53,11 +53,11 @@ export class PerformanceMonitor {
         if (!isRowPaint) { return; }
 
         this.paintTime$.next((performance.now() - this._timestamp!).toFixed(2));
-    }
+    };
 
     private _isRow = (element: Node) =>
         !!(element as Element).classList &&
         (element as Element)
             .classList
-            .contains('ui-grid-row')
+            .contains('ui-grid-row');
 }

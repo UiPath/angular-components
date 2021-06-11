@@ -96,12 +96,12 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
 
     private get _currentIndex() {
         if (!this.selectColumns) { return null; }
-        return this.selectColumns['_keyManager'].activeItemIndex;
+        return this.selectColumns._keyManager.activeItemIndex;
     }
 
     private set _currentIndex(i: number | null) {
         if (i == null || !this.selectColumns) { return; }
-        this.selectColumns['_keyManager'].setActiveItem(i);
+        this.selectColumns._keyManager.setActiveItem(i);
     }
 
     private get _isFirstValidIndex() {
@@ -113,7 +113,7 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
         return this._currentIndex === -1;
     }
 
-    private _selected: Array<string | keyof T> = [];
+    private _selected: (string | keyof T)[] = [];
     private _options: IVisibleModel<T>[] = [];
     private _destroyed$ = new Subject<void>();
 
@@ -183,7 +183,7 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
             e.stopPropagation();
             this._focusOnReset();
         }
-    }
+    };
 
     private _isArrowUp(e: KeyboardEvent) {
         return ['Up', 'ArrowUp'].includes(e.key);

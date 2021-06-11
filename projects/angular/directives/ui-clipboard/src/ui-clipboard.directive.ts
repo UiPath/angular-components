@@ -45,22 +45,20 @@ export class UiClipboardDirective implements OnInit, OnDestroy {
     private _clipboard!: Clipboard;
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     constructor(private _eltRef: ElementRef) { }
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     ngOnInit() {
         if (!this.uiClipboard) {
             throw new Error('Missing uiClipboard reference');
         }
 
         this._clipboard = new Clipboard(this._eltRef.nativeElement, {
-            target: () => {
-                return this.uiClipboard!;
-            },
+            target: () => this.uiClipboard!,
         });
 
         this._clipboard.on('success', (e) => {
@@ -73,8 +71,8 @@ export class UiClipboardDirective implements OnInit, OnDestroy {
     }
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     ngOnDestroy() {
         if (this._clipboard) {
             this._clipboard.destroy();

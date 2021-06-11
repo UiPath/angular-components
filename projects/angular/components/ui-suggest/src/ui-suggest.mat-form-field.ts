@@ -239,7 +239,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
         this.isFormControl = this.isFormControl || !!this.ngControl;
 
         // prevent cyclic dependency
-        if (!!this.ngControl) {
+        if (this.ngControl) {
             this.ngControl.valueAccessor = this;
         }
     }
@@ -324,6 +324,6 @@ export abstract class UiSuggestMatFormFieldDirective implements
             this.displayPriority,
             this.value,
             this.isDown,
-        )
+        );
 
 }

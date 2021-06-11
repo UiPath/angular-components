@@ -160,7 +160,6 @@ export class EventGenerator {
             value: fileList,
         });
 
-
         return ev as any as IDropEvent;
     }
 
@@ -228,7 +227,6 @@ export class EventGenerator {
     static moveXY(offsetX: number, offsetY: number): MouseEvent {
         const event = document.createEvent('MouseEvent');
         event.initEvent('mousemove', true, false);
-
 
         Object.defineProperty(event, 'offsetX', {
             value: offsetX,

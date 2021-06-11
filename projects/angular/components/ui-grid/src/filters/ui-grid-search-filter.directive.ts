@@ -61,7 +61,6 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> imp
     @Input()
     public value?: ISuggestValue;
 
-
     /**
      * Wether the filter should be rendered in the grid.
      *

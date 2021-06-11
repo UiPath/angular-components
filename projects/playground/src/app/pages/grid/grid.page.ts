@@ -102,7 +102,7 @@ export class GridPageComponent {
         });
     }
 
-    public generateData({ totalData, pageSize }: { totalData: number, pageSize: number }) {
+    public generateData({ totalData, pageSize }: { totalData: number; pageSize: number }) {
         this.allData = new Array(totalData).fill(0).map((_, i) => ({
             id: i,
             name: `name-${i}`,

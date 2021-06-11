@@ -92,7 +92,8 @@ function describeTestsFor(buttonType: ButtonType) {
         });
 
         it(`should set the button's accessible label to the tooltip's content`, fakeAsync(() => {
-            const tooltipDelay = 100, tooltip = 'Clear';
+            const tooltipDelay = 100;
+            const tooltip = 'Clear';
 
             const fixture = createComponent(IconButtonAsyncTooltipFixtureComponent);
             fixture.componentInstance.tooltip$ = of(tooltip).pipe(delay(tooltipDelay));

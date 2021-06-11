@@ -36,7 +36,7 @@ export class UiMatPaginatorIntl extends MatPaginatorIntl {
     encapsulation: ViewEncapsulation.None,
 })
 export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginatorDefaultOptions> {
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
     public _formFieldAppearance?: MatFormFieldAppearance;
     // eslint-disable-next-line
     public _intl!: UiMatPaginatorIntl;

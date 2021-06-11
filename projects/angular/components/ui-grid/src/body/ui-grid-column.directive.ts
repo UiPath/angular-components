@@ -26,8 +26,8 @@ import {
  */
 const ARIA_SORT_MAP: Record<SortDirection, string> = {
     '': 'none',
-    'asc': 'ascending',
-    'desc': 'descending',
+    asc: 'ascending',
+    desc: 'descending',
 };
 
 /**
@@ -196,6 +196,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
 
     /**
      * The searchable dropdown directive reference.
+     *
      * @ignore
      */
     @ContentChild(UiGridSearchFilterDirective, {
@@ -205,6 +206,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
 
     /**
      * The dropdown directive reference.
+     *
      * @ignore
      */
     @ContentChild(UiGridDropdownFilterDirective, {
@@ -214,6 +216,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
 
     /**
      * The view template associated to the row cell.
+     *
      * @ignore
      */
     @ContentChild(TemplateRef, {

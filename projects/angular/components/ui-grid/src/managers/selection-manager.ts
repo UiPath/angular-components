@@ -62,10 +62,10 @@ export class SelectionManager<T extends IGridDataEntry> {
     }
 
     public select = (...values: T[]): void =>
-        this._updateState(this._markSelected, values)
+        this._updateState(this._markSelected, values);
 
     public deselect = (...values: T[]): void =>
-        this._updateState(this._unmarkSelected, values)
+        this._updateState(this._unmarkSelected, values);
 
     public toggle(value: T): void {
         this.isSelected(value) ? this.deselect(value) : this.select(value);
@@ -102,7 +102,7 @@ export class SelectionManager<T extends IGridDataEntry> {
     private _updateState = (predicate: (value: T) => void, values: T[]) => {
         values.forEach(predicate);
         this._emitChangeEvent();
-    }
+    };
 
     private _emitChangeEvent() {
         this._hasValue$.next(this.hasValue());
@@ -126,7 +126,7 @@ export class SelectionManager<T extends IGridDataEntry> {
                 this._selectedToEmit.push(value);
             }
         }
-    }
+    };
 
     private _unmarkSelected = (value: T) => {
         if (this.isSelected(value)) {
@@ -136,5 +136,5 @@ export class SelectionManager<T extends IGridDataEntry> {
                 this._deselectedToEmit.push(value);
             }
         }
-    }
+    };
 }

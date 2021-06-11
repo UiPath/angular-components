@@ -21,15 +21,16 @@ import {
 } from '@angular/core';
 
 /**
-  *   Info:
-  *
-  *   On average a user trying hard enough can reach ~7 click/s
-  *   We'll reduce the click event count to half
-  *
-  *   Benefits:
-  *
-  *   - drastically reduce misclick emissions
-  * @ignore
+ *   Info:
+ *
+ *   On average a user trying hard enough can reach ~7 click/s
+ *   We'll reduce the click event count to half
+ *
+ *   Benefits:
+ *
+ *   - drastically reduce misclick emissions
+ *
+ * @ignore
  */
 const MAX_CLICKS_PER_SECOND = 3;
 
@@ -44,15 +45,15 @@ const MAX_CLICKS_PER_SECOND = 3;
 })
 export class UiClickOutsideService implements OnDestroy {
     /**
-   * The `global` event handler for `click` events.
-   *
-   */
+     * The `global` event handler for `click` events.
+     *
+     */
     public source: Observable<MouseEvent>;
     private _destroyed$ = new Subject<void>();
 
     /**
-    * @ignore
-    */
+     * @ignore
+     */
     constructor(
         @Inject(DOCUMENT)
         document: any,
@@ -68,8 +69,8 @@ export class UiClickOutsideService implements OnDestroy {
     }
 
     /**
-    * @ignore
-    */
+     * @ignore
+     */
     ngOnDestroy() {
         this._destroyed$.next();
     }
@@ -92,8 +93,8 @@ export class UiClickOutsideDirective {
     public uiClickOutside: Observable<MouseEvent>;
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     constructor(
         ref: ElementRef,
         private _clickService: UiClickOutsideService,

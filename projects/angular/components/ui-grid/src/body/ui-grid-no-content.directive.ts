@@ -5,11 +5,11 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[uiGridNoContent], ui-grid-no-content',
+    selector: '[uiGridNoContent], ui-grid-no-content',
 })
 export class UiGridNoContentDirective {
   @ContentChild(TemplateRef, {
-    static: true,
+      static: true,
   })
   public html?: TemplateRef<any>;
 }

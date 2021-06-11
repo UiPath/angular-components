@@ -80,21 +80,21 @@ export class UiProgressButtonDirective
 
     private _applyColor = () => {
         this._loader.color$.next(this.progressButtonColor);
-    }
+    };
 
     private _applyValue = () => {
         this._loader.value$.next(this.progressButtonValue);
-    }
+    };
 
     private _applyBufferValue = () => {
         this._loader.bufferValue$.next(this.progressButtonBufferValue);
-    }
+    };
 
     private _applyMode = () => {
         this._loader.mode$.next(this.progressButtonMode);
-    }
+    };
 
     private _applyLoading = () => {
         this._loader.loading$.next(this.progressButtonLoading);
-    }
+    };
 }

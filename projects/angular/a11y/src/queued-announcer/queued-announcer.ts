@@ -37,5 +37,5 @@ export class QueuedAnnouncer {
             .then(() => firstValueFrom(of(void 0).pipe(delay(50))))
             .then(this._announceNext)
             .catch(this._announceNext);
-    }
+    };
 }

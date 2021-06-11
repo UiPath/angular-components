@@ -103,5 +103,5 @@ export class UiPasswordToggleComponent implements OnInit, OnDestroy {
 
     private _toggleVisibiltyState = () => {
         this.isVisible$.next(!this._isVisible);
-    }
+    };
 }

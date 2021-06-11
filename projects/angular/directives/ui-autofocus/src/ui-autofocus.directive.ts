@@ -66,8 +66,8 @@ export class UiAutofocusDirective implements OnInit {
     private _autofocus = true;
 
     /**
-    * @ignore
-    */
+     * @ignore
+     */
     constructor(
         private _el: ElementRef,
         private _zone: NgZone,

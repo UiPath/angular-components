@@ -89,15 +89,15 @@ export class UiSpinnerButtonDirective
 
     private _applyColor = () => {
         this._loader.color$.next(this.spinnerButtonColor);
-    }
+    };
 
     private _applyValue = () => {
         this._loader.value$.next(this.spinnerButtonValue);
-    }
+    };
 
     private _applyMode = () => {
         this._loader.mode$.next(this.spinnerButtonMode);
-    }
+    };
 
     private _applyLoading = () => {
         if (this.spinnerButtonLoading) {
@@ -107,5 +107,5 @@ export class UiSpinnerButtonDirective
         }
 
         this._loader.loading$.next(this.spinnerButtonLoading);
-    }
+    };
 }

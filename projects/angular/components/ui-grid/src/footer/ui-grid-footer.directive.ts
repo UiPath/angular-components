@@ -74,7 +74,10 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
         return this._state;
     }
 
-    private _state: PageChangeEvent = { length: NaN, pageIndex: 0, pageSize: NaN, previousPageIndex: NaN };
+    private _state: PageChangeEvent = { length: NaN,
+        pageIndex: 0,
+        pageSize: NaN,
+        previousPageIndex: NaN };
 
     /**
      * @ignore
@@ -89,7 +92,8 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
      * @ignore
      */
     ngOnInit() {
-        this._state = { ...this._state, length: this.length };
+        this._state = { ...this._state,
+            length: this.length };
     }
 
     /**
