@@ -333,6 +333,28 @@ class GridUtils<T> {
         const button = this._utils.fixture.debugElement.query(By.css(selector));
         button.nativeElement.dispatchEvent(EventGenerator.click);
     };
+
+    public filterData = ({
+        columnName,
+        nth,
+        overlayContainerElement,
+    }: {
+        columnName: string;
+        nth: number;
+        overlayContainerElement: HTMLElement;
+    }) => {
+        const selector = `[data-column-name="ui-grid-dropdown-filter-${columnName}"]`;
+        const button = this._utils.fixture.debugElement.query(By.css(selector));
+        button.nativeElement.dispatchEvent(EventGenerator.click);
+        this._utils.fixture.detectChanges();
+
+        const labelButton = overlayContainerElement.querySelectorAll('button.mat-menu-item');
+        labelButton[nth].dispatchEvent(EventGenerator.click);
+
+        this._utils.fixture.detectChanges();
+        tick(500);
+        this._utils.fixture.detectChanges();
+    };
 }
 
 class SuggestUtils<T> {
