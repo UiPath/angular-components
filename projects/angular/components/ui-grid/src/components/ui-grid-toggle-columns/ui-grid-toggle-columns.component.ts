@@ -51,6 +51,9 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
     public dirty = false;
 
     @Input()
+    public showDivider = false;
+
+    @Input()
     public set options(options: IVisibleModel<T>[] | null) {
         if (!options || isEqual(this._options, options)) { return; }
 

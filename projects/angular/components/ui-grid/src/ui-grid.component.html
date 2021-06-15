@@ -29,13 +29,12 @@
                         class="ui-grid-search ui-grid-filter-option">
         </ui-grid-search>
 
-        <ng-container *ngTemplateOutlet="filtersTmpl">
+        <ng-container *ngIf="!useLegacyDesign">
+            <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
         </ng-container>
 
-    </ng-container>
-
-    <ng-container *ngIf="!useLegacyDesign">
-        <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
+        <ng-container *ngTemplateOutlet="filtersTmpl">
+        </ng-container>
     </ng-container>
 
     <div *ngIf="!(hasSelection$ | async)"
@@ -559,8 +558,9 @@
                             [resetToDefaults]="intl.toggleResetToDefaults"
                             [toggleTitle]="intl.toggleTitle"
                             [togglePlaceholderTitle]="intl.togglePlaceholderTitle"
+                            [useLegacyDesign]="useLegacyDesign"
+                            [showDivider]="!useLegacyDesign && (hasAnyFiltersVisible$ | async)"
                             (visibleColumns)="visibilityManager.update($event)"
-                            (resetColumns)="visibilityManager.reset()"
-                            [useLegacyDesign]="useLegacyDesign">
+                            (resetColumns)="visibilityManager.reset()">
     </ui-grid-toggle-columns>
 </ng-template>
