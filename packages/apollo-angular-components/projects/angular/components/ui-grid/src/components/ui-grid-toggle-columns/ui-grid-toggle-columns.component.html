@@ -40,6 +40,9 @@
                         [value]="o.property">{{ o.label }}</mat-option>
         </mat-optgroup>
     </mat-select>
+
+    <mat-divider *ngIf="showDivider"
+                 [vertical]="true"></mat-divider>
 </ng-container>
 
 <ng-template #classicColumnToggleTmpl>
