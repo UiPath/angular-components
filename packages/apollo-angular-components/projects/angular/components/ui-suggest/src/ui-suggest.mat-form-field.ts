@@ -48,7 +48,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
      *
      */
     @HostBinding('class.floating')
-    public get shouldLabelFloat() {
+    get shouldLabelFloat() {
         return this.focused || !this.empty;
     }
 
@@ -57,13 +57,13 @@ export abstract class UiSuggestMatFormFieldDirective implements
      *
      */
     @Input()
-    public get required() {
+    get required() {
         return this._required;
     }
     /**
      * @ignore
      */
-    public set required(required) {
+    set required(required) {
 
         required = !!required || this._elementRef.nativeElement.hasAttribute('required');
 
@@ -78,14 +78,14 @@ export abstract class UiSuggestMatFormFieldDirective implements
      *
      */
     @HostBinding('class.form-control')
-    public get isFormControl() {
+    get isFormControl() {
         return this._isFormControl || this._elementRef
             .nativeElement
             .classList
             .contains('form-control');
     }
 
-    public set isFormControl(value) {
+    set isFormControl(value) {
         this._isFormControl = value;
     }
 
@@ -94,11 +94,11 @@ export abstract class UiSuggestMatFormFieldDirective implements
      *
      */
     @Input()
-    public get placeholder() {
+    get placeholder() {
         return this._placeholder;
     }
 
-    public set placeholder(placeholder) {
+    set placeholder(placeholder) {
         this._placeholder = placeholder;
         this.stateChanges.next();
     }
@@ -108,13 +108,13 @@ export abstract class UiSuggestMatFormFieldDirective implements
      *
      */
     @Input()
-    public customItemSize?: number;
+    customItemSize?: number;
 
     /**
      * Computes the component item height depending on the current render mode.
      *
      */
-    public get itemSize() {
+    get itemSize() {
         if (this.customItemSize) { return this.customItemSize; }
 
         return this.isFormControl ? 32 : 40;
@@ -124,7 +124,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
      * Returns `true` if there are no items available.
      *
      */
-    public get empty() {
+    get empty() {
         return !this._value.length;
     }
 
@@ -132,7 +132,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
      * Determines if the render direction is `down`.
      *
      */
-    public get isDown() {
+    get isDown() {
         return this._direction === 'down';
     }
 
@@ -141,13 +141,13 @@ export abstract class UiSuggestMatFormFieldDirective implements
      *
      */
     @Input()
-    public get value() {
+    get value() {
         return this._value;
     }
     /**
      * @ignore
      */
-    public set value(newValue: ISuggestValue[]) {
+    set value(newValue: ISuggestValue[]) {
 
         const checkedNewValue = checkAndNormalizeValue(newValue);
 
@@ -167,52 +167,53 @@ export abstract class UiSuggestMatFormFieldDirective implements
     /**
      * @ignore
      */
-    public inputControl = new FormControl('');
+    inputControl = new FormControl('');
 
     /**
      * Configure the component display priority.
      *
      */
     @Input()
-    public displayPriority: SuggestDisplayPriority = 'default';
+    displayPriority: SuggestDisplayPriority = 'default';
 
     /**
      * @ignore
      */
     @HostBinding()
-    public id = `ui-suggest-${identifier()}`;
+    id = `ui-suggest-${identifier()}`;
 
     /**
      * @ignore
      */
-    public describedBy?: string;
+    describedBy?: string;
 
     /**
      * Emits the selected item value an item is selected.
      *
      */
     @Output()
-    public selected = new EventEmitter<ISuggestValue>();
+    selected = new EventEmitter<ISuggestValue>();
 
     /**
      * Emits the deselected item value when an item is deselected.
      *
      */
     @Output()
-    public deselected = new EventEmitter<ISuggestValue>();
+    deselected = new EventEmitter<ISuggestValue>();
 
     /**
      * @ignore
      */
-    public errorState = false;
+    errorState = false;
     /**
      * @ignore
      */
-    public focused = false;
+    focused = false;
     /**
      * @ignore
      */
-    public stateChanges = new Subject<void>();
+    // eslint-disable-next-line rxjs/finnish
+    stateChanges = new Subject<void>();
 
     protected _direction: SuggestDirection = 'down';
     protected _items: ISuggestValue[] = [];
@@ -239,7 +240,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
         this.isFormControl = this.isFormControl || !!this.ngControl;
 
         // prevent cyclic dependency
-        if (!!this.ngControl) {
+        if (this.ngControl) {
             this.ngControl.valueAccessor = this;
         }
     }
@@ -271,21 +272,21 @@ export abstract class UiSuggestMatFormFieldDirective implements
     /**
      * Clears the search input value.
      */
-    public clear() {
+    clear() {
         this.inputControl.setValue('');
     }
 
     /**
      * @ignore
      */
-    public setDescribedByIds(ids: string[]) {
+    setDescribedByIds(ids: string[]) {
         this.describedBy = ids.join(' ').trim() || undefined;
     }
 
     /**
      * @ignore
      */
-    public writeValue(value: ISuggestValue[]) {
+    writeValue(value: ISuggestValue[]) {
         value = checkAndNormalizeValue(value);
 
         if (!isEqual(value, this._value)) {
@@ -297,24 +298,24 @@ export abstract class UiSuggestMatFormFieldDirective implements
     /**
      * @ignore
      */
-    public registerChange = (_: ISuggestValue[]) => { };
+    registerChange = (_: ISuggestValue[]) => { };
 
     /**
      * @ignore
      */
-    public registerTouch: (ev?: Event) => void = (_?: Event) => { };
+    registerTouch: (ev?: Event) => void = (_?: Event) => { };
 
     /**
      * @ignore
      */
-    public registerOnChange(fn: (_: ISuggestValue[]) => {}) {
+    registerOnChange(fn: (_: ISuggestValue[]) => any) {
         this.registerChange = fn;
     }
 
     /**
      * @ignore
      */
-    public registerOnTouched(fn: (ev?: Event) => void) {
+    registerOnTouched(fn: (ev?: Event) => void) {
         this.registerTouch = fn;
     }
 
@@ -324,6 +325,6 @@ export abstract class UiSuggestMatFormFieldDirective implements
             this.displayPriority,
             this.value,
             this.isDown,
-        )
+        );
 
 }

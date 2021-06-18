@@ -16,17 +16,18 @@ import {
 } from '../models';
 
 /**
-* Case-insensitive comparer.
-*
-* @param str1 Left hand input.
-* @param str2 Right hand input.
-* @returns If the strings are equal.
-* @ignore
-*/
+ * Case-insensitive comparer.
+ *
+ * @param str1 Left hand input.
+ * @param str2 Right hand input.
+ * @returns If the strings are equal.
+ * @ignore
+ */
 export const caseInsensitiveCompare = (str1: string, str2: string): boolean => str1.trim().toLowerCase() === str2.trim().toLowerCase();
 
 /**
  * Warns the developer that the provided item collection is falsy.
+ *
  * @ignore
  */
 function arrayWarning(value: any) {
@@ -39,6 +40,7 @@ function arrayWarning(value: any) {
 
 /**
  * Warns the developer that the provided item collection contains falsy values.
+ *
  * @ignore
  */
 function nullValueWarning(value: any) {
@@ -55,6 +57,7 @@ function nullValueWarning(value: any) {
 
 /**
  * Sorts the items according to their display priority.
+ *
  * @returns The sorted items.
  * @ignore
  */
@@ -100,12 +103,12 @@ function filterItemsByPredicate(
 }
 
 /**
-* Generates an in memory search factory.
-*
-* @param searchTerm The term searched for.
-* @param sourceList The items that need to be filtered.
-* @ignore
-*/
+ * Generates an in memory search factory.
+ *
+ * @param searchTerm The term searched for.
+ * @param sourceList The items that need to be filtered.
+ * @ignore
+ */
 export const inMemorySearch = (searchTerm: string, sourceList: ISuggestValue[]) =>
     of(sourceList)
         .pipe(
@@ -177,7 +180,10 @@ export function mapInitialItems(
     isDown: boolean,
 ) {
     const loadingLength = total - data.length;
-    const queryResponse = data.map(r => ({ ...r, loading: VirtualScrollItemStatus.loaded }));
+    const queryResponse = data.map(r => ({
+        ...r,
+        loading: VirtualScrollItemStatus.loaded,
+    }));
     const mappedItems = applyDisplayPriority(queryResponse, displayPriority, value);
     const loadingItems = generateLoadingInitialCollection(loadingLabel, loadingLength);
 
@@ -210,7 +216,10 @@ export function generateLoadingInitialCollection(text: string, total = 0): ISugg
 export function setLoadedState(data: ISuggestValueData<any>[], start: number, currentItems: ISuggestValue[]) {
     const items = [...currentItems];
     data
-        .map(r => ({ ...r, loading: VirtualScrollItemStatus.loaded }))
+        .map(r => ({
+            ...r,
+            loading: VirtualScrollItemStatus.loaded,
+        }))
         .forEach((item, chunkIndex) => {
             const itemIndex = chunkIndex + start;
             if (items[itemIndex] && items[itemIndex].loading !== VirtualScrollItemStatus.loaded) {

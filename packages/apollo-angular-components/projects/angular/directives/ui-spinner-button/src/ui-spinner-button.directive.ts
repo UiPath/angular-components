@@ -42,16 +42,16 @@ export class UiSpinnerButtonDirective
     extends UiLoaderButtonDirective<UiButtonProgressSpinnerComponent>
     implements OnInit {
     @Input()
-    public spinnerButtonLoading = false;
+    spinnerButtonLoading = false;
 
     @Input()
-    public spinnerButtonMode: MatProgressSpinner['mode'] = 'indeterminate';
+    spinnerButtonMode: MatProgressSpinner['mode'] = 'indeterminate';
 
     @Input()
-    public spinnerButtonValue: MatProgressSpinner['value'] = 0;
+    spinnerButtonValue: MatProgressSpinner['value'] = 0;
 
     @Input()
-    public spinnerButtonColor: MatProgressSpinner['color'] = 'accent';
+    spinnerButtonColor: MatProgressSpinner['color'] = 'accent';
 
     constructor(
         button: MatButton,
@@ -89,15 +89,15 @@ export class UiSpinnerButtonDirective
 
     private _applyColor = () => {
         this._loader.color$.next(this.spinnerButtonColor);
-    }
+    };
 
     private _applyValue = () => {
         this._loader.value$.next(this.spinnerButtonValue);
-    }
+    };
 
     private _applyMode = () => {
         this._loader.mode$.next(this.spinnerButtonMode);
-    }
+    };
 
     private _applyLoading = () => {
         if (this.spinnerButtonLoading) {
@@ -107,5 +107,5 @@ export class UiSpinnerButtonDirective
         }
 
         this._loader.loading$.next(this.spinnerButtonLoading);
-    }
+    };
 }

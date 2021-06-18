@@ -112,7 +112,6 @@ export const toPercentageStyle = (value: number) => `${value}%`;
 export const findHeaderIndexFor = (headers: HTMLDivElement[], value: string) =>
     headers.findIndex(h => h.dataset[HEADER_DATA_KEY] === value);
 
-
 /**
  * Gets the data property value for the current element.
  *

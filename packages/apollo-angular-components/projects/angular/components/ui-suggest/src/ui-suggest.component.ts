@@ -117,10 +117,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      */
     @HostBinding('class.disabled')
     @Input()
-    public get disabled() {
+    get disabled() {
         return this._disabled$.value;
     }
-    public set disabled(value) {
+    set disabled(value) {
         if (this._disabled$.value === !!value) { return; }
 
         this._disabled$.next(!!value);
@@ -156,24 +156,23 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         this._cd.detectChanges();
     }
 
-
     /**
      * If true, the item list will render open and will not close on selection
      *
      * @ignore
      */
     @Input()
-    public alwaysExpanded = false;
+    alwaysExpanded = false;
 
     /**
      * Configure if the component allows multi-selection.
      *
      */
     @Input()
-    public get multiple() {
+    get multiple() {
         return this._multiple;
     }
-    public set multiple(multiple) {
+    set multiple(multiple) {
         if (this._multiple !== multiple) {
             if (!multiple) {
                 this._deselectValuesFrom(1);
@@ -189,10 +188,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @Input()
-    public get items() {
+    get items() {
         return this._items;
     }
-    public set items(items: ISuggestValue[]) {
+    set items(items: ISuggestValue[]) {
 
         if (!items || isEqual(items, this._items)) { return; }
 
@@ -203,7 +202,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         }
 
         this._items = this._sortItems(items)
-            .map(r => ({ ...r, loading: VirtualScrollItemStatus.loaded }));
+            .map(r => ({
+                ...r,
+                loading: VirtualScrollItemStatus.loaded,
+            }));
     }
 
     /**
@@ -211,12 +213,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @Input()
-    public set direction(value: SuggestDirection) {
+    set direction(value: SuggestDirection) {
         if (this._direction === value) { return; }
         this._items.reverse();
         this._direction = value;
     }
-    public get direction() {
+    get direction() {
         return this._direction;
     }
 
@@ -225,10 +227,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @Input()
-    public get searchable() {
+    get searchable() {
         return !!this.searchSourceFactory;
     }
-    public set searchable(searchable) {
+    set searchable(searchable) {
         if (!searchable) {
             this.searchSourceFactory = void 0;
             return;
@@ -245,13 +247,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @ContentChild(TemplateRef, { static: true })
-    public itemTemplate: TemplateRef<any> | null = null;
+    itemTemplate: TemplateRef<any> | null = null;
 
     /**
      * Computes the current tooltip value.
      *
      */
-    public get tooltip() {
+    get tooltip() {
         if (
             !this.isOpen &&
             this._hasValue
@@ -266,7 +268,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * Determines if the `custom value` option should be `displayed`.
      *
      */
-    public get isCustomValueVisible(): boolean {
+    get isCustomValueVisible(): boolean {
         return this._hasCustomValue$.value && !this.loading$.value;
     }
 
@@ -274,7 +276,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * Retrieves the currently `rendered` items.
      *
      */
-    public get renderItems() {
+    get renderItems() {
         return this.loading$.value ? [] :
             this._hasCustomValue$.value &&
                 !this.isDown ?
@@ -290,11 +292,11 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *  Add support for multiple selection
      */
     @Input()
-    public get enableCustomValue() {
+    get enableCustomValue() {
         return this._enableCustomValue &&
             !this._multiple;
     }
-    public set enableCustomValue(value) {
+    set enableCustomValue(value) {
         this._enableCustomValue = !!value;
     }
 
@@ -303,7 +305,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @Input()
-    public set loading(value: boolean) {
+    set loading(value: boolean) {
         this.loading$.next(value);
     }
 
@@ -311,7 +313,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * Determines if there are no results to display.
      *
      */
-    public get hasNoResults() {
+    get hasNoResults() {
         return !this.loading$.value && !this.items.length;
     }
 
@@ -319,7 +321,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * Computes the `viewport` max-height.
      *
      */
-    public get viewportMaxHeight() {
+    get viewportMaxHeight() {
         if (!this.isOpen) { return 0; }
 
         const actualCount = Math.max(this.renderItems.filter(Boolean).length + Number(this.isCustomValueVisible), 1);
@@ -351,9 +353,9 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @Input()
-    public searchSourceFactory?: (searchTerm?: string, fetchCount?: number, skip?: number) => Observable<ISuggestValues<any>>;
+    searchSourceFactory?: (searchTerm?: string, fetchCount?: number, skip?: number) => Observable<ISuggestValues<any>>;
     @Input()
-    public customValueLabelTranslator!: (value: string) => string;
+    customValueLabelTranslator!: (value: string) => string;
 
     /**
      * Configure the `fetchStrategy` for requesting data using searchSourceFactory
@@ -362,7 +364,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @Input()
-    public set fetchStrategy(strategy: 'eager' | 'onOpen') {
+    set fetchStrategy(strategy: 'eager' | 'onOpen') {
         if (strategy === this._fetchStrategy$.value) { return; }
 
         this._fetchStrategy$.next(strategy);
@@ -374,94 +376,94 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @Input()
-    public minChars = 0;
+    minChars = 0;
 
     /**
      * Configure the `control` width.
      *
      */
     @Input()
-    public width = '150px';
+    width = '150px';
     /**
      * Configure the `maximum` search length.
      *
      */
     @Input()
-    public maxLength?: number;
+    maxLength?: number;
     /**
      * The search event debounce interval in `ms`.
      *
      */
     @Input()
-    public debounceTime = DEFAULT_SUGGEST_DEBOUNCE_TIME;
+    debounceTime = DEFAULT_SUGGEST_DEBOUNCE_TIME;
     /**
      * The maximum number of items rendered in the viewport.
      *
      */
     @Input()
-    public displayCount = 10;
+    displayCount = 10;
     /**
      * Configure if the component allows selection clearing.
      *
      */
     @Input()
-    public clearable = true;
+    clearable = true;
     /**
      * Configure the `default` selected value.
      *
      */
     @Input()
-    public defaultValue = '';
+    defaultValue = '';
     /**
      * Configure if the tooltip should be disabled.
      *
      */
     @Input()
-    public disableTooltip = false;
+    disableTooltip = false;
 
     /**
      * Emits `once` when `data` is retrieved for the `first time`.
      *
      */
     @Output()
-    public sourceInitialized = new EventEmitter<ISuggestValue[]>();
+    sourceInitialized = new EventEmitter<ISuggestValue[]>();
 
     /**
      * Emits `every` time item data is retrieved.
      *
      */
     @Output()
-    public sourceUpdated = new EventEmitter<ISuggestValue[]>();
+    sourceUpdated = new EventEmitter<ISuggestValue[]>();
 
     /**
      * Emits when the overlay is hidden (dropdown close).
      *
      */
     @Output()
-    public closed = new EventEmitter<void>();
+    closed = new EventEmitter<void>();
 
     /**
      * Emits when the overlay is displayed (dropdown open).
      *
      */
     @Output()
-    public opened = new EventEmitter<void>();
+    opened = new EventEmitter<void>();
 
     /**
      * @ignore
      */
-    public VirtualScrollItemStatus = VirtualScrollItemStatus;
+    VirtualScrollItemStatus = VirtualScrollItemStatus;
     /**
      * Configures the dropdown open state.
      *
      * @ignore
      */
-    public set isOpen(isOpen: boolean) {
+    set isOpen(isOpen: boolean) {
         if (this._isOpen$.value === isOpen) { return; }
 
         this._isOpen$.next(isOpen);
     }
-    public get isOpen() {
+    get isOpen() {
         return this._isOpen$.value;
     }
     /**
@@ -469,19 +471,19 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @ignore
      */
-    public activeIndex = -1;
+    activeIndex = -1;
     /**
      * The component loading state source.
      *
      * @ignore
      */
-    public loading$ = new BehaviorSubject(false);
+    loading$ = new BehaviorSubject(false);
     /**
      * Stream that triggers focusing.
      *
      * @ignore
      */
-    public focus$ = new Subject<boolean>();
+    focus$ = new Subject<boolean>();
 
     @ViewChild(CdkVirtualScrollViewport)
     protected set _virtualScrollerQuery(value: CdkVirtualScrollViewport) {
@@ -494,7 +496,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             .pipe(
                 takeUntil(this._destroyed$),
             )
-            .subscribe(start => this._visibleRange = { start, end: start + this.displayCount });
+            .subscribe(start => this._visibleRange = {
+                start,
+                end: start + this.displayCount,
+            });
     }
 
     private _hasCustomValue$ = new BehaviorSubject(false);
@@ -528,7 +533,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     private _isOpen$ = new BehaviorSubject(false);
 
     private _virtualScroller?: CdkVirtualScrollViewport;
-    private _visibleRange = { start: Number.NEGATIVE_INFINITY, end: Number.POSITIVE_INFINITY };
+    private _visibleRange = {
+        start: Number.NEGATIVE_INFINITY,
+        end: Number.POSITIVE_INFINITY,
+    };
 
     private _inputChange$: Observable<string>;
 
@@ -663,7 +671,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @ignore
      */
-    public rangeLoad = (range: ListRange) => this._rangeLoad$.next(range);
+    rangeLoad = (range: ListRange) => this._rangeLoad$.next(range);
 
     /**
      * Disable state hook for the `form`.
@@ -671,7 +679,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * @param isDisabled The truth of of the `disabled` state.
      * @ignore
      */
-    public setDisabledState(isDisabled: boolean) {
+    setDisabledState(isDisabled: boolean) {
         this.disabled = isDisabled;
     }
 
@@ -680,7 +688,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @ignore
      */
-    public onContainerClick(event: MouseEvent) {
+    onContainerClick(event: MouseEvent) {
         if (
             !this.focused &&
             !this._isOpenDisabled
@@ -696,7 +704,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @ignore
      */
-    public onBlur() {
+    onBlur() {
         this._focusChanged(this.isOpen);
     }
 
@@ -705,7 +713,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @ignore
      */
-    public onFocus() {
+    onFocus() {
         this._focusChanged(true);
     }
 
@@ -713,7 +721,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * Toggle the dropdown state (opened/closed);
      *
      */
-    public toggle() {
+    toggle() {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.isOpen ? this.close() : this.open();
     }
 
@@ -721,7 +730,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * Opens the dropdown.
      *
      */
-    public open() {
+    open() {
         if (this._isOpenDisabled) { return; }
 
         this.isOpen = true;
@@ -757,7 +766,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @param [refocus=true] If the dropdown should be focused after closing.
      */
-    public close(refocus = true) {
+    close(refocus = true) {
         if (this.alwaysExpanded || !this.isOpen) { return; }
 
         if (this._isOnCustomValueIndex && !this.loading$.value) {
@@ -772,7 +781,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         this.isOpen = false;
         this.activeIndex = -1;
-        this._visibleRange = { start: Number.NEGATIVE_INFINITY, end: Number.POSITIVE_INFINITY };
+        this._visibleRange = {
+            start: Number.NEGATIVE_INFINITY,
+            end: Number.POSITIVE_INFINITY,
+        };
         this.closed.emit();
 
         this.focus$.next(refocus);
@@ -786,7 +798,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * Resets the component state.
      *
      */
-    public reset() {
+    reset() {
         this._reset$.next();
     }
 
@@ -795,7 +807,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @param [ev] `Mouse` or `Keyboard`.
      */
-    public removeSelection(ev?: KeyboardEvent | MouseEvent) {
+    removeSelection(ev?: KeyboardEvent | MouseEvent) {
         if (!this.clearable) { return; }
 
         this.preventDefault(ev);
@@ -814,7 +826,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * @param [ev] The navigation trigger event.
      * @ignore
      */
-    public navigate(increment: number, ev?: Event) {
+    navigate(increment: number, ev?: Event) {
         this.preventDefault(ev);
 
         if (
@@ -841,7 +853,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @ignore
      */
-    public setSelectedItem() {
+    setSelectedItem() {
         if (this.loading$.value) { return; }
 
         if (this._isOnCustomValueIndex) {
@@ -857,7 +869,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * @param [item] The `item` that needs to be checked.
      * @returns If the provided `item` is selected.
      */
-    public isItemSelected(item?: ISuggestValue) {
+    isItemSelected(item?: ISuggestValue) {
         return !!item &&
             !!this.value.find(v => v.id === item.id);
     }
@@ -869,7 +881,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * @param [closeAfterSelect=true] If the dropdown should close after the value is selected.
      * @param [refocus=true] If the search input should regain focus after selection.
      */
-    public updateValue(inputValue: ISuggestValue | string, closeAfterSelect = true, refocus = true) {
+    updateValue(inputValue: ISuggestValue | string, closeAfterSelect = true, refocus = true) {
         const value = toSuggestValue(inputValue, this._isOnCustomValueIndex);
         if (value.loading !== VirtualScrollItemStatus.loaded) { return; }
 
@@ -898,7 +910,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     /**
      * @ignore
      */
-    public preventDefault(ev?: Event) {
+    preventDefault(ev?: Event) {
         if (!ev) { return; }
         ev.preventDefault();
         ev.stopImmediatePropagation();
@@ -909,7 +921,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @param searchValue The search value that should be used for the `fetch`.
      */
-    public fetch = (searchValue = '') => {
+    fetch = (searchValue = '') => {
         if (!this.searchSourceFactory) { return; }
 
         this.loading$.next(true);
@@ -938,14 +950,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                     this._items = [];
                 },
             });
-    }
+    };
 
     /**
      * `NgFor` track method.
      *
      * @ignore
      */
-    public trackById = (_: number, { id }: ISuggestValue) => id;
+    trackById = (_: number, { id }: ISuggestValue) => id;
 
     private _selectActiveItem(closeAfterSelect: boolean) {
         const item = this.items[this.activeIndex];
@@ -956,7 +968,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _findItemIndex = (searchValue: string) =>
-        () => this._items.findIndex(({ text }) => caseInsensitiveCompare(text, searchValue))
+        () => this._items.findIndex(({ text }) => caseInsensitiveCompare(text, searchValue));
 
     private _safeCycleIncrement(increment: number) {
         let newIndex = this.activeIndex + increment;
@@ -1007,7 +1019,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         const end = start + this.displayCount;
 
-        this._visibleRange = { start, end };
+        this._visibleRange = {
+            start,
+            end,
+        };
 
         vs.setRenderedRange({
             start,
@@ -1029,7 +1044,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
             vs.scrollToIndex(targetIndex);
         }
-    }
+    };
 
     private _announceNavigate() {
         if (!this.items.length && !this._isOnCustomValueIndex) {
@@ -1063,7 +1078,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             this.sourceInitialized.complete();
         }
         this.sourceUpdated.emit(this.items);
-    }
+    };
 
     private _setActiveIndex = (itemIndex: number) => {
         this.activeIndex = itemIndex > -1 ?
@@ -1071,7 +1086,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             this.isDown ?
                 this._itemLowerBound
                 : this._itemUpperBound;
-    }
+    };
 
     private _scrollToFirst() {
         this._scrollTo$.next(this.isDown ?
@@ -1125,7 +1140,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             .pipe(
                 retry(1),
                 map(res => this.isDown ? res : {
-                    data: (res.data || []).reverse(),
+                    data: (res.data ?? []).reverse(),
                     total: res.total,
                 }),
                 tap(this._resetIfTotalCountChange),
@@ -1149,7 +1164,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                 );
                 this._cd.detectChanges();
             });
-    }
+    };
 
     private _resetIfTotalCountChange = ({ total }: ISuggestValues<any>) => {
         const totalCountHasChanged = this._items.length > 0 && total !== this._items.length;
@@ -1157,10 +1172,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             return;
         }
         this._items = generateLoadingInitialCollection(this.intl.loadingLabel, total);
-        if (!!total) {
+        if (total) {
             this._triggerViewportRefresh$.next(null);
         }
-    }
+    };
 
     private _gotoBottomAsync(element: HTMLElement) {
         setTimeout(() => element.scrollTop = element.scrollHeight - element.clientHeight, 0);

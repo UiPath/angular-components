@@ -27,12 +27,12 @@ import { UiSecondFormatModule } from './ui-secondformat.module';
     template: `<ui-secondformat [seconds]="seconds"></ui-secondformat>`,
 })
 class TestHostComponent {
-    public seconds?: number;
+    seconds?: number;
 
     @ViewChild(UiSecondFormatDirective, {
         static: true,
     })
-    public uiSecondFormat!: UiSecondFormatDirective;
+    uiSecondFormat!: UiSecondFormatDirective;
 }
 
 const MINUTE = 60;

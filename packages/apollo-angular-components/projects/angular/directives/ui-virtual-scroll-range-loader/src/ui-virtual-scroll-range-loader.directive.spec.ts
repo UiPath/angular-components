@@ -70,19 +70,19 @@ interface ITestVirtualScrollItem extends VirtualScrollItem {
                 </cdk-virtual-scroll-viewport>`,
 })
 class UiVirtualScrollRangeLoaderFixtureComponent {
-    public isDown = true;
-    public buffer = 0;
-    public itemSize = ITEM_SIZE;
-    public items: ITestVirtualScrollItem[] = INITIAL_ITEMS;
+    isDown = true;
+    buffer = 0;
+    itemSize = ITEM_SIZE;
+    items: ITestVirtualScrollItem[] = INITIAL_ITEMS;
 
-    public lastRangeLoad?: ListRange;
+    lastRangeLoad?: ListRange;
 
     @ViewChild('viewport', {
         static: true,
     })
-    public viewport!: CdkVirtualScrollViewport;
+    viewport!: CdkVirtualScrollViewport;
 
-    public rangeLoad(range: ListRange) {
+    rangeLoad(range: ListRange) {
         this.lastRangeLoad = range;
     }
 }
@@ -191,7 +191,10 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
 
         it('should not emit RangeLoad if all items are loaded',
             fakeAsync(() => {
-                component.items = component.items.map(_ => ({ loading: VirtualScrollItemStatus.loaded, text: 'Loaded' }));
+                component.items = component.items.map(_ => ({
+                    loading: VirtualScrollItemStatus.loaded,
+                    text: 'Loaded',
+                }));
                 fixture.detectChanges();
 
                 tick(RANGE_LOAD_DEBOUNCE);
@@ -238,7 +241,7 @@ describe('Directive: UiVirtualScrollRangeLoaderDirective', () => {
             }),
         );
 
-        it('should emit  RangeLoad without the last item index if that is loaded',
+        it('should emit RangeLoad without the last item index if that is loaded',
             fakeAsync(() => {
                 const targetRange = {
                     start: 0,

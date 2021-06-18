@@ -31,10 +31,10 @@ export class UiScrollIntoViewDirective {
      *
      */
     @Input()
-    public boundary: Boundary = 'parent';
+    boundary: Boundary = 'parent';
 
     @Input()
-    public block: Options['block'] = 'start';
+    block: Options['block'] = 'start';
 
     /**
      * Configures if the decorated element should be scrolled into view.
@@ -42,7 +42,7 @@ export class UiScrollIntoViewDirective {
      *
      */
     @Input()
-    public set uiScrollIntoView(condition: boolean) {
+    set uiScrollIntoView(condition: boolean) {
         this._zone.runOutsideAngular(() => {
             if (!condition) { return; }
             merge(
@@ -68,11 +68,11 @@ export class UiScrollIntoViewDirective {
      * Method that scrolls to the the provided `target`.
      *
      */
-    public scrollIntoViewIfNeeded = scrollIntoViewIfNeeded;
+    scrollIntoViewIfNeeded = scrollIntoViewIfNeeded;
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     constructor(
         private _element: ElementRef,
         private _zone: NgZone,

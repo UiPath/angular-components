@@ -9,19 +9,19 @@ export class UiSuggestAssert {
         private _suggest: UiSuggestComponent,
     ) { }
 
-    public isOpen(): void {
+    isOpen(): void {
         this._assertOpenState('open');
     }
 
-    public isClosed(): void {
+    isClosed(): void {
         this._assertOpenState('closed');
     }
 
-    public isDisabled(): void {
+    isDisabled(): void {
         this._assertDisableState('disabled');
     }
 
-    public isEnabled(): void {
+    isEnabled(): void {
         this._assertDisableState('enabled');
     }
 
