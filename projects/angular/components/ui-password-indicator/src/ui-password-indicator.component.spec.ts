@@ -52,16 +52,16 @@ const enum Rule {
     `,
 })
 export class PasswordIndicatorTestComponent {
-    public rules = {
+    rules = {
         [Rule.length]: (value: string) => value.length > 8,
         [Rule.upperCase]: /(?=.*[A-Z])/,
         [Rule.lowerCase]: /(?=.*[a-z])/,
         [Rule.dollarOrAt]: /(?=.*[$@])/,
     };
 
-    public form: FormGroup;
+    form: FormGroup;
 
-    public hideValidRuleDefinition = false;
+    hideValidRuleDefinition = false;
 
     constructor(fb: FormBuilder) {
         this.form = fb.group({
@@ -72,7 +72,7 @@ export class PasswordIndicatorTestComponent {
         });
     }
 
-    public setValue(value: string) {
+    setValue(value: string) {
         const password = this.form.get('password')!;
         password.markAsDirty();
         password!.setValue(value);

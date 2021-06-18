@@ -59,7 +59,7 @@ export class LiveAnnouncerManager<T> {
         );
     }
 
-    public destroy() {
+    destroy() {
         this._destroyed$.next();
         this._destroyed$.complete();
     }

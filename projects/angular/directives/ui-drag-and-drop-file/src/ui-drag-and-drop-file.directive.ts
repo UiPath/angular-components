@@ -28,49 +28,49 @@ export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnD
      *
      */
     @Input()
-    public fileType?: string;
+    fileType?: string;
 
     /**
      * The element reference that triggers file `browsing`.
      *
      */
     @Input()
-    public fileBrowseRef?: Element;
+    fileBrowseRef?: Element;
 
     /**
      * The element reference that serve as a `clear` trigger for the selected files.
      *
      */
     @Input()
-    public fileClearRef?: Element;
+    fileClearRef?: Element;
 
     /**
      * Configures if the `file area` accepts multiple files.
      *
      */
     @Input()
-    public multiple = false;
+    multiple = false;
 
     /**
      * Configures the `disabled` state of the `file area`.
      *
      */
     @Input()
-    public disabled = false;
+    disabled = false;
 
     /**
      * An event that emits when the file selection state `changes`.
      *
      */
     @Output()
-    public fileChange = new EventEmitter<File[]>();
+    fileChange = new EventEmitter<File[]>();
 
     /**
      * An event that emits when the file selection is `cleared`.
      *
      */
     @Output()
-    public fileClear = new EventEmitter();
+    fileClear = new EventEmitter();
 
     @HostBinding('class.file-dragging')
     protected _isDragging = false;

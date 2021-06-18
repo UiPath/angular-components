@@ -44,17 +44,17 @@ const COMPONENT_SELECTOR = 'ui-grid-toggle-columns';
 })
 export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements AfterViewInit, OnDestroy {
     @HostBinding('class')
-    public hostClass = COMPONENT_SELECTOR;
+    hostClass = COMPONENT_SELECTOR;
 
     @HostBinding(`class.${COMPONENT_SELECTOR}-dirty`)
     @Input()
-    public dirty = false;
+    dirty = false;
 
     @Input()
-    public showDivider = false;
+    showDivider = false;
 
     @Input()
-    public set options(options: IVisibleModel<T>[] | null) {
+    set options(options: IVisibleModel<T>[] | null) {
         if (!options || isEqual(this._options, options)) { return; }
 
         this._options = options;
@@ -62,38 +62,38 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
             .filter(({ checked }) => checked)
             .map(o => o.property);
     }
-    public get options() {
+    get options() {
         return this._options;
     }
 
     @Input()
-    public useLegacyDesign = false;
+    useLegacyDesign = false;
 
     @Input()
-    public toggleTooltip?: string;
+    toggleTooltip?: string;
 
     @Input()
-    public toggleTitle?: string;
+    toggleTitle?: string;
 
     @Input()
-    public resetToDefaults?: string;
+    resetToDefaults?: string;
 
     @Input()
-    public togglePlaceholderTitle?: string;
+    togglePlaceholderTitle?: string;
 
     @Output()
-    public visibleColumns = new EventEmitter<IVisibleModel<T>>();
+    visibleColumns = new EventEmitter<IVisibleModel<T>>();
 
     @Output()
-    public resetColumns = new EventEmitter<void>();
+    resetColumns = new EventEmitter<void>();
 
     @ViewChild(MatSelect, { static: false })
-    public selectColumns?: MatSelect;
+    selectColumns?: MatSelect;
 
     @ViewChild('resetBtn', { static: false })
-    public resetBtn?: MatAnchor;
+    resetBtn?: MatAnchor;
 
-    public get selected() {
+    get selected() {
         return this._selected;
     }
 
@@ -143,7 +143,7 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
         this._destroyed$.complete();
     }
 
-    public selectionChange({ value }: MatSelectChange) {
+    selectionChange({ value }: MatSelectChange) {
         this._selected = value;
         this._options
             .forEach(c => c.checked = value.includes(c.property));
@@ -151,13 +151,13 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
         this.visibleColumns.emit(value);
     }
 
-    public reset() {
+    reset() {
         this.resetColumns.emit();
         this.selectColumns!.close();
         this.selectColumns!.focus();
     }
 
-    public resetKeyDown(e: KeyboardEvent) {
+    resetKeyDown(e: KeyboardEvent) {
         if (this._isArrowUp(e)) {
             e.stopImmediatePropagation();
             return;

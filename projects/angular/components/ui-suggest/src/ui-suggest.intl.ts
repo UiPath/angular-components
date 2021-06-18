@@ -16,29 +16,29 @@ export class UiSuggestIntl implements OnDestroy {
      * Label for the selection clear tooltip.
      *
      */
-    public clearSelectionLabel = 'Clear Selection';
+    clearSelectionLabel = 'Clear Selection';
     /**
      * Label displayed when no results are available.
      *
      */
-    public noResultsLabel = 'No results';
+    noResultsLabel = 'No results';
     /**
      * Label displayed when an item is in a loading state.
      *
      */
-    public loadingLabel = 'Loading...';
+    loadingLabel = 'Loading...';
     /**
      * Label announced by the a11y live announcer for custom values.
      *
      */
-    public customValueLiveLabel = 'Custom value';
+    customValueLiveLabel = 'Custom value';
 
     /**
      * Notify if changes have occurred that require that the labels be updated.
      *
      */
     // eslint-disable-next-line rxjs/finnish
-    public changes = new Subject<void>();
+    changes = new Subject<void>();
 
     protected _destroyed$ = new Subject<void>();
 
@@ -49,20 +49,20 @@ export class UiSuggestIntl implements OnDestroy {
      * @param itemNo The current item index.
      * @param itemCount The total item count.
      */
-    public currentItemLabel = (text: string, itemNo: number, itemCount: number) => `${text} item ${itemNo} out of ${itemCount}`;
+    currentItemLabel = (text: string, itemNo: number, itemCount: number) => `${text} item ${itemNo} out of ${itemCount}`;
 
     /**
      * Custom value label generator function.
      *
      * @param text The text of the custom value.
      */
-    public customValueLabel = (text: string) => text;
+    customValueLabel = (text: string) => text;
 
     /**
      * Label displayed when minimum number of characters to trigger the search is not met.
      *
      */
-    public minCharsLength = (length: number) => length === 1
+    minCharsLength = (length: number) => length === 1
         ? 'Please start typing to search'
         : `Please type at least ${length} characters to search`;
 
@@ -71,7 +71,7 @@ export class UiSuggestIntl implements OnDestroy {
      *
      * @param text The text of the value.
      */
-    public translateLabel = (text: string) => text;
+    translateLabel = (text: string) => text;
 
     /**
      * @ignore

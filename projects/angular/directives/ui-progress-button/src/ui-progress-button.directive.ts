@@ -35,19 +35,19 @@ export class UiProgressButtonDirective
     implements OnInit {
 
     @Input()
-    public progressButtonLoading = false;
+    progressButtonLoading = false;
 
     @Input()
-    public progressButtonMode: MatProgressBar['mode'] = 'indeterminate';
+    progressButtonMode: MatProgressBar['mode'] = 'indeterminate';
 
     @Input()
-    public progressButtonValue: MatProgressBar['value'] = 0;
+    progressButtonValue: MatProgressBar['value'] = 0;
 
     @Input()
-    public progressButtonBufferValue: MatProgressBar['bufferValue'] = 0;
+    progressButtonBufferValue: MatProgressBar['bufferValue'] = 0;
 
     @Input()
-    public progressButtonColor: MatProgressBar['color'] = 'accent';
+    progressButtonColor: MatProgressBar['color'] = 'accent';
 
     constructor(
         componentFactory: ComponentFactoryResolver,

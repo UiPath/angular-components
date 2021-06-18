@@ -64,30 +64,30 @@ class UiSuggestFixtureDirective {
     @ViewChild(UiSuggestComponent, {
         static: true,
     })
-    public uiSuggest!: UiSuggestComponent;
+    uiSuggest!: UiSuggestComponent;
 
     // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-    public defaultValue?: string = 'All';
-    public placeholder = 'My Field';
+    defaultValue?: string = 'All';
+    placeholder = 'My Field';
 
-    public clearable?: boolean;
-    public searchable?: boolean;
-    public alwaysExpanded?: boolean;
-    public disabled?: boolean;
-    public multiple?: boolean;
-    public readonly?: boolean;
-    public enableCustomValue?: boolean;
-    public items?: ISuggestValue[];
-    public direction: 'up' | 'down' = 'down';
-    public displayPriority: 'default' | 'selected' = 'default';
-    public fetchStrategy: 'eager' | 'onOpen' = 'eager';
-    public minChars = 0;
+    clearable?: boolean;
+    searchable?: boolean;
+    alwaysExpanded?: boolean;
+    disabled?: boolean;
+    multiple?: boolean;
+    readonly?: boolean;
+    enableCustomValue?: boolean;
+    items?: ISuggestValue[];
+    direction: 'up' | 'down' = 'down';
+    displayPriority: 'default' | 'selected' = 'default';
+    fetchStrategy: 'eager' | 'onOpen' = 'eager';
+    minChars = 0;
 
-    public set value(value: ISuggestValue[] | undefined) {
+    set value(value: ISuggestValue[] | undefined) {
         this._value = value;
     }
 
-    public get value(): ISuggestValue[] | undefined {
+    get value(): ISuggestValue[] | undefined {
         return this._value;
     }
 
@@ -1955,13 +1955,13 @@ describe('Component: UiSuggest', () => {
         `,
     })
     class UiSuggestFormControlFixtureComponent extends UiSuggestFixtureDirective {
-        public formGroup: FormGroup;
+        formGroup: FormGroup;
 
-        public set value(value: ISuggestValue[]) {
+        set value(value: ISuggestValue[]) {
             this.formGroup.get('test')?.setValue(value);
         }
 
-        public get value(): ISuggestValue[] {
+        get value(): ISuggestValue[] {
             return this.formGroup.get('test')?.value;
         }
 

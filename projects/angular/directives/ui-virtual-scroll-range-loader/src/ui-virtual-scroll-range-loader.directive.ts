@@ -80,14 +80,14 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
      *
      */
     @Input()
-    public buffer = 10;
+    buffer = 10;
 
     /**
      * Flag used to indicate the direction of items
      * set to `false` if virtual scroll events indexes need to be reversed
      */
     @Input()
-    public isDown = true;
+    isDown = true;
 
     /**
      * Output of `ListRange` events based on renderedRangeStream from
@@ -97,7 +97,7 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
      *
      */
     @Output()
-    public rangeLoad = new EventEmitter<ListRange>();
+    rangeLoad = new EventEmitter<ListRange>();
 
     @ContentChild(CdkVirtualForOf, {
         static: true,

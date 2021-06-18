@@ -61,7 +61,7 @@ export class UiSnackBarComponent {
      * @internal
      * @ignore
      */
-    public isPropertyString(property: string | TemplateRef<any>): property is string {
+    isPropertyString(property: string | TemplateRef<any>): property is string {
         return typeof property === 'string';
     }
 }
@@ -89,7 +89,7 @@ export type SnackbarAction = (
 ) => MatSnackBarRef<UiSnackBarComponent>;
 
 export class UiMatSnackBarConfig {
-    public restrictHtml = false;
+    restrictHtml = false;
 }
 export const UI_MAT_SNACK_BAR_DEFAULT_OPTIONS = new InjectionToken<UiMatSnackBarConfig>('UiMatSnackBarConfig');
 
@@ -117,28 +117,28 @@ export class UiSnackBarService {
      * @param message The message to be displayed
      * @param config  `{ actionMessage, duration }`
      */
-    public info: SnackbarAction;
+    info: SnackbarAction;
     /**
      * Display an error snackbar
      *
      * @param message The message to be displayed
      * @param config  `{ actionMessage, duration }`
      */
-    public error: SnackbarAction;
+    error: SnackbarAction;
     /**
      * Display an success snackbar
      *
      * @param message The message to be displayed
      * @param config  `{ actionMessage, duration }`
      */
-    public success: SnackbarAction;
+    success: SnackbarAction;
     /**
      * Display an warning snackbar
      *
      * @param message The message to be displayed
      * @param config  `{ actionMessage, duration }`
      */
-    public warning: SnackbarAction;
+    warning: SnackbarAction;
     private _ref?: MatSnackBarRef<UiSnackBarComponent>;
 
     constructor(
@@ -166,7 +166,7 @@ export class UiSnackBarService {
      * @param message The message to be displayed
      * @param options Customize default options: snackbar type, icon, display duration, and action message
      */
-    public show = (message: string | TemplateRef<any>, { type, duration, icon, actionMessage }: ISnackBarOptions = {}) =>
+    show = (message: string | TemplateRef<any>, { type, duration, icon, actionMessage }: ISnackBarOptions = {}) =>
         this._alert(type ?? SnackBarType.None, {
             message,
             icon: icon ?? ICON_MAP.get(type!),
@@ -177,7 +177,7 @@ export class UiSnackBarService {
     /**
      * Dismiss the displayed snackbar
      */
-    public clear() {
+    clear() {
         if (!this._ref) { return; }
 
         this._ref.dismiss();

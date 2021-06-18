@@ -70,18 +70,18 @@ export class UiSecondFormatDirective {
      *
      */
     @Input()
-    public get seconds() { return this._seconds$.value; }
-    public set seconds(seconds: number | null) { this._seconds$.next(seconds); }
+    get seconds() { return this._seconds$.value; }
+    set seconds(seconds: number | null) { this._seconds$.next(seconds); }
 
     /**
      * @internal
      */
-    public tooltip$: Observable<string | undefined>;
+    tooltip$: Observable<string | undefined>;
 
     /**
      * @internal
      */
-    public text$: Observable<string>;
+    text$: Observable<string>;
 
     protected _text?: HTMLElement;
 

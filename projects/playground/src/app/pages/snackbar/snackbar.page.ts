@@ -13,8 +13,8 @@ import { Component } from '@angular/core';
     styleUrls: ['snackbar.page.scss'],
 })
 export class SnackbarPageComponent {
-    public readonly IconMap = ICON_MAP;
-    public readonly iconType = [...ICON_MAP.keys()];
+    readonly IconMap = ICON_MAP;
+    readonly iconType = [...ICON_MAP.keys()];
 
     constructor(
         private _snack: UiSnackBarService,

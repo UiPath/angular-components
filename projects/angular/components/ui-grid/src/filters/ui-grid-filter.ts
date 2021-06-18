@@ -18,13 +18,13 @@ import { IFilterModel } from '../models';
 @Directive()
 export abstract class UiGridFilterDirective<T> implements OnDestroy {
     @Input()
-    public disabled?: boolean;
+    disabled?: boolean;
 
     @Input()
-    public method?: string;
+    method?: string;
 
     @Output()
-    public filterChange = new EventEmitter<IFilterModel<T> | null>();
+    filterChange = new EventEmitter<IFilterModel<T> | null>();
 
     ngOnDestroy() {
         this.filterChange.complete();

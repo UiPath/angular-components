@@ -31,11 +31,11 @@ import { UiDragAndDropFileDirective } from './ui-drag-and-drop-file.directive';
     `,
 })
 class TestDragAndDropFileComponent {
-    public disabled = false;
-    public multiple = false;
+    disabled = false;
+    multiple = false;
 
-    public files?: File[];
-    public fileType?: string;
+    files?: File[];
+    fileType?: string;
 
     onFileChange(files: FileList) {
         this.files = Array.from(files);

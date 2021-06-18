@@ -34,16 +34,16 @@ const updatedTimezone = 'Europe/London';
     template: `<ui-dateformat [date]="date"></ui-dateformat>`,
 })
 class TestHostComponent {
-    public date?: Date | string;
-    public dateFormat?: string;
-    public timezone?: string;
-    public contentType?: DisplayType;
-    public titleType?: DisplayType;
+    date?: Date | string;
+    dateFormat?: string;
+    timezone?: string;
+    contentType?: DisplayType;
+    titleType?: DisplayType;
 
     @ViewChild(UiDateFormatDirective, {
         static: true,
     })
-    public uiDateFormat!: UiDateFormatDirective;
+    uiDateFormat!: UiDateFormatDirective;
 }
 
 describe('Directive: UiDateFormat', () => {

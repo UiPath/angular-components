@@ -135,7 +135,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * @param value The list that needs to rendered.
      */
     @Input()
-    public set data(value: T[]) {
+    set data(value: T[]) {
         this._performanceMonitor.reset();
         this.dataManager.update(value);
     }
@@ -146,7 +146,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @HostBinding('class.ui-grid-state-resizing')
     @Input()
-    public get isResizing() {
+    get isResizing() {
         return this.resizeManager.isResizing;
     }
 
@@ -156,13 +156,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @HostBinding('class.ui-grid-state-projected')
     @Input()
-    public isProjected: boolean;
+    isProjected: boolean;
 
     /**
      * Determines if all of the items are currently checked.
      *
      */
-    public get isEveryVisibleRowChecked() {
+    get isEveryVisibleRowChecked() {
         return !!this.dataManager.length &&
             this.dataManager.every(row => this.selectionManager.isSelected(row!));
     }
@@ -171,7 +171,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * Determines if there's a value selected within the currently rendered items (used for multi-page selection).
      *
      */
-    public get hasValueOnVisiblePage() {
+    get hasValueOnVisiblePage() {
         return this.dataManager.some(row => this.selectionManager.isSelected(row!));
     }
 
@@ -182,7 +182,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     @Input()
-    public set resizeStrategy(value: ResizeStrategy) {
+    set resizeStrategy(value: ResizeStrategy) {
         if (value === this._resizeStrategy) { return; }
 
         this._resizeStrategy = value;
@@ -200,7 +200,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @HostBinding('class.ui-grid-state-loading')
     @Input()
-    public loading = false;
+    loading = false;
 
     /**
      * Marks the grid enabled state.
@@ -208,18 +208,18 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @HostBinding('class.ui-grid-state-disabled')
     @Input()
-    public disabled = false;
+    disabled = false;
 
     /**
      * Configure if the grid search filters are eager or on open.
      *
      */
     @Input()
-    public set collapseFiltersCount(count: number) {
+    set collapseFiltersCount(count: number) {
         if (count === this._collapseFiltersCount$.value) { return; }
         this._collapseFiltersCount$.next(count);
     }
-    public get collapseFiltersCount() {
+    get collapseFiltersCount() {
         return this._collapseFiltersCount$.value;
     }
 
@@ -228,11 +228,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     @Input()
-    public set fetchStrategy(fetchStrategy: 'eager' | 'onOpen') {
+    set fetchStrategy(fetchStrategy: 'eager' | 'onOpen') {
         if (fetchStrategy === this.fetchStrategy) { return; }
         this._fetchStrategy = fetchStrategy;
     }
-    public get fetchStrategy() {
+    get fetchStrategy() {
         return this._fetchStrategy;
     }
 
@@ -241,14 +241,14 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     @Input()
-    public selectable = true;
+    selectable = true;
 
     /**
      * Option to select an alternate layout for footer pagination.
      *
      */
     @Input()
-    public useLegacyDesign: boolean;
+    useLegacyDesign: boolean;
 
     /**
      * Option to have collapsible filters.
@@ -256,10 +256,10 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * @deprecated - use `[collapseFiltersCount]="0" to render collapsed or leave out to always render inline`
      */
     @Input()
-    public set collapsibleFilters(collapse: boolean) {
+    set collapsibleFilters(collapse: boolean) {
         this._collapseFiltersCount$.next(collapse ? 0 : Number.POSITIVE_INFINITY);
     }
-    public get collapsibleFilters() {
+    get collapsibleFilters() {
         return !this._collapseFiltersCount$.value;
     }
 
@@ -268,7 +268,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     @Input()
-    public toggleColumns = false;
+    toggleColumns = false;
 
     /**
      * Configure if the grid allows multi-page selection.
@@ -276,90 +276,90 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @HostBinding('class.ui-grid-mode-multi-select')
     @Input()
-    public multiPageSelect = false;
+    multiPageSelect = false;
 
     /**
      * Configure if the grid is refreshable.
      *
      */
     @Input()
-    public refreshable = true;
+    refreshable = true;
 
     /**
      * Configure if `virtualScroll` is enabled.
      *
      */
     @Input()
-    public virtualScroll = false;
+    virtualScroll = false;
 
     /**
      * Configure the row item size for virtualScroll
      *
      */
     @Input()
-    public rowSize: number;
+    rowSize: number;
 
     /**
      * Show paint time stats
      *
      */
     @Input()
-    public showPaintTime = false;
+    showPaintTime = false;
 
     /**
      * Provide a custom `noDataMessage`.
      *
      */
     @Input()
-    public noDataMessage?: string;
+    noDataMessage?: string;
 
     /**
      * Set the expanded entry.
      *
      */
     @Input()
-    public expandedEntry?: T;
+    expandedEntry?: T;
 
     /**
      * Configure if the expanded entry should replace the active row, or add a new row with the expanded view.
      *
      */
     @Input()
-    public expandMode: 'preserve' | 'collapse' = 'collapse';
+    expandMode: 'preserve' | 'collapse' = 'collapse';
 
     /**
      * Configure if ui-grid-header-row should be visible, by default it is visible
      *
      */
     @Input()
-    public showHeaderRow = true;
+    showHeaderRow = true;
 
     /**
      * Emits an event with the sort model when a column sort changes.
      *
      */
     @Output()
-    public sortChange = new EventEmitter<ISortModel<T>>();
+    sortChange = new EventEmitter<ISortModel<T>>();
 
     /**
      * Emits an event when user click the refresh button.
      *
      */
     @Output()
-    public refresh = new EventEmitter<void>();
+    refresh = new EventEmitter<void>();
 
     /**
      * Emits an event once the grid has been rendered.
      *
      */
     @Output()
-    public rendered = new EventEmitter<void>();
+    rendered = new EventEmitter<void>();
 
     /**
      * Emits the column definitions when their definition changes.
      *
      */
-    public columns$ = new BehaviorSubject<UiGridColumnDirective<T>[]>([]);
+    columns$ = new BehaviorSubject<UiGridColumnDirective<T>[]>([]);
 
     /**
      * Row configuration directive reference.
@@ -369,7 +369,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     @ContentChild(UiGridRowConfigDirective, {
         static: true,
     })
-    public rowConfig?: UiGridRowConfigDirective<T>;
+    rowConfig?: UiGridRowConfigDirective<T>;
 
     /**
      * Row action directive reference.
@@ -379,7 +379,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     @ContentChild(UiGridRowActionDirective, {
         static: true,
     })
-    public actions?: UiGridRowActionDirective;
+    actions?: UiGridRowActionDirective;
 
     /**
      * Footer directive reference.
@@ -389,7 +389,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     @ContentChild(UiGridFooterDirective, {
         static: true,
     })
-    public footer?: UiGridFooterDirective;
+    footer?: UiGridFooterDirective;
 
     /**
      * Header directive reference.
@@ -399,7 +399,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     @ContentChild(UiGridHeaderDirective, {
         static: true,
     })
-    public header?: UiGridHeaderDirective<T>;
+    header?: UiGridHeaderDirective<T>;
 
     /**
      * Column directive reference list.
@@ -407,7 +407,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * @ignore
      */
     @ContentChildren(UiGridColumnDirective)
-    public columns!: QueryList<UiGridColumnDirective<T>>;
+    columns!: QueryList<UiGridColumnDirective<T>>;
 
     /**
      * Expanded row template reference.
@@ -417,7 +417,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     @ContentChild(UiGridExpandedRowDirective, {
         static: true,
     })
-    public expandedRow?: UiGridExpandedRowDirective;
+    expandedRow?: UiGridExpandedRowDirective;
 
     /**
      * No content custom template reference.
@@ -427,7 +427,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     @ContentChild(UiGridNoContentDirective, {
         static: true,
     })
-    public noContent?: UiGridNoContentDirective;
+    noContent?: UiGridNoContentDirective;
 
     /**
      * Custom loading template reference.
@@ -437,97 +437,97 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     @ContentChild(UiGridLoadingDirective, {
         static: true,
     })
-    public loadingState?: UiGridLoadingDirective;
+    loadingState?: UiGridLoadingDirective;
     /**
      * Reference to the grid action buttons container
      *
      * @ignore
      */
     @ViewChild('gridActionButtons')
-    public gridActionButtons!: ElementRef;
+    gridActionButtons!: ElementRef;
     /**
      * Toggle filters row display state
      *
      */
-    public showFilters = false;
+    showFilters = false;
 
     /**
      * Live announcer manager, used to emit notification via `aria-live`.
      *
      */
-    public liveAnnouncerManager?: LiveAnnouncerManager<T>;
+    liveAnnouncerManager?: LiveAnnouncerManager<T>;
 
     /**
      * Selection manager, used to manage grid selection states.
      *
      */
-    public selectionManager = new SelectionManager<T>();
+    selectionManager = new SelectionManager<T>();
 
     /**
      * Data manager, used to optimize row rendering.
      *
      */
-    public dataManager = new DataManager<T>(this._gridOptions);
+    dataManager = new DataManager<T>(this._gridOptions);
 
     /**
      * Filter manager, used to manage filter state changes.
      *
      */
-    public filterManager = new FilterManager<T>();
+    filterManager = new FilterManager<T>();
 
     /**
      * Visibility manager, used to manage visibility of columns.
      *
      */
-    public visibilityManager = new VisibilityManger<T>();
+    visibilityManager = new VisibilityManger<T>();
 
     /**
      * Sort manager, used to manage sort state changes.
      *
      */
-    public sortManager = new SortManager<T>();
+    sortManager = new SortManager<T>();
 
     /**
      * Resize manager, used to compute resized column states.
      *
      */
-    public resizeManager: ResizeManager<T>;
+    resizeManager: ResizeManager<T>;
 
     /**
      * @ignore
      */
-    public paintTime$: Observable<string>;
+    paintTime$: Observable<string>;
 
     /**
      * Emits with information whether filters are defined.
      *
      */
-    public isAnyFilterDefined$ = new BehaviorSubject<boolean>(false);
+    isAnyFilterDefined$ = new BehaviorSubject<boolean>(false);
 
     /**
      * Emits with information whether any filter is visible.
      *
      */
-    public hasAnyFiltersVisible$: Observable<boolean>;
+    hasAnyFiltersVisible$: Observable<boolean>;
 
     /**
      * Emits the visible column definitions when their definition changes.
      *
      */
-    public visible$ = this.visibilityManager.columns$;
+    visible$ = this.visibilityManager.columns$;
 
     /**
      * Returns the scroll size, in order to compensate for the scrollbar.
      *
      * @deprecated
      */
-    public scrollCompensationWidth = 0;
+    scrollCompensationWidth = 0;
 
     /**
      * @internal
      * @ignore
      */
-    public scrollCompensationWidth$ = this.dataManager.data$.pipe(
+    scrollCompensationWidth$ = this.dataManager.data$.pipe(
         map(data => data.length),
         distinctUntilChanged(),
         observeOn(animationFrameScheduler),
@@ -538,7 +538,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         tap(compensationWidth => this.scrollCompensationWidth = compensationWidth),
     );
 
-    public hasSelection$ = this.selectionManager.hasValue$.pipe(
+    hasSelection$ = this.selectionManager.hasValue$.pipe(
         tap(hasSelection => {
             if (hasSelection && !!this.header?.actionButtons?.length) {
                 this._announceGridHeaderActions();
@@ -547,7 +547,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         share(),
     );
 
-    public renderedColumns$ = this.visible$.pipe(
+    renderedColumns$ = this.visible$.pipe(
         map(columns => {
             const firstIndex = columns.findIndex(c => c.primary);
             const rowHeaderIndex = firstIndex > -1 ? firstIndex : 0;
@@ -559,13 +559,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         }),
     );
 
-    public areFilersCollapsed$: Observable<boolean>;
+    areFilersCollapsed$: Observable<boolean>;
 
     /**
      * Determines if the multi-page selection row should be displayed.
      *
      */
-    public get showMultiPageSelectionInfo() {
+    get showMultiPageSelectionInfo() {
         return this.multiPageSelect &&
             !this.dataManager.pristine &&
             (
@@ -784,7 +784,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     /**
      * Marks if the `Shift` key is pressed.
      */
-    public checkShift(event: MouseEvent | KeyboardEvent) {
+    checkShift(event: MouseEvent | KeyboardEvent) {
         event.stopPropagation();
 
         this._isShiftPressed = event.shiftKey;
@@ -796,7 +796,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * @param idx The clicked row index.
      * @param entry The entry associated to the selected row.
      */
-    public handleSelection(idx: number, entry: T) {
+    handleSelection(idx: number, entry: T) {
         if (!this._isShiftPressed) {
             this._lastCheckboxIdx = idx;
             this.selectionManager.toggle(entry);
@@ -831,7 +831,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * Toggles the row selection state.
      *
      */
-    public toggle(ev: MatCheckboxChange) {
+    toggle(ev: MatCheckboxChange) {
         if (ev.checked) {
             this.dataManager.forEach(row => this.selectionManager.select(row!));
         } else {
@@ -845,7 +845,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      * @param [row] The row for which the label is computed.
      */
-    public checkboxTooltip(row?: T): string {
+    checkboxTooltip(row?: T): string {
         if (!row) {
             return this.intl.checkboxTooltip(this.isEveryVisibleRowChecked);
         }
@@ -859,14 +859,14 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      * @param [row] The row for which the label is computed.
      */
-    public checkboxLabel(row?: T): string {
+    checkboxLabel(row?: T): string {
         if (!row) {
             return `${this.isEveryVisibleRowChecked ? 'select' : 'deselect'} all`;
         }
         return `${this.selectionManager.isSelected(row) ? 'deselect' : 'select'} row ${this.dataManager.indexOf(row)}`;
     }
 
-    public focusRowHeader() {
+    focusRowHeader() {
         this.gridActionButtons?.nativeElement.querySelector(FOCUSABLE_ELEMENTS_QUERY)?.focus();
     }
 

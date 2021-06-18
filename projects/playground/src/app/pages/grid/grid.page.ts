@@ -30,12 +30,12 @@ export interface MockData {
     styleUrls: ['./grid.page.scss'],
 })
 export class GridPageComponent {
-    public allData: MockData[] = [];
-    public data$ = new BehaviorSubject<MockData[]>([]);
-    public lastPageChange?: PageEvent;
-    public generatedGrid = false;
+    allData: MockData[] = [];
+    data$ = new BehaviorSubject<MockData[]>([]);
+    lastPageChange?: PageEvent;
+    generatedGrid = false;
 
-    public inputKeys = [
+    inputKeys = [
         'useLegacyDesign',
         'collapseFiltersCount',
         'loading',
@@ -50,28 +50,28 @@ export class GridPageComponent {
         'showHeaderRow',
     ];
 
-    public buttonKeys = [
+    buttonKeys = [
         'main',
         'action',
         'inline',
     ];
 
-    public dataActions = [
+    dataActions = [
         'totalData',
         'pageSize',
     ];
 
-    public inputs?: IInputs;
-    public header?: IHeader;
-    public footer: IFooter = {
+    inputs?: IInputs;
+    header?: IHeader;
+    footer: IFooter = {
         total: 100,
         pageSize: 10,
         hidePageSize: false,
     };
 
-    public actionsForm!: FormGroup;
+    actionsForm!: FormGroup;
 
-    public constructor(
+    constructor(
         private _fb: FormBuilder,
     ) {
         this.actionsForm = this._fb.group({
@@ -103,7 +103,7 @@ export class GridPageComponent {
         });
     }
 
-    public generateData({ totalData, pageSize }: { totalData: number; pageSize: number }) {
+    generateData({ totalData, pageSize }: { totalData: number; pageSize: number }) {
         this.allData = new Array(totalData).fill(0).map((_, i) => ({
             id: i,
             name: `name-${i}`,
@@ -113,7 +113,7 @@ export class GridPageComponent {
         this.footer.pageSize = pageSize;
     }
 
-    public generateGrid() {
+    generateGrid() {
         this.generatedGrid = false;
 
         if (this.actionsForm.invalid) { return; }

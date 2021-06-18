@@ -29,9 +29,9 @@ import { IFilterModel } from '../models';
  * @internal
  */
 export class FilterManager<T> {
-    public filter$ = new BehaviorSubject<IFilterModel<T>[]>([]);
+    filter$ = new BehaviorSubject<IFilterModel<T>[]>([]);
 
-    public dirty$ = this.filter$.pipe(
+    dirty$ = this.filter$.pipe(
         map(filters =>
             !!this._initialFilters
             && !isEqual(
@@ -42,7 +42,7 @@ export class FilterManager<T> {
         distinctUntilChanged(),
     );
 
-    public activeCount$ = combineLatest([
+    activeCount$ = combineLatest([
         this.filter$,
         this.dirty$,
     ]).pipe(
@@ -64,26 +64,26 @@ export class FilterManager<T> {
         private _columns: UiGridColumnDirective<T>[] = [],
     ) { }
 
-    public get columns() {
+    get columns() {
         return this._columns;
     }
 
-    public set columns(columns: UiGridColumnDirective<T>[]) {
+    set columns(columns: UiGridColumnDirective<T>[]) {
         this._columns = columns;
         this._emitFilterOptions();
     }
 
-    public destroy() {
+    destroy() {
         this.filter$.complete();
     }
 
-    public searchableDropdownUpdate = (column?: UiGridColumnDirective<T>, value?: ISuggestValue) =>
+    searchableDropdownUpdate = (column?: UiGridColumnDirective<T>, value?: ISuggestValue) =>
         this._updateFilterValue(column, value, this._mapSearchableDropdownItem);
 
-    public dropdownUpdate = (column?: UiGridColumnDirective<T>, value?: IDropdownOption) =>
+    dropdownUpdate = (column?: UiGridColumnDirective<T>, value?: IDropdownOption) =>
         this._updateFilterValue(column, value, this._mapDropdownItem);
 
-    public searchChange(term: string | undefined, header: UiGridHeaderDirective<T>) {
+    searchChange(term: string | undefined, header: UiGridHeaderDirective<T>) {
         const searchFilterCollection: IFilterModel<T>[] = term ?
             this._columns
                 .filter(column => column.searchable)

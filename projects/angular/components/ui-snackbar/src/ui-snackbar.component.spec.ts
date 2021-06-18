@@ -43,7 +43,7 @@ const ANGULAR_ARIA_DELAY = 150;
 })
 export class SnackBarFixtureComponent {
     @ViewChild('richContent', { static: true })
-    public richContent!: TemplateRef<any>;
+    richContent!: TemplateRef<any>;
 
     constructor(public service: UiSnackBarService) { }
 }

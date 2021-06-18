@@ -7,9 +7,9 @@ import { isDevMode } from '@angular/core';
  * @ignore
  */
 export class PerformanceMonitor {
-    public paintTime$ = new Subject<string>();
+    paintTime$ = new Subject<string>();
 
-    public get enabled() {
+    get enabled() {
         return isDevMode();
     }
 
@@ -26,13 +26,13 @@ export class PerformanceMonitor {
         });
     }
 
-    public reset() {
+    reset() {
         if (!this.enabled) { return; }
 
         this._timestamp = performance.now();
     }
 
-    public destroy() {
+    destroy() {
         this.paintTime$.complete();
 
         if (!this.enabled) { return; }

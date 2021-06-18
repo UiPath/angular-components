@@ -103,16 +103,16 @@ describe('Component: UiGrid', () => {
         @ViewChild(UiGridComponent, {
             static: true,
         })
-        public grid!: UiGridComponent<ITestEntity>;
+        grid!: UiGridComponent<ITestEntity>;
 
-        public data: ITestEntity[] = [];
-        public someFilter = [];
-        public isColumnVisible = true;
-        public isFilterVisible = true;
-        public selectable?: boolean;
-        public refreshable?: boolean;
-        public showHeaderRow = true;
-        public virtualScroll = false;
+        data: ITestEntity[] = [];
+        someFilter = [];
+        isColumnVisible = true;
+        isFilterVisible = true;
+        selectable?: boolean;
+        refreshable?: boolean;
+        showHeaderRow = true;
+        virtualScroll = false;
     }
     describe('Scenario: simple grid', () => {
         let fixture: ComponentFixture<TestFixtureSimpleGridComponent>;
@@ -782,10 +782,10 @@ describe('Component: UiGrid', () => {
         @ViewChild(UiGridComponent, {
             static: true,
         })
-        public grid!: UiGridComponent<ITestEntity>;
+        grid!: UiGridComponent<ITestEntity>;
 
-        public data: ITestEntity[] = [];
-        public search?: boolean;
+        data: ITestEntity[] = [];
+        search?: boolean;
     }
 
     describe('Scenario: grid with header actions', () => {
@@ -1033,14 +1033,14 @@ describe('Component: UiGrid', () => {
         @ViewChild(UiGridComponent, {
             static: true,
         })
-        public grid!: UiGridComponent<ITestEntity>;
+        grid!: UiGridComponent<ITestEntity>;
 
-        public data: ITestEntity[] = [];
-        public dropdownItemList: IDropdownOption[] = [];
-        public showAllOption?: boolean;
-        public search?: boolean;
+        data: ITestEntity[] = [];
+        dropdownItemList: IDropdownOption[] = [];
+        showAllOption?: boolean;
+        search?: boolean;
 
-        public searchFactory = (): Observable<ISuggestValues<any>> => of({
+        searchFactory = (): Observable<ISuggestValues<any>> => of({
             data: this.dropdownItemList
                 .map(
                     option => ({
@@ -1546,13 +1546,13 @@ describe('Component: UiGrid', () => {
         @ViewChild(UiGridComponent, {
             static: true,
         })
-        public grid!: UiGridComponent<ITestEntity>;
-        public data: ITestEntity[] = [];
-        public total = 0;
-        public pageSize = 2;
-        public pageIndex = 0;
-        public hidePageSize = true;
-        public lastPageChange?: PageEvent;
+        grid!: UiGridComponent<ITestEntity>;
+        data: ITestEntity[] = [];
+        total = 0;
+        pageSize = 2;
+        pageIndex = 0;
+        hidePageSize = true;
+        lastPageChange?: PageEvent;
     }
 
     describe('Scenario: grid with footer', () => {
@@ -1728,8 +1728,8 @@ describe('Component: UiGrid', () => {
             @ViewChild(UiGridComponent, {
                 static: true,
             })
-            public grid!: UiGridComponent<ITestEntity>;
-            public data: ITestEntity[] = [];
+            grid!: UiGridComponent<ITestEntity>;
+            data: ITestEntity[] = [];
         }
         describe('Scenario all columns visible', () => {
             let fixture: ComponentFixture<TestFixtureGridToggleComponent>;
@@ -2162,8 +2162,8 @@ describe('Component: UiGrid', () => {
             @ViewChild(UiGridComponent, {
                 static: true,
             })
-            public grid!: UiGridComponent<ITestEntity>;
-            public data: ITestEntity[] = [];
+            grid!: UiGridComponent<ITestEntity>;
+            data: ITestEntity[] = [];
         }
         describe('Scenario hidden columns', () => {
             let fixture: ComponentFixture<TestFixtureGridToggleHiddenComponent>;
@@ -2309,9 +2309,9 @@ describe('Component: UiGrid', () => {
                 `,
             })
             class TestFixtureAlternateDesignGridComponent {
-                public data: ITestEntity[] = [];
+                data: ITestEntity[] = [];
 
-                public get filterItems(): IDropdownOption[] {
+                get filterItems(): IDropdownOption[] {
                     return [1, 2, 3].map(count => ({
                         value: count,
                         label: count.toString(),
@@ -2526,7 +2526,7 @@ describe('Component: UiGrid', () => {
                 `,
             })
             class TestFixtureAlternateDesignGridComponent {
-                public data: ITestEntity[] = [];
+                data: ITestEntity[] = [];
             }
 
             let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
@@ -2616,14 +2616,14 @@ describe('Component: UiGrid', () => {
                 `,
                 })
                 class TestFixtureAlternateDesignGridComponent {
-                    public get filterItems(): IDropdownOption[] {
+                    get filterItems(): IDropdownOption[] {
                         return [1, 2, 3].map(count => ({
                             value: count,
                             label: count.toString(),
                         }));
                     }
 
-                    public searchFactory = (): Observable<ISuggestValues<any>> => of({
+                    searchFactory = (): Observable<ISuggestValues<any>> => of({
                         data: this.filterItems
                             .map(
                                 option => ({
@@ -2697,14 +2697,14 @@ describe('Component: UiGrid', () => {
                 `,
                 })
                 class TestFixtureAlternateDesignGridComponent {
-                    public get filterItems(): IDropdownOption[] {
+                    get filterItems(): IDropdownOption[] {
                         return [1, 2, 3].map(count => ({
                             value: count,
                             label: count.toString(),
                         }));
                     }
 
-                    public visible = true;
+                    visible = true;
                 }
 
                 let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
@@ -2809,14 +2809,14 @@ describe('Component: UiGrid', () => {
                 `,
                 })
                 class TestFixtureAlternateDesignGridComponent {
-                    public get filterItems(): IDropdownOption[] {
+                    get filterItems(): IDropdownOption[] {
                         return [1, 2, 3].map(count => ({
                             value: count,
                             label: count.toString(),
                         }));
                     }
 
-                    public searchFactory = (): Observable<ISuggestValues<any>> => of({
+                    searchFactory = (): Observable<ISuggestValues<any>> => of({
                         data: this.filterItems
                             .map(
                                 option => ({
@@ -2902,14 +2902,14 @@ describe('Component: UiGrid', () => {
                 `,
                 })
                 class TestFixtureAlternateDesignGridComponent {
-                    public get filterItems(): IDropdownOption[] {
+                    get filterItems(): IDropdownOption[] {
                         return [1, 2, 3].map(count => ({
                             value: count,
                             label: count.toString(),
                         }));
                     }
 
-                    public searchFactory = (): Observable<ISuggestValues<any>> => of({
+                    searchFactory = (): Observable<ISuggestValues<any>> => of({
                         data: this.filterItems
                             .map(
                                 option => ({
@@ -2983,14 +2983,14 @@ describe('Component: UiGrid', () => {
                 `,
                 })
                 class TestFixtureAlternateDesignGridComponent {
-                    public get filterItems(): IDropdownOption[] {
+                    get filterItems(): IDropdownOption[] {
                         return [1, 2, 3].map(count => ({
                             value: count,
                             label: count.toString(),
                         }));
                     }
 
-                    public visible = true;
+                    visible = true;
                 }
 
                 let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
@@ -3090,14 +3090,14 @@ describe('Component: UiGrid', () => {
                 `,
                 })
                 class TestFixtureAlternateDesignGridComponent {
-                    public get filterItems(): IDropdownOption[] {
+                    get filterItems(): IDropdownOption[] {
                         return [1, 2, 3].map(count => ({
                             value: count,
                             label: count.toString(),
                         }));
                     }
 
-                    public searchFactory = (): Observable<ISuggestValues<any>> => of({
+                    searchFactory = (): Observable<ISuggestValues<any>> => of({
                         data: this.filterItems
                             .map(
                                 option => ({
@@ -3189,11 +3189,11 @@ describe('Component: UiGrid', () => {
             @ViewChild(UiGridComponent, {
                 static: true,
             })
-            public grid!: UiGridComponent<ITestEntity>;
-            public data: ITestEntity[] = [];
-            public loading = false;
+            grid!: UiGridComponent<ITestEntity>;
+            data: ITestEntity[] = [];
+            loading = false;
 
-            public get filterItems(): IDropdownOption[] {
+            get filterItems(): IDropdownOption[] {
                 return [1, 2, 3].map(count => ({
                     value: count,
                     label: count.toString(),
@@ -3298,9 +3298,9 @@ describe('Component: UiGrid', () => {
             @ViewChild(UiGridComponent, {
                 static: true,
             })
-            public grid!: UiGridComponent<ITestEntity>;
-            public data: ITestEntity[] = [];
-            public loading = false;
+            grid!: UiGridComponent<ITestEntity>;
+            data: ITestEntity[] = [];
+            loading = false;
         }
         describe('Behavior: default state templates', () => {
             let fixture: ComponentFixture<TestFixtureDefaultStatesComponent>;
@@ -3380,7 +3380,7 @@ describe('Component: UiGrid', () => {
             `,
         })
         class TestFixtureAlternateDesignGridComponent {
-            public data: ITestEntity[] = [];
+            data: ITestEntity[] = [];
         }
 
         let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;

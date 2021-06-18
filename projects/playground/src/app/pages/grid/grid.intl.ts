@@ -3,7 +3,7 @@ import { UiGridIntl } from '@uipath/angular/components/ui-grid';
 
 @Injectable()
 export class UiGridTable extends UiGridIntl {
-    public noDataMessageAlternative = (searchValue?: string, activeFilters?: number | null) => {
+    noDataMessageAlternative = (searchValue?: string, activeFilters?: number | null) => {
         if (searchValue && activeFilters) {
             return `No results with current filters applied for: ${searchValue}`;
         }

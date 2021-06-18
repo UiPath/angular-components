@@ -36,7 +36,7 @@ const TEXT_ELEMENT_SELECTOR = 'p';
     `,
 })
 class ClickOutsideFixtureComponent {
-    public onClickOutside(ev: MouseEvent): MouseEvent {
+    onClickOutside(ev: MouseEvent): MouseEvent {
         return ev;
     }
 }

@@ -23,7 +23,7 @@ export class EventGenerator {
      * Very useful when testing hover effects.
      *
      */
-    public static cursor = {
+    static cursor = {
         ref: {} as HTMLElement,
         initialize: (parent?: HTMLElement) => {
             if (!parent) { return; }

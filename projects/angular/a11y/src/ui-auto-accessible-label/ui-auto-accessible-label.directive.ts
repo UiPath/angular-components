@@ -28,7 +28,7 @@ You can disable this directive using the boolean ${DISABLE_AUTO_ACCESSIBLE_LABEL
 export class UiAutoAccessibleLabelDirective {
     @HostBinding('attr.aria-label')
     @Input()
-    public matTooltip?: string;
+    matTooltip?: string;
 
     constructor(
         elementRef: ElementRef,

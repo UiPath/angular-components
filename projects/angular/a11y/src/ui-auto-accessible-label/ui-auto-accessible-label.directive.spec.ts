@@ -39,7 +39,7 @@ function describeTestsFor(buttonType: ButtonType) {
     `,
     })
     class IconButtonAsyncTooltipFixtureComponent {
-        public tooltip$: Observable<string> = EMPTY;
+        tooltip$: Observable<string> = EMPTY;
     }
 
     @Component({

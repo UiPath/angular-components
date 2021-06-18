@@ -49,7 +49,7 @@ export class UiClickOutsideService implements OnDestroy {
      *
      */
     // eslint-disable-next-line rxjs/finnish
-    public source: Observable<MouseEvent>;
+    source: Observable<MouseEvent>;
     private _destroyed$ = new Subject<void>();
 
     /**
@@ -92,7 +92,7 @@ export class UiClickOutsideDirective {
      */
     @Output()
     // eslint-disable-next-line rxjs/finnish
-    public uiClickOutside: Observable<MouseEvent>;
+    uiClickOutside: Observable<MouseEvent>;
 
     /**
      * @ignore
