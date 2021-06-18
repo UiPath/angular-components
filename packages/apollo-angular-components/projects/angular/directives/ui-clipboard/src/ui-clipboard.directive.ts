@@ -26,21 +26,21 @@ export class UiClipboardDirective implements OnInit, OnDestroy {
      *
      */
     @Input()
-    public uiClipboard?: Element;
+    uiClipboard?: Element;
 
     /**
      * Event that emits when the content is copied succesfully to the clipboard.
      *
      */
     @Output()
-    public clipboardSuccess: EventEmitter<Clipboard.Event> = new EventEmitter();
+    clipboardSuccess: EventEmitter<Clipboard.Event> = new EventEmitter();
 
     /**
      * Event that emits when the content could not be copied to the clipboard.
      *
      */
     @Output()
-    public clipboardError: EventEmitter<Clipboard.Event> = new EventEmitter();
+    clipboardError: EventEmitter<Clipboard.Event> = new EventEmitter();
 
     private _clipboard!: Clipboard;
 

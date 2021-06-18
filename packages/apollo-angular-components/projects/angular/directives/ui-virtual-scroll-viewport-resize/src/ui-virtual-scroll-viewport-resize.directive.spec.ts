@@ -60,9 +60,9 @@ class UiVirtualScrollViewportResizeFixtureComponent {
     @ViewChild('viewport', {
         static: true,
     })
-    public viewport!: CdkVirtualScrollViewport;
+    viewport!: CdkVirtualScrollViewport;
 
-    public length = 5;
+    length = 5;
 }
 describe('Directive: UiVirtualScrollViewportResize', () => {
     let fixture: ComponentFixture<UiVirtualScrollViewportResizeFixtureComponent>;

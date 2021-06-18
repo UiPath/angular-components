@@ -55,13 +55,13 @@ export class UiAutofocusDirective implements OnInit {
      *
      */
     @Input()
-    public selectionLocation: 'start' | 'end' = 'start';
+    selectionLocation: 'start' | 'end' = 'start';
 
     /**
      * The decorated `HTMLElement` reference.
      *
      */
-    public element?: HTMLElement;
+    element?: HTMLElement;
 
     private _autofocus = true;
 
@@ -86,7 +86,7 @@ export class UiAutofocusDirective implements OnInit {
      * Enqueues a focus event.
      *
      */
-    public enqueueFocus() {
+    enqueueFocus() {
         if (this._autofocus) {
             this._zone.runOutsideAngular(() => {
                 merge(
@@ -113,7 +113,7 @@ export class UiAutofocusDirective implements OnInit {
      * Focus the `element`.
      *
      */
-    public focus(element?: HTMLElement) {
+    focus(element?: HTMLElement) {
         if (!element) { return; }
         element.focus();
 

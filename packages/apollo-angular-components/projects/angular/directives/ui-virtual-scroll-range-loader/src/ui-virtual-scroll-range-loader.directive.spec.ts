@@ -70,19 +70,19 @@ interface ITestVirtualScrollItem extends VirtualScrollItem {
                 </cdk-virtual-scroll-viewport>`,
 })
 class UiVirtualScrollRangeLoaderFixtureComponent {
-    public isDown = true;
-    public buffer = 0;
-    public itemSize = ITEM_SIZE;
-    public items: ITestVirtualScrollItem[] = INITIAL_ITEMS;
+    isDown = true;
+    buffer = 0;
+    itemSize = ITEM_SIZE;
+    items: ITestVirtualScrollItem[] = INITIAL_ITEMS;
 
-    public lastRangeLoad?: ListRange;
+    lastRangeLoad?: ListRange;
 
     @ViewChild('viewport', {
         static: true,
     })
-    public viewport!: CdkVirtualScrollViewport;
+    viewport!: CdkVirtualScrollViewport;
 
-    public rangeLoad(range: ListRange) {
+    rangeLoad(range: ListRange) {
         this.lastRangeLoad = range;
     }
 }

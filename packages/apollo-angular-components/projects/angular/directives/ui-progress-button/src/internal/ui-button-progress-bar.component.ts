@@ -16,12 +16,12 @@ import { MatProgressBar } from '@angular/material/progress-bar';
     encapsulation: ViewEncapsulation.None,
 })
 export class UiButtonProgressBarComponent implements OnDestroy {
-    public loading$ = new BehaviorSubject(false);
+    loading$ = new BehaviorSubject(false);
 
-    public mode$ = new BehaviorSubject<MatProgressBar['mode']>('indeterminate');
-    public value$ = new BehaviorSubject<MatProgressBar['value']>(0);
-    public bufferValue$ = new BehaviorSubject<MatProgressBar['bufferValue']>(0);
-    public color$ = new BehaviorSubject<MatProgressBar['color']>('primary');
+    mode$ = new BehaviorSubject<MatProgressBar['mode']>('indeterminate');
+    value$ = new BehaviorSubject<MatProgressBar['value']>(0);
+    bufferValue$ = new BehaviorSubject<MatProgressBar['bufferValue']>(0);
+    color$ = new BehaviorSubject<MatProgressBar['color']>('primary');
 
     ngOnDestroy() {
         this.loading$.complete();

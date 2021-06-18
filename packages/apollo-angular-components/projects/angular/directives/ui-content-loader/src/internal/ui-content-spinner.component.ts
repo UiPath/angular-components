@@ -19,15 +19,15 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 })
 export class UiContentSpinnerComponent implements OnDestroy {
     @HostBinding('style.min-height.px')
-    public get minHeight() {
+    get minHeight() {
         return this.diameter$.value * 2.5;
     }
 
-    public mode$ = new BehaviorSubject<MatProgressSpinner['mode']>('indeterminate');
-    public value$ = new BehaviorSubject<MatProgressSpinner['value']>(0);
-    public color$ = new BehaviorSubject<MatProgressSpinner['color']>('primary');
-    public diameter$ = new BehaviorSubject<MatProgressSpinner['diameter']>(100);
-    public style$ = this.diameter$
+    mode$ = new BehaviorSubject<MatProgressSpinner['mode']>('indeterminate');
+    value$ = new BehaviorSubject<MatProgressSpinner['value']>(0);
+    color$ = new BehaviorSubject<MatProgressSpinner['color']>('primary');
+    diameter$ = new BehaviorSubject<MatProgressSpinner['diameter']>(100);
+    style$ = this.diameter$
         .pipe(
             map(diameter => {
                 const displace = `calc(50% - ${diameter / 2}px)`;

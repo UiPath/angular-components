@@ -37,20 +37,20 @@ class TestFixtureComponent {
     @ViewChild(UiGridColumnDirective, {
         static: true,
     })
-    public column!: UiGridColumnDirective<any>;
+    column!: UiGridColumnDirective<any>;
 
-    public visible = false;
-    public width?: string;
-    public sortable?: boolean;
-    public searchable?: boolean;
-    public resizeable?: boolean;
-    public title?: string;
-    public property?: string;
-    public method?: string;
-    public sort?: 'asc' | 'desc' | '';
-    public refetch?: boolean;
-    public primary = false;
-    public minWidth?: number;
+    visible = false;
+    width?: string;
+    sortable?: boolean;
+    searchable?: boolean;
+    resizeable?: boolean;
+    title?: string;
+    property?: string;
+    method?: string;
+    sort?: 'asc' | 'desc' | '';
+    refetch?: boolean;
+    primary = false;
+    minWidth?: number;
 }
 
 type TestInputProperty = keyof TestFixtureComponent & keyof UiGridColumnDirective<any>;

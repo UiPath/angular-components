@@ -49,18 +49,18 @@ type StringOrNumberKeyOf<T> = keyof T & (string | number);
  */
 export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf<T> = StringOrNumberKeyOf<T>> {
 
-    public useCache: boolean;
-    public idProperty: K;
+    useCache: boolean;
+    idProperty: K;
 
-    public get length() {
+    get length() {
         return this.data$.value.length;
     }
 
-    public pristine = true;
+    pristine = true;
 
-    public data$ = new BehaviorSubject<T[]>([]);
+    data$ = new BehaviorSubject<T[]>([]);
 
-    public getProperty = get;
+    getProperty = get;
 
     private _hashMap = new Map<string, string>();
 
@@ -69,26 +69,26 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
         this.idProperty = options?.idProperty as unknown as K ?? 'id';
     }
 
-    public forEach = (callbackfn: (value: T, index: number, array: T[]) => void) =>
+    forEach = (callbackfn: (value: T, index: number, array: T[]) => void) =>
         this.data$.value.forEach(callbackfn);
 
-    public some = (callbackfn: (value: T, index: number, array: T[]) => boolean) =>
+    some = (callbackfn: (value: T, index: number, array: T[]) => boolean) =>
         this.data$.value.some(callbackfn);
 
-    public every = (callbackfn: (value: T, index: number, array: T[]) => boolean) =>
+    every = (callbackfn: (value: T, index: number, array: T[]) => boolean) =>
         this.data$.value.every(callbackfn);
 
-    public indexOf(entry: T) {
+    indexOf(entry: T) {
         return this.data$.value.indexOf(entry);
     }
 
-    public find = <R extends T[K]>(entryId: R) =>
+    find = <R extends T[K]>(entryId: R) =>
         this.data$.value.find(e => e[this.idProperty] === entryId);
 
-    public get = (index: number) =>
+    get = (index: number) =>
         this.data$.value[index];
 
-    public patchRow(id: T[K], patch: PropertyMap<T>) {
+    patchRow(id: T[K], patch: PropertyMap<T>) {
         const entry = this.data$.value.find(e => e[this.idProperty] === id);
         if (!entry) {
             if (isDevMode()) {
@@ -114,7 +114,7 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
         this._emit();
     }
 
-    public update(data: T[]) {
+    update(data: T[]) {
         this.pristine = this.pristine &&
             data == null;
 
@@ -162,12 +162,12 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
         this._emit();
     }
 
-    public destroy() {
+    destroy() {
         this._hashMap.clear();
         this.data$.complete();
     }
 
-    public hashTrack = (_: number | undefined | null, entry: T) => this._hashMap.get(`${entry[this.idProperty]}`);
+    hashTrack = (_: number | undefined | null, entry: T) => this._hashMap.get(`${entry[this.idProperty]}`);
 
     private _hash = (entry: T) =>
         this._hashMap.set(`${entry[this.idProperty]}`, hash.MD5(entry));

@@ -16,7 +16,7 @@ export class QueuedAnnouncer {
 
     constructor(private _liveAnnouncer: LiveAnnouncer) { }
 
-    public enqueue(msg: string) {
+    enqueue(msg: string) {
         this._msgQueue.push(msg);
 
         if (!this._isAnnouncing) {

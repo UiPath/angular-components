@@ -18,7 +18,7 @@ import {
 
 @Injectable()
 export class UiMatPaginatorIntl extends MatPaginatorIntl {
-    public getPageLabel(currentPage: number, pageCount?: number): string {
+    getPageLabel(currentPage: number, pageCount?: number): string {
         if (!pageCount) {
             return `Page ${currentPage}`;
         }
@@ -42,9 +42,9 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginat
     public _intl!: UiMatPaginatorIntl;
 
     @HostBinding('class')
-    public hostClass = 'mat-paginator';
+    hostClass = 'mat-paginator';
 
-    public get pageCount(): number {
+    get pageCount(): number {
         return Math.ceil(this.length / this.pageSize);
     }
 

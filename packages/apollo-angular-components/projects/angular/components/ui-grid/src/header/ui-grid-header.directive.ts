@@ -26,60 +26,60 @@ export class UiGridHeaderDirective<T> implements AfterViewInit, OnDestroy {
      *
      */
     @Input()
-    public search = false;
+    search = false;
 
     /**
      * The active search value.
      *
      */
     @Input()
-    public searchValue?: string;
+    searchValue?: string;
 
     /**
      * The search debounce time (ms).
      *
      */
     @Input()
-    public searchDebounce = 500;
+    searchDebounce = 500;
 
     /**
      * The search max length.
      *
      */
     @Input()
-    public searchMaxLength = 64;
+    searchMaxLength = 64;
 
     /**
      * Emits a filter model event when the search changes.
      *
      */
     @Output()
-    public searchFilter = new EventEmitter<IFilterModel<T>[]>();
+    searchFilter = new EventEmitter<IFilterModel<T>[]>();
 
     /**
      * Emits the search term when the search changes.
      *
      */
     @Output()
-    public searchTerm = new EventEmitter<string>();
+    searchTerm = new EventEmitter<string>();
 
     /**
      * @internal
      * @ignore
      */
-    public mainButtons?: UiGridHeaderButtonDirective[];
+    mainButtons?: UiGridHeaderButtonDirective[];
 
     /**
      * @internal
      * @ignore
      */
-    public actionButtons?: UiGridHeaderButtonDirective[];
+    actionButtons?: UiGridHeaderButtonDirective[];
 
     /**
      * @internal
      * @ignore
      */
-    public inlineButtons?: UiGridHeaderButtonDirective[];
+    inlineButtons?: UiGridHeaderButtonDirective[];
 
     @ContentChildren(UiGridHeaderButtonDirective)
     private _buttons!: QueryList<UiGridHeaderButtonDirective>;

@@ -19,5 +19,5 @@ export class UiGridRowConfigDirective<T extends IGridDataEntry> {
      *
      */
     @Input()
-    public ngClassFn: (entry: T) => Record<string, boolean> = (_) => ({} as Record<string, boolean>);
+    ngClassFn: (entry: T) => Record<string, boolean> = (_) => ({} as Record<string, boolean>);
 }

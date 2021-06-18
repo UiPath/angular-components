@@ -19,107 +19,107 @@ export class UiGridIntl implements OnDestroy {
      *
      */
     // eslint-disable-next-line rxjs/finnish
-    public changes = new Subject<void>();
+    changes = new Subject<void>();
 
     /**
      * Live announcer refresh message.
      *
      */
-    public pageRefreshing = 'Page refreshing';
+    pageRefreshing = 'Page refreshing';
 
     /**
      * Refresh button tooltip.
      *
      */
-    public refreshTooltip = 'Refresh';
+    refreshTooltip = 'Refresh';
     /**
      * Search tooltip.
      *
      */
-    public searchTooltip = 'Search';
+    searchTooltip = 'Search';
     /**
      * Clear search tooltip.
      *
      */
-    public clearTooltip = 'Clear';
+    clearTooltip = 'Clear';
     /**
      * Clear multi-page selection tooltip.
      *
      */
-    public clearSelectionTooltip = 'Clear Selection';
+    clearSelectionTooltip = 'Clear Selection';
     /**
      * Multi-page selection information tootlip.
      *
      */
-    public multiPageSelectionInfoTooltip = 'Multi-page selection is enabled.';
+    multiPageSelectionInfoTooltip = 'Multi-page selection is enabled.';
 
     /**
      * No active filter placeholder.
      *
      */
-    public noFilterPlaceholder = 'All';
+    noFilterPlaceholder = 'All';
     /**
      * Search placeholder.
      *
      */
-    public searchPlaceholder = 'Search';
+    searchPlaceholder = 'Search';
     /**
      * Tooltip for toggle columns select dropdown
      *
      */
-    public toggleTooltip = 'Toggle column visibility';
+    toggleTooltip = 'Toggle column visibility';
     /**
      * Tooltip for resetting to column defaults
      *
      */
-    public toggleResetToDefaults = 'Reset';
+    toggleResetToDefaults = 'Reset';
     /**
      * Main title for visible columns displayed within the dropdown
      *
      */
-    public toggleTitle = 'Visible Columns';
+    toggleTitle = 'Visible Columns';
     /**
      * Text displayed next to icon for dropdown
      *
      */
-    public togglePlaceholderTitle = 'Columns';
+    togglePlaceholderTitle = 'Columns';
     /**
      * No data row message.
      *
      */
-    public noDataMessage = 'No data is available.';
+    noDataMessage = 'No data is available.';
     /**
      * No selection text (for multi-page selection).
      *
      */
-    public noSelectionMessage = 'No items currently selected.';
+    noSelectionMessage = 'No items currently selected.';
     /**
      * Ascending `aria-sort` text.
      *
      */
-    public ascending = 'ascending';
+    ascending = 'ascending';
     /**
      * Descending `aria-sort` text.
      *
      */
-    public descending = 'descending';
+    descending = 'descending';
     /**
      * Live announced text when new action buttons are revealed on selection
      *
      */
-    public gridHeaderActionsNotice = 'Grid header actions updated. Press Shift + Alt + Arrow Up to move there.';
+    gridHeaderActionsNotice = 'Grid header actions updated. Press Shift + Alt + Arrow Up to move there.';
     /**
      * No data row message alternative function.
      *
      */
-    public noDataMessageAlternative = (searchValue?: string, activeFilters?: number | null) =>
+    noDataMessageAlternative = (searchValue?: string, activeFilters?: number | null) =>
         `No data is available${searchValue ? ` for ${searchValue}` : ''}${activeFilters ? ' for applied filters' : ''}.`;
     /**
      * Determines the `checkbox` `matToolTip`.
      *
      * @param [rowIndex] The rowIndex for which the label is computed.
      */
-    public checkboxTooltip(selected: boolean, rowIndex?: number): string {
+    checkboxTooltip(selected: boolean, rowIndex?: number): string {
         if (rowIndex == null) {
             return `${selected ? 'Deselect' : 'Select'} all`;
         }
@@ -131,7 +131,7 @@ export class UiGridIntl implements OnDestroy {
      *
      * @param count The total selection count.
      */
-    public translateMultiPageSelectionCount =
+    translateMultiPageSelectionCount =
         (count: number) => `You have selected ${count} items.`;
 
     /**
@@ -141,7 +141,7 @@ export class UiGridIntl implements OnDestroy {
      * @param renderedItemCount The number of rendered items.
      * @param total The total number of items available.
      */
-    public loadedPage = (page: number, renderedItemCount: number, total?: number | null) => {
+    loadedPage = (page: number, renderedItemCount: number, total?: number | null) => {
         if (total == null || isNaN(total)) {
             return `Loaded page number ${page} containing ${renderedItemCount} items`;
         }
@@ -154,10 +154,10 @@ export class UiGridIntl implements OnDestroy {
      *
      * @param page The current loaded page number.
      */
-    public loadingPage = (page: number) =>
+    loadingPage = (page: number) =>
         `Loading page number ${page}`;
 
-    public filters = (filtersCount?: number | null) =>
+    filters = (filtersCount?: number | null) =>
         (filtersCount && filtersCount > 0)
             ? `Filters (${filtersCount})`
             : 'Filters';
@@ -167,7 +167,7 @@ export class UiGridIntl implements OnDestroy {
      *
      * @param option The current dropdown option.
      */
-    public translateDropdownOption =
+    translateDropdownOption =
         (option: IDropdownOption) => option.label;
 
     /**
@@ -175,7 +175,7 @@ export class UiGridIntl implements OnDestroy {
      *
      * @param columnTitle The sorted column title.
      */
-    public columnSortedAscending = (columnTitle: string) =>
+    columnSortedAscending = (columnTitle: string) =>
         `Column ${columnTitle} sorted ` + this.ascending;
 
     /**
@@ -183,7 +183,7 @@ export class UiGridIntl implements OnDestroy {
      *
      * @param columnTitle The sorted column title.
      */
-    public columnSortedDescending = (columnTitle: string) =>
+    columnSortedDescending = (columnTitle: string) =>
         `Column ${columnTitle} sorted ` + this.descending;
 
     /**
@@ -191,7 +191,7 @@ export class UiGridIntl implements OnDestroy {
      *
      * @param columnTitle The sorted column title.
      */
-    public columnUnsorted = (columnTtile: string) =>
+    columnUnsorted = (columnTtile: string) =>
         `Column ${columnTtile} unsorted`;
 
     /**

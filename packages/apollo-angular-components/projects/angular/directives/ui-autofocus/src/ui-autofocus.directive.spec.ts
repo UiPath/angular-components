@@ -22,8 +22,8 @@ import { UiAutofocusDirective } from './ui-autofocus.directive';
   `,
 })
 class TestAutofocusComponent {
-    public autofocusFlag = true;
-    public refocusFlag = false;
+    autofocusFlag = true;
+    refocusFlag = false;
 }
 
 describe('Directive: Autofocus', () => {

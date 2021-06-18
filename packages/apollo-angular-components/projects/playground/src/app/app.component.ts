@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    public isSidenavOpen = true;
+    isSidenavOpen = true;
 
-    public componentLinks = [
+    componentLinks = [
         {
             name: 'Home',
             link: '/home',

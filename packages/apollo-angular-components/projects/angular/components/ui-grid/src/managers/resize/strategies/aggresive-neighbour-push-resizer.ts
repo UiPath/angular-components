@@ -18,7 +18,7 @@ import {
 export class AggresiveNeighbourPushResizer<T extends IGridDataEntry> extends ResizeManager<T> {
     private _isWidthLimitReached = false;
 
-    public setupState(ev: MouseEvent, column: UiGridColumnDirective<T>) {
+    setupState(ev: MouseEvent, column: UiGridColumnDirective<T>) {
         super.setupState(ev, column);
         this._isWidthLimitReached = false;
     }

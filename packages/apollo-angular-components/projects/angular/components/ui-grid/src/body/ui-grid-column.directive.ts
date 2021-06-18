@@ -50,7 +50,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      *
      */
     @Input()
-    public set width(value: number | string) {
+    set width(value: number | string) {
         if (
             isDevMode() &&
             typeof value === 'string' &&
@@ -70,7 +70,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      * Returns the column width, in `%`.
      *
      */
-    public get width() {
+    get width() {
         return this._width;
     }
 
@@ -78,7 +78,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      * Returns the `aria-sort` associated to the current sort.
      *
      */
-    public get ariaSort() {
+    get ariaSort() {
         return ARIA_SORT_MAP[this.sort];
     }
 
@@ -88,66 +88,66 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      * (used for resize identification)
      *
      */
-    public identifier = identifier();
+    identifier = identifier();
 
     /**
      * Configure if the column is sortable.
      *
      */
     @Input()
-    public sortable = false;
+    sortable = false;
 
     /**
      * Configure if the column should be included in the search.
      *
      */
     @Input()
-    public searchable = false;
+    searchable = false;
 
     /**
      * Configure if the column is resizeable or not.
      *
      */
     @Input()
-    public resizeable = true;
+    resizeable = true;
 
     /**
      * The column title.
      *
      */
     @Input()
-    public title?: string;
+    title?: string;
 
     /**
      * The property that should be loaded in the associated row cell.
      *
      */
     @Input()
-    public property?: keyof T | string; // nested property
+    property?: keyof T | string; // nested property
 
     /**
      * The method metadata used for searches.
      *
      */
     @Input()
-    public method?: string;
+    method?: string;
 
     /**
      * The current sort of the column.
      *
      */
     @Input()
-    public sort: SortDirection = '';
+    sort: SortDirection = '';
 
     /**
      * If the column should be styled as primary.
      *
      */
     @Input()
-    public get primary() {
+    get primary() {
         return this._primary;
     }
-    public set primary(primary: boolean) {
+    set primary(primary: boolean) {
         if (primary === this._primary) { return; }
         this._primary = !!primary;
 
@@ -161,17 +161,17 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      *
      */
     @Input()
-    public disableToggle = false;
+    disableToggle = false;
 
     /**
      * If the column should be rendered, used as default state if toggle columns is turned on.
      *
      */
     @Input()
-    public get visible() {
+    get visible() {
         return this._visible;
     }
-    public set visible(visible: boolean) {
+    set visible(visible: boolean) {
         if (visible === this._visible) { return; }
         this._visible = !!visible;
 
@@ -185,14 +185,14 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      *
      */
     @Input()
-    public minWidth = 30;
+    minWidth = 30;
 
     /**
      * If the searchable dropdown associated to the column should trigger a data fetch when opened.
      *
      */
     @Input()
-    public refetch = false;
+    refetch = false;
 
     /**
      * The searchable dropdown directive reference.
@@ -202,7 +202,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     @ContentChild(UiGridSearchFilterDirective, {
         static: true,
     })
-    public searchableDropdown?: UiGridSearchFilterDirective<T>;
+    searchableDropdown?: UiGridSearchFilterDirective<T>;
 
     /**
      * The dropdown directive reference.
@@ -212,7 +212,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     @ContentChild(UiGridDropdownFilterDirective, {
         static: true,
     })
-    public dropdown?: UiGridDropdownFilterDirective<T>;
+    dropdown?: UiGridDropdownFilterDirective<T>;
 
     /**
      * The view template associated to the row cell.
@@ -222,13 +222,13 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     @ContentChild(TemplateRef, {
         static: true,
     })
-    public html?: TemplateRef<any>;
+    html?: TemplateRef<any>;
 
     /**
      * Emits when reactive properties change.
      *
      */
-    public change$ = new Subject<SimpleChanges>();
+    change$ = new Subject<SimpleChanges>();
 
     private _width = NaN;
     private _visible = true;

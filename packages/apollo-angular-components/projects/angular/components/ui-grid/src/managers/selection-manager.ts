@@ -21,27 +21,27 @@ import {
  * @ignore
  */
 export class SelectionManager<T extends IGridDataEntry> {
-    public get selected(): T[] {
+    get selected(): T[] {
         return Array.from(this._selection.values());
     }
 
-    public get selectionSnapshot(): T[] {
+    get selectionSnapshot(): T[] {
         return Array.from(this._selectionSnapshot.values());
     }
 
-    public get difference(): ISelectionDiff<T> {
+    get difference(): ISelectionDiff<T> {
         return {
             add: differenceBy(this.selected, this.selectionSnapshot, 'id'),
             remove: differenceBy(this.selectionSnapshot, this.selected, 'id'),
         };
     }
 
-    public changed$ = new Subject<SelectionChange<T>>();
+    changed$ = new Subject<SelectionChange<T>>();
 
     private _hasValue$ = new BehaviorSubject(false);
 
     // eslint-disable-next-line @typescript-eslint/member-ordering
-    public hasValue$ = this._hasValue$.pipe(distinctUntilChanged());
+    hasValue$ = this._hasValue$.pipe(distinctUntilChanged());
 
     private _selection = new Map<number | string, T>();
 
@@ -62,40 +62,40 @@ export class SelectionManager<T extends IGridDataEntry> {
         }
     }
 
-    public select = (...values: T[]): void =>
+    select = (...values: T[]): void =>
         this._updateState(this._markSelected, values);
 
-    public deselect = (...values: T[]): void =>
+    deselect = (...values: T[]): void =>
         this._updateState(this._unmarkSelected, values);
 
-    public toggle(value: T): void {
+    toggle(value: T): void {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.isSelected(value) ? this.deselect(value) : this.select(value);
     }
 
-    public clear(): void {
+    clear(): void {
         this._selection.forEach(v => this._unmarkSelected(v));
         this._selection.clear();
         this._emitChangeEvent();
     }
 
-    public isSelected(value: T): boolean {
+    isSelected(value: T): boolean {
         return this._selection.has(value.id);
     }
 
-    public isEmpty(): boolean {
+    isEmpty(): boolean {
         return this._selection.size === 0;
     }
 
-    public hasValue(): boolean {
+    hasValue(): boolean {
         return !this.isEmpty();
     }
 
-    public snapshot() {
+    snapshot() {
         this._selectionSnapshot = cloneDeep(this._selection);
     }
 
-    public destroy() {
+    destroy() {
         this._selection.clear();
         this._selectionSnapshot.clear();
         this._hasValue$.next(false);

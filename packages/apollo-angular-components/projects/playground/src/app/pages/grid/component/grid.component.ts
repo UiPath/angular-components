@@ -31,28 +31,28 @@ import { UiGridComponent } from '@uipath/angular/components/ui-grid';
 })
 export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input()
-    public readonly inputs!: IInputs;
+    readonly inputs!: IInputs;
 
     @Input()
-    public readonly header!: IHeader;
+    readonly header!: IHeader;
 
     @Input()
-    public readonly footer!: IFooter;
+    readonly footer!: IFooter;
 
     @Input()
-    public allData!: MockData[];
+    allData!: MockData[];
 
     @Input()
-    public readonly inputKeys!: string[];
+    readonly inputKeys!: string[];
 
-    public pageSizes = [5, 10, 20];
-    public pageIndex = 0;
-    public data$ = new BehaviorSubject<MockData[]>([]);
-    public filteredData: MockData[] = [];
-    public total = 0;
+    pageSizes = [5, 10, 20];
+    pageIndex = 0;
+    data$ = new BehaviorSubject<MockData[]>([]);
+    filteredData: MockData[] = [];
+    total = 0;
 
-    public editedEntity?: any;
-    public editedIndex?: number;
+    editedEntity?: any;
+    editedIndex?: number;
 
     @ViewChild(UiGridComponent)
     private _grid!: UiGridComponent<MockData>;
@@ -93,15 +93,15 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
 
-    public paginateData(data: MockData[], pageIndex: number, pageSize: number) {
+    paginateData(data: MockData[], pageIndex: number, pageSize: number) {
         this.data$.next(data.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize));
     }
 
-    public generateButtons(length: number) {
+    generateButtons(length: number) {
         return new Array(length).fill(0);
     }
 
-    public onPageChange(event: PageEvent) {
+    onPageChange(event: PageEvent) {
         this.pageIndex = event.pageIndex;
         this.paginateData(this.filteredData, event.pageIndex, event.pageSize);
     }

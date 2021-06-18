@@ -35,22 +35,22 @@ class TestHostComponent {
     @ViewChild(UiPasswordToggleComponent, {
         static: true,
     })
-    public toggle!: UiPasswordToggleComponent;
+    toggle!: UiPasswordToggleComponent;
 
-    public disabled?: boolean;
+    disabled?: boolean;
 
-    public password = '';
+    password = '';
 }
 
 @Injectable()
 export class TestPasswordToggleIntl extends UiPasswordToggleIntl {
-    public originalTooltipHide = this.tooltipHide;
-    public originalTooltipShow = this.tooltipShow;
+    originalTooltipHide = this.tooltipHide;
+    originalTooltipShow = this.tooltipShow;
 
-    public translatedTooltipHide = faker.lorem.word();
-    public translatedTooltipShow = faker.lorem.word();
+    translatedTooltipHide = faker.lorem.word();
+    translatedTooltipShow = faker.lorem.word();
 
-    public changeLabels() {
+    changeLabels() {
         this.tooltipHide = this.translatedTooltipHide;
         this.tooltipShow = this.translatedTooltipShow;
 

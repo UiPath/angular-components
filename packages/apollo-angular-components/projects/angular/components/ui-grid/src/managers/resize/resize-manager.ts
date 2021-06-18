@@ -36,8 +36,8 @@ import {
  * @ignore
  */
 export abstract class ResizeManager<T extends IGridDataEntry> {
-    public isResizing = false;
-    public current?: IResizeInfo<T>;
+    isResizing = false;
+    current?: IResizeInfo<T>;
 
     protected set _resizeEvent(ev: MouseEvent) {
         if (!this.current) { return; }
@@ -126,9 +126,9 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         ).subscribe();
     }
 
-    public handleResize = (ev: MouseEvent) => this._resizeEvent = ev;
+    handleResize = (ev: MouseEvent) => this._resizeEvent = ev;
 
-    public startResize(ev: MouseEvent, column: UiGridColumnDirective<T>) {
+    startResize(ev: MouseEvent, column: UiGridColumnDirective<T>) {
         this.isResizing = true;
         // hook events
         this.setupState(ev, column);
@@ -157,7 +157,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         (this._grid as any)._cd.detach();
     }
 
-    public stop() {
+    stop() {
         this._stopped$.next();
         this.endResize();
         this.isResizing = false;
@@ -169,7 +169,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         (this._grid as any)._cd.detectChanges();
     }
 
-    public setupState(ev: MouseEvent, column: UiGridColumnDirective<T>) {
+    setupState(ev: MouseEvent, column: UiGridColumnDirective<T>) {
         this.current = {} as IResizeInfo<T>;
         this.current.index = findHeaderIndexFor(this._headers!, column.identifier);
         this.current = Object.assign(this.current, {
@@ -195,13 +195,13 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             .subscribe(this._stateUpdate);
     }
 
-    public endResize() {
+    endResize() {
         this._endResizeCommon(this.current!, this._previous!.neighbour, this._previous!.oppositeNeighbour);
         this.current = undefined;
         this._direction = NaN;
     }
 
-    public destroy() {
+    destroy() {
         this._stopped$.complete();
         this._resize$.complete();
         this._widthMap.clear();

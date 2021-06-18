@@ -27,9 +27,9 @@ describe('Directive: UiClipboard', () => {
         @ViewChild('child', {
             static: true,
         })
-        public child!: ElementRef<HTMLDivElement>;
+        child!: ElementRef<HTMLDivElement>;
 
-        public data$ = of({
+        data$ = of({
             value: 'smth',
         }).pipe(delay(100));
     }
@@ -81,9 +81,9 @@ describe('Directive: UiClipboard', () => {
     })
     class NgLetDynamicFixtureComponent {
         @ViewChild('child')
-        public child!: ElementRef<HTMLDivElement>;
+        child!: ElementRef<HTMLDivElement>;
 
-        public data$ = of({
+        data$ = of({
             value: 'smth',
         }).pipe(delay(100));
     }

@@ -29,21 +29,21 @@ import {
 })
 export class UiContentLoaderDirective implements OnInit, OnChanges, OnDestroy {
     @Input()
-    public set uiContentLoading(value: boolean) {
+    set uiContentLoading(value: boolean) {
         this._loading$.next(value);
     }
 
     @Input()
-    public uiContentLoadingMode?: MatProgressSpinner['mode'];
+    uiContentLoadingMode?: MatProgressSpinner['mode'];
 
     @Input()
-    public uiContentLoadingDiameter?: MatProgressSpinner['diameter'];
+    uiContentLoadingDiameter?: MatProgressSpinner['diameter'];
 
     @Input()
-    public uiContentLoadingValue?: MatProgressSpinner['value'];
+    uiContentLoadingValue?: MatProgressSpinner['value'];
 
     @Input()
-    public uiContentLoadingColor?: MatProgressSpinner['color'];
+    uiContentLoadingColor?: MatProgressSpinner['color'];
 
     private _spinner?: ComponentRef<UiContentSpinnerComponent>;
     private _loading$ = new BehaviorSubject<boolean>(false);

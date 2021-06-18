@@ -102,7 +102,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
      *
      */
     @Input()
-    public contentType: DisplayType = 'absolute';
+    contentType: DisplayType = 'absolute';
     /**
      * What format should the `[data-title]` attribute have, `absolute` or `relative`.
      *
@@ -112,25 +112,25 @@ export class UiDateFormatDirective extends UiFormatDirective {
      * `<ui-dateformat #ref [matTooltip]="ref.dataset['title']"></ui-dateformat>`
      */
     @Input()
-    public titleType: DisplayType = 'absolute';
+    titleType: DisplayType = 'absolute';
     /**
      * The `timezone` for which the current date is displayed.
      *
      */
     @Input()
-    public timezone?: string;
+    timezone?: string;
     /**
      * The input `Date` that needs to be formatted.
      *
      */
     @Input()
-    public date?: Date | string;
+    date?: Date | string;
     /**
      * The `moment` format, defaults to `L LTS`.
      *
      */
     @Input()
-    public dateFormat = 'L LTS';
+    dateFormat = 'L LTS';
 
     protected _text?: HTMLElement;
 
