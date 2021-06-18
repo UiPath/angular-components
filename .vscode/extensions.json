@@ -6,7 +6,6 @@
         "natewallace.angular2-inline",
         "msjsdiag.debugger-for-chrome",
         "eamodio.gitlens",
-        "dozerg.tsimportsorter",
         "Angular.ng-template",
         "christian-kohler.npm-intellisense",
         "christian-kohler.path-intellisense",
@@ -14,8 +13,11 @@
         "alexiv.vscode-angular2-files",
         "mrmlnc.vscode-scss",
         "sibiraj-s.vscode-scss-formatter",
-        "ms-vscode.vscode-typescript-tslint-plugin",
+        "dozerg.tsimportsorter",
+        "dbaeumer.vscode-eslint"
     ],
     // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
-    "unwantedRecommendations": []
+    "unwantedRecommendations": [
+        "ms-vscode.vscode-typescript-tslint-plugin",
+    ]
 }

@@ -6,14 +6,15 @@ import {
 
 import { Component } from '@angular/core';
 
+// eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
-    selector: 'app-snackbar',
+    selector: 'ui-app-snackbar',
     templateUrl: './snackbar.page.html',
     styleUrls: ['snackbar.page.scss'],
 })
 export class SnackbarPageComponent {
-    public readonly IconMap = ICON_MAP;
-    public readonly iconType = [...ICON_MAP.keys()];
+    readonly IconMap = ICON_MAP;
+    readonly iconType = [...ICON_MAP.keys()];
 
     constructor(
         private _snack: UiSnackBarService,

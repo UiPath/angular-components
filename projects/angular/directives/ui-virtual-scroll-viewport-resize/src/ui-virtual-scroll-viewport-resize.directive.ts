@@ -39,7 +39,7 @@ export class UiVirtualScrollViewportResizeDirective implements OnInit, OnDestroy
      * The total item length.
      */
     @Input()
-    public set total(value: number) {
+    set total(value: number) {
         if (this._viewport.getDataLength() === value) { return; }
 
         this._total$.next(value);

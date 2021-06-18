@@ -29,21 +29,21 @@ import {
 })
 export class UiContentLoaderDirective implements OnInit, OnChanges, OnDestroy {
     @Input()
-    public set uiContentLoading(value: boolean) {
+    set uiContentLoading(value: boolean) {
         this._loading$.next(value);
     }
 
     @Input()
-    public uiContentLoadingMode?: MatProgressSpinner['mode'];
+    uiContentLoadingMode?: MatProgressSpinner['mode'];
 
     @Input()
-    public uiContentLoadingDiameter?: MatProgressSpinner['diameter'];
+    uiContentLoadingDiameter?: MatProgressSpinner['diameter'];
 
     @Input()
-    public uiContentLoadingValue?: MatProgressSpinner['value'];
+    uiContentLoadingValue?: MatProgressSpinner['value'];
 
     @Input()
-    public uiContentLoadingColor?: MatProgressSpinner['color'];
+    uiContentLoadingColor?: MatProgressSpinner['color'];
 
     private _spinner?: ComponentRef<UiContentSpinnerComponent>;
     private _loading$ = new BehaviorSubject<boolean>(false);
@@ -51,7 +51,7 @@ export class UiContentLoaderDirective implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         private _resolver: ComponentFactoryResolver,
-        private _ref: TemplateRef<{}>,
+        private _ref: TemplateRef<any>,
         private _container: ViewContainerRef,
     ) { }
 
@@ -88,14 +88,14 @@ export class UiContentLoaderDirective implements OnInit, OnChanges, OnDestroy {
         } else {
             this._container.createEmbeddedView(this._ref);
         }
-    }
+    };
 
     private _updateSpinner = (spinner: UiContentSpinnerComponent) => {
         this._emitIfChanged(spinner.mode$, this.uiContentLoadingMode);
         this._emitIfChanged(spinner.diameter$, this.uiContentLoadingDiameter);
         this._emitIfChanged(spinner.color$, this.uiContentLoadingColor);
         this._emitIfChanged(spinner.value$, this.uiContentLoadingValue);
-    }
+    };
 
     private _emitIfChanged = <T>(
         source: BehaviorSubject<T>,
@@ -107,12 +107,12 @@ export class UiContentLoaderDirective implements OnInit, OnChanges, OnDestroy {
         ) { return; }
 
         source.next(value);
-    }
+    };
 
     private _destroySpinner = () => {
         if (!this._spinner) { return; }
 
         this._spinner.destroy();
         this._spinner = undefined;
-    }
+    };
 }

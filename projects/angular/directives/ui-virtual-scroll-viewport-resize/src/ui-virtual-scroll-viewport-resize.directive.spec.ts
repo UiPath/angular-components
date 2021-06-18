@@ -60,9 +60,9 @@ class UiVirtualScrollViewportResizeFixtureComponent {
     @ViewChild('viewport', {
         static: true,
     })
-    public viewport!: CdkVirtualScrollViewport;
+    viewport!: CdkVirtualScrollViewport;
 
-    public length = 5;
+    length = 5;
 }
 describe('Directive: UiVirtualScrollViewportResize', () => {
     let fixture: ComponentFixture<UiVirtualScrollViewportResizeFixtureComponent>;
@@ -108,7 +108,6 @@ describe('Directive: UiVirtualScrollViewportResize', () => {
             expect(viewportSizeSpy).toHaveBeenCalled();
             expect(viewportSizeSpy).toHaveBeenCalledTimes(1);
         }));
-
 
         it('should redraw EVERY time the item count changs at a rapid pace', fakeAsync(() => {
             fixture.detectChanges();

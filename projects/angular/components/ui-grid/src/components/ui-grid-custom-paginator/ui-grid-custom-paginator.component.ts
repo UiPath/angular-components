@@ -18,7 +18,7 @@ import {
 
 @Injectable()
 export class UiMatPaginatorIntl extends MatPaginatorIntl {
-    public getPageLabel(currentPage: number, pageCount?: number): string {
+    getPageLabel(currentPage: number, pageCount?: number): string {
         if (!pageCount) {
             return `Page ${currentPage}`;
         }
@@ -30,21 +30,21 @@ export class UiMatPaginatorIntl extends MatPaginatorIntl {
     selector: 'ui-grid-custom-paginator',
     templateUrl: './ui-grid-custom-paginator.component.html',
     styleUrls: ['./ui-grid-custom-paginator.component.scss'],
-    // tslint:disable-next-line: no-inputs-metadata-property
+    // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
     inputs: ['disabled'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
 export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginatorDefaultOptions> {
-    // tslint:disable-next-line: naming-convention
+    // eslint-disable-next-line
     public _formFieldAppearance?: MatFormFieldAppearance;
-    // tslint:disable-next-line: naming-convention
+    // eslint-disable-next-line
     public _intl!: UiMatPaginatorIntl;
 
     @HostBinding('class')
-    public hostClass = 'mat-paginator';
+    hostClass = 'mat-paginator';
 
-    public get pageCount(): number {
+    get pageCount(): number {
         return Math.ceil(this.length / this.pageSize);
     }
 
@@ -58,7 +58,7 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginat
     ) {
         super(intl ?? new UiMatPaginatorIntl(), changeDetectorRef, defaults);
 
-        if (defaults && defaults.formFieldAppearance != null) {
+        if (defaults?.formFieldAppearance != null) {
             this._formFieldAppearance = defaults.formFieldAppearance;
         }
     }

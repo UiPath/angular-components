@@ -29,9 +29,9 @@ import { IFilterModel } from '../models';
  * @internal
  */
 export class FilterManager<T> {
-    public filter$ = new BehaviorSubject<IFilterModel<T>[]>([]);
+    filter$ = new BehaviorSubject<IFilterModel<T>[]>([]);
 
-    public dirty$ = this.filter$.pipe(
+    dirty$ = this.filter$.pipe(
         map(filters =>
             !!this._initialFilters
             && !isEqual(
@@ -42,7 +42,7 @@ export class FilterManager<T> {
         distinctUntilChanged(),
     );
 
-    public activeCount$ = combineLatest([
+    activeCount$ = combineLatest([
         this.filter$,
         this.dirty$,
     ]).pipe(
@@ -64,27 +64,27 @@ export class FilterManager<T> {
         private _columns: UiGridColumnDirective<T>[] = [],
     ) { }
 
-    public get columns() {
+    get columns() {
         return this._columns;
     }
 
-    public set columns(columns: UiGridColumnDirective<T>[]) {
+    set columns(columns: UiGridColumnDirective<T>[]) {
         this._columns = columns;
         this._emitFilterOptions();
     }
 
-    public destroy() {
+    destroy() {
         this.filter$.complete();
     }
 
-    public searchableDropdownUpdate = (column?: UiGridColumnDirective<T>, value?: ISuggestValue) =>
-        this._updateFilterValue(column, value, this._mapSearchableDropdownItem)
+    searchableDropdownUpdate = (column?: UiGridColumnDirective<T>, value?: ISuggestValue) =>
+        this._updateFilterValue(column, value, this._mapSearchableDropdownItem);
 
-    public dropdownUpdate = (column?: UiGridColumnDirective<T>, value?: IDropdownOption) =>
-        this._updateFilterValue(column, value, this._mapDropdownItem)
+    dropdownUpdate = (column?: UiGridColumnDirective<T>, value?: IDropdownOption) =>
+        this._updateFilterValue(column, value, this._mapDropdownItem);
 
-    public searchChange(term: string | undefined, header: UiGridHeaderDirective<T>) {
-        const searchFilterCollection: IFilterModel<T>[] = !!term ?
+    searchChange(term: string | undefined, header: UiGridHeaderDirective<T>) {
+        const searchFilterCollection: IFilterModel<T>[] = term ?
             this._columns
                 .filter(column => column.searchable)
                 .map(column => ({
@@ -106,17 +106,17 @@ export class FilterManager<T> {
     ): void => {
         if (!column) { return; }
 
-        const dropdown = column.dropdown || column.searchableDropdown;
+        const dropdown = column.dropdown ?? column.searchableDropdown;
 
         if (!dropdown) { return; }
 
         (dropdown as {
-            updateValue: (value: ISuggestValue | IDropdownOption | undefined) => void,
+            updateValue: (value: ISuggestValue | IDropdownOption | undefined) => void;
         }).updateValue(value);
         dropdown.filterChange.emit(value ? mapper(column) : null);
 
         this._emitFilterOptions();
-    }
+    };
 
     private _emitFilterOptions = () => {
         const dropdownFilters = this._columns
@@ -135,23 +135,23 @@ export class FilterManager<T> {
         if (isEqual(this.filter$.getValue(), updatedFilters)) { return; }
 
         this.filter$.next(updatedFilters);
-    }
+    };
 
     private _hasFilterValue = (dropdown?: UiGridSearchFilterDirective<T> | UiGridDropdownFilterDirective<T>) =>
         !!dropdown &&
-        dropdown.value
+        dropdown.value;
 
     private _mapDropdownItem = (column: UiGridColumnDirective<T>) => ({
         method: column.dropdown!.method,
         property: column.property,
         value: column.dropdown!.value!.value,
-    }) as IFilterModel<T>
+    }) as IFilterModel<T>;
 
     private _mapSearchableDropdownItem = (column: UiGridColumnDirective<T>): IFilterModel<T> => ({
         method: column.searchableDropdown!.method,
-        property: column.searchableDropdown!.property || column.property,
+        property: column.searchableDropdown!.property ?? column.property,
         value: column.searchableDropdown!.value!.id,
-    }) as IFilterModel<T>
+    }) as IFilterModel<T>;
 
     private _sortByProperty(filters: IFilterModel<T>[]): any {
         return filters.sort((a, b) => (a.property > b.property) ? 1 : -1);

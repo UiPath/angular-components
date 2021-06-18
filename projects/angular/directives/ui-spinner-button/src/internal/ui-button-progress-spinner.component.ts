@@ -16,12 +16,12 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     encapsulation: ViewEncapsulation.None,
 })
 export class UiButtonProgressSpinnerComponent implements OnDestroy {
-    public isRound$ = new BehaviorSubject(false);
-    public loading$ = new BehaviorSubject(false);
+    isRound$ = new BehaviorSubject(false);
+    loading$ = new BehaviorSubject(false);
 
-    public mode$ = new BehaviorSubject<MatProgressSpinner['mode']>('indeterminate');
-    public value$ = new BehaviorSubject<MatProgressSpinner['value']>(0);
-    public color$ = new BehaviorSubject<MatProgressSpinner['color']>('primary');
+    mode$ = new BehaviorSubject<MatProgressSpinner['mode']>('indeterminate');
+    value$ = new BehaviorSubject<MatProgressSpinner['value']>(0);
+    color$ = new BehaviorSubject<MatProgressSpinner['color']>('primary');
 
     ngOnDestroy() {
         this.isRound$.complete();

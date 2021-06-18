@@ -7,7 +7,7 @@ import {
 
 @Injectable()
 export class UiSnackbarIntl implements OnDestroy {
-    public closeAriaLabel = 'Close';
+    closeAriaLabel = 'Close';
     protected _destroyed$ = new Subject<void>();
 
     ngOnDestroy() {

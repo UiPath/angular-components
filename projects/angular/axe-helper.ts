@@ -1,9 +1,9 @@
 import { RunOptions } from 'axe-core';
 import * as jasmineAxe from 'jasmine-axe';
 
-// tslint:disable: naming-convention
+/* eslint-disable */
 export const axe = jasmineAxe.configureAxe({
-        globalOptions: {
+    globalOptions: {
         standards: {
             ariaRoles: {
                 combobox: {

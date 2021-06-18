@@ -25,6 +25,7 @@ import { UiFormatDirective } from '@uipath/angular/directives/internal';
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670
+ *
  * @ignore
  */
 const moment = _moment;
@@ -101,7 +102,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
      *
      */
     @Input()
-    public contentType: DisplayType = 'absolute';
+    contentType: DisplayType = 'absolute';
     /**
      * What format should the `[data-title]` attribute have, `absolute` or `relative`.
      *
@@ -111,25 +112,25 @@ export class UiDateFormatDirective extends UiFormatDirective {
      * `<ui-dateformat #ref [matTooltip]="ref.dataset['title']"></ui-dateformat>`
      */
     @Input()
-    public titleType: DisplayType = 'absolute';
+    titleType: DisplayType = 'absolute';
     /**
      * The `timezone` for which the current date is displayed.
      *
      */
     @Input()
-    public timezone?: string;
+    timezone?: string;
     /**
      * The input `Date` that needs to be formatted.
      *
      */
     @Input()
-    public date?: Date | string;
+    date?: Date | string;
     /**
      * The `moment` format, defaults to `L LTS`.
      *
      */
     @Input()
-    public dateFormat = 'L LTS';
+    dateFormat = 'L LTS';
 
     protected _text?: HTMLElement;
 
@@ -146,7 +147,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
         if (!(this.date instanceof Date)) { return this.date; }
 
         return moment(this.date)
-            .tz(this.timezone || resolveTimezone(this._options))
+            .tz(this.timezone ?? resolveTimezone(this._options))
             .format(this.dateFormat);
     }
 
@@ -170,9 +171,9 @@ export class UiDateFormatDirective extends UiFormatDirective {
             elementRef,
         );
 
-        _options = _options || {};
+        this._options = _options || {};
 
-        const redraw$ = _options.redraw$ || of(null);
+        const redraw$ = this._options.redraw$ || of(null);
 
         merge(
             redraw$,
@@ -230,9 +231,9 @@ export class UiDateFormatDirective extends UiFormatDirective {
     private _timeForTypeChanged = (type: DisplayType) =>
         this._isRelative(type) ?
             this._lastRelativeTime !== this._relativeTime :
-            this._lastAbsoluteTime !== this._absoluteTime
+            this._lastAbsoluteTime !== this._absoluteTime;
 
     private _timeForType = (type: DisplayType) => this._isRelative(type) ?
         this._relativeTime :
-        this._absoluteTime
+        this._absoluteTime;
 }

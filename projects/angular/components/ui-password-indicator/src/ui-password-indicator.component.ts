@@ -49,19 +49,19 @@ type RulesAndStates = [string[], IRuleValidationState];
 })
 export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
     @Input()
-    public control!: AbstractControl;
+    control!: AbstractControl;
 
     @Input()
-    public passwordRules!: IPasswordRuleSet;
+    passwordRules!: IPasswordRuleSet;
 
     @Input()
-    public hideValidRuleDefinition = false;
+    hideValidRuleDefinition = false;
 
-    public state$!: Observable<IRuleValidationState>;
-    public rules$!: Observable<string[]>;
-    public visibleRules$!: Observable<string[]>;
-    public percentage$!: Observable<number>;
-    public isErrorState$!: Observable<boolean>;
+    state$!: Observable<IRuleValidationState>;
+    rules$!: Observable<string[]>;
+    visibleRules$!: Observable<string[]>;
+    percentage$!: Observable<number>;
+    isErrorState$!: Observable<boolean>;
 
     private _destroyed$ = new Subject<void>();
 
@@ -123,10 +123,10 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
         this._destroyed$.complete();
     }
 
-    public trackByKey = (_id: number, key: string) => key;
+    trackByKey = (_id: number, key: string) => key;
 
     private _mapDirtyState = () => this.control.dirty &&
-        this.control.hasError(VALIDATION_RULE_NAME)
+        this.control.hasError(VALIDATION_RULE_NAME);
 
     private _calculatePercentage = ([rules, state]: RulesAndStates) => {
         if (!state) { return 100; }
@@ -140,11 +140,11 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
             );
 
         return validationPercentage;
-    }
+    };
 
     private _mapVisibleRules = ([rules, state]: RulesAndStates) => this.hideValidRuleDefinition ?
         rules.filter(rule => state[rule]) :
-        rules
+        rules;
 
     private _announceChanges = (state: IRuleValidationState) => {
         const rulesNotMet = Object.keys(this.passwordRules || {})
@@ -161,5 +161,5 @@ export class UiPasswordIndicatorComponent implements OnInit, OnDestroy {
                 : this.intl.allMet,
             'polite',
         );
-    }
+    };
 }

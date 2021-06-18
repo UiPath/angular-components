@@ -16,7 +16,7 @@ export class QueuedAnnouncer {
 
     constructor(private _liveAnnouncer: LiveAnnouncer) { }
 
-    public enqueue(msg: string) {
+    enqueue(msg: string) {
         this._msgQueue.push(msg);
 
         if (!this._isAnnouncing) {
@@ -37,5 +37,5 @@ export class QueuedAnnouncer {
             .then(() => firstValueFrom(of(void 0).pipe(delay(50))))
             .then(this._announceNext)
             .catch(this._announceNext);
-    }
+    };
 }

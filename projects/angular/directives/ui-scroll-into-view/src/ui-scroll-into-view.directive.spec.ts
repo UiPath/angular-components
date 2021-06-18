@@ -18,9 +18,9 @@ class TestScrollIntoViewComponent {
     @ViewChild(UiScrollIntoViewDirective, {
         static: true,
     })
-    public directive!: UiScrollIntoViewDirective;
+    directive!: UiScrollIntoViewDirective;
 
-    public editing = false;
+    editing = false;
 }
 
 describe('Directive: ScrollIntoView', () => {

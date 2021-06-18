@@ -43,7 +43,7 @@ const ANGULAR_ARIA_DELAY = 150;
 })
 export class SnackBarFixtureComponent {
     @ViewChild('richContent', { static: true })
-    public richContent!: TemplateRef<any>;
+    richContent!: TemplateRef<any>;
 
     constructor(public service: UiSnackBarService) { }
 }
@@ -109,15 +109,24 @@ describe('Service: UiSnackBarService', () => {
     ] as const).forEach(type => {
         describe(`Type: ${type}`, () => {
             [
-                { label: 'Via: show method', useGenericShow: true },
-                { label: `Via: ${type} method`, useGenericShow: false },
+                {
+                    label: 'Via: show method',
+                    useGenericShow: true,
+                },
+                {
+                    label: `Via: ${type} method`,
+                    useGenericShow: false,
+                },
             ].forEach(viaCase => {
                 describe(viaCase.label, () => {
                     let showSnackbar: SnackbarAction;
 
                     beforeEach(() => {
                         const showMethodAdapter: SnackbarAction = (message, configuration) =>
-                            service.show(message, { ...configuration, type });
+                            service.show(message, {
+                                ...configuration,
+                                type,
+                            });
                         showSnackbar = viaCase.useGenericShow
                             ? showMethodAdapter
                             : service[type];

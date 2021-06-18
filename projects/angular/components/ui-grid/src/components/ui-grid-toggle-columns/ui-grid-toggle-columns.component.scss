@@ -3,6 +3,11 @@ $toggle-col-width: 10em;
 .ui-grid-toggle-columns {
     margin-right: 6px;
     padding-left: 0;
+    display: flex;
+
+    mat-divider {
+        margin-left: 6px;
+    }
 
     mat-select {
         overflow: hidden;

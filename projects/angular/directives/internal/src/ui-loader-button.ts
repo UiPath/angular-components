@@ -55,12 +55,12 @@ export abstract class UiLoaderButtonDirective<T> implements OnChanges, OnDestroy
 
     protected _registerWatcher = (key: string, action: () => void) => {
         this._watchers.set(key, action);
-    }
+    };
 
     protected _createLoader = (type: Type<T>) => {
         const factory = this._componentFactory.resolveComponentFactory(type);
         return this._container.createComponent(factory, 0, this._container.injector);
-    }
+    };
 
     protected _doIfChange = (change: SimpleChange, action: () => void) => {
         if (
@@ -69,5 +69,5 @@ export abstract class UiLoaderButtonDirective<T> implements OnChanges, OnDestroy
         ) { return; }
 
         action();
-    }
+    };
 }

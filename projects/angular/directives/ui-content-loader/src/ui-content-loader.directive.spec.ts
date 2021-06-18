@@ -33,11 +33,11 @@ import { UiContentLoaderModule } from './ui-content-loader.module';
     `,
 })
 export class LoaderFixtureComponent {
-    public loading$ = new BehaviorSubject(false);
-    public color?: MatProgressSpinner['color'];
-    public mode?: MatProgressSpinner['mode'];
-    public value?: MatProgressSpinner['value'];
-    public diameter?: MatProgressSpinner['diameter'];
+    loading$ = new BehaviorSubject(false);
+    color?: MatProgressSpinner['color'];
+    mode?: MatProgressSpinner['mode'];
+    value?: MatProgressSpinner['value'];
+    diameter?: MatProgressSpinner['diameter'];
 }
 
 describe('Directive: *uiContentLoading', () => {

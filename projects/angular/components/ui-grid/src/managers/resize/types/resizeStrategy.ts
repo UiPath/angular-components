@@ -3,7 +3,7 @@
  * @ignore
  */
 export enum ResizeStrategy {
-    AggresiveNeighbourPush,
+    AggresiveNeighbourPush = 0,
     PassiveNeighbourPush,
     ImmediateNeighbourHalt,
 }

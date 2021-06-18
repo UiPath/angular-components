@@ -36,61 +36,61 @@ export class UiGridSearchComponent implements OnInit, OnDestroy {
      *
      */
     @Input()
-    public debounce = 0;
+    debounce = 0;
     /**
      * The search input placeholder.
      *
      */
     @Input()
-    public placeholder?: string;
+    placeholder?: string;
     /**
      * The max-length allowed in the search input.
      *
      */
     @Input()
-    public maxLength?: number;
+    maxLength?: number;
     /**
      * The search tooltip text.
      *
      */
     @Input()
-    public searchTooltip?: string;
+    searchTooltip?: string;
     /**
      * The clear search tooltip text.
      *
      */
     @Input()
-    public clearTooltip?: string;
+    clearTooltip?: string;
     /**
      * Configure if the search tooltip is disabled.
      *
      */
     @Input()
-    public tooltipDisabled?: boolean;
+    tooltipDisabled?: boolean;
 
     /**
      * The search value.
      *
      */
     @Input()
-    public get value() {
+    get value() {
         return this.search.value;
     }
-    public set value(value: string) {
+    set value(value: string) {
         this.search.setValue(value);
     }
 
     /**
      * @ignore
      */
-    public search = new FormControl('');
+    search = new FormControl('');
 
     /**
      * The search event.
      *
      */
     @Output()
-    public searchChange = new EventEmitter<string>();
+    searchChange = new EventEmitter<string>();
 
     private _destroyed$ = new Subject<void>();
 
@@ -120,7 +120,7 @@ export class UiGridSearchComponent implements OnInit, OnDestroy {
      * Clears the search input value.
      *
      */
-    public clear() {
+    clear() {
         this.search.setValue('');
     }
 }

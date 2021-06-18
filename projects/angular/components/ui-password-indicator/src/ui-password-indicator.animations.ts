@@ -8,6 +8,7 @@ import {
 /**
  * Enter / Leave animation generator.
  * NOTE: keep exported as function in order for it to be hoisted! Else the AOT build will fail.
+ *
  * @internal
  * @ignore
  */

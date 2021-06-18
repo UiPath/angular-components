@@ -31,7 +31,7 @@ describe('Component: UiGrid', () => {
 
             it('should NOT have a value', () => {
                 expect(manager.hasValue()).toEqual(false);
-                expect(manager['_hasValue$'].getValue()).toEqual(false);
+                expect((manager as any)._hasValue$.getValue()).toEqual(false);
             });
 
             it('should be empty', () => {
@@ -99,7 +99,7 @@ describe('Component: UiGrid', () => {
 
             it('should have a value', () => {
                 expect(manager.hasValue()).toEqual(true);
-                expect(manager['_hasValue$'].getValue()).toEqual(true);
+                expect((manager as any)._hasValue$.getValue()).toEqual(true);
             });
 
             it('should NOT be empty', () => {
@@ -157,7 +157,7 @@ describe('Component: UiGrid', () => {
 
             it('should have a value', () => {
                 expect(manager.hasValue()).toEqual(true);
-                expect(manager['_hasValue$'].getValue()).toEqual(true);
+                expect((manager as any)._hasValue$.getValue()).toEqual(true);
             });
 
             it('should NOT be empty', () => {
