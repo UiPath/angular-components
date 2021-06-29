@@ -83,7 +83,11 @@ export class IntegrationUtils<T> {
             const paramMatch = Object.entries(params).every(([key, value]) => request.params.get(key) === value);
             return urlMatch && paramMatch;
         });
-        testReq.flush(stub.response);
+        if (stub.response instanceof ErrorEvent) {
+            testReq.error(stub.response);
+        } else {
+            testReq.flush(stub.response);
+        }
 
         return testReq;
     };
