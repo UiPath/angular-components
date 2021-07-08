@@ -264,6 +264,23 @@ class GridUtils<T> {
         );
     };
 
+    public getMenuDictionary = (
+        rowNumber: number,
+        cfg: {
+            gridSelector?: string;
+            menu?: string;
+            debugEl?: DebugElement;
+        } = {},
+    ) => {
+        const menuItems = this.getMenuItems(rowNumber, cfg);
+        return menuItems.reduce((acc, step) => {
+            return {
+                ...acc,
+                [step.text]: step,
+            };
+        }, {} as Record<string, { text: string; href: string | undefined }>);
+    };
+
     public getMenuItems = (
         rowNumber: number,
         {
@@ -282,12 +299,11 @@ class GridUtils<T> {
         this._utils.click(`${gridSelector} [data-row-index="${rowNumber}"] ${menu}`, debugEl);
         this._utils.fixture.detectChanges();
 
-        const nodes = this._utils.getAllNativeElements<HTMLButtonElement | HTMLAnchorElement>
-            ('.cdk-overlay-container .mat-menu-item', debugEl);
+        const nodes = this._utils.getAllDebugElements('.cdk-overlay-container .mat-menu-item', debugEl);
 
         return nodes.map(item => ({
-            text: item.innerText,
-            href: (item as HTMLAnchorElement).href as string | undefined,
+            text: item.query(By.css('span')).nativeElement.innerText,
+            href: (item.nativeElement as HTMLAnchorElement).href as string | undefined,
         }));
     };
 
