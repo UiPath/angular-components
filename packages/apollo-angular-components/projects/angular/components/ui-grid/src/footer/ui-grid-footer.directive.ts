@@ -25,14 +25,14 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
      *
      */
     @Input()
-    public length = 0;
+    length = 0;
 
     /**
      * The active page size.
      *
      */
     @Input()
-    public set pageSize(value: number) {
+    set pageSize(value: number) {
         this._state.pageSize = value;
     }
 
@@ -41,7 +41,7 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
      *
      */
     @Input()
-    public set pageIndex(value: number) {
+    set pageIndex(value: number) {
         this._state.pageIndex = value;
     }
 
@@ -50,31 +50,36 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
      *
      */
     @Input()
-    public pageSizes: number[] = [];
+    pageSizes: number[] = [];
 
     /**
      * If the page size options should be hidden.
      *
      */
     @Input()
-    public hidePageSize = false;
+    hidePageSize = false;
 
     /**
      * Emits when the page is changed.
      *
      */
     @Output()
-    public pageChange = new EventEmitter<PageChangeEvent>();
+    pageChange = new EventEmitter<PageChangeEvent>();
 
     /**
      * The current footer state.
      *
      */
-    public get state() {
+    get state() {
         return this._state;
     }
 
-    private _state: PageChangeEvent = { length: NaN, pageIndex: 0, pageSize: NaN, previousPageIndex: NaN };
+    private _state: PageChangeEvent = {
+        length: NaN,
+        pageIndex: 0,
+        pageSize: NaN,
+        previousPageIndex: NaN,
+    };
 
     /**
      * @ignore
@@ -89,7 +94,10 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
      * @ignore
      */
     ngOnInit() {
-        this._state = { ...this._state, length: this.length };
+        this._state = {
+            ...this._state,
+            length: this.length,
+        };
     }
 
     /**

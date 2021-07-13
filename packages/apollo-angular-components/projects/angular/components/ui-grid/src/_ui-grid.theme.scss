@@ -1,9 +1,7 @@
 @import "./components/ui-grid-search/ui-grid-search.theme";
 
-@import "~@angular/material/theming";
-
 /* https://github.com/angular/material2/blob/master/src/lib/button/_button-base.scss */
-$ui-grid-default-transition: 200ms $swift-ease-in-out-timing-function;
+$ui-grid-default-transition: 200ms cubic-bezier(0.35, 0, 0.25, 1);
 $ui-grid-background-transition: background-color $ui-grid-default-transition;
 $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
@@ -27,7 +25,7 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
     $ui-grid-accent-color: map-get($accent-palette, "default");
 
     $ui-grid-background: map-get($background, "card");
-    $ui-grid-border-color: mat-color($foreground, "divider");
+    $ui-grid-border-color: mat.get-color-from-palette($foreground, "divider");
     $ui-grid-elevation-color: rgb(0, 0, 0);
 
     $_hover-base: mix($ui-grid-background, invert($ui-grid-background), 97%);
@@ -42,14 +40,14 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
         @for $i from 1 through 24 {
             &.ui-grid-elevation-z#{$i} {
                 .ui-grid-container {
-                    @include mat-elevation($i, $ui-grid-elevation-color, 0.5);
+                    @include mat.elevation($i, $ui-grid-elevation-color, 0.5);
                 }
             }
         }
 
         &:not([class*="ui-grid-elevation-z"]) {
             .ui-grid-container {
-                @include mat-elevation(4, $ui-grid-elevation-color, 0.5);
+                @include mat.elevation(4, $ui-grid-elevation-color, 0.5);
             }
         }
 

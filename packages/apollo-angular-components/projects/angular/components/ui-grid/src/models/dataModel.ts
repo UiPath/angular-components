@@ -13,13 +13,18 @@ export interface IGridDataEntry {
 }
 /**
  * Grid options.
+ * `useLegacyDesign` if you still need the old layout
+ * `collapsibleFilters` is deprecated, use `collapseFiltersCount` instead
+ * `fetchStrategy` controls how searchable filters will emit queries on render
  *
  * @export
  */
 export interface GridOptions<T> {
     useCache?: boolean;
-    useAlternateDesign?: boolean;
+    fetchStrategy?: 'eager' | 'onOpen';
+    useLegacyDesign?: boolean;
     collapsibleFilters?: boolean;
+    collapseFiltersCount?: number;
     idProperty?: keyof T;
     rowSize?: number;
 }

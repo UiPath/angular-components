@@ -24,14 +24,14 @@ interface IDelayedTarget {
 
 describe('Util(rxjs): asyncOf', () => {
     it('should emit sync stream first, delayed stream (0ms) second and delayed stream (10ms) third', fakeAsync((done: DoneFn) => {
-        const noDelay = of<IDelayedTarget>({ target: 'noDelay' });
-        const delay0 = asyncOf<IDelayedTarget>({ target: 'delay0' });
-        const delay10 = asyncOf<IDelayedTarget>({ target: 'delay10' }, 10);
+        const noDelay$ = of<IDelayedTarget>({ target: 'noDelay' });
+        const delay0$ = asyncOf<IDelayedTarget>({ target: 'delay0' });
+        const delay10$ = asyncOf<IDelayedTarget>({ target: 'delay10' }, 10);
 
         const emissions$ = merge(
-            delay10,
-            delay0,
-            noDelay,
+            delay10$,
+            delay0$,
+            noDelay$,
         ).pipe(
             take(3),
             share(),
@@ -88,8 +88,8 @@ describe('Util(rxjs): asyncOf', () => {
                 );
 
             const callbacks = {
-                empty: (output: Object | null) => expect(output).toBeNull(),
-                response: (output: Object | null) => {
+                empty: (output: any | null) => expect(output).toBeNull(),
+                response: (output: any | null) => {
                     expect(output).not.toBeNull();
                     expect(output!.constructor).toBe(Object);
                 },

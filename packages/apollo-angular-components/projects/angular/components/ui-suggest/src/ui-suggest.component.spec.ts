@@ -1,8 +1,13 @@
 import * as faker from 'faker';
 import {
+    a11y,
+    axe,
+} from 'projects/angular/axe-helper';
+import {
     VirtualScrollItemStatus,
 } from 'projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api';
 import {
+    firstValueFrom,
     Observable,
     of,
 } from 'rxjs';
@@ -59,30 +64,30 @@ class UiSuggestFixtureDirective {
     @ViewChild(UiSuggestComponent, {
         static: true,
     })
-    public uiSuggest!: UiSuggestComponent;
+    uiSuggest!: UiSuggestComponent;
 
-    // tslint:disable-next-line: no-inferrable-types
-    public defaultValue?: string = 'All';
-    public placeholder = 'My Field';
+    // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+    defaultValue?: string = 'All';
+    placeholder = 'My Field';
 
-    public clearable?: boolean;
-    public searchable?: boolean;
-    public alwaysExpanded?: boolean;
-    public disabled?: boolean;
-    public multiple?: boolean;
-    public readonly?: boolean;
-    public enableCustomValue?: boolean;
-    public items?: ISuggestValue[];
-    public direction: 'up' | 'down' = 'down';
-    public displayPriority: 'default' | 'selected' = 'default';
-    public fetchStrategy: 'eager' | 'onOpen' = 'eager';
-    public minChars = 0;
+    clearable?: boolean;
+    searchable?: boolean;
+    alwaysExpanded?: boolean;
+    disabled?: boolean;
+    multiple?: boolean;
+    readonly?: boolean;
+    enableCustomValue?: boolean;
+    items?: ISuggestValue[];
+    direction: 'up' | 'down' = 'down';
+    displayPriority: 'default' | 'selected' = 'default';
+    fetchStrategy: 'eager' | 'onOpen' = 'eager';
+    minChars = 0;
 
-    public set value(value: ISuggestValue[] | undefined) {
+    set value(value: ISuggestValue[] | undefined) {
         this._value = value;
     }
 
-    public get value(): ISuggestValue[] | undefined {
+    get value(): ISuggestValue[] | undefined {
         return this._value;
     }
 
@@ -104,9 +109,9 @@ const searchFor = (value: string, fixture: ComponentFixture<UiSuggestFixtureDire
 
 const sharedSpecifications = (
     beforeEachFn: () => {
-        fixture: ComponentFixture<UiSuggestFixtureDirective>,
-        component: UiSuggestFixtureDirective,
-        uiSuggest: UiSuggestComponent,
+        fixture: ComponentFixture<UiSuggestFixtureDirective>;
+        component: UiSuggestFixtureDirective;
+        uiSuggest: UiSuggestComponent;
     },
 ) => {
     let fixture: ComponentFixture<UiSuggestFixtureDirective>;
@@ -125,6 +130,13 @@ const sharedSpecifications = (
     describe('Behavior: standard usage', () => {
         it('should be initialized', () => {
             expect(uiSuggest).toBeDefined();
+        });
+
+        a11y.suite((runOptions) => {
+            a11y.it('should have no violations', async () => {
+                fixture.detectChanges();
+                expect(await axe(fixture.nativeElement, runOptions)).toHaveNoViolations();
+            });
         });
 
         it('should have value set to an empty array if NULL or Undefined is provided', () => {
@@ -372,7 +384,6 @@ const sharedSpecifications = (
                     done();
                 });
 
-
             fixture.detectChanges();
         });
 
@@ -459,13 +470,11 @@ const sharedSpecifications = (
 
             component.searchable = true;
             component.items = items;
-            uiSuggest.searchSourceFactory = () => {
-                return of([...items]).pipe(
-                    map(() => {
-                        throw new Error('Testing if all goes well');
-                    }),
-                );
-            };
+            uiSuggest.searchSourceFactory = () => of([...items]).pipe(
+                map(() => {
+                    throw new Error('Testing if all goes well');
+                }),
+            );
 
             await fixture.whenStable();
 
@@ -481,15 +490,13 @@ const sharedSpecifications = (
 
             fixture.detectChanges();
 
-            uiSuggest.searchSourceFactory = (term) => {
-                return of([...items]).pipe(
-                    delay(100),
-                    map(itemList => ({
-                        data: itemList.filter(item => item.text.includes(term as string)),
-                        total: itemList.length,
-                    }) as ISuggestValues<any>),
-                );
-            };
+            uiSuggest.searchSourceFactory = (term) => of([...items]).pipe(
+                delay(100),
+                map(itemList => ({
+                    data: itemList.filter(item => item.text.includes(term as string)),
+                    total: itemList.length,
+                }) as ISuggestValues<any>),
+            );
 
             uiSuggest.sourceUpdated
                 .pipe(
@@ -569,14 +576,12 @@ const sharedSpecifications = (
             it('should not be in loading state if it has a searchSourceFactory', async () => {
                 const items = generateSuggetionItemList();
                 component.disabled = true;
-                uiSuggest.searchSourceFactory = (term) => {
-                    return of([...items]).pipe(
-                        map(itemList => ({
-                            data: itemList.filter(item => item.text.includes(term as string)),
-                            total: itemList.length,
-                        }) as ISuggestValues<any>),
-                    );
-                };
+                uiSuggest.searchSourceFactory = (term) => of([...items]).pipe(
+                    map(itemList => ({
+                        data: itemList.filter(item => item.text.includes(term as string)),
+                        total: itemList.length,
+                    }) as ISuggestValues<any>),
+                );
 
                 fixture.detectChanges();
                 assert.isDisabled();
@@ -592,7 +597,6 @@ const sharedSpecifications = (
                 expect(uiSuggest.loading$.value).toBeFalsy();
             });
         });
-
 
         it('should not open on first click and close on the second', () => {
             fixture.detectChanges();
@@ -618,7 +622,7 @@ const sharedSpecifications = (
 
     describe('Behavior: a11y on open', () => {
         it(`should announce if empty`, () => {
-            const spy = spyOn(uiSuggest['_liveAnnouncer'], 'announce');
+            const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
             const display = fixture.debugElement.query(By.css('.display'));
             display.nativeElement.dispatchEvent(EventGenerator.click);
 
@@ -631,7 +635,7 @@ const sharedSpecifications = (
             component.items = generateSuggetionItemList('random');
             fixture.detectChanges();
 
-            const spy = spyOn(uiSuggest['_liveAnnouncer'], 'announce');
+            const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
             uiSuggest.loading$.next(true);
 
             const display = fixture.debugElement.query(By.css('.display'));
@@ -645,7 +649,7 @@ const sharedSpecifications = (
             component.items = generateSuggetionItemList('random');
             fixture.detectChanges();
 
-            const spy = spyOn(uiSuggest['_liveAnnouncer'], 'announce');
+            const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
             const display = fixture.debugElement.query(By.css('.display'));
             display.nativeElement.dispatchEvent(EventGenerator.click);
 
@@ -806,7 +810,6 @@ const sharedSpecifications = (
 
             expect(uiSuggest.activeIndex).toEqual(0);
         });
-
 
         it('should select the active item when pressing enter', () => {
             fixture.detectChanges();
@@ -1184,8 +1187,8 @@ const sharedSpecifications = (
 
                 const word = faker.random.word();
                 const wordWithWhitespace = `${Array(6).fill(' ').join('')
-                    }${word}${Array(6).fill(' ').join('')
-                    }`;
+                }${word}${Array(6).fill(' ').join('')
+                }`;
 
                 searchFor(wordWithWhitespace, fixture);
                 await fixture.whenStable();
@@ -1262,7 +1265,7 @@ const sharedSpecifications = (
             for (const itemEntry of itemList) {
                 const label = itemEntry.query(By.css('.text-label'));
                 const labelText = label.nativeElement.innerText.trim();
-                if (!!selectedValues.find(value => value.text === labelText)) {
+                if (selectedValues.find(value => value.text === labelText)) {
                     const checkbox = itemEntry.query(By.css('input:checked'));
                     expect(checkbox).not.toBeNull();
                 }
@@ -1388,7 +1391,7 @@ const sharedSpecifications = (
         let overrideItems: ISuggestValue[] | undefined;
 
         const asyncSearchFactory = (query = '', fetchSize = 10, start = 0) => {
-            const source = overrideItems || items;
+            const source = overrideItems ?? items;
 
             const results = query !== '' ?
                 source.filter(i => i.text.toLowerCase().includes(query.toLowerCase())) :
@@ -1508,7 +1511,7 @@ const sharedSpecifications = (
             await fixture.whenStable();
 
             expect(uiSuggest.items.length).toBe(items.length);
-            const response = await sourceSpy.calls.mostRecent().returnValue.toPromise();
+            const response = await firstValueFrom(sourceSpy.calls.mostRecent().returnValue);
             expect(uiSuggest.items.length).toEqual(response.total!);
         }));
 
@@ -1683,9 +1686,18 @@ const sharedSpecifications = (
                 const customString = 'QQ_';
                 overrideItems = [
                     ...items,
-                    { id: 'QQ_1', text: 'QQ_1' },
-                    { id: 'QQ_2', text: 'QQ_2' },
-                    { id: 'QQ_3', text: 'QQ_3' },
+                    {
+                        id: 'QQ_1',
+                        text: 'QQ_1',
+                    },
+                    {
+                        id: 'QQ_2',
+                        text: 'QQ_2',
+                    },
+                    {
+                        id: 'QQ_3',
+                        text: 'QQ_3',
+                    },
                 ];
                 fixture.detectChanges();
 
@@ -1732,9 +1744,18 @@ const sharedSpecifications = (
                 const customString = 'QQ_';
                 overrideItems = [
                     ...items,
-                    { id: 'QQ_1', text: 'QQ_1' },
-                    { id: 'QQ_2', text: 'QQ_2' },
-                    { id: 'QQ_3', text: 'QQ_3' },
+                    {
+                        id: 'QQ_1',
+                        text: 'QQ_1',
+                    },
+                    {
+                        id: 'QQ_2',
+                        text: 'QQ_2',
+                    },
+                    {
+                        id: 'QQ_3',
+                        text: 'QQ_3',
+                    },
                 ];
                 fixture.detectChanges();
 
@@ -1775,9 +1796,18 @@ const sharedSpecifications = (
                 const customString = 'QQ_';
                 overrideItems = [
                     ...items,
-                    { id: 'QQ_1', text: 'QQ_1' },
-                    { id: 'QQ_2', text: 'QQ_2' },
-                    { id: 'QQ_3', text: 'QQ_3' },
+                    {
+                        id: 'QQ_1',
+                        text: 'QQ_1',
+                    },
+                    {
+                        id: 'QQ_2',
+                        text: 'QQ_2',
+                    },
+                    {
+                        id: 'QQ_3',
+                        text: 'QQ_3',
+                    },
                 ];
                 fixture.detectChanges();
 
@@ -1925,13 +1955,13 @@ describe('Component: UiSuggest', () => {
         `,
     })
     class UiSuggestFormControlFixtureComponent extends UiSuggestFixtureDirective {
-        public formGroup: FormGroup;
+        formGroup: FormGroup;
 
-        public set value(value: ISuggestValue[]) {
+        set value(value: ISuggestValue[]) {
             this.formGroup.get('test')?.setValue(value);
         }
 
-        public get value(): ISuggestValue[] {
+        get value(): ISuggestValue[] {
             return this.formGroup.get('test')?.value;
         }
 
@@ -1943,7 +1973,7 @@ describe('Component: UiSuggest', () => {
             super();
 
             this.formGroup = fb.group({
-                'test': [[]],
+                test: [[]],
             });
         }
     }
@@ -2072,7 +2102,6 @@ describe('Component: UiSuggest', () => {
                 expect(component.formGroup.valid).toBeTruthy();
             });
 
-
             it('should have aria attribute set to true if marked as required', () => {
                 uiSuggest.required = true;
                 fixture.detectChanges();
@@ -2089,7 +2118,6 @@ describe('Component: UiSuggest', () => {
             });
         });
     });
-
 
     @Component({
         template: `

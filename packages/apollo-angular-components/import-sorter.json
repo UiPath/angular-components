@@ -1,14 +1,8 @@
 {
+    "ignoreESLintRules": ".*",
     "groupRules": [
-        {
-            "flag": "scripts",
-            "sort": {
-                "paths": "none",
-                "names": "none"
-            }
-        },
-        "^[@]",
         {},
+        "^[@]",
         "^[.]"
     ],
     "sortRules": {

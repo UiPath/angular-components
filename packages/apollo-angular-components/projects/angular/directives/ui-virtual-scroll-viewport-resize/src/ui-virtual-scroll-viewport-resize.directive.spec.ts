@@ -60,9 +60,9 @@ class UiVirtualScrollViewportResizeFixtureComponent {
     @ViewChild('viewport', {
         static: true,
     })
-    public viewport!: CdkVirtualScrollViewport;
+    viewport!: CdkVirtualScrollViewport;
 
-    public length = 5;
+    length = 5;
 }
 describe('Directive: UiVirtualScrollViewportResize', () => {
     let fixture: ComponentFixture<UiVirtualScrollViewportResizeFixtureComponent>;
@@ -109,7 +109,6 @@ describe('Directive: UiVirtualScrollViewportResize', () => {
             expect(viewportSizeSpy).toHaveBeenCalledTimes(1);
         }));
 
-
         it('should redraw EVERY time the item count changs at a rapid pace', fakeAsync(() => {
             fixture.detectChanges();
             tick(DELAY_TIME);
@@ -151,7 +150,8 @@ describe('Directive: UiVirtualScrollViewportResize', () => {
     });
 
     describe('Trigger: window resize', () => {
-        const DEBOUNCE_TIME = 1000 / 60;
+        /* FIXME: https://github.com/ReactiveX/rxjs/issues/6382 */
+        const DEBOUNCE_TIME = 1001 / 60;
 
         it('should redraw the viewport if the window is resized', fakeAsync(() => {
             fixture.detectChanges();

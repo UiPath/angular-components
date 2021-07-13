@@ -28,10 +28,10 @@ class TestFixtureComponent {
     @ViewChild(UiGridCustomPaginatorComponent, {
         static: false,
     })
-    public paginator!: UiGridCustomPaginatorComponent;
-    public pageIndex = 0;
-    public pageSize = 10;
-    public length = 120;
+    paginator!: UiGridCustomPaginatorComponent;
+    pageIndex = 0;
+    pageSize = 10;
+    length = 120;
 }
 
 describe('Component: UiGrid', () => {

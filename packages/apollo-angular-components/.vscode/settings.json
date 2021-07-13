@@ -5,11 +5,12 @@
     "extensions.ignoreRecommendations": false,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "editor.codeActionsOnSave": {
-        "source.fixAll.tslint": true,
+        "source.fixAll.eslint": true,
     },
     "javascript.preferences.importModuleSpecifier": "non-relative",
     "javascript.preferences.quoteStyle": "single",
     "typescript.preferences.importModuleSpecifier": "non-relative",
     "typescript.preferences.quoteStyle": "single",
     "html.format.wrapAttributes": "force-aligned",
+    "typescript.tsdk": "node_modules/typescript/lib",
 }

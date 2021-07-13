@@ -5,7 +5,9 @@
         flex-wrap: wrap;
         margin-bottom: 50px;
 
-        &-inputs, &-header, &-data {
+        &-inputs,
+        &-header,
+        &-data {
             margin-right: 50px;
             display: flex;
             flex-direction: column;

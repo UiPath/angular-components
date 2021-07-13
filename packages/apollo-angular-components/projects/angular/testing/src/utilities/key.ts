@@ -42,7 +42,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `q`.
      *
      */
-    public static q: IKey = {
+    static q: IKey = {
         name: 'q',
         code: 'KeyQ',
         keyCode: 81,
@@ -51,7 +51,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `w`.
      *
      */
-    public static w: IKey = {
+    static w: IKey = {
         name: 'w',
         code: 'KeyW',
         keyCode: 87,
@@ -60,7 +60,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `e`.
      *
      */
-    public static e: IKey = {
+    static e: IKey = {
         name: 'e',
         code: 'KeyE',
         keyCode: 69,
@@ -69,7 +69,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `r`.
      *
      */
-    public static r: IKey = {
+    static r: IKey = {
         name: 'r',
         code: 'KeyR',
         keyCode: 82,
@@ -78,7 +78,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `t`.
      *
      */
-    public static t: IKey = {
+    static t: IKey = {
         name: 't',
         code: 'KeyT',
         keyCode: 84,
@@ -87,7 +87,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `y`.
      *
      */
-    public static y: IKey = {
+    static y: IKey = {
         name: 'y',
         code: 'KeyY',
         keyCode: 89,
@@ -96,7 +96,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `u`.
      *
      */
-    public static u: IKey = {
+    static u: IKey = {
         name: 'u',
         code: 'KeyU',
         keyCode: 85,
@@ -105,7 +105,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `i`.
      *
      */
-    public static i: IKey = {
+    static i: IKey = {
         name: 'i',
         code: 'KeyI',
         keyCode: 73,
@@ -114,7 +114,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `o`.
      *
      */
-    public static o: IKey = {
+    static o: IKey = {
         name: 'o',
         code: 'KeyO',
         keyCode: 79,
@@ -123,7 +123,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `p`.
      *
      */
-    public static p: IKey = {
+    static p: IKey = {
         name: 'p',
         code: 'KeyP',
         keyCode: 80,
@@ -132,7 +132,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `a`.
      *
      */
-    public static a: IKey = {
+    static a: IKey = {
         name: 'a',
         code: 'KeyA',
         keyCode: 65,
@@ -141,7 +141,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `s`.
      *
      */
-    public static s: IKey = {
+    static s: IKey = {
         name: 's',
         code: 'KeyS',
         keyCode: 83,
@@ -150,7 +150,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `d`.
      *
      */
-    public static d: IKey = {
+    static d: IKey = {
         name: 'd',
         code: 'KeyD',
         keyCode: 68,
@@ -159,7 +159,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `f`.
      *
      */
-    public static f: IKey = {
+    static f: IKey = {
         name: 'f',
         code: 'KeyF',
         keyCode: 70,
@@ -168,7 +168,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `g`.
      *
      */
-    public static g: IKey = {
+    static g: IKey = {
         name: 'g',
         code: 'KeyG',
         keyCode: 71,
@@ -177,7 +177,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `h`.
      *
      */
-    public static h: IKey = {
+    static h: IKey = {
         name: 'h',
         code: 'KeyH',
         keyCode: 72,
@@ -186,7 +186,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `j`.
      *
      */
-    public static j: IKey = {
+    static j: IKey = {
         name: 'j',
         code: 'KeyJ',
         keyCode: 74,
@@ -195,7 +195,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `k`.
      *
      */
-    public static k: IKey = {
+    static k: IKey = {
         name: 'k',
         code: 'KeyK',
         keyCode: 75,
@@ -204,7 +204,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `l`.
      *
      */
-    public static l: IKey = {
+    static l: IKey = {
         name: 'l',
         code: 'KeyL',
         keyCode: 76,
@@ -213,7 +213,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `z`.
      *
      */
-    public static z: IKey = {
+    static z: IKey = {
         name: 'z',
         code: 'KeyZ',
         keyCode: 90,
@@ -222,7 +222,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `x`.
      *
      */
-    public static x: IKey = {
+    static x: IKey = {
         name: 'x',
         code: 'KeyX',
         keyCode: 88,
@@ -231,7 +231,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `c`.
      *
      */
-    public static c: IKey = {
+    static c: IKey = {
         name: 'c',
         code: 'KeyC',
         keyCode: 67,
@@ -240,7 +240,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `v`.
      *
      */
-    public static v: IKey = {
+    static v: IKey = {
         name: 'v',
         code: 'KeyV',
         keyCode: 86,
@@ -249,7 +249,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `b`.
      *
      */
-    public static b: IKey = {
+    static b: IKey = {
         name: 'b',
         code: 'KeyB',
         keyCode: 66,
@@ -258,7 +258,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `n`.
      *
      */
-    public static n: IKey = {
+    static n: IKey = {
         name: 'n',
         code: 'KeyN',
         keyCode: 78,
@@ -267,7 +267,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `m`.
      *
      */
-    public static m: IKey = {
+    static m: IKey = {
         name: 'm',
         code: 'KeyM',
         keyCode: 77,
@@ -276,7 +276,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `Q`.
      *
      */
-    public static Q: IKey = {
+    static Q: IKey = {
         name: 'Q',
         code: 'KeyQ',
         keyCode: 81,
@@ -285,7 +285,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `W`.
      *
      */
-    public static W: IKey = {
+    static W: IKey = {
         name: 'W',
         code: 'KeyW',
         keyCode: 87,
@@ -294,7 +294,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `E`.
      *
      */
-    public static E: IKey = {
+    static E: IKey = {
         name: 'E',
         code: 'KeyE',
         keyCode: 69,
@@ -303,7 +303,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `R`.
      *
      */
-    public static R: IKey = {
+    static R: IKey = {
         name: 'R',
         code: 'KeyR',
         keyCode: 82,
@@ -312,7 +312,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `T`.
      *
      */
-    public static T: IKey = {
+    static T: IKey = {
         name: 'T',
         code: 'KeyT',
         keyCode: 84,
@@ -321,7 +321,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `Y`.
      *
      */
-    public static Y: IKey = {
+    static Y: IKey = {
         name: 'Y',
         code: 'KeyY',
         keyCode: 89,
@@ -330,7 +330,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `U`.
      *
      */
-    public static U: IKey = {
+    static U: IKey = {
         name: 'U',
         code: 'KeyU',
         keyCode: 85,
@@ -339,7 +339,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `I`.
      *
      */
-    public static I: IKey = {
+    static I: IKey = {
         name: 'I',
         code: 'KeyI',
         keyCode: 73,
@@ -348,7 +348,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `O`.
      *
      */
-    public static O: IKey = {
+    static O: IKey = {
         name: 'O',
         code: 'KeyO',
         keyCode: 79,
@@ -357,7 +357,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `P`.
      *
      */
-    public static P: IKey = {
+    static P: IKey = {
         name: 'P',
         code: 'KeyP',
         keyCode: 80,
@@ -366,7 +366,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `A`.
      *
      */
-    public static A: IKey = {
+    static A: IKey = {
         name: 'A',
         code: 'KeyA',
         keyCode: 65,
@@ -375,7 +375,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `S`.
      *
      */
-    public static S: IKey = {
+    static S: IKey = {
         name: 'S',
         code: 'KeyS',
         keyCode: 83,
@@ -384,7 +384,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `D`.
      *
      */
-    public static D: IKey = {
+    static D: IKey = {
         name: 'D',
         code: 'KeyD',
         keyCode: 68,
@@ -393,7 +393,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `F`.
      *
      */
-    public static F: IKey = {
+    static F: IKey = {
         name: 'F',
         code: 'KeyF',
         keyCode: 70,
@@ -402,7 +402,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `G`.
      *
      */
-    public static G: IKey = {
+    static G: IKey = {
         name: 'G',
         code: 'KeyG',
         keyCode: 71,
@@ -411,7 +411,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `H`.
      *
      */
-    public static H: IKey = {
+    static H: IKey = {
         name: 'H',
         code: 'KeyH',
         keyCode: 72,
@@ -420,7 +420,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `J`.
      *
      */
-    public static J: IKey = {
+    static J: IKey = {
         name: 'J',
         code: 'KeyJ',
         keyCode: 74,
@@ -429,7 +429,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `K`.
      *
      */
-    public static K: IKey = {
+    static K: IKey = {
         name: 'K',
         code: 'KeyK',
         keyCode: 75,
@@ -438,7 +438,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `L`.
      *
      */
-    public static L: IKey = {
+    static L: IKey = {
         name: 'L',
         code: 'KeyL',
         keyCode: 76,
@@ -447,7 +447,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `Z`.
      *
      */
-    public static Z: IKey = {
+    static Z: IKey = {
         name: 'Z',
         code: 'KeyZ',
         keyCode: 90,
@@ -456,7 +456,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `X`.
      *
      */
-    public static X: IKey = {
+    static X: IKey = {
         name: 'X',
         code: 'KeyX',
         keyCode: 88,
@@ -465,7 +465,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `C`.
      *
      */
-    public static C: IKey = {
+    static C: IKey = {
         name: 'C',
         code: 'KeyC',
         keyCode: 67,
@@ -474,7 +474,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `V`.
      *
      */
-    public static V: IKey = {
+    static V: IKey = {
         name: 'V',
         code: 'KeyV',
         keyCode: 86,
@@ -483,7 +483,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `B`.
      *
      */
-    public static B: IKey = {
+    static B: IKey = {
         name: 'B',
         code: 'KeyB',
         keyCode: 66,
@@ -492,7 +492,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `N`.
      *
      */
-    public static N: IKey = {
+    static N: IKey = {
         name: 'N',
         code: 'KeyN',
         keyCode: 78,
@@ -501,7 +501,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `M`.
      *
      */
-    public static M: IKey = {
+    static M: IKey = {
         name: 'M',
         code: 'KeyM',
         keyCode: 77,
@@ -510,7 +510,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `Shift`.
      *
      */
-    public static Shift: IKeyModifier = {
+    static Shift: IKeyModifier = {
         name: 'Shift',
         code: 'Shift',
         keyCode: 16,
@@ -519,7 +519,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `Control`.
      *
      */
-    public static Control: IKeyModifier = {
+    static Control: IKeyModifier = {
         name: 'Control',
         code: 'Control',
         keyCode: 17,
@@ -528,7 +528,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `Alt`.
      *
      */
-    public static Alt: IKeyModifier = {
+    static Alt: IKeyModifier = {
         name: 'Alt',
         code: 'Alt',
         keyCode: 18,
@@ -537,7 +537,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `Enter`.
      *
      */
-    public static Enter: IKey = {
+    static Enter: IKey = {
         name: 'Enter',
         code: 'Enter',
         keyCode: 13,
@@ -546,7 +546,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `ArrowLeft`.
      *
      */
-    public static ArrowLeft: IKey = {
+    static ArrowLeft: IKey = {
         name: 'ArrowLeft',
         code: 'ArrowLeft',
         keyCode: 37,
@@ -555,7 +555,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `ArrowDown`.
      *
      */
-    public static ArrowDown: IKey = {
+    static ArrowDown: IKey = {
         name: 'ArrowDown',
         code: 'ArrowDown',
         keyCode: 40,
@@ -564,7 +564,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `ArrowRight`.
      *
      */
-    public static ArrowRight: IKey = {
+    static ArrowRight: IKey = {
         name: 'ArrowRight',
         code: 'ArrowRight',
         keyCode: 39,
@@ -573,7 +573,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `ArrowUp`.
      *
      */
-    public static ArrowUp: IKey = {
+    static ArrowUp: IKey = {
         name: 'ArrowUp',
         code: 'ArrowUp',
         keyCode: 38,
@@ -582,7 +582,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `Space`.
      *
      */
-    public static Space: IKey = {
+    static Space: IKey = {
         name: ' ',
         code: 'Space',
         keyCode: 32,
@@ -591,7 +591,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `Tab`.
      *
      */
-    public static Tab: IKey = {
+    static Tab: IKey = {
         name: 'Tab',
         code: 'Tab',
         keyCode: 9,
@@ -600,7 +600,7 @@ export class Key implements Record<keyof Key, IKey> {
      * Metadata for key `Escape`.
      *
      */
-    public static Escape: IKey = {
+    static Escape: IKey = {
         name: 'Escape',
         code: 'Escape',
         keyCode: 27,

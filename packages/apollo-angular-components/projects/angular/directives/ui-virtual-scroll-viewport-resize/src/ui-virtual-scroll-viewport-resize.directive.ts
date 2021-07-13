@@ -32,14 +32,14 @@ import {
     selector: '[uiVirtualScrollViewportResize], ui-virtual-scroll-viewport-resize',
 })
 export class UiVirtualScrollViewportResizeDirective implements OnInit, OnDestroy {
-    private readonly _destroy$ = new Subject();
+    private readonly _destroy$ = new Subject<void>();
     private readonly _total$ = new Subject<number>();
 
     /**
      * The total item length.
      */
     @Input()
-    public set total(value: number) {
+    set total(value: number) {
         if (this._viewport.getDataLength() === value) { return; }
 
         this._total$.next(value);

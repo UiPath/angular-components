@@ -25,26 +25,22 @@ export class VisibilityManger<T extends IGridDataEntry> {
     private _columns$ = new BehaviorSubject<UiGridColumnDirective<T>[]>([]);
     private _initial?: IVisibleDiff[];
 
-    public columns$ = this._columns$.pipe(
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    columns$ = this._columns$.pipe(
         map(cols => cols.filter(c => !!c.visible)),
     );
-
-    public options$ = this._columns$.pipe(
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    options$ = this._columns$.pipe(
         map(cols => this._mapToRenderedOptions(cols)),
     );
-
-    public isDirty$ = this.options$.pipe(
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    isDirty$ = this.options$.pipe(
         filter(() => !!this._initial),
-        map(o =>
-            ([
-                o.map(this._mapToVisibleDiff),
-                this._initial,
-            ]),
-        ),
+        map(o => ([o.map(this._mapToVisibleDiff), this._initial])),
         map(([current, initial]) => !isEqual(current, initial)),
     );
 
-    public set columns(columns: UiGridColumnDirective<T>[]) {
+    set columns(columns: UiGridColumnDirective<T>[]) {
         if (!this._initial) {
             this._initial = this._mapInitial(columns);
         }
@@ -52,11 +48,11 @@ export class VisibilityManger<T extends IGridDataEntry> {
         this._columns$.next(columns);
     }
 
-    public destroy() {
+    destroy() {
         this._columns$.complete();
     }
 
-    public reset() {
+    reset() {
         if (!this._initial) { return; }
 
         this.update(
@@ -66,7 +62,7 @@ export class VisibilityManger<T extends IGridDataEntry> {
         );
     }
 
-    public update(visibleColumnsByProps: Array<string | keyof T>) {
+    update(visibleColumnsByProps: (string | keyof T)[]) {
         // changing the visible attribute will trigger a SimpleChange Emission
         this._columns$.getValue()
             .forEach(c => c.visible = visibleColumnsByProps.includes(c.property!));
@@ -77,15 +73,15 @@ export class VisibilityManger<T extends IGridDataEntry> {
         label: column.title,
         checked: column.visible,
         disabled: column.disableToggle,
-    }) as IVisibleModel<T>
+    }) as IVisibleModel<T>;
 
     private _mapToVisibleDiff = ({ checked, property }: IVisibleModel<T>) => ({
         property,
         checked,
-    } as IVisibleDiff)
+    } as IVisibleDiff);
 
     private _mapInitial = (columns: UiGridColumnDirective<T>[]) =>
-        this._mapOptions(columns).map(this._mapToVisibleDiff)
+        this._mapOptions(columns).map(this._mapToVisibleDiff);
 
     private _mapOptions = (columns: UiGridColumnDirective<T>[]) =>
         columns
@@ -93,7 +89,7 @@ export class VisibilityManger<T extends IGridDataEntry> {
                 // discard locked and hidden columns from toggle-able options
                 && (!c.disableToggle || c.visible),
             )
-            .map(this._mapColumnOption)
+            .map(this._mapColumnOption);
 
     private _mapToRenderedOptions = (columns: UiGridColumnDirective<T>[]) => {
         const columnOptions = this._mapOptions(columns);
@@ -113,5 +109,5 @@ export class VisibilityManger<T extends IGridDataEntry> {
         }
 
         return columnOptions;
-    }
+    };
 }
