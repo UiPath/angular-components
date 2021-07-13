@@ -143,7 +143,7 @@
         "jasmine-expect": "^4.0.3",
         "jasmine-spec-reporter": "~5.0.0",
         "jasmine_dom_matchers": "^1.4.0",
-        "json": "^9.0.6",
+        "json": "^10.0.0",
         "karma": "~6.3.2",
         "karma-chrome-launcher": "~3.1.0",
         "karma-coverage-istanbul-reporter": "~3.0.2",
