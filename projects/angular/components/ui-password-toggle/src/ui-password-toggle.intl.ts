@@ -4,8 +4,9 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class UiPasswordToggleIntl {
-    public changes = new Subject();
+    // eslint-disable-next-line rxjs/finnish
+    changes = new Subject<void>();
 
-    public tooltipShow = 'Show';
-    public tooltipHide = 'Hide';
+    tooltipShow = 'Show';
+    tooltipHide = 'Hide';
 }

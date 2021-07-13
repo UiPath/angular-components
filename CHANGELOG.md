@@ -1,3 +1,37 @@
+# v12.0.0 (2021-07-13)
+
+# v12.0.0-rc.3 (2021-06-18)
+
+* **chore** drop public member
+* **BREAKING CHANGE** grid place toggle columns between search and filters add divider between toggle and filters
+* **grid** adjust spacing in no results message
+* **chore** bind typescript version to workspace
+* **chore** fix lint issues
+* **chore** auto format
+* **chore** ng lint --fix
+* **chore** migrate to eslint
+* **BREAKING CHANGE** grid change default design, previous is now legacy
+* **chore** bump dependencies
+* **chore** npm audit fix
+* **chore** ng update
+* **playground** update for collapseFiltersCount
+* **grid** expose collapseFiltersCount
+* **dateformat** default options
+* **grid** 'eager' | 'onOpen'
+
+# v12.0.0-rc.2 (2021-05-31)
+* **a11y** add basic a11y test cases
+* **a11y** setup testing for a11y
+* **a11y** add jasmine to project
+
+# v12.0.0-rc.1 (2021-05-19)
+* **fix** tmp fix for scroll viewport test
+
+# v12.0.0-rc.0 (2021-05-14)
+* **chore** bump rx to 7.0.1
+* **chore** bump angular material to 12
+* **chore** bump angular to 12
+
 # v11.0.1 (2021-04-28)
 * **snackbar** correctly map icons to type & playground
 * **fix** add fix changelog script if merge issues

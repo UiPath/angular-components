@@ -34,28 +34,28 @@ export class UiPasswordToggleComponent implements OnInit, OnDestroy {
      *
      */
     @Input()
-    public element?: HTMLInputElement;
+    element?: HTMLInputElement;
 
     /**
      * The disabled state of the toggle.
      *
      */
     @Input()
-    public disabled?: boolean;
+    disabled?: boolean;
 
     /**
      * Emits the password input visibility state.
      *
      */
-    public isVisible$ = new BehaviorSubject(false);
+    isVisible$ = new BehaviorSubject(false);
 
     /**
      * Emits the password toggle active tooltip.
      *
      */
-    public tooltip$: Observable<string>;
+    tooltip$: Observable<string>;
 
-    private _destroyed$ = new Subject();
+    private _destroyed$ = new Subject<void>();
 
     private get _isVisible() {
         return this.isVisible$.value;
@@ -94,7 +94,7 @@ export class UiPasswordToggleComponent implements OnInit, OnDestroy {
         this._destroyed$.complete();
     }
 
-    public toggle() {
+    toggle() {
         this._toggleVisibiltyState();
 
         const type = this._isVisible ? 'text' : 'password';
@@ -103,5 +103,5 @@ export class UiPasswordToggleComponent implements OnInit, OnDestroy {
 
     private _toggleVisibiltyState = () => {
         this.isVisible$.next(!this._isVisible);
-    }
+    };
 }

@@ -38,11 +38,11 @@ const templateFactory = (type: ButtonType) => `
     template: '',
 })
 export class ProgressButtonFixtureComponent {
-    public loading = false;
-    public color: MatProgressBar['color'] = 'accent';
-    public mode: MatProgressBar['mode'] = 'indeterminate';
-    public value: MatProgressBar['value'] = 0;
-    public bufferValue: MatProgressBar['bufferValue'] = 0;
+    loading = false;
+    color: MatProgressBar['color'] = 'accent';
+    mode: MatProgressBar['mode'] = 'indeterminate';
+    value: MatProgressBar['value'] = 0;
+    bufferValue: MatProgressBar['bufferValue'] = 0;
 }
 
 const describeForButtonType = (type: ButtonType) => {

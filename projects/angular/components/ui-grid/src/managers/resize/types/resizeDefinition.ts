@@ -2,4 +2,4 @@
  * @internal
  * @ignore
  */
-export interface IResizeDefinition extends Record<string, string> { }
+export type IResizeDefinition = Record<string, string>;

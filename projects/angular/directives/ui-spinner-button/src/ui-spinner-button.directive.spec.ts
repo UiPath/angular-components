@@ -18,10 +18,10 @@ import { UiSpinnerButtonModule } from './ui-spinner-button.module';
     template: '',
 })
 export class SpinnerButtonFixtureComponent {
-    public loading = false;
-    public color: MatProgressSpinner['color'] = 'accent';
-    public mode: MatProgressSpinner['mode'] = 'indeterminate';
-    public value: MatProgressSpinner['value'] = 0;
+    loading = false;
+    color: MatProgressSpinner['color'] = 'accent';
+    mode: MatProgressSpinner['mode'] = 'indeterminate';
+    value: MatProgressSpinner['value'] = 0;
 }
 
 const enum ButtonType {

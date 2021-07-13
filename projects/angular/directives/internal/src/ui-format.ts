@@ -11,8 +11,8 @@ import {
 @Directive()
 export abstract class UiFormatDirective implements OnChanges, OnDestroy {
     protected abstract _text?: HTMLElement;
-    protected _redraw$ = new Subject();
-    protected _destroyed$ = new Subject();
+    protected _redraw$ = new Subject<void>();
+    protected _destroyed$ = new Subject<void>();
 
     constructor(
         protected _renderer: Renderer2,

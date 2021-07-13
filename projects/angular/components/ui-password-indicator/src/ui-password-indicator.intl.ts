@@ -7,10 +7,11 @@ import { Injectable } from '@angular/core';
     providedIn: 'root',
 })
 export class UiPasswordComplexityIntl {
-    public changes = new Subject();
-    public notMet = 'Complexity rules not met:';
-    public allMet = 'All complexity rules are met';
+    // eslint-disable-next-line rxjs/finnish
+    changes = new Subject<void>();
+    notMet = 'Complexity rules not met:';
+    allMet = 'All complexity rules are met';
 
-    public ruleLabel = (ruleKey: string) => startCase(ruleKey);
-    public percentageTitle = (percentage: number) => `${percentage}%`;
+    ruleLabel = (ruleKey: string) => startCase(ruleKey);
+    percentageTitle = (percentage: number) => `${percentage}%`;
 }

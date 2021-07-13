@@ -11,6 +11,6 @@ export interface IDropEvent extends Event {
      *
      */
     dataTransfer: {
-        files: FakeFileList,
+        files: FakeFileList;
     };
 }

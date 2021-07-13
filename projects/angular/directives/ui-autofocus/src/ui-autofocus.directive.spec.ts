@@ -22,8 +22,8 @@ import { UiAutofocusDirective } from './ui-autofocus.directive';
   `,
 })
 class TestAutofocusComponent {
-    public autofocusFlag = true;
-    public refocusFlag = false;
+    autofocusFlag = true;
+    refocusFlag = false;
 }
 
 describe('Directive: Autofocus', () => {
@@ -59,13 +59,13 @@ describe('Directive: Autofocus', () => {
 
         fixture.detectChanges();
         expect(directive.enqueueFocus).toHaveBeenCalledTimes(1);
-        expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
+        expect((directive as any)._getFocusableNode).toHaveBeenCalledTimes(0);
         expect(directive.element).toBeUndefined();
         expect(directive.focus).toHaveBeenCalledTimes(0);
 
         tick();
 
-        expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(1);
+        expect((directive as any)._getFocusableNode).toHaveBeenCalledTimes(1);
         expect(directive.element).not.toBeNull();
         expect(directive.focus).toHaveBeenCalledTimes(1);
     }));
@@ -83,7 +83,7 @@ describe('Directive: Autofocus', () => {
 
         tick();
 
-        expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
+        expect((directive as any)._getFocusableNode).toHaveBeenCalledTimes(0);
         expect(directive.element).toBeUndefined();
         expect(directive.focus).toHaveBeenCalledTimes(0);
     }));
@@ -99,13 +99,13 @@ describe('Directive: Autofocus', () => {
         fixture.detectChanges();
         expect(directive.enqueueFocus).toHaveBeenCalledTimes(1);
         expect(directive.element).toBeUndefined();
-        expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
+        expect((directive as any)._getFocusableNode).toHaveBeenCalledTimes(0);
         expect(directive.focus).toHaveBeenCalledTimes(0);
 
         tick();
 
         // check focusable element was found and has been focused
-        expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(1);
+        expect((directive as any)._getFocusableNode).toHaveBeenCalledTimes(1);
         expect(directive.element).not.toBeNull();
         expect(directive.focus).toHaveBeenCalledTimes(1);
 
@@ -121,7 +121,7 @@ describe('Directive: Autofocus', () => {
         tick();
 
         // _getFocusableNode should not have been called again, only the 'focus' methods
-        expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(1);
+        expect((directive as any)._getFocusableNode).toHaveBeenCalledTimes(1);
         expect(directive.focus).toHaveBeenCalledTimes(2);
         expect(directive.element!.focus).toHaveBeenCalledTimes(1);
     }));
@@ -136,13 +136,13 @@ describe('Directive: Autofocus', () => {
 
         fixture.detectChanges();
         expect(directive.element).toBeUndefined();
-        expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
+        expect((directive as any)._getFocusableNode).toHaveBeenCalledTimes(0);
         expect(directive.focus).toHaveBeenCalledTimes(0);
 
         tick();
 
         expect(directive.element).toBeUndefined();
-        expect(directive['_getFocusableNode']).toHaveBeenCalledTimes(0);
+        expect((directive as any)._getFocusableNode).toHaveBeenCalledTimes(0);
         expect(directive.focus).toHaveBeenCalledTimes(0);
     }));
 });

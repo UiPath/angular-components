@@ -44,14 +44,17 @@ const COMPONENT_SELECTOR = 'ui-grid-toggle-columns';
 })
 export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements AfterViewInit, OnDestroy {
     @HostBinding('class')
-    public hostClass = COMPONENT_SELECTOR;
+    hostClass = COMPONENT_SELECTOR;
 
     @HostBinding(`class.${COMPONENT_SELECTOR}-dirty`)
     @Input()
-    public dirty = false;
+    dirty = false;
 
     @Input()
-    public set options(options: IVisibleModel<T>[] | null) {
+    showDivider = false;
+
+    @Input()
+    set options(options: IVisibleModel<T>[] | null) {
         if (!options || isEqual(this._options, options)) { return; }
 
         this._options = options;
@@ -59,49 +62,51 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
             .filter(({ checked }) => checked)
             .map(o => o.property);
     }
-    public get options() {
+    get options() {
         return this._options;
     }
 
     @Input()
-    public useAlternateDesign = false;
+    useLegacyDesign = false;
 
     @Input()
-    public toggleTooltip?: string;
+    toggleTooltip?: string;
 
     @Input()
-    public toggleTitle?: string;
+    toggleTitle?: string;
 
     @Input()
-    public resetToDefaults?: string;
+    resetToDefaults?: string;
 
     @Input()
-    public togglePlaceholderTitle?: string;
+    togglePlaceholderTitle?: string;
 
     @Output()
-    public visibleColumns = new EventEmitter<IVisibleModel<T>>();
+    visibleColumns = new EventEmitter<IVisibleModel<T>>();
 
     @Output()
-    public resetColumns = new EventEmitter<void>();
+    resetColumns = new EventEmitter<void>();
 
     @ViewChild(MatSelect, { static: false })
-    public selectColumns?: MatSelect;
+    selectColumns?: MatSelect;
 
     @ViewChild('resetBtn', { static: false })
-    public resetBtn?: MatAnchor;
+    resetBtn?: MatAnchor;
 
-    public get selected() {
+    get selected() {
         return this._selected;
     }
 
     private get _currentIndex() {
         if (!this.selectColumns) { return null; }
-        return this.selectColumns['_keyManager'].activeItemIndex;
+        // eslint-disable-next-line no-underscore-dangle
+        return this.selectColumns._keyManager.activeItemIndex;
     }
 
     private set _currentIndex(i: number | null) {
         if (i == null || !this.selectColumns) { return; }
-        this.selectColumns['_keyManager'].setActiveItem(i);
+        // eslint-disable-next-line no-underscore-dangle
+        this.selectColumns._keyManager.setActiveItem(i);
     }
 
     private get _isFirstValidIndex() {
@@ -113,9 +118,9 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
         return this._currentIndex === -1;
     }
 
-    private _selected: Array<string | keyof T> = [];
+    private _selected: (string | keyof T)[] = [];
     private _options: IVisibleModel<T>[] = [];
-    private _destroyed$ = new Subject();
+    private _destroyed$ = new Subject<void>();
 
     constructor(
         private _elementRef: ElementRef<HTMLElement>,
@@ -138,7 +143,7 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
         this._destroyed$.complete();
     }
 
-    public selectionChange({ value }: MatSelectChange) {
+    selectionChange({ value }: MatSelectChange) {
         this._selected = value;
         this._options
             .forEach(c => c.checked = value.includes(c.property));
@@ -146,13 +151,13 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
         this.visibleColumns.emit(value);
     }
 
-    public reset() {
+    reset() {
         this.resetColumns.emit();
         this.selectColumns!.close();
         this.selectColumns!.focus();
     }
 
-    public resetKeyDown(e: KeyboardEvent) {
+    resetKeyDown(e: KeyboardEvent) {
         if (this._isArrowUp(e)) {
             e.stopImmediatePropagation();
             return;
@@ -172,6 +177,7 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
             e.stopImmediatePropagation();
 
             this.selectColumns?.focus();
+            // eslint-disable-next-line no-underscore-dangle
             this.selectColumns?._keyManager.setFirstItemActive();
             this._cd.detectChanges();
         }
@@ -183,7 +189,7 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
             e.stopPropagation();
             this._focusOnReset();
         }
-    }
+    };
 
     private _isArrowUp(e: KeyboardEvent) {
         return ['Up', 'ArrowUp'].includes(e.key);

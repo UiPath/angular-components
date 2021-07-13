@@ -21,6 +21,7 @@ import {
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670
+ *
  * @ignore
  */
 const moment = _moment;
@@ -62,25 +63,25 @@ export const UI_SECONDFORMAT_OPTIONS = new InjectionToken<Observable<void>>('UiS
     template: `<span [matTooltip]="tooltip$ | async">{{ text$ | async }}</span>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-// tslint:disable-next-line: component-class-suffix
+// eslint-disable-next-line @angular-eslint/component-class-suffix
 export class UiSecondFormatDirective {
     /**
      * The number of `seconds` that need to be formatted.
      *
      */
     @Input()
-    public get seconds() { return this._seconds$.value; }
-    public set seconds(seconds: number | null) { this._seconds$.next(seconds); }
+    get seconds() { return this._seconds$.value; }
+    set seconds(seconds: number | null) { this._seconds$.next(seconds); }
 
     /**
      * @internal
      */
-    public tooltip$: Observable<string | undefined>;
+    tooltip$: Observable<string | undefined>;
 
     /**
      * @internal
      */
-    public text$: Observable<string>;
+    text$: Observable<string>;
 
     protected _text?: HTMLElement;
 

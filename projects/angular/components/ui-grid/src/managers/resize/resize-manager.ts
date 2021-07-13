@@ -36,8 +36,8 @@ import {
  * @ignore
  */
 export abstract class ResizeManager<T extends IGridDataEntry> {
-    public isResizing = false;
-    public current?: IResizeInfo<T>;
+    isResizing = false;
+    current?: IResizeInfo<T>;
 
     protected set _resizeEvent(ev: MouseEvent) {
         if (!this.current) { return; }
@@ -63,7 +63,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
                 oppositeNeighbour: this._getResizedPairAt(this.current.index + -direction),
                 offsetPx: value,
                 offsetPercent: Math.round(value / this._table!.clientWidth * 1000),
-                direction: direction,
+                direction,
                 event: ev,
             },
         };
@@ -92,11 +92,13 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     constructor(
         private _grid: ResizableGrid<T>,
     ) {
-        this._gridElement = _grid['_ref'].nativeElement;
+        // eslint-disable-next-line no-underscore-dangle
+        this._gridElement = (_grid as any)._ref.nativeElement;
 
         merge(
             _grid.rendered,
-            _grid['_columnChanges$'],
+            // eslint-disable-next-line no-underscore-dangle
+            (_grid as any)._columnChanges$,
         ).pipe(
             map(() => {
                 this._table = this._gridElement.querySelector<HTMLTableElement>('.ui-grid-container');
@@ -119,13 +121,14 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
                     console.warn(`Table header sum is currently ${headerWidth} ( < 100 ) please update column definitions.`);
                 }
             }),
-            takeUntil(_grid['_destroyed$']),
+            // eslint-disable-next-line no-underscore-dangle
+            takeUntil((_grid as any)._destroyed$),
         ).subscribe();
     }
 
-    public handleResize = (ev: MouseEvent) => this._resizeEvent = ev;
+    handleResize = (ev: MouseEvent) => this._resizeEvent = ev;
 
-    public startResize(ev: MouseEvent, column: UiGridColumnDirective<T>) {
+    startResize(ev: MouseEvent, column: UiGridColumnDirective<T>) {
         this.isResizing = true;
         // hook events
         this.setupState(ev, column);
@@ -148,25 +151,29 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             .subscribe(moveEv => this.handleResize(moveEv));
 
         // detection is required in order to update cell resize state
-        this._grid['_cd'].detectChanges();
-        this._grid['_cd'].detach();
+        // eslint-disable-next-line no-underscore-dangle
+        (this._grid as any)._cd.detectChanges();
+        // eslint-disable-next-line no-underscore-dangle
+        (this._grid as any)._cd.detach();
     }
 
-    public stop() {
+    stop() {
         this._stopped$.next();
         this.endResize();
         this.isResizing = false;
 
         // detection is required in order to update cell resize state
-        this._grid['_cd'].reattach();
-        this._grid['_cd'].detectChanges();
+        // eslint-disable-next-line no-underscore-dangle
+        (this._grid as any)._cd.reattach();
+        // eslint-disable-next-line no-underscore-dangle
+        (this._grid as any)._cd.detectChanges();
     }
 
-    public setupState(ev: MouseEvent, column: UiGridColumnDirective<T>) {
+    setupState(ev: MouseEvent, column: UiGridColumnDirective<T>) {
         this.current = {} as IResizeInfo<T>;
         this.current.index = findHeaderIndexFor(this._headers!, column.identifier);
         this.current = Object.assign(this.current, {
-            column: column,
+            column,
             element: this._headers![this.current.index],
             cells: this._getCellsFor(column.identifier),
         });
@@ -188,13 +195,13 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             .subscribe(this._stateUpdate);
     }
 
-    public endResize() {
+    endResize() {
         this._endResizeCommon(this.current!, this._previous!.neighbour, this._previous!.oppositeNeighbour);
         this.current = undefined;
         this._direction = NaN;
     }
 
-    public destroy() {
+    destroy() {
         this._stopped$.complete();
         this._resize$.complete();
         this._widthMap.clear();
@@ -224,7 +231,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         };
     }
 
-    protected _simulateStopFor(ev: MouseEvent | undefined, ...neighbours: Array<IResizeInfo<T> | undefined>) {
+    protected _simulateStopFor(ev: MouseEvent | undefined, ...neighbours: (IResizeInfo<T> | undefined)[]) {
         this._endResizeCommon(...neighbours);
         this._startResizeCommon(ev);
     }
@@ -242,7 +249,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     private _getCellsFor = (property: string) => toArray<HTMLDivElement>(
         this._gridElement
             .querySelectorAll(cellSelector(property)),
-    )
+    );
 
     private _startResizeCommon(ev?: MouseEvent) {
         if (!ev) { return; }
@@ -253,7 +260,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         this.current!.dragInitX = ev.clientX;
     }
 
-    private _endResizeCommon(...entries: Array<IResizeInfo<T> | undefined>) {
+    private _endResizeCommon(...entries: (IResizeInfo<T> | undefined)[]) {
         entries.forEach(entry => {
             if (!entry) { return; }
 

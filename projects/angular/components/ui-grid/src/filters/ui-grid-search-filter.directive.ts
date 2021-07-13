@@ -25,18 +25,25 @@ import { UiGridFilterDirective } from './ui-grid-filter';
 })
 export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> implements OnDestroy {
     /**
+     * The property associated to the dropdown search fetch strategy.
+     *
+     */
+    @Input()
+    fetchStrategy?: 'eager' | 'onOpen';
+
+    /**
      * The property associated to the dropdown search.
      *
      */
     @Input()
-    public property?: string;
+    property?: string;
 
     /**
      * The no selection placeholder.
      *
      */
     @Input()
-    public noFilterPlaceholder?: string;
+    noFilterPlaceholder?: string;
 
     /**
      * Stream factory, used to resolve a stream for the provided options.
@@ -45,34 +52,33 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> imp
      * @param fetchSize The next chunk size that needs to be loaded.
      */
     @Input()
-    public searchSourceFactory?: (searchTerm?: string, fetchSize?: number) => Observable<ISuggestValues<any>>;
+    searchSourceFactory?: (searchTerm?: string, fetchSize?: number) => Observable<ISuggestValues<any>>;
 
     /**
      * The current dropdown options.
      *
      */
     @Input()
-    public value?: ISuggestValue;
-
+    value?: ISuggestValue;
 
     /**
      * Wether the filter should be rendered in the grid.
      *
      */
     @Input()
-    public get visible() { return this.visible$.value; }
-    public set visible(visible: boolean) { this.visible$.next(visible); }
+    get visible() { return this.visible$.value; }
+    set visible(visible: boolean) { this.visible$.next(visible); }
 
     /**
      * @ignore
      */
-    public visible$ = new BehaviorSubject(true);
+    visible$ = new BehaviorSubject(true);
 
     /**
      * Updates the dropdown option.
      *
      */
-    public updateValue(value?: ISuggestValue) {
+    updateValue(value?: ISuggestValue) {
         this.value = value;
     }
 

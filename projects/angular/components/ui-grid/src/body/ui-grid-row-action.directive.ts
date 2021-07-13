@@ -18,5 +18,5 @@ export class UiGridRowActionDirective {
     @ContentChild(TemplateRef, {
         static: true,
     })
-    public html?: TemplateRef<any>;
+    html?: TemplateRef<any>;
 }

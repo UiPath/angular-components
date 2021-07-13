@@ -38,15 +38,15 @@ class TestFixtureComponent {
     @ViewChild(UiGridSearchComponent, {
         static: true,
     })
-    public search!: UiGridSearchComponent;
+    search!: UiGridSearchComponent;
 
-    public debounce?: number;
-    public placeholder?: string;
-    public maxLength?: number;
-    public searchTooltip?: string;
-    public clearTooltip?: string;
-    public tooltipDisabled?: string;
-    public value?: string;
+    debounce?: number;
+    placeholder?: string;
+    maxLength?: number;
+    searchTooltip?: string;
+    clearTooltip?: string;
+    tooltipDisabled?: string;
+    value?: string;
 }
 
 describe('Component: UiGrid', () => {

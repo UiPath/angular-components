@@ -7,9 +7,9 @@ import { isDevMode } from '@angular/core';
  * @ignore
  */
 export class PerformanceMonitor {
-    public paintTime$ = new Subject<string>();
+    paintTime$ = new Subject<string>();
 
-    public get enabled() {
+    get enabled() {
         return isDevMode();
     }
 
@@ -26,13 +26,13 @@ export class PerformanceMonitor {
         });
     }
 
-    public reset() {
+    reset() {
         if (!this.enabled) { return; }
 
         this._timestamp = performance.now();
     }
 
-    public destroy() {
+    destroy() {
         this.paintTime$.complete();
 
         if (!this.enabled) { return; }
@@ -53,11 +53,11 @@ export class PerformanceMonitor {
         if (!isRowPaint) { return; }
 
         this.paintTime$.next((performance.now() - this._timestamp!).toFixed(2));
-    }
+    };
 
     private _isRow = (element: Node) =>
         !!(element as Element).classList &&
         (element as Element)
             .classList
-            .contains('ui-grid-row')
+            .contains('ui-grid-row');
 }

@@ -38,14 +38,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/angular/tsconfig.lib.json",
-              "projects/angular/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/angular/**/*.ts",
+              "projects/angular/**/*.html"
             ]
           }
         }
@@ -70,7 +67,6 @@
             "main": "projects/playground/src/main.ts",
             "polyfills": "projects/playground/src/polyfills.ts",
             "tsConfig": "projects/playground/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/playground/src/favicon.ico",
               "projects/playground/src/assets"
@@ -78,7 +74,13 @@
             "styles": [
               "projects/playground/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -128,14 +130,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/playground/tsconfig.app.json",
-              "projects/playground/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/playground/**/*.ts",
+              "projects/playground/**/*.html"
             ]
           }
         }
@@ -144,6 +143,7 @@
   },
   "defaultProject": "angular",
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "defaultCollection": "@angular-eslint/schematics"
   }
 }

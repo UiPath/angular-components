@@ -26,13 +26,13 @@ import { UiClipboardModule } from './ui-clipboard.module';
     `,
 })
 class ClipboardFixtureComponent {
-    public text = 'qwertyiop';
-    public event$ = new Subject<{
-        type: 'error' | 'success',
-        ev: ClipboardJS.Event,
+    text = 'qwertyiop';
+    event$ = new Subject<{
+        type: 'error' | 'success';
+        ev: ClipboardJS.Event;
     }>();
 
-    public onClipboardCopy(ev: ClipboardJS.Event) {
+    onClipboardCopy(ev: ClipboardJS.Event) {
         console.log('success', ev);
         this.event$.next({
             type: 'success',
@@ -40,7 +40,7 @@ class ClipboardFixtureComponent {
         });
     }
 
-    public onClipboardError(ev: ClipboardJS.Event) {
+    onClipboardError(ev: ClipboardJS.Event) {
         console.log('error', ev);
         this.event$.next({
             type: 'error',

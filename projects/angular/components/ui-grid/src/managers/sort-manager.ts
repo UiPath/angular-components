@@ -12,8 +12,8 @@ import { ISortModel } from '../models';
  */
 const SORT_CYCLE_MAP: Record<SortDirection, SortDirection> = {
     '': 'asc',
-    'asc': 'desc',
-    'desc': '',
+    asc: 'desc',
+    desc: '',
 };
 
 /**
@@ -24,17 +24,17 @@ const SORT_CYCLE_MAP: Record<SortDirection, SortDirection> = {
  * @internal
  */
 export class SortManager<T> {
-    public sort$ = new BehaviorSubject<ISortModel<T>>({} as ISortModel<T>);
+    sort$ = new BehaviorSubject<ISortModel<T>>({} as ISortModel<T>);
 
     constructor(
         private _columns: UiGridColumnDirective<T>[] = [],
     ) { }
 
-    public get columns() {
+    get columns() {
         return this._columns;
     }
 
-    public set columns(columns: UiGridColumnDirective<T>[]) {
+    set columns(columns: UiGridColumnDirective<T>[]) {
         this._columns = columns;
 
         const sortedColumn = columns.find(column => column.sort !== '');
@@ -51,7 +51,7 @@ export class SortManager<T> {
     /**
      * Sort based on user action on column header
      */
-    public changeSort(column: UiGridColumnDirective<T>) {
+    changeSort(column: UiGridColumnDirective<T>) {
         if (!column.sortable) { return; }
 
         this._columns
@@ -63,7 +63,7 @@ export class SortManager<T> {
         this._emitSort(column, true);
     }
 
-    public destroy() {
+    destroy() {
         this.sort$.complete();
     }
 
