@@ -82,7 +82,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#getPageLabel">getPageLabel</a>
                             </li>
                         </ul>
@@ -110,7 +109,6 @@
                     <a name="getPageLabel"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Public</span>
                             getPageLabel
                         </b>
                         <a href="#getPageLabel"><span class="icon ion-ios-link"></span></a>
@@ -119,8 +117,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getPageLabel(currentPage: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, pageCount?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+<code>getPageLabel(currentPage: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, pageCount?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
@@ -213,7 +210,7 @@ import {
 
 @Injectable()
 export class UiMatPaginatorIntl extends MatPaginatorIntl {
-    public getPageLabel(currentPage: number, pageCount?: number): string {
+    getPageLabel(currentPage: number, pageCount?: number): string {
         if (!pageCount) {
             return &#x60;Page ${currentPage}&#x60;;
         }
@@ -225,21 +222,21 @@ export class UiMatPaginatorIntl extends MatPaginatorIntl {
     selector: &#x27;ui-grid-custom-paginator&#x27;,
     templateUrl: &#x27;./ui-grid-custom-paginator.component.html&#x27;,
     styleUrls: [&#x27;./ui-grid-custom-paginator.component.scss&#x27;],
-    // tslint:disable-next-line: no-inputs-metadata-property
+    // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
     inputs: [&#x27;disabled&#x27;],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
 export class UiGridCustomPaginatorComponent extends _MatPaginatorBase&lt;MatPaginatorDefaultOptions&gt; {
-    // tslint:disable-next-line: naming-convention
+    // eslint-disable-next-line
     public _formFieldAppearance?: MatFormFieldAppearance;
-    // tslint:disable-next-line: naming-convention
+    // eslint-disable-next-line
     public _intl!: UiMatPaginatorIntl;
 
     @HostBinding(&#x27;class&#x27;)
-    public hostClass &#x3D; &#x27;mat-paginator&#x27;;
+    hostClass &#x3D; &#x27;mat-paginator&#x27;;
 
-    public get pageCount(): number {
+    get pageCount(): number {
         return Math.ceil(this.length / this.pageSize);
     }
 
@@ -253,7 +250,7 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase&lt;MatPagi
     ) {
         super(intl ?? new UiMatPaginatorIntl(), changeDetectorRef, defaults);
 
-        if (defaults &amp;&amp; defaults.formFieldAppearance !&#x3D; null) {
+        if (defaults?.formFieldAppearance !&#x3D; null) {
             this._formFieldAppearance &#x3D; defaults.formFieldAppearance;
         }
     }

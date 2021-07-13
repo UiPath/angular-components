@@ -268,40 +268,40 @@ export class UiGridDropdownFilterDirective&lt;T&gt; extends UiGridFilterDirectiv
      *
      */
     @Input()
-    public items?: IDropdownOption[];
+    items?: IDropdownOption[];
 
     /**
      * If it should display the &#x60;All&#x60; option.
      *
      */
     @Input()
-    public showAllOption &#x3D; true;
+    showAllOption &#x3D; true;
 
     /**
      * The current dropdown option.
      *
      */
     @Input()
-    public value?: IDropdownOption;
+    value?: IDropdownOption;
 
     /**
      * Wether the filter should be rendered in the grid.
      *
      */
     @Input()
-    public get visible() { return this.visible$.value; }
-    public set visible(visible: boolean) { this.visible$.next(visible); }
+    get visible() { return this.visible$.value; }
+    set visible(visible: boolean) { this.visible$.next(visible); }
 
     /**
      * @ignore
      */
-    public visible$ &#x3D; new BehaviorSubject(true);
+    visible$ &#x3D; new BehaviorSubject(true);
 
     /**
      * Updates the dropdown value.
      *
      */
-    public updateValue(value?: IDropdownOption) {
+    updateValue(value?: IDropdownOption) {
         this.value &#x3D; value;
     }
 

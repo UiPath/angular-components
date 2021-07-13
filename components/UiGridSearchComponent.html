@@ -152,7 +152,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#clear">clear</a>
                             </li>
                         </ul>
@@ -457,7 +456,6 @@
                     <a name="clear"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Public</span>
                             clear
                         </b>
                         <a href="#clear"><span class="icon ion-ios-link"></span></a>
@@ -466,8 +464,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>clear()</code>
+<code>clear()</code>
                 </td>
             </tr>
 
@@ -601,63 +598,63 @@ export class UiGridSearchComponent implements OnInit, OnDestroy {
      *
      */
     @Input()
-    public debounce &#x3D; 0;
+    debounce &#x3D; 0;
     /**
      * The search input placeholder.
      *
      */
     @Input()
-    public placeholder?: string;
+    placeholder?: string;
     /**
      * The max-length allowed in the search input.
      *
      */
     @Input()
-    public maxLength?: number;
+    maxLength?: number;
     /**
      * The search tooltip text.
      *
      */
     @Input()
-    public searchTooltip?: string;
+    searchTooltip?: string;
     /**
      * The clear search tooltip text.
      *
      */
     @Input()
-    public clearTooltip?: string;
+    clearTooltip?: string;
     /**
      * Configure if the search tooltip is disabled.
      *
      */
     @Input()
-    public tooltipDisabled?: boolean;
+    tooltipDisabled?: boolean;
 
     /**
      * The search value.
      *
      */
     @Input()
-    public get value() {
+    get value() {
         return this.search.value;
     }
-    public set value(value: string) {
+    set value(value: string) {
         this.search.setValue(value);
     }
 
     /**
      * @ignore
      */
-    public search &#x3D; new FormControl(&#x27;&#x27;);
+    search &#x3D; new FormControl(&#x27;&#x27;);
 
     /**
      * The search event.
      *
      */
     @Output()
-    public searchChange &#x3D; new EventEmitter&lt;string&gt;();
+    searchChange &#x3D; new EventEmitter&lt;string&gt;();
 
-    private _destroyed$ &#x3D; new Subject();
+    private _destroyed$ &#x3D; new Subject&lt;void&gt;();
 
     /**
      * @ignore
@@ -685,7 +682,7 @@ export class UiGridSearchComponent implements OnInit, OnDestroy {
      * Clears the search input value.
      *
      */
-    public clear() {
+    clear() {
         this.search.setValue(&#x27;&#x27;);
     }
 }

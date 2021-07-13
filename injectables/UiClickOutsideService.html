@@ -88,7 +88,6 @@ By sharing the event stream, we end up adding only one event listener rather tha
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#source">source</a>
                             </li>
                         </ul>
@@ -118,7 +117,6 @@ By sharing the event stream, we end up adding only one event listener rather tha
                         <a name="source"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             source</b>
                             <a href="#source"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -132,7 +130,7 @@ By sharing the event stream, we end up adding only one event listener rather tha
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/angular/directives/ui-click-outside/src/ui-click-outside.directive.ts:50</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/angular/directives/ui-click-outside/src/ui-click-outside.directive.ts:52</a></div>
                             </td>
                         </tr>
 
@@ -174,15 +172,16 @@ import {
 } from &#x27;@angular/core&#x27;;
 
 /**
-  *   Info:
-  *
-  *   On average a user trying hard enough can reach ~7 click/s
-  *   We&#x27;ll reduce the click event count to half
-  *
-  *   Benefits:
-  *
-  *   - drastically reduce misclick emissions
-  * @ignore
+ *   Info:
+ *
+ *   On average a user trying hard enough can reach ~7 click/s
+ *   We&#x27;ll reduce the click event count to half
+ *
+ *   Benefits:
+ *
+ *   - drastically reduce misclick emissions
+ *
+ * @ignore
  */
 const MAX_CLICKS_PER_SECOND &#x3D; 3;
 
@@ -197,15 +196,16 @@ const MAX_CLICKS_PER_SECOND &#x3D; 3;
 })
 export class UiClickOutsideService implements OnDestroy {
     /**
-   * The &#x60;global&#x60; event handler for &#x60;click&#x60; events.
-   *
-   */
-    public source: Observable&lt;MouseEvent&gt;;
-    private _destroyed$ &#x3D; new Subject();
+     * The &#x60;global&#x60; event handler for &#x60;click&#x60; events.
+     *
+     */
+    // eslint-disable-next-line rxjs/finnish
+    source: Observable&lt;MouseEvent&gt;;
+    private _destroyed$ &#x3D; new Subject&lt;void&gt;();
 
     /**
-    * @ignore
-    */
+     * @ignore
+     */
     constructor(
         @Inject(DOCUMENT)
         document: any,
@@ -221,8 +221,8 @@ export class UiClickOutsideService implements OnDestroy {
     }
 
     /**
-    * @ignore
-    */
+     * @ignore
+     */
     ngOnDestroy() {
         this._destroyed$.next();
     }
@@ -242,11 +242,12 @@ export class UiClickOutsideDirective {
      *
      */
     @Output()
-    public uiClickOutside: Observable&lt;MouseEvent&gt;;
+    // eslint-disable-next-line rxjs/finnish
+    uiClickOutside: Observable&lt;MouseEvent&gt;;
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     constructor(
         ref: ElementRef,
         private _clickService: UiClickOutsideService,

@@ -239,31 +239,33 @@
  */
 export interface ISuggestValue extends VirtualScrollItem {
     /**
-    * Unique identifier associated to the entry.
-    *
-    */
+     * Unique identifier associated to the entry.
+     *
+     */
     id: number | string;
     /**
-   * Text associated to the entry.
-   *
-   */
+     * Text associated to the entry.
+     *
+     */
     text: string;
     /**
-  * Marks the current item state
-  * @internal
-  * @ignore
-  */
+     * Marks the current item state
+     *
+     * @internal
+     * @ignore
+     */
     loading?: VirtualScrollItemStatus;
     /**
-  * Flag that marks custom items.
-  * @internal
-  * @ignore
-  */
+     * Flag that marks custom items.
+     *
+     * @internal
+     * @ignore
+     */
     isCustom?: boolean;
     /**
-  * Optional icon that will be displayed to the left of the item.
-  *
-  */
+     * Optional icon that will be displayed to the left of the item.
+     *
+     */
     icon?: {
         iconOnly?: boolean;
         svgIcon?: string;

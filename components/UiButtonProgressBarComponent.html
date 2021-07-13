@@ -138,23 +138,18 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#bufferValue$">bufferValue$</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#color$">color$</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#loading$">loading$</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#mode$">mode$</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#value$">value$</a>
                             </li>
                         </ul>
@@ -246,7 +241,6 @@
                         <a name="bufferValue$"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             bufferValue$</b>
                             <a href="#bufferValue$"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -273,7 +267,6 @@
                         <a name="color$"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             color$</b>
                             <a href="#color$"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -300,7 +293,6 @@
                         <a name="loading$"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             loading$</b>
                             <a href="#loading$"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -327,7 +319,6 @@
                         <a name="mode$"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             mode$</b>
                             <a href="#mode$"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -354,7 +345,6 @@
                         <a name="value$"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             value$</b>
                             <a href="#value$"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -398,12 +388,12 @@ import { MatProgressBar } from &#x27;@angular/material/progress-bar&#x27;;
     encapsulation: ViewEncapsulation.None,
 })
 export class UiButtonProgressBarComponent implements OnDestroy {
-    public loading$ &#x3D; new BehaviorSubject(false);
+    loading$ &#x3D; new BehaviorSubject(false);
 
-    public mode$ &#x3D; new BehaviorSubject&lt;MatProgressBar[&#x27;mode&#x27;]&gt;(&#x27;indeterminate&#x27;);
-    public value$ &#x3D; new BehaviorSubject&lt;MatProgressBar[&#x27;value&#x27;]&gt;(0);
-    public bufferValue$ &#x3D; new BehaviorSubject&lt;MatProgressBar[&#x27;bufferValue&#x27;]&gt;(0);
-    public color$ &#x3D; new BehaviorSubject&lt;MatProgressBar[&#x27;color&#x27;]&gt;(&#x27;primary&#x27;);
+    mode$ &#x3D; new BehaviorSubject&lt;MatProgressBar[&#x27;mode&#x27;]&gt;(&#x27;indeterminate&#x27;);
+    value$ &#x3D; new BehaviorSubject&lt;MatProgressBar[&#x27;value&#x27;]&gt;(0);
+    bufferValue$ &#x3D; new BehaviorSubject&lt;MatProgressBar[&#x27;bufferValue&#x27;]&gt;(0);
+    color$ &#x3D; new BehaviorSubject&lt;MatProgressBar[&#x27;color&#x27;]&gt;(&#x27;primary&#x27;);
 
     ngOnDestroy() {
         this.loading$.complete();

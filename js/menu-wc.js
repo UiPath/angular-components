@@ -317,13 +317,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiGridToggleColumnsModule.html" data-type="entity-link">UiGridToggleColumnsModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-UiGridToggleColumnsModule-99442bdb9a60508b085cdc8b292e3d1f"' : 'data-target="#xs-components-links-module-UiGridToggleColumnsModule-99442bdb9a60508b085cdc8b292e3d1f"' }>
+                                            'data-target="#components-links-module-UiGridToggleColumnsModule-0011d3c7b24db38182b0c9b5edae46ed"' : 'data-target="#xs-components-links-module-UiGridToggleColumnsModule-0011d3c7b24db38182b0c9b5edae46ed"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiGridToggleColumnsModule-99442bdb9a60508b085cdc8b292e3d1f"' :
-                                            'id="xs-components-links-module-UiGridToggleColumnsModule-99442bdb9a60508b085cdc8b292e3d1f"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiGridToggleColumnsModule-0011d3c7b24db38182b0c9b5edae46ed"' :
+                                            'id="xs-components-links-module-UiGridToggleColumnsModule-0011d3c7b24db38182b0c9b5edae46ed"' }>
                                             <li class="link">
                                                 <a href="components/UiGridToggleColumnsComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiGridToggleColumnsComponent</a>

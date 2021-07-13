@@ -107,7 +107,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#updateValue">updateValue</a>
                             </li>
                         </ul>
@@ -279,7 +278,6 @@
                     <a name="updateValue"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Public</span>
                             updateValue
                         </b>
                         <a href="#updateValue"><span class="icon ion-ios-link"></span></a>
@@ -288,8 +286,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateValue(value?: <a href="../interfaces/IDropdownOption.html">IDropdownOption</a>)</code>
+<code>updateValue(value?: <a href="../interfaces/IDropdownOption.html">IDropdownOption</a>)</code>
                 </td>
             </tr>
 
@@ -464,40 +461,40 @@ export class UiGridDropdownFilterDirective&lt;T&gt; extends UiGridFilterDirectiv
      *
      */
     @Input()
-    public items?: IDropdownOption[];
+    items?: IDropdownOption[];
 
     /**
      * If it should display the &#x60;All&#x60; option.
      *
      */
     @Input()
-    public showAllOption &#x3D; true;
+    showAllOption &#x3D; true;
 
     /**
      * The current dropdown option.
      *
      */
     @Input()
-    public value?: IDropdownOption;
+    value?: IDropdownOption;
 
     /**
      * Wether the filter should be rendered in the grid.
      *
      */
     @Input()
-    public get visible() { return this.visible$.value; }
-    public set visible(visible: boolean) { this.visible$.next(visible); }
+    get visible() { return this.visible$.value; }
+    set visible(visible: boolean) { this.visible$.next(visible); }
 
     /**
      * @ignore
      */
-    public visible$ &#x3D; new BehaviorSubject(true);
+    visible$ &#x3D; new BehaviorSubject(true);
 
     /**
      * Updates the dropdown value.
      *
      */
-    public updateValue(value?: IDropdownOption) {
+    updateValue(value?: IDropdownOption) {
         this.value &#x3D; value;
     }
 

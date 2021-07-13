@@ -88,7 +88,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                     <span class="modifier">Optional</span>
                                 <a href="#html">html</a>
                             </li>
@@ -123,7 +122,6 @@
                         <a name="html"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                                 <span class="modifier">Optional</span>
                             html</b>
                             <a href="#html"><span class="icon ion-ios-link"></span></a>
@@ -168,13 +166,13 @@
 } from &#x27;@angular/core&#x27;;
 
 @Directive({
-  selector: &#x27;[uiGridNoContent], ui-grid-no-content&#x27;,
+    selector: &#x27;[uiGridNoContent], ui-grid-no-content&#x27;,
 })
 export class UiGridNoContentDirective {
-  @ContentChild(TemplateRef, {
-    static: true,
-  })
-  public html?: TemplateRef&lt;any&gt;;
+    @ContentChild(TemplateRef, {
+        static: true,
+    })
+    html?: TemplateRef&lt;any&gt;;
 }
 </code></pre>
     </div>

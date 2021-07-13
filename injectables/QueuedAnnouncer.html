@@ -76,7 +76,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#enqueue">enqueue</a>
                             </li>
                         </ul>
@@ -102,7 +101,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">projects/angular/a11y/src/queued-announcer/queued-announcer.ts:12</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">projects/angular/a11y/src/queued-announcer/queued-announcer.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -152,7 +151,6 @@
                     <a name="enqueue"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Public</span>
                             enqueue
                         </b>
                         <a href="#enqueue"><span class="icon ion-ios-link"></span></a>
@@ -161,16 +159,15 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>enqueue(msg: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>enqueue(msg: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="16"
-                            class="link-to-prism">projects/angular/a11y/src/queued-announcer/queued-announcer.ts:16</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="19"
+                            class="link-to-prism">projects/angular/a11y/src/queued-announcer/queued-announcer.ts:19</a></div>
                 </td>
             </tr>
 
@@ -223,7 +220,10 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { of } from &#x27;rxjs&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    firstValueFrom,
+    of,
+} from &#x27;rxjs&#x27;;
 import { delay } from &#x27;rxjs/operators&#x27;;
 
 import { LiveAnnouncer } from &#x27;@angular/cdk/a11y&#x27;;
@@ -238,7 +238,7 @@ export class QueuedAnnouncer {
 
     constructor(private _liveAnnouncer: LiveAnnouncer) { }
 
-    public enqueue(msg: string) {
+    enqueue(msg: string) {
         this._msgQueue.push(msg);
 
         if (!this._isAnnouncing) {
@@ -256,10 +256,10 @@ export class QueuedAnnouncer {
         this._liveAnnouncer.announce(this._msgQueue.shift()!)
             // announcements end up in an aria-live element
             // a delay is needed before setting the next announcement so they are both picked up by the screen reader
-            .then(() &#x3D;&gt; of(void 0).pipe(delay(50)).toPromise())
+            .then(() &#x3D;&gt; firstValueFrom(of(void 0).pipe(delay(50))))
             .then(this._announceNext)
             .catch(this._announceNext);
-    }
+    };
 }
 </code></pre>
     </div>

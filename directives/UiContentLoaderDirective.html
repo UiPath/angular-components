@@ -163,7 +163,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_resolver: <a href="https://angular.io/api/core/ComponentFactoryResolver" target="_blank">ComponentFactoryResolver</a>, _ref: TemplateRef<literal type>, _container: <a href="https://angular.io/api/core/ViewContainerRef" target="_blank">ViewContainerRef</a>)</code>
+<code>constructor(_resolver: <a href="https://angular.io/api/core/ComponentFactoryResolver" target="_blank">ComponentFactoryResolver</a>, _ref: TemplateRef<any>, _container: <a href="https://angular.io/api/core/ViewContainerRef" target="_blank">ViewContainerRef</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -201,7 +201,7 @@
                                                         <td>_ref</td>
                                                   
                                                         <td>
-                                                                    <code>TemplateRef&lt;literal type&gt;</code>
+                                                                    <code>TemplateRef&lt;any&gt;</code>
                                                         </td>
                                                   
                                                     <td>
@@ -541,21 +541,21 @@ import {
 })
 export class UiContentLoaderDirective implements OnInit, OnChanges, OnDestroy {
     @Input()
-    public set uiContentLoading(value: boolean) {
+    set uiContentLoading(value: boolean) {
         this._loading$.next(value);
     }
 
     @Input()
-    public uiContentLoadingMode?: MatProgressSpinner[&#x27;mode&#x27;];
+    uiContentLoadingMode?: MatProgressSpinner[&#x27;mode&#x27;];
 
     @Input()
-    public uiContentLoadingDiameter?: MatProgressSpinner[&#x27;diameter&#x27;];
+    uiContentLoadingDiameter?: MatProgressSpinner[&#x27;diameter&#x27;];
 
     @Input()
-    public uiContentLoadingValue?: MatProgressSpinner[&#x27;value&#x27;];
+    uiContentLoadingValue?: MatProgressSpinner[&#x27;value&#x27;];
 
     @Input()
-    public uiContentLoadingColor?: MatProgressSpinner[&#x27;color&#x27;];
+    uiContentLoadingColor?: MatProgressSpinner[&#x27;color&#x27;];
 
     private _spinner?: ComponentRef&lt;UiContentSpinnerComponent&gt;;
     private _loading$ &#x3D; new BehaviorSubject&lt;boolean&gt;(false);
@@ -563,7 +563,7 @@ export class UiContentLoaderDirective implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         private _resolver: ComponentFactoryResolver,
-        private _ref: TemplateRef&lt;{}&gt;,
+        private _ref: TemplateRef&lt;any&gt;,
         private _container: ViewContainerRef,
     ) { }
 
@@ -600,14 +600,14 @@ export class UiContentLoaderDirective implements OnInit, OnChanges, OnDestroy {
         } else {
             this._container.createEmbeddedView(this._ref);
         }
-    }
+    };
 
     private _updateSpinner &#x3D; (spinner: UiContentSpinnerComponent) &#x3D;&gt; {
         this._emitIfChanged(spinner.mode$, this.uiContentLoadingMode);
         this._emitIfChanged(spinner.diameter$, this.uiContentLoadingDiameter);
         this._emitIfChanged(spinner.color$, this.uiContentLoadingColor);
         this._emitIfChanged(spinner.value$, this.uiContentLoadingValue);
-    }
+    };
 
     private _emitIfChanged &#x3D; &lt;T&gt;(
         source: BehaviorSubject&lt;T&gt;,
@@ -619,14 +619,14 @@ export class UiContentLoaderDirective implements OnInit, OnChanges, OnDestroy {
         ) { return; }
 
         source.next(value);
-    }
+    };
 
     private _destroySpinner &#x3D; () &#x3D;&gt; {
         if (!this._spinner) { return; }
 
         this._spinner.destroy();
         this._spinner &#x3D; undefined;
-    }
+    };
 }
 </code></pre>
     </div>

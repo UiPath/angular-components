@@ -206,14 +206,14 @@ export class UiGridHeaderButtonDirective {
      *
      */
     @Input()
-    public type?: &#x27;action&#x27; | &#x27;main&#x27; | &#x27;inline&#x27;;
+    type?: &#x27;action&#x27; | &#x27;main&#x27; | &#x27;inline&#x27;;
 
     /**
      * Configure if the button is visible or not.
      *
      */
     @Input()
-    public visible &#x3D; true;
+    visible &#x3D; true;
 
     /**
      * @internal
@@ -222,7 +222,7 @@ export class UiGridHeaderButtonDirective {
     @ContentChild(TemplateRef, {
         static: true,
     })
-    public html?: TemplateRef&lt;any&gt;;
+    html?: TemplateRef&lt;any&gt;;
 }
 </code></pre>
     </div>

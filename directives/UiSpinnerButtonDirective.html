@@ -413,16 +413,16 @@ export class UiSpinnerButtonDirective
     extends UiLoaderButtonDirective&lt;UiButtonProgressSpinnerComponent&gt;
     implements OnInit {
     @Input()
-    public spinnerButtonLoading &#x3D; false;
+    spinnerButtonLoading &#x3D; false;
 
     @Input()
-    public spinnerButtonMode: MatProgressSpinner[&#x27;mode&#x27;] &#x3D; &#x27;indeterminate&#x27;;
+    spinnerButtonMode: MatProgressSpinner[&#x27;mode&#x27;] &#x3D; &#x27;indeterminate&#x27;;
 
     @Input()
-    public spinnerButtonValue: MatProgressSpinner[&#x27;value&#x27;] &#x3D; 0;
+    spinnerButtonValue: MatProgressSpinner[&#x27;value&#x27;] &#x3D; 0;
 
     @Input()
-    public spinnerButtonColor: MatProgressSpinner[&#x27;color&#x27;] &#x3D; &#x27;accent&#x27;;
+    spinnerButtonColor: MatProgressSpinner[&#x27;color&#x27;] &#x3D; &#x27;accent&#x27;;
 
     constructor(
         button: MatButton,
@@ -460,15 +460,15 @@ export class UiSpinnerButtonDirective
 
     private _applyColor &#x3D; () &#x3D;&gt; {
         this._loader.color$.next(this.spinnerButtonColor);
-    }
+    };
 
     private _applyValue &#x3D; () &#x3D;&gt; {
         this._loader.value$.next(this.spinnerButtonValue);
-    }
+    };
 
     private _applyMode &#x3D; () &#x3D;&gt; {
         this._loader.mode$.next(this.spinnerButtonMode);
-    }
+    };
 
     private _applyLoading &#x3D; () &#x3D;&gt; {
         if (this.spinnerButtonLoading) {
@@ -478,7 +478,7 @@ export class UiSpinnerButtonDirective
         }
 
         this._loader.loading$.next(this.spinnerButtonLoading);
-    }
+    };
 }
 </code></pre>
     </div>

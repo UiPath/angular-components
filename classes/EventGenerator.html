@@ -282,8 +282,8 @@ by providing a collection of methods and properties that create the most often r
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="172"
-                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:172</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="173"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:173</a></div>
                 </td>
             </tr>
 
@@ -331,8 +331,8 @@ by providing a collection of methods and properties that create the most often r
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="207"
-                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:207</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="208"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:208</a></div>
                 </td>
             </tr>
 
@@ -427,8 +427,8 @@ by providing a collection of methods and properties that create the most often r
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="151"
-                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:151</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="153"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:153</a></div>
                 </td>
             </tr>
 
@@ -511,8 +511,8 @@ by providing a collection of methods and properties that create the most often r
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="194"
-                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:194</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="195"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:195</a></div>
                 </td>
             </tr>
 
@@ -656,8 +656,8 @@ by providing a collection of methods and properties that create the most often r
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="141"
-                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:141</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="142"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:142</a></div>
                 </td>
             </tr>
 
@@ -752,8 +752,8 @@ by providing a collection of methods and properties that create the most often r
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="228"
-                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:228</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="229"
+                            class="link-to-prism">projects/angular/testing/src/utilities/event-generator.ts:229</a></div>
                 </td>
             </tr>
 
@@ -1083,7 +1083,7 @@ export class EventGenerator {
      * Very useful when testing hover effects.
      *
      */
-    public static cursor &#x3D; {
+    static cursor &#x3D; {
         ref: {} as HTMLElement,
         initialize: (parent?: HTMLElement) &#x3D;&gt; {
             if (!parent) { return; }
@@ -1188,6 +1188,7 @@ export class EventGenerator {
      * @returns A &#x60;keydown&#x60; event with the provided key and modifier metadata.
      */
     static keyDown(key: KeyOrKeyName, ...modifiers: IKeyModifier[]): KeyboardEvent {
+        // eslint-disable-next-line no-underscore-dangle
         return EventGenerator._key(&#x27;keydown&#x27;, key, modifiers);
     }
 
@@ -1199,6 +1200,7 @@ export class EventGenerator {
      * @returns A &#x60;keyup&#x60; event with the provided key and modifier metadata.
      */
     static keyUp(key: KeyOrKeyName, ...modifiers: IKeyModifier[]): KeyboardEvent {
+        // eslint-disable-next-line no-underscore-dangle
         return EventGenerator._key(&#x27;keyup&#x27;, key, modifiers);
     }
 
@@ -1220,7 +1222,6 @@ export class EventGenerator {
             value: fileList,
         });
 
-
         return ev as any as IDropEvent;
     }
 
@@ -1236,7 +1237,7 @@ export class EventGenerator {
         changeEvent.initEvent(&#x27;change&#x27;, true, true);
 
         Object.defineProperty(changeEvent, &#x27;target&#x27;, {
-            value: changeEvent.target || {},
+            value: changeEvent.target ?? {},
         });
 
         Object.defineProperty(changeEvent.target, &#x27;files&#x27;, {
@@ -1289,7 +1290,6 @@ export class EventGenerator {
         const event &#x3D; document.createEvent(&#x27;MouseEvent&#x27;);
         event.initEvent(&#x27;mousemove&#x27;, true, false);
 
-
         Object.defineProperty(event, &#x27;offsetX&#x27;, {
             value: offsetX,
         });
@@ -1302,6 +1302,7 @@ export class EventGenerator {
     }
 
     private static _key(type: string, key: IKey | keyof Key, modifiers &#x3D; [] as IKeyModifier[]) {
+        // eslint-disable-next-line no-underscore-dangle
         const safeKey &#x3D; EventGenerator._getKey(key) as IKey;
         const options: KeyboardEventInit &amp; { keyCode: number } &#x3D; {
             code: &#x60;${safeKey.code}&#x60;,

@@ -115,11 +115,9 @@ This class facilitates easy creation of <code>FileList</code> mocks, for UTs.</p
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#add">add</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#item">item</a>
                             </li>
                         </ul>
@@ -235,7 +233,7 @@ This class facilitates easy creation of <code>FileList</code> mocks, for UTs.</p
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">projects/angular/testing/src/utilities/fake-file-list.ts:23</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/angular/testing/src/utilities/fake-file-list.ts:24</a></div>
                             </td>
                         </tr>
 
@@ -261,7 +259,6 @@ This class facilitates easy creation of <code>FileList</code> mocks, for UTs.</p
                     <a name="add"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Public</span>
                             add
                         </b>
                         <a href="#add"><span class="icon ion-ios-link"></span></a>
@@ -270,16 +267,15 @@ This class facilitates easy creation of <code>FileList</code> mocks, for UTs.</p
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>add(...files: File[])</code>
+<code>add(...files: File[])</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="44"
-                            class="link-to-prism">projects/angular/testing/src/utilities/fake-file-list.ts:44</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">projects/angular/testing/src/utilities/fake-file-list.ts:45</a></div>
                 </td>
             </tr>
 
@@ -340,7 +336,6 @@ This class facilitates easy creation of <code>FileList</code> mocks, for UTs.</p
                     <a name="item"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Public</span>
                             item
                         </b>
                         <a href="#item"><span class="icon ion-ios-link"></span></a>
@@ -349,16 +344,15 @@ This class facilitates easy creation of <code>FileList</code> mocks, for UTs.</p
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>item(idx: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+<code>item(idx: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="35"
-                            class="link-to-prism">projects/angular/testing/src/utilities/fake-file-list.ts:35</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="36"
+                            class="link-to-prism">projects/angular/testing/src/utilities/fake-file-list.ts:36</a></div>
                 </td>
             </tr>
 
@@ -482,12 +476,13 @@ This class facilitates easy creation of <code>FileList</code> mocks, for UTs.</p
      * The total file count.
      *
      */
-    public get length() {
+    get length() {
         return this.files.length;
     }
 
     /**
      * Creates a &#x60;mock&#x60; for &#x60;FileList&#x60; in order to easily test file centric scenarios with &#x60;input&#x60;s.
+     *
      * @param [files&#x3D;[]] A list of files.
      * @returns The mocked &#x60;FileList&#x60; instance.
      */
@@ -503,7 +498,7 @@ This class facilitates easy creation of <code>FileList</code> mocks, for UTs.</p
      * @param idx The accesed index.
      * @returns The file at the requested &#x60;idx&#x60;.
      */
-    public item(idx: number): File {
+    item(idx: number): File {
         return this[idx];
     }
 
@@ -512,7 +507,7 @@ This class facilitates easy creation of <code>FileList</code> mocks, for UTs.</p
      *
      * @param files The files that will be added to the collection.
      */
-    public add(...files: File[]): void {
+    add(...files: File[]): void {
         files.forEach(file &#x3D;&gt; {
             this[this.files.length] &#x3D; file;
             this.files.push(file);

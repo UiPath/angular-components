@@ -106,7 +106,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                     <span class="modifier">Optional</span>
                                 <a href="#element">element</a>
                             </li>
@@ -123,11 +122,9 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#enqueueFocus">enqueueFocus</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#focus">focus</a>
                             </li>
                         </ul>
@@ -286,7 +283,6 @@ Defaults to: <code>true</code></p>
                     <a name="enqueueFocus"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Public</span>
                             enqueueFocus
                         </b>
                         <a href="#enqueueFocus"><span class="icon ion-ios-link"></span></a>
@@ -295,8 +291,7 @@ Defaults to: <code>true</code></p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>enqueueFocus()</code>
+<code>enqueueFocus()</code>
                 </td>
             </tr>
 
@@ -329,7 +324,6 @@ Defaults to: <code>true</code></p>
                     <a name="focus"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Public</span>
                             focus
                         </b>
                         <a href="#focus"><span class="icon ion-ios-link"></span></a>
@@ -338,8 +332,7 @@ Defaults to: <code>true</code></p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>focus(element?: HTMLElement)</code>
+<code>focus(element?: HTMLElement)</code>
                 </td>
             </tr>
 
@@ -409,7 +402,6 @@ Defaults to: <code>true</code></p>
                         <a name="element"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                                 <span class="modifier">Optional</span>
                             element</b>
                             <a href="#element"><span class="icon ion-ios-link"></span></a>
@@ -630,19 +622,19 @@ export class UiAutofocusDirective implements OnInit {
      *
      */
     @Input()
-    public selectionLocation: &#x27;start&#x27; | &#x27;end&#x27; &#x3D; &#x27;start&#x27;;
+    selectionLocation: &#x27;start&#x27; | &#x27;end&#x27; &#x3D; &#x27;start&#x27;;
 
     /**
      * The decorated &#x60;HTMLElement&#x60; reference.
      *
      */
-    public element?: HTMLElement;
+    element?: HTMLElement;
 
     private _autofocus &#x3D; true;
 
     /**
-    * @ignore
-    */
+     * @ignore
+     */
     constructor(
         private _el: ElementRef,
         private _zone: NgZone,
@@ -661,7 +653,7 @@ export class UiAutofocusDirective implements OnInit {
      * Enqueues a focus event.
      *
      */
-    public enqueueFocus() {
+    enqueueFocus() {
         if (this._autofocus) {
             this._zone.runOutsideAngular(() &#x3D;&gt; {
                 merge(
@@ -688,7 +680,7 @@ export class UiAutofocusDirective implements OnInit {
      * Focus the &#x60;element&#x60;.
      *
      */
-    public focus(element?: HTMLElement) {
+    focus(element?: HTMLElement) {
         if (!element) { return; }
         element.focus();
 
@@ -712,7 +704,7 @@ export class UiAutofocusDirective implements OnInit {
         }
 
         const children &#x3D; el.children || el.childNodes;
-
+        // eslint-disable-next-line @typescript-eslint/prefer-for-of
         for (let i &#x3D; 0; i &lt; children.length; i++) {
             const focusable &#x3D; children[i].nodeType &#x3D;&#x3D;&#x3D; ELEMENT_NODE ?
                 this._getFocusableNode(children[i] as HTMLElement) :

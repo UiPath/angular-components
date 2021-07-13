@@ -204,6 +204,7 @@ import { UiFormatDirective } from &#x27;@uipath/angular/directives/internal&#x27
 
 /**
  * Rollup issue: https://github.com/rollup/rollup/issues/670
+ *
  * @ignore
  */
 const moment &#x3D; _moment;
@@ -280,7 +281,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
      *
      */
     @Input()
-    public contentType: DisplayType &#x3D; &#x27;absolute&#x27;;
+    contentType: DisplayType &#x3D; &#x27;absolute&#x27;;
     /**
      * What format should the &#x60;[data-title]&#x60; attribute have, &#x60;absolute&#x60; or &#x60;relative&#x60;.
      *
@@ -290,25 +291,25 @@ export class UiDateFormatDirective extends UiFormatDirective {
      * &#x60;&lt;ui-dateformat #ref [matTooltip]&#x3D;&quot;ref.dataset[&#x27;title&#x27;]&quot;&gt;&lt;/ui-dateformat&gt;&#x60;
      */
     @Input()
-    public titleType: DisplayType &#x3D; &#x27;absolute&#x27;;
+    titleType: DisplayType &#x3D; &#x27;absolute&#x27;;
     /**
      * The &#x60;timezone&#x60; for which the current date is displayed.
      *
      */
     @Input()
-    public timezone?: string;
+    timezone?: string;
     /**
      * The input &#x60;Date&#x60; that needs to be formatted.
      *
      */
     @Input()
-    public date?: Date | string;
+    date?: Date | string;
     /**
      * The &#x60;moment&#x60; format, defaults to &#x60;L LTS&#x60;.
      *
      */
     @Input()
-    public dateFormat &#x3D; &#x27;L LTS&#x27;;
+    dateFormat &#x3D; &#x27;L LTS&#x27;;
 
     protected _text?: HTMLElement;
 
@@ -325,7 +326,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
         if (!(this.date instanceof Date)) { return this.date; }
 
         return moment(this.date)
-            .tz(this.timezone || resolveTimezone(this._options))
+            .tz(this.timezone ?? resolveTimezone(this._options))
             .format(this.dateFormat);
     }
 
@@ -349,9 +350,9 @@ export class UiDateFormatDirective extends UiFormatDirective {
             elementRef,
         );
 
-        _options &#x3D; _options || {};
+        this._options &#x3D; _options || {};
 
-        const redraw$ &#x3D; _options.redraw$ || of(null);
+        const redraw$ &#x3D; this._options.redraw$ || of(null);
 
         merge(
             redraw$,
@@ -409,11 +410,11 @@ export class UiDateFormatDirective extends UiFormatDirective {
     private _timeForTypeChanged &#x3D; (type: DisplayType) &#x3D;&gt;
         this._isRelative(type) ?
             this._lastRelativeTime !&#x3D;&#x3D; this._relativeTime :
-            this._lastAbsoluteTime !&#x3D;&#x3D; this._absoluteTime
+            this._lastAbsoluteTime !&#x3D;&#x3D; this._absoluteTime;
 
     private _timeForType &#x3D; (type: DisplayType) &#x3D;&gt; this._isRelative(type) ?
         this._relativeTime :
-        this._absoluteTime
+        this._absoluteTime;
 }
 </code></pre>
     </div>

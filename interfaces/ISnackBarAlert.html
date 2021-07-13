@@ -334,8 +334,8 @@ interface ISnackBarAlert {
      */
     actionMessage?: string;
     /**
-    * How long to remain on the screen
-    */
+     * How long to remain on the screen
+     */
     duration: number;
     /**
      * Material icon to be used in snackbar
@@ -366,7 +366,7 @@ export class UiSnackBarComponent {
      * @internal
      * @ignore
      */
-    public isPropertyString(property: string | TemplateRef&lt;any&gt;): property is string {
+    isPropertyString(property: string | TemplateRef&lt;any&gt;): property is string {
         return typeof property &#x3D;&#x3D;&#x3D; &#x27;string&#x27;;
     }
 }
@@ -388,13 +388,13 @@ export const ICON_MAP: Map&lt;SnackBarType, string&gt; &#x3D; new Map([
 export type SnackbarAction &#x3D; (
     message: string | TemplateRef&lt;any&gt;,
     config?: {
-        actionMessage?: string,
-        duration?: number,
+        actionMessage?: string;
+        duration?: number;
     },
 ) &#x3D;&gt; MatSnackBarRef&lt;UiSnackBarComponent&gt;;
 
 export class UiMatSnackBarConfig {
-    public restrictHtml &#x3D; false;
+    restrictHtml &#x3D; false;
 }
 export const UI_MAT_SNACK_BAR_DEFAULT_OPTIONS &#x3D; new InjectionToken&lt;UiMatSnackBarConfig&gt;(&#x27;UiMatSnackBarConfig&#x27;);
 
@@ -418,28 +418,32 @@ export class UiSnackBarService {
 
     /**
      * Display an info snackbar
+     *
      * @param message The message to be displayed
      * @param config  &#x60;{ actionMessage, duration }&#x60;
-    */
-    public info: SnackbarAction;
+     */
+    info: SnackbarAction;
     /**
      * Display an error snackbar
+     *
      * @param message The message to be displayed
      * @param config  &#x60;{ actionMessage, duration }&#x60;
-    */
-    public error: SnackbarAction;
+     */
+    error: SnackbarAction;
     /**
      * Display an success snackbar
+     *
      * @param message The message to be displayed
      * @param config  &#x60;{ actionMessage, duration }&#x60;
-    */
-    public success: SnackbarAction;
+     */
+    success: SnackbarAction;
     /**
      * Display an warning snackbar
+     *
      * @param message The message to be displayed
      * @param config  &#x60;{ actionMessage, duration }&#x60;
-    */
-    public warning: SnackbarAction;
+     */
+    warning: SnackbarAction;
     private _ref?: MatSnackBarRef&lt;UiSnackBarComponent&gt;;
 
     constructor(
@@ -463,36 +467,36 @@ export class UiSnackBarService {
 
     /**
      * Display a snackbar (customizable)
+     *
      * @param message The message to be displayed
      * @param options Customize default options: snackbar type, icon, display duration, and action message
      */
-    public show &#x3D; (message: string | TemplateRef&lt;any&gt;, { type, duration, icon, actionMessage }
-        : ISnackBarOptions &#x3D; {}) &#x3D;&gt;
-        this._alert(type || SnackBarType.None, {
+    show &#x3D; (message: string | TemplateRef&lt;any&gt;, { type, duration, icon, actionMessage }: ISnackBarOptions &#x3D; {}) &#x3D;&gt;
+        this._alert(type ?? SnackBarType.None, {
             message,
-            icon: icon || ICON_MAP.get(type!),
+            icon: icon ?? ICON_MAP.get(type!),
             duration: duration || duration &#x3D;&#x3D;&#x3D; 0 ? duration : this._options.duration!,
             actionMessage,
-        })
+        });
 
     /**
      * Dismiss the displayed snackbar
      */
-    public clear() {
+    clear() {
         if (!this._ref) { return; }
 
         this._ref.dismiss();
     }
 
     private _alertFactory &#x3D; (type: SnackBarType) &#x3D;&gt;
-        (message: string | TemplateRef&lt;any&gt;, config?: { actionMessage?: string, duration?: number }) &#x3D;&gt; this._alert(type, {
+        (message: string | TemplateRef&lt;any&gt;, config?: { actionMessage?: string; duration?: number }) &#x3D;&gt; this._alert(type, {
             message,
             actionMessage: config?.actionMessage,
             icon: ICON_MAP.get(type),
             duration: config?.duration || config?.duration &#x3D;&#x3D;&#x3D; 0
                 ? config.duration
                 : this._options.duration!,
-        })
+        });
 
     private _alert(type: SnackBarType, options: ISnackBarAlert) {
         if (

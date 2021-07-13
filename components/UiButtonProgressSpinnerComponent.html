@@ -138,23 +138,18 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#color$">color$</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#isRound$">isRound$</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#loading$">loading$</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#mode$">mode$</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#value$">value$</a>
                             </li>
                         </ul>
@@ -246,7 +241,6 @@
                         <a name="color$"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             color$</b>
                             <a href="#color$"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -273,7 +267,6 @@
                         <a name="isRound$"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             isRound$</b>
                             <a href="#isRound$"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -300,7 +293,6 @@
                         <a name="loading$"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             loading$</b>
                             <a href="#loading$"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -327,7 +319,6 @@
                         <a name="mode$"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             mode$</b>
                             <a href="#mode$"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -354,7 +345,6 @@
                         <a name="value$"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             value$</b>
                             <a href="#value$"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -398,12 +388,12 @@ import { MatProgressSpinner } from &#x27;@angular/material/progress-spinner&#x27
     encapsulation: ViewEncapsulation.None,
 })
 export class UiButtonProgressSpinnerComponent implements OnDestroy {
-    public isRound$ &#x3D; new BehaviorSubject(false);
-    public loading$ &#x3D; new BehaviorSubject(false);
+    isRound$ &#x3D; new BehaviorSubject(false);
+    loading$ &#x3D; new BehaviorSubject(false);
 
-    public mode$ &#x3D; new BehaviorSubject&lt;MatProgressSpinner[&#x27;mode&#x27;]&gt;(&#x27;indeterminate&#x27;);
-    public value$ &#x3D; new BehaviorSubject&lt;MatProgressSpinner[&#x27;value&#x27;]&gt;(0);
-    public color$ &#x3D; new BehaviorSubject&lt;MatProgressSpinner[&#x27;color&#x27;]&gt;(&#x27;primary&#x27;);
+    mode$ &#x3D; new BehaviorSubject&lt;MatProgressSpinner[&#x27;mode&#x27;]&gt;(&#x27;indeterminate&#x27;);
+    value$ &#x3D; new BehaviorSubject&lt;MatProgressSpinner[&#x27;value&#x27;]&gt;(0);
+    color$ &#x3D; new BehaviorSubject&lt;MatProgressSpinner[&#x27;color&#x27;]&gt;(&#x27;primary&#x27;);
 
     ngOnDestroy() {
         this.isRound$.complete();
@@ -434,10 +424,8 @@ export class UiButtonProgressSpinnerComponent implements OnDestroy {
                 </p>
                 <pre class="line-numbers"><code class="language-scss">$spinner-diameter: 22px;
 
-@import &quot;~@angular/material/theming&quot;;
-
 /* https://github.com/angular/material2/blob/master/src/lib/button/_button-base.scss */
-$ui-button-progress-default-transition: 200ms $swift-ease-in-out-timing-function;
+$ui-button-progress-default-transition: 200ms cubic-bezier(0.35, 0, 0.25, 1);
 $ui-button-progress-opacity-transition: opacity $ui-button-progress-default-transition;
 
 ui-button-progress-spinner {

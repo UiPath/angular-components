@@ -411,19 +411,19 @@ export class UiProgressButtonDirective
     implements OnInit {
 
     @Input()
-    public progressButtonLoading &#x3D; false;
+    progressButtonLoading &#x3D; false;
 
     @Input()
-    public progressButtonMode: MatProgressBar[&#x27;mode&#x27;] &#x3D; &#x27;indeterminate&#x27;;
+    progressButtonMode: MatProgressBar[&#x27;mode&#x27;] &#x3D; &#x27;indeterminate&#x27;;
 
     @Input()
-    public progressButtonValue: MatProgressBar[&#x27;value&#x27;] &#x3D; 0;
+    progressButtonValue: MatProgressBar[&#x27;value&#x27;] &#x3D; 0;
 
     @Input()
-    public progressButtonBufferValue: MatProgressBar[&#x27;bufferValue&#x27;] &#x3D; 0;
+    progressButtonBufferValue: MatProgressBar[&#x27;bufferValue&#x27;] &#x3D; 0;
 
     @Input()
-    public progressButtonColor: MatProgressBar[&#x27;color&#x27;] &#x3D; &#x27;accent&#x27;;
+    progressButtonColor: MatProgressBar[&#x27;color&#x27;] &#x3D; &#x27;accent&#x27;;
 
     constructor(
         componentFactory: ComponentFactoryResolver,
@@ -456,23 +456,23 @@ export class UiProgressButtonDirective
 
     private _applyColor &#x3D; () &#x3D;&gt; {
         this._loader.color$.next(this.progressButtonColor);
-    }
+    };
 
     private _applyValue &#x3D; () &#x3D;&gt; {
         this._loader.value$.next(this.progressButtonValue);
-    }
+    };
 
     private _applyBufferValue &#x3D; () &#x3D;&gt; {
         this._loader.bufferValue$.next(this.progressButtonBufferValue);
-    }
+    };
 
     private _applyMode &#x3D; () &#x3D;&gt; {
         this._loader.mode$.next(this.progressButtonMode);
-    }
+    };
 
     private _applyLoading &#x3D; () &#x3D;&gt; {
         this._loader.loading$.next(this.progressButtonLoading);
-    }
+    };
 }
 </code></pre>
     </div>

@@ -104,7 +104,6 @@ This behavior results in weird jumps in certain scenarios, using <code>scroll-in
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#scrollIntoViewIfNeeded">scrollIntoViewIfNeeded</a>
                             </li>
                         </ul>
@@ -254,7 +253,6 @@ eg: <code>[uiScrollIntoView]=&quot;isFocused&quot;</code></p>
                         <a name="scrollIntoViewIfNeeded"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             scrollIntoViewIfNeeded</b>
                             <a href="#scrollIntoViewIfNeeded"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -387,10 +385,10 @@ export class UiScrollIntoViewDirective {
      *
      */
     @Input()
-    public boundary: Boundary &#x3D; &#x27;parent&#x27;;
+    boundary: Boundary &#x3D; &#x27;parent&#x27;;
 
     @Input()
-    public block: Options[&#x27;block&#x27;] &#x3D; &#x27;start&#x27;;
+    block: Options[&#x27;block&#x27;] &#x3D; &#x27;start&#x27;;
 
     /**
      * Configures if the decorated element should be scrolled into view.
@@ -398,7 +396,7 @@ export class UiScrollIntoViewDirective {
      *
      */
     @Input()
-    public set uiScrollIntoView(condition: boolean) {
+    set uiScrollIntoView(condition: boolean) {
         this._zone.runOutsideAngular(() &#x3D;&gt; {
             if (!condition) { return; }
             merge(
@@ -424,11 +422,11 @@ export class UiScrollIntoViewDirective {
      * Method that scrolls to the the provided &#x60;target&#x60;.
      *
      */
-    public scrollIntoViewIfNeeded &#x3D; scrollIntoViewIfNeeded;
+    scrollIntoViewIfNeeded &#x3D; scrollIntoViewIfNeeded;
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     constructor(
         private _element: ElementRef,
         private _zone: NgZone,

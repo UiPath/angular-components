@@ -150,13 +150,18 @@
 }
 /**
  * Grid options.
+ * &#x60;useLegacyDesign&#x60; if you still need the old layout
+ * &#x60;collapsibleFilters&#x60; is deprecated, use &#x60;collapseFiltersCount&#x60; instead
+ * &#x60;fetchStrategy&#x60; controls how searchable filters will emit queries on render
  *
  * @export
  */
 export interface GridOptions&lt;T&gt; {
     useCache?: boolean;
-    useAlternateDesign?: boolean;
+    fetchStrategy?: &#x27;eager&#x27; | &#x27;onOpen&#x27;;
+    useLegacyDesign?: boolean;
     collapsibleFilters?: boolean;
+    collapseFiltersCount?: number;
     idProperty?: keyof T;
     rowSize?: number;
 }

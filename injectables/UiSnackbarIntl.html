@@ -75,7 +75,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#closeAriaLabel">closeAriaLabel</a>
                             </li>
                         </ul>
@@ -163,7 +162,6 @@
                         <a name="closeAriaLabel"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             closeAriaLabel</b>
                             <a href="#closeAriaLabel"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -204,7 +202,7 @@ import {
 
 @Injectable()
 export class UiSnackbarIntl implements OnDestroy {
-    public closeAriaLabel &#x3D; &#x27;Close&#x27;;
+    closeAriaLabel &#x3D; &#x27;Close&#x27;;
     protected _destroyed$ &#x3D; new Subject&lt;void&gt;();
 
     ngOnDestroy() {

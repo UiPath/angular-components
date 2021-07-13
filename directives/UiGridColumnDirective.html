@@ -107,11 +107,9 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#change$">change$</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#identifier">identifier</a>
                             </li>
                         </ul>
@@ -552,7 +550,6 @@
                         <a name="change$"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             change$</b>
                             <a href="#change$"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -565,7 +562,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="228" class="link-to-prism">projects/angular/components/ui-grid/src/body/ui-grid-column.directive.ts:228</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="231" class="link-to-prism">projects/angular/components/ui-grid/src/body/ui-grid-column.directive.ts:231</a></div>
                             </td>
                         </tr>
 
@@ -585,7 +582,6 @@
                         <a name="identifier"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
                             identifier</b>
                             <a href="#identifier"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -873,14 +869,14 @@ import {
  */
 const ARIA_SORT_MAP: Record&lt;SortDirection, string&gt; &#x3D; {
     &#x27;&#x27;: &#x27;none&#x27;,
-    &#x27;asc&#x27;: &#x27;ascending&#x27;,
-    &#x27;desc&#x27;: &#x27;descending&#x27;,
+    asc: &#x27;ascending&#x27;,
+    desc: &#x27;descending&#x27;,
 };
 
 /**
  * @ignore
  */
-const REACTIVE_INPUT_LIST: (keyof UiGridColumnDirective&lt;{}&gt;)[]
+const REACTIVE_INPUT_LIST: (keyof UiGridColumnDirective&lt;Record&lt;string, unknown&gt;&gt;)[]
     &#x3D; [&#x27;sort&#x27;, &#x27;visible&#x27;, &#x27;title&#x27;, &#x27;primary&#x27;];
 
 /**
@@ -897,7 +893,7 @@ export class UiGridColumnDirective&lt;T&gt; implements OnChanges, OnDestroy {
      *
      */
     @Input()
-    public set width(value: number | string) {
+    set width(value: number | string) {
         if (
             isDevMode() &amp;&amp;
             typeof value &#x3D;&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp;
@@ -917,7 +913,7 @@ export class UiGridColumnDirective&lt;T&gt; implements OnChanges, OnDestroy {
      * Returns the column width, in &#x60;%&#x60;.
      *
      */
-    public get width() {
+    get width() {
         return this._width;
     }
 
@@ -925,7 +921,7 @@ export class UiGridColumnDirective&lt;T&gt; implements OnChanges, OnDestroy {
      * Returns the &#x60;aria-sort&#x60; associated to the current sort.
      *
      */
-    public get ariaSort() {
+    get ariaSort() {
         return ARIA_SORT_MAP[this.sort];
     }
 
@@ -935,66 +931,66 @@ export class UiGridColumnDirective&lt;T&gt; implements OnChanges, OnDestroy {
      * (used for resize identification)
      *
      */
-    public identifier &#x3D; identifier();
+    identifier &#x3D; identifier();
 
     /**
      * Configure if the column is sortable.
      *
      */
     @Input()
-    public sortable &#x3D; false;
+    sortable &#x3D; false;
 
     /**
      * Configure if the column should be included in the search.
      *
      */
     @Input()
-    public searchable &#x3D; false;
+    searchable &#x3D; false;
 
     /**
      * Configure if the column is resizeable or not.
      *
      */
     @Input()
-    public resizeable &#x3D; true;
+    resizeable &#x3D; true;
 
     /**
      * The column title.
      *
      */
     @Input()
-    public title?: string;
+    title?: string;
 
     /**
      * The property that should be loaded in the associated row cell.
      *
      */
     @Input()
-    public property?: keyof T | string; // nested property
+    property?: keyof T | string; // nested property
 
     /**
      * The method metadata used for searches.
      *
      */
     @Input()
-    public method?: string;
+    method?: string;
 
     /**
      * The current sort of the column.
      *
      */
     @Input()
-    public sort: SortDirection &#x3D; &#x27;&#x27;;
+    sort: SortDirection &#x3D; &#x27;&#x27;;
 
     /**
      * If the column should be styled as primary.
      *
      */
     @Input()
-    public get primary() {
+    get primary() {
         return this._primary;
     }
-    public set primary(primary: boolean) {
+    set primary(primary: boolean) {
         if (primary &#x3D;&#x3D;&#x3D; this._primary) { return; }
         this._primary &#x3D; !!primary;
 
@@ -1008,17 +1004,17 @@ export class UiGridColumnDirective&lt;T&gt; implements OnChanges, OnDestroy {
      *
      */
     @Input()
-    public disableToggle &#x3D; false;
+    disableToggle &#x3D; false;
 
     /**
      * If the column should be rendered, used as default state if toggle columns is turned on.
      *
      */
     @Input()
-    public get visible() {
+    get visible() {
         return this._visible;
     }
-    public set visible(visible: boolean) {
+    set visible(visible: boolean) {
         if (visible &#x3D;&#x3D;&#x3D; this._visible) { return; }
         this._visible &#x3D; !!visible;
 
@@ -1032,47 +1028,50 @@ export class UiGridColumnDirective&lt;T&gt; implements OnChanges, OnDestroy {
      *
      */
     @Input()
-    public minWidth &#x3D; 30;
+    minWidth &#x3D; 30;
 
     /**
      * If the searchable dropdown associated to the column should trigger a data fetch when opened.
      *
      */
     @Input()
-    public refetch &#x3D; false;
+    refetch &#x3D; false;
 
     /**
      * The searchable dropdown directive reference.
+     *
      * @ignore
      */
     @ContentChild(UiGridSearchFilterDirective, {
         static: true,
     })
-    public searchableDropdown?: UiGridSearchFilterDirective&lt;T&gt;;
+    searchableDropdown?: UiGridSearchFilterDirective&lt;T&gt;;
 
     /**
      * The dropdown directive reference.
+     *
      * @ignore
      */
     @ContentChild(UiGridDropdownFilterDirective, {
         static: true,
     })
-    public dropdown?: UiGridDropdownFilterDirective&lt;T&gt;;
+    dropdown?: UiGridDropdownFilterDirective&lt;T&gt;;
 
     /**
      * The view template associated to the row cell.
+     *
      * @ignore
      */
     @ContentChild(TemplateRef, {
         static: true,
     })
-    public html?: TemplateRef&lt;any&gt;;
+    html?: TemplateRef&lt;any&gt;;
 
     /**
      * Emits when reactive properties change.
      *
      */
-    public change$ &#x3D; new Subject&lt;SimpleChanges&gt;();
+    change$ &#x3D; new Subject&lt;SimpleChanges&gt;();
 
     private _width &#x3D; NaN;
     private _visible &#x3D; true;

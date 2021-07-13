@@ -659,59 +659,59 @@ export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnD
      *
      */
     @Input()
-    public fileType?: string;
+    fileType?: string;
 
     /**
      * The element reference that triggers file &#x60;browsing&#x60;.
      *
      */
     @Input()
-    public fileBrowseRef?: Element;
+    fileBrowseRef?: Element;
 
     /**
      * The element reference that serve as a &#x60;clear&#x60; trigger for the selected files.
      *
      */
     @Input()
-    public fileClearRef?: Element;
+    fileClearRef?: Element;
 
     /**
      * Configures if the &#x60;file area&#x60; accepts multiple files.
      *
      */
     @Input()
-    public multiple &#x3D; false;
+    multiple &#x3D; false;
 
     /**
      * Configures the &#x60;disabled&#x60; state of the &#x60;file area&#x60;.
      *
      */
     @Input()
-    public disabled &#x3D; false;
+    disabled &#x3D; false;
 
     /**
      * An event that emits when the file selection state &#x60;changes&#x60;.
      *
      */
     @Output()
-    public fileChange &#x3D; new EventEmitter&lt;File[]&gt;();
+    fileChange &#x3D; new EventEmitter&lt;File[]&gt;();
 
     /**
      * An event that emits when the file selection is &#x60;cleared&#x60;.
      *
      */
     @Output()
-    public fileClear &#x3D; new EventEmitter();
+    fileClear &#x3D; new EventEmitter();
 
     @HostBinding(&#x27;class.file-dragging&#x27;)
     protected _isDragging &#x3D; false;
 
-    private _disposalCallbacks: Array&lt;() &#x3D;&gt; void&gt; &#x3D; [];
+    private _disposalCallbacks: (() &#x3D;&gt; void)[] &#x3D; [];
     private _fileInput: HTMLInputElement;
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     constructor(
         private _elementRef: ElementRef,
         private _renderer: Renderer2,
@@ -734,8 +734,8 @@ export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnD
     }
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     ngAfterViewInit() {
         if (this.multiple) {
             this._renderer.setProperty(this._fileInput, &#x27;multiple&#x27;, &#x27;true&#x27;);
@@ -781,8 +781,8 @@ export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnD
     }
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     ngOnDestroy() {
         this._disposalCallbacks.forEach(dispose &#x3D;&gt; {
             dispose();
@@ -880,7 +880,7 @@ export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnD
     private _preventEnterOnChildren(element: Element) {
         if (!isInternetExplorer()) { return; }
 
-        if (!!element.children.length) {
+        if (element.children.length) {
             const children: Element[] &#x3D; Array.from(element.children);
 
             for (const child of children) {

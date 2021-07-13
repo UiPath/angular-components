@@ -265,41 +265,39 @@ export class UiClipboardDirective implements OnInit, OnDestroy {
      *
      */
     @Input()
-    public uiClipboard?: Element;
+    uiClipboard?: Element;
 
     /**
      * Event that emits when the content is copied succesfully to the clipboard.
      *
      */
     @Output()
-    public clipboardSuccess: EventEmitter&lt;Clipboard.Event&gt; &#x3D; new EventEmitter();
+    clipboardSuccess: EventEmitter&lt;Clipboard.Event&gt; &#x3D; new EventEmitter();
 
     /**
      * Event that emits when the content could not be copied to the clipboard.
      *
      */
     @Output()
-    public clipboardError: EventEmitter&lt;Clipboard.Event&gt; &#x3D; new EventEmitter();
+    clipboardError: EventEmitter&lt;Clipboard.Event&gt; &#x3D; new EventEmitter();
 
     private _clipboard!: Clipboard;
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     constructor(private _eltRef: ElementRef) { }
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     ngOnInit() {
         if (!this.uiClipboard) {
             throw new Error(&#x27;Missing uiClipboard reference&#x27;);
         }
 
         this._clipboard &#x3D; new Clipboard(this._eltRef.nativeElement, {
-            target: () &#x3D;&gt; {
-                return this.uiClipboard!;
-            },
+            target: () &#x3D;&gt; this.uiClipboard!,
         });
 
         this._clipboard.on(&#x27;success&#x27;, (e) &#x3D;&gt; {
@@ -312,8 +310,8 @@ export class UiClipboardDirective implements OnInit, OnDestroy {
     }
 
     /**
-      * @ignore
-      */
+     * @ignore
+     */
     ngOnDestroy() {
         if (this._clipboard) {
             this._clipboard.destroy();
