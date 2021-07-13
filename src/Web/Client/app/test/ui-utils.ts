@@ -446,6 +446,8 @@ class SuggestUtils<T> {
         if (!!config && strategy === 'eager') {
             this._utils.expectAndFlush(config.stub, config.httpMock);
         }
+
+        return listItem;
     };
 
     public getValue = (selector: string, debugEl = this._utils.fixture.debugElement) =>
