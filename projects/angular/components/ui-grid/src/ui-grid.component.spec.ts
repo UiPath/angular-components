@@ -67,6 +67,7 @@ describe('Component: UiGrid', () => {
     @Component({
         template: `
             <ui-grid [data]="data"
+                     [disableSelectionByEntry]="disableSelectionByEntry"
                      [refreshable]="refreshable"
                      [selectable]="selectable"
                      [showHeaderRow]="showHeaderRow"
@@ -113,6 +114,7 @@ describe('Component: UiGrid', () => {
         refreshable?: boolean;
         showHeaderRow = true;
         virtualScroll = false;
+        disableSelectionByEntry: () => null | string = () => null;
     }
     describe('Scenario: simple grid', () => {
         let fixture: ComponentFixture<TestFixtureSimpleGridComponent>;
@@ -635,6 +637,39 @@ describe('Component: UiGrid', () => {
                         expect(infoMessage.nativeElement.innerText).toEqual(intl.translateMultiPageSelectionCount(1));
                     });
 
+                    it('should disable selection for rows that do not pass the disableSelectionByEntry function if it is set', () => {
+                        const unselectableReason = 'unselectable';
+                        const disableSelectionByEntry = () => unselectableReason;
+
+                        component.disableSelectionByEntry = disableSelectionByEntry;
+                        grid.selectionManager.disableSelectionByEntry = disableSelectionByEntry;
+                        fixture.detectChanges();
+
+                        const checkboxHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell.ui-grid-checkbox-cell'));
+                        const matCheckbox = checkboxHeader.query(By.css('mat-checkbox')).componentInstance as MatCheckbox;
+
+                        expect(matCheckbox.checked).toEqual(false);
+
+                        const checkboxInput = checkboxHeader.query(By.css('input'));
+                        checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+
+                        fixture.detectChanges();
+
+                        const rowCheckboxList = fixture.debugElement
+                            .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell mat-checkbox'))
+                            .map(el => el.componentInstance as MatCheckbox);
+
+                        expect(rowCheckboxList.length).toEqual(50);
+
+                        rowCheckboxList.forEach(checkbox => {
+                            expect(checkbox.checked).toEqual(false);
+                            expect(checkbox.disabled).toEqual(true);
+                            expect(checkbox._elementRef.nativeElement.querySelector('input')).toHaveAttr('aria-label', unselectableReason);
+                        });
+
+                        expect(grid.selectionManager.selected.length).toEqual(0);
+                        expect(grid.isEveryVisibleRowChecked).toEqual(false);
+                    });
                 });
             });
         });
