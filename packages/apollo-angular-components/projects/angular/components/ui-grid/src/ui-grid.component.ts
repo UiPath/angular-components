@@ -335,6 +335,14 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     showHeaderRow = true;
 
     /**
+     * Configure a function that receives the whole grid row, and returns
+     * disabled message if the row should not be selectable
+     *
+     */
+    @Input()
+    disableSelectionByEntry: (entry: T) => null | string;
+
+    /**
      * Emits an event with the sort model when a column sort changes.
      *
      */
@@ -601,6 +609,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     ) {
         super();
 
+        this.disableSelectionByEntry = () => null;
         this.useLegacyDesign = _gridOptions?.useLegacyDesign ?? false;
         this._fetchStrategy = _gridOptions?.fetchStrategy ?? 'onOpen';
         this.rowSize = _gridOptions?.rowSize ?? DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
@@ -696,6 +705,8 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * @ignore
      */
     ngAfterContentInit() {
+        this.selectionManager.disableSelectionByEntry = this.disableSelectionByEntry;
+
         this.liveAnnouncerManager = new LiveAnnouncerManager(
             msg => this._queuedAnnouncer.enqueue(msg),
             this.intl,

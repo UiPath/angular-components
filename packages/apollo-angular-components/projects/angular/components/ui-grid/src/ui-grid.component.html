@@ -262,13 +262,15 @@
              role="gridcell">
             <div *ngIf="selectable"
                  class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
-                <mat-checkbox (click)="checkShift($event)"
+                <mat-checkbox *ngLet="disableSelectionByEntry(row) as disabledReason"
+                              (click)="checkShift($event)"
                               (keyup.shift.space)="checkShift($event)"
                               (keyup.space)="checkShift($event)"
                               (change)="handleSelection(index, row)"
                               [checked]="selectionManager.isSelected(row)"
-                              [matTooltip]="checkboxTooltip(row)"
-                              [aria-label]="checkboxTooltip(row)"
+                              [matTooltip]="disabledReason || checkboxTooltip(row)"
+                              [aria-label]="disabledReason || checkboxTooltip(row)"
+                              [disabled]="!!disabledReason"
                               tabindex="0">
                 </mat-checkbox>
             </div>
@@ -287,13 +289,15 @@
                     selectable"
              class="ui-grid-cell ui-grid-checkbox-cell ui-grid-feature-cell"
              role="gridcell">
-            <mat-checkbox (click)="checkShift($event)"
+            <mat-checkbox *ngLet="disableSelectionByEntry(row) as disabledReason"
+                          (click)="checkShift($event)"
                           (keyup.shift.space)="checkShift($event)"
                           (keyup.space)="checkShift($event)"
                           (change)="handleSelection(index, row)"
                           [checked]="selectionManager.isSelected(row)"
-                          [matTooltip]="checkboxTooltip(row)"
-                          [aria-label]="checkboxTooltip(row)"
+                          [matTooltip]="disabledReason || checkboxTooltip(row)"
+                          [aria-label]="disabledReason || checkboxTooltip(row)"
+                          [disabled]="disabledReason"
                           tabindex="0">
             </mat-checkbox>
         </div>

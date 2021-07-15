@@ -1,3 +1,7 @@
+# v12.1.0 (2021-07-15)
+* **chore** bump angular to 12.1.2
+* **grid** disable selection by row data
+
 # v12.0.0 (2021-07-13)
 
 # v12.0.0-rc.3 (2021-06-18)
