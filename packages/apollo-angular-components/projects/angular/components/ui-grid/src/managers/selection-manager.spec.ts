@@ -204,5 +204,23 @@ describe('Component: UiGrid', () => {
                 manager.select(...newEntityList);
             });
         });
+
+        describe('Scenario: disableSelectionByEntry is set', () => {
+            const selectedEntityList = generateListFactory(generateEntity)('random');
+
+            it('should not be able to select if function returns string', () => {
+                manager.disableSelectionByEntry = () => 'disabled';
+                manager.select(...selectedEntityList);
+
+                expect(manager.selected.length).toEqual(0);
+            });
+
+            it('should select if function returns null', () => {
+                manager.disableSelectionByEntry = () => null;
+                manager.select(...selectedEntityList);
+
+                expect(manager.selected.length).toEqual(30);
+            });
+        });
     });
 });
