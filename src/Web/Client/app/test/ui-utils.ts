@@ -32,6 +32,7 @@ export class IntegrationUtils<T> {
 
     public grid = new GridUtils<T>(this);
     public suggest = new SuggestUtils<T>(this);
+    public uiUtils = new UIUtils(this.fixture.nativeElement);
 
     constructor(
         public fixture: ComponentFixture<T>,
@@ -101,9 +102,7 @@ export class IntegrationUtils<T> {
     };
 
     public setInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
-        const input = this.getNativeElement<HTMLInputElement>(selector, debugEl)!;
-        input.value = value;
-        input.dispatchEvent(EventGenerator.input());
+        const input = this.uiUtils.setInput(selector, value, debugEl.nativeElement);
         this.fixture.detectChanges();
         return input;
     };
@@ -131,10 +130,7 @@ export class IntegrationUtils<T> {
     };
 
     public toggleSlider = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.getDebugElement(selector, debugEl)
-            .query(By.css('.mat-slide-toggle-label'))
-            .nativeElement
-            .dispatchEvent(EventGenerator.click);
+        this.uiUtils.toggleSlider(selector, debugEl.nativeElement);
 
     public setSliderState(selector: string, state: boolean, debugEl = this.fixture.debugElement) {
         const isToggled = this.isToggleChecked(selector, debugEl);
@@ -147,10 +143,7 @@ export class IntegrationUtils<T> {
     }
 
     public isToggleChecked = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.getDebugElement(selector, debugEl)
-            .nativeElement
-            .classList
-            .contains('mat-checked');
+        this.uiUtils.isToggleChecked(selector, debugEl.nativeElement);
 
     public isRadioButtonChecked = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
@@ -184,6 +177,33 @@ export class IntegrationUtils<T> {
 
     private _isCheckBoxDisabled = (debugEl: DebugElement) =>
         debugEl.nativeElement.classList.contains('mat-checkbox-disabled');
+}
+
+export class UIUtils {
+    private _rootEl: HTMLElement;
+
+    constructor(element: HTMLElement) {
+        this._rootEl = element;
+    }
+
+    getElement = <T extends HTMLElement>(selector: string, element: HTMLElement = this._rootEl) =>
+        element.querySelector(selector) as T | null;
+
+    isToggleChecked = (selector: string, element: HTMLElement = this._rootEl) =>
+        this.getElement(selector, element)?.classList.contains('mat-checked');
+
+    toggleSlider = (selector: string, element: HTMLElement = this._rootEl) =>
+        this.getElement(`${selector} .mat-slide-toggle-label`, element)?.dispatchEvent(EventGenerator.click);
+
+    setInput = (selector: string, value: any, element: HTMLElement = this._rootEl) => {
+        const input = this.getElement<HTMLInputElement>(selector, element)!;
+        input.value = value;
+        input.dispatchEvent(EventGenerator.input());
+        return input;
+    };
+
+    click = (selector: string, element: HTMLElement = this._rootEl) =>
+        this.getElement(selector, element)!.dispatchEvent(EventGenerator.click);
 }
 
 class GridUtils<T> {
