@@ -318,12 +318,12 @@ class GridUtils<T> {
 
         this._utils.click(`${gridSelector} [data-row-index="${rowNumber}"] ${menu}`, debugEl);
         this._utils.fixture.detectChanges();
-
         const nodes = this._utils.getAllDebugElements('.cdk-overlay-container .mat-menu-item', debugEl);
 
         return nodes.map(item => ({
             text: item.query(By.css('span')).nativeElement.innerText,
             href: (item.nativeElement as HTMLAnchorElement).href as string | undefined,
+            node: item.nativeElement,
         }));
     };
 
