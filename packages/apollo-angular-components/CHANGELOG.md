@@ -1,3 +1,9 @@
+# v12.2.0 (2021-09-09)
+* **chore** bump angular to 12.2.5
+* **chore** add vscode theming colors
+* **suggest** range loader emit issues
+* **deps** bump tar from 4.4.8 to 4.4.15
+
 # v12.1.0 (2021-07-15)
 * **chore** bump angular to 12.1.2
 * **grid** disable selection by row data

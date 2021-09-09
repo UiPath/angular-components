@@ -126,13 +126,13 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
                         startWith([] as VirtualScrollItem[]),
                     ),
                 ),
+                distinctUntilChanged(([list1], [list2]) => `${list1.start}${list1.end}` === `${list2.start}${list2.end}`),
                 debounceTime(100),
                 // filter early, in case of false emissions like { 0,0 }
                 filter(([{ start, end }]) => this._isValidRange({
                     start,
                     end,
                 })),
-                distinctUntilChanged(([list1], [list2]) => `${list1.start}${list1.end}` === `${list2.start}${list2.end}`),
                 filter(this._filterTouchedRange),
                 map(([{ start, end }, items]) => ({
                     ...this._adjustLoadingRange(start, end, this.buffer, items),
