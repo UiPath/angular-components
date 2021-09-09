@@ -1187,8 +1187,8 @@ const sharedSpecifications = (
 
                 const word = faker.random.word();
                 const wordWithWhitespace = `${Array(6).fill(' ').join('')
-                }${word}${Array(6).fill(' ').join('')
-                }`;
+                    }${word}${Array(6).fill(' ').join('')
+                    }`;
 
                 searchFor(wordWithWhitespace, fixture);
                 await fixture.whenStable();
@@ -1390,7 +1390,7 @@ const sharedSpecifications = (
         const items = generateSuggetionItemList(100);
         let overrideItems: ISuggestValue[] | undefined;
 
-        const asyncSearchFactory = (query = '', fetchSize = 10, start = 0) => {
+        const asyncSearchFactory = (delayTime = 0) => (query = '', fetchSize = 10, start = 0) => {
             const source = overrideItems ?? items;
 
             const results = query !== '' ?
@@ -1405,7 +1405,7 @@ const sharedSpecifications = (
                             data: filteredItems.slice(start, start + fetchSize),
                         } as ISuggestValues<any>),
                     ),
-                    delay(0),
+                    delay(delayTime),
                 );
         };
 
@@ -1413,7 +1413,7 @@ const sharedSpecifications = (
 
         beforeEach(() => {
             overrideItems = undefined;
-            uiSuggest.searchSourceFactory = asyncSearchFactory;
+            uiSuggest.searchSourceFactory = asyncSearchFactory();
             sourceSpy = spyOn<UiSuggestComponent, any>(uiSuggest, 'searchSourceFactory');
             sourceSpy.and.callThrough();
             component.searchable = true;
@@ -1452,6 +1452,47 @@ const sharedSpecifications = (
 
                 expect(sourceSpy).toHaveBeenCalled();
             }));
+
+            it('should call fetch 2 times if fetchStrategy is `onOpen`, direction is `up` and suggest gets opened twice', waitForAsync(
+                async () => {
+                    component.fetchStrategy = 'onOpen';
+                    component.direction = 'up';
+                    overrideItems = new Array(6).fill(0).map((_, i) => ({
+                        id: i + 1,
+                        text: `Suggestion ${i + 1}`,
+                    }));
+                    uiSuggest.displayCount = 5;
+                    uiSuggest.searchSourceFactory = asyncSearchFactory(100);
+                    sourceSpy = spyOn<UiSuggestComponent, any>(uiSuggest, 'searchSourceFactory');
+                    sourceSpy.and.callThrough();
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+
+                    expect(sourceSpy).toHaveBeenCalledTimes(0);
+
+                    const display = fixture.debugElement.query(By.css('.display'));
+                    display.nativeElement.dispatchEvent(EventGenerator.click);
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+
+                    fixture.detectChanges();
+
+                    expect(sourceSpy).toHaveBeenCalledTimes(2);
+
+                    uiSuggest.close();
+                    fixture.detectChanges();
+
+                    display.nativeElement.dispatchEvent(EventGenerator.click);
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+
+                    fixture.detectChanges();
+
+                    expect(sourceSpy).toHaveBeenCalledTimes(4);
+                }));
 
             it(`should fetch call after the 'minChars' is met`, waitForAsync(async () => {
                 const MIN_CHARS = 5;
