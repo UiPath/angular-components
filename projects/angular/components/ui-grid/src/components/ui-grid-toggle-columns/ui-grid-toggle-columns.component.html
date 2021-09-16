@@ -36,6 +36,7 @@
             </a>
 
             <mat-option *ngFor="let o of options"
+                        [matTooltip]="o.label"
                         [disabled]="o.disabled"
                         [value]="o.property">{{ o.label }}</mat-option>
         </mat-optgroup>
