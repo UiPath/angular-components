@@ -1,3 +1,6 @@
+# v12.3.0 (2021-09-17)
+* **grid** add tooltip for columns and filters
+
 # v12.2.0 (2021-09-09)
 * **chore** bump angular to 12.2.5
 * **chore** add vscode theming colors

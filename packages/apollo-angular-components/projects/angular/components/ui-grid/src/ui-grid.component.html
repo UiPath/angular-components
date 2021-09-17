@@ -520,6 +520,7 @@
                       [overlapTrigger]="true">
                 <button *ngIf="column.dropdown.showAllOption"
                         [class.active]="column.dropdown.value == null"
+                        [matTooltip]="intl.noFilterPlaceholder"
                         (click)="filterManager.dropdownUpdate(column!, undefined)"
                         type="button"
                         mat-menu-item>
@@ -527,6 +528,7 @@
                 </button>
                 <button *ngFor="let dropdownItem of column.dropdown.items"
                         [class.active]="column.dropdown.value?.label === dropdownItem.label"
+                        [matTooltip]="intl.translateDropdownOption(dropdownItem)"
                         (click)="filterManager.dropdownUpdate(column, dropdownItem)"
                         type="button"
                         mat-menu-item>
