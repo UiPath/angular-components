@@ -310,6 +310,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     /**
+     * Configure if the selected value shown should respect the template in dropdown
+     *
+     */
+    @Input()
+    displayTemplateValue = false;
+
+    /**
      * Determines if there are no results to display.
      *
      */
