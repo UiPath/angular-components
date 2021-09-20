@@ -35,24 +35,32 @@
          matRipple
          class="display"
          role="combobox">
-        <div [matTooltip]="tooltip"
-             class="display-container text-ellipsis">
-            <span *ngIf="!isFormControl && placeholder"
-                  class="display-title"
-                  aria-hidden="true">
-                {{ placeholder }}:
-            </span>
-            <span class="display-value">
-                <ng-container *ngIf="!!value.length; else allLabel">
-                    <ng-container *ngFor="let option of value; let i = index">
-                        {{ intl.translateLabel(option.text) + (i === value.length - 1 ? '' : ', ') }}
+        <ng-container *ngIf="itemTemplate && !multiple && value.length && displayTemplateValue; else showDefaultValue">
+            <ng-container *ngTemplateOutlet="itemTemplate; context: {
+                                                $implicit: value[0]
+                                            }">
+            </ng-container>
+        </ng-container>
+        <ng-template #showDefaultValue>
+            <div [matTooltip]="tooltip"
+                 class="display-container text-ellipsis">
+                <span *ngIf="!isFormControl && placeholder"
+                      class="display-title"
+                      aria-hidden="true">
+                    {{ placeholder }}:
+                </span>
+                <span class="display-value">
+                    <ng-container *ngIf="!!value.length; else allLabel">
+                        <ng-container *ngFor="let option of value; let i = index">
+                            {{ intl.translateLabel(option.text) + (i === value.length - 1 ? '' : ', ') }}
+                        </ng-container>
                     </ng-container>
-                </ng-container>
-                <ng-template #allLabel>
-                    {{ defaultValue }}
-                </ng-template>
-            </span>
-        </div>
+                    <ng-template #allLabel>
+                        {{ defaultValue }}
+                    </ng-template>
+                </span>
+            </div>
+        </ng-template>
         <ng-container *ngIf="!readonly">
             <!-- aria-hidden will override the default from mat-icon -->
             <mat-icon *ngIf="value.length && clearable"

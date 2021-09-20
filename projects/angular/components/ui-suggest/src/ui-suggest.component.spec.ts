@@ -78,6 +78,7 @@ class UiSuggestFixtureDirective {
     readonly?: boolean;
     enableCustomValue?: boolean;
     items?: ISuggestValue[];
+    displayTemplateValue?: boolean;
     direction: 'up' | 'down' = 'down';
     displayPriority: 'default' | 'selected' = 'default';
     fetchStrategy: 'eager' | 'onOpen' = 'eager';
@@ -2176,6 +2177,7 @@ describe('Component: UiSuggest', () => {
                             [multiple]="multiple"
                             [readonly]="readonly"
                             [fetchStrategy]="fetchStrategy"
+                            [displayTemplateValue]="displayTemplateValue"
                             [minChars]="minChars">
                             <ng-template let-item >
                                 <div class="item-template">{{ item.text }}</div>
@@ -2237,6 +2239,30 @@ describe('Component: UiSuggest', () => {
                     expect(item.text).toBe(generatedItems[index].nativeElement.innerText);
                 });
             }));
+
+            [false, true].forEach((multiple) => {
+                [false, true].forEach((displayTemplateValue) => {
+                    it(`should ${!multiple && displayTemplateValue ? '' : 'NOT'} render the displayed value with custom` +
+                        `template if displayTemplateValue is ${displayTemplateValue}, multiple is ${multiple}`, () => {
+                            component.displayTemplateValue = displayTemplateValue;
+                            component.multiple = multiple;
+
+                            const items = generateSuggetionItemList(5);
+                            component.items = items;
+                            component.value = [faker.helpers.randomize(items)];
+
+                            fixture.detectChanges();
+                            const display = fixture.debugElement.query(By.css('.item-template'));
+
+                            if (!multiple && displayTemplateValue) {
+                                expect(display).toBeDefined();
+                            } else {
+                                expect(display).toBeNull();
+                            }
+                        });
+                });
+            });
+
         });
     });
 });
