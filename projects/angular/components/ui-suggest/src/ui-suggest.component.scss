@@ -20,6 +20,15 @@ $componentName: "ui-suggest";
         @extend %ellipse;
     }
 
+    .item-max-count-info-message {
+        .mat-divider {
+            margin: 0;
+        }
+
+        padding: 0 16px;
+        display: block;
+    }
+
     &.disabled {
         opacity: 0.38;
     }

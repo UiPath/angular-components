@@ -310,6 +310,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     /**
+     * Render an additional info message if a specific count of items is rendered
+     * Useful in case search results are capped and the user needs to adjust the query
+     */
+    @Input()
+    searchableCountInfo?: { count: number; message: string };
+
+    /**
      * Configure if the selected value shown should respect the template in dropdown
      *
      */
