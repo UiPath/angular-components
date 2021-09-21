@@ -1,3 +1,8 @@
+# v12.4.0 (2021-09-21)
+* **suggest** render a searchable info message
+* **suggest** add custom item template for value
+* **chore** enable bracketPairColorization
+
 # v12.3.0 (2021-09-17)
 * **grid** add tooltip for columns and filters
 

@@ -28,6 +28,7 @@ import {
     ComponentFixture,
     discardPeriodicTasks,
     fakeAsync,
+    flush,
     TestBed,
     tick,
     waitForAsync,
@@ -59,6 +60,8 @@ import { UiSuggestModule } from './ui-suggest.module';
 
 type SuggestProperties = 'disabled' | 'readonly';
 
+const SEARCH_DEBOUNCE = 300 + 100;
+const VIRTUAL_SCROLL_DEBOUNCE = 100 + 100;
 @Directive()
 class UiSuggestFixtureDirective {
     @ViewChild(UiSuggestComponent, {
@@ -72,12 +75,14 @@ class UiSuggestFixtureDirective {
 
     clearable?: boolean;
     searchable?: boolean;
+    searchableCountInfo?: { count: number; message: string };
     alwaysExpanded?: boolean;
     disabled?: boolean;
     multiple?: boolean;
     readonly?: boolean;
     enableCustomValue?: boolean;
     items?: ISuggestValue[];
+    displayTemplateValue?: boolean;
     direction: 'up' | 'down' = 'down';
     displayPriority: 'default' | 'selected' = 'default';
     fetchStrategy: 'eager' | 'onOpen' = 'eager';
@@ -100,6 +105,10 @@ const searchFor = (value: string, fixture: ComponentFixture<UiSuggestFixtureDire
 
     fixture.detectChanges();
 
+    populateSearchFor(value, fixture);
+};
+
+const populateSearchFor = (value: string, fixture: ComponentFixture<UiSuggestFixtureDirective>) => {
     const input = fixture.debugElement.query(By.css('input'));
     input.nativeElement.value = value;
     input.nativeElement.dispatchEvent(EventGenerator.input());
@@ -1384,9 +1393,6 @@ const sharedSpecifications = (
     });
 
     describe('Source: async data', () => {
-        const SEARCH_DEBOUNCE = 300 + 100;
-        const VIRTUAL_SCROLL_DEBOUNCE = 100 + 100;
-
         const items = generateSuggetionItemList(100);
         let overrideItems: ISuggestValue[] | undefined;
 
@@ -2176,6 +2182,8 @@ describe('Component: UiSuggest', () => {
                             [multiple]="multiple"
                             [readonly]="readonly"
                             [fetchStrategy]="fetchStrategy"
+                            [displayTemplateValue]="displayTemplateValue"
+                            [searchableCountInfo]="searchableCountInfo"
                             [minChars]="minChars">
                             <ng-template let-item >
                                 <div class="item-template">{{ item.text }}</div>
@@ -2237,6 +2245,78 @@ describe('Component: UiSuggest', () => {
                     expect(item.text).toBe(generatedItems[index].nativeElement.innerText);
                 });
             }));
+
+            [false, true].forEach((multiple) => {
+                [false, true].forEach((displayTemplateValue) => {
+                    it(`should ${!multiple && displayTemplateValue ? '' : 'NOT'} render the displayed value with custom` +
+                        `template if displayTemplateValue is ${displayTemplateValue}, multiple is ${multiple}`, () => {
+                            component.displayTemplateValue = displayTemplateValue;
+                            component.multiple = multiple;
+
+                            const items = generateSuggetionItemList(5);
+                            component.items = items;
+                            component.value = [faker.helpers.randomize(items)];
+
+                            fixture.detectChanges();
+                            const display = fixture.debugElement.query(By.css('.item-template'));
+
+                            if (!multiple && displayTemplateValue) {
+                                expect(display).toBeDefined();
+                            } else {
+                                expect(display).toBeNull();
+                            }
+                        });
+                });
+            });
+
+            [undefined, {
+                count: 5,
+                message: '5 might not be all',
+            }].forEach((searchableCountInfo) => {
+                [0, 3, 5, 7].forEach((itemsCount) => {
+                    [false, true].forEach((searchable) => {
+                        const shouldRenderMessage = itemsCount > 0 && itemsCount === searchableCountInfo?.count && searchable;
+
+                        it(
+                            `should ${shouldRenderMessage ? '' : 'NOT'} render the max count info ` +
+                            `is ${searchable ? '' : 'NOT'} searchable ` +
+                            `if searchableCountInfo is [${JSON.stringify(searchableCountInfo)}], and items rendered are ${itemsCount}`,
+                            fakeAsync(() => {
+                                component.searchableCountInfo = searchableCountInfo;
+                                component.searchable = searchable;
+
+                                const items = generateSuggetionItemList(itemsCount, 'a');
+                                component.items = items;
+
+                                fixture.detectChanges();
+                                tick(SEARCH_DEBOUNCE);
+                                const display = fixture.debugElement.query(By.css('.display'));
+
+                                display.nativeElement.dispatchEvent(EventGenerator.click);
+                                fixture.detectChanges();
+
+                                const customInfoMessageCount = fixture.debugElement.query(By.css('.item-max-count-info-message'));
+
+                                if (shouldRenderMessage) {
+                                    expect(customInfoMessageCount).toBeDefined();
+                                    expect(customInfoMessageCount.nativeNode!.innerText.includes(searchableCountInfo!.message)).toBeTrue();
+
+                                    populateSearchFor('a', fixture);
+                                    tick(SEARCH_DEBOUNCE);
+                                    fixture.detectChanges();
+
+                                    const noMessage = fixture.debugElement.query(By.css('.item-max-count-info-message'));
+                                    expect(noMessage).toBeNull();
+                                } else {
+                                    expect(customInfoMessageCount).toBeNull();
+                                }
+
+                                flush();
+                                discardPeriodicTasks();
+                            }));
+                    });
+                });
+            });
         });
     });
 });
