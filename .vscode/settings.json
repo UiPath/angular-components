@@ -30,4 +30,5 @@
         "titleBar.inactiveForeground": "#e7e7e799"
     },
     "peacock.color": "#2e010a",
+    "editor.bracketPairColorization.enabled": true,
 }
