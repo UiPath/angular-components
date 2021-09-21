@@ -28,6 +28,7 @@ import {
     ComponentFixture,
     discardPeriodicTasks,
     fakeAsync,
+    flush,
     TestBed,
     tick,
     waitForAsync,
@@ -59,6 +60,8 @@ import { UiSuggestModule } from './ui-suggest.module';
 
 type SuggestProperties = 'disabled' | 'readonly';
 
+const SEARCH_DEBOUNCE = 300 + 100;
+const VIRTUAL_SCROLL_DEBOUNCE = 100 + 100;
 @Directive()
 class UiSuggestFixtureDirective {
     @ViewChild(UiSuggestComponent, {
@@ -72,6 +75,7 @@ class UiSuggestFixtureDirective {
 
     clearable?: boolean;
     searchable?: boolean;
+    searchableCountInfo?: { count: number; message: string };
     alwaysExpanded?: boolean;
     disabled?: boolean;
     multiple?: boolean;
@@ -101,6 +105,10 @@ const searchFor = (value: string, fixture: ComponentFixture<UiSuggestFixtureDire
 
     fixture.detectChanges();
 
+    populateSearchFor(value, fixture);
+};
+
+const populateSearchFor = (value: string, fixture: ComponentFixture<UiSuggestFixtureDirective>) => {
     const input = fixture.debugElement.query(By.css('input'));
     input.nativeElement.value = value;
     input.nativeElement.dispatchEvent(EventGenerator.input());
@@ -1385,9 +1393,6 @@ const sharedSpecifications = (
     });
 
     describe('Source: async data', () => {
-        const SEARCH_DEBOUNCE = 300 + 100;
-        const VIRTUAL_SCROLL_DEBOUNCE = 100 + 100;
-
         const items = generateSuggetionItemList(100);
         let overrideItems: ISuggestValue[] | undefined;
 
@@ -2178,6 +2183,7 @@ describe('Component: UiSuggest', () => {
                             [readonly]="readonly"
                             [fetchStrategy]="fetchStrategy"
                             [displayTemplateValue]="displayTemplateValue"
+                            [searchableCountInfo]="searchableCountInfo"
                             [minChars]="minChars">
                             <ng-template let-item >
                                 <div class="item-template">{{ item.text }}</div>
@@ -2263,6 +2269,54 @@ describe('Component: UiSuggest', () => {
                 });
             });
 
+            [undefined, {
+                count: 5,
+                message: '5 might not be all',
+            }].forEach((searchableCountInfo) => {
+                [0, 3, 5, 7].forEach((itemsCount) => {
+                    [false, true].forEach((searchable) => {
+                        const shouldRenderMessage = itemsCount > 0 && itemsCount === searchableCountInfo?.count && searchable;
+
+                        it(
+                            `should ${shouldRenderMessage ? '' : 'NOT'} render the max count info ` +
+                            `is ${searchable ? '' : 'NOT'} searchable ` +
+                            `if searchableCountInfo is [${JSON.stringify(searchableCountInfo)}], and items rendered are ${itemsCount}`,
+                            fakeAsync(() => {
+                                component.searchableCountInfo = searchableCountInfo;
+                                component.searchable = searchable;
+
+                                const items = generateSuggetionItemList(itemsCount, 'a');
+                                component.items = items;
+
+                                fixture.detectChanges();
+                                tick(SEARCH_DEBOUNCE);
+                                const display = fixture.debugElement.query(By.css('.display'));
+
+                                display.nativeElement.dispatchEvent(EventGenerator.click);
+                                fixture.detectChanges();
+
+                                const customInfoMessageCount = fixture.debugElement.query(By.css('.item-max-count-info-message'));
+
+                                if (shouldRenderMessage) {
+                                    expect(customInfoMessageCount).toBeDefined();
+                                    expect(customInfoMessageCount.nativeNode!.innerText.includes(searchableCountInfo!.message)).toBeTrue();
+
+                                    populateSearchFor('a', fixture);
+                                    tick(SEARCH_DEBOUNCE);
+                                    fixture.detectChanges();
+
+                                    const noMessage = fixture.debugElement.query(By.css('.item-max-count-info-message'));
+                                    expect(noMessage).toBeNull();
+                                } else {
+                                    expect(customInfoMessageCount).toBeNull();
+                                }
+
+                                flush();
+                                discardPeriodicTasks();
+                            }));
+                    });
+                });
+            });
         });
     });
 });
