@@ -79,8 +79,11 @@ export class IntegrationUtils<T> {
             .dispatchEvent(EventGenerator.keyDown(Key.Enter));
 
     public expectAndFlush = (stub: IStubEndpoint, httpClient: HttpTestingController, params: Record<string, string> = {}) => {
+        const urlWithParams = stub.url.includes('?');
+
         const testReq = httpClient.expectOne(request => {
-            const urlMatch = request.url.includes(stub.url);
+            const urlMatch = request[urlWithParams ? 'urlWithParams' : 'url'].includes(stub.url);
+
             const paramMatch = Object.entries(params).every(([key, value]) => request.params.get(key) === value);
             return urlMatch && paramMatch;
         });
