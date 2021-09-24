@@ -30,6 +30,9 @@ export class UiAutoAccessibleLabelDirective {
     @Input()
     matTooltip?: string;
 
+    @Input('disable-auto-accessible-label')
+    disableAutoAccessibleLabel?: boolean;
+
     constructor(
         elementRef: ElementRef,
         @Optional() tooltip?: MatTooltip,
