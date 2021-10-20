@@ -26,6 +26,7 @@ module.exports = {
                 'testing',
                 'virtual-scroll-range-loader',
                 'virtual-scroll-viewport-resize',
+                'matformfield-required',
             ];
 
             return [2, 'always', scopeList];
