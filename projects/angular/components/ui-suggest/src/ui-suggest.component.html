@@ -16,7 +16,7 @@
          [uiAutofocus]="!isOpen && focus"
          [refocus]="!isOpen && focus"
          [matRippleDisabled]="isFormControl"
-         [attr.aria-label]="placeholder"
+         [attr.aria-label]="ariaLabel + placeholder"
          [attr.aria-describedby]="describedBy"
          [attr.aria-required]="required"
          [attr.aria-disabled]="disabled || readonly"

@@ -243,6 +243,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     /**
+     * Aria label for the combo box
+     *
+     */
+    @Input()
+    ariaLabel = '';
+
+    /**
      * Reference for custom item template
      *
      */
