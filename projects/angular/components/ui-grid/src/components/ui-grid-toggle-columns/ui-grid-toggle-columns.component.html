@@ -4,7 +4,7 @@
             (click)="selectColumns!.open(); selectColumns!.focus()"
             type="button"
             mat-button>
-        <mat-icon>view_column</mat-icon>
+        <mat-icon class="material-icons-outlined">view_column</mat-icon>
         <span>{{togglePlaceholderTitle}}</span>
     </button>
 
@@ -18,7 +18,7 @@
                 multiple>
         <mat-optgroup>
             <span>
-                <mat-icon>view_column</mat-icon> {{ toggleTitle }}
+                <mat-icon class="material-icons-outlined">view_column</mat-icon> {{ toggleTitle }}
             </span>
 
             <a #resetBtn
@@ -53,6 +53,6 @@
             matTooltipPosition="right"
             type="button"
             mat-icon-button>
-        <mat-icon>view_column</mat-icon>
+        <mat-icon class="material-icons-outlined">view_column</mat-icon>
     </button>
 </ng-template>
