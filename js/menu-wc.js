@@ -332,6 +332,24 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                             </li>
                             <li class="link">
+                                <a href="modules/UiMatFormFieldRequiredModule.html" data-type="entity-link">UiMatFormFieldRequiredModule</a>
+                                <li class="chapter inner">
+                                    <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                        'data-target="#directives-links-module-UiMatFormFieldRequiredModule-521710ff922010fae43b8578628e34a6"' : 'data-target="#xs-directives-links-module-UiMatFormFieldRequiredModule-521710ff922010fae43b8578628e34a6"' }>
+                                        <span class="icon ion-md-code-working"></span>
+                                        <span>Directives</span>
+                                        <span class="icon ion-ios-arrow-down"></span>
+                                    </div>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiMatFormFieldRequiredModule-521710ff922010fae43b8578628e34a6"' :
+                                        'id="xs-directives-links-module-UiMatFormFieldRequiredModule-521710ff922010fae43b8578628e34a6"' }>
+                                        <li class="link">
+                                            <a href="directives/UiMatFormFieldRequiredDirective.html"
+                                                data-type="entity-link" data-context="sub-entity" data-context-id="modules">UiMatFormFieldRequiredDirective</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </li>
+                            <li class="link">
                                 <a href="modules/UiNgLetModule.html" data-type="entity-link">UiNgLetModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
@@ -599,6 +617,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/UiGridIntl.html" data-type="entity-link">UiGridIntl</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/UiMatFormFieldRequiredIntl.html" data-type="entity-link">UiMatFormFieldRequiredIntl</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/UiPasswordComplexityIntl.html" data-type="entity-link">UiPasswordComplexityIntl</a>
