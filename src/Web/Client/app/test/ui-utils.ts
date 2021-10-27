@@ -440,40 +440,7 @@ class SuggestUtils<T> {
         return (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$'].value;
     };
 
-    public selectNthItem = async (selector: string, nth = 0, config?: {
-        httpMock: HttpTestingController;
-        stub: IStubEndpoint;
-    }) => {
-        const suggest = this._utils.getDebugElement(selector);
-
-        this._utils.click('.display', suggest);
-        this._utils.fixture.detectChanges();
-
-        const strategy = this.getFetchStrategy(selector);
-
-        if (!!config && strategy === 'onOpen') {
-            await this._utils.fixture.whenStable();
-            this._utils.expectAndFlush(config.stub, config.httpMock);
-        }
-
-        const listItems = suggest.queryAll(By.css('.mat-list-item'));
-
-        const reverseOrder = !!suggest.query(By.css('.item-list-container-direction-up'));
-
-        const listItem = listItems[reverseOrder ? listItems.length - nth - 1 : nth].nativeElement;
-
-        listItem.dispatchEvent(EventGenerator.click);
-        this._utils.fixture.detectChanges();
-        await this._utils.fixture.whenStable();
-
-        if (!!config && strategy === 'eager') {
-            this._utils.expectAndFlush(config.stub, config.httpMock);
-        }
-
-        return listItem;
-    };
-
-    public selectNthItemForFakeAsync = (selector: string, nth = 0, config?: {
+    public selectNthItem = (selector: string, nth = 0, config?: {
         httpMock: HttpTestingController;
         stub: IStubEndpoint;
     }) => {
