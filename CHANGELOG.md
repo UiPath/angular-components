@@ -1,3 +1,7 @@
+# v12.5.0 (2021-10-27)
+* **matformfield-required** test the directive
+* **matformfield-required** create directive that adds tooltip
+
 # v12.4.0 (2021-09-21)
 * **suggest** render a searchable info message
 * **suggest** add custom item template for value
