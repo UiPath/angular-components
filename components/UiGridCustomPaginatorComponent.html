@@ -575,9 +575,16 @@ $mat-paginator-selector-trigger-outline-width: 64px;
 $mat-paginator-selector-trigger-fill-width: 64px;
 
 $mat-paginator-page-label-margin: 0 32px 0 24px;
-$mat-paginator-button-icon-size: 28px;
+$mat-paginator-button-icon-size: 14px;
+$mat-paginator-button-size: 32px;
 
 ui-grid-custom-paginator {
+    .mat-icon-button {
+        width: $mat-paginator-button-size;
+        height: $mat-paginator-button-size;
+        line-height: unset;
+    }
+
     .mat-paginator {
         display: block;
     }
@@ -643,6 +650,7 @@ ui-grid-custom-paginator {
 
     .mat-paginator-icon {
         width: $mat-paginator-button-icon-size;
+        height: $mat-paginator-button-icon-size;
         fill: currentColor;
 
         [dir&#x3D;&quot;rtl&quot;] &amp; {
