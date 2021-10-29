@@ -1,3 +1,8 @@
+# v12.5.2 (2021-10-29)
+* **grid** align footer icons
+* **grid** position search-icon on the left
+* **grid** outline column icon
+
 # v12.5.1 (2021-10-29)
 * **matformfield-required** mark intl as optional
 
