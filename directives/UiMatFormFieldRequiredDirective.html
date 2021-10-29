@@ -366,8 +366,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="86"
-                            class="link-to-prism">projects/angular/directives/ui-matformfield-required/src/ui-matformfield-required.directive.ts:86</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="87"
+                            class="link-to-prism">projects/angular/directives/ui-matformfield-required/src/ui-matformfield-required.directive.ts:87</a></div>
                 </td>
             </tr>
 
@@ -405,8 +405,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="99"
-                            class="link-to-prism">projects/angular/directives/ui-matformfield-required/src/ui-matformfield-required.directive.ts:99</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="100"
+                            class="link-to-prism">projects/angular/directives/ui-matformfield-required/src/ui-matformfield-required.directive.ts:100</a></div>
                 </td>
             </tr>
 
@@ -447,9 +447,18 @@
 
                         </td>
                     </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @Optional()<br />
+                            </code>
+                        </td>
+                    </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">projects/angular/directives/ui-matformfield-required/src/ui-matformfield-required.directive.ts:82</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">projects/angular/directives/ui-matformfield-required/src/ui-matformfield-required.directive.ts:83</a></div>
                             </td>
                         </tr>
 
@@ -604,6 +613,7 @@ export class UiMatFormFieldRequiredDirective implements AfterViewInit, OnDestroy
         private _defaultOptions: MatTooltipDefaultOptions,
         @Inject(DOCUMENT)
         private _document: any,
+        @Optional()
         public intl: UiMatFormFieldRequiredIntl) {
         this.intl &#x3D; this.intl || new UiMatFormFieldRequiredIntl();
     }
