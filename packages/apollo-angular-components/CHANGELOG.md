@@ -1,3 +1,6 @@
+# v12.5.1 (2021-10-29)
+* **matformfield-required** mark intl as optional
+
 # v12.5.0 (2021-10-27)
 * **matformfield-required** test the directive
 * **matformfield-required** create directive that adds tooltip
