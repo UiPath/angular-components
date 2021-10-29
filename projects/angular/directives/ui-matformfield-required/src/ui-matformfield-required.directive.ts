@@ -79,6 +79,7 @@ export class UiMatFormFieldRequiredDirective implements AfterViewInit, OnDestroy
         private _defaultOptions: MatTooltipDefaultOptions,
         @Inject(DOCUMENT)
         private _document: any,
+        @Optional()
         public intl: UiMatFormFieldRequiredIntl) {
         this.intl = this.intl || new UiMatFormFieldRequiredIntl();
     }
