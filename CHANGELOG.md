@@ -1,3 +1,6 @@
+# v12.5.3 (2021-11-01)
+* **grid** persist search icon
+
 # v12.5.2 (2021-10-29)
 * **grid** align footer icons
 * **grid** position search-icon on the left
