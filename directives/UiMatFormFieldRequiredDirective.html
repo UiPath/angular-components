@@ -405,8 +405,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="100"
-                            class="link-to-prism">projects/angular/directives/ui-matformfield-required/src/ui-matformfield-required.directive.ts:100</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="97"
+                            class="link-to-prism">projects/angular/directives/ui-matformfield-required/src/ui-matformfield-required.directive.ts:97</a></div>
                 </td>
             </tr>
 
@@ -621,9 +621,6 @@ export class UiMatFormFieldRequiredDirective implements AfterViewInit, OnDestroy
     ngAfterViewInit() {
         // attach tooltip on the span, which is the parent of label
         this._labelElement &#x3D; this._elemRef.nativeElement.querySelector(MATFORMFIELD_LABEL_SELECTOR)?.parentNode;
-        if (!this._labelElement) {
-            return;
-        }
 
         if (this._elemRef.nativeElement.querySelector(&#x27;[required]&#x27;)
             &amp;&amp; !this._elemRef.nativeElement.classList.contains(&#x27;mat-form-field-disabled&#x27;)) {
@@ -652,6 +649,8 @@ export class UiMatFormFieldRequiredDirective implements AfterViewInit, OnDestroy
     }
 
     private _createMatTooltip() {
+        if (!this._labelElement) { return; }
+
         const labelElementRef &#x3D; new ElementRef(this._labelElement!);
         // FIXME: should find another way to instantiate the MatTooltip
         // https://github.com/angular/angular/issues/8785
