@@ -1,3 +1,6 @@
+# v12.5.4 (2021-11-02)
+* **matformfield-required** error when label is not existing
+
 # v12.5.3 (2021-11-01)
 * **grid** persist search icon
 
