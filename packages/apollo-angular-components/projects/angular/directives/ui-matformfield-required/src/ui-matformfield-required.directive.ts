@@ -87,9 +87,6 @@ export class UiMatFormFieldRequiredDirective implements AfterViewInit, OnDestroy
     ngAfterViewInit() {
         // attach tooltip on the span, which is the parent of label
         this._labelElement = this._elemRef.nativeElement.querySelector(MATFORMFIELD_LABEL_SELECTOR)?.parentNode;
-        if (!this._labelElement) {
-            return;
-        }
 
         if (this._elemRef.nativeElement.querySelector('[required]')
             && !this._elemRef.nativeElement.classList.contains('mat-form-field-disabled')) {
@@ -118,6 +115,8 @@ export class UiMatFormFieldRequiredDirective implements AfterViewInit, OnDestroy
     }
 
     private _createMatTooltip() {
+        if (!this._labelElement) { return; }
+
         const labelElementRef = new ElementRef(this._labelElement!);
         // FIXME: should find another way to instantiate the MatTooltip
         // https://github.com/angular/angular/issues/8785
