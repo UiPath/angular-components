@@ -525,6 +525,12 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     visible$ = this.visibilityManager.columns$;
 
     /**
+     * Emits when the visible columns menu has been opened or closed
+     *
+     */
+    visibleColumnsToggle$ = new BehaviorSubject<boolean>(false);
+
+    /**
      * Returns the scroll size, in order to compensate for the scrollbar.
      *
      * @deprecated

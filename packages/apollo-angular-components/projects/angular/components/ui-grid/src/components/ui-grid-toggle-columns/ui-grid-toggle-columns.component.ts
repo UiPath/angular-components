@@ -87,6 +87,9 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
     @Output()
     resetColumns = new EventEmitter<void>();
 
+    @Output()
+    visibleColumnsToggled = new EventEmitter<boolean>();
+
     @ViewChild(MatSelect, { static: false })
     selectColumns?: MatSelect;
 
@@ -136,6 +139,14 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
             filter(_ => this.dirty),
             takeUntil(this._destroyed$),
         ).subscribe(this._onKeyDown);
+
+        this.selectColumns!.openedChange
+            .pipe(
+                takeUntil(this._destroyed$),
+            )
+            .subscribe((open) => {
+                this.visibleColumnsToggled.emit(open);
+            });
     }
 
     ngOnDestroy() {
