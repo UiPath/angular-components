@@ -1,3 +1,7 @@
+# v12.5.5 (2021-11-03)
+* **playground** add visibility columns state
+* **grid** emit toggle visibility columns
+
 # v12.5.4 (2021-11-02)
 * **matformfield-required** error when label is not existing
 
