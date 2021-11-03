@@ -567,6 +567,7 @@
                             [useLegacyDesign]="useLegacyDesign"
                             [showDivider]="!useLegacyDesign && (hasAnyFiltersVisible$ | async)"
                             (visibleColumns)="visibilityManager.update($event)"
-                            (resetColumns)="visibilityManager.reset()">
+                            (resetColumns)="visibilityManager.reset()"
+                            (visibleColumnsToggled)="visibleColumnsToggle$.next($event)">
     </ui-grid-toggle-columns>
 </ng-template>
