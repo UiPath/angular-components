@@ -83,10 +83,13 @@
     </mat-card-content>
 </mat-card>
 
-<ui-app-grid-component *ngIf="generatedGrid"
-                       [allData]="allData"
-                       [inputs]="inputs"
-                       [header]="header"
-                       [footer]="footer"
-                       [inputKeys]="inputKeys">
-</ui-app-grid-component>
+<ng-container *ngIf="generatedGrid">
+    <h3 *ngIf="inputs?.toggleColumns">Visibility columns state: {{ visibilityColumnsOpened ? 'Opened' : 'Closed' }}</h3>
+    <ui-app-grid-component [allData]="allData"
+                           [inputs]="inputs"
+                           [header]="header"
+                           [footer]="footer"
+                           [inputKeys]="inputKeys"
+                           (visibleColumnsToggled)="visibilityColumnsOpened = $event">
+    </ui-app-grid-component>
+</ng-container>
