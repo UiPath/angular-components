@@ -294,7 +294,7 @@ ui-grid {
                 font-size: 0.8rem;
                 height: $ui-grid-button-size;
                 line-height: normal;
-                padding-right: 6px;
+                padding-right: 4px !important;
 
                 .ui-grid-dropdown-filter-title {
                     font-weight: 700;
