@@ -10,14 +10,19 @@ import {
     combineLatest,
     Subject,
 } from 'rxjs';
-import { startWith } from 'rxjs/operators';
+import {
+    startWith,
+    takeUntil,
+} from 'rxjs/operators';
 
 import {
     AfterViewInit,
     Component,
+    EventEmitter,
     Input,
     OnDestroy,
     OnInit,
+    Output,
     ViewChild,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
@@ -44,6 +49,9 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @Input()
     readonly inputKeys!: string[];
+
+    @Output()
+    visibleColumnsToggled = new EventEmitter<boolean>();
 
     pageSizes = [5, 10, 20];
     pageIndex = 0;
@@ -76,7 +84,9 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
         combineLatest([
             this._grid.header?.searchFilter.pipe(startWith([]))!,
             this._grid.filterManager.filter$,
-        ]).subscribe(([searchFilters, filters]) => {
+        ]).pipe(
+            takeUntil(this._destroyed$),
+        ).subscribe(([searchFilters, filters]) => {
             this.filteredData = cloneDeep(this.allData);
 
             searchFilters.forEach(filter => {
@@ -91,6 +101,13 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
 
             this.paginateData(this.filteredData, this.pageIndex, this.footer.pageSize);
         });
+
+        this._grid.visibleColumnsToggle$
+            .pipe(
+                takeUntil(this._destroyed$),
+            ).subscribe(opened => {
+                this.visibleColumnsToggled.emit(opened);
+            });
     }
 
     paginateData(data: MockData[], pageIndex: number, pageSize: number) {
