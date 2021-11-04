@@ -7,6 +7,7 @@ import {
     Observable,
     of,
     Subject,
+    Subscription,
 } from 'rxjs';
 import {
     debounceTime,
@@ -191,7 +192,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             this.resizeManager.destroy();
         }
 
-        this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
+        this._initResizeManager();
     }
 
     /**
@@ -364,6 +365,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     rendered = new EventEmitter<void>();
 
     /**
+     * Emits an event once the grid has been rendered.
+     *
+     */
+    @Output()
+    resizeEnd = new EventEmitter<void>();
+
+    /**
      * Emits the column definitions when their definition changes.
      *
      */
@@ -499,7 +507,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * Resize manager, used to compute resized column states.
      *
      */
-    resizeManager: ResizeManager<T>;
+    resizeManager!: ResizeManager<T>;
 
     /**
      * @ignore
@@ -598,6 +606,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     private _configure$ = new Subject<void>();
     private _isShiftPressed = false;
     private _lastCheckboxIdx = 0;
+    private _resizeSubscription$: null | Subscription = null;
 
     /**
      * @ignore
@@ -702,7 +711,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             takeUntil(this._destroyed$),
         ).subscribe();
 
-        this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
+        this._initResizeManager();
         this._performanceMonitor = new PerformanceMonitor(_ref.nativeElement);
         this.paintTime$ = this._performanceMonitor.paintTime$;
     }
@@ -889,5 +898,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
 
     private _announceGridHeaderActions() {
         this._queuedAnnouncer.enqueue(this.intl.gridHeaderActionsNotice);
+    }
+
+    private _initResizeManager() {
+        this._resizeSubscription$?.unsubscribe();
+        this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
+        this._resizeSubscription$ = this.resizeManager.resizeEnd$.subscribe(() => this.resizeEnd.emit());
     }
 }
