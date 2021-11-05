@@ -33,6 +33,7 @@ import { MatMenuItem } from '@angular/material/menu';
 import { PageEvent } from '@angular/material/paginator';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ResizeStrategy } from '@uipath/angular/components/ui-grid';
 import {
     ISuggestValues,
     UiSuggestComponent,
@@ -218,6 +219,24 @@ describe('Component: UiGrid', () => {
                     headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
                     expect(headers.length).toEqual(4);
                     expect(getDropdownFilter()).toBeFalsy();
+                }));
+
+                it('should emit event on resizeEnd', fakeAsync(() => {
+                    let resizeEmissions = 0;
+                    grid.resizeEnd.pipe(
+                        take(1),
+                    ).subscribe(() => resizeEmissions++);
+                    grid.resizeManager.stop();
+                    tick();
+
+                    grid.resizeStrategy = ResizeStrategy.AggresiveNeighbourPush;
+                    grid.resizeEnd.pipe(
+                        take(1),
+                    ).subscribe(() => resizeEmissions++);
+                    grid.resizeManager.stop();
+                    tick();
+
+                    expect(resizeEmissions).toBe(2);
                 }));
             });
 
