@@ -1,3 +1,6 @@
+# v12.5.6 (2021-11-05)
+* **grid** expose resize stream
+
 # v12.5.5 (2021-11-03)
 * **playground** add visibility columns state
 * **grid** emit toggle visibility columns

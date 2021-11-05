@@ -38,6 +38,7 @@ import {
 export abstract class ResizeManager<T extends IGridDataEntry> {
     isResizing = false;
     current?: IResizeInfo<T>;
+    resizeEnd$ = new Subject<void>();
 
     protected set _resizeEvent(ev: MouseEvent) {
         if (!this.current) { return; }
@@ -161,6 +162,8 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         this._stopped$.next();
         this.endResize();
         this.isResizing = false;
+        // it's added after the `endResize` call to ensure new width values upon emission
+        this.resizeEnd$.next();
 
         // detection is required in order to update cell resize state
         // eslint-disable-next-line no-underscore-dangle
