@@ -27,6 +27,7 @@ module.exports = {
                 'virtual-scroll-range-loader',
                 'virtual-scroll-viewport-resize',
                 'matformfield-required',
+                'shortcut-manager',
             ];
 
             return [2, 'always', scopeList];
