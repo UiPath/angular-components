@@ -13,7 +13,7 @@ import {
 
 import { UiNgLetModule } from './ui-ng-let.module';
 
-describe('Directive: UiClipboard', () => {
+describe('Directive: ngLet', () => {
     @Component({
         template: `
             <ng-container *ngLet="data$ | async as data">
