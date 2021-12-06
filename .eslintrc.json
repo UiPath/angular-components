@@ -1,11 +1,18 @@
 {
     "root": true,
-    "ignorePatterns": ["projects/**/*"],
+    "ignorePatterns": [
+        "projects/**/*"
+    ],
     "overrides": [
         {
-            "files": ["*.ts"],
+            "files": [
+                "*.ts"
+            ],
             "parserOptions": {
-                "project": ["tsconfig.json", "e2e/tsconfig.json"],
+                "project": [
+                    "tsconfig.json",
+                    "e2e/tsconfig.json"
+                ],
                 "createDefaultProgram": true
             },
             "extends": [
@@ -16,15 +23,31 @@
                 "./eslint-configs/angular",
                 "./eslint-configs/rxjs"
             ],
-            "plugins": ["sonarjs", "eslint-plugin-rxjs"],
+            "plugins": [
+                "sonarjs",
+                "eslint-plugin-rxjs"
+            ],
             "rules": {
+                "eslint-plugin/require-meta-fixable": "off",
                 "prefer-arrow/prefer-arrow-functions": "off",
                 "@typescript-eslint/no-non-null-assertion": "off",
                 "@typescript-eslint/prefer-enum-initializers": "off",
                 "indent": "off",
                 "simple-import-sort/imports": "off",
                 "array-bracket-spacing": "off",
-                "object-curly-newline": "off",
+                "object-curly-newline": [
+                    "error",
+                    {
+                        "ImportDeclaration": {
+                            "multiline": true,
+                            "minProperties": 2
+                        },
+                        "ExportDeclaration": {
+                            "multiline": true,
+                            "minProperties": 2
+                        }
+                    }
+                ],
                 "sonarjs/max-switch-cases": "error",
                 "sonarjs/no-all-duplicated-branches": "error",
                 "sonarjs/no-collapsible-if": "error",
@@ -60,7 +83,9 @@
             }
         },
         {
-            "files": ["*.html"],
+            "files": [
+                "*.html"
+            ],
             "extends": [
                 "plugin:@angular-eslint/template/recommended",
                 "./eslint-configs/angular-html"
@@ -71,20 +96,35 @@
             }
         },
         {
-            "files": ["*.spec.ts"],
-            "plugins": ["jasmine"],
-            "extends": ["plugin:jasmine/recommended"],
+            "files": [
+                "*.spec.ts"
+            ],
+            "plugins": [
+                "jasmine"
+            ],
+            "extends": [
+                "plugin:jasmine/recommended"
+            ],
             "rules": {
                 "jasmine/new-line-before-expect": "off",
                 "jasmine/no-unsafe-spy": "off",
-                "no-restricted-globals": ["error", "event"],
+                "no-restricted-globals": [
+                    "error",
+                    "event"
+                ],
                 "@typescript-eslint/no-shadow": "warn",
                 "no-underscore-dangle": "off",
                 "no-useless-escape": "off",
                 "@angular-eslint/prefer-on-push-component-change-detection": "off",
                 "jasmine/prefer-toHaveBeenCalledWith": "off",
-                "jasmine/no-spec-dupes": ["error", "branch"],
-                "jasmine/no-suite-dupes": ["error", "branch"],
+                "jasmine/no-spec-dupes": [
+                    "error",
+                    "branch"
+                ],
+                "jasmine/no-suite-dupes": [
+                    "error",
+                    "branch"
+                ],
                 "sonarjs/no-identical-functions": "off",
                 "jasmine/no-global-setup": "off"
             }

@@ -195,8 +195,6 @@ module.exports = {
             'error',
             { default: 'array-simple' },
         ],
-        'modules-newline/import-declaration-newline': 'error',
-        'modules-newline/export-declaration-newline': 'error',
         'simple-import-sort/imports': 'error',
         'import/first': 'error',
         'import/newline-after-import': 'error',
