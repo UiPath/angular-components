@@ -11,9 +11,7 @@ import type {
     SimpleChanges,
 } from '@angular/core';
 
-import type {
-    UiGridColumnDirective,
-} from '../../../body/ui-grid-column.directive';
+import type { UiGridColumnDirective } from '../../../body/ui-grid-column.directive';
 
 /**
  * @internal

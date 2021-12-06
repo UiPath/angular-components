@@ -1,12 +1,6 @@
-import {
-    GridModule,
-} from 'projects/playground/src/app/pages/grid/grid.page.module';
-import {
-    HomeModule,
-} from 'projects/playground/src/app/pages/home/home.page.module';
-import {
-    SnackbarModule,
-} from 'projects/playground/src/app/pages/snackbar/snackbar.module';
+import { GridModule } from 'projects/playground/src/app/pages/grid/grid.page.module';
+import { HomeModule } from 'projects/playground/src/app/pages/home/home.page.module';
+import { SnackbarModule } from 'projects/playground/src/app/pages/snackbar/snackbar.module';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';

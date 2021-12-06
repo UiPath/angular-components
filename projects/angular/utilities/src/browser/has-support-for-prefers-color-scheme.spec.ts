@@ -1,6 +1,4 @@
-import {
-    hasSupportForPrefersColorScheme,
-} from './has-support-for-prefers-color-scheme';
+import { hasSupportForPrefersColorScheme } from './has-support-for-prefers-color-scheme';
 
 describe('Util(browser): hasSupportForPrefersColorScheme', () => {
     it('should return true if the media query matches', () => {

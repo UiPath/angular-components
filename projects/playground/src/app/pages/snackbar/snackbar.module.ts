@@ -1,6 +1,4 @@
-import {
-    UiSnackBarModule,
-} from 'projects/angular/components/ui-snackbar/src/ui-snackbar.module';
+import { UiSnackBarModule } from 'projects/angular/components/ui-snackbar/src/ui-snackbar.module';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';

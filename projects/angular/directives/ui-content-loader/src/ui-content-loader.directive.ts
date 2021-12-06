@@ -20,9 +20,7 @@ import {
 } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
-import {
-    UiContentSpinnerComponent,
-} from './internal/ui-content-spinner.component';
+import { UiContentSpinnerComponent } from './internal/ui-content-spinner.component';
 
 @Directive({
     selector: '[uiContentLoading]',
