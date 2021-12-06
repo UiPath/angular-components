@@ -3,9 +3,7 @@ import {
     a11y,
     axe,
 } from 'projects/angular/axe-helper';
-import {
-    VirtualScrollItemStatus,
-} from 'projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api';
+import { VirtualScrollItemStatus } from 'projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api';
 import {
     firstValueFrom,
     Observable,

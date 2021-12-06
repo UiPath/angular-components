@@ -10,13 +10,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UiAutofocusModule } from '@uipath/angular/directives/ui-autofocus';
-import {
-    UiClickOutsideModule,
-} from '@uipath/angular/directives/ui-click-outside';
+import { UiClickOutsideModule } from '@uipath/angular/directives/ui-click-outside';
 import { UiNgLetModule } from '@uipath/angular/directives/ui-ng-let';
-import {
-    UiVirtualScrollRangeLoaderModule,
-} from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
+import { UiVirtualScrollRangeLoaderModule } from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
 
 import { UiSuggestComponent } from './ui-suggest.component';
 
