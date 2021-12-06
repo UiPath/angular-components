@@ -20,9 +20,9 @@ import type {
  * @ignore
  */
 export abstract class ResizableGrid<T> {
-    public abstract columns: QueryList<UiGridColumnDirective<T>>;
-    public abstract rendered: EventEmitter<void>;
-    public abstract toggleColumns: boolean;
+    abstract columns: QueryList<UiGridColumnDirective<T>>;
+    abstract rendered: EventEmitter<void>;
+    abstract toggleColumns: boolean;
 
     protected abstract _ref: ElementRef;
     protected abstract _cd: ChangeDetectorRef;
