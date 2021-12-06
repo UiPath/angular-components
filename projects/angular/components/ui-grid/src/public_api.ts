@@ -3,8 +3,7 @@ export { UiGridIntl } from './ui-grid.intl';
 export {
     UiMatPaginatorIntl,
 } from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.component';
-export { UiGridComponent,
-    UI_GRID_OPTIONS } from './ui-grid.component';
+export { UiGridComponent, UI_GRID_OPTIONS } from './ui-grid.component';
 export {
     IDropdownOption,
     UiGridDropdownFilterDirective,
@@ -22,6 +21,8 @@ export {
 } from './body/ui-grid-expanded-row.directive';
 export { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 export { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
+export { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
+export { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 export {
     UiGridSearchComponent,
 } from './components/ui-grid-search/ui-grid-search.component';
