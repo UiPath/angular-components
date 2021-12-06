@@ -1,7 +1,7 @@
 /* eslint-disable import/order */
 
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
-import 'core-js/es7/reflect';
+import 'core-js/es/reflect';
 import 'zone.js';
 import 'zone.js/testing';
 import 'jasmine-expect';
@@ -47,7 +47,7 @@ beforeEach(reseed);
 
 // eslint-disable-next-line no-underscore-dangle
 const __describe = describe;
-(global as any).describe = function() {
+(global as any).describe = function desc() {
     reseed();
     // eslint-disable-next-line prefer-rest-params
     __describe.apply(this, arguments as any);
@@ -61,7 +61,7 @@ getTestBed().initTestEnvironment(
     BrowserDynamicTestingModule,
     platformBrowserDynamicTesting(),
     {
-        teardown: { destroyAfterEach: false },
+        teardown: { destroyAfterEach: true },
     },
 );
 
