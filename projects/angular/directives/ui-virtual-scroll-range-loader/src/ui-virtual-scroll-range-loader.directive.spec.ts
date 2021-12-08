@@ -20,9 +20,7 @@ import {
     VirtualScrollItem,
     VirtualScrollItemStatus,
 } from './ui-virtual-scroll-range-loader.directive';
-import {
-    UiVirtualScrollRangeLoaderModule,
-} from './ui-virtual-scroll-range-loader.module';
+import { UiVirtualScrollRangeLoaderModule } from './ui-virtual-scroll-range-loader.module';
 
 const RANGE_LOAD_DEBOUNCE = 100;
 const ITEM_SIZE = 25;

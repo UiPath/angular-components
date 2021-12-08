@@ -12,9 +12,7 @@ import {
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { By } from '@angular/platform-browser';
 
-import {
-    UiContentSpinnerComponent,
-} from './internal/ui-content-spinner.component';
+import { UiContentSpinnerComponent } from './internal/ui-content-spinner.component';
 import { UiContentLoaderModule } from './ui-content-loader.module';
 
 @Component({

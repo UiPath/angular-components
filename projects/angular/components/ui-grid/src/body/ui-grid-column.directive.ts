@@ -14,12 +14,8 @@ import {
 import { SortDirection } from '@angular/material/sort';
 import { identifier } from '@uipath/angular/utilities';
 
-import {
-    UiGridDropdownFilterDirective,
-} from '../filters/ui-grid-dropdown-filter.directive';
-import {
-    UiGridSearchFilterDirective,
-} from '../filters/ui-grid-search-filter.directive';
+import { UiGridDropdownFilterDirective } from '../filters/ui-grid-dropdown-filter.directive';
+import { UiGridSearchFilterDirective } from '../filters/ui-grid-search-filter.directive';
 
 /**
  * @ignore

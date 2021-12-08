@@ -1,3 +1,14 @@
+# v13.0.0-rc.0 (2021-12-07)
+* **fix** update test setup
+* **fix** theme build
+* **fix** apply new linting rules
+* **fix** update eslint rules
+* **fix** update public api exports
+* **fix** drop public modifier
+* **chore** bump eslint plugins
+* **chore** bump angular material
+* **chore** upgrade angular core & cli
+
 # v12.5.6 (2021-11-05)
 * **grid** expose resize stream
 

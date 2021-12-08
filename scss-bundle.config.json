@@ -1,6 +1,9 @@
 {
     "bundlerOptions": {
         "entryFile": "./projects/angular/_uipath-angular.theme.scss",
-        "outFile": "./dist/angular/_theming.scss"
+        "outFile": "./dist/angular/_theming.scss",
+        "includePaths": [
+            "./node_modules"
+        ]
     }
 }

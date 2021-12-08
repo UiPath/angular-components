@@ -43,12 +43,8 @@ import {
     Key,
 } from '@uipath/angular/testing';
 
-import {
-    UiMatPaginatorIntl,
-} from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.component';
-import {
-    UiGridCustomPaginatorModule,
-} from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.module';
+import { UiMatPaginatorIntl } from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.component';
+import { UiGridCustomPaginatorModule } from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.module';
 import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
 import {
     generateEntity,

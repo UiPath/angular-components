@@ -4,9 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import {
-    UiGridCustomPaginatorComponent,
-} from './ui-grid-custom-paginator.component';
+import { UiGridCustomPaginatorComponent } from './ui-grid-custom-paginator.component';
 
 @NgModule({
     imports: [

@@ -9,9 +9,7 @@ import {
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { UiLoaderButtonDirective } from '@uipath/angular/directives/internal';
 
-import {
-    UiButtonProgressBarComponent,
-} from './internal/ui-button-progress-bar.component';
+import { UiButtonProgressBarComponent } from './internal/ui-button-progress-bar.component';
 
 export const enum ButtonProgressClass {
     Base = 'ui-button-progress',

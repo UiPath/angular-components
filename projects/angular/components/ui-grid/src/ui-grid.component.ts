@@ -57,9 +57,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
 
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
-import {
-    UiGridExpandedRowDirective,
-} from './body/ui-grid-expanded-row.directive';
+import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
 import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
 import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';

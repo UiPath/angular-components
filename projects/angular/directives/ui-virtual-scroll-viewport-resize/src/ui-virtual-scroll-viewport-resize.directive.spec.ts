@@ -16,9 +16,7 @@ import {
     tick,
 } from '@angular/core/testing';
 
-import {
-    UiVirtualScrollViewportResizeModule,
-} from './ui-virtual-scroll-viewport-resize.module';
+import { UiVirtualScrollViewportResizeModule } from './ui-virtual-scroll-viewport-resize.module';
 
 const ITEM_SIZE = 25;
 const ITEMS_IN_VIEWPORT = 5;

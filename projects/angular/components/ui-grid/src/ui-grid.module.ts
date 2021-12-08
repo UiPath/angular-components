@@ -13,37 +13,21 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { UiAutoAccessibleLabelModule } from '@uipath/angular/a11y';
 import { UiSuggestModule } from '@uipath/angular/components/ui-suggest';
 import { UiNgLetModule } from '@uipath/angular/directives/ui-ng-let';
-import {
-    UiVirtualScrollViewportResizeModule,
-} from '@uipath/angular/directives/ui-virtual-scroll-viewport-resize';
+import { UiVirtualScrollViewportResizeModule } from '@uipath/angular/directives/ui-virtual-scroll-viewport-resize';
 
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
-import {
-    UiGridExpandedRowDirective,
-} from './body/ui-grid-expanded-row.directive';
+import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
 import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
 import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
-import {
-    UiGridCustomPaginatorModule,
-} from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.module';
-import {
-    UiGridSearchModule,
-} from './components/ui-grid-search/ui-grid-search.module';
-import {
-    UiGridToggleColumnsModule,
-} from './components/ui-grid-toggle-columns/ui-grid-toggle-columns.module';
-import {
-    UiGridDropdownFilterDirective,
-} from './filters/ui-grid-dropdown-filter.directive';
-import {
-    UiGridSearchFilterDirective,
-} from './filters/ui-grid-search-filter.directive';
+import { UiGridCustomPaginatorModule } from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.module';
+import { UiGridSearchModule } from './components/ui-grid-search/ui-grid-search.module';
+import { UiGridToggleColumnsModule } from './components/ui-grid-toggle-columns/ui-grid-toggle-columns.module';
+import { UiGridDropdownFilterDirective } from './filters/ui-grid-dropdown-filter.directive';
+import { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
-import {
-    UiGridHeaderButtonDirective,
-} from './header/ui-grid-header-button.directive';
+import { UiGridHeaderButtonDirective } from './header/ui-grid-header-button.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 import { UiGridComponent } from './ui-grid.component';
 

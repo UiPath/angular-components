@@ -1,12 +1,6 @@
-import {
-    GridPageComponent,
-} from 'projects/playground/src/app/pages/grid/grid.page';
-import {
-    HomePageComponent,
-} from 'projects/playground/src/app/pages/home/home.page';
-import {
-    SnackbarPageComponent,
-} from 'projects/playground/src/app/pages/snackbar/snackbar.page';
+import { GridPageComponent } from 'projects/playground/src/app/pages/grid/grid.page';
+import { HomePageComponent } from 'projects/playground/src/app/pages/home/home.page';
+import { SnackbarPageComponent } from 'projects/playground/src/app/pages/snackbar/snackbar.page';
 
 import { NgModule } from '@angular/core';
 import {
