@@ -1,6 +1,4 @@
-import {
-    GridComponent,
-} from 'projects/playground/src/app/pages/grid/component/grid.component';
+import { GridComponent } from 'projects/playground/src/app/pages/grid/component/grid.component';
 import { UiGridTable } from 'projects/playground/src/app/pages/grid/grid.intl';
 
 import { CommonModule } from '@angular/common';

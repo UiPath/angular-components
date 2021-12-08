@@ -32,7 +32,7 @@ module.exports = function (config) {
       outputFile: '@uipath/angular.test.xml',
       useBrowserName: false,
     },
-    reporters: ['progress', 'junit', 'kjhtml'],
+    reporters: ['progress', 'junit', 'kjhtml', 'coverage-istanbul'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

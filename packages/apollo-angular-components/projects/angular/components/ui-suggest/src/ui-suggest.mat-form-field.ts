@@ -41,7 +41,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
     MatFormFieldControl<ISuggestValue[]>,
     ControlValueAccessor {
 
-    public abstract disabled: boolean;
+    abstract disabled: boolean;
 
     /**
      * Configure if the form control label should float.
@@ -267,7 +267,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
     /**
      * @ignore
      */
-    public abstract onContainerClick(event: MouseEvent): void;
+    abstract onContainerClick(event: MouseEvent): void;
 
     /**
      * Clears the search input value.

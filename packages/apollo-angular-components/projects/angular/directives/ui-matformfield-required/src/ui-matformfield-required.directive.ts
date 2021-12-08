@@ -35,9 +35,7 @@ import {
     MAT_TOOLTIP_SCROLL_STRATEGY,
 } from '@angular/material/tooltip';
 
-import {
-    UiMatFormFieldRequiredIntl,
-} from './ui-matformfield-required.directive.intl';
+import { UiMatFormFieldRequiredIntl } from './ui-matformfield-required.directive.intl';
 
 const MATFORMFIELD_LABEL_SELECTOR = '.mat-form-field-label-wrapper label';
 

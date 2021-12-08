@@ -15,15 +15,9 @@ import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventGenerator } from '@uipath/angular/testing';
 
-import {
-    UiMatFormFieldRequiredDirective,
-} from './ui-matformfield-required.directive';
-import {
-    UiMatFormFieldRequiredIntl,
-} from './ui-matformfield-required.directive.intl';
-import {
-    UiMatFormFieldRequiredModule,
-} from './ui-matformfield-required.module';
+import { UiMatFormFieldRequiredDirective } from './ui-matformfield-required.directive';
+import { UiMatFormFieldRequiredIntl } from './ui-matformfield-required.directive.intl';
+import { UiMatFormFieldRequiredModule } from './ui-matformfield-required.module';
 
 @Component({
     template: `
