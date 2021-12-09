@@ -7,6 +7,9 @@ import {
 import {
     SnackbarPageComponent,
 } from 'projects/playground/src/app/pages/snackbar/snackbar.page';
+import {
+    SuggestPageComponent,
+} from 'projects/playground/src/app/pages/suggest/suggest.page';
 
 import { NgModule } from '@angular/core';
 import {
@@ -26,6 +29,10 @@ const routes: Routes = [
     {
         path: 'snackbar',
         component: SnackbarPageComponent,
+    },
+    {
+        path: 'suggest',
+        component: SuggestPageComponent,
     },
     {
         path: '**',

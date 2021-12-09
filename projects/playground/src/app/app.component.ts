@@ -22,5 +22,9 @@ export class AppComponent {
             name: 'Snackbar',
             link: '/snackbar',
         },
+        {
+            name: 'Suggest',
+            link: '/suggest',
+        },
     ];
 }
