@@ -1,0 +1,17 @@
+<h1>Single select suggest</h1>
+<mat-form-field>
+    <ui-suggest searchable="true"
+                [searchSourceFactory]="searchSourceFactory">
+    </ui-suggest>
+</mat-form-field>
+
+<hr class="spacer">
+
+<h2>Multiple select suggest</h2>
+<mat-form-field>
+    <ui-suggest searchable="true"
+                [disabled]="false"
+                [multiple]="true"
+                [searchSourceFactory]="searchSourceFactory">
+    </ui-suggest>
+</mat-form-field>
