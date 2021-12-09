@@ -2,7 +2,8 @@
      (uiClickOutside)="focused &&
                     close(false)"
      class="ui-suggest-container"
-     role="application">
+     role="application"
+     [class.ui-suggest-with-chips]="useChips">
     <!--
           We use role="application" to opt-out of the screen reader's navigator. Without this,
           we couldn't highlight correctly the focused option when navigating by keyboard.
@@ -35,58 +36,62 @@
          matRipple
          class="display"
          role="combobox">
-        <ng-container *ngIf="itemTemplate && !multiple && value.length && displayTemplateValue; else showDefaultValue">
-            <ng-container *ngTemplateOutlet="itemTemplate; context: {
+        <ng-container *ngIf="!useChips; else chipsTpl">
+            <ng-container
+                          *ngIf="itemTemplate && !multiple && value.length && displayTemplateValue; else showDefaultValue">
+                <ng-container *ngTemplateOutlet="itemTemplate; context: {
                                                 $implicit: value[0]
                                             }">
+                </ng-container>
+            </ng-container>
+            <ng-template #showDefaultValue>
+                <div [matTooltip]="tooltip"
+                     class="display-container text-ellipsis">
+                    <span *ngIf="!isFormControl && placeholder"
+                          class="display-title"
+                          aria-hidden="true">
+                        {{ placeholder }}:
+                    </span>
+                    <span class="display-value">
+                        <ng-container *ngIf="!!value.length; else allLabel">
+                            <ng-container *ngFor="let option of value; let i = index">
+                                {{ intl.translateLabel(option.text) + (i === value.length - 1 ? '' : ', ') }}
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #allLabel>
+                            {{ defaultValue }}
+                        </ng-template>
+                    </span>
+                </div>
+            </ng-template>
+            <ng-container *ngIf="!readonly">
+                <!-- aria-hidden will override the default from mat-icon -->
+                <mat-icon *ngIf="value.length && clearable"
+                          [matTooltip]="intl.clearSelectionLabel"
+                          (keydown.space)="removeSelection($event)"
+                          (keydown.enter)="removeSelection($event)"
+                          (click)="removeSelection($event)"
+                          tabindex="0"
+                          role="button"
+                          aria-hidden="false"
+                          class="clear">
+                    <svg width="100%"
+                         height="100%"
+                         viewBox="0 0 20 20"
+                         style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
+                        <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.0011213" />
+                    </svg>
+                </mat-icon>
+                <mat-icon *ngIf="!value.length ||
+                         !clearable"
+                          class="arrow-down">keyboard_arrow_down</mat-icon>
             </ng-container>
         </ng-container>
-        <ng-template #showDefaultValue>
-            <div [matTooltip]="tooltip"
-                 class="display-container text-ellipsis">
-                <span *ngIf="!isFormControl && placeholder"
-                      class="display-title"
-                      aria-hidden="true">
-                    {{ placeholder }}:
-                </span>
-                <span class="display-value">
-                    <ng-container *ngIf="!!value.length; else allLabel">
-                        <ng-container *ngFor="let option of value; let i = index">
-                            {{ intl.translateLabel(option.text) + (i === value.length - 1 ? '' : ', ') }}
-                        </ng-container>
-                    </ng-container>
-                    <ng-template #allLabel>
-                        {{ defaultValue }}
-                    </ng-template>
-                </span>
-            </div>
-        </ng-template>
-        <ng-container *ngIf="!readonly">
-            <!-- aria-hidden will override the default from mat-icon -->
-            <mat-icon *ngIf="value.length && clearable"
-                      [matTooltip]="intl.clearSelectionLabel"
-                      (keydown.space)="removeSelection($event)"
-                      (keydown.enter)="removeSelection($event)"
-                      (click)="removeSelection($event)"
-                      tabindex="0"
-                      role="button"
-                      aria-hidden="false"
-                      class="clear">
-                <svg width="100%"
-                     height="100%"
-                     viewBox="0 0 20 20"
-                     style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
-                    <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2.0011213" />
-                </svg>
-            </mat-icon>
-            <mat-icon *ngIf="!value.length ||
-                         !clearable"
-                      class="arrow-down">keyboard_arrow_down</mat-icon>
-        </ng-container>
     </div>
+
     <div [style.width]="isFormControl ? null : width"
          [class.item-list-container-state-open]="isOpen"
          [class.item-list-container-state-closed]="!isOpen"
@@ -137,24 +142,31 @@
             <ng-container *ngTemplateOutlet="searchableCountInfoTmpl"></ng-container>
         </ng-container>
 
-        <ng-template #searchableCountInfoTmpl>
-            <mat-list-item *ngIf="items.length &&
-                                  (loading$ | async) === false &&
-                                  searchableCountInfo?.count === items.length &&
-                                  searchable &&
-                                  !inputControl.value"
-                           [matTooltip]="searchableCountInfo?.message"
-                           [attr.role]="'option'"
-                           matTooltipPosition="right"
-                           class="text-ellipsis item-max-count-info-message">
-                <mat-divider *ngIf="isDown"></mat-divider>
-                <mat-icon>info_outline</mat-icon>
-                <span>{{searchableCountInfo?.message}}</span>
-                <mat-divider *ngIf="!isDown"></mat-divider>
-            </mat-list-item>
-        </ng-template>
     </div>
 </div>
+
+
+<ng-template #chipsTpl>
+    <mat-chip-list #chipList
+                   [attr.aria-label]="placeholder">
+        <mat-chip *ngFor="let option of value; let i = index">
+            {{option.text}}
+            <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-chip>
+
+        <input [placeholder]="this.isFormControl ? null : placeholder"
+               [formControl]="inputControl"
+               [uiAutofocus]="isOpen &&searchable"
+               [attr.maxlength]="maxLength"
+               [refocus]="isOpen"
+               selectionLocation="end"
+               autocomplete="off"
+               aria-autocomplete="list"
+               matInput>
+    </mat-chip-list>
+</ng-template>
 
 <ng-template #resultList>
     <mat-list [attr.role]="'listbox'">
@@ -240,6 +252,23 @@
             </ng-container>
         </cdk-virtual-scroll-viewport>
     </mat-list>
+</ng-template>
+
+<ng-template #searchableCountInfoTmpl>
+    <mat-list-item *ngIf="items.length &&
+                          (loading$ | async) === false &&
+                          searchableCountInfo?.count === items.length &&
+                          searchable &&
+                          !inputControl.value"
+                   [matTooltip]="searchableCountInfo?.message"
+                   [attr.role]="'option'"
+                   matTooltipPosition="right"
+                   class="text-ellipsis item-max-count-info-message">
+        <mat-divider *ngIf="isDown"></mat-divider>
+        <mat-icon>info_outline</mat-icon>
+        <span>{{searchableCountInfo?.message}}</span>
+        <mat-divider *ngIf="!isDown"></mat-divider>
+    </mat-list-item>
 </ng-template>
 
 <ng-template #customValueTemplate

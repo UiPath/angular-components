@@ -2,7 +2,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -28,6 +30,8 @@ import { UiSuggestComponent } from './ui-suggest.component';
         MatListModule,
         MatTooltipModule,
         MatCheckboxModule,
+        MatChipsModule,
+        MatAutocompleteModule,
         ScrollingModule,
         MatRippleModule,
         MatProgressSpinnerModule,

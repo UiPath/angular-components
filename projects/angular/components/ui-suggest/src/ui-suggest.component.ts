@@ -25,6 +25,10 @@ import {
 
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ListRange } from '@angular/cdk/collections';
+import {
+    COMMA,
+    ENTER,
+} from '@angular/cdk/keycodes';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
     AfterViewInit,
@@ -155,6 +159,11 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         this.stateChanges.next();
         this._cd.detectChanges();
     }
+
+    separatorKeysCodes: number[] = [ENTER, COMMA];
+
+    @Input()
+    useChips = true;
 
     /**
      * If true, the item list will render open and will not close on selection
