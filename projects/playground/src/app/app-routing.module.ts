@@ -1,4 +1,7 @@
 import {
+    ChipsPageComponent,
+} from 'projects/playground/src/app/pages/chips/chips.page';
+import {
     GridPageComponent,
 } from 'projects/playground/src/app/pages/grid/grid.page';
 import {
@@ -33,6 +36,10 @@ const routes: Routes = [
     {
         path: 'suggest',
         component: SuggestPageComponent,
+    },
+    {
+        path: 'chips',
+        component: ChipsPageComponent,
     },
     {
         path: '**',

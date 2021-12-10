@@ -1,5 +1,6 @@
-@use '~@angular/material' as mat;
+@use "~@angular/material" as mat;
 @import "./projects/angular/uipath-angular.theme";
+@import "../../../test.theme.scss";
 
 $theme: mat.define-light-theme(
     mat.define-palette(mat.$blue-grey-palette, 500),
