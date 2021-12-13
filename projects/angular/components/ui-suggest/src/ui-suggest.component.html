@@ -11,86 +11,8 @@
           Tested in NVDA.
       -->
 
-    <div [attr.tabindex]="!disabled &&
-                        !readonly ?
-                        0 : null"
-         [uiAutofocus]="!isOpen && focus"
-         [refocus]="!isOpen && focus"
-         [matRippleDisabled]="isFormControl"
-         [attr.aria-label]="placeholder"
-         [attr.aria-describedby]="describedBy"
-         [attr.aria-required]="required"
-         [attr.aria-disabled]="disabled || readonly"
-         [attr.aria-expanded]="isOpen"
-         (click)="toggle()"
-         (keyup.enter)="preventDefault($event);"
-         (keydown.enter)="preventDefault($event);
-                          open();"
-         (keyup.space)="open()"
-         (keyup.esc)="removeSelection($event)"
-         (keydown.esc)="isOpen &&
-                        preventDefault($event)"
-         (keydown.space)="preventDefault($event)"
-         (focus)="onFocus();"
-         (blur)="onBlur()"
-         matRipple
-         class="display"
-         role="combobox">
-        <ng-container *ngIf="!useChips; else chipsTpl">
-            <ng-container
-                          *ngIf="itemTemplate && !multiple && value.length && displayTemplateValue; else showDefaultValue">
-                <ng-container *ngTemplateOutlet="itemTemplate; context: {
-                                                $implicit: value[0]
-                                            }">
-                </ng-container>
-            </ng-container>
-            <ng-template #showDefaultValue>
-                <div [matTooltip]="tooltip"
-                     class="display-container text-ellipsis">
-                    <span *ngIf="!isFormControl && placeholder"
-                          class="display-title"
-                          aria-hidden="true">
-                        {{ placeholder }}:
-                    </span>
-                    <span class="display-value">
-                        <ng-container *ngIf="!!value.length; else allLabel">
-                            <ng-container *ngFor="let option of value; let i = index">
-                                {{ intl.translateLabel(option.text) + (i === value.length - 1 ? '' : ', ') }}
-                            </ng-container>
-                        </ng-container>
-                        <ng-template #allLabel>
-                            {{ defaultValue }}
-                        </ng-template>
-                    </span>
-                </div>
-            </ng-template>
-            <ng-container *ngIf="!readonly">
-                <!-- aria-hidden will override the default from mat-icon -->
-                <mat-icon *ngIf="value.length && clearable"
-                          [matTooltip]="intl.clearSelectionLabel"
-                          (keydown.space)="removeSelection($event)"
-                          (keydown.enter)="removeSelection($event)"
-                          (click)="removeSelection($event)"
-                          tabindex="0"
-                          role="button"
-                          aria-hidden="false"
-                          class="clear">
-                    <svg width="100%"
-                         height="100%"
-                         viewBox="0 0 20 20"
-                         style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
-                        <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2.0011213" />
-                    </svg>
-                </mat-icon>
-                <mat-icon *ngIf="!value.length ||
-                         !clearable"
-                          class="arrow-down">keyboard_arrow_down</mat-icon>
-            </ng-container>
-        </ng-container>
-    </div>
+    <ng-container *ngTemplateOutlet="useChips ? chipsTpl : noChipsTpl; context: { focus }">
+    </ng-container>
 
     <div [style.width]="isFormControl ? null : width"
          [class.item-list-container-state-open]="isOpen"
@@ -120,7 +42,7 @@
             </ng-container>
         </ng-container>
 
-        <mat-form-field *ngIf="searchable"
+        <mat-form-field *ngIf="!useChips && searchable"
                         floatLabel="never">
             <input [placeholder]="this.isFormControl ? null : placeholder"
                    [formControl]="inputControl"
@@ -145,13 +67,113 @@
     </div>
 </div>
 
+<ng-template #noChipsTpl
+             let-focus>
+    <div [attr.tabindex]="!disabled &&
+    !readonly ?
+    0 : null"
+         [uiAutofocus]="!isOpen && focus"
+         [refocus]="!isOpen && focus"
+         [matRippleDisabled]="isFormControl"
+         [attr.aria-label]="placeholder"
+         [attr.aria-describedby]="describedBy"
+         [attr.aria-required]="required"
+         [attr.aria-disabled]="disabled || readonly"
+         [attr.aria-expanded]="isOpen"
+         (click)="toggle()"
+         (keyup.enter)="preventDefault($event);"
+         (keydown.enter)="preventDefault($event);
+      open();"
+         (keyup.space)="open()"
+         (keyup.esc)="removeSelection($event)"
+         (keydown.esc)="isOpen &&
+    preventDefault($event)"
+         (keydown.space)="preventDefault($event)"
+         (focus)="onFocus();"
+         (blur)="onBlur()"
+         matRipple
+         class="display"
+         role="combobox">
+        <ng-container *ngIf="itemTemplate && !multiple && value.length && displayTemplateValue; else showDefaultValue">
+            <ng-container *ngTemplateOutlet="itemTemplate; context: {
+                            $implicit: value[0]
+                        }">
+            </ng-container>
+        </ng-container>
+        <ng-template #showDefaultValue>
+            <div [matTooltip]="tooltip"
+                 class="display-container text-ellipsis">
+                <span *ngIf="!isFormControl && placeholder"
+                      class="display-title"
+                      aria-hidden="true">
+                    {{ placeholder }}:
+                </span>
+                <span class="display-value">
+                    <ng-container *ngIf="!!value.length; else allLabel">
+                        <ng-container *ngFor="let option of value; let i = index">
+                            {{ intl.translateLabel(option.text) + (i === value.length - 1 ? '' : ', ') }}
+                        </ng-container>
+                    </ng-container>
+                    <ng-template #allLabel>
+                        {{ defaultValue }}
+                    </ng-template>
+                </span>
+            </div>
+        </ng-template>
+        <ng-container *ngIf="!readonly">
+            <!-- aria-hidden will override the default from mat-icon -->
+            <mat-icon *ngIf="value.length && clearable"
+                      [matTooltip]="intl.clearSelectionLabel"
+                      (keydown.space)="removeSelection($event)"
+                      (keydown.enter)="removeSelection($event)"
+                      (click)="removeSelection($event)"
+                      tabindex="0"
+                      role="button"
+                      aria-hidden="false"
+                      class="clear">
+                <svg width="100%"
+                     height="100%"
+                     viewBox="0 0 20 20"
+                     style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
+                    <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.0011213" />
+                </svg>
+            </mat-icon>
+            <mat-icon *ngIf="!value.length ||
+     !clearable"
+                      class="arrow-down">keyboard_arrow_down</mat-icon>
+        </ng-container>
+    </div>
+</ng-template>
 
-<ng-template #chipsTpl>
-    <mat-chip-list #chipList
+<ng-template #chipsTpl
+             let-focus>
+    <mat-chip-list [attr.tabindex]="!disabled && !readonly ? 0 : null"
+                   [uiAutofocus]="!isOpen && focus"
+                   [refocus]="!isOpen && focus"
+                   [attr.aria-label]="placeholder"
+                   [attr.aria-describedby]="describedBy"
+                   [attr.aria-required]="required"
+                   [attr.aria-disabled]="disabled || readonly"
+                   [attr.aria-expanded]="isOpen"
+                   (click)="toggle()"
+                   (keyup.enter)="preventDefault($event);"
+                   (keydown.enter)="preventDefault($event);
+      open();"
+                   (keyup.space)="open()"
+                   (keyup.esc)="removeSelection($event)"
+                   (keydown.esc)="isOpen &&
+    preventDefault($event)"
+                   (keydown.space)="preventDefault($event)"
+                   (focus)="onFocus();"
+                   (blur)="onBlur()"
+                   #chipList
                    [attr.aria-label]="placeholder">
         <mat-chip *ngFor="let option of value; let i = index">
             {{option.text}}
-            <button matChipRemove>
+            <button matIconButton>
                 <mat-icon>cancel</mat-icon>
             </button>
         </mat-chip>
@@ -206,7 +228,7 @@
                              [attr.data-item-id]="item.id"
                              matTooltipPosition="right"
                              class="ui-suggest-item">
-                            <mat-checkbox *ngIf="multiple"
+                            <mat-checkbox *ngIf="!useChips && multiple"
                                           [checked]="isItemSelected(item)"
                                           [indeterminate]="false">
                             </mat-checkbox>

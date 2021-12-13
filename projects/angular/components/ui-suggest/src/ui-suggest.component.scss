@@ -150,6 +150,15 @@ $componentName: "ui-suggest";
         }
     }
 
+    .ui-suggest-with-chips .item-list-container {
+        // position: relative;
+        // bottom: 0;
+    }
+
+    .ui-suggest-with-chips .mat-chip-list {
+        height: 90px;
+    }
+
     .display {
         cursor: pointer;
         user-select: none;
@@ -170,7 +179,7 @@ $componentName: "ui-suggest";
 }
 
 #{$componentName}:not(.form-control) {
-    $searchUpDown: 3px;
+    $searchUpDown: 75px;
     $searchLeft: -1px;
 
     .display,
@@ -243,7 +252,7 @@ $componentName: "ui-suggest";
     .item-list-container {
         &-direction {
             &-down {
-                top: -7px;
+                top: 70px;
 
                 .mat-list-item:last-child {
                     border-bottom-left-radius: $default-border-radius;

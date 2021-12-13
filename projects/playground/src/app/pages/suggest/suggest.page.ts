@@ -1,16 +1,13 @@
 import { range } from 'lodash';
 import {
-    Observable,
-    of,
+  Observable,
+  of,
 } from 'rxjs';
-import {
-    switchMap,
-    tap,
-} from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import {
-    ChangeDetectionStrategy,
-    Component,
+  ChangeDetectionStrategy,
+  Component,
 } from '@angular/core';
 import { ISuggestValues } from '@uipath/angular/components/ui-suggest';
 
@@ -41,7 +38,7 @@ export class SuggestPageComponent {
   searchSourceFactory: SearchSourceFactory = (searchTerm = '') => of(searchTerm).pipe(
     switchMap(this.getResults),
     // delay(500),
-    tap(console.log),
+    // tap(console.log),
   );
 }
 

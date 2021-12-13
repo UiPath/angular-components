@@ -1,0 +1,22 @@
+// .example-viewport {
+//     height: calc(5 * #{40px});
+//     width: 200px;
+//     border: 1px solid black;
+// }
+.mat-option {
+    line-height: 40px;
+
+    .mat-option-text {
+        height: 40px;
+    }
+}
+
+cdk-virtual-scroll-viewport {
+    height: 100vh;
+    overflow-x: hidden;
+
+    .cdk-virtual-scroll-content-wrapper {
+        width: 100%;
+        overflow: hidden;
+    }
+}

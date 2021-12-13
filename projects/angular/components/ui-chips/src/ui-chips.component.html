@@ -1,1 +1,45 @@
-<p>ui-chips works!</p>
+<mat-form-field class="example-chip-list"
+                appearance="fill">
+
+    <mat-label>Favorite Fruits</mat-label>
+
+    <mat-chip-list #chipList
+                   [formControl]="chipListControl"
+                   aria-label="Fruit selection">
+
+        <mat-chip *ngFor="let selectedOption of selectedOptions">
+            <mat-icon *ngIf="selectedOption.icon">
+                {{selectedOption.icon}}
+            </mat-icon>
+            <span>
+                {{selectedOption.text}}
+            </span>
+            <button *ngIf="removable"
+                    matChipRemove>
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-chip>
+
+        <input placeholder="New fruit..."
+               #fruitInput
+               [formControl]="fruitCtrl"
+               [matAutocomplete]="auto"
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+    </mat-chip-list>
+
+    <mat-autocomplete #auto="matAutocomplete"
+                      (optionSelected)="selected($event)">
+        <cdk-virtual-scroll-viewport [itemSize]="40"
+                                     [style.max-height.px]="5*40"
+                                     [minBufferPx]="5 * 40 * 1.2"
+                                     [maxBufferPx]="5 * 40 * 1.4"
+                                     class="example-viewport">
+            <mat-option *cdkVirtualFor="let option of ds; trackBy: trackById; templateCacheSize: 10"
+                        [value]="option"
+                        [style.height.px]="40">
+                {{option.text}}
+            </mat-option>
+        </cdk-virtual-scroll-viewport>
+    </mat-autocomplete>
+</mat-form-field>
