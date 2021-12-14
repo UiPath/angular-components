@@ -8,9 +8,9 @@ import {
 /**
  * @ignore
  */
-class NgLetContext {
-    $implicit: any = null;
-    ngLet: any = null;
+class NgLetContext<T = unknown> {
+    $implicit: T = null!;
+    ngLet: T = null!;
 }
 
 /**
@@ -25,15 +25,15 @@ class NgLetContext {
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[ngLet]',
 })
-export class UiNgLetDirective {
-    private _context = new NgLetContext();
+export class UiNgLetDirective<T = unknown> {
+    private _context = new NgLetContext<T>();
 
     /**
      * The context bound to the decorated area.
      *
      */
     @Input()
-    set ngLet(value: any) {
+    set ngLet(value: T) {
         this._context.$implicit = this._context.ngLet = value;
     }
 
@@ -42,7 +42,7 @@ export class UiNgLetDirective {
      */
     constructor(
         private _vcr: ViewContainerRef,
-        private _templateRef: TemplateRef<NgLetContext>,
+        private _templateRef: TemplateRef<NgLetContext<T>>,
     ) {
         this._vcr.createEmbeddedView(
             this._templateRef,
