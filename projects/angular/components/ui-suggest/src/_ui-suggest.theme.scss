@@ -50,6 +50,20 @@
                 color: map-get($warn-palette, "default");
             }
         }
+
+        .mat-chip-list {
+            .mat-chip button {
+                position: relative;
+                background-color: unset;
+                border: unset;
+
+                .mat-icon {
+                    position: absolute;
+                    top: -3px;
+                    left: -3px;
+                }
+            }
+        }
     }
 
     #{$componentName}:not(.form-control) {

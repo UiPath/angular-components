@@ -583,6 +583,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                 map((v = '') => v.trim()),
                 distinctUntilChanged(),
                 filter(v => v.length >= this.minChars),
+                tap(() => this.multiple && this.open()),
                 tap(this._setLoadingState),
                 debounceTime(this.debounceTime),
                 filter(_ => !!this.searchSourceFactory),
@@ -970,6 +971,16 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * @ignore
      */
     trackById = (_: number, { id }: ISuggestValue) => id;
+
+    deselectItem(option: ISuggestValue) {
+        this._removeEntry(option);
+    }
+
+    backspaceBehavior() {
+        if (!this.inputControl.value.length) {
+            this.close();
+        }
+    }
 
     private _selectActiveItem(closeAfterSelect: boolean) {
         const item = this.items[this.activeIndex];
