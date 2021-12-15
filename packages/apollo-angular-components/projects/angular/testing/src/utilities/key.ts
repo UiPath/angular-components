@@ -605,4 +605,13 @@ export class Key implements Record<keyof Key, IKey> {
         code: 'Escape',
         keyCode: 27,
     };
+    /**
+     * Metadata for key `Backspace`.
+     *
+     */
+    static Backspace: IKey = {
+        name: 'Backspace',
+        code: 'Backspace',
+        keyCode: 8,
+    };
 }
