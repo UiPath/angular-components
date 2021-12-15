@@ -30,8 +30,10 @@ export class UiSuggestAssert {
 
         expect(this._suggest.isOpen).toBe(expectedIsOpen);
 
-        const combo = this._root.query(By.css('[role=combobox]')).nativeElement;
-        expect(combo).toHaveAttr('aria-expanded', expectedIsOpen.toString());
+        if (!this._suggest.multiple) {
+            const combo = this._root.query(By.css('[role=combobox]')).nativeElement;
+            expect(combo).toHaveAttr('aria-expanded', expectedIsOpen.toString());
+        }
 
         const itemList = this._root.query(By.css('.item-list-container'));
         const itemListClasses = itemList.nativeElement.classList;
