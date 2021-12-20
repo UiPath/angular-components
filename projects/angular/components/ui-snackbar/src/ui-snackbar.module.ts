@@ -1,3 +1,4 @@
+import { PortalModule } from '@angular/cdk/portal';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,6 +20,7 @@ const DEFAULT_VERTICAL = 'top';
         MatSnackBarModule,
         MatIconModule,
         MatButtonModule,
+        PortalModule,
         UiPipeModule,
         CommonModule,
     ],

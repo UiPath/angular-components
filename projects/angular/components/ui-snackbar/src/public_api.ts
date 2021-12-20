@@ -5,6 +5,7 @@ export {
     UiSnackBarComponent,
     UiSnackBarService,
     UI_MAT_SNACK_BAR_DEFAULT_OPTIONS,
+    UI_MAT_SNACK_BAR_PAYLOAD,
 } from './ui-snackbar.component';
 
 export { UiSnackBarModule } from './ui-snackbar.module';
