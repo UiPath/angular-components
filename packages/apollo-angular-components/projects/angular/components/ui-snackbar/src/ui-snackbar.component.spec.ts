@@ -7,6 +7,7 @@ import {
 import { OverlayContainer } from '@angular/cdk/overlay';
 import {
     Component,
+    Inject,
     TemplateRef,
     ViewChild,
 } from '@angular/core';
@@ -30,11 +31,13 @@ import {
     UiMatSnackBarConfig,
     UiSnackBarService,
     UI_MAT_SNACK_BAR_DEFAULT_OPTIONS,
+    UI_MAT_SNACK_BAR_PAYLOAD,
 } from './ui-snackbar.component';
 import { UiSnackBarModule } from './ui-snackbar.module';
 
 const DEFAULT_DURATION = 2500;
 const ANGULAR_ARIA_DELAY = 150;
+
 @Component({
     template: `<ng-template #richContent>
                 <div class="rich-class">Some Rich</div>
@@ -46,6 +49,19 @@ export class SnackBarFixtureComponent {
     richContent!: TemplateRef<any>;
 
     constructor(public service: UiSnackBarService) { }
+}
+
+@Component({
+    template: `A component with a <a [href]="link">link</a>`,
+})
+export class SnackBarContentComponent {
+    link = this._payload.url;
+
+    constructor(
+        @Inject(UI_MAT_SNACK_BAR_PAYLOAD)
+        private _payload: { url: string },
+    ) {
+    }
 }
 
 describe('Service: UiSnackBarService', () => {
@@ -358,7 +374,7 @@ describe('Service: UiSnackBarService', () => {
         expect(snackAfterClear).toBeNull();
     });
 
-    it('should show rich context via template', () => {
+    it('should show rich content via template', () => {
         // make sure the template is initialized
         fixture.detectChanges();
 
@@ -368,6 +384,18 @@ describe('Service: UiSnackBarService', () => {
         expect(snack).not.toBeNull();
         expect(snack.querySelectorAll('div.rich-class').length).toEqual(1);
         expect(snack.querySelectorAll('a').length).toEqual(1);
+    });
+
+    it('should show rich content via component', () => {
+        const payload = {
+            url: faker.internet.url(),
+        };
+
+        service.success(SnackBarContentComponent, { payload });
+        const snack = getSnack()!;
+
+        expect(snack).not.toBeNull();
+        expect(snack.querySelector('a')!.href).toEqual(`${payload.url}/`);
     });
 
     it('should REMOVE html from the message', () => {
