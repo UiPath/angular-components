@@ -54,8 +54,8 @@
     "bump:patch:rc": "node version-bump.js pre patch",
     "bump:minor:rc": "node version-bump.js pre minor",
     "bump:major:rc": "node version-bump.js pre major",
-    "publish:npm": "json -I -f dist/angular/package.json -e \"this.publishConfig = {'@uipath:registry':'https://registry.npmjs.org'}\" && npm publish dist/angular",
-    "publish:gh": "json -I -f dist/angular/package.json -e \"this.publishConfig = {'@uipath:registry':'https://npm.pkg.github.com'}\" && npm publish dist/angular"
+    "publish:npm": "json -I -f dist/angular/package.json -e \"this.publishConfig = {'@uipath:registry':'https://registry.npmjs.org'}\" && npm publish ./dist/angular",
+    "publish:gh": "json -I -f dist/angular/package.json -e \"this.publishConfig = {'@uipath:registry':'https://npm.pkg.github.com'}\" && npm publish ./dist/angular"
   },
   "config": {
     "commitizen": {
