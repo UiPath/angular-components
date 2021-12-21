@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
 
@@ -35,7 +36,9 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>UiGridToggleColumnsComponent</li>
+  <li
+  >
+  UiGridToggleColumnsComponent</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -66,6 +69,7 @@
 
 
 
+
     <p class="comment">
         <h3>Implements</h3>
     </p>
@@ -77,7 +81,7 @@
 
 <section>
     <h3>Metadata</h3>
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover metadata">
         <tbody>
 
             <tr>
@@ -139,12 +143,15 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Optional</span>
-                                <a href="#resetBtn">resetBtn</a>
+                                <a href="#hostClass" >hostClass</a>
                             </li>
                             <li>
                                     <span class="modifier">Optional</span>
-                                <a href="#selectColumns">selectColumns</a>
+                                <a href="#resetBtn" >resetBtn</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Optional</span>
+                                <a href="#selectColumns" >selectColumns</a>
                             </li>
                         </ul>
                     </td>
@@ -159,19 +166,19 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#ngAfterViewInit">ngAfterViewInit</a>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
                             </li>
                             <li>
-                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
                             </li>
                             <li>
-                                <a href="#reset">reset</a>
+                                <a href="#reset" >reset</a>
                             </li>
                             <li>
-                                <a href="#resetKeyDown">resetKeyDown</a>
+                                <a href="#resetKeyDown" >resetKeyDown</a>
                             </li>
                             <li>
-                                <a href="#selectionChange">selectionChange</a>
+                                <a href="#selectionChange" >selectionChange</a>
                             </li>
                         </ul>
                     </td>
@@ -186,28 +193,28 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#dirty">dirty</a>
+                                <a href="#dirty" >dirty</a>
                             </li>
                             <li>
-                                <a href="#options">options</a>
+                                <a href="#options" >options</a>
                             </li>
                             <li>
-                                <a href="#resetToDefaults">resetToDefaults</a>
+                                <a href="#resetToDefaults" >resetToDefaults</a>
                             </li>
                             <li>
-                                <a href="#showDivider">showDivider</a>
+                                <a href="#showDivider" >showDivider</a>
                             </li>
                             <li>
-                                <a href="#togglePlaceholderTitle">togglePlaceholderTitle</a>
+                                <a href="#togglePlaceholderTitle" >togglePlaceholderTitle</a>
                             </li>
                             <li>
-                                <a href="#toggleTitle">toggleTitle</a>
+                                <a href="#toggleTitle" >toggleTitle</a>
                             </li>
                             <li>
-                                <a href="#toggleTooltip">toggleTooltip</a>
+                                <a href="#toggleTooltip" >toggleTooltip</a>
                             </li>
                             <li>
-                                <a href="#useLegacyDesign">useLegacyDesign</a>
+                                <a href="#useLegacyDesign" >useLegacyDesign</a>
                             </li>
                         </ul>
                     </td>
@@ -222,13 +229,13 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#resetColumns">resetColumns</a>
+                                <a href="#resetColumns" >resetColumns</a>
                             </li>
                             <li>
-                                <a href="#visibleColumns">visibleColumns</a>
+                                <a href="#visibleColumns" >visibleColumns</a>
                             </li>
                             <li>
-                                <a href="#visibleColumnsToggled">visibleColumnsToggled</a>
+                                <a href="#visibleColumnsToggled" >visibleColumnsToggled</a>
                             </li>
                         </ul>
                     </td>
@@ -243,7 +250,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#class">class</a>
+                                <a href="#class" >class</a>
                             </li>
                         </ul>
                     </td>
@@ -259,10 +266,10 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                    <a href="#options">options</a>
+                                    <a href="#options" >options</a>
                                 </li>
                                 <li>
-                                    <a href="#selected">selected</a>
+                                    <a href="#selected" >selected</a>
                                 </li>
                             </ul>
                         </td>
@@ -344,6 +351,12 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
@@ -396,6 +409,12 @@
                     <td class="col-md-4">
                         <a name="showDivider"></a>
                         <b>showDivider</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
                     </td>
                 </tr>
                 <tr>
@@ -483,6 +502,12 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
@@ -561,32 +586,37 @@
         </table>
 </section>
     <section>
-    <h3>HostBindings</h3>        <table class="table table-sm table-bordered">
-            <tbody>
+    <h3>HostBindings</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="class"></a>
+                    <span class="name">
+                        <span ><b>class</b></span>
+                        <a href="#class"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="class"></a>
-                        <span class="name">
-                            <b>
-                            class</b>
-                            <a href="#class"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>COMPONENT_SELECTOR</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>COMPONENT_SELECTOR</code>
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/angular/components/ui-grid/src/components/ui-grid-toggle-columns/ui-grid-toggle-columns.component.ts:47</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/angular/components/ui-grid/src/components/ui-grid-toggle-columns/ui-grid-toggle-columns.component.ts:47</a></div>
-                            </td>
-                        </tr>
 
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 </section>
 
 
@@ -601,9 +631,7 @@
                 <td class="col-md-4">
                     <a name="ngAfterViewInit"></a>
                     <span class="name">
-                        <b>
-                            ngAfterViewInit
-                        </b>
+                        <span ><b>ngAfterViewInit</b></span>
                         <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -640,9 +668,7 @@
                 <td class="col-md-4">
                     <a name="ngOnDestroy"></a>
                     <span class="name">
-                        <b>
-                            ngOnDestroy
-                        </b>
+                        <span ><b>ngOnDestroy</b></span>
                         <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -679,9 +705,7 @@
                 <td class="col-md-4">
                     <a name="reset"></a>
                     <span class="name">
-                        <b>
-                            reset
-                        </b>
+                        <span ><b>reset</b></span>
                         <a href="#reset"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -718,16 +742,14 @@
                 <td class="col-md-4">
                     <a name="resetKeyDown"></a>
                     <span class="name">
-                        <b>
-                            resetKeyDown
-                        </b>
+                        <span ><b>resetKeyDown</b></span>
                         <a href="#resetKeyDown"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>resetKeyDown(e: <a href="../classes/Key.html">KeyboardEvent</a>)</code>
+<code>resetKeyDown(e: <a href="../classes/Key.html" target="_self">KeyboardEvent</a>)</code>
                 </td>
             </tr>
 
@@ -745,6 +767,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -788,9 +811,7 @@
                 <td class="col-md-4">
                     <a name="selectionChange"></a>
                     <span class="name">
-                        <b>
-                            selectionChange
-                        </b>
+                        <span ><b>selectionChange</b></span>
                         <a href="#selectionChange"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -815,6 +836,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -854,83 +876,115 @@
 </section>
     <section>
     
-        <h3 id="inputs">
-            Properties
-        </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hostClass"></a>
+                    <span class="name">
+                        <span ><b>hostClass</b></span>
+                        <a href="#hostClass"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="resetBtn"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Optional</span>
-                            resetBtn</b>
-                            <a href="#resetBtn"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Default value : </i><code>COMPONENT_SELECTOR</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @HostBinding(&#x27;class&#x27;)<br />
+                        </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code>MatAnchor</code>
-
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/angular/components/ui-grid/src/components/ui-grid-toggle-columns/ui-grid-toggle-columns.component.ts:47</a></div>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <b>Decorators : </b>
-                            <br />
-                            <code>
-                                @ViewChild(&#x27;resetBtn&#x27;, {static: false})<br />
-                            </code>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">projects/angular/components/ui-grid/src/components/ui-grid-toggle-columns/ui-grid-toggle-columns.component.ts:97</a></div>
-                            </td>
-                        </tr>
 
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetBtn"></a>
+                    <span class="name">
+                            <span class="modifier">Optional</span>
+                        <span ><b>resetBtn</b></span>
+                        <a href="#resetBtn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="selectColumns"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Optional</span>
-                            selectColumns</b>
-                            <a href="#selectColumns"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>    <code>MatAnchor</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;resetBtn&#x27;, {static: false})<br />
+                        </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code>MatSelect</code>
-
+                                <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">projects/angular/components/ui-grid/src/components/ui-grid-toggle-columns/ui-grid-toggle-columns.component.ts:97</a></div>
                         </td>
                     </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectColumns"></a>
+                    <span class="name">
+                            <span class="modifier">Optional</span>
+                        <span ><b>selectColumns</b></span>
+                        <a href="#selectColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>MatSelect</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(MatSelect, {static: false})<br />
+                        </code>
+                    </td>
+                </tr>
                     <tr>
                         <td class="col-md-4">
-                            <b>Decorators : </b>
-                            <br />
-                            <code>
-                                @ViewChild(MatSelect, {static: false})<br />
-                            </code>
+                                <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">projects/angular/components/ui-grid/src/components/ui-grid-toggle-columns/ui-grid-toggle-columns.component.ts:94</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">projects/angular/components/ui-grid/src/components/ui-grid-toggle-columns/ui-grid-toggle-columns.component.ts:94</a></div>
-                            </td>
-                        </tr>
 
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 </section>
 
     <section>
@@ -959,7 +1013,7 @@
 
                 <tr>
                     <td class="col-md-4">
-                        <span class="accessor"><b>set</b><code>options(options)</code></span>
+                        <span class="accessor"><b>set</b><code>options(options: <a href="../interfaces/IVisibleModel.html" target="_self">IVisibleModel&lt;T&gt;[] | null</a>)</code></span>
                     </td>
                 </tr>
                             <tr>
@@ -976,6 +1030,7 @@
                                             <thead>
                                                 <tr>
                                                     <td>Name</td>
+                                                        <td>Type</td>
                                                     <td>Optional</td>
                                                 </tr>
                                             </thead>
@@ -983,6 +1038,9 @@
                                                     <tr>
                                                             <td>options</td>
                                                     
+                                                            <td>
+                                                                            <code><a href="../interfaces/IVisibleModel.html" target="_self" >IVisibleModel&lt;T&gt;[] | null</a></code>
+                                                            </td>
                                                     
                                                         <td>
                                                                 No
@@ -1395,7 +1453,7 @@ export class UiGridToggleColumnsComponent&lt;T extends IGridDataEntry&gt; implem
 <script>
         var COMPONENT_TEMPLATE = '<div><ng-container *ngIf="options!.length">    <button *ngIf="!useLegacyDesign; else classicColumnToggleTmpl"            [color]="dirty ? \'primary\' : undefined"            (click)="selectColumns!.open(); selectColumns!.focus()"            type="button"            mat-button>        <mat-icon class="material-icons-outlined">view_column</mat-icon>        <span>{{togglePlaceholderTitle}}</span>    </button>    <mat-select [value]="selected"                [aria-label]="togglePlaceholderTitle"                [disableOptionCentering]="true"                [class.use-alternate]="!useLegacyDesign"                [panelClass]="[\'ui-grid-toggle-panel\', useLegacyDesign ?  \'\' : \'ui-grid-toggle-panel-alternate\']"                (selectionChange)="selectionChange($event)"                tabIndex="-1"                multiple>        <mat-optgroup>            <span>                <mat-icon class="material-icons-outlined">view_column</mat-icon> {{ toggleTitle }}            </span>            <a #resetBtn               *ngIf="dirty"               [matTooltip]="resetToDefaults"               (click)="reset()"               (keydown.enter)="reset()"               (keydown.space)="reset()"               (keydown)="resetKeyDown($event)"               class="ui-grid-toggle-reset"               role="button"               color="primary"               mat-button>                {{resetToDefaults}}            </a>            <mat-option *ngFor="let o of options"                        [matTooltip]="o.label"                        [disabled]="o.disabled"                        [value]="o.property">{{ o.label }}</mat-option>        </mat-optgroup>    </mat-select>    <mat-divider *ngIf="showDivider"                 [vertical]="true"></mat-divider></ng-container><ng-template #classicColumnToggleTmpl>    <button [matTooltip]="togglePlaceholderTitle"            [color]="dirty ? \'primary\' : undefined"            (click)="selectColumns!.open(); selectColumns!.focus()"            matTooltipPosition="right"            type="button"            mat-icon-button>        <mat-icon class="material-icons-outlined">view_column</mat-icon>    </button></ng-template></div>'
     var COMPONENTS = [{'name': 'UiButtonProgressBarComponent', 'selector': 'ui-button-progress-bar'},{'name': 'UiButtonProgressSpinnerComponent', 'selector': 'ui-button-progress-spinner'},{'name': 'UiContentSpinnerComponent', 'selector': 'ui-content-spinner'},{'name': 'UiGridComponent', 'selector': 'ui-grid'},{'name': 'UiGridCustomPaginatorComponent', 'selector': 'ui-grid-custom-paginator'},{'name': 'UiGridSearchComponent', 'selector': 'ui-grid-search'},{'name': 'UiGridToggleColumnsComponent', 'selector': 'COMPONENT_SELECTOR'},{'name': 'UiPasswordIndicatorComponent', 'selector': 'ui-password-indicator'},{'name': 'UiPasswordToggleComponent', 'selector': 'ui-password-toggle'},{'name': 'UiSecondFormatDirective', 'selector': 'ui-secondformat'},{'name': 'UiSnackBarComponent', 'selector': ''}];
-    var DIRECTIVES = [{'name': 'UiAutoAccessibleLabelDirective', 'selector': ''},{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiContentLoaderDirective', 'selector': '[uiContentLoading]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridLoadingDirective', 'selector': '[uiGridLoading], ui-grid-loading'},{'name': 'UiGridNoContentDirective', 'selector': '[uiGridNoContent], ui-grid-no-content'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiMatFormFieldRequiredDirective', 'selector': 'mat-form-field'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiProgressButtonDirective', 'selector': '
+    var DIRECTIVES = [{'name': 'UiAutoAccessibleLabelDirective', 'selector': ''},{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiContentLoaderDirective', 'selector': '[uiContentLoading]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiFormatDirective', 'selector': ''},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridLoadingDirective', 'selector': '[uiGridLoading], ui-grid-loading'},{'name': 'UiGridNoContentDirective', 'selector': '[uiGridNoContent], ui-grid-no-content'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiLoaderButtonDirective', 'selector': ''},{'name': 'UiMatFormFieldRequiredDirective', 'selector': 'mat-form-field'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiProgressButtonDirective', 'selector': '
         button[mat-button][ui-progress-button],
         button[mat-raised-button][ui-progress-button],
         button[mat-stroked-button][ui-progress-button],
@@ -1419,7 +1477,7 @@ export class UiGridToggleColumnsComponent&lt;T extends IGridDataEntry&gt; implem
         button[mat-fab][uiSpinnerButton],
         button[mat-mini-fab][uiSpinnerButton],
         button[mat-button][ui-spinner-button],
-    '},{'name': 'UiVirtualScrollRangeLoaderDirective', 'selector': '[uiVirtualScrollRangeLoader], ui-virtual-scroll-range-loader'},{'name': 'UiVirtualScrollViewportResizeDirective', 'selector': '[uiVirtualScrollViewportResize], ui-virtual-scroll-viewport-resize'}];
+    '},{'name': 'UiSuggestMatFormFieldDirective', 'selector': ''},{'name': 'UiVirtualScrollRangeLoaderDirective', 'selector': '[uiVirtualScrollRangeLoader], ui-virtual-scroll-range-loader'},{'name': 'UiVirtualScrollViewportResizeDirective', 'selector': '[uiVirtualScrollViewportResize], ui-virtual-scroll-viewport-resize'}];
     var ACTUAL_COMPONENT = {'name': 'UiGridToggleColumnsComponent'};
 </script>
 <script src="../js/tree.js"></script>
@@ -1433,14 +1491,14 @@ export class UiGridToggleColumnsComponent&lt;T extends IGridDataEntry&gt; implem
 
 
 
-                   
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -1452,17 +1510,27 @@ export class UiGridToggleColumnsComponent&lt;T extends IGridDataEntry&gt; implem
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
             var COMPODOC_CURRENT_PAGE_URL = 'UiGridToggleColumnsComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 
