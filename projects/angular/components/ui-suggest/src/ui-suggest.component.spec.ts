@@ -28,6 +28,7 @@ import {
     ComponentFixture,
     discardPeriodicTasks,
     fakeAsync,
+    flush,
     TestBed,
     tick,
     waitForAsync,
@@ -59,6 +60,8 @@ import { UiSuggestModule } from './ui-suggest.module';
 
 type SuggestProperties = 'disabled' | 'readonly';
 
+const SEARCH_DEBOUNCE = 300 + 100;
+const VIRTUAL_SCROLL_DEBOUNCE = 100 + 100;
 @Directive()
 class UiSuggestFixtureDirective {
     @ViewChild(UiSuggestComponent, {
@@ -72,12 +75,14 @@ class UiSuggestFixtureDirective {
 
     clearable?: boolean;
     searchable?: boolean;
+    searchableCountInfo?: { count: number; message: string };
     alwaysExpanded?: boolean;
     disabled?: boolean;
     multiple?: boolean;
     readonly?: boolean;
     enableCustomValue?: boolean;
     items?: ISuggestValue[];
+    displayTemplateValue?: boolean;
     direction: 'up' | 'down' = 'down';
     displayPriority: 'default' | 'selected' = 'default';
     fetchStrategy: 'eager' | 'onOpen' = 'eager';
@@ -100,6 +105,10 @@ const searchFor = (value: string, fixture: ComponentFixture<UiSuggestFixtureDire
 
     fixture.detectChanges();
 
+    populateSearchFor(value, fixture);
+};
+
+const populateSearchFor = (value: string, fixture: ComponentFixture<UiSuggestFixtureDirective>) => {
     const input = fixture.debugElement.query(By.css('input'));
     input.nativeElement.value = value;
     input.nativeElement.dispatchEvent(EventGenerator.input());
@@ -1187,8 +1196,8 @@ const sharedSpecifications = (
 
                 const word = faker.random.word();
                 const wordWithWhitespace = `${Array(6).fill(' ').join('')
-                }${word}${Array(6).fill(' ').join('')
-                }`;
+                    }${word}${Array(6).fill(' ').join('')
+                    }`;
 
                 searchFor(wordWithWhitespace, fixture);
                 await fixture.whenStable();
@@ -1384,13 +1393,10 @@ const sharedSpecifications = (
     });
 
     describe('Source: async data', () => {
-        const SEARCH_DEBOUNCE = 300 + 100;
-        const VIRTUAL_SCROLL_DEBOUNCE = 100 + 100;
-
         const items = generateSuggetionItemList(100);
         let overrideItems: ISuggestValue[] | undefined;
 
-        const asyncSearchFactory = (query = '', fetchSize = 10, start = 0) => {
+        const asyncSearchFactory = (delayTime = 0) => (query = '', fetchSize = 10, start = 0) => {
             const source = overrideItems ?? items;
 
             const results = query !== '' ?
@@ -1405,7 +1411,7 @@ const sharedSpecifications = (
                             data: filteredItems.slice(start, start + fetchSize),
                         } as ISuggestValues<any>),
                     ),
-                    delay(0),
+                    delay(delayTime),
                 );
         };
 
@@ -1413,7 +1419,7 @@ const sharedSpecifications = (
 
         beforeEach(() => {
             overrideItems = undefined;
-            uiSuggest.searchSourceFactory = asyncSearchFactory;
+            uiSuggest.searchSourceFactory = asyncSearchFactory();
             sourceSpy = spyOn<UiSuggestComponent, any>(uiSuggest, 'searchSourceFactory');
             sourceSpy.and.callThrough();
             component.searchable = true;
@@ -1452,6 +1458,47 @@ const sharedSpecifications = (
 
                 expect(sourceSpy).toHaveBeenCalled();
             }));
+
+            it('should call fetch 2 times if fetchStrategy is `onOpen`, direction is `up` and suggest gets opened twice', waitForAsync(
+                async () => {
+                    component.fetchStrategy = 'onOpen';
+                    component.direction = 'up';
+                    overrideItems = new Array(6).fill(0).map((_, i) => ({
+                        id: i + 1,
+                        text: `Suggestion ${i + 1}`,
+                    }));
+                    uiSuggest.displayCount = 5;
+                    uiSuggest.searchSourceFactory = asyncSearchFactory(100);
+                    sourceSpy = spyOn<UiSuggestComponent, any>(uiSuggest, 'searchSourceFactory');
+                    sourceSpy.and.callThrough();
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+
+                    expect(sourceSpy).toHaveBeenCalledTimes(0);
+
+                    const display = fixture.debugElement.query(By.css('.display'));
+                    display.nativeElement.dispatchEvent(EventGenerator.click);
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+
+                    fixture.detectChanges();
+
+                    expect(sourceSpy).toHaveBeenCalledTimes(2);
+
+                    uiSuggest.close();
+                    fixture.detectChanges();
+
+                    display.nativeElement.dispatchEvent(EventGenerator.click);
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+
+                    fixture.detectChanges();
+
+                    expect(sourceSpy).toHaveBeenCalledTimes(4);
+                }));
 
             it(`should fetch call after the 'minChars' is met`, waitForAsync(async () => {
                 const MIN_CHARS = 5;
@@ -2135,6 +2182,8 @@ describe('Component: UiSuggest', () => {
                             [multiple]="multiple"
                             [readonly]="readonly"
                             [fetchStrategy]="fetchStrategy"
+                            [displayTemplateValue]="displayTemplateValue"
+                            [searchableCountInfo]="searchableCountInfo"
                             [minChars]="minChars">
                             <ng-template let-item >
                                 <div class="item-template">{{ item.text }}</div>
@@ -2196,6 +2245,78 @@ describe('Component: UiSuggest', () => {
                     expect(item.text).toBe(generatedItems[index].nativeElement.innerText);
                 });
             }));
+
+            [false, true].forEach((multiple) => {
+                [false, true].forEach((displayTemplateValue) => {
+                    it(`should ${!multiple && displayTemplateValue ? '' : 'NOT'} render the displayed value with custom` +
+                        `template if displayTemplateValue is ${displayTemplateValue}, multiple is ${multiple}`, () => {
+                            component.displayTemplateValue = displayTemplateValue;
+                            component.multiple = multiple;
+
+                            const items = generateSuggetionItemList(5);
+                            component.items = items;
+                            component.value = [faker.helpers.randomize(items)];
+
+                            fixture.detectChanges();
+                            const display = fixture.debugElement.query(By.css('.item-template'));
+
+                            if (!multiple && displayTemplateValue) {
+                                expect(display).toBeDefined();
+                            } else {
+                                expect(display).toBeNull();
+                            }
+                        });
+                });
+            });
+
+            [undefined, {
+                count: 5,
+                message: '5 might not be all',
+            }].forEach((searchableCountInfo) => {
+                [0, 3, 5, 7].forEach((itemsCount) => {
+                    [false, true].forEach((searchable) => {
+                        const shouldRenderMessage = itemsCount > 0 && itemsCount === searchableCountInfo?.count && searchable;
+
+                        it(
+                            `should ${shouldRenderMessage ? '' : 'NOT'} render the max count info ` +
+                            `is ${searchable ? '' : 'NOT'} searchable ` +
+                            `if searchableCountInfo is [${JSON.stringify(searchableCountInfo)}], and items rendered are ${itemsCount}`,
+                            fakeAsync(() => {
+                                component.searchableCountInfo = searchableCountInfo;
+                                component.searchable = searchable;
+
+                                const items = generateSuggetionItemList(itemsCount, 'a');
+                                component.items = items;
+
+                                fixture.detectChanges();
+                                tick(SEARCH_DEBOUNCE);
+                                const display = fixture.debugElement.query(By.css('.display'));
+
+                                display.nativeElement.dispatchEvent(EventGenerator.click);
+                                fixture.detectChanges();
+
+                                const customInfoMessageCount = fixture.debugElement.query(By.css('.item-max-count-info-message'));
+
+                                if (shouldRenderMessage) {
+                                    expect(customInfoMessageCount).toBeDefined();
+                                    expect(customInfoMessageCount.nativeNode!.innerText.includes(searchableCountInfo!.message)).toBeTrue();
+
+                                    populateSearchFor('a', fixture);
+                                    tick(SEARCH_DEBOUNCE);
+                                    fixture.detectChanges();
+
+                                    const noMessage = fixture.debugElement.query(By.css('.item-max-count-info-message'));
+                                    expect(noMessage).toBeNull();
+                                } else {
+                                    expect(customInfoMessageCount).toBeNull();
+                                }
+
+                                flush();
+                                discardPeriodicTasks();
+                            }));
+                    });
+                });
+            });
         });
     });
 });

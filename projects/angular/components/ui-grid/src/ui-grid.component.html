@@ -262,13 +262,15 @@
              role="gridcell">
             <div *ngIf="selectable"
                  class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
-                <mat-checkbox (click)="checkShift($event)"
+                <mat-checkbox *ngLet="disableSelectionByEntry(row) as disabledReason"
+                              (click)="checkShift($event)"
                               (keyup.shift.space)="checkShift($event)"
                               (keyup.space)="checkShift($event)"
                               (change)="handleSelection(index, row)"
                               [checked]="selectionManager.isSelected(row)"
-                              [matTooltip]="checkboxTooltip(row)"
-                              [aria-label]="checkboxTooltip(row)"
+                              [matTooltip]="disabledReason || checkboxTooltip(row)"
+                              [aria-label]="disabledReason || checkboxTooltip(row)"
+                              [disabled]="!!disabledReason"
                               tabindex="0">
                 </mat-checkbox>
             </div>
@@ -287,13 +289,15 @@
                     selectable"
              class="ui-grid-cell ui-grid-checkbox-cell ui-grid-feature-cell"
              role="gridcell">
-            <mat-checkbox (click)="checkShift($event)"
+            <mat-checkbox *ngLet="disableSelectionByEntry(row) as disabledReason"
+                          (click)="checkShift($event)"
                           (keyup.shift.space)="checkShift($event)"
                           (keyup.space)="checkShift($event)"
                           (change)="handleSelection(index, row)"
                           [checked]="selectionManager.isSelected(row)"
-                          [matTooltip]="checkboxTooltip(row)"
-                          [aria-label]="checkboxTooltip(row)"
+                          [matTooltip]="disabledReason || checkboxTooltip(row)"
+                          [aria-label]="disabledReason || checkboxTooltip(row)"
+                          [disabled]="disabledReason"
                           tabindex="0">
             </mat-checkbox>
         </div>
@@ -516,6 +520,7 @@
                       [overlapTrigger]="true">
                 <button *ngIf="column.dropdown.showAllOption"
                         [class.active]="column.dropdown.value == null"
+                        [matTooltip]="intl.noFilterPlaceholder"
                         (click)="filterManager.dropdownUpdate(column!, undefined)"
                         type="button"
                         mat-menu-item>
@@ -523,6 +528,7 @@
                 </button>
                 <button *ngFor="let dropdownItem of column.dropdown.items"
                         [class.active]="column.dropdown.value?.label === dropdownItem.label"
+                        [matTooltip]="intl.translateDropdownOption(dropdownItem)"
                         (click)="filterManager.dropdownUpdate(column, dropdownItem)"
                         type="button"
                         mat-menu-item>
@@ -561,6 +567,7 @@
                             [useLegacyDesign]="useLegacyDesign"
                             [showDivider]="!useLegacyDesign && (hasAnyFiltersVisible$ | async)"
                             (visibleColumns)="visibilityManager.update($event)"
-                            (resetColumns)="visibilityManager.reset()">
+                            (resetColumns)="visibilityManager.reset()"
+                            (visibleColumnsToggled)="visibleColumnsToggle$.next($event)">
     </ui-grid-toggle-columns>
 </ng-template>

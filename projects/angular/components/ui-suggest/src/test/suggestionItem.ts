@@ -2,8 +2,8 @@ import * as faker from 'faker';
 
 import { ISuggestValue } from '../models';
 
-export const generateSuggestionItem = (): ISuggestValue => {
-    const value = faker.random.words(3);
+export const generateSuggestionItem = (label = ''): ISuggestValue => {
+    const value = `${label}${faker.random.words(1)}`;
 
     return {
         id: value,
@@ -12,7 +12,7 @@ export const generateSuggestionItem = (): ISuggestValue => {
 };
 
 export const generateSuggetionItemList =
-    (count: number | 'random' = 5): ISuggestValue[] =>
+    (count: number | 'random' = 5, label?: string): ISuggestValue[] =>
         Array(
             count === 'random' ?
                 faker.random.number({
@@ -22,5 +22,5 @@ export const generateSuggetionItemList =
                 count,
         )
             .fill(0)
-            .map(generateSuggestionItem);
+            .map(() => generateSuggestionItem(label));
 

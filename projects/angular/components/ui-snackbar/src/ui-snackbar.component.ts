@@ -1,9 +1,14 @@
 import {
+    ComponentPortal,
+    ComponentType,
+} from '@angular/cdk/portal';
+import {
     ChangeDetectionStrategy,
     Component,
     Inject,
     Injectable,
     InjectionToken,
+    Injector,
     Optional,
     TemplateRef,
     ViewEncapsulation,
@@ -15,14 +20,13 @@ import {
     MAT_SNACK_BAR_DATA,
     MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
-
 import { UiSnackbarIntl } from './ui-snackbar.intl';
 
 interface ISnackBarAlert {
     /**
      * Alert message
      */
-    message: string | TemplateRef<any>;
+    message: string | TemplateRef<any> | ComponentType<unknown>;
     /**
      * Optional action button message,
      * will emit `dismissWithAction` on click
@@ -40,6 +44,10 @@ interface ISnackBarAlert {
      * Aria label for screen-readers on close button
      */
     closeAriaLabel?: string;
+    /**
+     * Additional information to pass to components. Can be used by injecting `UI_MAT_SNACK_BAR_PAYLOAD`.
+     */
+    payload?: unknown;
 }
 
 @Component({
@@ -51,18 +59,60 @@ interface ISnackBarAlert {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiSnackBarComponent {
+    private _componentPortal?: ComponentPortal<unknown>;
+
+    get componentPortal() {
+        if (typeof this.data.message !== 'function') {
+            throw new Error('`componentPortal` getter cannot be used when `data.message` is not a component type');
+        }
+
+        this._componentPortal ??= new ComponentPortal(
+            this.data.message,
+            null,
+            Injector.create({
+                providers: [
+                    {
+                        provide: UI_MAT_SNACK_BAR_PAYLOAD,
+                        useValue: this.data.payload,
+                    },
+                ],
+                parent: this._injector,
+
+            }),
+        );
+
+        return this._componentPortal;
+    }
 
     constructor(
         @Inject(MAT_SNACK_BAR_DATA)
         public data: ISnackBarAlert,
         public snackBarRef: MatSnackBarRef<UiSnackBarComponent>,
+        private _injector: Injector,
     ) { }
+
     /**
      * @internal
      * @ignore
      */
-    isPropertyString(property: string | TemplateRef<any>): property is string {
+    isPropertyString(property: unknown): property is string {
         return typeof property === 'string';
+    }
+
+    /**
+     * @internal
+     * @ignore
+     */
+    isTemplateRef(property: unknown): property is TemplateRef<unknown> {
+        return property instanceof TemplateRef;
+    }
+
+    /**
+     * @internal
+     * @ignore
+     */
+    isComponentType(property: unknown): property is ComponentType<unknown> {
+        return typeof property === 'function';
     }
 }
 
@@ -81,17 +131,20 @@ export const ICON_MAP: Map<SnackBarType, string> = new Map([
     [SnackBarType.Error, 'error'],
 ]);
 export type SnackbarAction = (
-    message: string | TemplateRef<any>,
+    message: string | TemplateRef<any> | ComponentType<unknown>,
     config?: {
         actionMessage?: string;
         duration?: number;
+        payload?: unknown;
     },
 ) => MatSnackBarRef<UiSnackBarComponent>;
 
 export class UiMatSnackBarConfig {
     restrictHtml = false;
 }
+
 export const UI_MAT_SNACK_BAR_DEFAULT_OPTIONS = new InjectionToken<UiMatSnackBarConfig>('UiMatSnackBarConfig');
+export const UI_MAT_SNACK_BAR_PAYLOAD = new InjectionToken('UiSnackBarService Payload');
 
 /**
  * Snackbar config options
@@ -166,12 +219,16 @@ export class UiSnackBarService {
      * @param message The message to be displayed
      * @param options Customize default options: snackbar type, icon, display duration, and action message
      */
-    show = (message: string | TemplateRef<any>, { type, duration, icon, actionMessage }: ISnackBarOptions = {}) =>
+    show = (
+        message: string | TemplateRef<any> | ComponentType<unknown>,
+        { type, duration, icon, actionMessage, payload }: ISnackBarOptions = {},
+    ) =>
         this._alert(type ?? SnackBarType.None, {
             message,
             icon: icon ?? ICON_MAP.get(type!),
             duration: duration || duration === 0 ? duration : this._options.duration!,
             actionMessage,
+            payload,
         });
 
     /**
@@ -184,14 +241,18 @@ export class UiSnackBarService {
     }
 
     private _alertFactory = (type: SnackBarType) =>
-        (message: string | TemplateRef<any>, config?: { actionMessage?: string; duration?: number }) => this._alert(type, {
-            message,
-            actionMessage: config?.actionMessage,
-            icon: ICON_MAP.get(type),
-            duration: config?.duration || config?.duration === 0
-                ? config.duration
-                : this._options.duration!,
-        });
+        (
+            message: string | TemplateRef<any> | ComponentType<unknown>,
+            config?: { actionMessage?: string; duration?: number; payload?: unknown }) =>
+            this._alert(type, {
+                message,
+                actionMessage: config?.actionMessage,
+                icon: ICON_MAP.get(type),
+                duration: config?.duration || config?.duration === 0
+                    ? config.duration
+                    : this._options.duration!,
+                payload: config?.payload,
+            });
 
     private _alert(type: SnackBarType, options: ISnackBarAlert) {
         if (

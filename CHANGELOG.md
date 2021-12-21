@@ -1,3 +1,50 @@
+# v12.6.0 (2021-12-21)
+* **snackbar** add component support
+* **build** `npm ci` should work
+
+# v12.5.6 (2021-11-04)
+* **grid** expose resize stream
+
+# v12.5.5 (2021-11-03)
+* **playground** add visibility columns state
+* **grid** emit toggle visibility columns
+
+# v12.5.4 (2021-11-02)
+* **matformfield-required** error when label is not existing
+
+# v12.5.3 (2021-11-01)
+* **grid** persist search icon
+
+# v12.5.2 (2021-10-29)
+* **grid** align footer icons
+* **grid** position search-icon on the left
+* **grid** outline column icon
+
+# v12.5.1 (2021-10-29)
+* **matformfield-required** mark intl as optional
+
+# v12.5.0 (2021-10-27)
+* **matformfield-required** test the directive
+* **matformfield-required** create directive that adds tooltip
+
+# v12.4.0 (2021-09-21)
+* **suggest** render a searchable info message
+* **suggest** add custom item template for value
+* **chore** enable bracketPairColorization
+
+# v12.3.0 (2021-09-17)
+* **grid** add tooltip for columns and filters
+
+# v12.2.0 (2021-09-09)
+* **chore** bump angular to 12.2.5
+* **chore** add vscode theming colors
+* **suggest** range loader emit issues
+* **deps** bump tar from 4.4.8 to 4.4.15
+
+# v12.1.0 (2021-07-15)
+* **chore** bump angular to 12.1.2
+* **grid** disable selection by row data
+
 # v12.0.0 (2021-07-13)
 
 # v12.0.0-rc.3 (2021-06-18)

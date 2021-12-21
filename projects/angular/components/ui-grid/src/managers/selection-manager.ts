@@ -36,6 +36,13 @@ export class SelectionManager<T extends IGridDataEntry> {
         };
     }
 
+    set disableSelectionByEntry(disableFunc: (entry: T) => null | string) {
+        this._disableSelectionByEntry = disableFunc;
+    }
+    get disableSelectionByEntry() {
+        return this._disableSelectionByEntry;
+    }
+
     changed$ = new Subject<SelectionChange<T>>();
 
     private _hasValue$ = new BehaviorSubject(false);
@@ -50,6 +57,8 @@ export class SelectionManager<T extends IGridDataEntry> {
     private _deselectedToEmit: T[] = [];
 
     private _selectedToEmit: T[] = [];
+
+    private _disableSelectionByEntry!: (entry: T) => null | string;
 
     constructor(
         initiallySelectedValues?: T[],
@@ -102,7 +111,10 @@ export class SelectionManager<T extends IGridDataEntry> {
     }
 
     private _updateState = (predicate: (value: T) => void, values: T[]) => {
-        values.forEach(predicate);
+        (this.disableSelectionByEntry
+            ? values.filter(value => !this.disableSelectionByEntry(value))
+            : values
+        ).forEach(predicate);
         this._emitChangeEvent();
     };
 

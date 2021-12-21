@@ -7,6 +7,7 @@ import {
     Observable,
     of,
     Subject,
+    Subscription,
 } from 'rxjs';
 import {
     debounceTime,
@@ -191,7 +192,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             this.resizeManager.destroy();
         }
 
-        this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
+        this._initResizeManager();
     }
 
     /**
@@ -335,6 +336,14 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     showHeaderRow = true;
 
     /**
+     * Configure a function that receives the whole grid row, and returns
+     * disabled message if the row should not be selectable
+     *
+     */
+    @Input()
+    disableSelectionByEntry: (entry: T) => null | string;
+
+    /**
      * Emits an event with the sort model when a column sort changes.
      *
      */
@@ -354,6 +363,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @Output()
     rendered = new EventEmitter<void>();
+
+    /**
+     * Emits an event once the grid has been rendered.
+     *
+     */
+    @Output()
+    resizeEnd = new EventEmitter<void>();
 
     /**
      * Emits the column definitions when their definition changes.
@@ -491,7 +507,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * Resize manager, used to compute resized column states.
      *
      */
-    resizeManager: ResizeManager<T>;
+    resizeManager!: ResizeManager<T>;
 
     /**
      * @ignore
@@ -515,6 +531,12 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     visible$ = this.visibilityManager.columns$;
+
+    /**
+     * Emits when the visible columns menu has been opened or closed
+     *
+     */
+    visibleColumnsToggle$ = new BehaviorSubject<boolean>(false);
 
     /**
      * Returns the scroll size, in order to compensate for the scrollbar.
@@ -584,6 +606,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     private _configure$ = new Subject<void>();
     private _isShiftPressed = false;
     private _lastCheckboxIdx = 0;
+    private _resizeSubscription$: null | Subscription = null;
 
     /**
      * @ignore
@@ -601,6 +624,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     ) {
         super();
 
+        this.disableSelectionByEntry = () => null;
         this.useLegacyDesign = _gridOptions?.useLegacyDesign ?? false;
         this._fetchStrategy = _gridOptions?.fetchStrategy ?? 'onOpen';
         this.rowSize = _gridOptions?.rowSize ?? DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
@@ -687,7 +711,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             takeUntil(this._destroyed$),
         ).subscribe();
 
-        this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
+        this._initResizeManager();
         this._performanceMonitor = new PerformanceMonitor(_ref.nativeElement);
         this.paintTime$ = this._performanceMonitor.paintTime$;
     }
@@ -696,6 +720,8 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * @ignore
      */
     ngAfterContentInit() {
+        this.selectionManager.disableSelectionByEntry = this.disableSelectionByEntry;
+
         this.liveAnnouncerManager = new LiveAnnouncerManager(
             msg => this._queuedAnnouncer.enqueue(msg),
             this.intl,
@@ -872,5 +898,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
 
     private _announceGridHeaderActions() {
         this._queuedAnnouncer.enqueue(this.intl.gridHeaderActionsNotice);
+    }
+
+    private _initResizeManager() {
+        this._resizeSubscription$?.unsubscribe();
+        this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
+        this._resizeSubscription$ = this.resizeManager.resizeEnd$.subscribe(() => this.resizeEnd.emit());
     }
 }

@@ -1,10 +1,16 @@
 import {
+    Component,
+    TemplateRef,
+} from '@angular/core';
+import {
     ICON_MAP,
     SnackBarType,
     UiSnackBarService,
 } from 'projects/angular/components/ui-snackbar/src/ui-snackbar.component';
-
-import { Component } from '@angular/core';
+import {
+    SnackbarContentComponent,
+    SnackbarContentPayload,
+} from 'projects/playground/src/app/pages/snackbar/snackbar-content.component';
 
 // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
@@ -22,5 +28,20 @@ export class SnackbarPageComponent {
 
     openSnackbar(snackbarType: SnackBarType.Error | SnackBarType.Info | SnackBarType.Success | SnackBarType.Warning) {
         this._snack[snackbarType](`This is ${snackbarType}`);
+    }
+
+    openSnackbarWithTemplateRef(
+        snackbarType: SnackBarType.Error | SnackBarType.Info | SnackBarType.Success | SnackBarType.Warning,
+        template: TemplateRef<unknown>,
+    ) {
+        this._snack[snackbarType](template);
+    }
+
+    openSnackbarWithComponent(snackbarType: SnackBarType.Error | SnackBarType.Info | SnackBarType.Success | SnackBarType.Warning) {
+        const payload: SnackbarContentPayload = { buttonLabel: 'Click me' };
+        this._snack[snackbarType](
+            SnackbarContentComponent,
+            { payload },
+        );
     }
 }

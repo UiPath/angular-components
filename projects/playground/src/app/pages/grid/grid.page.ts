@@ -34,6 +34,7 @@ export class GridPageComponent {
     data$ = new BehaviorSubject<MockData[]>([]);
     lastPageChange?: PageEvent;
     generatedGrid = false;
+    visibilityColumnsOpened = false;
 
     inputKeys = [
         'useLegacyDesign',
