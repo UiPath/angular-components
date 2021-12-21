@@ -1,3 +1,10 @@
+# v12.6.0 (2021-12-21)
+* **snackbar** add component support
+* **build** `npm ci` should work
+
+# v12.5.6 (2021-11-04)
+* **grid** expose resize stream
+
 # v12.5.5 (2021-11-03)
 * **playground** add visibility columns state
 * **grid** emit toggle visibility columns
