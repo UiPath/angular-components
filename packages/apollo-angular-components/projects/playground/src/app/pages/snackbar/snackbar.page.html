@@ -1,6 +1,5 @@
 <mat-card>
-    <mat-card-title> Snackbar </mat-card-title>
-    <mat-card-subtitle>Playground</mat-card-subtitle>
+    <mat-card-title>Snackbar w/ Text</mat-card-title>
 
     <mat-card-content>
         <button *ngFor="let icon of iconType"
@@ -11,3 +10,33 @@
         </button>
     </mat-card-content>
 </mat-card>
+
+<mat-card>
+    <mat-card-title>Snackbar w/ TemplateRef</mat-card-title>
+
+    <mat-card-content>
+        <button *ngFor="let icon of iconType"
+                (click)="openSnackbarWithTemplateRef(icon, template)"
+                class="snackbar-toggle-button"
+                mat-stroked-button>
+            <mat-icon>{{IconMap.get(icon)}}</mat-icon> {{icon}}
+        </button>
+    </mat-card-content>
+</mat-card>
+
+<mat-card>
+    <mat-card-title>Snackbar w/ Component</mat-card-title>
+
+    <mat-card-content>
+        <button *ngFor="let icon of iconType"
+                (click)="openSnackbarWithComponent(icon)"
+                class="snackbar-toggle-button"
+                mat-stroked-button>
+            <mat-icon>{{IconMap.get(icon)}}</mat-icon> {{icon}}
+        </button>
+    </mat-card-content>
+</mat-card>
+
+<ng-template #template>
+    <span>Snackbar w/ <b>TemplateRef</b></span>
+</ng-template>
