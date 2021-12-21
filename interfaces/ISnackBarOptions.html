@@ -163,11 +163,16 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    ComponentPortal,
+    ComponentType,
+} from &#x27;@angular/cdk/portal&#x27;;
+import {
     ChangeDetectionStrategy,
     Component,
     Inject,
     Injectable,
     InjectionToken,
+    Injector,
     Optional,
     TemplateRef,
     ViewEncapsulation,
@@ -179,14 +184,13 @@ import {
     MAT_SNACK_BAR_DATA,
     MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from &#x27;@angular/material/snack-bar&#x27;;
-
 import { UiSnackbarIntl } from &#x27;./ui-snackbar.intl&#x27;;
 
 interface ISnackBarAlert {
     /**
      * Alert message
      */
-    message: string | TemplateRef&lt;any&gt;;
+    message: string | TemplateRef&lt;any&gt; | ComponentType&lt;unknown&gt;;
     /**
      * Optional action button message,
      * will emit &#x60;dismissWithAction&#x60; on click
@@ -204,6 +208,10 @@ interface ISnackBarAlert {
      * Aria label for screen-readers on close button
      */
     closeAriaLabel?: string;
+    /**
+     * Additional information to pass to components. Can be used by injecting &#x60;UI_MAT_SNACK_BAR_PAYLOAD&#x60;.
+     */
+    payload?: unknown;
 }
 
 @Component({
@@ -215,18 +223,60 @@ interface ISnackBarAlert {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiSnackBarComponent {
+    private _componentPortal?: ComponentPortal&lt;unknown&gt;;
+
+    get componentPortal() {
+        if (typeof this.data.message !&#x3D;&#x3D; &#x27;function&#x27;) {
+            throw new Error(&#x27;&#x60;componentPortal&#x60; getter cannot be used when &#x60;data.message&#x60; is not a component type&#x27;);
+        }
+
+        this._componentPortal ??&#x3D; new ComponentPortal(
+            this.data.message,
+            null,
+            Injector.create({
+                providers: [
+                    {
+                        provide: UI_MAT_SNACK_BAR_PAYLOAD,
+                        useValue: this.data.payload,
+                    },
+                ],
+                parent: this._injector,
+
+            }),
+        );
+
+        return this._componentPortal;
+    }
 
     constructor(
         @Inject(MAT_SNACK_BAR_DATA)
         public data: ISnackBarAlert,
         public snackBarRef: MatSnackBarRef&lt;UiSnackBarComponent&gt;,
+        private _injector: Injector,
     ) { }
+
     /**
      * @internal
      * @ignore
      */
-    isPropertyString(property: string | TemplateRef&lt;any&gt;): property is string {
+    isPropertyString(property: unknown): property is string {
         return typeof property &#x3D;&#x3D;&#x3D; &#x27;string&#x27;;
+    }
+
+    /**
+     * @internal
+     * @ignore
+     */
+    isTemplateRef(property: unknown): property is TemplateRef&lt;unknown&gt; {
+        return property instanceof TemplateRef;
+    }
+
+    /**
+     * @internal
+     * @ignore
+     */
+    isComponentType(property: unknown): property is ComponentType&lt;unknown&gt; {
+        return typeof property &#x3D;&#x3D;&#x3D; &#x27;function&#x27;;
     }
 }
 
@@ -245,17 +295,20 @@ export const ICON_MAP: Map&lt;SnackBarType, string&gt; &#x3D; new Map([
     [SnackBarType.Error, &#x27;error&#x27;],
 ]);
 export type SnackbarAction &#x3D; (
-    message: string | TemplateRef&lt;any&gt;,
+    message: string | TemplateRef&lt;any&gt; | ComponentType&lt;unknown&gt;,
     config?: {
         actionMessage?: string;
         duration?: number;
+        payload?: unknown;
     },
 ) &#x3D;&gt; MatSnackBarRef&lt;UiSnackBarComponent&gt;;
 
 export class UiMatSnackBarConfig {
     restrictHtml &#x3D; false;
 }
+
 export const UI_MAT_SNACK_BAR_DEFAULT_OPTIONS &#x3D; new InjectionToken&lt;UiMatSnackBarConfig&gt;(&#x27;UiMatSnackBarConfig&#x27;);
+export const UI_MAT_SNACK_BAR_PAYLOAD &#x3D; new InjectionToken(&#x27;UiSnackBarService Payload&#x27;);
 
 /**
  * Snackbar config options
@@ -330,12 +383,16 @@ export class UiSnackBarService {
      * @param message The message to be displayed
      * @param options Customize default options: snackbar type, icon, display duration, and action message
      */
-    show &#x3D; (message: string | TemplateRef&lt;any&gt;, { type, duration, icon, actionMessage }: ISnackBarOptions &#x3D; {}) &#x3D;&gt;
+    show &#x3D; (
+        message: string | TemplateRef&lt;any&gt; | ComponentType&lt;unknown&gt;,
+        { type, duration, icon, actionMessage, payload }: ISnackBarOptions &#x3D; {},
+    ) &#x3D;&gt;
         this._alert(type ?? SnackBarType.None, {
             message,
             icon: icon ?? ICON_MAP.get(type!),
             duration: duration || duration &#x3D;&#x3D;&#x3D; 0 ? duration : this._options.duration!,
             actionMessage,
+            payload,
         });
 
     /**
@@ -348,14 +405,18 @@ export class UiSnackBarService {
     }
 
     private _alertFactory &#x3D; (type: SnackBarType) &#x3D;&gt;
-        (message: string | TemplateRef&lt;any&gt;, config?: { actionMessage?: string; duration?: number }) &#x3D;&gt; this._alert(type, {
-            message,
-            actionMessage: config?.actionMessage,
-            icon: ICON_MAP.get(type),
-            duration: config?.duration || config?.duration &#x3D;&#x3D;&#x3D; 0
-                ? config.duration
-                : this._options.duration!,
-        });
+        (
+            message: string | TemplateRef&lt;any&gt; | ComponentType&lt;unknown&gt;,
+            config?: { actionMessage?: string; duration?: number; payload?: unknown }) &#x3D;&gt;
+            this._alert(type, {
+                message,
+                actionMessage: config?.actionMessage,
+                icon: ICON_MAP.get(type),
+                duration: config?.duration || config?.duration &#x3D;&#x3D;&#x3D; 0
+                    ? config.duration
+                    : this._options.duration!,
+                payload: config?.payload,
+            });
 
     private _alert(type: SnackBarType, options: ISnackBarAlert) {
         if (

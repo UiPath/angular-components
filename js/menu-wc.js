@@ -461,13 +461,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiSnackBarModule.html" data-type="entity-link" >UiSnackBarModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-UiSnackBarModule-9470440e7aef0c234020991fa11740736988aa23753ceb0640aae05a61765dce98da72d081e2a634969ce96d08471257481e81bfe0185a2ae851c2c62576ccac"' : 'data-target="#xs-components-links-module-UiSnackBarModule-9470440e7aef0c234020991fa11740736988aa23753ceb0640aae05a61765dce98da72d081e2a634969ce96d08471257481e81bfe0185a2ae851c2c62576ccac"' }>
+                                            'data-target="#components-links-module-UiSnackBarModule-3d666ad70bb2b500f495652a5e8ee1aa951237b322c6219b54a1756e2bf9e42142658d129bd6ff05320efa0abef5091148c959bf0acf1cd4941330faa32b50bd"' : 'data-target="#xs-components-links-module-UiSnackBarModule-3d666ad70bb2b500f495652a5e8ee1aa951237b322c6219b54a1756e2bf9e42142658d129bd6ff05320efa0abef5091148c959bf0acf1cd4941330faa32b50bd"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiSnackBarModule-9470440e7aef0c234020991fa11740736988aa23753ceb0640aae05a61765dce98da72d081e2a634969ce96d08471257481e81bfe0185a2ae851c2c62576ccac"' :
-                                            'id="xs-components-links-module-UiSnackBarModule-9470440e7aef0c234020991fa11740736988aa23753ceb0640aae05a61765dce98da72d081e2a634969ce96d08471257481e81bfe0185a2ae851c2c62576ccac"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiSnackBarModule-3d666ad70bb2b500f495652a5e8ee1aa951237b322c6219b54a1756e2bf9e42142658d129bd6ff05320efa0abef5091148c959bf0acf1cd4941330faa32b50bd"' :
+                                            'id="xs-components-links-module-UiSnackBarModule-3d666ad70bb2b500f495652a5e8ee1aa951237b322c6219b54a1756e2bf9e42142658d129bd6ff05320efa0abef5091148c959bf0acf1cd4941330faa32b50bd"' }>
                                             <li class="link">
                                                 <a href="components/UiSnackBarComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >UiSnackBarComponent</a>
                                             </li>

@@ -148,6 +148,20 @@
 
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#componentPortal" >componentPortal</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
         </tbody>
     </table>
 </section>
@@ -158,12 +172,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(data: <a href="../interfaces/ISnackBarAlert.html" target="_self">ISnackBarAlert</a>, snackBarRef: <a href="../components/UiSnackBarComponent.html" target="_self">MatSnackBarRef&lt;UiSnackBarComponent&gt;</a>)</code>
+<code>constructor(data: <a href="../interfaces/ISnackBarAlert.html" target="_self">ISnackBarAlert</a>, snackBarRef: <a href="../components/UiSnackBarComponent.html" target="_self">MatSnackBarRef&lt;UiSnackBarComponent&gt;</a>, _injector: <a href="https://angular.io/api/core/Injector" target="_blank">Injector</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:53</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:85</a></div>
                             </td>
                         </tr>
 
@@ -197,6 +211,18 @@
                                                   
                                                         <td>
                                                                         <code><a href="../components/UiSnackBarComponent.html" target="_self" >MatSnackBarRef&lt;UiSnackBarComponent&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_injector</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/core/Injector" target="_blank" >Injector</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -252,7 +278,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:57</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:89</a></div>
                         </td>
                     </tr>
 
@@ -279,7 +305,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:58</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:90</a></div>
                         </td>
                     </tr>
 
@@ -288,16 +314,48 @@
     </table>
 </section>
 
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="componentPortal"></a>
+                        <span class="name"><b>componentPortal</b><a href="#componentPortal"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>componentPortal()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:64</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
 </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    ComponentPortal,
+    ComponentType,
+} from &#x27;@angular/cdk/portal&#x27;;
+import {
     ChangeDetectionStrategy,
     Component,
     Inject,
     Injectable,
     InjectionToken,
+    Injector,
     Optional,
     TemplateRef,
     ViewEncapsulation,
@@ -309,14 +367,13 @@ import {
     MAT_SNACK_BAR_DATA,
     MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from &#x27;@angular/material/snack-bar&#x27;;
-
 import { UiSnackbarIntl } from &#x27;./ui-snackbar.intl&#x27;;
 
 interface ISnackBarAlert {
     /**
      * Alert message
      */
-    message: string | TemplateRef&lt;any&gt;;
+    message: string | TemplateRef&lt;any&gt; | ComponentType&lt;unknown&gt;;
     /**
      * Optional action button message,
      * will emit &#x60;dismissWithAction&#x60; on click
@@ -334,6 +391,10 @@ interface ISnackBarAlert {
      * Aria label for screen-readers on close button
      */
     closeAriaLabel?: string;
+    /**
+     * Additional information to pass to components. Can be used by injecting &#x60;UI_MAT_SNACK_BAR_PAYLOAD&#x60;.
+     */
+    payload?: unknown;
 }
 
 @Component({
@@ -345,18 +406,60 @@ interface ISnackBarAlert {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiSnackBarComponent {
+    private _componentPortal?: ComponentPortal&lt;unknown&gt;;
+
+    get componentPortal() {
+        if (typeof this.data.message !&#x3D;&#x3D; &#x27;function&#x27;) {
+            throw new Error(&#x27;&#x60;componentPortal&#x60; getter cannot be used when &#x60;data.message&#x60; is not a component type&#x27;);
+        }
+
+        this._componentPortal ??&#x3D; new ComponentPortal(
+            this.data.message,
+            null,
+            Injector.create({
+                providers: [
+                    {
+                        provide: UI_MAT_SNACK_BAR_PAYLOAD,
+                        useValue: this.data.payload,
+                    },
+                ],
+                parent: this._injector,
+
+            }),
+        );
+
+        return this._componentPortal;
+    }
 
     constructor(
         @Inject(MAT_SNACK_BAR_DATA)
         public data: ISnackBarAlert,
         public snackBarRef: MatSnackBarRef&lt;UiSnackBarComponent&gt;,
+        private _injector: Injector,
     ) { }
+
     /**
      * @internal
      * @ignore
      */
-    isPropertyString(property: string | TemplateRef&lt;any&gt;): property is string {
+    isPropertyString(property: unknown): property is string {
         return typeof property &#x3D;&#x3D;&#x3D; &#x27;string&#x27;;
+    }
+
+    /**
+     * @internal
+     * @ignore
+     */
+    isTemplateRef(property: unknown): property is TemplateRef&lt;unknown&gt; {
+        return property instanceof TemplateRef;
+    }
+
+    /**
+     * @internal
+     * @ignore
+     */
+    isComponentType(property: unknown): property is ComponentType&lt;unknown&gt; {
+        return typeof property &#x3D;&#x3D;&#x3D; &#x27;function&#x27;;
     }
 }
 
@@ -375,17 +478,20 @@ export const ICON_MAP: Map&lt;SnackBarType, string&gt; &#x3D; new Map([
     [SnackBarType.Error, &#x27;error&#x27;],
 ]);
 export type SnackbarAction &#x3D; (
-    message: string | TemplateRef&lt;any&gt;,
+    message: string | TemplateRef&lt;any&gt; | ComponentType&lt;unknown&gt;,
     config?: {
         actionMessage?: string;
         duration?: number;
+        payload?: unknown;
     },
 ) &#x3D;&gt; MatSnackBarRef&lt;UiSnackBarComponent&gt;;
 
 export class UiMatSnackBarConfig {
     restrictHtml &#x3D; false;
 }
+
 export const UI_MAT_SNACK_BAR_DEFAULT_OPTIONS &#x3D; new InjectionToken&lt;UiMatSnackBarConfig&gt;(&#x27;UiMatSnackBarConfig&#x27;);
+export const UI_MAT_SNACK_BAR_PAYLOAD &#x3D; new InjectionToken(&#x27;UiSnackBarService Payload&#x27;);
 
 /**
  * Snackbar config options
@@ -460,12 +566,16 @@ export class UiSnackBarService {
      * @param message The message to be displayed
      * @param options Customize default options: snackbar type, icon, display duration, and action message
      */
-    show &#x3D; (message: string | TemplateRef&lt;any&gt;, { type, duration, icon, actionMessage }: ISnackBarOptions &#x3D; {}) &#x3D;&gt;
+    show &#x3D; (
+        message: string | TemplateRef&lt;any&gt; | ComponentType&lt;unknown&gt;,
+        { type, duration, icon, actionMessage, payload }: ISnackBarOptions &#x3D; {},
+    ) &#x3D;&gt;
         this._alert(type ?? SnackBarType.None, {
             message,
             icon: icon ?? ICON_MAP.get(type!),
             duration: duration || duration &#x3D;&#x3D;&#x3D; 0 ? duration : this._options.duration!,
             actionMessage,
+            payload,
         });
 
     /**
@@ -478,14 +588,18 @@ export class UiSnackBarService {
     }
 
     private _alertFactory &#x3D; (type: SnackBarType) &#x3D;&gt;
-        (message: string | TemplateRef&lt;any&gt;, config?: { actionMessage?: string; duration?: number }) &#x3D;&gt; this._alert(type, {
-            message,
-            actionMessage: config?.actionMessage,
-            icon: ICON_MAP.get(type),
-            duration: config?.duration || config?.duration &#x3D;&#x3D;&#x3D; 0
-                ? config.duration
-                : this._options.duration!,
-        });
+        (
+            message: string | TemplateRef&lt;any&gt; | ComponentType&lt;unknown&gt;,
+            config?: { actionMessage?: string; duration?: number; payload?: unknown }) &#x3D;&gt;
+            this._alert(type, {
+                message,
+                actionMessage: config?.actionMessage,
+                icon: ICON_MAP.get(type),
+                duration: config?.duration || config?.duration &#x3D;&#x3D;&#x3D; 0
+                    ? config.duration
+                    : this._options.duration!,
+                payload: config?.payload,
+            });
 
     private _alert(type: SnackBarType, options: ISnackBarAlert) {
         if (
@@ -517,12 +631,13 @@ export class UiSnackBarService {
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;ui-snackbar-container&quot;&gt;
     &lt;div class&#x3D;&quot;ui-snackbar-message&quot;&gt;
         &lt;mat-icon *ngIf&#x3D;&quot;data.icon&quot;&gt;{{data.icon}}&lt;/mat-icon&gt;
-        &lt;span *ngIf&#x3D;&quot;isPropertyString(data.message); else renderTemplate&quot;
+        &lt;span *ngIf&#x3D;&quot;isPropertyString(data.message)&quot;
               [innerHTML]&#x3D;&quot;data.message | nl2br&quot;&gt;&lt;/span&gt;
-        &lt;ng-template #renderTemplate&gt;
-            &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;data.message&quot;
-                          [ngTemplateOutletContext]&#x3D;&quot;{ $implicit: snackBarRef }&quot;&gt;&lt;/ng-container&gt;
-        &lt;/ng-template&gt;
+        &lt;ng-container *ngIf&#x3D;&quot;isTemplateRef(data.message)&quot;
+                      [ngTemplateOutlet]&#x3D;&quot;data.message&quot;
+                      [ngTemplateOutletContext]&#x3D;&quot;{ $implicit: snackBarRef }&quot;&gt;&lt;/ng-container&gt;
+        &lt;ng-template *ngIf&#x3D;&quot;isComponentType(data.message)&quot;
+                     [cdkPortalOutlet]&#x3D;&quot;componentPortal&quot;&gt;&lt;/ng-template&gt;
     &lt;/div&gt;
 
     &lt;div class&#x3D;&quot;ui-snackbar-dismiss&quot;&gt;
@@ -607,7 +722,7 @@ export class UiSnackBarService {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="ui-snackbar-container">    <div class="ui-snackbar-message">        <mat-icon *ngIf="data.icon">{{data.icon}}</mat-icon>        <span *ngIf="isPropertyString(data.message); else renderTemplate"              [innerHTML]="data.message | nl2br"></span>        <ng-template #renderTemplate>            <ng-container [ngTemplateOutlet]="data.message"                          [ngTemplateOutletContext]="{ $implicit: snackBarRef }"></ng-container>        </ng-template>    </div>    <div class="ui-snackbar-dismiss">        <button *ngIf="data.actionMessage"                (click)="snackBarRef.dismissWithAction()"                class="ui-snackbar-action"                type="button"                mat-button>            {{ data.actionMessage }}        </button>        <button [attr.aria-label]="data.closeAriaLabel"                (click)="snackBarRef.dismiss()"                class="ui-snackbar-close"                type="button"                mat-icon-button>            <mat-icon>close</mat-icon>        </button>    </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="ui-snackbar-container">    <div class="ui-snackbar-message">        <mat-icon *ngIf="data.icon">{{data.icon}}</mat-icon>        <span *ngIf="isPropertyString(data.message)"              [innerHTML]="data.message | nl2br"></span>        <ng-container *ngIf="isTemplateRef(data.message)"                      [ngTemplateOutlet]="data.message"                      [ngTemplateOutletContext]="{ $implicit: snackBarRef }"></ng-container>        <ng-template *ngIf="isComponentType(data.message)"                     [cdkPortalOutlet]="componentPortal"></ng-template>    </div>    <div class="ui-snackbar-dismiss">        <button *ngIf="data.actionMessage"                (click)="snackBarRef.dismissWithAction()"                class="ui-snackbar-action"                type="button"                mat-button>            {{ data.actionMessage }}        </button>        <button [attr.aria-label]="data.closeAriaLabel"                (click)="snackBarRef.dismiss()"                class="ui-snackbar-close"                type="button"                mat-icon-button>            <mat-icon>close</mat-icon>        </button>    </div></div></div>'
     var COMPONENTS = [{'name': 'UiButtonProgressBarComponent', 'selector': 'ui-button-progress-bar'},{'name': 'UiButtonProgressSpinnerComponent', 'selector': 'ui-button-progress-spinner'},{'name': 'UiContentSpinnerComponent', 'selector': 'ui-content-spinner'},{'name': 'UiGridComponent', 'selector': 'ui-grid'},{'name': 'UiGridCustomPaginatorComponent', 'selector': 'ui-grid-custom-paginator'},{'name': 'UiGridSearchComponent', 'selector': 'ui-grid-search'},{'name': 'UiGridToggleColumnsComponent', 'selector': 'COMPONENT_SELECTOR'},{'name': 'UiPasswordIndicatorComponent', 'selector': 'ui-password-indicator'},{'name': 'UiPasswordToggleComponent', 'selector': 'ui-password-toggle'},{'name': 'UiSecondFormatDirective', 'selector': 'ui-secondformat'},{'name': 'UiSnackBarComponent', 'selector': ''}];
     var DIRECTIVES = [{'name': 'UiAutoAccessibleLabelDirective', 'selector': ''},{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiContentLoaderDirective', 'selector': '[uiContentLoading]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiFormatDirective', 'selector': ''},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridLoadingDirective', 'selector': '[uiGridLoading], ui-grid-loading'},{'name': 'UiGridNoContentDirective', 'selector': '[uiGridNoContent], ui-grid-no-content'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiLoaderButtonDirective', 'selector': ''},{'name': 'UiMatFormFieldRequiredDirective', 'selector': 'mat-form-field'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiProgressButtonDirective', 'selector': '
         button[mat-button][ui-progress-button],
