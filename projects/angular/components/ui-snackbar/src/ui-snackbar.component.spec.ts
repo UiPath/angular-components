@@ -398,6 +398,16 @@ describe('Service: UiSnackBarService', () => {
         expect(snack.querySelector('a')!.href).toEqual(`${payload.url}/`);
     });
 
+    it('should add extra css class', () => {
+        const extraCssClasses = ['ui-custom-css-class'];
+
+        service.success('', { extraCssClasses });
+        const snack = getSnack()!;
+
+        expect(snack).not.toBeNull();
+        snack.classList.contains('ui-custom-css-class');
+    });
+
     it('should REMOVE html from the message', () => {
         securitySettings.restrictHtml = true;
         fixture = TestBed.createComponent(SnackBarFixtureComponent);
