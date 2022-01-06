@@ -1,3 +1,7 @@
+# v12.6.1 (2022-01-06)
+* **feat** snackbar support for extra css class
+* **build** update publish tasks to work with npm v7
+
 # v12.6.0 (2021-12-21)
 * **snackbar** add component support
 * **build** `npm ci` should work

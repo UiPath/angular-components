@@ -44,4 +44,9 @@ export class SnackbarPageComponent {
             { payload },
         );
     }
+
+    openWithCustomCssClass(snackbarType: SnackBarType.Error | SnackBarType.Info | SnackBarType.Success | SnackBarType.Warning) {
+        const extraCssClasses = ['ui-my-custom-css-class'];
+        this._snack[snackbarType](`This is ${snackbarType} with custom CSS class on panel`, { extraCssClasses });
+    }
 }
