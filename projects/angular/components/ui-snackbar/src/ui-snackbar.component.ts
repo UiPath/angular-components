@@ -48,6 +48,10 @@ interface ISnackBarAlert {
      * Additional information to pass to components. Can be used by injecting `UI_MAT_SNACK_BAR_PAYLOAD`.
      */
     payload?: unknown;
+    /**
+     *  Extra CSS classes to be added to the snack bar container.
+     */
+    extraCssClasses?: string[];
 }
 
 @Component({
@@ -136,6 +140,7 @@ export type SnackbarAction = (
         actionMessage?: string;
         duration?: number;
         payload?: unknown;
+        extraCssClasses?: string[];
     },
 ) => MatSnackBarRef<UiSnackBarComponent>;
 
@@ -221,7 +226,7 @@ export class UiSnackBarService {
      */
     show = (
         message: string | TemplateRef<any> | ComponentType<unknown>,
-        { type, duration, icon, actionMessage, payload }: ISnackBarOptions = {},
+        { type, duration, icon, actionMessage, payload, extraCssClasses }: ISnackBarOptions = {},
     ) =>
         this._alert(type ?? SnackBarType.None, {
             message,
@@ -229,6 +234,7 @@ export class UiSnackBarService {
             duration: duration || duration === 0 ? duration : this._options.duration!,
             actionMessage,
             payload,
+            extraCssClasses,
         });
 
     /**
@@ -243,7 +249,7 @@ export class UiSnackBarService {
     private _alertFactory = (type: SnackBarType) =>
         (
             message: string | TemplateRef<any> | ComponentType<unknown>,
-            config?: { actionMessage?: string; duration?: number; payload?: unknown }) =>
+            config?: { actionMessage?: string; duration?: number; payload?: unknown; extraCssClasses?: string[] }) =>
             this._alert(type, {
                 message,
                 actionMessage: config?.actionMessage,
@@ -252,6 +258,7 @@ export class UiSnackBarService {
                     ? config.duration
                     : this._options.duration!,
                 payload: config?.payload,
+                extraCssClasses: config?.extraCssClasses,
             });
 
     private _alert(type: SnackBarType, options: ISnackBarAlert) {
@@ -265,13 +272,14 @@ export class UiSnackBarService {
             span.remove();
         }
 
+        const extraPanelClasses = options.extraCssClasses ?? [];
         this._ref = this._snackBar.openFromComponent(UiSnackBarComponent, {
             data: {
                 closeAriaLabel: this._snackIntl.closeAriaLabel,
                 ...options,
             },
             duration: options.duration,
-            panelClass: panelClass(type),
+            panelClass: [panelClass(type), ...extraPanelClasses],
         });
 
         return this._ref;
