@@ -381,6 +381,20 @@ class GridUtils<T> {
         button.nativeElement.dispatchEvent(EventGenerator.click);
     };
 
+    public openSearchFilter = ({
+        columnName,
+    }: {
+        columnName: string;
+    }) => {
+        const selector = `[data-cy="ui-grid-search-filter-${columnName}"] [role="combobox"]`;
+        const button = this._utils.fixture.debugElement.query(By.css(selector));
+        expect(button).toBeTruthy();
+
+        button.nativeElement.dispatchEvent(EventGenerator.click);
+        this._utils.fixture.detectChanges();
+        tick(300);
+    };
+
     public filterData = ({
         columnName,
         nth,
