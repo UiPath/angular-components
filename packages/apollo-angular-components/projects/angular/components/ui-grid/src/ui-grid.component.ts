@@ -79,7 +79,6 @@ import {
 import { ResizableGrid } from './managers/resize/types';
 import {
     GridOptions,
-    IGridDataEntry,
     ISortModel,
 } from './models';
 import { UiGridIntl } from './ui-grid.intl';
@@ -125,7 +124,7 @@ const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), 
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> implements AfterContentInit, OnChanges, OnDestroy {
+export class UiGridComponent<T extends { id: number | string }> extends ResizableGrid<T> implements AfterContentInit, OnChanges, OnDestroy {
     /**
      * The data list that needs to be rendered within the grid.
      *

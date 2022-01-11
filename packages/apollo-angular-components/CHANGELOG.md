@@ -1,3 +1,12 @@
+# v13.0.0-rc.1 (2022-01-11)
+* **fix** angular ivy bug
+* **chore** update dependencies
+* **feat** snackbar support for extra css class
+* **build** update publish tasks to work with npm v7
+* **snackbar** add component support
+* **build** `npm ci` should work
+* **ng-let** improve typings
+
 # v13.0.0-rc.0 (2021-12-07)
 * **fix** update test setup
 * **fix** theme build
