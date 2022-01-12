@@ -1,3 +1,10 @@
+# v13.0.0-rc.3 (2022-01-12)
+* **chore** update peer deps
+* **test** update multi-select scenarios
+* **suggest** render multi-select suggest as chips
+* **feat** playground suggest page
+* **feat** run playground on port 4300
+
 # v13.0.0-rc.2 (2022-01-12)
 * **fix** adjust imports for moment
 * **chore** update settings colors for peacock
