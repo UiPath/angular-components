@@ -5,6 +5,7 @@
         "outDir": "./dist/out-tsc",
         "sourceMap": true,
         "declaration": false,
+        "allowSyntheticDefaultImports":true,
         "module": "es2020",
         "moduleResolution": "node",
         "noUnusedLocals": true,
