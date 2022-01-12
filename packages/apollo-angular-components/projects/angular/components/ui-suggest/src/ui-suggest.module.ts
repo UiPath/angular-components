@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -32,6 +33,7 @@ import { UiSuggestComponent } from './ui-suggest.component';
         UiAutofocusModule,
         UiClickOutsideModule,
         UiVirtualScrollRangeLoaderModule,
+        MatChipsModule,
     ],
     declarations: [
         UiSuggestComponent,

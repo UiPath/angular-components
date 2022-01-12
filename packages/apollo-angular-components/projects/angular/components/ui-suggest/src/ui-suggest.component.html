@@ -1,6 +1,5 @@
 <div *ngLet="focus$ | async as focus"
-     (uiClickOutside)="focused &&
-                    close(false)"
+     (uiClickOutside)="focused && close(false)"
      class="ui-suggest-container"
      role="application">
     <!--
@@ -10,149 +9,204 @@
           Tested in NVDA.
       -->
 
-    <div [attr.tabindex]="!disabled &&
+    <ng-container *ngIf="!multiple; else chipsTemplate">
+        <div [attr.tabindex]="!disabled &&
                         !readonly ?
                         0 : null"
-         [uiAutofocus]="!isOpen && focus"
-         [refocus]="!isOpen && focus"
-         [matRippleDisabled]="isFormControl"
-         [attr.aria-label]="placeholder"
-         [attr.aria-describedby]="describedBy"
-         [attr.aria-required]="required"
-         [attr.aria-disabled]="disabled || readonly"
-         [attr.aria-expanded]="isOpen"
-         (click)="toggle()"
-         (keyup.enter)="preventDefault($event);"
-         (keydown.enter)="preventDefault($event);
+             [uiAutofocus]="!isOpen && focus"
+             [refocus]="!isOpen && focus"
+             [matRippleDisabled]="isFormControl"
+             [attr.aria-label]="placeholder"
+             [attr.aria-describedby]="describedBy"
+             [attr.aria-required]="required"
+             [attr.aria-disabled]="disabled || readonly"
+             [attr.aria-expanded]="isOpen"
+             (click)="toggle()"
+             (keyup.enter)="preventDefault($event);"
+             (keydown.enter)="preventDefault($event);
                           open();"
-         (keyup.space)="open()"
-         (keyup.esc)="removeSelection($event)"
-         (keydown.esc)="isOpen &&
+             (keyup.space)="open()"
+             (keyup.esc)="removeSelection($event)"
+             (keydown.esc)="isOpen &&
                         preventDefault($event)"
-         (keydown.space)="preventDefault($event)"
-         (focus)="onFocus();"
-         (blur)="onBlur()"
-         matRipple
-         class="display"
-         role="combobox">
-        <ng-container *ngIf="itemTemplate && !multiple && value.length && displayTemplateValue; else showDefaultValue">
-            <ng-container *ngTemplateOutlet="itemTemplate; context: {
+             (keydown.space)="preventDefault($event)"
+             (focus)="onFocus();"
+             (blur)="onBlur()"
+             matRipple
+             class="display"
+             role="combobox">
+            <ng-container
+                          *ngIf="itemTemplate && !multiple && value.length && displayTemplateValue; else showDefaultValue">
+                <ng-container *ngTemplateOutlet="itemTemplate; context: {
                                                 $implicit: value[0]
                                             }">
+                </ng-container>
             </ng-container>
-        </ng-container>
-        <ng-template #showDefaultValue>
-            <div [matTooltip]="tooltip"
-                 class="display-container text-ellipsis">
-                <span *ngIf="!isFormControl && placeholder"
-                      class="display-title"
-                      aria-hidden="true">
-                    {{ placeholder }}:
-                </span>
-                <span class="display-value">
-                    <ng-container *ngIf="!!value.length; else allLabel">
-                        <ng-container *ngFor="let option of value; let i = index">
-                            {{ intl.translateLabel(option.text) + (i === value.length - 1 ? '' : ', ') }}
+            <ng-template #showDefaultValue>
+                <div [matTooltip]="tooltip"
+                     class="display-container text-ellipsis">
+                    <span *ngIf="!isFormControl && placeholder"
+                          class="display-title"
+                          aria-hidden="true">
+                        {{ placeholder }}:
+                    </span>
+                    <span class="display-value">
+                        <ng-container *ngIf="!!value.length; else allLabel">
+                            <ng-container *ngFor="let option of value; let i = index">
+                                {{ intl.translateLabel(option.text) + (i === value.length - 1 ? '' : ', ') }}
+                            </ng-container>
                         </ng-container>
-                    </ng-container>
-                    <ng-template #allLabel>
-                        {{ defaultValue }}
-                    </ng-template>
-                </span>
-            </div>
-        </ng-template>
-        <ng-container *ngIf="!readonly">
-            <!-- aria-hidden will override the default from mat-icon -->
-            <mat-icon *ngIf="value.length && clearable"
-                      [matTooltip]="intl.clearSelectionLabel"
-                      (keydown.space)="removeSelection($event)"
-                      (keydown.enter)="removeSelection($event)"
-                      (click)="removeSelection($event)"
-                      tabindex="0"
-                      role="button"
-                      aria-hidden="false"
-                      class="clear">
-                <svg width="100%"
-                     height="100%"
-                     viewBox="0 0 20 20"
-                     style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
-                    <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2.0011213" />
-                </svg>
-            </mat-icon>
-            <mat-icon *ngIf="!value.length ||
+                        <ng-template #allLabel>
+                            {{ defaultValue }}
+                        </ng-template>
+                    </span>
+                </div>
+            </ng-template>
+            <ng-container *ngIf="!readonly">
+                <!-- aria-hidden will override the default from mat-icon -->
+                <mat-icon *ngIf="value.length && clearable"
+                          [matTooltip]="intl.clearSelectionLabel"
+                          (keydown.space)="removeSelection($event)"
+                          (keydown.enter)="removeSelection($event)"
+                          (click)="removeSelection($event)"
+                          tabindex="0"
+                          role="button"
+                          aria-hidden="false"
+                          class="clear">
+                    <svg width="100%"
+                         height="100%"
+                         viewBox="0 0 20 20"
+                         style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
+                        <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.0011213" />
+                    </svg>
+                </mat-icon>
+                <mat-icon *ngIf="!value.length ||
                          !clearable"
-                      class="arrow-down">keyboard_arrow_down</mat-icon>
-        </ng-container>
-    </div>
-    <div [style.width]="isFormControl ? null : width"
-         [class.item-list-container-state-open]="isOpen"
-         [class.item-list-container-state-closed]="!isOpen"
-         [class.item-list-container-direction-down]="isDown"
-         [class.item-list-container-direction-up]="!isDown"
-         [class.searchable]="searchable"
-         [uiAutofocus]="!searchable"
-         [refocus]="isOpen"
-         [@displayState]="isOpen ? 'open' : 'closed'"
-         (keydown.arrowup)="navigate(-1, $event)"
-         (keydown.arrowdown)="navigate(1, $event)"
-         (keyup.esc)="preventDefault($event);
-                      close();"
-         (keyup.enter)="preventDefault($event);"
-         (keydown.enter)="preventDefault($event);
-                        setSelectedItem();"
-         (keydown.esc)="preventDefault($event)"
-         (keydown.tab)="close(false)"
-         (keydown.shift.tab)="close()"
-         tabindex="-1"
-         class="item-list-container mat-elevation-z4">
-        <ng-container *ngIf="!isDown">
-            <ng-container *ngTemplateOutlet="searchableCountInfoTmpl"></ng-container>
-
-            <ng-container *ngTemplateOutlet="resultList">
+                          class="arrow-down">keyboard_arrow_down</mat-icon>
             </ng-container>
-        </ng-container>
+        </div>
+    </ng-container>
 
-        <mat-form-field *ngIf="searchable"
-                        floatLabel="never">
-            <input [placeholder]="this.isFormControl ? null : placeholder"
-                   [formControl]="inputControl"
-                   [uiAutofocus]="isOpen &&
-                                  searchable"
-                   [attr.maxlength]="maxLength"
+    <ng-template #chipsTemplate>
+        <mat-chip-list #chipList
+                       [attr.tabindex]="!disabled && !readonly ? 0 : null"
+                       [attr.aria-label]="placeholder"
+                       [attr.aria-describedby]="describedBy"
+                       [attr.aria-required]="required"
+                       [attr.aria-disabled]="disabled || readonly"
+                       [attr.aria-expanded]="isOpen"
+                       [style.width]="isFormControl ? null : width"
+                       [disabled]="disabled"
+                       (click)="open()"
+                       (focus)="onFocus()"
+                       (blur)="onBlur()"
+                       (keydown.backspace)="backspaceBehavior()"
+                       (keydown.arrowup)="navigate(-1, $event)"
+                       (keydown.arrowdown)="navigate(1, $event)"
+                       (keyup.enter)="preventDefault($event);"
+                       (keydown.enter)="preventDefault($event); opened ? setSelectedItem() : open();"
+                       (keyup.space)="opened ? setSelectedItem() : open();"
+                       (keydown.space)="preventDefault($event)"
+                       (keyup.esc)="preventDefault($event); close();"
+                       (keydown.esc)="preventDefault($event)"
+                       (keydown.tab)="close(false)"
+                       (keydown.shift.tab)="close()">
+            <mat-chip *ngFor="let option of value; let i = index"
+                      (removed)="deselectItem(option)">
+                <span>
+                    {{ intl.translateLabel(option.text) }}
+                </span>
+                <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip>
+
+            <input #chipInput
+                   [uiAutofocus]="searchable"
                    [refocus]="isOpen"
+                   [placeholder]="this.isFormControl ? null : placeholder"
+                   [formControl]="inputControl"
+                   [matChipInputFor]="chipList"
+                   [attr.maxlength]="maxLength"
                    selectionLocation="end"
                    autocomplete="off"
                    aria-autocomplete="list"
                    matInput>
-            <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
+        </mat-chip-list>
+    </ng-template>
 
-        <ng-container *ngIf="isDown">
-            <ng-container *ngTemplateOutlet="resultList">
+    <div class="item-list-container-wrapper"
+         [class.multi-select]="multiple">
+        <div [style.width]="isFormControl ? null : width"
+             [class.item-list-container-state-open]="isOpen"
+             [class.item-list-container-state-closed]="!isOpen"
+             [class.item-list-container-direction-down]="isDown"
+             [class.item-list-container-direction-up]="!isDown"
+             [class.searchable]="searchable && !multiple"
+             [uiAutofocus]="!searchable && !multiple"
+             [refocus]="isOpen && !multiple"
+             [@displayState]="isOpen ? 'open' : 'closed'"
+             (keydown.arrowup)="navigate(-1, $event)"
+             (keydown.arrowdown)="navigate(1, $event)"
+             (keyup.enter)="preventDefault($event);"
+             (keydown.enter)="preventDefault($event);
+                        setSelectedItem();"
+             (keydown.esc)="preventDefault($event)"
+             (keyup.esc)="preventDefault($event);
+                      close();"
+             (keydown.tab)="close(false)"
+             (keydown.shift.tab)="close()"
+             tabindex="-1"
+             class="item-list-container mat-elevation-z4">
+            <ng-container *ngIf="!isDown">
+                <ng-container *ngTemplateOutlet="searchableCountInfoTmpl"></ng-container>
+
+                <ng-container *ngTemplateOutlet="resultList">
+                </ng-container>
             </ng-container>
 
-            <ng-container *ngTemplateOutlet="searchableCountInfoTmpl"></ng-container>
-        </ng-container>
+            <mat-form-field *ngIf="searchable && !multiple"
+                            floatLabel="never">
+                <input [placeholder]="this.isFormControl ? null : placeholder"
+                       [formControl]="inputControl"
+                       [uiAutofocus]="isOpen &&
+                                  searchable"
+                       [attr.maxlength]="maxLength"
+                       [refocus]="isOpen"
+                       selectionLocation="end"
+                       autocomplete="off"
+                       aria-autocomplete="list"
+                       matInput>
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
 
-        <ng-template #searchableCountInfoTmpl>
-            <mat-list-item *ngIf="items.length &&
+            <ng-container *ngIf="isDown">
+                <ng-container *ngTemplateOutlet="resultList">
+                </ng-container>
+
+                <ng-container *ngTemplateOutlet="searchableCountInfoTmpl"></ng-container>
+            </ng-container>
+
+            <ng-template #searchableCountInfoTmpl>
+                <mat-list-item *ngIf="items.length &&
                                   (loading$ | async) === false &&
                                   searchableCountInfo?.count === items.length &&
                                   searchable &&
                                   !inputControl.value"
-                           [matTooltip]="searchableCountInfo?.message"
-                           [attr.role]="'option'"
-                           matTooltipPosition="right"
-                           class="text-ellipsis item-max-count-info-message">
-                <mat-divider *ngIf="isDown"></mat-divider>
-                <mat-icon>info_outline</mat-icon>
-                <span>{{searchableCountInfo?.message}}</span>
-                <mat-divider *ngIf="!isDown"></mat-divider>
-            </mat-list-item>
-        </ng-template>
+                               [matTooltip]="searchableCountInfo?.message"
+                               [attr.role]="'option'"
+                               matTooltipPosition="right"
+                               class="text-ellipsis item-max-count-info-message">
+                    <mat-divider *ngIf="isDown"></mat-divider>
+                    <mat-icon>info_outline</mat-icon>
+                    <span>{{searchableCountInfo?.message}}</span>
+                    <mat-divider *ngIf="!isDown"></mat-divider>
+                </mat-list-item>
+            </ng-template>
+        </div>
     </div>
 </div>
 
