@@ -1,6 +1,6 @@
 import 'moment-timezone';
 
-import * as moment from 'moment';
+import moment from 'moment';
 import {
     interval,
     merge,
