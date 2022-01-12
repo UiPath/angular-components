@@ -1,6 +1,6 @@
 import 'moment-timezone';
 
-import * as _moment from 'moment';
+import * as moment from 'moment';
 import {
     interval,
     merge,
@@ -22,13 +22,6 @@ import {
     Renderer2,
 } from '@angular/core';
 import { UiFormatDirective } from '@uipath/angular/directives/internal';
-
-/**
- * Rollup issue: https://github.com/rollup/rollup/issues/670
- *
- * @ignore
- */
-const moment = _moment;
 
 /**
  * The date format display type options.

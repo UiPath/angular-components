@@ -1,3 +1,7 @@
+# v13.0.0-rc.2 (2022-01-12)
+* **fix** adjust imports for moment
+* **chore** update settings colors for peacock
+
 # v13.0.0-rc.1 (2022-01-11)
 * **fix** angular ivy bug
 * **chore** update dependencies

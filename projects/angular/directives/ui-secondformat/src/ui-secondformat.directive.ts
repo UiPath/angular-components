@@ -1,4 +1,4 @@
-import * as _moment from 'moment';
+import * as moment from 'moment';
 import {
     BehaviorSubject,
     merge,
@@ -18,13 +18,6 @@ import {
     Input,
     Optional,
 } from '@angular/core';
-
-/**
- * Rollup issue: https://github.com/rollup/rollup/issues/670
- *
- * @ignore
- */
-const moment = _moment;
 
 /**
  * The date format options schema.
