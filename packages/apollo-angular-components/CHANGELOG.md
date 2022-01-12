@@ -1,3 +1,6 @@
+# v13.0.0-rc.4 (2022-01-12)
+* **fix** moment import
+
 # v13.0.0-rc.3 (2022-01-12)
 * **chore** update peer deps
 * **test** update multi-select scenarios
