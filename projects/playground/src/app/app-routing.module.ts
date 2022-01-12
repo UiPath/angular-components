@@ -1,6 +1,7 @@
 import { GridPageComponent } from 'projects/playground/src/app/pages/grid/grid.page';
 import { HomePageComponent } from 'projects/playground/src/app/pages/home/home.page';
 import { SnackbarPageComponent } from 'projects/playground/src/app/pages/snackbar/snackbar.page';
+import { SuggestPageComponent } from 'projects/playground/src/app/pages/suggest/suggest.page';
 
 import { NgModule } from '@angular/core';
 import {
@@ -20,6 +21,10 @@ const routes: Routes = [
     {
         path: 'snackbar',
         component: SnackbarPageComponent,
+    },
+    {
+        path: 'suggest',
+        component: SuggestPageComponent,
     },
     {
         path: '**',

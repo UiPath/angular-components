@@ -63,6 +63,13 @@ $componentName: "ui-suggest";
         border-radius: $default-border-radius;
         width: 100%;
 
+        &-wrapper.multi-select {
+            position: absolute;
+            bottom: 0;
+            height: 0;
+            width: 100%;
+        }
+
         .ui-suggest-item {
             width: 100%;
             height: 100%;

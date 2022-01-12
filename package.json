@@ -1,6 +1,6 @@
 {
   "name": "angular-components",
-  "version": "13.0.0-rc.2",
+  "version": "13.0.0-rc.3",
   "author": {
     "name": "UiPath Inc",
     "url": "https://uipath.com"
@@ -29,7 +29,7 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4300 --open",
     "build": "ng build --configuration production",
     "build:theme": "scss-bundle -c scss-bundle.config.json",
     "build:readme": "cpx ./README.md ./dist/angular",
