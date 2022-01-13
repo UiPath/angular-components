@@ -125,7 +125,8 @@
             </mat-chip>
 
             <input #chipInput
-                   [uiAutofocus]="searchable"
+                   *ngIf="searchable"
+                   [uiAutofocus]="isOpen"
                    [refocus]="isOpen"
                    [placeholder]="this.isFormControl ? null : placeholder"
                    [formControl]="inputControl"
