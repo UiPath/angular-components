@@ -107,8 +107,8 @@
                        (keydown.arrowup)="navigate(-1, $event)"
                        (keydown.arrowdown)="navigate(1, $event)"
                        (keyup.enter)="preventDefault($event);"
-                       (keydown.enter)="preventDefault($event); opened ? setSelectedItem() : open();"
-                       (keyup.space)="opened ? setSelectedItem() : open();"
+                       (keydown.enter)="preventDefault($event); isOpen ? setSelectedItem() : open();"
+                       (keyup.space)="isOpen ? setSelectedItem() : open();"
                        (keydown.space)="preventDefault($event)"
                        (keyup.esc)="preventDefault($event); close();"
                        (keydown.esc)="preventDefault($event)"
@@ -124,8 +124,7 @@
                 </button>
             </mat-chip>
 
-            <input #chipInput
-                   *ngIf="searchable"
+            <input *ngIf="searchable"
                    [uiAutofocus]="isOpen"
                    [refocus]="isOpen"
                    [placeholder]="this.isFormControl ? null : placeholder"
