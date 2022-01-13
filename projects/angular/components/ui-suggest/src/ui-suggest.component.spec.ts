@@ -915,15 +915,14 @@ const sharedSpecifications = (
 
         it('should NOT close if selecting an item via navigation and multiple selection is ENABLED', () => {
             component.multiple = true;
-
             fixture.detectChanges();
+
             const display = fixture.debugElement.query(By.css('.mat-chip-list'));
             display.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.Enter),
             );
 
             fixture.detectChanges();
-
             assert.isOpen();
 
             const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
@@ -1030,74 +1029,137 @@ const sharedSpecifications = (
             component.defaultValue = undefined;
         });
 
-        it('should update chiplist on new item selected', fakeAsync(() => {
-            const someAvailableItems = component.items!.slice(0, 4);
-            const initiallySelectedItems = someAvailableItems.slice(0, 3);
-            component.value = initiallySelectedItems;
-            fixture.detectChanges();
-            tick();
+        describe('a11y', () => {
+            a11y.suite((runOptions) => {
+                a11y.it('should have no violations', async () => {
+                    component.searchable = true;
 
-            const initialChips = fixture.debugElement.queryAll(By.css('.mat-chip'));
-            expect(initialChips.length).toBe(3);
+                    fixture.detectChanges();
+                    expect(await axe(fixture.nativeElement, runOptions)).toHaveNoViolations();
+                });
+            });
 
-            fixture.detectChanges();
-            tick(5000);
+            it(`should announce if empty`, waitForAsync(async () => {
+                component.items = [];
+                fixture.detectChanges();
 
-            searchFor(component.items![3].text, fixture);
-            fixture.detectChanges();
-            tick(5000);
+                const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
+                const display = fixture.debugElement.query(By.css(
+                    fixture.componentInstance.multiple
+                        ? '.mat-chip-list'
+                        : '[role=combobox]'),
+                );
 
-            const currentListItem = fixture.debugElement.queryAll(
-                By.css('.mat-list-item'),
-            )[3];
-            currentListItem.nativeElement.dispatchEvent(EventGenerator.click);
+                display.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
 
-            fixture.detectChanges();
-            tick(5000);
+                await fixture.whenStable();
+                fixture.detectChanges();
 
-            const updatedChips = fixture.debugElement.queryAll(By.css('.mat-chip span')).map(el => getNativeElement<HTMLSpanElement>(el));
+                expect(spy).toHaveBeenCalledWith('No results');
+            }));
 
-            expect(updatedChips.length).toEqual(4);
-            expect(updatedChips.map(chip => chip.innerText)).toEqual(someAvailableItems.map(item => item.text));
+            it(`should NOT annuonce a highlight if in loading state`, () => {
+                component.items = generateSuggetionItemList('random');
+                fixture.detectChanges();
 
-            discardPeriodicTasks();
-        }));
+                const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
+                uiSuggest.loading$.next(true);
 
-        it('should list initial value in correct order', fakeAsync(() => {
-            const items = component.items!.slice(0, 3);
-            component.value = items;
-            fixture.detectChanges();
-            tick(5000);
+                const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+                display.nativeElement.dispatchEvent(EventGenerator.click);
 
-            const chips = fixture.debugElement.queryAll(By.css('.mat-chip span')).map(el => getNativeElement<HTMLSpanElement>(el));
+                fixture.detectChanges();
+                expect(spy).toHaveBeenCalledTimes(0);
+            });
 
-            expect(chips.length).toEqual(3);
-            expect(chips.map(chip => chip.innerText)).toEqual(items.map(item => item.text));
-            discardPeriodicTasks();
-        }));
+            it(`should announce as highlighted first item`, () => {
+                component.items = generateSuggetionItemList('random');
+                fixture.detectChanges();
 
-        it('should be able to remove chip from remove button', fakeAsync(() => {
-            const items = component.items!.slice(0, 3);
-            component.value = items;
-            fixture.detectChanges();
-            tick();
+                const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
+                const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+                display.nativeElement.dispatchEvent(EventGenerator.click);
 
-            const initialChips = fixture.debugElement.queryAll(By.css('.mat-chip'));
-            expect(initialChips.length).toBe(3);
+                fixture.detectChanges();
+                expect(spy).toHaveBeenCalledWith(`${component.items[0].text} item 1 out of ${component.items.length}`);
+            });
+        });
 
-            const chipRemoveButton = getNativeElement<HTMLButtonElement>(initialChips[1].query(By.css('button')));
-            chipRemoveButton.click();
+        describe('generic', () => {
+            it('should update chiplist on new item selected', fakeAsync(() => {
+                const someAvailableItems = component.items!.slice(0, 4);
+                const initiallySelectedItems = someAvailableItems.slice(0, 3);
+                component.value = initiallySelectedItems;
+                fixture.detectChanges();
+                tick();
 
-            fixture.detectChanges();
-            tick(5000);
+                const initialChips = fixture.debugElement.queryAll(By.css('.mat-chip'));
+                expect(initialChips.length).toBe(3);
 
-            const updatedChips = fixture.debugElement.queryAll(By.css('.mat-chip span')).map(el => getNativeElement<HTMLSpanElement>(el));
+                fixture.detectChanges();
+                tick(5000);
 
-            expect(updatedChips.length).toEqual(2);
-            expect(updatedChips.map(chip => chip.innerText)).toEqual([items[0].text, items[2].text]);
+                searchFor(component.items![3].text, fixture);
+                fixture.detectChanges();
+                tick(5000);
 
-            discardPeriodicTasks();
-        }));
+                const currentListItem = fixture.debugElement.queryAll(
+                    By.css('.mat-list-item'),
+                )[3];
+                currentListItem.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+                tick(5000);
+
+                const updatedChips = fixture.debugElement
+                    .queryAll(By.css('.mat-chip span'))
+                    .map(el => getNativeElement<HTMLSpanElement>(el));
+
+                expect(updatedChips.length).toEqual(4);
+                expect(updatedChips.map(chip => chip.innerText)).toEqual(someAvailableItems.map(item => item.text));
+
+                discardPeriodicTasks();
+            }));
+
+            it('should list initial value in correct order', fakeAsync(() => {
+                const items = component.items!.slice(0, 3);
+                component.value = items;
+                fixture.detectChanges();
+                tick(5000);
+
+                const chips = fixture.debugElement.queryAll(By.css('.mat-chip span')).map(el => getNativeElement<HTMLSpanElement>(el));
+
+                expect(chips.length).toEqual(3);
+                expect(chips.map(chip => chip.innerText)).toEqual(items.map(item => item.text));
+                discardPeriodicTasks();
+            }));
+
+            it('should be able to remove chip from remove button', fakeAsync(() => {
+                const items = component.items!.slice(0, 3);
+                component.value = items;
+                fixture.detectChanges();
+                tick();
+
+                const initialChips = fixture.debugElement.queryAll(By.css('.mat-chip'));
+                expect(initialChips.length).toBe(3);
+
+                const chipRemoveButton = getNativeElement<HTMLButtonElement>(initialChips[1].query(By.css('button')));
+                chipRemoveButton.click();
+
+                fixture.detectChanges();
+                tick(5000);
+
+                const updatedChips = fixture.debugElement
+                    .queryAll(By.css('.mat-chip span'))
+                    .map(el => getNativeElement<HTMLSpanElement>(el));
+
+                expect(updatedChips.length).toEqual(2);
+                expect(updatedChips.map(chip => chip.innerText)).toEqual([items[0].text, items[2].text]);
+
+                discardPeriodicTasks();
+            }));
+        });
     });
 
     describe('Selection: single value', () => {
@@ -1313,6 +1375,7 @@ const sharedSpecifications = (
 
         it('should display all selected values', () => {
             const selectedValues = faker.helpers.shuffle(component.items!).slice(0, 3);
+            component.searchable = true;
             component.value = selectedValues;
 
             fixture.detectChanges();
