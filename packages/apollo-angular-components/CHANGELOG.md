@@ -1,3 +1,6 @@
+# v13.0.0-rc.6 (2022-01-13)
+* **fix** update import path
+
 # v13.0.0-rc.5 (2022-01-13)
 * **test** update existing tests & add a11y suite
 * **suggest** add aria label attribute
