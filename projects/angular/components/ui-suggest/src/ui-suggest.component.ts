@@ -583,7 +583,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                 map((v = '') => v.trim()),
                 distinctUntilChanged(),
                 filter(v => v.length >= this.minChars),
-                tap(() => this.multiple && this.open()),
+                tap(v => v && this.multiple && this.open()),
                 tap(this._setLoadingState),
                 debounceTime(this.debounceTime),
                 filter(_ => !!this.searchSourceFactory),
