@@ -1,3 +1,8 @@
+# v13.0.0-rc.5 (2022-01-13)
+* **test** update existing tests & add a11y suite
+* **suggest** add aria label attribute
+* **suggest** prevent autofocus on render
+
 # v13.0.0-rc.4 (2022-01-12)
 * **fix** moment import
 
