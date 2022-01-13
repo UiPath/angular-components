@@ -1,4 +1,4 @@
-import * as Clipboard from 'clipboard';
+import Clipboard from 'clipboard';
 
 import {
     Directive,
