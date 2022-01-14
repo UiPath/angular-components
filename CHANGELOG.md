@@ -1,3 +1,7 @@
+# v13.0.0-rc.7 (2022-01-14)
+* **suggest** update placeholder rendering logic
+* **suggest** adjust mat chip styles
+
 # v13.0.0-rc.6 (2022-01-13)
 * **fix** update import path
 
