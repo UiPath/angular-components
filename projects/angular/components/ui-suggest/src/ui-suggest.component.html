@@ -127,7 +127,7 @@
             <input *ngIf="searchable"
                    [uiAutofocus]="isOpen"
                    [refocus]="isOpen"
-                   [placeholder]="this.isFormControl ? null : placeholder"
+                   [placeholder]="(this.isFormControl && !empty) ? null : placeholder"
                    [formControl]="inputControl"
                    [matChipInputFor]="chipList"
                    [attr.maxlength]="maxLength"
@@ -171,7 +171,7 @@
 
             <mat-form-field *ngIf="searchable && !multiple"
                             floatLabel="never">
-                <input [placeholder]="this.isFormControl ? null : placeholder"
+                <input [placeholder]="(this.isFormControl && !empty) ? null : placeholder"
                        [formControl]="inputControl"
                        [uiAutofocus]="isOpen &&
                                   searchable"
