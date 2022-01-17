@@ -60,6 +60,15 @@
         }
     }
 
+    mat-form-field.mat-form-field-hide-placeholder #{$componentName} {
+        .mat-chip-list {
+            .mat-input-element::placeholder {
+                color: currentColor !important;
+                -webkit-text-fill-color: currentColor !important;
+            }
+        }
+    }
+
     #{$componentName}:not(.form-control) {
         .display {
             &:focus {
