@@ -1370,7 +1370,7 @@ const sharedSpecifications = (
         beforeEach(() => {
             component.items = generateSuggetionItemList('random');
             component.multiple = true;
-            component.defaultValue = undefined;
+            component.defaultValue = 'test';
         });
 
         it('should display all selected values', () => {
@@ -1386,7 +1386,7 @@ const sharedSpecifications = (
             if (!uiSuggest.isFormControl) {
                 const displayTitle = fixture.debugElement.query(By.css('.mat-chip-list input'));
                 const nativeDisplayTitle = getNativeElement<HTMLInputElement>(displayTitle);
-                expect(nativeDisplayTitle.getAttribute('placeholder')).toEqual(component.placeholder);
+                expect(nativeDisplayTitle.getAttribute('placeholder')).toEqual(component.defaultValue ?? null);
             } else {
                 const displayTitle = fixture.debugElement.query(By.css('.mat-form-field-label'));
                 expect(displayTitle.nativeElement.innerText.trim()).toEqual(component.placeholder);
