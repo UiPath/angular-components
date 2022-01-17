@@ -1,3 +1,6 @@
+# v13.0.0-rc.8 (2022-01-17)
+* **suggest** repair placeholder rendering show defaultValue in matChips placeholder if any on empty
+
 # v13.0.0-rc.7 (2022-01-14)
 * **suggest** update placeholder rendering logic
 * **suggest** adjust mat chip styles
