@@ -425,15 +425,25 @@ class SuggestUtils<T> {
 
     public searchAndSelect = (selector: string, httpRequest?: Function, searchStr = '', nth = 0) => {
         const suggest = this._utils.getDebugElement(selector);
-
-        this._utils.click('.display', suggest);
-        this._utils.fixture.detectChanges();
-
+        const multiple = this.isMultiple(selector);
         const searchInput = this._utils.getDebugElement('input', suggest);
 
+        if (!multiple && !this.isOpen(selector)) {
+            this._utils.fixture.detectChanges();
+
+            this._utils.click('.display', suggest);
+            this._utils.fixture.detectChanges();
+        }
+
         if (searchInput) {
+            if (multiple && !this.isOpen(selector)) {
+                this._utils.click('input', suggest);
+                this._utils.fixture.detectChanges();
+            }
+
             this._utils.setInput('input', searchStr, suggest);
             tick(SUGGEST_DEBOUNCE);
+            // this._utils.fixture.detectChanges();
 
             if (httpRequest) { httpRequest(); }
         }
@@ -446,6 +456,12 @@ class SuggestUtils<T> {
         const listItem = listItems[reverseOrder ? listItems.length - nth - 1 : nth].nativeElement;
         listItem.dispatchEvent(EventGenerator.click);
         this._utils.fixture.detectChanges();
+
+        if (multiple) {
+            this._utils.getNativeElement(`.mat-chip-list`, suggest)!
+                .dispatchEvent(EventGenerator.keyUp(Key.Escape));
+            this._utils.fixture.detectChanges();
+        }
     };
 
     public getFetchStrategy = (selector: string) => {
@@ -459,9 +475,12 @@ class SuggestUtils<T> {
         stub: IStubEndpoint;
     }) => {
         const suggest = this._utils.getDebugElement(selector);
+        const multiple = this.isMultiple(selector);
 
-        this._utils.click('.display', suggest);
-        this._utils.fixture.detectChanges();
+        if (!this.isOpen(selector)) {
+            this._utils.click(multiple ? 'input' : '.display', suggest);
+            this._utils.fixture.detectChanges();
+        }
 
         const strategy = this.getFetchStrategy(selector);
 
@@ -487,8 +506,23 @@ class SuggestUtils<T> {
         return listItem;
     };
 
-    public getValue = (selector: string, debugEl = this._utils.fixture.debugElement) =>
-        this._utils.getNativeElement(`${selector} .display-value`, debugEl)!
+    public isMultiple = (selector: string) => {
+        return !!this._utils.getNativeElement(`${selector} .multi-select`);
+    };
+
+    public isOpen = (selector: string) => {
+        return !!this._utils.getNativeElement(`${selector} [aria-expanded="true"]`);
+    };
+
+    public getValue = (selector: string, debugEl = this._utils.fixture.debugElement) => {
+        if (this.isMultiple(selector)) {
+            return this._utils.getAllNativeElements(`${selector} .mat-chip span`, debugEl)
+                .map(el => el.innerText.trim())
+                .join(',');
+        }
+
+        return this._utils.getNativeElement(`${selector} .display-value`, debugEl)!
             .innerText
             .trim();
+    };
 }
