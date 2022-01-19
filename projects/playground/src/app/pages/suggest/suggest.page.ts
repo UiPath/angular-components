@@ -4,6 +4,7 @@ import {
     of,
 } from 'rxjs';
 import {
+    delay,
     switchMap,
     tap,
 } from 'rxjs/operators';
@@ -28,9 +29,10 @@ export class SuggestPageComponent {
     const options = range(0, 20).map(idx => ({
       id: idx,
       text: `Element ${idx}`,
+      expandable: true,
     }));
 
-    const filteredOptions = options.filter(option => option.text.includes(searchTerm));
+    const filteredOptions = options.filter(option => option.text.includes(searchTerm.trim()));
 
     return of({
       total: filteredOptions.length,
@@ -38,10 +40,15 @@ export class SuggestPageComponent {
     });
   }
 
-  searchSourceFactory: SearchSourceFactory = (searchTerm = '') => of(searchTerm).pipe(
+  searchSourceFactory: SearchSourceFactory = (searchTerm = '', top = 10, skip = 0) => of(searchTerm).pipe(
     switchMap(this.getResults),
-    // delay(500),
-    tap(console.log),
+    tap((results: any) => console.log({
+      searchTerm,
+      top,
+      skip,
+      results,
+    })),
+    delay(50),
   );
 }
 

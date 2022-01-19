@@ -1,6 +1,14 @@
 <h1>Single select suggest</h1>
 <mat-form-field>
-    <ui-suggest searchable="true"
+    <ui-suggest [searchable]="true"
+                [searchSourceFactory]="searchSourceFactory">
+    </ui-suggest>
+</mat-form-field>
+
+<h1>Drill down suggest</h1>
+<mat-form-field>
+    <ui-suggest [searchable]="true"
+                [drillDown]="true"
                 [searchSourceFactory]="searchSourceFactory">
     </ui-suggest>
 </mat-form-field>
@@ -9,7 +17,7 @@
 
 <h2>Multiple select suggest</h2>
 <mat-form-field>
-    <ui-suggest searchable="true"
+    <ui-suggest [searchable]="true"
                 [disabled]="false"
                 [multiple]="true"
                 [searchSourceFactory]="searchSourceFactory">
