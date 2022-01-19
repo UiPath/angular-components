@@ -361,7 +361,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
     private get _isOnCustomValueIndex() {
         return this.enableCustomValue &&
-            !!this.inputControl.value &&
+            !!this.inputControl.value.trim() &&
             (
                 this.activeIndex === -1 ||
                 this.activeIndex === this._items.length
@@ -641,7 +641,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         merge(
             this._reset$.pipe(
                 map(_ => ''),
-                tap(_ => !!this.inputControl.value && this.inputControl.setValue('')),
+                tap(_ => !!this.inputControl.value.trim() && this.inputControl.setValue('')),
                 tap(this._setLoadingState),
             ),
             this._inputChange$,
@@ -804,7 +804,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             if (!this.multiple) {
                 this._clearSelection();
             }
-            this._pushEntry(toSuggestValue(this.inputControl.value, true));
+            this._pushEntry(toSuggestValue(this.inputControl.value.trim(), true));
         }
 
         this.registerTouch();
@@ -891,7 +891,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (this.loading$.value) { return; }
 
         if (this._isOnCustomValueIndex) {
-            return this.updateValue(this.inputControl.value);
+            return this.updateValue(this.inputControl.value.trim());
         }
 
         this._selectActiveItem(!this.multiple);
@@ -1004,7 +1004,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     backspaceBehavior() {
-        if (!this.inputControl.value.length) {
+        if (!this.inputControl.value.trim().length) {
             this.close();
         }
     }
@@ -1186,7 +1186,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         const mappedEnd = this.isDown ? end : this._items.length - start - 1;
 
         setPendingState(this._items, mappedStart, mappedEnd);
-        this.searchSourceFactory(this.inputControl.value, fetchCount, start)
+        this.searchSourceFactory(this.inputControl.value.trim(), fetchCount, start)
             .pipe(
                 retry(1),
                 map(res => this.isDown ? res : {
