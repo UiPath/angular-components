@@ -7,7 +7,7 @@
             <form [formGroup]="actionsForm"
                   (submit)="generateGrid()">
                 <div class="grid-playground-actions">
-                    <div [formGroup]="actionsForm.get('inputs')"
+                    <div [formGroup]="inputGroup"
                          class="grid-playground-actions-inputs">
                         <h4>Grid Inputs</h4>
                         <ng-container *ngFor="let inputKey of inputKeys">
@@ -33,7 +33,7 @@
 
                     </div>
 
-                    <div [formGroup]="actionsForm.get('header')"
+                    <div [formGroup]="headerGroup"
                          class="grid-playground-actions-header">
                         <h4>Grid Header</h4>
 
@@ -57,7 +57,7 @@
                         </mat-form-field>
                     </div>
 
-                    <div [formGroup]="actionsForm.get('data')"
+                    <div [formGroup]="dataGroup"
                          class="grid-playground-actions-data">
                         <h4>Grid Data</h4>
 
@@ -86,8 +86,8 @@
 <ng-container *ngIf="generatedGrid">
     <h3 *ngIf="inputs?.toggleColumns">Visibility columns state: {{ visibilityColumnsOpened ? 'Opened' : 'Closed' }}</h3>
     <ui-app-grid-component [allData]="allData"
-                           [inputs]="inputs"
-                           [header]="header"
+                           [inputs]="inputs!"
+                           [header]="header!"
                            [footer]="footer"
                            [inputKeys]="inputKeys"
                            (visibleColumnsToggled)="visibilityColumnsOpened = $event">

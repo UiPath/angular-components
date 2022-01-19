@@ -1,4 +1,4 @@
-<mat-progress-spinner [mode]="mode$ | async"
+<mat-progress-spinner [mode]="(mode$ | async) ?? 'indeterminate'"
                       [color]="color$ | async"
                       [value]="value$ | async"
                       [diameter]="diameter$ | async"

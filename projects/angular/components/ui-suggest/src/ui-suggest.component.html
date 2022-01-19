@@ -43,7 +43,7 @@
                 </ng-container>
             </ng-container>
             <ng-template #showDefaultValue>
-                <div [matTooltip]="tooltip"
+                <div [matTooltip]="tooltip ?? ''"
                      class="display-container text-ellipsis">
                     <span *ngIf="!isFormControl && placeholder"
                           class="display-title"
@@ -111,7 +111,7 @@
                 <input #searchInput
                        [uiAutofocus]="isOpen"
                        [refocus]="isOpen"
-                       [placeholder]="(isFormControl && !empty) ? null : defaultValue"
+                       [placeholder]="(isFormControl && !empty) ? '' : defaultValue"
                        [formControl]="inputControl"
                        [matChipInputFor]="chipList"
                        [attr.maxlength]="maxLength"
@@ -158,7 +158,7 @@
             <mat-form-field *ngIf="searchable && !multiple"
                             floatLabel="never">
                 <input #searchInput
-                       [placeholder]="isFormControl ? null : placeholder"
+                       [placeholder]="isFormControl ? '' : placeholder"
                        [formControl]="inputControl"
                        [uiAutofocus]="isOpen &&
                                   searchable"
@@ -207,7 +207,7 @@
                                   searchableCountInfo?.count === items.length &&
                                   searchable &&
                                   !inputControl.value"
-                               [matTooltip]="searchableCountInfo?.message"
+                               [matTooltip]="searchableCountInfo?.message ?? ''"
                                [attr.role]="'option'"
                                matTooltipPosition="right"
                                class="text-ellipsis item-max-count-info-message">
@@ -257,7 +257,7 @@
                         </ng-container>
                     </ng-container>
                     <ng-template #defaultItem>
-                        <div [matTooltip]="disableTooltip ? null : intl.translateLabel(item.text)"
+                        <div [matTooltip]="disableTooltip ? '' : intl.translateLabel(item.text)"
                              [attr.data-item-id]="item.id"
                              matTooltipPosition="right"
                              class="ui-suggest-item">

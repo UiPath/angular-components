@@ -1,6 +1,6 @@
 <ui-grid [data]="data$ | async"
          [useLegacyDesign]="inputs.useLegacyDesign"
-         [collapsibleFilters]="inputs.collapsibleFilters"
+         [collapsibleFilters]="inputs.collapsibleFilters ?? false"
          [collapseFiltersCount]="inputs.collapseFiltersCount"
          [isProjected]="inputs.isProjected"
          [loading]="inputs.loading"

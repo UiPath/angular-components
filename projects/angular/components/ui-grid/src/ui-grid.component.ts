@@ -133,7 +133,7 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
      * @param value The list that needs to rendered.
      */
     @Input()
-    set data(value: T[]) {
+    set data(value: T[] | null) {
         this._performanceMonitor.reset();
         this.dataManager.update(value);
     }
@@ -807,10 +807,10 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
     /**
      * Marks if the `Shift` key is pressed.
      */
-    checkShift(event: MouseEvent | KeyboardEvent) {
+    checkShift(event: Event) {
         event.stopPropagation();
 
-        this._isShiftPressed = event.shiftKey;
+        this._isShiftPressed = (event as MouseEvent | KeyboardEvent).shiftKey;
     }
 
     /**
