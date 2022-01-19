@@ -1107,6 +1107,7 @@ const sharedSpecifications = (
                 const currentListItem = fixture.debugElement.queryAll(
                     By.css('.mat-list-item'),
                 )[3];
+
                 currentListItem.nativeElement.dispatchEvent(EventGenerator.click);
 
                 fixture.detectChanges();
@@ -1120,6 +1121,25 @@ const sharedSpecifications = (
                 expect(updatedChips.map(chip => chip.innerText)).toEqual(someAvailableItems.map(item => item.text));
 
                 discardPeriodicTasks();
+            }));
+
+            it('should NOT react to keyup space coming from chips', fakeAsync(() => {
+                component.searchable = true;
+
+                fixture.detectChanges();
+                tick();
+                const display = getDisplayElement(fixture);
+                display.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+                tick(5000);
+
+                const chips = fixture.debugElement.query(By.css('.mat-chip-list'));
+                chips.nativeElement.dispatchEvent(EventGenerator.keyUp(Key.Space));
+
+                fixture.detectChanges();
+                discardPeriodicTasks();
+                expect(uiSuggest.value).toEqual([]);
             }));
 
             it('should list initial value in correct order', fakeAsync(() => {
