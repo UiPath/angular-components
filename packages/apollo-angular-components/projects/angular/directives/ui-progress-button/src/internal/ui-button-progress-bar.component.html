@@ -1,6 +1,6 @@
 <mat-progress-bar *ngIf="loading$ | async"
-                  [mode]="mode$ | async"
+                  [mode]="(mode$ | async) ?? 'indeterminate'"
                   [color]="color$ | async"
                   [value]="value$ | async"
-                  [bufferValue]="bufferValue$ | async">
+                  [bufferValue]="(bufferValue$ | async) ?? 0">
 </mat-progress-bar>

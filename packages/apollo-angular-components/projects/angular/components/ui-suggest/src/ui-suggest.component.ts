@@ -45,6 +45,7 @@ import {
     Self,
     SimpleChanges,
     TemplateRef,
+    TrackByFunction,
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
@@ -292,11 +293,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     get renderItems() {
-        return this.loading$.value ? [] :
-            this._hasCustomValue$.value &&
-                !this.isDown ?
-                [...this.items, false] :
-                this.items;
+        return this.loading$.value
+            ? []
+            : this._hasCustomValue$.value && !this.isDown
+                // FIXME: hack
+                ? [...this.items, false as unknown as ISuggestValue]
+                : this.items;
     }
 
     /**
@@ -838,7 +840,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @param [ev] `Mouse` or `Keyboard`.
      */
-    removeSelection(ev?: KeyboardEvent | MouseEvent) {
+    removeSelection(ev?: Event | KeyboardEvent | MouseEvent) {
         if (!this.clearable) { return; }
 
         this.preventDefault(ev);
@@ -997,7 +999,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @ignore
      */
-    trackById = (_: number, { id }: ISuggestValue) => id;
+    trackById: TrackByFunction<ISuggestValue> = (_: number, { id }: ISuggestValue) => id;
 
     deselectItem(option: ISuggestValue) {
         this._removeEntry(option);

@@ -53,7 +53,7 @@ export const UI_SECONDFORMAT_OPTIONS = new InjectionToken<Observable<void>>('UiS
  */
 @Component({
     selector: 'ui-secondformat',
-    template: `<span [matTooltip]="tooltip$ | async">{{ text$ | async }}</span>`,
+    template: `<span [matTooltip]="(tooltip$ | async) ?? ''">{{ text$ | async }}</span>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix

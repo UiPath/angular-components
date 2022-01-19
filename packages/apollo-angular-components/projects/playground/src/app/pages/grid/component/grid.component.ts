@@ -25,8 +25,10 @@ import {
     Output,
     ViewChild,
 } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { UiGridComponent } from '@uipath/angular/components/ui-grid';
+import {
+    PageChangeEvent,
+    UiGridComponent,
+} from '@uipath/angular/components/ui-grid';
 
 // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
@@ -118,7 +120,7 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
         return new Array(length).fill(0);
     }
 
-    onPageChange(event: PageEvent) {
+    onPageChange(event: PageChangeEvent) {
         this.pageIndex = event.pageIndex;
         this.paginateData(this.filteredData, event.pageIndex, event.pageSize);
     }
