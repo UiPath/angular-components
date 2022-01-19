@@ -1,3 +1,7 @@
+# v13.0.0-rc.9 (2022-01-19)
+* **suggest** do NOT select on space in multiple
+* **suggest** repair test
+
 # v13.0.0-rc.8 (2022-01-17)
 * **suggest** repair placeholder rendering show defaultValue in matChips placeholder if any on empty
 
