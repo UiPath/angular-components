@@ -78,6 +78,7 @@ class UiSuggestFixtureDirective {
     alwaysExpanded?: boolean;
     disabled?: boolean;
     multiple?: boolean;
+    drillDown?: boolean;
     readonly?: boolean;
     enableCustomValue?: boolean;
     items?: ISuggestValue[];
@@ -1586,7 +1587,7 @@ const sharedSpecifications = (
         const asyncSearchFactory = (delayTime = 0) => (query = '', fetchSize = 10, start = 0) => {
             const source = overrideItems ?? items;
 
-            const results = query !== '' ?
+            const results = query !== '' && !query.includes(':') ?
                 source.filter(i => i.text.toLowerCase().includes(query.toLowerCase())) :
                 [...source];
 
@@ -1611,6 +1612,93 @@ const sharedSpecifications = (
             sourceSpy.and.callThrough();
             component.searchable = true;
             uiSuggest.displayCount = 10;
+        });
+
+        describe('Feature: Drill Down', () => {
+            beforeEach(() => {
+                component.drillDown = true;
+                fixture.detectChanges();
+            });
+
+            it('should render as drill down', () => {
+                expect(fixture.debugElement.query(By.css('ui-suggest.drill-down'))).toBeTruthy();
+            });
+
+            describe('open', () => {
+                beforeEach(async () => {
+                    const display = fixture.debugElement.query(By.css('.display'));
+                    display.nativeElement.dispatchEvent(EventGenerator.click);
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+                });
+
+                it('should have requested items', () => {
+                    expect(sourceSpy).toHaveBeenCalledTimes(1);
+                });
+
+                it('should render item(s) as expandable', () => {
+                    expect(fixture.debugElement.queryAll(By.css('.mat-list-item.is-expandable')).length).toBeGreaterThan(0);
+                });
+
+                it('should fill in search on item select', async () => {
+                    const item = fixture.debugElement.query(By.css('.mat-list-item.is-expandable'));
+                    const itemText = (item.query(By.css('span')).nativeElement as HTMLElement).innerText;
+                    item.nativeElement.dispatchEvent(EventGenerator.click);
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+
+                    expect(sourceSpy).toHaveBeenCalledTimes(2);
+
+                    const search = fixture.debugElement.query(By.css('ui-suggest input')).nativeElement as HTMLInputElement;
+
+                    expect(search.value).toEqual(`${itemText}:`);
+                });
+
+                it('should be able to clear upon selection', async () => {
+                    const item = fixture.debugElement.query(By.css('.mat-list-item.is-expandable'));
+                    item.nativeElement.dispatchEvent(EventGenerator.click);
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+                    expect(uiSuggest.isOpen).toBe(true);
+
+                    const clear = fixture.debugElement.query(By.css('mat-icon.clear'));
+                    clear.nativeElement.dispatchEvent(EventGenerator.click);
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+                    expect(uiSuggest.isOpen).toBe(true);
+                });
+
+                it('should NOT have item selected if expandable', async () => {
+                    const item = fixture.debugElement.query(By.css('.mat-list-item.is-expandable'));
+                    item.nativeElement.dispatchEvent(EventGenerator.click);
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+                    expect(uiSuggest.value).toEqual([]);
+                });
+
+                it('should be able to select drilled item', async () => {
+                    const item = fixture.debugElement.query(By.css('.mat-list-item.is-expandable'));
+                    item.nativeElement.dispatchEvent(EventGenerator.click);
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+
+                    const drilled = fixture.debugElement.query(By.css('.mat-list-item:not(.is-expandable'));
+                    const drilledText = (drilled.query(By.css('span')).nativeElement as HTMLElement).innerText;
+                    drilled.nativeElement.dispatchEvent(EventGenerator.click);
+
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+
+                    expect(uiSuggest.value.length).toEqual(1);
+                    expect(uiSuggest.value[0].text).toEqual(drilledText);
+                });
+            });
         });
 
         describe('Feature: fetchStrategy', () => {
@@ -2104,6 +2192,7 @@ describe('Component: UiSuggest', () => {
                         [multiple]="multiple"
                         [fetchStrategy]="fetchStrategy"
                         [minChars]="minChars"
+                        [drillDown]="drillDown"
                         [readonly]="readonly">
             </ui-suggest>
         `,
@@ -2183,6 +2272,7 @@ describe('Component: UiSuggest', () => {
                             [readonly]="readonly"
                             [fetchStrategy]="fetchStrategy"
                             [minChars]="minChars"
+                            [drillDown]="drillDown"
                             formControlName="test">
             </ui-suggest>
             </mat-form-field>
@@ -2372,7 +2462,8 @@ describe('Component: UiSuggest', () => {
                             [fetchStrategy]="fetchStrategy"
                             [displayTemplateValue]="displayTemplateValue"
                             [searchableCountInfo]="searchableCountInfo"
-                            [minChars]="minChars">
+                            [minChars]="minChars"
+                            [drillDown]="drillDown">
                             <ng-template let-item >
                                 <div class="item-template">{{ item.text }}</div>
                             </ng-template>

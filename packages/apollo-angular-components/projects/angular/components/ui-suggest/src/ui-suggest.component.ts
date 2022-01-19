@@ -109,6 +109,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     OnChanges,
     AfterViewInit {
 
+    get inDrillDownMode() {
+        return !!this.drillDown && this.inputControl.value.includes(':');
+    }
+
     /**
      * Configure if the component is `disabled`.
      *
@@ -131,6 +135,19 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         this._cd.markForCheck();
         this.stateChanges.next();
+    }
+
+    /**
+     * Configure if the component allows expandable items
+     *
+     */
+    @HostBinding('class.drill-down')
+    @Input()
+    get drillDown() {
+        return this._drillDown;
+    }
+    set drillDown(value) {
+        this._drillDown = !!value;
     }
 
     /**
@@ -551,6 +568,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     };
 
     private _inputChange$: Observable<string>;
+    private _drillDown = false;
 
     /**
      * @ignore
@@ -824,11 +842,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (!this.clearable) { return; }
 
         this.preventDefault(ev);
-
         this._clearSelection();
         this.selected.emit();
         this.registerChange(this.value);
 
+        if (this.inDrillDownMode) {
+            this.inputControl.setValue('');
+            return;
+        }
         this.close(false);
     }
 
@@ -897,6 +918,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     updateValue(inputValue: ISuggestValue | string, closeAfterSelect = true, refocus = true) {
         const value = toSuggestValue(inputValue, this._isOnCustomValueIndex);
         if (value.loading !== VirtualScrollItemStatus.loaded) { return; }
+        const isExpandable = this.searchable && this.drillDown && !!value.expandable;
+
+        if (isExpandable) {
+            this.inputControl.setValue(`${value.text}:`);
+            return;
+        }
 
         const isItemSelected = this.isItemSelected(value);
 

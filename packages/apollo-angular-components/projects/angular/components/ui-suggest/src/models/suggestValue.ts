@@ -34,6 +34,13 @@ export interface ISuggestValue extends VirtualScrollItem {
      */
     isCustom?: boolean;
     /**
+     * Flag that marks if item is expandable.
+     * Will be ignored if ui-suggest doesn't have drillDown and searchable.
+     * On selection will trigger a new searchSource call, value will NOT updated yet.
+     * The string input will be applied as `${item.text}:`
+     */
+    expandable?: boolean;
+    /**
      * Optional icon that will be displayed to the left of the item.
      *
      */

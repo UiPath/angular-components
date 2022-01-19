@@ -8,6 +8,7 @@ export const generateSuggestionItem = (label = ''): ISuggestValue => {
     return {
         id: value,
         text: value,
+        expandable: faker.random.boolean(),
     };
 };
 
