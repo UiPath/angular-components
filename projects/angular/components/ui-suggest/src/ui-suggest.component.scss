@@ -123,14 +123,27 @@ $componentName: "ui-suggest";
                     display: block;
                 }
 
+                &.is-expandable {
+                    .mat-list-item-content {
+                        padding-right: 30px;
+                    }
+                }
+
                 mat-progress-spinner {
                     margin: 0 auto;
                 }
 
                 .mat-icon {
                     vertical-align: middle;
-                    padding-right: 5px;
-                    margin-top: -3px;
+                    &:not(.expand-icon) {
+                        padding-right: 5px;
+                        margin-top: -3px;
+                    }
+
+                    &.expand-icon {
+                        position: absolute;
+                        right: 0;
+                    }
                 }
 
                 .text-label {
