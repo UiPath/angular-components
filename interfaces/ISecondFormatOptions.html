@@ -205,7 +205,7 @@ export const UI_SECONDFORMAT_OPTIONS &#x3D; new InjectionToken&lt;Observable&lt;
  */
 @Component({
     selector: &#x27;ui-secondformat&#x27;,
-    template: &#x60;&lt;span [matTooltip]&#x3D;&quot;tooltip$ | async&quot;&gt;{{ text$ | async }}&lt;/span&gt;&#x60;,
+    template: &#x60;&lt;span [matTooltip]&#x3D;&quot;(tooltip$ | async) ?? &#x27;&#x27;&quot;&gt;{{ text$ | async }}&lt;/span&gt;&#x60;,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
