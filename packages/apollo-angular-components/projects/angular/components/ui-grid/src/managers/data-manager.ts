@@ -114,11 +114,11 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
         this._emit();
     }
 
-    update(data: T[]) {
+    update(data: T[] | null) {
         this.pristine = this.pristine &&
             data == null;
 
-        data = cloneDeep(data || []);
+        data = cloneDeep(data ?? []);
 
         if (!this.useCache) {
             this._emit(data);

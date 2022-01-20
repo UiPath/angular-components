@@ -1,3 +1,12 @@
+# v13.0.0-rc.10 (2022-01-20)
+* **chore** add playground scenario
+* **grid** drill down filter
+* **chore** enable strictTemplates
+* **suggest** trim value for search calls
+* **chore** ng update
+* **suggest** add support for drill-down
+* **chore** disable flaky test
+
 # v13.0.0-rc.9 (2022-01-19)
 * **suggest** do NOT select on space in multiple
 * **suggest** repair test

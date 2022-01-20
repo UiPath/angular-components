@@ -1,5 +1,5 @@
 <mat-progress-spinner *ngIf="loading$ | async"
-                      [mode]="mode$ | async"
+                      [mode]="(mode$ | async) ?? 'indeterminate'"
                       [color]="color$ | async"
                       [value]="value$ | async"
                       [diameter]="22"

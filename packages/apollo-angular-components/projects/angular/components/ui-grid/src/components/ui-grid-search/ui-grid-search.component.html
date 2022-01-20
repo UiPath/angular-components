@@ -1,6 +1,6 @@
 ﻿<mat-form-field floatLabel="never">
     <input [formControl]="search"
-           [placeholder]="placeholder"
+           [placeholder]="placeholder ?? ''"
            [attr.maxlength]="maxLength"
            matInput
            type="search"
@@ -9,7 +9,7 @@
          (keyup.enter)="clear()"
          (keyup.space)="clear()"
          [hidden]="!search.value"
-         [matTooltip]="clearTooltip"
+         [matTooltip]="clearTooltip ?? ''"
          [matTooltipDisabled]="tooltipDisabled"
          [attr.aria-label]="clearTooltip"
          role="button"
@@ -28,7 +28,7 @@
             </svg>
         </mat-icon>
     </div>
-    <mat-icon [matTooltip]="searchTooltip"
+    <mat-icon [matTooltip]="searchTooltip ?? ''"
               [matTooltipDisabled]="tooltipDisabled"
               matPrefix
               class="svg-icon">

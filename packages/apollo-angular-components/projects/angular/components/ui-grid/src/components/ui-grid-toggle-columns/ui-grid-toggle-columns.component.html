@@ -9,7 +9,7 @@
     </button>
 
     <mat-select [value]="selected"
-                [aria-label]="togglePlaceholderTitle"
+                [aria-label]="togglePlaceholderTitle ?? ''"
                 [disableOptionCentering]="true"
                 [class.use-alternate]="!useLegacyDesign"
                 [panelClass]="['ui-grid-toggle-panel', useLegacyDesign ?  '' : 'ui-grid-toggle-panel-alternate']"
@@ -23,7 +23,7 @@
 
             <a #resetBtn
                *ngIf="dirty"
-               [matTooltip]="resetToDefaults"
+               [matTooltip]="resetToDefaults ?? ''"
                (click)="reset()"
                (keydown.enter)="reset()"
                (keydown.space)="reset()"
@@ -47,7 +47,7 @@
 </ng-container>
 
 <ng-template #classicColumnToggleTmpl>
-    <button [matTooltip]="togglePlaceholderTitle"
+    <button [matTooltip]="togglePlaceholderTitle ?? ''"
             [color]="dirty ? 'primary' : undefined"
             (click)="selectColumns!.open(); selectColumns!.focus()"
             matTooltipPosition="right"

@@ -24,7 +24,7 @@
                         [searchTooltip]="intl.searchTooltip"
                         [clearTooltip]="intl.clearTooltip"
                         [tooltipDisabled]="resizeManager.isResizing"
-                        [value]="header!.searchValue"
+                        [value]="header!.searchValue!"
                         (searchChange)="filterManager.searchChange($event, header!)"
                         class="ui-grid-search ui-grid-filter-option">
         </ui-grid-search>
@@ -41,7 +41,7 @@
          class="ui-grid-action-buttons ui-grid-action-buttons-inline">
         <ng-container *ngFor="let button of header?.inlineButtons">
             <ng-container *ngIf="button.visible">
-                <ng-container *ngTemplateOutlet="button.html">
+                <ng-container *ngTemplateOutlet="button.html ?? null">
                 </ng-container>
             </ng-container>
         </ng-container>
@@ -52,17 +52,17 @@
          class="ui-grid-action-buttons ui-grid-action-buttons-selection">
         <ng-container *ngFor="let button of header?.actionButtons">
             <ng-container *ngIf="button.visible">
-                <ng-container *ngTemplateOutlet="button.html">
+                <ng-container *ngTemplateOutlet="button.html?? null">
                 </ng-container>
             </ng-container>
         </ng-container>
     </div>
 
-    <div *ngIf="!useLegacyDesign || header?.mainButtons?.length > 1"
+    <div *ngIf="!useLegacyDesign || header?.mainButtons?.length ?? 0 > 1"
          class="ui-grid-action-buttons ui-grid-action-buttons-main">
         <ng-container *ngFor="let button of header?.mainButtons">
             <ng-container *ngIf="button.visible">
-                <ng-container *ngTemplateOutlet="button.html">
+                <ng-container *ngTemplateOutlet="button.html ?? null">
                 </ng-container>
             </ng-container>
         </ng-container>
@@ -87,7 +87,7 @@
              class="ui-grid-action-button">
             <ng-container *ngIf="header!.mainButtons![0] as mainBtn">
                 <ng-container *ngIf="mainBtn.visible">
-                    <ng-container *ngTemplateOutlet="mainBtn.html">
+                    <ng-container *ngTemplateOutlet="mainBtn.html ?? null">
                     </ng-container>
                 </ng-container>
             </ng-container>
@@ -133,7 +133,7 @@
                              class="ui-grid-header-title">
                             <p [class.ui-grid-header-title-filtered]="column.dropdown?.value != null ||
                                                                  column.searchableDropdown?.value != null"
-                               [matTooltip]="column.title"
+                               [matTooltip]="column.title ?? ''"
                                [matTooltipDisabled]="resizeManager.isResizing">{{ column.title }}</p>
                             <div *ngIf="column.sortable"
                                  [class.ui-grid-sort-indicator-asc]="column.sort === 'asc'"
@@ -233,7 +233,7 @@
             </ng-container>
 
             <ng-container *ngIf="loading && !!loadingState">
-                <ng-container *ngTemplateOutlet="loadingState.html"></ng-container>
+                <ng-container *ngTemplateOutlet="loadingState.html ?? null"></ng-container>
             </ng-container>
         </div>
     </div>
@@ -252,7 +252,7 @@
          *ngIf="expanded?.id !== row?.id || expandMode === 'preserve'"
          [class.ui-grid-row-state-expanded]="expanded?.id === row?.id"
          [class.ui-grid-border-none]="!footer && last"
-         [ngClass]="rowConfig?.ngClassFn(row)"
+         [ngClass]="rowConfig?.ngClassFn(row) ?? ''"
          [tabIndex]="0"
          [attr.data-row-index]="index"
          role="row">
@@ -277,7 +277,7 @@
             <div *ngIf="!!actions"
                  role="gridcell"
                  class="ui-grid-mobile-feature-container ui-grid-mobile-action-container">
-                <ng-container *ngTemplateOutlet="actions.html; context: {
+                <ng-container *ngTemplateOutlet="actions.html ?? null; context: {
                     data: row,
                     index: index
                 }">
@@ -312,7 +312,7 @@
                  [attr.role]="column.role"
                  class="ui-grid-cell">
                 <div *ngIf="isProjected"
-                     [matTooltip]="column.directive.title"
+                     [matTooltip]="column.directive.title ?? ''"
                      [matTooltipDisabled]="resizeManager.isResizing"
                      class="ui-grid-cell-mobile-title">{{column.directive.title}}</div>
                 <div class="ui-grid-cell-content">
@@ -340,7 +340,7 @@
              role="gridcell"
              class="ui-grid-cell ui-grid-action-cell ui-grid-feature-cell">
             <div class="ui-grid-action-cell-container">
-                <ng-container *ngTemplateOutlet="actions.html; context: {
+                <ng-container *ngTemplateOutlet="actions.html ?? null; context: {
                         data: row,
                         index: index
                     }">
@@ -353,7 +353,7 @@
          [class.ui-grid-border-none]="!footer && last"
          role="row">
         <div class="ui-grid-expanded-row-container">
-            <ng-container *ngTemplateOutlet="expandedRow!.html; context: {
+            <ng-container *ngTemplateOutlet="expandedRow!.html ?? null; context: {
                 data: row,
                 index: index
             }">
@@ -372,7 +372,7 @@
 <ng-template #noData>
     <ng-container *ngIf="!loading">
         <ng-container *ngIf="noContent; else defaultNoData">
-            <ng-container *ngTemplateOutlet="noContent.html; context: {
+            <ng-container *ngTemplateOutlet="noContent.html ?? null; context: {
                 search: header?.searchValue,
                 activeCount: filterManager.activeCount$ | async
             }">
@@ -461,7 +461,7 @@
     <mat-paginator *ngIf="!!footer"
                    [pageIndex]="footer?.state?.pageIndex"
                    [pageSize]="footer?.state?.pageSize"
-                   [pageSizeOptions]="footer?.pageSizes"
+                   [pageSizeOptions]="footer?.pageSizes ?? []"
                    [length]="footer?.length"
                    [disabled]="disabled"
                    [showFirstLastButtons]="true"
@@ -474,7 +474,7 @@
     <ui-grid-custom-paginator *ngIf="!!footer"
                               [pageIndex]="footer?.state?.pageIndex"
                               [pageSize]="footer?.state?.pageSize"
-                              [pageSizeOptions]="footer?.pageSizes"
+                              [pageSizeOptions]="footer?.pageSizes ?? []"
                               [length]="footer?.length"
                               [disabled]="disabled"
                               [showFirstLastButtons]="true"
@@ -504,30 +504,30 @@
              [ngClass]="{'ui-grid-alternate-filter-container': collapsibleFilters}"
              class="ui-grid-dropdown-filter-container ui-grid-filter-option">
             <button [matMenuTriggerFor]="filterOptions"
-                    [disabled]="column.dropdown.disabled || disabled"
+                    [disabled]="column.dropdown?.disabled || disabled"
                     [attr.data-column-name]="'ui-grid-dropdown-filter-' + (column.property || 'na')"
                     mat-button
                     type="button"
                     class="ui-grid-dropdown-filter-button">
                 <span class="ui-grid-dropdown-filter-title">{{ column.title }}: </span>
                 <span class="ui-grid-dropdown-filter-value">
-                    {{ !!column.dropdown.value ? intl.translateDropdownOption(column.dropdown.value) :
+                    {{ !!column.dropdown?.value ? intl.translateDropdownOption(column.dropdown!.value!) :
                     intl.noFilterPlaceholder }}
                 </span>
                 <mat-icon>keyboard_arrow_down</mat-icon>
             </button>
             <mat-menu #filterOptions="matMenu"
                       [overlapTrigger]="true">
-                <button *ngIf="column.dropdown.showAllOption"
-                        [class.active]="column.dropdown.value == null"
+                <button *ngIf="column.dropdown?.showAllOption"
+                        [class.active]="column.dropdown?.value == null"
                         [matTooltip]="intl.noFilterPlaceholder"
                         (click)="filterManager.dropdownUpdate(column!, undefined)"
                         type="button"
                         mat-menu-item>
                     {{ intl.noFilterPlaceholder }}
                 </button>
-                <button *ngFor="let dropdownItem of column.dropdown.items"
-                        [class.active]="column.dropdown.value?.label === dropdownItem.label"
+                <button *ngFor="let dropdownItem of column.dropdown?.items"
+                        [class.active]="column.dropdown?.value?.label === dropdownItem.label"
                         [matTooltip]="intl.translateDropdownOption(dropdownItem)"
                         (click)="filterManager.dropdownUpdate(column, dropdownItem)"
                         type="button"
@@ -539,13 +539,14 @@
 
         <ng-container *ngIf="column.searchableDropdown?.visible$ | async">
             <ui-suggest #suggest
-                        [placeholder]="column.title"
-                        [defaultValue]="column.searchableDropdown.noFilterPlaceholder || intl.noFilterPlaceholder"
-                        [searchSourceFactory]="column.searchableDropdown.searchSourceFactory"
-                        [value]="[column.searchableDropdown.value]"
-                        [disabled]="column.searchableDropdown.disabled || disabled"
+                        [placeholder]="column.title ?? ''"
+                        [defaultValue]="column.searchableDropdown!.noFilterPlaceholder || intl.noFilterPlaceholder"
+                        [searchSourceFactory]="column.searchableDropdown!.searchSourceFactory"
+                        [value]="column.searchableDropdown!.value ? [column.searchableDropdown!.value!] : []"
+                        [disabled]="column.searchableDropdown!.disabled || disabled"
+                        [drillDown]="column.searchableDropdown!.drillDown"
                         [maxLength]="64"
-                        [fetchStrategy]="column.searchableDropdown.fetchStrategy || fetchStrategy"
+                        [fetchStrategy]="column.searchableDropdown!.fetchStrategy || fetchStrategy"
                         [attr.data-cy]="'ui-grid-search-filter-' + (column.property || 'na')"
                         (selected)="filterManager.searchableDropdownUpdate(column, $event)"
                         (opened)="column.refetch && suggest.fetch()"
@@ -559,13 +560,13 @@
 <ng-template #toggleColumnsTmpl>
     <ui-grid-toggle-columns *ngIf="toggleColumns && !(hasSelection$ | async)"
                             [options]="visibilityManager.options$ | async"
-                            [dirty]="visibilityManager.isDirty$ | async"
+                            [dirty]="(visibilityManager.isDirty$ | async) ?? false"
                             [toggleTooltip]="intl.toggleTooltip"
                             [resetToDefaults]="intl.toggleResetToDefaults"
                             [toggleTitle]="intl.toggleTitle"
                             [togglePlaceholderTitle]="intl.togglePlaceholderTitle"
                             [useLegacyDesign]="useLegacyDesign"
-                            [showDivider]="!useLegacyDesign && (hasAnyFiltersVisible$ | async)"
+                            [showDivider]="!useLegacyDesign && (hasAnyFiltersVisible$ | async) ?? false"
                             (visibleColumns)="visibilityManager.update($event)"
                             (resetColumns)="visibilityManager.reset()"
                             (visibleColumnsToggled)="visibleColumnsToggle$.next($event)">
