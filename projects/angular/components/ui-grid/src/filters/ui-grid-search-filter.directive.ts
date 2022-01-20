@@ -46,6 +46,13 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> imp
     noFilterPlaceholder?: string;
 
     /**
+     * Allow filter drill down
+     *
+     */
+    @Input()
+    drillDown = false;
+
+    /**
      * Stream factory, used to resolve a stream for the provided options.
      *
      * @param searchTerm The current searched term.

@@ -43,7 +43,7 @@
                 </ng-container>
             </ng-container>
             <ng-template #showDefaultValue>
-                <div [matTooltip]="tooltip"
+                <div [matTooltip]="tooltip ?? ''"
                      class="display-container text-ellipsis">
                     <span *ngIf="!isFormControl && placeholder"
                           class="display-title"
@@ -64,27 +64,11 @@
             </ng-template>
             <ng-container *ngIf="!readonly">
                 <!-- aria-hidden will override the default from mat-icon -->
-                <mat-icon *ngIf="value.length && clearable"
-                          [matTooltip]="intl.clearSelectionLabel"
-                          (keydown.space)="removeSelection($event)"
-                          (keydown.enter)="removeSelection($event)"
-                          (click)="removeSelection($event)"
-                          tabindex="0"
-                          role="button"
-                          aria-hidden="false"
-                          class="clear">
-                    <svg width="100%"
-                         height="100%"
-                         viewBox="0 0 20 20"
-                         style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
-                        <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2.0011213" />
-                    </svg>
-                </mat-icon>
-                <mat-icon *ngIf="!value.length ||
-                         !clearable"
+                <ng-container *ngIf="value.length && clearable">
+                    <ng-container *ngTemplateOutlet="clearIcon"></ng-container>
+                </ng-container>
+
+                <mat-icon *ngIf="!value.length || !clearable"
                           class="arrow-down">keyboard_arrow_down</mat-icon>
             </ng-container>
         </div>
@@ -123,18 +107,21 @@
                 </button>
             </mat-chip>
 
-            <input *ngIf="searchable"
-                   [uiAutofocus]="isOpen"
-                   [refocus]="isOpen"
-                   [placeholder]="(isFormControl && !empty) ? null : defaultValue"
-                   [formControl]="inputControl"
-                   [matChipInputFor]="chipList"
-                   [attr.maxlength]="maxLength"
-                   [attr.aria-label]="placeholder"
-                   selectionLocation="end"
-                   autocomplete="off"
-                   aria-autocomplete="list"
-                   matInput>
+            <ng-container *ngIf="searchable">
+                <input #searchInput
+                       [uiAutofocus]="isOpen"
+                       [refocus]="isOpen"
+                       [placeholder]="(isFormControl && !empty) ? '' : defaultValue"
+                       [formControl]="inputControl"
+                       [matChipInputFor]="chipList"
+                       [attr.maxlength]="maxLength"
+                       [attr.aria-label]="placeholder"
+                       selectionLocation="end"
+                       autocomplete="off"
+                       aria-autocomplete="list"
+                       matInput>
+            </ng-container>
+
         </mat-chip-list>
     </ng-template>
 
@@ -170,7 +157,8 @@
 
             <mat-form-field *ngIf="searchable && !multiple"
                             floatLabel="never">
-                <input [placeholder]="isFormControl ? null : placeholder"
+                <input #searchInput
+                       [placeholder]="isFormControl ? '' : placeholder"
                        [formControl]="inputControl"
                        [uiAutofocus]="isOpen &&
                                   searchable"
@@ -180,7 +168,30 @@
                        autocomplete="off"
                        aria-autocomplete="list"
                        matInput>
-                <mat-icon matSuffix>search</mat-icon>
+
+                <mat-icon *ngIf="inDrillDownMode"
+                          [matTooltip]="intl.clearSelectionLabel"
+                          (keydown.space)="removeSelection($event)"
+                          (keydown.enter)="removeSelection($event)"
+                          (click)="removeSelection($event)"
+                          matSuffix
+                          tabindex="0"
+                          role="button"
+                          aria-hidden="false"
+                          class="clear">
+                    <svg width="100%"
+                         height="100%"
+                         viewBox="0 0 20 20"
+                         style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
+                        <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.0011213" />
+                    </svg>
+                </mat-icon>
+
+                <mat-icon *ngIf="!drillDown || !searchInput.value"
+                          matSuffix>search</mat-icon>
             </mat-form-field>
 
             <ng-container *ngIf="isDown">
@@ -196,7 +207,7 @@
                                   searchableCountInfo?.count === items.length &&
                                   searchable &&
                                   !inputControl.value"
-                               [matTooltip]="searchableCountInfo?.message"
+                               [matTooltip]="searchableCountInfo?.message ?? ''"
                                [attr.role]="'option'"
                                matTooltipPosition="right"
                                class="text-ellipsis item-max-count-info-message">
@@ -224,12 +235,14 @@
 
             <ng-container
                           *cdkVirtualFor="let item of renderItems; let index = index; trackBy: trackById; templateCacheSize: disableTooltip ? 20 : 0">
-                <mat-list-item [class.active]="index === activeIndex"
+                <mat-list-item *ngLet="drillDown && !!item?.expandable as itemExpandable"
+                               [class.active]="index === activeIndex"
                                [class.is-loading]="item.loading !== VirtualScrollItemStatus.loaded"
                                [class.readonly]="item.loading !== VirtualScrollItemStatus.loaded"
                                [class.selected]="!!item &&
                                                 !multiple &&
                                                 isItemSelected(item)"
+                               [class.is-expandable]="itemExpandable"
                                [style.height.px]="!!item ? itemSize : 0"
                                (click)="preventDefault($event);
                                         updateValue(item, !multiple, true);"
@@ -244,7 +257,7 @@
                         </ng-container>
                     </ng-container>
                     <ng-template #defaultItem>
-                        <div [matTooltip]="disableTooltip ? null : intl.translateLabel(item.text)"
+                        <div [matTooltip]="disableTooltip ? '' : intl.translateLabel(item.text)"
                              [attr.data-item-id]="item.id"
                              matTooltipPosition="right"
                              class="ui-suggest-item">
@@ -258,8 +271,10 @@
                                 <mat-icon *ngIf="!!item?.icon?.svgIcon"
                                           [svgIcon]="item?.icon.svgIcon"></mat-icon>
                                 <mat-icon *ngIf="!!item?.icon?.matIcon">{{item?.icon.matIcon}}</mat-icon>
-                                {{ item?.icon?.iconOnly ? null : intl.translateLabel(item.text) }}
+                                <span>{{ item?.icon?.iconOnly ? null : intl.translateLabel(item.text) }}</span>
                             </div>
+                            <mat-icon *ngIf="itemExpandable"
+                                      class="expand-icon">chevron_right</mat-icon>
                         </div>
                     </ng-template>
                 </mat-list-item>
@@ -311,4 +326,26 @@
             {{ customValueLabelTranslator(inputControl.value) }}
         </div>
     </mat-list-item>
+</ng-template>
+
+
+<ng-template #clearIcon>
+    <mat-icon [matTooltip]="intl.clearSelectionLabel"
+              (keydown.space)="removeSelection($event)"
+              (keydown.enter)="removeSelection($event)"
+              (click)="removeSelection($event)"
+              tabindex="0"
+              role="button"
+              aria-hidden="false"
+              class="clear">
+        <svg width="100%"
+             height="100%"
+             viewBox="0 0 20 20"
+             style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
+            <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.0011213" />
+        </svg>
+    </mat-icon>
 </ng-template>

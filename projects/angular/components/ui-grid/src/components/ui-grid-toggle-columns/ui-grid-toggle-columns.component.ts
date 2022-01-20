@@ -82,7 +82,7 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
     togglePlaceholderTitle?: string;
 
     @Output()
-    visibleColumns = new EventEmitter<IVisibleModel<T>>();
+    visibleColumns = new EventEmitter<(string | keyof T)[]>();
 
     @Output()
     resetColumns = new EventEmitter<void>();

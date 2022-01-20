@@ -1,8 +1,4 @@
 import {
-    Component,
-    TemplateRef,
-} from '@angular/core';
-import {
     ICON_MAP,
     SnackBarType,
     UiSnackBarService,
@@ -11,6 +7,11 @@ import {
     SnackbarContentComponent,
     SnackbarContentPayload,
 } from 'projects/playground/src/app/pages/snackbar/snackbar-content.component';
+
+import {
+    Component,
+    TemplateRef,
+} from '@angular/core';
 
 // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
@@ -26,27 +27,27 @@ export class SnackbarPageComponent {
         private _snack: UiSnackBarService,
     ) { }
 
-    openSnackbar(snackbarType: SnackBarType.Error | SnackBarType.Info | SnackBarType.Success | SnackBarType.Warning) {
-        this._snack[snackbarType](`This is ${snackbarType}`);
+    openSnackbar(snackbarType: SnackBarType) {
+        (this._snack as any)[snackbarType](`This is ${snackbarType}`);
     }
 
     openSnackbarWithTemplateRef(
-        snackbarType: SnackBarType.Error | SnackBarType.Info | SnackBarType.Success | SnackBarType.Warning,
+        snackbarType: SnackBarType,
         template: TemplateRef<unknown>,
     ) {
-        this._snack[snackbarType](template);
+        (this._snack as any)[snackbarType](template);
     }
 
-    openSnackbarWithComponent(snackbarType: SnackBarType.Error | SnackBarType.Info | SnackBarType.Success | SnackBarType.Warning) {
+    openSnackbarWithComponent(snackbarType: SnackBarType) {
         const payload: SnackbarContentPayload = { buttonLabel: 'Click me' };
-        this._snack[snackbarType](
+        (this._snack as any)[snackbarType](
             SnackbarContentComponent,
             { payload },
         );
     }
 
-    openWithCustomCssClass(snackbarType: SnackBarType.Error | SnackBarType.Info | SnackBarType.Success | SnackBarType.Warning) {
+    openWithCustomCssClass(snackbarType: SnackBarType) {
         const extraCssClasses = ['ui-my-custom-css-class'];
-        this._snack[snackbarType](`This is ${snackbarType} with custom CSS class on panel`, { extraCssClasses });
+        (this._snack as any)[snackbarType](`This is ${snackbarType} with custom CSS class on panel`, { extraCssClasses });
     }
 }

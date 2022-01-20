@@ -45,6 +45,7 @@ import {
     Self,
     SimpleChanges,
     TemplateRef,
+    TrackByFunction,
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
@@ -109,6 +110,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     OnChanges,
     AfterViewInit {
 
+    get inDrillDownMode() {
+        return !!this.drillDown && this.inputControl.value.includes(':');
+    }
+
     /**
      * Configure if the component is `disabled`.
      *
@@ -131,6 +136,19 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         this._cd.markForCheck();
         this.stateChanges.next();
+    }
+
+    /**
+     * Configure if the component allows expandable items
+     *
+     */
+    @HostBinding('class.drill-down')
+    @Input()
+    get drillDown() {
+        return this._drillDown;
+    }
+    set drillDown(value) {
+        this._drillDown = !!value;
     }
 
     /**
@@ -275,11 +293,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     get renderItems() {
-        return this.loading$.value ? [] :
-            this._hasCustomValue$.value &&
-                !this.isDown ?
-                [...this.items, false] :
-                this.items;
+        return this.loading$.value
+            ? []
+            : this._hasCustomValue$.value && !this.isDown
+                // FIXME: hack
+                ? [...this.items, false as unknown as ISuggestValue]
+                : this.items;
     }
 
     /**
@@ -344,7 +363,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
     private get _isOnCustomValueIndex() {
         return this.enableCustomValue &&
-            !!this.inputControl.value &&
+            !!this.inputControl.value.trim() &&
             (
                 this.activeIndex === -1 ||
                 this.activeIndex === this._items.length
@@ -551,6 +570,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     };
 
     private _inputChange$: Observable<string>;
+    private _drillDown = false;
 
     /**
      * @ignore
@@ -623,7 +643,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         merge(
             this._reset$.pipe(
                 map(_ => ''),
-                tap(_ => !!this.inputControl.value && this.inputControl.setValue('')),
+                tap(_ => !!this.inputControl.value.trim() && this.inputControl.setValue('')),
                 tap(this._setLoadingState),
             ),
             this._inputChange$,
@@ -786,7 +806,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             if (!this.multiple) {
                 this._clearSelection();
             }
-            this._pushEntry(toSuggestValue(this.inputControl.value, true));
+            this._pushEntry(toSuggestValue(this.inputControl.value.trim(), true));
         }
 
         this.registerTouch();
@@ -820,15 +840,18 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @param [ev] `Mouse` or `Keyboard`.
      */
-    removeSelection(ev?: KeyboardEvent | MouseEvent) {
+    removeSelection(ev?: Event | KeyboardEvent | MouseEvent) {
         if (!this.clearable) { return; }
 
         this.preventDefault(ev);
-
         this._clearSelection();
         this.selected.emit();
         this.registerChange(this.value);
 
+        if (this.inDrillDownMode) {
+            this.inputControl.setValue('');
+            return;
+        }
         this.close(false);
     }
 
@@ -870,7 +893,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (this.loading$.value) { return; }
 
         if (this._isOnCustomValueIndex) {
-            return this.updateValue(this.inputControl.value);
+            return this.updateValue(this.inputControl.value.trim());
         }
 
         this._selectActiveItem(!this.multiple);
@@ -897,6 +920,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     updateValue(inputValue: ISuggestValue | string, closeAfterSelect = true, refocus = true) {
         const value = toSuggestValue(inputValue, this._isOnCustomValueIndex);
         if (value.loading !== VirtualScrollItemStatus.loaded) { return; }
+        const isExpandable = this.searchable && this.drillDown && !!value.expandable;
+
+        if (isExpandable) {
+            this.inputControl.setValue(`${value.text}:`);
+            return;
+        }
 
         const isItemSelected = this.isItemSelected(value);
 
@@ -970,14 +999,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @ignore
      */
-    trackById = (_: number, { id }: ISuggestValue) => id;
+    trackById: TrackByFunction<ISuggestValue> = (_: number, { id }: ISuggestValue) => id;
 
     deselectItem(option: ISuggestValue) {
         this._removeEntry(option);
     }
 
     backspaceBehavior() {
-        if (!this.inputControl.value.length) {
+        if (!this.inputControl.value.trim().length) {
             this.close();
         }
     }
@@ -1159,7 +1188,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         const mappedEnd = this.isDown ? end : this._items.length - start - 1;
 
         setPendingState(this._items, mappedStart, mappedEnd);
-        this.searchSourceFactory(this.inputControl.value, fetchCount, start)
+        this.searchSourceFactory(this.inputControl.value.trim(), fetchCount, start)
             .pipe(
                 retry(1),
                 map(res => this.isDown ? res : {

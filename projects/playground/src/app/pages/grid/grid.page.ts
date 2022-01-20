@@ -71,6 +71,15 @@ export class GridPageComponent {
     };
 
     actionsForm!: FormGroup;
+    get inputGroup(): FormGroup {
+        return this.actionsForm.get('inputs')! as FormGroup;
+    }
+    get headerGroup(): FormGroup {
+        return this.actionsForm.get('header')! as FormGroup;
+    }
+    get dataGroup(): FormGroup {
+        return this.actionsForm.get('data')! as FormGroup;
+    }
 
     constructor(
         private _fb: FormBuilder,

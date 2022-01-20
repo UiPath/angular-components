@@ -47,7 +47,8 @@ beforeEach(reseed);
 
 // eslint-disable-next-line no-underscore-dangle
 const __describe = describe;
-(global as any).describe = function desc() {
+(window as any).global = window;
+global.describe = function desc() {
     reseed();
     // eslint-disable-next-line prefer-rest-params
     __describe.apply(this, arguments as any);
