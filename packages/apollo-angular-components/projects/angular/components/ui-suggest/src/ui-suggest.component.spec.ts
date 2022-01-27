@@ -1087,6 +1087,78 @@ const sharedSpecifications = (
             });
         });
 
+        describe('With custom', () => {
+            function addCustomValue(str: string) {
+                searchFor(str, fixture);
+                fixture.detectChanges();
+                tick(5000);
+
+                const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+                itemContainer.nativeElement.dispatchEvent(
+                    EventGenerator.keyDown(Key.Enter),
+                );
+                fixture.detectChanges();
+            }
+
+            beforeEach(async () => {
+                component.searchable = true;
+                component.enableCustomValue = true;
+
+                fixture.detectChanges();
+
+                const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+                display.nativeElement.dispatchEvent(
+                    EventGenerator.keyDown(Key.Enter),
+                );
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+            });
+
+            it('should be able to toggle a custom value', fakeAsync(() => {
+                addCustomValue('A');
+
+                expect(uiSuggest.value[0].text).toBe('A');
+                const chip = fixture.debugElement.query(By.css('.mat-chip.mat-standard-chip span'));
+
+                expect(chip.nativeNode.innerText).toBe('A');
+
+                fixture.debugElement.query(By.css('.mat-chip.mat-standard-chip .mat-chip-remove'))
+                    .nativeElement
+                    .dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                expect(uiSuggest.value.length).toBe(0);
+
+                expect(fixture.debugElement.query(By.css('.mat-chip.mat-standard-chip span'))).toBeFalsy();
+
+                discardPeriodicTasks();
+            }));
+
+            it('should NOT render a custom value item if already selected', fakeAsync(() => {
+                addCustomValue('A');
+                searchFor('A', fixture);
+                fixture.detectChanges();
+                tick(5000);
+
+                const itemContainer = fixture.debugElement.query(By.css('.custom-item'));
+                expect(itemContainer).toBeFalsy();
+
+                discardPeriodicTasks();
+            }));
+
+            it('should be able to add multiple custom values', fakeAsync(() => {
+                addCustomValue('A');
+                addCustomValue('B');
+                addCustomValue('C');
+                const chips = fixture.debugElement.queryAll(By.css('.mat-chip.mat-standard-chip span')).map(el => el.nativeNode.innerText);
+
+                expect(`${chips}`).toEqual(`A,B,C`);
+                discardPeriodicTasks();
+            }));
+
+        });
+
         describe('generic', () => {
             it('should update chiplist on new item selected', fakeAsync(() => {
                 const someAvailableItems = component.items!.slice(0, 4);
