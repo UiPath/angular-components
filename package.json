@@ -29,7 +29,7 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4300 --open",
+    "start": "ng serve --port 4222 --open",
     "build": "ng build --configuration production",
     "build:theme": "scss-bundle -c scss-bundle.config.json",
     "build:readme": "cpx ./README.md ./dist/angular",
