@@ -285,7 +285,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     get isCustomValueVisible(): boolean {
-        return this._hasCustomValue$.value && !this.loading$.value;
+        if (
+            !this._hasCustomValue$.value ||
+            this.loading$.value
+        ) {
+            return false;
+        }
+
+        return !this.multiple || !this._value.some(v => v.text === this.inputControl.value);
     }
 
     /**
@@ -304,14 +311,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     /**
      * Configure if the user is allowed to select `custom values`.
      *
-     * TODO:
-     *  Currently custom values can be selected if the component is used in `single` selection mode.
-     *  Add support for multiple selection
      */
     @Input()
     get enableCustomValue() {
-        return this._enableCustomValue &&
-            !this._multiple;
+        return this._enableCustomValue;
     }
     set enableCustomValue(value) {
         this._enableCustomValue = !!value;
@@ -775,7 +778,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (
             this.enableCustomValue &&
             value &&
-            value.isCustom
+            value.isCustom &&
+            !this.multiple
         ) {
             this.inputControl.setValue(value.text);
         }
@@ -893,7 +897,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (this.loading$.value) { return; }
 
         if (this._isOnCustomValueIndex) {
-            return this.updateValue(this.inputControl.value.trim());
+            this.updateValue(this.inputControl.value.trim(), !this.multiple);
+            return;
         }
 
         this._selectActiveItem(!this.multiple);
@@ -932,6 +937,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (!isItemSelected && value) {
             if (!this.multiple) {
                 this._clearSelection();
+            } else {
+                if (value.isCustom) {
+                    this.inputControl.setValue('');
+                }
             }
             this._pushEntry(value);
         }
@@ -939,7 +948,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (
             this.multiple &&
             isItemSelected &&
-            !!value
+            !!value &&
+            !value.isCustom
         ) {
             this._removeEntry(value);
         }
