@@ -1,3 +1,7 @@
+# v13.0.0-rc.11 (2022-01-27)
+* **suggest** add multiple custom value support
+* **chore** change playground port
+
 # v13.0.0-rc.10 (2022-01-20)
 * **chore** add playground scenario
 * **grid** drill down filter
