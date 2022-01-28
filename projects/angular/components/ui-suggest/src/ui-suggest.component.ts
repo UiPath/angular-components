@@ -850,6 +850,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         this.preventDefault(ev);
         this._clearSelection();
         this.selected.emit();
+        this.registerTouch();
         this.registerChange(this.value);
 
         if (this.inDrillDownMode) {
