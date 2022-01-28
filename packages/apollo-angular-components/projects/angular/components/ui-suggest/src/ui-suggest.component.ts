@@ -975,7 +975,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * @param searchValue The search value that should be used for the `fetch`.
      */
     fetch = (searchValue = '') => {
-        if (!this.searchSourceFactory) { return; }
+        if (!this.searchSourceFactory ||
+            this._fetchStrategy$.value === 'onOpen' &&
+            !this.isOpen
+        ) {
+            return;
+        }
 
         this.loading$.next(true);
 
