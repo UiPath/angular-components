@@ -43,11 +43,11 @@ export class SuggestPageComponent {
   searchSourceFactory: SearchSourceFactory = (searchTerm = '', top = 10, skip = 0) => of(searchTerm).pipe(
     switchMap(this.getResults),
     tap((results: any) => console.log({
-      searchTerm,
-      top,
-      skip,
-      results,
-    })),
+        searchTerm,
+        top,
+        skip,
+        results,
+      })),
     delay(50),
   );
 }

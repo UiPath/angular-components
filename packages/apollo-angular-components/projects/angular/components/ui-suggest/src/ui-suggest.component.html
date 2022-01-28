@@ -50,16 +50,10 @@
                           aria-hidden="true">
                         {{ placeholder }}:
                     </span>
-                    <span class="display-value">
-                        <ng-container *ngIf="!!value.length; else allLabel">
-                            <ng-container *ngFor="let option of value; let i = index">
-                                {{ intl.translateLabel(option.text) + (i === value.length - 1 ? '' : ', ') }}
-                            </ng-container>
-                        </ng-container>
-                        <ng-template #allLabel>
-                            {{ defaultValue }}
-                        </ng-template>
-                    </span>
+                    <span class="display-value text-label-rendered">{{
+                        value[0]
+                        ? intl.translateLabel(value[0].text)
+                        : defaultValue }}</span>
                 </div>
             </ng-template>
             <ng-container *ngIf="!readonly">
@@ -271,7 +265,8 @@
                                 <mat-icon *ngIf="!!item?.icon?.svgIcon"
                                           [svgIcon]="item?.icon.svgIcon"></mat-icon>
                                 <mat-icon *ngIf="!!item?.icon?.matIcon">{{item?.icon.matIcon}}</mat-icon>
-                                <span>{{ item?.icon?.iconOnly ? null : intl.translateLabel(item.text) }}</span>
+                                <span class="text-label-rendered">{{ item?.icon?.iconOnly ? null :
+                                    intl.translateLabel(item.text) }}</span>
                             </div>
                             <mat-icon *ngIf="itemExpandable"
                                       class="expand-icon">chevron_right</mat-icon>
@@ -323,7 +318,7 @@
                    class="text-ellipsis custom-item">
         <div class="text-label text-ellipsis">
             <mat-icon>add</mat-icon>
-            {{ customValueLabelTranslator(inputControl.value) }}
+            <span class="text-label-rendered">{{ customValueLabelTranslator(inputControl.value) }}</span>
         </div>
     </mat-list-item>
 </ng-template>
