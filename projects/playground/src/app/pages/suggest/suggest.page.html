@@ -1,6 +1,6 @@
 <h1>Single select suggest</h1>
 <mat-form-field>
-    <ui-suggest [searchable]="true"
+    <ui-suggest [fetchStrategy]="'onOpen'"
                 [searchSourceFactory]="searchSourceFactory">
     </ui-suggest>
 </mat-form-field>
