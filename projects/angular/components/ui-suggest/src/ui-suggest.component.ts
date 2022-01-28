@@ -16,6 +16,7 @@ import {
     filter,
     finalize,
     map,
+    pairwise,
     retry,
     startWith,
     switchMap,
@@ -651,6 +652,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             ),
             this._inputChange$,
         ).pipe(
+            startWith(''),
+            pairwise(),
+            filter(([prev, current]) => !(prev !== '' && current === '')),
+            map(([_, current]) => current),
             takeUntil(this._destroyed$),
         ).subscribe(this.fetch);
 

@@ -367,11 +367,14 @@ const sharedSpecifications = (
             fixture.detectChanges();
         });
 
-        it('should emit update event EVERY TIME the source queried', (done) => {
+        it('should emit update event EVERY TIME the source queried', fakeAsync(() => {
             const items = generateSuggetionItemList(25);
 
             component.searchable = true;
             component.items = items;
+
+            fixture.detectChanges();
+            tick(1);
 
             uiSuggest.sourceUpdated
                 .pipe(
@@ -383,6 +386,8 @@ const sharedSpecifications = (
                     setTimeout(() => searchFor(faker.helpers.randomize(items).text, fixture), 100);
                 });
 
+            tick(100);
+
             uiSuggest.sourceUpdated
                 .pipe(
                     skip(1),
@@ -392,18 +397,18 @@ const sharedSpecifications = (
                     setTimeout(() => searchFor('', fixture), 100);
                 });
 
+            tick(100);
+
             uiSuggest.sourceUpdated
                 .pipe(
                     skip(2),
                     take(1),
-                    finalize(done),
                 ).subscribe(result => {
                     expect(result.length).toEqual(uiSuggest.items.length);
-                    done();
                 });
 
-            fixture.detectChanges();
-        });
+            tick(1000);
+        }));
 
         it('should emit selected on select item', async (done) => {
             const items = generateSuggetionItemList();
@@ -1805,10 +1810,9 @@ const sharedSpecifications = (
 
                 expect(sourceSpy).toHaveBeenCalled();
             }));
-            // FIXME: flaky test
-            // eslint-disable-next-line jasmine/no-disabled-tests
-            xit('should call fetch 2 times if fetchStrategy is `onOpen`, direction is `up` and suggest gets opened twice', waitForAsync(
-                async () => {
+
+            it('should call fetch 2 times if fetchStrategy is `onOpen`, direction is `up` and suggest gets opened once', fakeAsync(
+                () => {
                     component.fetchStrategy = 'onOpen';
                     component.direction = 'up';
                     overrideItems = new Array(6).fill(0).map((_, i) => ({
@@ -1821,7 +1825,7 @@ const sharedSpecifications = (
                     sourceSpy.and.callThrough();
 
                     fixture.detectChanges();
-                    await fixture.whenStable();
+                    tick(1000);
 
                     expect(sourceSpy).toHaveBeenCalledTimes(0);
 
@@ -1829,11 +1833,9 @@ const sharedSpecifications = (
                     display.nativeElement.dispatchEvent(EventGenerator.click);
 
                     fixture.detectChanges();
-                    await fixture.whenStable();
+                    tick(1000);
 
-                    fixture.detectChanges();
-
-                    expect(sourceSpy).toHaveBeenCalledTimes(2);
+                    expect(sourceSpy).toHaveBeenCalledTimes(1);
 
                     uiSuggest.close();
                     fixture.detectChanges();
@@ -1841,11 +1843,9 @@ const sharedSpecifications = (
                     display.nativeElement.dispatchEvent(EventGenerator.click);
 
                     fixture.detectChanges();
-                    await fixture.whenStable();
+                    tick(1000);
 
-                    fixture.detectChanges();
-
-                    expect(sourceSpy).toHaveBeenCalledTimes(4);
+                    expect(sourceSpy).toHaveBeenCalledTimes(2);
                 }));
 
             it(`should fetch call after the 'minChars' is met`, waitForAsync(async () => {
