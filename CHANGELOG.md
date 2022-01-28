@@ -1,3 +1,6 @@
+# v13.0.0-rc.12 (2022-01-28)
+* **suggest** prevent fetch after select
+
 # v13.0.0-rc.11 (2022-01-27)
 * **suggest** add multiple custom value support
 * **chore** change playground port
