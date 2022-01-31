@@ -173,9 +173,15 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     /**
+     * By default the onOpen fetchStrategy prevents additional requests if closed.
+     * This allows you to bypass that check and update even if closed.
+     */
+    @Input()
+    ignoreOpenOnFetch = false;
+
+    /**
      * If true, the item list will render open and will not close on selection
      *
-     * @ignore
      */
     @Input()
     alwaysExpanded = false;
@@ -977,6 +983,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     fetch = (searchValue = '') => {
         if (!this.searchSourceFactory ||
             this._fetchStrategy$.value === 'onOpen' &&
+            !this.ignoreOpenOnFetch &&
             !this.isOpen
         ) {
             return;
