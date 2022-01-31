@@ -1,3 +1,6 @@
+# v13.0.0-rc.13 (2022-01-31)
+* **suggest** expose input to allow fetching while closed consumers may use this to reset/refetch items even if closed in order to trigger validations
+
 # v13.0.0-rc.11 (2022-01-27)
 * **suggest** add multiple custom value support
 * **chore** change playground port
