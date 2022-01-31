@@ -32,6 +32,7 @@ export class IntegrationUtils<T> {
 
     public grid = new GridUtils<T>(this);
     public suggest = new SuggestUtils<T>(this);
+    public kvpUtils = new KVPUtils<T>(this);
     public uiUtils = new UIUtils(this.fixture.nativeElement);
 
     constructor(
@@ -242,18 +243,22 @@ class GridUtils<T> {
             endColumn,
             gridSelector,
             debugEl,
+            getter = (cellEl: DebugElement) => cellEl.nativeElement.innerText as string,
         }: {
             startColumn?: number;
             endColumn?: number;
             gridSelector?: string;
             debugEl?: DebugElement;
-        } = {},
+            getter?: (cellEl: DebugElement, index: number, array: DebugElement[]) => string;
+        } = {
+                getter: (cellEl: DebugElement) => cellEl.nativeElement.innerText as string,
+            },
     ) => {
         const rowEl = this._utils.getDebugElement(`${gridSelector ?? selectors.grid} [data-row-index="${rowNumber - 1}"]`, debugEl);
         return rowEl
             .queryAll(By.css('.ui-grid-cell'))
             .slice(startColumn, endColumn)
-            .map((cellEl) => cellEl.nativeElement.innerText as string);
+            .map(getter);
     };
 
     public getHeaders = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
@@ -423,27 +428,54 @@ class SuggestUtils<T> {
         private _utils: IntegrationUtils<T>,
     ) { }
 
+    public openAndFlush = (selector: string, httpRequest: Function) => {
+        this._utils.click('.display', this._utils.getDebugElement(selector));
+        this._utils.fixture.detectChanges();
+        httpRequest();
+        this._utils.fixture.detectChanges();
+    };
+
+    // eslint-disable-next-line complexity
     public searchAndSelect = (selector: string, httpRequest?: Function, searchStr = '', nth = 0) => {
         const suggest = this._utils.getDebugElement(selector);
         const multiple = this.isMultiple(selector);
         const searchInput = this._utils.getDebugElement('input', suggest);
+        const strategy = this.getFetchStrategy(selector);
 
         if (!multiple && !this.isOpen(selector)) {
             this._utils.fixture.detectChanges();
 
             this._utils.click('.display', suggest);
             this._utils.fixture.detectChanges();
+
+            if (
+                httpRequest &&
+                strategy === 'onOpen'
+                // if we're searching for some specific string, the first query can be ignored,
+                // hint: use `openAndFlush()`
+                && searchStr !== ''
+            ) {
+                tick(1000);
+                this._utils.fixture.detectChanges();
+                httpRequest();
+            }
         }
 
-        if (searchInput) {
+        if (searchInput) { // && searchStr
             if (multiple && !this.isOpen(selector)) {
                 this._utils.click('input', suggest);
                 this._utils.fixture.detectChanges();
+
+                if (httpRequest && strategy === 'onOpen') {
+                    tick(1000);
+                    this._utils.fixture.detectChanges();
+                    httpRequest();
+                }
             }
 
             this._utils.setInput('input', searchStr, suggest);
             tick(SUGGEST_DEBOUNCE);
-            // this._utils.fixture.detectChanges();
+            this._utils.fixture.detectChanges();
 
             if (httpRequest) { httpRequest(); }
         }
@@ -467,7 +499,7 @@ class SuggestUtils<T> {
     public getFetchStrategy = (selector: string) => {
         const suggest = this._utils.getDebugElement(selector);
         // maybe add a getter along the setter for fetchStrategy ?
-        return (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$'].value;
+        return (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$']?.value ?? 'eager';
     };
 
     public selectNthItem = (selector: string, nth = 0, config?: {
@@ -525,4 +557,90 @@ class SuggestUtils<T> {
             .innerText
             .trim();
     };
+}
+
+class KVPUtils<T> {
+    constructor(
+        private _utils: IntegrationUtils<T>,
+    ) { }
+
+    /**
+     * Creates a new key value pair and populates it with the specified values
+     *
+     * @param keySearchText key suggest text to be selected
+     * @param valueSearchText value suggest text to be selected
+     */
+    addAndPopulateKVPInput = (keySearchText: string, valueSearchText: string, keyHttpRequest?: Function, valueHttpRequest?: Function) => {
+        this._utils.click('[data-cy=ui-kvp-add-new-entry]');
+        this._utils.fixture.detectChanges();
+
+        const existingKvpCount = this.currentKVPCount();
+
+        this._utils.suggest.searchAndSelect(this._nthKeySuggestSelector(existingKvpCount), keyHttpRequest, keySearchText);
+        this._utils.fixture.detectChanges();
+        tick(1000);
+        this._utils.fixture.detectChanges();
+
+        this._utils.suggest.searchAndSelect(this._nthValueSuggestSelector(existingKvpCount), valueHttpRequest, valueSearchText);
+        this._utils.fixture.detectChanges();
+        tick(1);
+        this._utils.fixture.detectChanges();
+
+        tick(1000);
+        this._utils.fixture.detectChanges();
+    };
+
+    /**
+     * Existing number of key value pairs.
+     *
+     * @param debugEl
+     * @returns
+     */
+    currentKVPCount(debugEl = this._utils.fixture.debugElement) {
+        const selector = 'ui-key-value-input';
+        return this._utils.getAllDebugElements(selector, debugEl).length;
+    }
+
+    /**
+     * Retrive a reference to the nth key suggest.
+     * Index starts at 1.
+     *
+     * @param debugEl
+     * @returns
+     */
+    nthKeySuggest(index: number, debugEl = this._utils.fixture.debugElement) {
+        const selector = this._nthKeySuggestSelector(index);
+        return this._utils.getDebugElement(selector, debugEl);
+    }
+
+    /**
+     * Retrive a reference to the nth value suggest.
+     * Index starts at 1.
+     *
+     * @param debugEl
+     * @returns
+     */
+    nthValueSuggest(index: number, debugEl = this._utils.fixture.debugElement) {
+        const selector = this._nthValueSuggestSelector(index);
+        return this._utils.getDebugElement(selector, debugEl);
+    }
+
+    /**
+     * Removes the nth key value pair.
+     * Index starts at 1.
+     *
+     * @param debugEl
+     * @returns
+     */
+    removeNthKVP(index: number, debugEl = this._utils.fixture.debugElement) {
+        const selector = this._nthRemoveButtonSelector(index);
+        this._utils.click(selector, debugEl);
+
+        tick(1000);
+        this._utils.fixture.detectChanges();
+    }
+
+    private _nthKeySuggestSelector(index: number) { return `[data-cy=ui-kvp-input-nr-${index}] [data-cy=ui-kvp-key-suggest]`; }
+    private _nthValueSuggestSelector(index: number) { return `[data-cy=ui-kvp-input-nr-${index}] [data-cy=ui-kvp-value-suggest]`; }
+    private _nthRemoveButtonSelector(index: number) { return `[data-cy=ui-kvp-input-nr-${index}] [data-cy=ui-kvp-remove-button]`; }
 }
