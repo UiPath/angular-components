@@ -1715,7 +1715,7 @@ const sharedSpecifications = (
 
                 it('should fill in search on item select', async () => {
                     const item = fixture.debugElement.query(By.css('.mat-list-item.is-expandable'));
-                    const itemText = (item.query(By.css('span')).nativeElement as HTMLElement).innerText;
+                    const itemText = (item.query(By.css('span.text-label-rendered')).nativeElement as HTMLElement).innerText;
                     item.nativeElement.dispatchEvent(EventGenerator.click);
 
                     fixture.detectChanges();
@@ -1760,6 +1760,8 @@ const sharedSpecifications = (
                     fixture.detectChanges();
                     await fixture.whenStable();
 
+                    const query = uiSuggest.inputControl.value;
+
                     const drilled = fixture.debugElement.query(By.css('.mat-list-item:not(.is-expandable'));
                     const drilledText = (drilled.query(By.css('span')).nativeElement as HTMLElement).innerText;
                     drilled.nativeElement.dispatchEvent(EventGenerator.click);
@@ -1768,7 +1770,7 @@ const sharedSpecifications = (
                     await fixture.whenStable();
 
                     expect(uiSuggest.value.length).toEqual(1);
-                    expect(uiSuggest.value[0].text).toEqual(drilledText);
+                    expect(uiSuggest.value[0].text).toEqual(`${query}${drilledText}`);
                 });
             });
         });
