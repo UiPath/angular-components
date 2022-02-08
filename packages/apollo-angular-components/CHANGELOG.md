@@ -1,3 +1,8 @@
+# v13.0.0 (2022-02-08)
+* **chore** npm audit
+* **chore** bump angular version
+* **suggest** persist drilldown selected value
+
 # v13.0.0-rc.13 (2022-01-31)
 * **suggest** expose input to allow fetching while closed consumers may use this to reset/refetch items even if closed in order to trigger validations
 
