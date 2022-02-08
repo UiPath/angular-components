@@ -78,6 +78,7 @@ import {
 } from './utils';
 
 export const DEFAULT_SUGGEST_DEBOUNCE_TIME = 300;
+export const DEFAULT_SUGGEST_DRILLDOWN_CHARACTER = ':';
 
 /**
  * A form compatible `dropdown` packing `lazy-loading` and `virtual-scroll`.
@@ -111,7 +112,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     AfterViewInit {
 
     get inDrillDownMode() {
-        return !!this.drillDown && this.inputControl.value.includes(':');
+        return !!this.drillDown && this.inputControl.value.includes(this.drillDownCharacter);
     }
 
     /**
@@ -150,6 +151,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     set drillDown(value) {
         this._drillDown = !!value;
     }
+
+    /**
+     * Divider character for drilldown logic
+     */
+    @Input()
+    drillDownCharacter = DEFAULT_SUGGEST_DRILLDOWN_CHARACTER;
 
     /**
      * Configure if the component is `readonly`.
@@ -929,9 +936,18 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * @param [closeAfterSelect=true] If the dropdown should close after the value is selected.
      * @param [refocus=true] If the search input should regain focus after selection.
      */
+    // eslint-disable-next-line complexity
     updateValue(inputValue: ISuggestValue | string, closeAfterSelect = true, refocus = true) {
-        const value = toSuggestValue(inputValue, this._isOnCustomValueIndex);
+        let value = toSuggestValue(inputValue, this._isOnCustomValueIndex);
         if (value.loading !== VirtualScrollItemStatus.loaded) { return; }
+
+        if (this.inDrillDownMode) {
+            value = {
+                ...value,
+                text: `${this.inputControl.value}${value.text}`,
+            };
+        }
+
         const isExpandable = this.searchable && this.drillDown && !!value.expandable;
 
         if (isExpandable) {
