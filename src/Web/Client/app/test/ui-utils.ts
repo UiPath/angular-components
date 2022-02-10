@@ -371,12 +371,16 @@ class GridUtils<T> {
             .dispatchEvent(EventGenerator.click);
     };
 
-    public checkRow = (rowNumber: number, gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
+    public getRowCheckbox = (rowNumber: number, gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
         const rowEl = this._utils.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"]`, debugEl);
 
         const rowCheckbox = this._utils.getDebugElement('mat-checkbox input', rowEl);
 
-        rowCheckbox.nativeElement.dispatchEvent(EventGenerator.click);
+        return rowCheckbox;
+    };
+
+    public checkRow = (rowNumber: number, gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
+        this.getRowCheckbox(rowNumber, gridSelector, debugEl).nativeElement.dispatchEvent(EventGenerator.click);
         this._utils.fixture.detectChanges();
     };
 
