@@ -1074,7 +1074,8 @@ describe('Component: UiGrid', () => {
                                 [searchable]="true"
                                 title="String Header"
                                 width="50%">
-                    <ui-grid-search-filter [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
+                    <ui-grid-search-filter [searchSourceFactory]="searchFactory"
+                                           property="myString"></ui-grid-search-filter>
                 </ui-grid-column>
             </ui-grid>
         `,
@@ -2657,7 +2658,9 @@ describe('Component: UiGrid', () => {
                     </ui-grid-column>
                     <ui-grid-column property="name"
                                     title="Name">
-                        <ui-grid-search-filter [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
+                        <ui-grid-search-filter [searchSourceFactory]="searchFactory"
+                                               property="name">
+                        </ui-grid-search-filter>
                     </ui-grid-column>
                     <ui-grid-footer [length]="5"
                                     [pageSize]="5">
@@ -2849,11 +2852,16 @@ describe('Component: UiGrid', () => {
                     </ui-grid-column>
                     <ui-grid-column property="name"
                                     title="Name">
-                        <ui-grid-search-filter [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
+                        <ui-grid-search-filter [searchSourceFactory]="searchFactory"
+                                               property="name">
+                        </ui-grid-search-filter>
                     </ui-grid-column>
                     <ui-grid-column property="another"
                                     title="Another">
-                        <ui-grid-search-filter [fetchStrategy]="'eager'" [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
+                        <ui-grid-search-filter [fetchStrategy]="'eager'"
+                                               [searchSourceFactory]="searchFactory"
+                                               property="another">
+                        </ui-grid-search-filter>
                     </ui-grid-column>
                 </ui-grid>
                 `,
@@ -2943,7 +2951,9 @@ describe('Component: UiGrid', () => {
                                 </ui-grid-column>
                                 <ui-grid-column property="name"
                                                 title="Name">
-                                    <ui-grid-search-filter [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
+                                    <ui-grid-search-filter [searchSourceFactory]="searchFactory"
+                                                           property="name">
+                                    </ui-grid-search-filter>
                                 </ui-grid-column>
                                 <ui-grid-footer [length]="5"
                                                 [pageSize]="5">
@@ -3134,7 +3144,9 @@ describe('Component: UiGrid', () => {
                     </ui-grid-column>
                     <ui-grid-column property="name"
                                     title="Name">
-                        <ui-grid-search-filter [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
+                        <ui-grid-search-filter [searchSourceFactory]="searchFactory"
+                                               property="name">
+                        </ui-grid-search-filter>
                     </ui-grid-column>
                 </ui-grid>
                 `,

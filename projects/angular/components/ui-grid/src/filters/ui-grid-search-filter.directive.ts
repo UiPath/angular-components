@@ -21,7 +21,11 @@ import { UiGridFilterDirective } from './ui-grid-filter';
  * @export
  */
 @Directive({
-    selector: '[uiGridSearchFilter], ui-grid-search-filter',
+    selector: `
+    [uiGridSearchFilter][items],
+    ui-grid-search-filter[items],
+    [uiGridSearchFilter][searchSourceFactory][property],
+    ui-grid-search-filter[searchSourceFactory][property]`,
 })
 export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> implements OnDestroy {
     /**
