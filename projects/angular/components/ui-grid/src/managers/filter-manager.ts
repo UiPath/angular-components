@@ -117,19 +117,21 @@ export class FilterManager<T> {
     };
 
     private _emitFilterOptions = () => {
-        const dropdownFilters = this._columns
+        const defaultValueDropdownFilters = this._columns
             .filter(({ dropdown }) => this._hasFilterValue(dropdown))
             .map(this._mapDropdownItem);
 
+        const emptyStateDropdownFilters = this._columns
+            .filter(col => col.dropdown?.emptyStateValue)
+            .map(this._mapDropdownEmptyStateItem);
         const searchableFilters = this._columns
             .filter(({ searchableDropdown }) => this._hasFilterValue(searchableDropdown))
             .map(this._mapSearchableDropdownItem);
 
-        const updatedFilters = [...dropdownFilters, ...searchableFilters];
-
-        if (!this._initialFilters) {
-            this._initialFilters = updatedFilters;
-        }
+        const updatedFilters = [...defaultValueDropdownFilters, ...searchableFilters];
+        this._initialFilters = emptyStateDropdownFilters.length
+            ? emptyStateDropdownFilters
+            : [];
         if (isEqual(this.filter$.getValue(), updatedFilters)) { return; }
 
         this.filter$.next(updatedFilters);
@@ -143,6 +145,12 @@ export class FilterManager<T> {
         method: column.dropdown!.method,
         property: column.property,
         value: column.dropdown!.value!.value,
+    }) as IFilterModel<T>;
+
+    private _mapDropdownEmptyStateItem = (column: UiGridColumnDirective<T>) => ({
+        method: column.dropdown!.method,
+        property: column.property,
+        value: column.dropdown!.emptyStateValue,
     }) as IFilterModel<T>;
 
     private _mapSearchableDropdownItem = (column: UiGridColumnDirective<T>): IFilterModel<T> => ({
