@@ -578,14 +578,12 @@ class KVPUtils<T> {
         this._utils.click('[data-cy=ui-kvp-add-new-entry]');
         this._utils.fixture.detectChanges();
 
-        const existingKvpCount = this.currentKVPCount();
-
-        this._utils.suggest.searchAndSelect(this._nthKeySuggestSelector(existingKvpCount), keyHttpRequest, keySearchText);
+        this._utils.suggest.searchAndSelect(this._nthKeySuggestSelector(1), keyHttpRequest, keySearchText);
         this._utils.fixture.detectChanges();
         tick(1000);
         this._utils.fixture.detectChanges();
 
-        this._utils.suggest.searchAndSelect(this._nthValueSuggestSelector(existingKvpCount), valueHttpRequest, valueSearchText);
+        this._utils.suggest.searchAndSelect(this._nthValueSuggestSelector(1), valueHttpRequest, valueSearchText);
         this._utils.fixture.detectChanges();
         tick(1);
         this._utils.fixture.detectChanges();
