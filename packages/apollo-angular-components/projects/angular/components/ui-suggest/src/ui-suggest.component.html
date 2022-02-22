@@ -92,8 +92,9 @@
                        (keydown.tab)="close(false)"
                        (keydown.shift.tab)="close()">
             <mat-chip *ngFor="let option of value; let i = index"
-                      (removed)="deselectItem(option)"
-                      [removable]="!readonly">
+                      [removable]="!readonly"
+                      [matTooltip]="intl.translateLabel(option.text)"
+                      (removed)="deselectItem(option)">
                 <span>
                     {{ intl.translateLabel(option.text) }}
                 </span>
