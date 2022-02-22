@@ -310,6 +310,12 @@ export class UiGridDropdownFilterDirective&lt;T&gt; extends UiGridFilterDirectiv
     value?: IDropdownOption;
 
     /**
+     * The empty dropdown state.
+     *
+     */
+    @Input()
+    emptyStateValue?: IDropdownOption[&#x27;value&#x27;];
+    /**
      * Wether the filter should be rendered in the grid.
      *
      */

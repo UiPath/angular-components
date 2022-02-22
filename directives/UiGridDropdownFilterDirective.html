@@ -119,6 +119,9 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#emptyStateValue" >emptyStateValue</a>
+                            </li>
+                            <li>
                                 <a href="#items" >items</a>
                             </li>
                             <li>
@@ -158,6 +161,27 @@
 
             <section>
     <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="emptyStateValue"></a>
+                        <b>emptyStateValue</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-dropdown-filter.directive.ts:69</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The empty dropdown state.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -260,7 +284,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-dropdown-filter.directive.ts:69</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-dropdown-filter.directive.ts:75</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -300,8 +324,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="81"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-dropdown-filter.directive.ts:81</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="87"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-dropdown-filter.directive.ts:87</a></div>
                 </td>
             </tr>
 
@@ -373,7 +397,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-dropdown-filter.directive.ts:69</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-dropdown-filter.directive.ts:75</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -391,7 +415,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-dropdown-filter.directive.ts:70</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-dropdown-filter.directive.ts:76</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -502,6 +526,12 @@ export class UiGridDropdownFilterDirective&lt;T&gt; extends UiGridFilterDirectiv
     @Input()
     value?: IDropdownOption;
 
+    /**
+     * The empty dropdown state.
+     *
+     */
+    @Input()
+    emptyStateValue?: IDropdownOption[&#x27;value&#x27;];
     /**
      * Wether the filter should be rendered in the grid.
      *
