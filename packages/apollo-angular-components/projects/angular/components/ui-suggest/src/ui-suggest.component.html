@@ -94,7 +94,8 @@
             <mat-chip *ngFor="let option of value; let i = index"
                       [removable]="!readonly"
                       [matTooltip]="intl.translateLabel(option.text)"
-                      (removed)="deselectItem(option)">
+                      (removed)="deselectItem(option)"
+                      class="chip-selectable">
                 <span>
                     {{ intl.translateLabel(option.text) }}
                 </span>
