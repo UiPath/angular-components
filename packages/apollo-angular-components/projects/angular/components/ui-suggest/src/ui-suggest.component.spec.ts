@@ -1151,10 +1151,11 @@ const sharedSpecifications = (
                 addCustomValue('A');
                 addCustomValue('B');
                 addCustomValue('C');
+
                 const chips = fixture.debugElement.queryAll(By.css('.mat-chip.mat-standard-chip span')).map(el => el.nativeNode.innerText);
+                tick(1000);
 
                 expect(`${chips}`).toEqual(`A,B,C`);
-                discardPeriodicTasks();
             }));
 
         });
