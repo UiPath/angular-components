@@ -92,7 +92,8 @@
                        (keydown.tab)="close(false)"
                        (keydown.shift.tab)="close()">
             <mat-chip *ngFor="let option of value; let i = index"
-                      (removed)="deselectItem(option)">
+                      (removed)="deselectItem(option)"
+                      [removable]="!readonly">
                 <span>
                     {{ intl.translateLabel(option.text) }}
                 </span>
@@ -106,6 +107,7 @@
                        [uiAutofocus]="isOpen"
                        [refocus]="isOpen"
                        [placeholder]="(isFormControl && !empty) ? '' : defaultValue"
+                       [readonly]="readonly"
                        [formControl]="inputControl"
                        [matChipInputFor]="chipList"
                        [attr.maxlength]="maxLength"
