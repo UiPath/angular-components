@@ -1,3 +1,7 @@
+# v13.0.1 (2022-02-22)
+* **suggest** prevent chip remove on multiselect & readonly
+* **suggest** update tests
+
 # v13.0.0 (2022-02-08)
 * **chore** npm audit
 * **chore** bump angular version
