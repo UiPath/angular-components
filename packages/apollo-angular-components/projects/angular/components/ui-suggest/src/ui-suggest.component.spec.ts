@@ -1252,6 +1252,32 @@ const sharedSpecifications = (
 
                 discardPeriodicTasks();
             }));
+
+            it('should NOT be able to remove chip if readonly', fakeAsync(() => {
+                const items = component.items!.slice(0, 3);
+                component.value = items;
+                component.readonly = true;
+                fixture.detectChanges();
+                tick();
+
+                const initialChips = fixture.debugElement.queryAll(By.css('.mat-chip'));
+                expect(initialChips.length).toBe(3);
+
+                const chipRemoveButton = getNativeElement<HTMLButtonElement>(initialChips[1].query(By.css('button')));
+                chipRemoveButton.click();
+
+                fixture.detectChanges();
+                tick(5000);
+
+                const updatedChips = fixture.debugElement
+                    .queryAll(By.css('.mat-chip span'))
+                    .map(el => getNativeElement<HTMLSpanElement>(el));
+
+                expect(updatedChips.length).toEqual(3);
+                expect(updatedChips.map(chip => chip.innerText)).toEqual(items.map(item => item.text));
+
+                discardPeriodicTasks();
+            }));
         });
     });
 
