@@ -2836,6 +2836,113 @@ describe('Component: UiGrid', () => {
                 });
             });
 
+            describe('Behaviour: use empty state value for filters', () => {
+                @Component({
+                    template: `
+                <ui-grid>
+                    <ui-grid-header [search]="true">
+                    </ui-grid-header>
+                    <ui-grid-column property="id"
+                                    title="Id">
+                        <ui-grid-dropdown-filter [items]="filterItems"
+                                                 [visible]="true"
+                                                 [value]="value"
+                                                 [emptyStateValue]="emptyStateValue">
+                        </ui-grid-dropdown-filter>
+                    </ui-grid-column>
+                </ui-grid>
+                `,
+                })
+                class TestFixtureAlternateDesignGridComponent {
+                    get filterItems(): IDropdownOption[] {
+                        return [1, 2, 3].map(count => ({
+                            value: count,
+                            label: count.toString(),
+                        }));
+                    }
+                    value?: IDropdownOption;
+                    emptyStateValue?: IDropdownOption['value'];
+                }
+
+                let fixture: ComponentFixture<TestFixtureAlternateDesignGridComponent>;
+                let component: TestFixtureAlternateDesignGridComponent;
+
+                beforeEach(() => {
+                    TestBed.configureTestingModule({
+                        imports: [
+                            UiGridModule,
+                            UiGridCustomPaginatorModule,
+                            NoopAnimationsModule,
+                        ],
+                        providers: [
+                            UiMatPaginatorIntl,
+                            {
+                                provide: UI_GRID_OPTIONS,
+                                useValue: {
+                                    useLegacyDesign: false,
+                                    collapsibleFilters: true,
+                                    fetchStrategy: 'eager',
+                                },
+                            },
+                        ],
+                        declarations: [
+                            TestFixtureAlternateDesignGridComponent,
+                        ],
+                    });
+
+                    fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
+                    component = fixture.componentInstance;
+                });
+
+                afterEach(() => {
+                    fixture.destroy();
+                });
+
+                it('should count applied default filter when there is not empty filter state', () => {
+                    component.value = {
+                        value: '123',
+                        label: '123',
+                    };
+                    fixture.detectChanges();
+
+                    const collapisbleFiltersToggleText = fixture.debugElement
+                        .query(By.css('.ui-grid-collapsible-filters-toggle span span'));
+
+                    expect(collapisbleFiltersToggleText.nativeElement.innerText).toBe('Filters (1)');
+                });
+
+                it('should count applied default filter when it is different from the empty filter state', fakeAsync(() => {
+                    component.value = {
+                        value: '123',
+                        label: '123',
+                    };
+                    component.emptyStateValue = '12';
+                    fixture.detectChanges();
+
+                    const collapisbleFiltersToggleText = fixture.debugElement
+                        .query(By.css('.ui-grid-collapsible-filters-toggle span span'));
+
+                    expect(collapisbleFiltersToggleText.nativeElement.innerText).toBe('Filters (1)');
+                    expect(fixture.debugElement.query(By.css('.ui-grid-header-title-filtered'))).toBeTruthy();
+                    tick(1000);
+                }));
+
+                it('should not count applied default filter when it is equal to empty filter state', () => {
+                    fixture.componentInstance.value = {
+                        value: '123',
+                        label: '123',
+                    };
+                    component.emptyStateValue = '123';
+                    fixture.detectChanges();
+
+                    const collapisbleFiltersToggleText = fixture.debugElement
+                        .query(By.css('.ui-grid-collapsible-filters-toggle span span'));
+
+                    expect(collapisbleFiltersToggleText.nativeElement.innerText).toBe('Filters');
+                    expect(fixture.debugElement.query(By.css('.ui-grid-header-title-filtered'))).toBeNull();
+                });
+            });
+
             describe('Behavior: override injection token value', () => {
                 @Component({
                     template: `

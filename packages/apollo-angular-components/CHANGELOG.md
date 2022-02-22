@@ -1,3 +1,9 @@
+# v13.1.0 (2022-02-22)
+* **grid** add test cases for empty filter state
+* **grid** add filters empty state input
+* **suggest** add missing theme class
+* **suggest** add tooltip & ellipsis to chips
+
 # v13.0.1 (2022-02-22)
 * **suggest** prevent chip remove on multiselect & readonly
 * **suggest** update tests
