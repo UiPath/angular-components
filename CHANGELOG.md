@@ -1,3 +1,6 @@
+# v13.2.0 (2022-02-23)
+* **suggest** add input for removable chips
+
 # v13.1.0 (2022-02-22)
 * **grid** add test cases for empty filter state
 * **grid** add filters empty state input
