@@ -649,6 +649,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     /**
+     * Configure if each individual chip can be removed
+     *
+     */
+    @Input()
+    canRemoveChip: (value: ISuggestValue) => boolean
+        = () => !this.readonly;
+
+    /**
      * @ignore
      */
     ngOnInit() {
