@@ -79,6 +79,7 @@ import {
 
 export const DEFAULT_SUGGEST_DEBOUNCE_TIME = 300;
 export const DEFAULT_SUGGEST_DRILLDOWN_CHARACTER = ':';
+export const MAT_CHIP_INPUT_SELECTOR = '.mat-chip-list input';
 
 /**
  * A form compatible `dropdown` packing `lazy-loading` and `virtual-scroll`.
@@ -970,18 +971,20 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (!isItemSelected && value) {
             if (!this.multiple) {
                 this._clearSelection();
+                this._pushEntry(value);
             } else {
                 this.inputControl.setValue('');
+                this._pushEntry(value);
+                this._focusChipInput();
             }
-            this._pushEntry(value);
         }
 
-        if (
-            this.multiple &&
+        const alreadySelectedNormalValue = this.multiple &&
             isItemSelected &&
             !!value &&
-            !value.isCustom
-        ) {
+            !value.isCustom;
+
+        if (alreadySelectedNormalValue) {
             this._removeEntry(value);
         }
 
@@ -1278,5 +1281,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
     private _gotoBottomAsync(element: HTMLElement) {
         setTimeout(() => element.scrollTop = element.scrollHeight - element.clientHeight, 0);
+    }
+
+    private _focusChipInput() {
+        // direct focus needed as chip component doesn't expose a focus to input mechanism
+        document.querySelector<HTMLInputElement>(MAT_CHIP_INPUT_SELECTOR)?.focus();
     }
 }
