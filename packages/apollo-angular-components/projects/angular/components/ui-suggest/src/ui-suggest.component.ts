@@ -827,10 +827,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     close(refocus = true) {
         if (this.alwaysExpanded || !this.isOpen) { return; }
 
-        if (this._isOnCustomValueIndex && !this.loading$.value) {
-            if (!this.multiple) {
-                this._clearSelection();
-            }
+        if (
+            this._isOnCustomValueIndex &&
+            !this.loading$.value &&
+            !this.multiple
+        ) {
+            this._clearSelection();
             this._pushEntry(toSuggestValue(this.inputControl.value.trim(), true));
         }
 
