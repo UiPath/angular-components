@@ -1,3 +1,10 @@
+# v13.2.1 (2022-03-04)
+* **chore** karma bump
+* **suggest** add tests
+* **suggest** refocus post item selection
+* **suggest** on multiple always clear input
+* **suggest** push custom item only on single select
+
 # v13.2.0 (2022-02-23)
 * **suggest** add input for removable chips
 
