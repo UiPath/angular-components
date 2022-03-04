@@ -1088,6 +1088,16 @@ const sharedSpecifications = (
         });
 
         describe('With custom', () => {
+            function addByClickCustomValue(str: string) {
+                searchFor(str, fixture);
+                fixture.detectChanges();
+                tick(5000);
+
+                fixture.debugElement.query(By.css('.custom-item')).nativeElement
+                    .dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+            }
+
             function addCustomValue(str: string) {
                 searchFor(str, fixture);
                 fixture.detectChanges();
@@ -1156,6 +1166,35 @@ const sharedSpecifications = (
                 tick(1000);
 
                 expect(`${chips}`).toEqual(`A,B,C`);
+            }));
+
+            it('should preserve input focus on click custom value', fakeAsync(() => {
+                const input = fixture.debugElement.query(By.css('.mat-chip-list input'));
+                addByClickCustomValue('A');
+                tick(1000);
+                expect(document.activeElement).toBe(input.nativeElement);
+            }));
+
+            it('should NOT add custom value on close if input is populated', fakeAsync(() => {
+                searchFor('test', fixture);
+                fixture.detectChanges();
+                tick(5000);
+                expect(uiSuggest.inputControl.value).toEqual('test');
+
+                uiSuggest.close();
+                fixture.detectChanges();
+                tick(1000);
+
+                expect(uiSuggest.value).toEqual([]);
+            }));
+
+            it('should clear input after selection', fakeAsync(() => {
+                addCustomValue('A');
+                tick(1000);
+
+                const input: HTMLInputElement = fixture.debugElement.query(By.css('input'))!.nativeElement;
+                expect(uiSuggest.inputControl.value).toEqual('');
+                expect(input.value).toEqual('');
             }));
 
         });
