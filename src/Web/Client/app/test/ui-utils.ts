@@ -196,6 +196,9 @@ export class UIUtils {
     isToggleChecked = (selector: string, element: HTMLElement = this._rootEl) =>
         this.getElement(selector, element)?.classList.contains('mat-checked');
 
+    toggleCheckbox = (selector: string, element: HTMLElement = this._rootEl) =>
+        this.getElement(`${selector} .mat-checkbox-label`, element)?.dispatchEvent(EventGenerator.click);
+
     toggleSlider = (selector: string, element: HTMLElement = this._rootEl) =>
         this.getElement(`${selector} .mat-slide-toggle-label`, element)?.dispatchEvent(EventGenerator.click);
 
