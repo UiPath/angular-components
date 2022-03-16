@@ -4,8 +4,9 @@
             (click)="selectColumns!.open(); selectColumns!.focus()"
             type="button"
             mat-button>
-        <mat-icon class="material-icons-outlined">view_column</mat-icon>
+        <mat-icon class="material-icons-outlined">table_chart</mat-icon>
         <span>{{togglePlaceholderTitle}}</span>
+        <mat-icon class="material-icons-outlined">keyboard_arrow_down</mat-icon>
     </button>
 
     <mat-select [value]="selected"
@@ -53,6 +54,6 @@
             matTooltipPosition="right"
             type="button"
             mat-icon-button>
-        <mat-icon class="material-icons-outlined">view_column</mat-icon>
+        <mat-icon class="material-icons-outlined">table_chart</mat-icon>
     </button>
 </ng-template>
