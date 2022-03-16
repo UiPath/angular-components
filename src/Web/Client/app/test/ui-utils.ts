@@ -1,5 +1,8 @@
 import { HttpTestingController } from '@angular/common/http/testing';
-import { DebugElement } from '@angular/core';
+import {
+    DebugElement,
+    Type,
+} from '@angular/core';
 import {
     ComponentFixture,
     discardPeriodicTasks,
@@ -44,6 +47,12 @@ export class IntegrationUtils<T> {
 
     public getAllDebugElements = (selector: string, debugEl = this.fixture.debugElement) =>
         debugEl.queryAll(By.css(selector));
+
+    public getChildComponentInstance = (type: Type<any>, debugEl = this.fixture.debugElement) =>
+        debugEl.query(By.directive(type))?.componentInstance;
+
+    public getAllChildComponentInstances = (type: Type<any>, debugEl = this.fixture.debugElement) =>
+        debugEl.queryAll(By.directive(type)).map(el => el.componentInstance);
 
     public getNativeElement = <U extends HTMLElement>(selector: string, debugEl = this.fixture.debugElement) => {
         const debugElement = this.getDebugElement(selector, debugEl);
