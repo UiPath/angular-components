@@ -1,3 +1,7 @@
+# v13.2.2 (2022-03-17)
+* **grid** change column icon and divider height
+* **suggest** results remove italics
+
 # v13.2.1 (2022-03-04)
 * **chore** karma bump
 * **suggest** add tests
