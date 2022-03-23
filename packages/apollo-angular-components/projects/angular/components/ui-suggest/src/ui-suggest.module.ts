@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { UiAutoAccessibleLabelModule } from '@uipath/angular/a11y';
 import { UiAutofocusModule } from '@uipath/angular/directives/ui-autofocus';
 import { UiClickOutsideModule } from '@uipath/angular/directives/ui-click-outside';
 import { UiNgLetModule } from '@uipath/angular/directives/ui-ng-let';
@@ -34,6 +35,7 @@ import { UiSuggestComponent } from './ui-suggest.component';
         UiClickOutsideModule,
         UiVirtualScrollRangeLoaderModule,
         MatChipsModule,
+        UiAutoAccessibleLabelModule,
     ],
     declarations: [
         UiSuggestComponent,
