@@ -1,0 +1,90 @@
+<p>ui-autocomplete works</p>
+
+<mat-list [attr.role]="'listbox'">
+    <cdk-virtual-scroll-viewport [isDown]="isDown"
+                                 [itemSize]="itemSize"
+                                 [style.max-height.px]="viewportMaxHeight"
+                                 [minBufferPx]="viewportMaxHeight * 1.2"
+                                 [maxBufferPx]="viewportMaxHeight * 1.4"
+                                 (rangeLoad)="rangeLoad($event)"
+                                 uiVirtualScrollRangeLoader>
+        <ng-container *ngTemplateOutlet="customValueTemplate; context: { $implicit: 'down' }">
+        </ng-container>
+
+        <ng-container
+                      *cdkVirtualFor="let item of renderItems; let index = index; trackBy: trackById; templateCacheSize: disableTooltip ? 20 : 0">
+            <mat-list-item *ngLet="drillDown && !!item?.expandable as itemExpandable"
+                           [class.active]="index === activeIndex"
+                           [class.is-loading]="item.loading !== VirtualScrollItemStatus.loaded"
+                           [class.readonly]="item.loading !== VirtualScrollItemStatus.loaded"
+                           [class.selected]="!!item &&
+                                            !multiple &&
+                                            isItemSelected(item)"
+                           [class.is-expandable]="itemExpandable"
+                           [style.height.px]="!!item ? itemSize : 0"
+                           (click)="preventDefault($event);
+                                    updateValue(item, !multiple, true);"
+                           [attr.role]="'option'"
+                           matRipple>
+                <ng-container *ngIf="!!item">
+                    <ng-container *ngIf="itemTemplate; else defaultItem">
+                        <ng-container *ngTemplateOutlet="itemTemplate; context: {
+                                                            $implicit: item
+                                                        }">
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+                <ng-template #defaultItem>
+                    <div [matTooltip]="disableTooltip ? '' : intl.translateLabel(item.text)"
+                         [attr.data-item-id]="item.id"
+                         matTooltipPosition="right"
+                         class="ui-suggest-item">
+                        <mat-checkbox *ngIf="multiple"
+                                      [checked]="isItemSelected(item)"
+                                      [indeterminate]="false">
+                        </mat-checkbox>
+                        <div [attr.aria-label]="intl.translateLabel(item.text)"
+                             class="text-label text-ellipsis"
+                             tabindex="-1">
+                            <mat-icon *ngIf="!!item?.icon?.svgIcon"
+                                      [svgIcon]="item?.icon.svgIcon"></mat-icon>
+                            <mat-icon *ngIf="!!item?.icon?.matIcon">{{item?.icon.matIcon}}</mat-icon>
+                            <span class="text-label-rendered">{{ item?.icon?.iconOnly ? null :
+                                intl.translateLabel(item.text) }}</span>
+                        </div>
+                        <mat-icon *ngIf="itemExpandable"
+                                  class="expand-icon">chevron_right</mat-icon>
+                    </div>
+                </ng-template>
+            </mat-list-item>
+        </ng-container>
+
+        <ng-container *ngTemplateOutlet="customValueTemplate; context: { $implicit: 'up' }">
+        </ng-container>
+
+        <mat-list-item *ngIf="loading$ | async"
+                       [style.height.px]="itemSize">
+            <mat-progress-spinner color="primary"
+                                  mode="indeterminate"
+                                  diameter="20"
+                                  strokeWidth="2">
+            </mat-progress-spinner>
+        </mat-list-item>
+
+        <ng-container *ngLet="(
+            inputControl.value.length < minChars
+                ? intl.minCharsLength(minChars)
+                : intl.noResultsLabel
+        ) as label">
+            <mat-list-item *ngIf="hasNoResults &&
+                              !isCustomValueVisible &&
+                              (loading$ | async) === false"
+                           [matTooltip]="label"
+                           [attr.role]="'option'"
+                           matTooltipPosition="right"
+                           class="text-ellipsis no-results-text">
+                {{label}}
+            </mat-list-item>
+        </ng-container>
+    </cdk-virtual-scroll-viewport>
+</mat-list>

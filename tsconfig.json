@@ -5,7 +5,7 @@
         "outDir": "./dist/out-tsc",
         "sourceMap": true,
         "declaration": false,
-        "allowSyntheticDefaultImports":true,
+        "allowSyntheticDefaultImports": true,
         "module": "es2020",
         "moduleResolution": "node",
         "noUnusedLocals": true,
@@ -29,6 +29,9 @@
             ],
             "@uipath/angular/components/ui-suggest": [
                 "./projects/angular/components/ui-suggest/src/public_api.ts"
+            ],
+            "@uipath/angular/components/ui-autocomplete": [
+                "./projects/angular/components/ui-autocomplete/src/public_api.ts"
             ],
             "@uipath/angular/components/ui-grid": [
                 "./projects/angular/components/ui-grid/src/public_api.ts"
