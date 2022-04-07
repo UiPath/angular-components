@@ -135,9 +135,36 @@ ui-grid {
         &-filter-container {
             padding: 0 0 $ui-grid-default-spacing $ui-grid-default-spacing;
             min-height: $ui-grid-header-row-height;
-            align-items: center;
+
             display: flex;
             flex-wrap: wrap;
+            align-items: flex-start;
+
+            &-lhs-group {
+                display: flex;
+                flex-direction: column;
+
+                &-actions {
+                    min-height: $ui-grid-header-row-height;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                }
+
+                &-filters {
+                    min-height: $ui-grid-header-row-height;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    display: flex;
+                }
+            }
+
+            &-rhs-group {
+                min-height: $ui-grid-header-row-height;
+                display: flex;
+                margin-left: auto;
+                align-items: center;
+            }
         }
 
         // single main button on default design
