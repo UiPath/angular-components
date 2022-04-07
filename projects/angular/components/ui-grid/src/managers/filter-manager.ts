@@ -6,6 +6,7 @@ import {
 import {
     distinctUntilChanged,
     map,
+    tap,
 } from 'rxjs/operators';
 
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
@@ -37,6 +38,7 @@ export class FilterManager<T> {
                 this._sortByProperty(this._initialFilters),
             ),
         ),
+        tap(x => console.log('dirty', x)),
         distinctUntilChanged(),
     );
 
@@ -75,7 +77,7 @@ export class FilterManager<T> {
         this.filter$.complete();
     }
 
-    searchableDropdownUpdate = (column?: UiGridColumnDirective<T>, value?: ISuggestValue) =>
+    searchableDropdownUpdate = (column?: UiGridColumnDirective<T>, value?: ISuggestValue | ISuggestValue[]) =>
         this._updateFilterValue(column, value, this._mapSearchableDropdownItem);
 
     dropdownUpdate = (column?: UiGridColumnDirective<T>, value?: IDropdownOption) =>
@@ -99,8 +101,8 @@ export class FilterManager<T> {
 
     private _updateFilterValue = (
         column: UiGridColumnDirective<T> | undefined,
-        value: ISuggestValue | IDropdownOption | undefined,
-        mapper: (column: UiGridColumnDirective<T>) => IFilterModel<T>,
+        value: ISuggestValue | IDropdownOption | ISuggestValue[] | IDropdownOption[] | undefined,
+        mapper: (column: UiGridColumnDirective<T>) => IFilterModel<T> | IFilterModel<T>,
     ): void => {
         if (!column) { return; }
 
@@ -109,7 +111,7 @@ export class FilterManager<T> {
         if (!dropdown) { return; }
 
         (dropdown as {
-            updateValue: (value: ISuggestValue | IDropdownOption | undefined) => void;
+            updateValue: (value: ISuggestValue | ISuggestValue[] | IDropdownOption | IDropdownOption[] | undefined) => void;
         }).updateValue(value);
         dropdown.filterChange.emit(value ? mapper(column) : null);
 
@@ -144,7 +146,7 @@ export class FilterManager<T> {
     private _mapDropdownItem = (column: UiGridColumnDirective<T>) => ({
         method: column.dropdown!.method,
         property: column.property,
-        value: column.dropdown!.value!.value,
+        value: column.dropdown!.value,
     }) as IFilterModel<T>;
 
     private _mapDropdownEmptyStateItem = (column: UiGridColumnDirective<T>) => ({
@@ -153,11 +155,18 @@ export class FilterManager<T> {
         value: column.dropdown!.emptyStateValue,
     }) as IFilterModel<T>;
 
-    private _mapSearchableDropdownItem = (column: UiGridColumnDirective<T>): IFilterModel<T> => ({
-        method: column.searchableDropdown!.method,
-        property: column.searchableDropdown!.property ?? column.property,
-        value: column.searchableDropdown!.value!.id,
-    }) as IFilterModel<T>;
+    private _mapSearchableDropdownItem = (column: UiGridColumnDirective<T>): IFilterModel<T> => {
+        const isMultipleFilter = Array.isArray(column.searchableDropdown!.value);
+        const computedValue = isMultipleFilter
+            ? (column.searchableDropdown!.value! as ISuggestValue[]).map(value => value.id)
+            : (column.searchableDropdown!.value as ISuggestValue)!.id;
+
+        return {
+            method: column.searchableDropdown!.method,
+            property: column.searchableDropdown!.property ?? column.property,
+            value: computedValue,
+        } as IFilterModel<T>;
+    };
 
     private _sortByProperty(filters: IFilterModel<T>[]): any {
         return filters.sort((a, b) => (a.property > b.property) ? 1 : -1);

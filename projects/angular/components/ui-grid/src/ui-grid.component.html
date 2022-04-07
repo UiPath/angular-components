@@ -131,8 +131,7 @@
                          tabindex="0">
                         <div (click)="sortManager.changeSort(column)"
                              class="ui-grid-header-title">
-                            <p [class.ui-grid-header-title-filtered]="(column.dropdown?.value != null &&
-                                    column.dropdown!.value!.value !== column.dropdown!.emptyStateValue) ||
+                            <p [class.ui-grid-header-title-filtered]="
                                     column.searchableDropdown?.value != null"
                                [matTooltip]="column.title ?? ''"
                                [matTooltipDisabled]="resizeManager.isResizing">{{ column.title }}</p>
@@ -504,52 +503,67 @@
         <div *ngIf="column.dropdown?.visible$ | async"
              [ngClass]="{'ui-grid-alternate-filter-container': collapsibleFilters}"
              class="ui-grid-dropdown-filter-container ui-grid-filter-option">
-            <button [matMenuTriggerFor]="filterOptions"
-                    [disabled]="column.dropdown?.disabled || disabled"
-                    [attr.data-column-name]="'ui-grid-dropdown-filter-' + (column.property || 'na')"
-                    mat-button
-                    type="button"
-                    class="ui-grid-dropdown-filter-button">
-                <span class="ui-grid-dropdown-filter-title">{{ column.title }}: </span>
-                <span class="ui-grid-dropdown-filter-value">
-                    {{ !!column.dropdown?.value ? intl.translateDropdownOption(column.dropdown!.value!) :
-                    intl.noFilterPlaceholder }}
-                </span>
-                <mat-icon>keyboard_arrow_down</mat-icon>
-            </button>
-            <mat-menu #filterOptions="matMenu"
-                      [overlapTrigger]="true">
-                <button *ngIf="column.dropdown?.showAllOption"
-                        [class.active]="column.dropdown?.value == null"
-                        [matTooltip]="intl.noFilterPlaceholder"
-                        (click)="filterManager.dropdownUpdate(column!, undefined)"
+            <ng-container *ngIf="column.dropdown?.multiple; else simpleDropdownFilter">
+                <mat-selection-list [multiple]="true">
+                    <mat-list-option *ngFor="let dropdownItem of column.dropdown?.items"
+                                     [matTooltip]="intl.translateDropdownOption(dropdownItem)"
+                                     (click)="filterManager.dropdownUpdate(column, dropdownItem)">
+                        {{ intl.translateDropdownOption(dropdownItem) }}
+                    </mat-list-option>
+                </mat-selection-list>
+            </ng-container>
+
+            <ng-template #simpleDropdownFilter>
+                <button [matMenuTriggerFor]="filterOptions"
+                        [disabled]="column.dropdown?.disabled || disabled"
+                        [attr.data-column-name]="'ui-grid-dropdown-filter-' + (column.property || 'na')"
+                        mat-button
                         type="button"
-                        mat-menu-item>
-                    {{ intl.noFilterPlaceholder }}
+                        class="ui-grid-dropdown-filter-button">
+                    <span class="ui-grid-dropdown-filter-title">{{ column.title }}: </span>
+                    <span class="ui-grid-dropdown-filter-value">
+                        {{ !!column.dropdown?.value ? intl.translateDropdownOption(column.dropdown!.value!) :
+                        intl.noFilterPlaceholder }}
+                    </span>
+                    <mat-icon>keyboard_arrow_down</mat-icon>
                 </button>
-                <button *ngFor="let dropdownItem of column.dropdown?.items"
-                        [class.active]="column.dropdown?.value?.label === dropdownItem.label"
-                        [matTooltip]="intl.translateDropdownOption(dropdownItem)"
-                        (click)="filterManager.dropdownUpdate(column, dropdownItem)"
-                        type="button"
-                        mat-menu-item>
-                    {{ intl.translateDropdownOption(dropdownItem) }}
-                </button>
-            </mat-menu>
+                <mat-menu #filterOptions="matMenu"
+                          [overlapTrigger]="true">
+                    <button *ngIf="column.dropdown?.showAllOption"
+                            [class.active]="column.dropdown?.value == null"
+                            [matTooltip]="intl.noFilterPlaceholder"
+                            (click)="filterManager.dropdownUpdate(column!, undefined)"
+                            type="button"
+                            mat-menu-item>
+                        {{ intl.noFilterPlaceholder }}
+                    </button>
+                    <button *ngFor="let dropdownItem of column.dropdown?.items"
+                            [class.active]="isDropdownItemActive(column.dropdown?.value, dropdownItem.label)"
+                            [matTooltip]="intl.translateDropdownOption(dropdownItem)"
+                            (click)="filterManager.dropdownUpdate(column, dropdownItem)"
+                            type="button"
+                            mat-menu-item>
+                        {{ intl.translateDropdownOption(dropdownItem) }}
+                    </button>
+                </mat-menu>
+            </ng-template>
         </div>
 
         <ng-container *ngIf="column.searchableDropdown?.visible$ | async">
             <ui-suggest #suggest
                         [placeholder]="column.title ?? ''"
                         [defaultValue]="column.searchableDropdown!.noFilterPlaceholder || intl.noFilterPlaceholder"
+                        [displayCount]="5"
                         [searchSourceFactory]="column.searchableDropdown!.searchSourceFactory"
-                        [value]="column.searchableDropdown!.value ? [column.searchableDropdown!.value!] : []"
+                        [value]="getFilterValue(column.searchableDropdown!.value)"
                         [disabled]="column.searchableDropdown!.disabled || disabled"
                         [drillDown]="column.searchableDropdown!.drillDown"
+                        [multiple]="!!column.searchableDropdown!.multiple"
                         [maxLength]="64"
                         [fetchStrategy]="column.searchableDropdown!.fetchStrategy || fetchStrategy"
                         [attr.data-cy]="'ui-grid-search-filter-' + (column.property || 'na')"
-                        (selected)="filterManager.searchableDropdownUpdate(column, $event)"
+                        (selected)="filterManager.searchableDropdownUpdate(column, suggest.value)"
+                        (deselected)="filterManager.searchableDropdownUpdate(column, suggest.value)"
                         (opened)="column.refetch && suggest.fetch()"
                         width="230px"
                         class="ui-grid-search-filter ui-grid-filter-option">

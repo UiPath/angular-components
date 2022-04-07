@@ -168,7 +168,9 @@ export class UiGridIntl implements OnDestroy {
      * @param option The current dropdown option.
      */
     translateDropdownOption =
-        (option: IDropdownOption) => option.label;
+        (option: IDropdownOption | IDropdownOption[]) => Array.isArray(option)
+            ? option.map(opt => opt.label).join(', ')
+            : option.label;
 
     /**
      * Live announcer sort ascending notification.

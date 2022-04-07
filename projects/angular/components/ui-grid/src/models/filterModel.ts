@@ -20,7 +20,7 @@ export interface IFilterModel<T> {
      * The current filter value.
      *
      */
-    value: string | number | Date | boolean | [] | undefined | null;
+    value: FilterValue | FilterValue[] | [] | undefined | null;
     /**
      * Type metadata.
      *
@@ -29,3 +29,5 @@ export interface IFilterModel<T> {
      */
     type?: string;
 }
+
+export type FilterValue = string | number | Date | boolean;

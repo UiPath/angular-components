@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -42,6 +43,7 @@ import { UiGridComponent } from './ui-grid.component';
         MatSelectModule,
         MatTooltipModule,
         MatProgressBarModule,
+        MatListModule,
         ScrollingModule,
         UiGridSearchModule,
         UiGridToggleColumnsModule,

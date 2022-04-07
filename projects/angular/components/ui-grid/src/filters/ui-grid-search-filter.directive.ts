@@ -66,7 +66,7 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> imp
      *
      */
     @Input()
-    value?: ISuggestValue;
+    value?: ISuggestValue | ISuggestValue[];
 
     /**
      * Wether the filter should be rendered in the grid.
@@ -85,7 +85,7 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> imp
      * Updates the dropdown option.
      *
      */
-    updateValue(value?: ISuggestValue) {
+    updateValue(value?: ISuggestValue | ISuggestValue[]) {
         this.value = value;
     }
 

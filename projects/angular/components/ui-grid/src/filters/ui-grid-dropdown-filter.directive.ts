@@ -59,7 +59,7 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
      *
      */
     @Input()
-    value?: IDropdownOption;
+    value?: IDropdownOption | IDropdownOption[];
 
     /**
      * The empty dropdown state.
@@ -84,7 +84,7 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
      * Updates the dropdown value.
      *
      */
-    updateValue(value?: IDropdownOption) {
+    updateValue(value?: IDropdownOption | IDropdownOption[]) {
         this.value = value;
     }
 

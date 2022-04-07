@@ -56,6 +56,8 @@ import {
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
 
+import { IDropdownOption } from '@uipath/angular/components/ui-grid';
+import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
 import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
@@ -848,6 +850,20 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
         this.selectionManager.deselect(...rowsForDeselection.filter(row => this.selectionManager.isSelected(row)));
 
         this._cd.detectChanges();
+    }
+
+    getFilterValue(value: ISuggestValue | ISuggestValue[] | undefined) {
+        return value
+            ? Array.isArray(value)
+                ? value
+                : [value]
+            : [];
+    }
+
+    isDropdownItemActive(values: IDropdownOption | IDropdownOption[] | undefined, currentItem: string) {
+        return Array.isArray(values)
+            ? values.some(value => value.label === currentItem)
+            : values?.label === currentItem;
     }
 
     /**

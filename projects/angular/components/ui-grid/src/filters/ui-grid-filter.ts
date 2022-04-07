@@ -23,8 +23,14 @@ export abstract class UiGridFilterDirective<T> implements OnDestroy {
     @Input()
     method?: string;
 
+    @Input()
+    multipleOperator?: 'AND' | 'OR';
+
+    @Input()
+    multiple?: boolean;
+
     @Output()
-    filterChange = new EventEmitter<IFilterModel<T> | null>();
+    filterChange = new EventEmitter<IFilterModel<T> | IFilterModel<T>[] | null>();
 
     ngOnDestroy() {
         this.filterChange.complete();
