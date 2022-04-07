@@ -56,8 +56,8 @@ import {
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
 
-import { IDropdownOption } from '@uipath/angular/components/ui-grid';
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
+import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
 import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
