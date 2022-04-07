@@ -8,9 +8,12 @@ import { MockData } from 'projects/playground/src/app/pages/grid/grid.page';
 import {
     BehaviorSubject,
     combineLatest,
+    Observable,
+    of,
     Subject,
 } from 'rxjs';
 import {
+    map,
     startWith,
     takeUntil,
 } from 'rxjs/operators';
@@ -29,6 +32,7 @@ import {
     PageChangeEvent,
     UiGridComponent,
 } from '@uipath/angular/components/ui-grid';
+import { ISuggestValues } from '@uipath/angular/components/ui-suggest';
 
 // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
@@ -111,6 +115,20 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.visibleColumnsToggled.emit(opened);
             });
     }
+
+    nameSuggest: (searchTerm?: string, fetchSize?: number, skip?: number) => Observable<ISuggestValues<any>> =
+        (searchTerm = '', fetchSize = 5, skip = 0) =>
+            of(this.allData).pipe(
+                map(values => values.filter(value => value.name.includes(searchTerm))),
+                // map(values => values.slice(0, fetchSize > values.length ? values.length : fetchSize)),
+                map(values => ({
+                    data: values.map(({ id, name }) => ({
+                        id,
+                        text: name,
+                    })).slice(skip, skip + fetchSize),
+                    total: values.length,
+                })),
+            );
 
     paginateData(data: MockData[], pageIndex: number, pageSize: number) {
         this.data$.next(data.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize));
