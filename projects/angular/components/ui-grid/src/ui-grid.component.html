@@ -11,68 +11,73 @@
             header?.search ||
             (isAnyFilterDefined$ | async)"
      class="ui-grid-filter-container">
-    <ng-container *ngIf="useLegacyDesign">
-        <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
-    </ng-container>
+    <div class="ui-grid-filter-container-lhs-group">
+        <div class="ui-grid-filter-container-lhs-group-actions">
+            <ng-container *ngIf="useLegacyDesign">
+                <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
+            </ng-container>
 
-    <ng-container *ngIf="!(hasSelection$ | async) ||
-                   !header?.actionButtons?.length">
-        <ui-grid-search *ngIf="header?.search"
-                        [debounce]="header!.searchDebounce"
-                        [maxLength]="header!.searchMaxLength"
-                        [placeholder]="intl.searchPlaceholder"
-                        [searchTooltip]="intl.searchTooltip"
-                        [clearTooltip]="intl.clearTooltip"
-                        [tooltipDisabled]="resizeManager.isResizing"
-                        [value]="header!.searchValue!"
-                        (searchChange)="filterManager.searchChange($event, header!)"
-                        class="ui-grid-search ui-grid-filter-option">
-        </ui-grid-search>
+            <ng-container *ngIf="!(hasSelection$ | async) ||
+                       !header?.actionButtons?.length">
+                <ui-grid-search *ngIf="header?.search"
+                                [debounce]="header!.searchDebounce"
+                                [maxLength]="header!.searchMaxLength"
+                                [placeholder]="intl.searchPlaceholder"
+                                [searchTooltip]="intl.searchTooltip"
+                                [clearTooltip]="intl.clearTooltip"
+                                [tooltipDisabled]="resizeManager.isResizing"
+                                [value]="header!.searchValue!"
+                                (searchChange)="filterManager.searchChange($event, header!)"
+                                class="ui-grid-search ui-grid-filter-option">
+                </ui-grid-search>
 
-        <ng-container *ngIf="!useLegacyDesign">
-            <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
-        </ng-container>
+                <ng-container *ngIf="!useLegacyDesign">
+                    <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
+                </ng-container>
 
-        <ng-container *ngTemplateOutlet="filtersTmpl">
-        </ng-container>
-    </ng-container>
-
-    <div *ngIf="!(hasSelection$ | async)"
-         class="ui-grid-action-buttons ui-grid-action-buttons-inline">
-        <ng-container *ngFor="let button of header?.inlineButtons">
-            <ng-container *ngIf="button.visible">
-                <ng-container *ngTemplateOutlet="button.html ?? null">
+                <ng-container *ngTemplateOutlet="filtersTmpl">
                 </ng-container>
             </ng-container>
-        </ng-container>
+
+            <div *ngIf="!(hasSelection$ | async)"
+                 class="ui-grid-action-buttons ui-grid-action-buttons-inline">
+                <ng-container *ngFor="let button of header?.inlineButtons">
+                    <ng-container *ngIf="button.visible">
+                        <ng-container *ngTemplateOutlet="button.html ?? null">
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </div>
+
+            <div #gridActionButtons
+                 *ngIf="hasSelection$ | async"
+                 class="ui-grid-action-buttons ui-grid-action-buttons-selection">
+                <ng-container *ngFor="let button of header?.actionButtons">
+                    <ng-container *ngIf="button.visible">
+                        <ng-container *ngTemplateOutlet="button.html?? null">
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+        <div *ngIf="showFilters && (hasAnyFiltersVisible$ | async)"
+             [@filters-container]
+             class="ui-grid-filter-container-lhs-group-filters">
+            <ng-container *ngTemplateOutlet="inlineFiltersTmpl"></ng-container>
+        </div>
     </div>
 
-    <div #gridActionButtons
-         *ngIf="hasSelection$ | async"
-         class="ui-grid-action-buttons ui-grid-action-buttons-selection">
-        <ng-container *ngFor="let button of header?.actionButtons">
-            <ng-container *ngIf="button.visible">
-                <ng-container *ngTemplateOutlet="button.html?? null">
+    <div class="ui-grid-filter-container-rhs-group">
+        <div *ngIf="!useLegacyDesign || header?.mainButtons?.length ?? 0 > 1"
+             class="ui-grid-action-buttons ui-grid-action-buttons-main">
+            <ng-container *ngFor="let button of header?.mainButtons">
+                <ng-container *ngIf="button.visible">
+                    <ng-container *ngTemplateOutlet="button.html ?? null">
+                    </ng-container>
                 </ng-container>
             </ng-container>
-        </ng-container>
+        </div>
     </div>
-
-    <div *ngIf="!useLegacyDesign || header?.mainButtons?.length ?? 0 > 1"
-         class="ui-grid-action-buttons ui-grid-action-buttons-main">
-        <ng-container *ngFor="let button of header?.mainButtons">
-            <ng-container *ngIf="button.visible">
-                <ng-container *ngTemplateOutlet="button.html ?? null">
-                </ng-container>
-            </ng-container>
-        </ng-container>
-    </div>
-</div>
-
-<div *ngIf="showFilters && (hasAnyFiltersVisible$ | async)"
-     [@filters-container]
-     class="ui-grid-filter-container">
-    <ng-container *ngTemplateOutlet="inlineFiltersTmpl"></ng-container>
 </div>
 
 <ng-container *ngIf="!useLegacyDesign && multiPageSelect then multiPageSelectionRow">
