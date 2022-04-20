@@ -573,6 +573,9 @@ class SuggestUtils<T> {
             .innerText
             .trim();
     };
+
+    public clear = (selector: string) =>
+        this._utils.getNativeElement(`${selector} [role=button].mat-icon`)?.dispatchEvent(EventGenerator.click);
 }
 
 class KVPUtils<T> {
