@@ -15,19 +15,19 @@
         <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
     </ng-container>
 
-    <ng-container *ngIf="!(hasSelection$ | async) ||
-                   !header?.actionButtons?.length">
-        <ui-grid-search *ngIf="header?.search"
-                        [debounce]="header!.searchDebounce"
-                        [maxLength]="header!.searchMaxLength"
-                        [placeholder]="intl.searchPlaceholder"
-                        [searchTooltip]="intl.searchTooltip"
-                        [clearTooltip]="intl.clearTooltip"
-                        [tooltipDisabled]="resizeManager.isResizing"
-                        [value]="header!.searchValue"
-                        (searchChange)="filterManager.searchChange($event, header!)"
-                        class="ui-grid-search ui-grid-filter-option">
-        </ui-grid-search>
+        <ng-container *ngIf="!(hasSelection$ | async) ||
+                    !header?.actionButtons?.length">
+            <ui-grid-search *ngIf="header?.search"
+                            [debounce]="header!.searchDebounce"
+                            [maxLength]="header!.searchMaxLength"
+                            [placeholder]="intl.searchPlaceholder"
+                            [searchTooltip]="intl.searchTooltip"
+                            [clearTooltip]="intl.clearTooltip"
+                            [tooltipDisabled]="resizeManager.isResizing"
+                            [value]="header!.searchValue!"
+                            (searchChange)="filterManager.searchChange($event, header!, footer)"
+                            class="ui-grid-search ui-grid-filter-option">
+            </ui-grid-search>
 
         <ng-container *ngIf="!useLegacyDesign">
             <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>

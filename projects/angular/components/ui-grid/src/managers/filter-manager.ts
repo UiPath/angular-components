@@ -18,6 +18,7 @@ import {
 import {
     UiGridSearchFilterDirective,
 } from '../filters/ui-grid-search-filter.directive';
+import { UiGridFooterDirective } from '../footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from '../header/ui-grid-header.directive';
 import { IFilterModel } from '../models';
 
@@ -83,7 +84,8 @@ export class FilterManager<T> {
     dropdownUpdate = (column?: UiGridColumnDirective<T>, value?: IDropdownOption) =>
         this._updateFilterValue(column, value, this._mapDropdownItem);
 
-    searchChange(term: string | undefined, header: UiGridHeaderDirective<T>) {
+    searchChange(term: string | undefined, header: UiGridHeaderDirective<T>, footer?: UiGridFooterDirective) {
+        if (term === header.searchValue) { return; }
         const searchFilterCollection: IFilterModel<T>[] = term ?
             this._columns
                 .filter(column => column.searchable)
@@ -97,6 +99,12 @@ export class FilterManager<T> {
         header.searchValue = term;
         header.searchTerm.emit(term);
         header.searchFilter.emit(searchFilterCollection);
+        if (footer?.state.pageIndex) {
+            footer.pageChange.emit({
+                pageIndex: 0,
+                pageSize: footer.state.pageSize,
+            });
+        }
     }
 
     private _updateFilterValue = (
