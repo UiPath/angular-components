@@ -8,9 +8,9 @@ import {
     map,
 } from 'rxjs/operators';
 
-import { UiGridFooterDirective } from '@uipath/angular/components/ui-grid';
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
+import { UiGridFooterDirective } from '../../src/footer/ui-grid-footer.directive';
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import {
     IDropdownOption,
@@ -96,12 +96,10 @@ export class FilterManager<T> {
         header.searchValue = term;
         header.searchTerm.emit(term);
         header.searchFilter.emit(searchFilterCollection);
-        if (footer) {
-            footer.pageChange.emit({
-                pageIndex: 0,
-                pageSize: footer.state.pageSize,
-            });
-        }
+        footer?.pageChange.emit({
+            pageIndex: 0,
+            pageSize: footer.state.pageSize,
+        });
     }
 
     private _updateFilterValue = (

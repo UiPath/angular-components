@@ -9,6 +9,7 @@ import {
     toArray,
 } from 'rxjs/operators';
 
+import { UiGridFooterDirective } from '@uipath/angular/components/ui-grid';
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
@@ -140,6 +141,18 @@ describe('Component: UiGrid', () => {
                         });
 
                     manager.searchChange(searchTerm, header);
+                });
+
+                it('should set page index to 0', (done) => {
+                const footer = new UiGridFooterDirective();
+                    footer.pageChange
+                        .pipe(
+                            first(),
+                            finalize(done),
+                        )
+                        .subscribe((pageChange) => expect(pageChange.pageIndex).toEqual(0));
+
+                    manager.searchChange(searchTerm, header, footer);
                 });
             });
 
