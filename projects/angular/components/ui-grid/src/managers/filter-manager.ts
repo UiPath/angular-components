@@ -8,6 +8,7 @@ import {
     map,
 } from 'rxjs/operators';
 
+import { UiGridFooterDirective } from '@uipath/angular/components/ui-grid';
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
@@ -81,7 +82,7 @@ export class FilterManager<T> {
     dropdownUpdate = (column?: UiGridColumnDirective<T>, value?: IDropdownOption) =>
         this._updateFilterValue(column, value, this._mapDropdownItem);
 
-    searchChange(term: string | undefined, header: UiGridHeaderDirective<T>) {
+    searchChange(term: string | undefined, header: UiGridHeaderDirective<T>, footer?: UiGridFooterDirective) {
         const searchFilterCollection: IFilterModel<T>[] = term ?
             this._columns
                 .filter(column => column.searchable)
@@ -95,6 +96,12 @@ export class FilterManager<T> {
         header.searchValue = term;
         header.searchTerm.emit(term);
         header.searchFilter.emit(searchFilterCollection);
+        if (footer) {
+            footer.pageChange.emit({
+                pageIndex: 0,
+                pageSize: footer.state.pageSize,
+            });
+        }
     }
 
     private _updateFilterValue = (
