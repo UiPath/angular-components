@@ -1,3 +1,6 @@
+# v13.2.3 (2022-04-26)
+* **grid** update header elements rendering order
+
 # v13.2.2 (2022-03-17)
 * **grid** change column icon and divider height
 * **suggest** results remove italics
