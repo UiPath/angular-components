@@ -131,6 +131,8 @@
                          [style.width.%]="column.width"
                          (keyup.enter)="sortManager.changeSort(column)"
                          (keyup.space)="sortManager.changeSort(column)"
+                         (keydown.ArrowLeft)="!last && resizeManager.startKeyboardResize('left', column)"
+                         (keydown.ArrowRight)="!last && resizeManager.startKeyboardResize('right', column)"
                          class="ui-grid-header-cell"
                          role="columnheader"
                          tabindex="0">

@@ -2,6 +2,7 @@ import toArray from 'lodash-es/toArray';
 import {
     animationFrameScheduler,
     fromEvent,
+    interval,
     merge,
     Subject,
 } from 'rxjs';
@@ -150,6 +151,49 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
                 takeUntil(this._stopped$),
             )
             .subscribe(moveEv => this.handleResize(moveEv));
+
+        // detection is required in order to update cell resize state
+        // eslint-disable-next-line no-underscore-dangle
+        (this._grid as any)._cd.detectChanges();
+        // eslint-disable-next-line no-underscore-dangle
+        (this._grid as any)._cd.detach();
+    }
+
+    startKeyboardResize(direction: 'left' | 'right', column: UiGridColumnDirective<T>) {
+        if (this.isResizing) { return; }
+
+        const columnElement = document.querySelector(`[data-property=${column.property}]`);
+        const { x, width } = columnElement!.getBoundingClientRect()!;
+        let currentX = x + width;
+        const maxSpeed = 50;
+        const directionFactor = direction === 'left' ? -1 : 1;
+        const eventFrequency = 16;
+        const step = 0.5;
+        let speed = 1;
+
+        this.isResizing = true;
+        // hook events
+        this.setupState({ clientX: currentX } as any, column);
+
+        const defaultView = this._gridElement.ownerDocument!.defaultView!;
+
+        const keyUp$ = fromEvent(defaultView, 'keyup')
+            .pipe(
+                take(1),
+                takeUntil(this._stopped$),
+            );
+
+        keyUp$.subscribe(() => this.stop());
+
+        interval(eventFrequency)
+            .pipe(
+                takeUntil(this._stopped$),
+            )
+            .subscribe(() => {
+                speed = Math.min(speed + step, maxSpeed);
+                currentX += speed * directionFactor;
+                this.handleResize({ clientX: currentX } as MouseEvent);
+            });
 
         // detection is required in order to update cell resize state
         // eslint-disable-next-line no-underscore-dangle
