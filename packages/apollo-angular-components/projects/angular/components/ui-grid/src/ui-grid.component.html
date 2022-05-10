@@ -27,7 +27,7 @@
                                 [clearTooltip]="intl.clearTooltip"
                                 [tooltipDisabled]="resizeManager.isResizing"
                                 [value]="header!.searchValue!"
-                                (searchChange)="filterManager.searchChange($event, header!)"
+                                (searchChange)="filterManager.searchChange($event, header!, footer)"
                                 class="ui-grid-search ui-grid-filter-option">
                 </ui-grid-search>
 
