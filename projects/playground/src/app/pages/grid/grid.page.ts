@@ -9,7 +9,10 @@ import {
 } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { Component } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+} from '@angular/core';
 import {
     FormBuilder,
     FormGroup,
@@ -29,7 +32,7 @@ export interface MockData {
     templateUrl: './grid.page.html',
     styleUrls: ['./grid.page.scss'],
 })
-export class GridPageComponent {
+export class GridPageComponent implements AfterViewInit {
     allData: MockData[] = [];
     data$ = new BehaviorSubject<MockData[]>([]);
     lastPageChange?: PageEvent;
@@ -111,6 +114,10 @@ export class GridPageComponent {
                 pageSize: [this.footer.pageSize, [Validators.min(0), Validators.max(1000)]],
             }),
         });
+    }
+
+    ngAfterViewInit(): void {
+        this.generateGrid();
     }
 
     generateData({ totalData, pageSize }: { totalData: number; pageSize: number }) {

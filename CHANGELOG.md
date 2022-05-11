@@ -1,3 +1,11 @@
+# v13.3.0 (2022-05-11)
+* **grid** add tests
+* **grid** add keyboard column resize
+* **suggest** add auto-accessible-label module
+* **grid** add test
+* **grid** reset page after search
+* **grid** update header elements rendering order
+
 # v13.2.3 (2022-04-26)
 * **grid** update header elements rendering order
 

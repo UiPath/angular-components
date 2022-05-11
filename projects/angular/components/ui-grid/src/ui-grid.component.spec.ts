@@ -234,6 +234,54 @@ describe('Component: UiGrid', () => {
 
                     expect(resizeEmissions).toBe(2);
                 }));
+
+                it('should resize column on key press', fakeAsync(() => {
+                    const col = document.querySelector('div[role="columnheader"]')!;
+                    const initialWidth = col!.getBoundingClientRect()!.width;
+                    col.dispatchEvent(EventGenerator.keyDown(Key.ArrowRight));
+                    fixture.detectChanges();
+                    tick(50);
+                    col.dispatchEvent(EventGenerator.keyUp(Key.ArrowRight));
+
+                    const newWidth = col!.getBoundingClientRect()!.width;
+                    expect(newWidth).toBeGreaterThan(initialWidth);
+
+                    discardPeriodicTasks();
+                }));
+
+                it('should not resize last grid column on key press', fakeAsync(() => {
+                    const columns = document.querySelectorAll('div[role="columnheader"]')!;
+                    const lastColumn = columns[columns.length - 1];
+                    const initialWidth = lastColumn!.getBoundingClientRect()!.width;
+                    lastColumn.dispatchEvent(EventGenerator.keyDown(Key.ArrowRight));
+                    fixture.detectChanges();
+                    tick(50);
+                    lastColumn.dispatchEvent(EventGenerator.keyUp(Key.ArrowRight));
+
+                    const newWidth = lastColumn!.getBoundingClientRect()!.width;
+                    expect(newWidth).toEqual(initialWidth);
+
+                    discardPeriodicTasks();
+                }));
+
+                it('should keep the same total width for 2 neighbored columns after resizing one', fakeAsync(() => {
+                    const col1 = document.querySelectorAll('div[role="columnheader"]')![0];
+                    const col2 = document.querySelectorAll('div[role="columnheader"]')![1];
+
+                    const initialCol1Width = col1!.getBoundingClientRect()!.width;
+                    const initialCol2Width = col2!.getBoundingClientRect()!.width;
+
+                    col1.dispatchEvent(EventGenerator.keyDown(Key.ArrowRight));
+                    fixture.detectChanges();
+                    tick(50);
+                    col1.dispatchEvent(EventGenerator.keyUp(Key.ArrowRight));
+
+                    const newCol1Width = col1!.getBoundingClientRect()!.width;
+                    const newCol2Width = col2!.getBoundingClientRect()!.width;
+                    expect(newCol1Width).toBeGreaterThan(newCol2Width);
+                    expect(Math.round(initialCol1Width + initialCol2Width)).toEqual(Math.round(newCol1Width + newCol2Width));
+                    discardPeriodicTasks();
+                }));
             });
 
             describe('State: populated', () => {
