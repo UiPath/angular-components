@@ -1,3 +1,6 @@
+# v13.3.1 (2022-05-11)
+* **grid** set proper import path
+
 # v13.3.0 (2022-05-11)
 * **grid** add tests
 * **grid** add keyboard column resize
