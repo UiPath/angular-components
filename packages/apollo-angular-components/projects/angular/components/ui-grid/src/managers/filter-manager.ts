@@ -10,13 +10,13 @@ import {
 
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
-import { UiGridFooterDirective } from '../../src/footer/ui-grid-footer.directive';
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import {
     IDropdownOption,
     UiGridDropdownFilterDirective,
 } from '../filters/ui-grid-dropdown-filter.directive';
 import { UiGridSearchFilterDirective } from '../filters/ui-grid-search-filter.directive';
+import { UiGridFooterDirective } from '../footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from '../header/ui-grid-header.directive';
 import { IFilterModel } from '../models';
 
