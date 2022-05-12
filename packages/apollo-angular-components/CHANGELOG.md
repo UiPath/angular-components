@@ -1,3 +1,6 @@
+# v13.3.2 (2022-05-12)
+* **grid** set first page when page index exists
+
 # v13.3.1 (2022-05-11)
 * **grid** set proper import path
 

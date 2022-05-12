@@ -145,6 +145,7 @@ describe('Component: UiGrid', () => {
 
                 it('should set page index to 0', (done) => {
                 const footer = new UiGridFooterDirective();
+                footer.state.pageIndex = 2;
                     footer.pageChange
                         .pipe(
                             first(),
