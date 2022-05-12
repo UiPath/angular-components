@@ -96,10 +96,12 @@ export class FilterManager<T> {
         header.searchValue = term;
         header.searchTerm.emit(term);
         header.searchFilter.emit(searchFilterCollection);
-        footer?.pageChange.emit({
-            pageIndex: 0,
-            pageSize: footer.state.pageSize,
-        });
+        if (footer?.state.pageIndex) {
+            footer.pageChange.emit({
+                pageIndex: 0,
+                pageSize: footer.state.pageSize,
+            });
+        }
     }
 
     private _updateFilterValue = (
