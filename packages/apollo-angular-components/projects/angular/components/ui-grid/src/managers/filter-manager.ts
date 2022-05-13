@@ -83,6 +83,7 @@ export class FilterManager<T> {
         this._updateFilterValue(column, value, this._mapDropdownItem);
 
     searchChange(term: string | undefined, header: UiGridHeaderDirective<T>, footer?: UiGridFooterDirective) {
+        if (term === header.searchValue) { return; }
         const searchFilterCollection: IFilterModel<T>[] = term ?
             this._columns
                 .filter(column => column.searchable)
