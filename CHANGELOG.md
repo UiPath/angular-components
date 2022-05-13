@@ -1,3 +1,8 @@
+# v13.3.3 (2022-05-13)
+* **grid** update tests for page index reset
+* **grid** do not reset page index for same search value
+* **grid** set page index in tests
+
 # v13.3.2 (2022-05-12)
 * **grid** set first page when page index exists
 
