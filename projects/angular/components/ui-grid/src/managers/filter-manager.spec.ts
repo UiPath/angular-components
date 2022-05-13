@@ -89,11 +89,6 @@ describe('Component: UiGrid', () => {
 
             describe('Event: search change', () => {
                 const header = new UiGridHeaderDirective<ITestEntity>();
-                let searchTerm: string;
-
-                beforeEach(() => {
-                    searchTerm = faker.company.bs();
-                });
 
                 it('should emit filters for searchable columns only', (done) => {
                     header.searchFilter
@@ -103,7 +98,7 @@ describe('Component: UiGrid', () => {
                         )
                         .subscribe(filters => expect(filters.length).toEqual(columns.filter(c => c.searchable).length));
 
-                    manager.searchChange(searchTerm, header);
+                    manager.searchChange('a', header);
                 });
 
                 it('should emit the search term via the header subject', (done) => {
@@ -113,10 +108,10 @@ describe('Component: UiGrid', () => {
                             finalize(done),
                         )
                         .subscribe(term => {
-                            expect(term).toEqual(searchTerm);
+                            expect(term).toEqual('b');
                         });
 
-                    manager.searchChange(searchTerm, header);
+                    manager.searchChange('b', header);
                 });
 
                 it('should emit the filter collection via the header subject', (done) => {
@@ -140,11 +135,21 @@ describe('Component: UiGrid', () => {
                             });
                         });
 
-                    manager.searchChange(searchTerm, header);
+                    manager.searchChange('c', header);
                 });
 
-                it('should set page index to 0', (done) => {
+                it('should not set page index to 0 for same search term', () => {
+                const footer = new UiGridFooterDirective();
+                const footerEmitSpy = spyOn(footer.pageChange, 'emit');
+                    manager.searchChange('d', header, footer);
+                    expect(footerEmitSpy).toHaveBeenCalledTimes(0);
+                });
+
+                it('should set page index to 0 for different search term', (done) => {
                     const footer = new UiGridFooterDirective();
+                    footer.state.pageIndex = 2;
+                    const footerEmitSpy = spyOn(footer.pageChange, 'emit').and.callThrough();
+
                         footer.pageChange
                             .pipe(
                                 first(),
@@ -152,7 +157,8 @@ describe('Component: UiGrid', () => {
                             )
                             .subscribe((pageChange) => expect(pageChange.pageIndex).toEqual(0));
 
-                        manager.searchChange(searchTerm, header, footer);
+                        manager.searchChange('e', header, footer);
+                        expect(footerEmitSpy).toHaveBeenCalledTimes(1);
                     });
             });
 
