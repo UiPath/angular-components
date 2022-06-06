@@ -82,6 +82,7 @@ class UiSuggestFixtureDirective {
     readonly?: boolean;
     enableCustomValue?: boolean;
     items?: ISuggestValue[];
+    headerItems?: ISuggestValue[];
     displayTemplateValue?: boolean;
     direction: 'up' | 'down' = 'down';
     displayPriority: 'default' | 'selected' = 'default';
@@ -287,14 +288,14 @@ const sharedSpecifications = (
             expect(itemListEntries.length).toEqual(0);
         });
 
-        it('should render the list open and not close on selection if alwaysExpanded is true', (async () => {
+        it('should render the list open and not close on selection if alwaysExpanded is true', (fakeAsync(() => {
             const items = generateSuggetionItemList(10);
 
             component.alwaysExpanded = true;
             component.items = items;
 
             fixture.detectChanges();
-            await fixture.whenStable();
+            tick(400);
 
             const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
 
@@ -308,10 +309,11 @@ const sharedSpecifications = (
 
             currentListItem.nativeElement.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
+            tick(400);
 
             expect(itemListEntries).not.toBeNull();
             expect(itemListEntries.length).toEqual(items.length);
-        }));
+        })));
 
         it('should filter items if typed into', (done) => {
             let items = generateSuggetionItemList(40);
@@ -1321,6 +1323,76 @@ const sharedSpecifications = (
         });
     });
 
+    describe('Behavior: headerItems', () => {
+        it('should not work with custom value enabled', () => {
+            const error = new Error('enableCustomValue and headerItems are mutually exclusive options');
+            component.enableCustomValue = true;
+
+            expect(() => {
+                component.headerItems = generateSuggetionItemList(5);
+                fixture.detectChanges();
+            }).toThrow(error);
+        });
+
+        it('should not work with custom direction up', () => {
+            const error = new Error('direction up is not supported when used in conjunction with headerItems');
+            component.direction = 'up';
+
+            expect(() => {
+                component.headerItems = generateSuggetionItemList(5);
+                fixture.detectChanges();
+            }).toThrow(error);
+        });
+
+        it('should display header items & fetched data in list', fakeAsync(() => {
+            const items = generateSuggetionItemList(10);
+            const headerItems = items.slice(0, 5);
+            const regularItems = items.slice(5, 10);
+
+            component.alwaysExpanded = true;
+            component.items = regularItems;
+            component.headerItems = headerItems;
+
+            fixture.detectChanges();
+            tick(1000);
+
+            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+
+            expect(itemListEntries).not.toBeNull();
+            expect(itemListEntries.length).toEqual(items.length);
+            itemListEntries.forEach((entry, idx) => {
+                expect(entry.nativeElement.innerText).toBe(items[idx].text);
+            });
+        }));
+
+        it('should hide elements on search', fakeAsync(() => {
+            const items = generateSuggetionItemList(10, 'Item');
+            const headerItems = items.slice(0, 5);
+            const regularItems = items.slice(5, 10);
+
+            component.alwaysExpanded = true;
+            component.items = regularItems;
+            component.headerItems = headerItems;
+            component.searchable = true;
+
+            fixture.detectChanges();
+            tick(1000);
+
+            searchFor('Item', fixture);
+
+            fixture.detectChanges();
+            tick(1000);
+
+            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+
+            expect(itemListEntries).not.toBeNull();
+            expect(itemListEntries.length).toEqual(regularItems.length);
+            itemListEntries.forEach((entry, idx) => {
+                expect(entry.nativeElement.innerText).toBe(regularItems[idx].text);
+            });
+        }));
+    });
+
     describe('Selection: single value', () => {
         it('should have one list item entry for each item provided', waitForAsync(async () => {
             fixture.detectChanges();
@@ -2324,6 +2396,7 @@ describe('Component: UiSuggest', () => {
                         [searchable]="searchable"
                         [enableCustomValue]="enableCustomValue"
                         [alwaysExpanded]="alwaysExpanded"
+                        [headerItems]="headerItems"
                         [items]="items"
                         [value]="value"
                         [direction]="direction"
@@ -2403,6 +2476,7 @@ describe('Component: UiSuggest', () => {
                             [clearable]="clearable"
                             [searchable]="searchable"
                             [enableCustomValue]="enableCustomValue"
+                            [headerItems]="headerItems"
                             [alwaysExpanded]="alwaysExpanded"
                             [items]="items"
                             [direction]="direction"
@@ -2592,6 +2666,7 @@ describe('Component: UiSuggest', () => {
                             [searchable]="searchable"
                             [enableCustomValue]="enableCustomValue"
                             [alwaysExpanded]="alwaysExpanded"
+                            [headerItems]="headerItems"
                             [items]="items"
                             [value]="value"
                             [direction]="direction"
