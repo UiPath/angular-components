@@ -188,6 +188,30 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     ignoreOpenOnFetch = false;
 
     /**
+     * A list of options that will be presented at the top of the list.
+     *
+     */
+    @Input()
+    get headerItems() {
+        return this.loading$.value || !!this.inputControl.value.trim()
+            ? []
+            : this._headerItems;
+    }
+    set headerItems(value: ISuggestValue[] | null) {
+        if (!value || isEqual(value, this._headerItems)) { return; }
+
+        if (this.enableCustomValue) {
+            throw new Error('enableCustomValue and headerItems are mutually exclusive options');
+        }
+
+        this._headerItems = this._sortItems(value)
+            .map(r => ({
+                ...r,
+                loading: VirtualScrollItemStatus.loaded,
+            }));
+    }
+
+    /**
      * If true, the item list will render open and will not close on selection
      *
      */
@@ -222,7 +246,6 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         return this._items;
     }
     set items(items: ISuggestValue[]) {
-
         if (!items || isEqual(items, this._items)) { return; }
 
         this._lastSetItems = cloneDeep(items);
@@ -309,6 +332,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         return !this.multiple || !this._value.some(v => v.text === this.inputControl.value);
     }
 
+    get isCustomHeaderItemsVisible(): boolean {
+        return !(this.loading$.value || !this.headerItems!.length);
+    }
+
     /**
      * Retrieves the currently `rendered` items.
      *
@@ -325,6 +352,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     /**
      * Configure if the user is allowed to select `custom values`.
      *
+     * @deprecated
      */
     @Input()
     get enableCustomValue() {
@@ -372,13 +400,20 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     get viewportMaxHeight() {
         if (!this.isOpen) { return 0; }
 
-        const actualCount = Math.max(this.renderItems.filter(Boolean).length + Number(this.isCustomValueVisible), 1);
+        const actualCount = Math.max(
+            this.renderItems.filter(Boolean).length + (this.headerItems!.length ?? Number(this.isCustomValueVisible)),
+            1,
+        );
         const displayedCount = Math.min(this.displayCount, actualCount);
 
-        return this.itemSize * displayedCount;
+        return this.itemSize * displayedCount + Number(!!this.headerItems!.length);
     }
 
     private get _isOnCustomValueIndex() {
+        if (this.headerItems!.length) {
+            return this.activeIndex < this.headerItems!.length;
+        }
+
         return this.enableCustomValue &&
             !!this.inputControl.value.trim() &&
             (
@@ -392,7 +427,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private get _itemUpperBound() {
-        return this.items.length + (this._hasCustomValue$.value && !this.isDown ? 0 : -1);
+        const headerItemsLength = this.headerItems!.length ?? 0;
+        const itemsLength = this.items.length + headerItemsLength;
+
+        return itemsLength + (this._hasCustomValue$.value && !this.isDown ? 0 : -1);
     }
 
     /**
@@ -580,6 +618,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     private _fetchStrategy$ = new BehaviorSubject<'eager' | 'onOpen'>('eager');
     private _isOpen$ = new BehaviorSubject(false);
 
+    private _headerItems: ISuggestValue[] = [];
     private _virtualScroller?: CdkVirtualScrollViewport;
     private _visibleRange = {
         start: Number.NEGATIVE_INFINITY,
@@ -725,6 +764,16 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     /**
+     * Computed index offset in items list when prepending header items
+     *
+     * @param index
+     * @returns
+     */
+    computedItemsOffset(index: number) {
+        return index + this.headerItems!.length;
+    }
+
+    /**
      * Is called every time a new range needs to be loaded.
      *
      * @ignore
@@ -806,15 +855,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             this.inputControl.setValue(value.text);
         }
 
-        const hasSingleSelectValue = !!value && !this.multiple;
+        this._setAndScrollToActiveIndex(value);
 
-        this._setActiveIndex(
-            hasSingleSelectValue ?
-                this._items.findIndex(({ id }) => id === value.id) :
-                -1,
-        );
-
-        this._scrollTo$.next(this.activeIndex);
         if (!this.loading$.value) {
             this._announceNavigate();
         }
@@ -829,7 +871,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (this.alwaysExpanded || !this.isOpen) { return; }
 
         if (
-            this._isOnCustomValueIndex &&
+            (this._isOnCustomValueIndex && !this.headerItems!.length) &&
             !this.loading$.value &&
             !this.multiple
         ) {
@@ -904,7 +946,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             value &&
             this.activeIndex === this._itemLowerBound - 1
         ) {
-            this.activeIndex = this._items.findIndex(v => v.id === value.id);
+            const headerItemIndex = this.headerItems!.findIndex(v => v.id === value.id);
+            this.activeIndex = headerItemIndex !== -1
+                ? headerItemIndex
+                : this.computedItemsOffset(this._items.findIndex(v => v.id === value.id));
         }
 
         this._safeCycleIncrement(increment);
@@ -921,7 +966,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     setSelectedItem() {
         if (this.loading$.value) { return; }
 
-        if (this._isOnCustomValueIndex) {
+        if (this._isOnCustomValueIndex && !this.headerItems!.length) {
             this.updateValue(this.inputControl.value.trim(), !this.multiple);
             return;
         }
@@ -937,7 +982,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      */
     isItemSelected(item?: ISuggestValue) {
         return !!item &&
-            !!this.value.find(v => v.id === item.id);
+            (!!this.value.find(v => v.id === item.id) ?? !!this.headerItems!.find(v => v.id === item.id));
     }
 
     /**
@@ -1062,7 +1107,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _selectActiveItem(closeAfterSelect: boolean) {
-        const item = this.items[this.activeIndex];
+        const item = this.headerItems![this.activeIndex] ?? this.items[this.activeIndex - this.headerItems!.length];
         if (!item) { return; }
 
         this.updateValue(item, closeAfterSelect);
@@ -1070,7 +1115,16 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _findItemIndex = (searchValue: string) =>
-        () => this._items.findIndex(({ text }) => caseInsensitiveCompare(text, searchValue));
+        () => {
+            const headerItemIndex = this.headerItems!.findIndex(({ text }) => caseInsensitiveCompare(text, searchValue));
+            const itemIndex = this._items.findIndex(({ text }) => caseInsensitiveCompare(text, searchValue));
+
+            return headerItemIndex !== -1
+                ? headerItemIndex
+                : itemIndex !== -1
+                    ? this.computedItemsOffset(itemIndex)
+                    : -1;
+        };
 
     private _safeCycleIncrement(increment: number) {
         let newIndex = this.activeIndex + increment;
@@ -1090,7 +1144,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
     private _checkCustomValue(searchValue: string) {
         return (itemIndex: number) => this.enableCustomValue &&
-            this._setHasCustomValue(!!searchValue && itemIndex === -1);
+            this._setHasCustomValue(!!searchValue && itemIndex === -1 || !!this.headerItems!.length);
     }
 
     private _setHasCustomValue(isCustomValue: boolean) {
@@ -1100,12 +1154,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
     private _virtualScrollTo = (index: number) => {
         const vs = this._virtualScroller;
+        const headerItemsOffset = this._headerItems.length;
         const customValueOffset = this._itemLowerBound;
 
         if (!vs ||
             (this.isDown
                 ? index !== 0
-                : index !== this._items.length - 1) &&
+                : index !== this._items.length + this.headerItems!.length - 1) &&
             index >= this._visibleRange.start + customValueOffset &&
             index < this._visibleRange.end + customValueOffset
         ) {
@@ -1117,7 +1172,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         const start = passedBottomBound
             ? index + 1 - customValueOffset - this.displayCount
-            : Math.max(Math.min(index, this.items.length - this.displayCount), 0);
+            : Math.max(Math.min(index, this.items.length + headerItemsOffset - this.displayCount), 0);
 
         const end = start + this.displayCount;
 
@@ -1134,7 +1189,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         if (
             end > this._itemUpperBound
-            && this.isCustomValueVisible
+            && (this.isCustomValueVisible || this.isCustomHeaderItemsVisible)
         ) {
             this._gotoBottomAsync(vs.elementRef.nativeElement);
         } else {
@@ -1154,9 +1209,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             return;
         }
         const textToAnnounce = !this._isOnCustomValueIndex
-            ? this.items[this.activeIndex].text
+            ? this.activeIndex < this.headerItems!.length
+                ? this.headerItems![this.activeIndex].text
+                : this.items[this.activeIndex - this.headerItems!.length].text
             : `${this.intl.customValueLiveLabel} ${this.customValueLabelTranslator(this.inputControl.value)}`;
-        this._liveAnnouncer.announce(this.intl.currentItemLabel(textToAnnounce, this.activeIndex + 1, this._items.length));
+
+        this._liveAnnouncer.announce(
+            this.intl.currentItemLabel(textToAnnounce, this.activeIndex + 1, this.headerItems!.length + this._items.length),
+        );
     }
 
     private _setLoadingState = () => !this.disabled && this.searchSourceFactory && this.loading$.next(true);
@@ -1190,6 +1250,20 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                 : this._itemUpperBound;
     };
 
+    private _setAndScrollToActiveIndex(value: ISuggestValue) {
+        const hasSingleSelectValue = !!value && !this.multiple;
+
+        this._setActiveIndex(
+            hasSingleSelectValue
+                ? this.headerItems!.length
+                    ? this.headerItems!.findIndex(({ id }) => id === value.id)
+                    : this.computedItemsOffset(this._items.findIndex(({ id }) => id === value.id))
+                : -1,
+        );
+
+        this._scrollTo$.next(this.activeIndex);
+    }
+
     private _scrollToFirst() {
         this._scrollTo$.next(this.isDown ?
             this._itemLowerBound
@@ -1205,7 +1279,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _pushEntry(entry: ISuggestValue) {
-        this._setActiveIndex(this._items.indexOf(entry));
+        const headerItemIndex = this.headerItems!.findIndex(val => val.id === entry.id);
+        this._setActiveIndex(
+            headerItemIndex !== -1
+                ? headerItemIndex
+                : this.computedItemsOffset(this._items.indexOf(entry)),
+        );
 
         if (this.multiple) {
             this.value.push(entry);
@@ -1233,11 +1312,11 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         }
 
         const fetchCount = end - start + 1;
-
         const mappedStart = this.isDown ? start : this._items.length - end - 1;
         const mappedEnd = this.isDown ? end : this._items.length - start - 1;
 
         setPendingState(this._items, mappedStart, mappedEnd);
+
         this.searchSourceFactory(this.inputControl.value.trim(), fetchCount, start)
             .pipe(
                 retry(1),
