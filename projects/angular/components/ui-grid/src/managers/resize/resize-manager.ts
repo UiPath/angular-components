@@ -162,7 +162,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     startKeyboardResize(direction: 'left' | 'right', column: UiGridColumnDirective<T>) {
         if (this.isResizing) { return; }
 
-        const columnElement = document.querySelector(`[data-property=${column.property}]`);
+        const columnElement = document.querySelector(`[data-property="${column.property}"]`);
         const { x, width } = columnElement!.getBoundingClientRect()!;
         let currentX = x + width;
         const maxSpeed = 50;
