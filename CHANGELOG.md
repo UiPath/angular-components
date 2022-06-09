@@ -1,3 +1,6 @@
+# v13.4.0 (2022-06-09)
+* **suggest** implement custom header slot
+
 # v13.3.3 (2022-05-13)
 * **grid** update tests for page index reset
 * **grid** do not reset page index for same search value
