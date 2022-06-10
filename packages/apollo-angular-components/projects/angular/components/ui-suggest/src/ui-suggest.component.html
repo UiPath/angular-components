@@ -231,52 +231,34 @@
             <ng-container *ngTemplateOutlet="customValueTemplate; context: { $implicit: 'down' }">
             </ng-container>
 
-            <ng-container
-                          *cdkVirtualFor="let item of renderItems; let index = index; trackBy: trackById; templateCacheSize: disableTooltip ? 20 : 0">
-                <mat-list-item *ngLet="drillDown && !!item?.expandable as itemExpandable"
-                               [class.active]="index === activeIndex"
-                               [class.is-loading]="item.loading !== VirtualScrollItemStatus.loaded"
-                               [class.readonly]="item.loading !== VirtualScrollItemStatus.loaded"
-                               [class.selected]="!!item &&
-                                                !multiple &&
-                                                isItemSelected(item)"
-                               [class.is-expandable]="itemExpandable"
-                               [style.height.px]="!!item ? itemSize : 0"
-                               (click)="preventDefault($event);
-                                        updateValue(item, !multiple, true);"
-                               [attr.role]="'option'"
-                               matRipple>
-                    <ng-container *ngIf="!!item">
-                        <ng-container *ngIf="itemTemplate; else defaultItem">
-                            <ng-container *ngTemplateOutlet="itemTemplate; context: {
-                                                                $implicit: item
-                                                            }">
-                            </ng-container>
-                        </ng-container>
-                    </ng-container>
-                    <ng-template #defaultItem>
-                        <div [matTooltip]="disableTooltip ? '' : intl.translateLabel(item.text)"
-                             [attr.data-item-id]="item.id"
-                             matTooltipPosition="right"
-                             class="ui-suggest-item">
-                            <mat-checkbox *ngIf="multiple"
-                                          [checked]="isItemSelected(item)"
-                                          [indeterminate]="false">
-                            </mat-checkbox>
-                            <div [attr.aria-label]="intl.translateLabel(item.text)"
-                                 class="text-label text-ellipsis"
-                                 tabindex="-1">
-                                <mat-icon *ngIf="!!item?.icon?.svgIcon"
-                                          [svgIcon]="item?.icon.svgIcon"></mat-icon>
-                                <mat-icon *ngIf="!!item?.icon?.matIcon">{{item?.icon.matIcon}}</mat-icon>
-                                <span class="text-label-rendered">{{ item?.icon?.iconOnly ? null :
-                                    intl.translateLabel(item.text) }}</span>
-                            </div>
-                            <mat-icon *ngIf="itemExpandable"
-                                      class="expand-icon">chevron_right</mat-icon>
-                        </div>
-                    </ng-template>
-                </mat-list-item>
+            <ng-container *ngFor="
+                            let item of headerItems;
+                            let index = index">
+                <ng-container *ngTemplateOutlet="
+                                defaultItemTemplate;
+                                context: {
+                                    item,
+                                    index,
+                                    isActiveIndex: index === activeIndex
+                                }">
+                </ng-container>
+            </ng-container>
+
+            <mat-divider *ngIf="headerItems!.length"></mat-divider>
+
+            <ng-container *cdkVirtualFor="
+                            let item of renderItems;
+                            let index = index;
+                            trackBy: trackById;
+                            templateCacheSize: disableTooltip ? 20 : 0">
+                <ng-container *ngTemplateOutlet="
+                              defaultItemTemplate;
+                              context: {
+                                  item,
+                                  index,
+                                  isActiveIndex: computedItemsOffset(index) === activeIndex
+                                }">
+                </ng-container>
             </ng-container>
 
             <ng-container *ngTemplateOutlet="customValueTemplate; context: { $implicit: 'up' }">
@@ -347,4 +329,54 @@
                   stroke-width="2.0011213" />
         </svg>
     </mat-icon>
+</ng-template>
+
+<ng-template #defaultItemTemplate
+             let-item="item"
+             let-index="index"
+             let-isActiveIndex="isActiveIndex">
+    <mat-list-item *ngLet="drillDown && !!item?.expandable as itemExpandable"
+                   [class.active]="isActiveIndex"
+                   [class.is-loading]="item.loading !== VirtualScrollItemStatus.loaded"
+                   [class.readonly]="item.loading !== VirtualScrollItemStatus.loaded"
+                   [class.selected]="!!item &&
+                                                !multiple &&
+                                                isItemSelected(item)"
+                   [class.is-expandable]="itemExpandable"
+                   [style.height.px]="!!item ? itemSize : 0"
+                   (click)="preventDefault($event);
+                                        updateValue(item, !multiple, true);"
+                   [attr.role]="'option'"
+                   matRipple>
+        <ng-container *ngIf="!!item">
+            <ng-container *ngIf="itemTemplate; else defaultItem">
+                <ng-container *ngTemplateOutlet="itemTemplate; context: {
+                                                                $implicit: item
+                                                            }">
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <ng-template #defaultItem>
+            <div [matTooltip]="disableTooltip ? '' : intl.translateLabel(item.text)"
+                 [attr.data-item-id]="item.id"
+                 matTooltipPosition="right"
+                 class="ui-suggest-item">
+                <mat-checkbox *ngIf="multiple"
+                              [checked]="isItemSelected(item)"
+                              [indeterminate]="false">
+                </mat-checkbox>
+                <div [attr.aria-label]="intl.translateLabel(item.text)"
+                     class="text-label text-ellipsis"
+                     tabindex="-1">
+                    <mat-icon *ngIf="!!item?.icon?.svgIcon"
+                              [svgIcon]="item!.icon!.svgIcon!"></mat-icon>
+                    <mat-icon *ngIf="!!item?.icon?.matIcon">{{item?.icon?.matIcon}}</mat-icon>
+                    <span class="text-label-rendered">{{ item?.icon?.iconOnly ? null :
+                        intl.translateLabel(item.text) }}</span>
+                </div>
+                <mat-icon *ngIf="itemExpandable"
+                          class="expand-icon">chevron_right</mat-icon>
+            </div>
+        </ng-template>
+    </mat-list-item>
 </ng-template>
