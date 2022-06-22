@@ -1391,6 +1391,28 @@ const sharedSpecifications = (
                 expect(entry.nativeElement.innerText).toBe(regularItems[idx].text);
             });
         }));
+
+        it('should render headerItems when searchSourceFactory is empty', fakeAsync(() => {
+            const headerItems = generateSuggetionItemList(1, 'Item');
+            const regularItems = [] as ISuggestValue[];
+
+            component.alwaysExpanded = true;
+            component.items = regularItems;
+            component.headerItems = headerItems;
+            component.searchable = true;
+
+            fixture.detectChanges();
+            tick(1000);
+
+            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+
+            expect(itemListEntries).not.toBeNull();
+            expect(itemListEntries.length).toEqual(1);
+
+            const [item] = itemListEntries;
+
+            expect(item.nativeElement.innerText).toBe(headerItems[0].text);
+        }));
     });
 
     describe('Selection: single value', () => {
