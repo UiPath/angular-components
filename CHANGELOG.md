@@ -1,3 +1,6 @@
+# v13.4.1 (2022-06-22)
+* **suggest** hide no results when header items are available
+
 # v13.4.0 (2022-06-09)
 * **suggest** implement custom header slot
 
