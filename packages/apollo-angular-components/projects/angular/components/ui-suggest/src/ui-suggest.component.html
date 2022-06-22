@@ -244,7 +244,7 @@
                 </ng-container>
             </ng-container>
 
-            <mat-divider *ngIf="headerItems!.length"></mat-divider>
+            <mat-divider *ngIf="headerItems!.length && !hasNoResults"></mat-divider>
 
             <ng-container *cdkVirtualFor="
                             let item of renderItems;
@@ -280,6 +280,7 @@
             ) as label">
                 <mat-list-item *ngIf="hasNoResults &&
                                   !isCustomValueVisible &&
+                                  !headerItems!.length &&
                                   (loading$ | async) === false"
                                [matTooltip]="label"
                                [attr.role]="'option'"
