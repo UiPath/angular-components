@@ -126,6 +126,12 @@ export class IntegrationUtils<T> {
             .classList
             .contains('mat-checkbox-checked');
 
+    public isCheckboxIndeterminate = (selector: string, debugEl = this.fixture.debugElement) =>
+        this.getDebugElement(selector, debugEl)
+            .nativeElement
+            .classList
+            .contains('mat-checkbox-indeterminate');
+
     public toggleCheckbox = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
             .query(By.css('.mat-checkbox-label'))
