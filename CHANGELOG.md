@@ -1,3 +1,7 @@
+# v12.5.7 (2022-07-06)
+* **grid** add tests for grid pagination
+* **grid** reset page after search
+
 # v12.5.6 (2021-11-05)
 * **grid** expose resize stream
 
