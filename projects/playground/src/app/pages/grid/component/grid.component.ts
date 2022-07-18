@@ -26,6 +26,7 @@ import {
     ViewChild,
 } from '@angular/core';
 import {
+    IFilterModel,
     PageChangeEvent,
     UiGridComponent,
 } from '@uipath/angular/components/ui-grid';
@@ -90,14 +91,15 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
             takeUntil(this._destroyed$),
         ).subscribe(([searchFilters, filters]) => {
             this.filteredData = cloneDeep(this.allData);
+            const filterValues = (filter: IFilterModel<any>) => {
+                this.filteredData = this.filteredData.filter((row: any) =>
+                row[filter.property]
+                    .toString()
+                    .includes(filter.value?.toString()));
+            };
 
-            searchFilters.forEach(filter => {
-                this.filteredData = this.filteredData.filter((row: any) => row[filter.property].includes(filter.value));
-            });
-
-            filters.forEach(filter => {
-                this.filteredData = this.filteredData.filter((row: any) => row[filter.property].includes(filter.value));
-            });
+            searchFilters.forEach(filterValues);
+            filters.forEach(filterValues);
 
             this.total = this.filteredData.length;
 
