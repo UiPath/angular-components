@@ -33,7 +33,10 @@ import { MatMenuItem } from '@angular/material/menu';
 import { PageEvent } from '@angular/material/paginator';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ResizeStrategy } from '@uipath/angular/components/ui-grid';
+import {
+    IFilterModel,
+    ResizeStrategy,
+} from '@uipath/angular/components/ui-grid';
 import {
     ISuggestValues,
     UiSuggestComponent,
@@ -3629,5 +3632,109 @@ describe('Component: UiGrid', () => {
             const buttons = fixture.debugElement.queryAll(By.css('.ui-grid-action-buttons-main button'));
             expect(buttons.length).toEqual(2);
         });
+    });
+
+    describe('Behaviour: Clear custom filter', () => {
+        @Component({
+            template: `
+                <ui-grid [data]="data"
+                         [customFilterValue]="customFilter">
+                    <ui-grid-header [search]="search">
+                    </ui-grid-header>
+                    <ui-grid-column [property]="'myNumber'"
+                                    [searchable]="true"
+                                    [sortable]="true"
+                                    title="Number Header"
+                                    width="50%">
+                        <ui-grid-dropdown-filter
+                        [value]="filterValue"
+                        [items]="filterItems">
+                        </ui-grid-dropdown-filter>
+                    </ui-grid-column>
+                </ui-grid>
+            `,
+        })
+        class TestFixtureCustomFilterGridComponent {
+            @ViewChild(UiGridComponent, {
+                static: true,
+            })
+            grid!: UiGridComponent<ITestEntity>;
+
+            get filterItems(): IDropdownOption[] {
+                return [1, 2, 3].map(count => ({
+                    value: count,
+                    label: count.toString(),
+                }));
+            }
+            customFilter: IFilterModel<any>[] = [];
+            filterValue = {
+                value: '777',
+                label: 'the label',
+            };
+            data: ITestEntity[] = [];
+        }
+
+        let fixture: ComponentFixture<TestFixtureCustomFilterGridComponent>;
+
+        beforeEach(async () => {
+            TestBed.configureTestingModule({
+                imports: [
+                    UiGridModule,
+                    UiGridCustomPaginatorModule,
+                    NoopAnimationsModule,
+                ],
+                providers: [
+                    UiMatPaginatorIntl,
+                    {
+                        provide: UI_GRID_OPTIONS,
+                        useValue: {
+                            useLegacyDesign: false,
+                        },
+                    },
+                ],
+                declarations: [
+                    TestFixtureCustomFilterGridComponent,
+                ],
+            });
+
+            fixture = TestBed.createComponent(TestFixtureCustomFilterGridComponent);
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should show custom filter after setting the grid\'s custom filter input', () => {
+            expect(document.querySelector('.ui-grid-dropdown-filter-button')).toBeTruthy();
+            fixture.componentInstance.customFilter = [{ property: 'myNumber1',
+                method: 'eq',
+                value: '2' }];
+            fixture.detectChanges();
+            expect(document.querySelector('.ui-grid-dropdown-filter-button')).toBeFalsy();
+            expect(document.querySelector('[data-cy="clear-custom-filter"]')).toBeTruthy();
+        });
+
+        it('should revert to old filter value after clearing the custom filter', fakeAsync(() => {
+            fixture.componentInstance.customFilter = [{ property: 'myNumber2',
+                method: 'eq',
+                value: '2' }];
+            fixture.detectChanges();
+            expect(JSON.stringify(fixture.componentInstance.grid.filterManager.filter$.value))
+                .toEqual(JSON.stringify(fixture.componentInstance.customFilter));
+            expect(fixture.componentInstance.grid.filterManager.hasCustomFilter$.value).toBeTrue();
+
+            const clearCustomFilterButton = fixture.debugElement.query(By.css('[data-cy="clear-custom-filter"]'));
+            clearCustomFilterButton.nativeElement.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+
+            expect(document.querySelector('.ui-grid-dropdown-filter-button')).toBeTruthy();
+            expect(fixture.componentInstance.grid.filterManager.hasCustomFilter$.value).toBeFalse();
+            expect(fixture.componentInstance.grid.filterManager.filter$.value[0].value)
+            .toEqual(fixture.componentInstance.filterValue.value);
+        }));
     });
 });
