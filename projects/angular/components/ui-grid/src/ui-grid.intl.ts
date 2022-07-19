@@ -109,6 +109,11 @@ export class UiGridIntl implements OnDestroy {
      */
     gridHeaderActionsNotice = 'Grid header actions updated. Press Shift + Alt + Arrow Up to move there.';
     /**
+     * Message for the button that clears the applied custom filter.
+     *
+     */
+    clearCustomFilter = 'Clear custom filter';
+    /**
      * No data row message alternative function.
      *
      */
