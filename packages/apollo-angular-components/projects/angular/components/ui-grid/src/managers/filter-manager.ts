@@ -28,6 +28,9 @@ import { IFilterModel } from '../models';
  * @internal
  */
 export class FilterManager<T> {
+    hasCustomFilter$ = new BehaviorSubject(false);
+    customFilters?: IFilterModel<T>[];
+
     filter$ = new BehaviorSubject<IFilterModel<T>[]>([]);
 
     dirty$ = this.filter$.pipe(
@@ -105,6 +108,17 @@ export class FilterManager<T> {
         }
     }
 
+    updateCustomFilters(customValue: IFilterModel<T>[]) {
+        this.customFilters = customValue;
+        this.hasCustomFilter$.next(true);
+        this.filter$.next(customValue);
+    }
+
+    clearCustomFilters() {
+        this.hasCustomFilter$.next(false);
+        this._emitFilterOptions();
+    }
+
     private _updateFilterValue = (
         column: UiGridColumnDirective<T> | undefined,
         value: ISuggestValue | IDropdownOption | undefined,
@@ -142,7 +156,11 @@ export class FilterManager<T> {
             : [];
         if (isEqual(this.filter$.getValue(), updatedFilters)) { return; }
 
-        this.filter$.next(updatedFilters);
+        this.filter$.next(
+            this.hasCustomFilter$.value
+            ? this.customFilters!
+            : updatedFilters,
+        );
     };
 
     private _hasFilterValue = (dropdown?: UiGridSearchFilterDirective<T> | UiGridDropdownFilterDirective<T>) =>
