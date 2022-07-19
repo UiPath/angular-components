@@ -342,10 +342,7 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
     disableSelectionByEntry: (entry: T) => null | string;
 
     @Input()
-    get customFilterValue() {
-        return this._customFilterValue;
-    }
-    set customFilterValue(customValue) {
+    set customFilterValue(customValue: IFilterModel<T>[]) {
         if (!Array.isArray(customValue) || !customValue.length) { return; }
         this.filterManager.updateCustomFilters(customValue);
     }
@@ -617,7 +614,6 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
     private _isShiftPressed = false;
     private _lastCheckboxIdx = 0;
     private _resizeSubscription$: null | Subscription = null;
-    private _customFilterValue: IFilterModel<any>[] = [];
 
     /**
      * @ignore
