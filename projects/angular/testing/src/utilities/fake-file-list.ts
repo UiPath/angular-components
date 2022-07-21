@@ -27,6 +27,10 @@ export class FakeFileList implements FileList {
         });
     }
 
+    [Symbol.iterator](): IterableIterator<File> {
+        return this.files[Symbol.iterator]();
+    }
+
     /**
      * Retrieve an item at the specified index.
      *
