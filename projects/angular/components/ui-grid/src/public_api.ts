@@ -52,3 +52,7 @@ export {
     SortManager,
     VisibilityManger,
 } from './managers';
+
+export {
+    UiGridCustomPaginatorModule,
+} from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.module';
