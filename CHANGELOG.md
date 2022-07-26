@@ -1,3 +1,15 @@
+# v11.0.2 (2022-07-26)
+* **grid** fix expose UiGridCustomPaginatorModule
+* **grid** fix use noDataMessage input in alternate design
+# v11.0.1 (2021-04-28)
+* **snackbar** correctly map icons to type & playground
+* **fix** add fix changelog script if merge issues
+* **chore** add autoamtic changelog & version bump & tag
+* **grid** add type="button" to filter button
+* **chore** add missing env refferences
+* **chore** add .npmrc for publishing to github
+* **deps** bump ini from 1.3.5 to 1.3.8
+
 # v11.0.0 (2021-04-13)
 
 # v11.0.0-rc.7 (2021-04-08)
