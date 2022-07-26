@@ -395,7 +395,7 @@
              [class.ui-grid-no-content-available]="!header?.searchValue && !activeFilterCount"
              [class.ui-grid-border-none]="!footer">
             <mat-icon *ngIf="!header?.searchValue && !activeFilterCount">visibility_off</mat-icon>
-            <p>{{ intl.noDataMessageAlternative(header?.searchValue, activeFilterCount) }}</p>
+            <p>{{ noDataMessage || intl.noDataMessageAlternative(header?.searchValue, activeFilterCount) }}</p>
         </div>
     </ng-container>
 </ng-template>
