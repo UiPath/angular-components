@@ -1,3 +1,6 @@
+# v11.0.2 (2022-07-26)
+* **grid** fix expose UiGridCustomPaginatorModule
+* **grid** fix use noDataMessage input in alternate design
 # v11.0.1 (2021-04-28)
 * **snackbar** correctly map icons to type & playground
 * **fix** add fix changelog script if merge issues
