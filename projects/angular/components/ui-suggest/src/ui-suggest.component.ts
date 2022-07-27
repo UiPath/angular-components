@@ -507,6 +507,20 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     disableTooltip = false;
 
     /**
+     * Use compact summary info instead of chips
+     *
+     */
+     @Input()
+     compact = false;
+
+     /**
+      * The template to use for compact summary
+      *
+      */
+     @Input()
+     compactSummaryTemplate?: TemplateRef<any>;
+
+    /**
      * Emits `once` when `data` is retrieved for the `first time`.
      *
      */
@@ -1103,6 +1117,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (!this.inputControl.value.trim().length) {
             this.close();
         }
+    }
+
+    computeDisplayValue() {
+        return this.value.length > 0
+            ? this.value.map(v => this.intl.translateLabel(v.text))
+                .join(',')
+            : this.defaultValue;
     }
 
     private _selectActiveItem(closeAfterSelect: boolean) {
