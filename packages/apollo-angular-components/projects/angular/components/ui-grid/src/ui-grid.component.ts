@@ -79,6 +79,7 @@ import {
 import { ResizableGrid } from './managers/resize/types';
 import {
     GridOptions,
+    IFilterModel,
     ISortModel,
 } from './models';
 import { UiGridIntl } from './ui-grid.intl';
@@ -340,6 +341,12 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
     @Input()
     disableSelectionByEntry: (entry: T) => null | string;
 
+    @Input()
+    set customFilterValue(customValue: IFilterModel<T>[]) {
+        if (!Array.isArray(customValue) || !customValue.length) { return; }
+        this.filterManager.updateCustomFilters(customValue);
+    }
+
     /**
      * Emits an event with the sort model when a column sort changes.
      *
@@ -367,6 +374,9 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
      */
     @Output()
     resizeEnd = new EventEmitter<void>();
+
+    @Output()
+    removeCustomFilter = new EventEmitter<void>();
 
     /**
      * Emits the column definitions when their definition changes.
@@ -891,6 +901,11 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
 
     focusRowHeader() {
         this.gridActionButtons?.nativeElement.querySelector(FOCUSABLE_ELEMENTS_QUERY)?.focus();
+    }
+
+    clearCustomFilter() {
+        this.removeCustomFilter.emit();
+        this.filterManager.clearCustomFilters();
     }
 
     private _announceGridHeaderActions() {
