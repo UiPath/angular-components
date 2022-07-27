@@ -13,7 +13,8 @@
          [showPaintTime]="inputs.showPaintTime"
          [showHeaderRow]="inputs.showHeaderRow"
          [expandedEntry]="editedEntity"
-         [expandMode]="'preserve'">
+         [expandMode]="'preserve'"
+         [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []">
 
     <ui-grid-header [search]="header.searchable">
         <ui-header-button *ngFor="let button of generateButtons(header.main)"

@@ -52,6 +52,7 @@ export class GridPageComponent implements AfterViewInit {
         'virtualScroll',
         'showPaintTime',
         'showHeaderRow',
+        'customFilter',
     ];
 
     buttonKeys = [
@@ -101,6 +102,7 @@ export class GridPageComponent implements AfterViewInit {
                 virtualScroll: [false],
                 showPaintTime: [false],
                 showHeaderRow: [true],
+                customFilter: [false],
             }),
             header: this._fb.group({
                 searchable: [true],

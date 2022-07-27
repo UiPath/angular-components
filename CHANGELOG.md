@@ -1,3 +1,10 @@
+# v13.5.0 (2022-07-21)
+* **deps** add dom iterable in tsconfig
+* **grid** add tests for custom filter
+* **playground** add custom filter input
+* **grid** add input for custom filter value
+* **playground** convert filter value to string
+
 # v13.4.1 (2022-06-22)
 * **suggest** hide no results when header items are available
 

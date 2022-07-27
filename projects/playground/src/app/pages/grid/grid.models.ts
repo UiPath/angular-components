@@ -27,4 +27,5 @@ export interface IInputs {
     virtualScroll: boolean;
     showPaintTime: boolean;
     showHeaderRow: boolean;
+    customFilter: boolean;
 }
