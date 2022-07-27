@@ -24,3 +24,26 @@
                 [searchSourceFactory]="searchSourceFactory">
     </ui-suggest>
 </mat-form-field>
+
+<h2>Multiple select with compact summary instead of chips</h2>
+<mat-form-field>
+    <ui-suggest [searchable]="true"
+                [disabled]="false"
+                [multiple]="true"
+                [enableCustomValue]="true"
+                [searchSourceFactory]="searchSourceFactory"
+                [compact]="true"
+                [compactSummaryTemplate]="compactSummaryTemplate">
+    </ui-suggest>
+
+    <ng-template #compactSummaryTemplate
+                 let-value>
+        <div class="flex">
+            <span class="text-ellipsis">{{value?.[0]?.text}}</span>
+            <span *ngIf="(value?.length || 0) > 1"
+                  class="example-additional-selection">
+                (+{{(value?.length || 0) - 1}} {{value?.length === 2 ? 'other' : 'others'}})
+            </span>
+        </div>
+    </ng-template>
+</mat-form-field>

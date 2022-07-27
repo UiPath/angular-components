@@ -9,7 +9,7 @@
           Tested in NVDA.
       -->
 
-    <ng-container *ngIf="!multiple; else chipsTemplate">
+    <ng-container *ngIf="(!multiple || compact); else chipsTemplate">
         <div [attr.tabindex]="!disabled &&
                         !readonly ?
                         0 : null"
@@ -35,8 +35,7 @@
              matRipple
              class="display"
              role="combobox">
-            <ng-container
-                          *ngIf="itemTemplate && !multiple && value.length && displayTemplateValue; else showDefaultValue">
+            <ng-container *ngIf="itemTemplate && value.length && displayTemplateValue; else showDefaultValue">
                 <ng-container *ngTemplateOutlet="itemTemplate; context: {
                                                 $implicit: value[0]
                                             }">
@@ -50,10 +49,16 @@
                           aria-hidden="true">
                         {{ placeholder }}:
                     </span>
-                    <span class="display-value text-label-rendered">{{
-                        value[0]
-                        ? intl.translateLabel(value[0].text)
-                        : defaultValue }}</span>
+                    <ng-container *ngIf="compactSummaryTemplate; else defaultSummary">
+                        <ng-template #displayCompactSummaryTemplate
+                                     *ngTemplateOutlet="compactSummaryTemplate; context: { $implicit: value }">
+                        </ng-template>
+                    </ng-container>
+                    <ng-template #defaultSummary>
+                        <span class="display-value text-label-rendered">
+                            {{ computeDisplayValue() }}
+                        </span>
+                    </ng-template>
                 </div>
             </ng-template>
             <ng-container *ngIf="!readonly">
@@ -153,7 +158,7 @@
                 </ng-container>
             </ng-container>
 
-            <mat-form-field *ngIf="searchable && !multiple"
+            <mat-form-field *ngIf="searchable && (!multiple || compact)"
                             floatLabel="never">
                 <input #searchInput
                        [placeholder]="isFormControl ? '' : placeholder"
@@ -309,7 +314,6 @@
         </div>
     </mat-list-item>
 </ng-template>
-
 
 <ng-template #clearIcon>
     <mat-icon [matTooltip]="intl.clearSelectionLabel"
