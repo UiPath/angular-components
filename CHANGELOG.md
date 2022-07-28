@@ -1,3 +1,9 @@
+# v13.6.0 (2022-07-28)
+* **fix** fix the return value of valueSummary func
+* **refactor** extract valueSummary func
+* **chore** add unit tests
+* **suggest** add compact summary support
+
 # v13.5.0 (2022-07-21)
 * **deps** add dom iterable in tsconfig
 * **grid** add tests for custom filter
