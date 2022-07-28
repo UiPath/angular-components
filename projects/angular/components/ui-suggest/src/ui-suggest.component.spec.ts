@@ -74,6 +74,7 @@ class UiSuggestFixtureDirective {
 
     clearable?: boolean;
     searchable?: boolean;
+    compact?: boolean;
     searchableCountInfo?: { count: number; message: string };
     alwaysExpanded?: boolean;
     disabled?: boolean;
@@ -1655,6 +1656,30 @@ const sharedSpecifications = (
                 .forEach(valueText => expect(selectedChipsInnerText.includes(valueText)).toBeTrue());
         });
 
+        it('should display all selected values in compact mode', () => {
+            const selectedValues = faker.helpers.shuffle(component.items!).slice(0, 3);
+            component.value = selectedValues;
+            component.compact = true;
+            component.searchable = true;
+
+            fixture.detectChanges();
+
+            const displayContainer = fixture.debugElement.query(By.css('.display-container'));
+            const displayValue = displayContainer.query(By.css('.display-value'));
+
+            if (!uiSuggest.isFormControl) {
+                const displayTitle = displayContainer.query(By.css('.display-title'));
+                expect(displayTitle.nativeElement.innerText.trim()).toBe(`${component.placeholder}:`);
+            } else {
+                const displayTitle = fixture.debugElement.query(By.css('.mat-form-field-label'));
+                expect(displayTitle.nativeElement.innerText.trim()).toEqual(component.placeholder);
+            }
+
+            selectedValues
+                .map(value => value.text)
+                .forEach(valueText => expect(displayValue.nativeElement.innerText.trim()).toContain(valueText));
+        });
+
         it('should have a checkbox next to each item entry', waitForAsync(async () => {
             fixture.detectChanges();
 
@@ -2428,7 +2453,8 @@ describe('Component: UiSuggest', () => {
                         [fetchStrategy]="fetchStrategy"
                         [minChars]="minChars"
                         [drillDown]="drillDown"
-                        [readonly]="readonly">
+                        [readonly]="readonly"
+                        [compact]="compact">
             </ui-suggest>
         `,
     })
@@ -2509,6 +2535,7 @@ describe('Component: UiSuggest', () => {
                             [fetchStrategy]="fetchStrategy"
                             [minChars]="minChars"
                             [drillDown]="drillDown"
+                            [compact]="compact"
                             formControlName="test">
             </ui-suggest>
             </mat-form-field>
@@ -2682,32 +2709,45 @@ describe('Component: UiSuggest', () => {
 
     @Component({
         template: `
-                <ui-suggest [placeholder]="placeholder"
-                            [defaultValue]="defaultValue"
-                            [clearable]="clearable"
-                            [searchable]="searchable"
-                            [enableCustomValue]="enableCustomValue"
-                            [alwaysExpanded]="alwaysExpanded"
-                            [headerItems]="headerItems"
-                            [items]="items"
-                            [value]="value"
-                            [direction]="direction"
-                            [displayPriority]="displayPriority"
-                            [disabled]="disabled"
-                            [multiple]="multiple"
-                            [readonly]="readonly"
-                            [fetchStrategy]="fetchStrategy"
-                            [displayTemplateValue]="displayTemplateValue"
-                            [searchableCountInfo]="searchableCountInfo"
-                            [minChars]="minChars"
-                            [drillDown]="drillDown">
-                            <ng-template let-item >
-                                <div class="item-template">{{ item.text }}</div>
-                            </ng-template>
+            <ui-suggest
+                [placeholder]="placeholder"
+                [defaultValue]="defaultValue"
+                [clearable]="clearable"
+                [searchable]="searchable"
+                [enableCustomValue]="enableCustomValue"
+                [alwaysExpanded]="alwaysExpanded"
+                [headerItems]="headerItems"
+                [items]="items"
+                [value]="value"
+                [direction]="direction"
+                [displayPriority]="displayPriority"
+                [disabled]="disabled"
+                [multiple]="multiple"
+                [readonly]="readonly"
+                [fetchStrategy]="fetchStrategy"
+                [displayTemplateValue]="displayTemplateValue"
+                [searchableCountInfo]="searchableCountInfo"
+                [minChars]="minChars"
+                [drillDown]="drillDown"
+                [compact]="compact"
+                [compactSummaryTemplate]="compactSummaryTemplate"
+            >
+                <ng-template let-item>
+                    <div class="item-template">{{ item.text }}</div>
+                </ng-template>
             </ui-suggest>
+            <ng-template #compactSummaryTemplate let-value>
+                <div class="custom-display-value">
+                    <span class="text-ellipsis">{{value?.[0]?.text}}</span>
+                    <span *ngIf="(value?.length || 0) > 1">
+                        (+{{ (value?.length || 0) - 1 }}
+                        {{ value?.length === 2 ? "other" : "others" }})
+                    </span>
+                </div>
+            </ng-template>
         `,
     })
-    class UiSuggestCustomTemplateFixtureComponent extends UiSuggestFixtureDirective { }
+    class UiSuggestCustomTemplateFixtureComponent extends UiSuggestFixtureDirective {}
 
     describe('Type: custom template', () => {
         let fixture: ComponentFixture<UiSuggestCustomTemplateFixtureComponent>;
@@ -2761,6 +2801,25 @@ describe('Component: UiSuggest', () => {
                     expect(item.text).toBe(generatedItems[index].nativeElement.innerText);
                 });
             }));
+
+            it('should render the compact summary using the provided custom template', () => {
+                component.items = generateSuggetionItemList('random');
+
+                const selectedValues = faker.helpers.shuffle(component.items!).slice(0, 3);
+                component.value = selectedValues;
+
+                component.multiple = true;
+                component.compact = true;
+                component.searchable = true;
+
+                fixture.detectChanges();
+
+                const displayContainer = fixture.debugElement.query(By.css('.display-container'));
+                const displayValue = displayContainer.query(By.css('.custom-display-value'));
+                const summaryText = displayValue.nativeElement.innerText.trim();
+
+                expect(summaryText).toBe(`${selectedValues[0].text} (+2 others)`);
+            });
 
             [false, true].forEach((multiple) => {
                 [false, true].forEach((displayTemplateValue) => {

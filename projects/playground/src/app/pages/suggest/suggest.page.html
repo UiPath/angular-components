@@ -26,6 +26,17 @@
 </mat-form-field>
 
 <h2>Multiple select with compact summary instead of chips</h2>
+<h3>With the default template</h3>
+<mat-form-field>
+    <ui-suggest [searchable]="true"
+                [disabled]="false"
+                [multiple]="true"
+                [enableCustomValue]="true"
+                [searchSourceFactory]="searchSourceFactory"
+                [compact]="true">
+    </ui-suggest>
+</mat-form-field>
+<h3>With custom template</h3>
 <mat-form-field>
     <ui-suggest [searchable]="true"
                 [disabled]="false"
