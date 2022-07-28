@@ -187,6 +187,10 @@ $componentName: "ui-suggest";
         &-container {
             max-width: calc(100% - #{$mat-icon-size});
         }
+
+        .mat-icon {
+            flex-shrink: 0;
+        }
     }
 
     .mat-chip {
