@@ -1407,6 +1407,6 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _getValueSummary() {
-        this.value.map(v => this.intl.translateLabel(v.text)).join(', ');
+        return this.value.map(v => this.intl.translateLabel(v.text)).join(', ');
     }
 }
