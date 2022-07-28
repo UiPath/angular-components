@@ -309,7 +309,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             !this.isOpen &&
             this._hasValue
         ) {
-            return this.value.map(v => this.intl.translateLabel(v.text)).join(', ');
+            return this._getValueSummary();
         }
 
         return null;
@@ -1121,8 +1121,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
     computeDisplayValue() {
         return this.value.length > 0
-            ? this.value.map(v => this.intl.translateLabel(v.text))
-                .join(',')
+            ? this._getValueSummary()
             : this.defaultValue;
     }
 
@@ -1405,5 +1404,9 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         UNSUPPORTED_SCENARIOS.forEach(({ errorText, scenario }) => {
             if (scenario) { throw new Error(errorText); }
         });
+    }
+
+    private _getValueSummary() {
+        this.value.map(v => this.intl.translateLabel(v.text)).join(', ');
     }
 }
