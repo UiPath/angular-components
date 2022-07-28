@@ -309,7 +309,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             !this.isOpen &&
             this._hasValue
         ) {
-            return this.value.map(v => this.intl.translateLabel(v.text)).join(', ');
+            return this._getValueSummary();
         }
 
         return null;
@@ -505,6 +505,20 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      */
     @Input()
     disableTooltip = false;
+
+    /**
+     * Use compact summary info instead of chips
+     *
+     */
+     @Input()
+     compact = false;
+
+     /**
+      * The template to use for compact summary
+      *
+      */
+     @Input()
+     compactSummaryTemplate?: TemplateRef<any>;
 
     /**
      * Emits `once` when `data` is retrieved for the `first time`.
@@ -1105,6 +1119,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         }
     }
 
+    computeDisplayValue() {
+        return this.value.length > 0
+            ? this._getValueSummary()
+            : this.defaultValue;
+    }
+
     private _selectActiveItem(closeAfterSelect: boolean) {
         const item = this.headerItems![this.activeIndex] ?? this.items[this.activeIndex - this.headerItems!.length];
         if (!item) { return; }
@@ -1384,5 +1404,9 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         UNSUPPORTED_SCENARIOS.forEach(({ errorText, scenario }) => {
             if (scenario) { throw new Error(errorText); }
         });
+    }
+
+    private _getValueSummary() {
+        return this.value.map(v => this.intl.translateLabel(v.text)).join(', ');
     }
 }
