@@ -534,6 +534,12 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
     hasAnyFiltersVisible$: Observable<boolean>;
 
     /**
+     * Emits with information whether the dvider for toggle columns should be displayed
+     *
+     */
+    displayToggleColumnsDivider$?: Observable<boolean>;
+
+    /**
      * Emits the visible column definitions when their definition changes.
      *
      */
@@ -721,6 +727,8 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
         this._initResizeManager();
         this._performanceMonitor = new PerformanceMonitor(_ref.nativeElement);
         this.paintTime$ = this._performanceMonitor.paintTime$;
+
+        this._initDisplayToggleColumnsDivider();
     }
 
     /**
@@ -916,5 +924,11 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
         this._resizeSubscription$?.unsubscribe();
         this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
         this._resizeSubscription$ = this.resizeManager.resizeEnd$.subscribe(() => this.resizeEnd.emit());
+    }
+
+    private _initDisplayToggleColumnsDivider() {
+        this.displayToggleColumnsDivider$ = combineLatest([this.hasAnyFiltersVisible$, this.filterManager.hasCustomFilter$]).pipe(
+            map(([hasAnyFilterVisible, hasCustomFilters]) => hasAnyFilterVisible || hasCustomFilters),
+        );
     }
 }
