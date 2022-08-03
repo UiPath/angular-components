@@ -190,6 +190,9 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     @Input()
     refetch = false;
 
+    @Input()
+    description = '';
+
     /**
      * The searchable dropdown directive reference.
      *
