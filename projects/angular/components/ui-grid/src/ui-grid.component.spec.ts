@@ -3737,4 +3737,71 @@ describe('Component: UiGrid', () => {
             .toEqual(fixture.componentInstance.filterValue.value);
         }));
     });
+
+    describe('Verify column description', () => {
+        @Component({
+            template: `
+                <ui-grid [data]="data"
+                         [customFilterValue]="customFilter">
+                    <ui-grid-column [property]="'myNumber'"
+                                    [sortable]="true"
+                                    [description]="columnDescription"
+                                    title="Number Header"
+                                    width="50%">
+                    </ui-grid-column>
+                </ui-grid>
+            `,
+        })
+        class TestFixtureCustomFilterGridComponent {
+            columnDescription = 'some column description';
+        }
+
+        let fixture: ComponentFixture<TestFixtureCustomFilterGridComponent>;
+
+        beforeEach(async () => {
+            TestBed.configureTestingModule({
+                imports: [
+                    UiGridModule,
+                    UiGridCustomPaginatorModule,
+                    NoopAnimationsModule,
+                ],
+                providers: [
+                    UiMatPaginatorIntl,
+                    {
+                        provide: UI_GRID_OPTIONS,
+                        useValue: {
+                            useLegacyDesign: false,
+                        },
+                    },
+                ],
+                declarations: [
+                    TestFixtureCustomFilterGridComponent,
+                ],
+            });
+
+            fixture = TestBed.createComponent(TestFixtureCustomFilterGridComponent);
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should display info icon and change aria label attribute of the column', fakeAsync(() => {
+            fixture.detectChanges();
+            expect(document.querySelector('.ui-grid-info-icon ')).toBeTruthy();
+            const colTitleParagraphElement = document.querySelector('.ui-grid-header-title p');
+            expect(colTitleParagraphElement!.getAttribute('aria-label')).toEqual('Number Header. some column description');
+        }));
+
+        it('should not show info icon if description is missing', fakeAsync(() => {
+            fixture.componentInstance.columnDescription = '';
+            fixture.detectChanges();
+            expect(document.querySelector('.ui-grid-info-icon ')).toBeNull();
+            const colTitleParagraphElement = document.querySelector('.ui-grid-header-title p');
+            expect(colTitleParagraphElement!.getAttribute('aria-label')).toEqual('Number Header');
+        }));
+    });
 });
