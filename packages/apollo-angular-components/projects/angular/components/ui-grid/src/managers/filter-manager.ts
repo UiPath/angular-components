@@ -32,6 +32,7 @@ export class FilterManager<T> {
     customFilters?: IFilterModel<T>[];
 
     filter$ = new BehaviorSubject<IFilterModel<T>[]>([]);
+    defaultValueDropdownFilters: IFilterModel<T>[] = [];
 
     dirty$ = this.filter$.pipe(
         map(filters =>
@@ -139,7 +140,7 @@ export class FilterManager<T> {
     };
 
     private _emitFilterOptions = () => {
-        const defaultValueDropdownFilters = this._columns
+        this.defaultValueDropdownFilters = this._columns
             .filter(({ dropdown }) => this._hasFilterValue(dropdown))
             .map(this._mapDropdownItem);
 
@@ -150,7 +151,7 @@ export class FilterManager<T> {
             .filter(({ searchableDropdown }) => this._hasFilterValue(searchableDropdown))
             .map(this._mapSearchableDropdownItem);
 
-        const updatedFilters = [...defaultValueDropdownFilters, ...searchableFilters];
+        const updatedFilters = [...this.defaultValueDropdownFilters, ...searchableFilters];
         this._initialFilters = emptyStateDropdownFilters.length
             ? emptyStateDropdownFilters
             : [];
