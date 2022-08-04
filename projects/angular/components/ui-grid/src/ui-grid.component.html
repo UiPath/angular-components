@@ -586,7 +586,7 @@
                             [toggleTitle]="intl.toggleTitle"
                             [togglePlaceholderTitle]="intl.togglePlaceholderTitle"
                             [useLegacyDesign]="useLegacyDesign"
-                            [showDivider]="!useLegacyDesign && (hasAnyFiltersVisible$ | async) ?? false"
+                            [showDivider]="!useLegacyDesign && (displayToggleColumnsDivider$ | async) ?? false"
                             (visibleColumns)="visibilityManager.update($event)"
                             (resetColumns)="visibilityManager.reset()"
                             (visibleColumnsToggled)="visibleColumnsToggle$.next($event)">
