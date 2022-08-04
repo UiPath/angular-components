@@ -1,3 +1,8 @@
+# v13.6.1 (2022-08-04)
+* **grid** add column description icon
+* **grid** expose default filter values
+* **grid** add toggle columns divider
+
 # v13.6.0 (2022-07-28)
 * **fix** fix the return value of valueSummary func
 * **refactor** extract valueSummary func
