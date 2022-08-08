@@ -1,3 +1,6 @@
+# v13.6.2 (2022-08-08)
+* **suggest** remove extra space
+
 # v13.6.1 (2022-08-04)
 * **grid** add column description icon
 * **grid** expose default filter values
