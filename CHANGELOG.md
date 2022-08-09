@@ -1,3 +1,6 @@
+# v13.6.4 (2022-08-09)
+* **chore** bump patch version
+
 # v13.6.3 (2022-08-09)
 * **suggest** do not clear the search input on selecting an item
 
