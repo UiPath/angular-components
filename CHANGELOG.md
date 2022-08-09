@@ -1,3 +1,6 @@
+# v13.6.3 (2022-08-09)
+* **suggest** do not clear the search input on selecting an item
+
 # v13.6.2 (2022-08-08)
 * **suggest** remove extra space
 
