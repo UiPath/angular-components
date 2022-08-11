@@ -1,3 +1,7 @@
+# v13.6.5 (2022-08-11)
+* **dateformat** add injection token properties
+* **grid** hide expanded filters if grid has custom filter
+
 # v13.6.4 (2022-08-09)
 * **chore** bump patch version
 
