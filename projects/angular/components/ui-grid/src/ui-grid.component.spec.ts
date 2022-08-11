@@ -3651,6 +3651,16 @@ describe('Component: UiGrid', () => {
                         [items]="filterItems">
                         </ui-grid-dropdown-filter>
                     </ui-grid-column>
+                    <ui-grid-column [property]="'myString'"
+                                    [searchable]="true"
+                                    [sortable]="true"
+                                    title="String Header"
+                                    width="50%">
+                        <ui-grid-dropdown-filter
+                        [value]="filterValue"
+                        [items]="filterItems">
+                        </ui-grid-dropdown-filter>
+                    </ui-grid-column>
                 </ui-grid>
             `,
         })
@@ -3689,6 +3699,7 @@ describe('Component: UiGrid', () => {
                         provide: UI_GRID_OPTIONS,
                         useValue: {
                             useLegacyDesign: false,
+                            collapseFiltersCount: 1,
                         },
                     },
                 ],
@@ -3709,12 +3720,12 @@ describe('Component: UiGrid', () => {
         });
 
         it('should show custom filter after setting the grid\'s custom filter input', () => {
-            expect(document.querySelector('.ui-grid-dropdown-filter-button')).toBeTruthy();
+            expect(document.querySelector('.ui-grid-collapsible-filters-toggle')).toBeTruthy();
             fixture.componentInstance.customFilter = [{ property: 'myNumber1',
                 method: 'eq',
                 value: '2' }];
             fixture.detectChanges();
-            expect(document.querySelector('.ui-grid-dropdown-filter-button')).toBeFalsy();
+            expect(document.querySelector('.ui-grid-collapsible-filters-toggle')).toBeFalsy();
             expect(document.querySelector('[data-cy="clear-custom-filter"]')).toBeTruthy();
         });
 
@@ -3731,10 +3742,39 @@ describe('Component: UiGrid', () => {
             clearCustomFilterButton.nativeElement.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
 
-            expect(document.querySelector('.ui-grid-dropdown-filter-button')).toBeTruthy();
+            expect(document.querySelector('.ui-grid-collapsible-filters-toggle')).toBeTruthy();
             expect(fixture.componentInstance.grid.filterManager.hasCustomFilter$.value).toBeFalse();
             expect(fixture.componentInstance.grid.filterManager.filter$.value[0].value)
             .toEqual(fixture.componentInstance.filterValue.value);
+        }));
+
+        it('should NOT display expanded filters when grid has custom filter', fakeAsync(() => {
+            fixture.detectChanges();
+
+            const toggleFiltersButton = document.querySelector<HTMLButtonElement>('.ui-grid-collapsible-filters-toggle');
+            expect(toggleFiltersButton).toBeTruthy();
+
+            toggleFiltersButton?.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+
+            expect(document.querySelectorAll('.ui-grid-dropdown-filter-button').length).toBe(2);
+
+            fixture.componentInstance.customFilter = [{
+                property: 'myNumber2',
+                method: 'eq',
+                value: '3',
+            }];
+
+            fixture.detectChanges();
+            tick(500);
+            fixture.detectChanges();
+
+            expect(document.querySelectorAll('.ui-grid-dropdown-filter-button').length).toBe(0);
+
+            const clearCustomFilterButton = fixture.debugElement.query(By.css('[data-cy="clear-custom-filter"]'));
+            clearCustomFilterButton.nativeElement.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+            expect(document.querySelectorAll('.ui-grid-dropdown-filter-button').length).toBe(2);
         }));
     });
 
