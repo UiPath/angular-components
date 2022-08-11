@@ -47,6 +47,21 @@ export interface IDateFormatOptions {
      *
      */
     timezone: string | TimezoneResolver;
+    /**
+     * Overwrites the default content type.
+     *
+     */
+    contentType?: DisplayType;
+    /**
+     * Overwrites the default title type.
+     *
+     */
+    titleType?: DisplayType;
+    /**
+     * Overwrites the default dateformat used by moment.js.
+     *
+     */
+    format?: string;
 }
 
 /**
@@ -95,7 +110,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
      *
      */
     @Input()
-    contentType: DisplayType = 'absolute';
+    contentType!: DisplayType;
     /**
      * What format should the `[data-title]` attribute have, `absolute` or `relative`.
      *
@@ -105,7 +120,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
      * `<ui-dateformat #ref [matTooltip]="ref.dataset['title']"></ui-dateformat>`
      */
     @Input()
-    titleType: DisplayType = 'absolute';
+    titleType!: DisplayType;
     /**
      * The `timezone` for which the current date is displayed.
      *
@@ -123,7 +138,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
      *
      */
     @Input()
-    dateFormat = 'L LTS';
+    dateFormat!: string;
 
     protected _text?: HTMLElement;
 
@@ -165,6 +180,9 @@ export class UiDateFormatDirective extends UiFormatDirective {
         );
 
         this._options = _options || {};
+        this.dateFormat = this._options.format ?? 'L LTS';
+        this.contentType = this._options.contentType ?? 'absolute';
+        this.titleType = this._options.titleType ?? 'absolute';
 
         const redraw$ = this._options.redraw$ || of(null);
 
