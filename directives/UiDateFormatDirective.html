@@ -151,14 +151,9 @@
 
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>&#x27;absolute&#x27;</code>
-                    </td>
-                </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:98</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="113" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:113</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -185,7 +180,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:120</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="135" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:135</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -210,14 +205,9 @@
 
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>&#x27;L LTS&#x27;</code>
-                    </td>
-                </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:126</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="141" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:141</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -244,7 +234,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:114</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="129" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:129</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -269,14 +259,9 @@
 
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>&#x27;absolute&#x27;</code>
-                    </td>
-                </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="108" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:108</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="123" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:123</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -350,6 +335,21 @@ export interface IDateFormatOptions {
      *
      */
     timezone: string | TimezoneResolver;
+    /**
+     * Overwrites the default content type.
+     *
+     */
+    contentType?: DisplayType;
+    /**
+     * Overwrites the default title type.
+     *
+     */
+    titleType?: DisplayType;
+    /**
+     * Overwrites the default dateformat used by moment.js.
+     *
+     */
+    format?: string;
 }
 
 /**
@@ -398,7 +398,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
      *
      */
     @Input()
-    contentType: DisplayType &#x3D; &#x27;absolute&#x27;;
+    contentType!: DisplayType;
     /**
      * What format should the &#x60;[data-title]&#x60; attribute have, &#x60;absolute&#x60; or &#x60;relative&#x60;.
      *
@@ -408,7 +408,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
      * &#x60;&lt;ui-dateformat #ref [matTooltip]&#x3D;&quot;ref.dataset[&#x27;title&#x27;]&quot;&gt;&lt;/ui-dateformat&gt;&#x60;
      */
     @Input()
-    titleType: DisplayType &#x3D; &#x27;absolute&#x27;;
+    titleType!: DisplayType;
     /**
      * The &#x60;timezone&#x60; for which the current date is displayed.
      *
@@ -426,7 +426,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
      *
      */
     @Input()
-    dateFormat &#x3D; &#x27;L LTS&#x27;;
+    dateFormat!: string;
 
     protected _text?: HTMLElement;
 
@@ -468,6 +468,9 @@ export class UiDateFormatDirective extends UiFormatDirective {
         );
 
         this._options &#x3D; _options || {};
+        this.dateFormat &#x3D; this._options.format ?? &#x27;L LTS&#x27;;
+        this.contentType &#x3D; this._options.contentType ?? &#x27;absolute&#x27;;
+        this.titleType &#x3D; this._options.titleType ?? &#x27;absolute&#x27;;
 
         const redraw$ &#x3D; this._options.redraw$ || of(null);
 
