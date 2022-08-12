@@ -3681,7 +3681,7 @@ describe('Component: UiGrid', () => {
                 value: '777',
                 label: 'the label',
             };
-            data: ITestEntity[] = [];
+            data: ITestEntity[] = generateListFactory(generateEntity)(50);
         }
 
         let fixture: ComponentFixture<TestFixtureCustomFilterGridComponent>;
@@ -3775,6 +3775,26 @@ describe('Component: UiGrid', () => {
             clearCustomFilterButton.nativeElement.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
             expect(document.querySelectorAll('.ui-grid-dropdown-filter-button').length).toBe(2);
+        }));
+
+        it('should NOT display custom filter button if there are selected rows', fakeAsync(() => {
+            fixture.detectChanges();
+            fixture.componentInstance.customFilter = [{
+                property: 'myNumber2',
+                method: 'eq',
+                value: '3',
+            }];
+            fixture.detectChanges();
+            tick(500);
+            let clearCustomFilterButton = fixture.debugElement.query(By.css('[data-cy="clear-custom-filter"]'));
+            expect(clearCustomFilterButton).toBeTruthy();
+
+            const checkboxInput = fixture.debugElement.query(By.css('.ui-grid-header-cell.ui-grid-checkbox-cell input'));
+            checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+
+            clearCustomFilterButton = fixture.debugElement.query(By.css('[data-cy="clear-custom-filter"]'));
+            expect(clearCustomFilterButton).toBeFalsy();
         }));
     });
 
