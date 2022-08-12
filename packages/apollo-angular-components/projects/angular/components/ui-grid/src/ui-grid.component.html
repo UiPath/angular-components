@@ -15,8 +15,10 @@
         <div class="ui-grid-filter-container-lhs-group-actions">
             <ng-container *ngIf="filterManager.hasCustomFilter$ | async; else noCustomFilter">
                 <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
-                <button (click)="clearCustomFilter()"
-                        mat-flat-button type="button"
+                <button *ngIf="!(hasSelection$ | async)"
+                        (click)="clearCustomFilter()"
+                        mat-flat-button
+                        type="button"
                         data-cy="clear-custom-filter">
                     {{ intl.clearCustomFilter }}
                 </button>
@@ -58,21 +60,24 @@
                             </ng-container>
                         </ng-container>
                     </div>
-
-                    <div #gridActionButtons
-                        *ngIf="hasSelection$ | async"
-                        class="ui-grid-action-buttons ui-grid-action-buttons-selection">
-                        <ng-container *ngFor="let button of header?.actionButtons">
-                            <ng-container *ngIf="button.visible">
-                                <ng-container *ngTemplateOutlet="button.html?? null">
-                                </ng-container>
-                            </ng-container>
-                        </ng-container>
-                    </div>
                 </ng-container>
             </ng-template>
+
+            <div #gridActionButtons
+                *ngIf="hasSelection$ | async"
+                class="ui-grid-action-buttons ui-grid-action-buttons-selection">
+                <ng-container *ngFor="let button of header?.actionButtons">
+                    <ng-container *ngIf="button.visible">
+                        <ng-container *ngTemplateOutlet="button.html?? null">
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </div>
         </div>
-        <div *ngIf="showFilters && (hasAnyFiltersVisible$ | async) && (filterManager.hasCustomFilter$ | async) === false"
+        <div *ngIf="showFilters &&
+             (hasAnyFiltersVisible$ | async) &&
+             (filterManager.hasCustomFilter$ | async) === false &&
+             !(hasSelection$ | async)"
              [@filters-container]
              class="ui-grid-filter-container-lhs-group-filters">
             <ng-container *ngTemplateOutlet="inlineFiltersTmpl"></ng-container>

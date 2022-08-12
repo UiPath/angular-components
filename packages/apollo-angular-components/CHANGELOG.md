@@ -1,3 +1,7 @@
+# v13.6.6 (2022-08-12)
+* **grid** hide expanded filters on row selection
+* **grid** hide custom filter btn on row selection
+
 # v13.6.5 (2022-08-11)
 * **dateformat** add injection token properties
 * **grid** hide expanded filters if grid has custom filter
