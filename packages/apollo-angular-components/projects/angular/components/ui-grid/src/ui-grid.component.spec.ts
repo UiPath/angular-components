@@ -3796,6 +3796,23 @@ describe('Component: UiGrid', () => {
             clearCustomFilterButton = fixture.debugElement.query(By.css('[data-cy="clear-custom-filter"]'));
             expect(clearCustomFilterButton).toBeFalsy();
         }));
+
+        it('should NOT display expanded filters if grid has selection', fakeAsync(() => {
+            fixture.detectChanges();
+
+            const toggleFiltersButton = document.querySelector<HTMLButtonElement>('.ui-grid-collapsible-filters-toggle');
+            toggleFiltersButton!.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+
+            expect(document.querySelectorAll('.ui-grid-dropdown-filter-button').length).toBe(2);
+
+            const checkboxInput = fixture.debugElement.query(By.css('.ui-grid-header-cell.ui-grid-checkbox-cell input'));
+            checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+            tick(500);
+
+            expect(document.querySelectorAll('.ui-grid-dropdown-filter-button').length).toBe(0);
+        }));
     });
 
     describe('Verify column description', () => {
