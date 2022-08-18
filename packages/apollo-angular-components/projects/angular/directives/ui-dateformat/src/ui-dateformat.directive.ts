@@ -13,6 +13,7 @@ import {
 } from 'rxjs/operators';
 
 import {
+    ChangeDetectorRef,
     Directive,
     ElementRef,
     Inject,
@@ -132,7 +133,13 @@ export class UiDateFormatDirective extends UiFormatDirective {
      *
      */
     @Input()
-    date?: Date | string;
+    set date(date: Date | string | undefined) {
+        this._date = date;
+        this._cd.detectChanges();
+    }
+    get date() {
+        return this._date;
+    }
     /**
      * The `moment` format, defaults to `L LTS`.
      *
@@ -163,6 +170,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
     private _lastRelativeTime?: string;
     private _lastContentType?: DisplayType;
     private _lastTitleType?: DisplayType;
+    private _date?: Date | string;
 
     /**
      * @ignore
@@ -171,6 +179,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
         @Inject(UI_DATEFORMAT_OPTIONS)
         @Optional()
         private _options: IDateFormatOptions,
+        private _cd: ChangeDetectorRef,
         renderer: Renderer2,
         elementRef: ElementRef,
     ) {
