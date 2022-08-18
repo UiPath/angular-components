@@ -1,3 +1,6 @@
+# v13.6.7 (2022-08-18)
+* **dateformat** trigger change detection on setting input
+
 # v13.6.6 (2022-08-12)
 * **grid** hide expanded filters on row selection
 * **grid** hide custom filter btn on row selection
