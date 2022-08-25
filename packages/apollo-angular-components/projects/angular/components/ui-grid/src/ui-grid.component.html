@@ -125,7 +125,8 @@
                     <div *ngIf="selectable"
                          class="ui-grid-header-cell ui-grid-checkbox-cell ui-grid-feature-cell"
                          role="columnheader">
-                        <mat-checkbox (change)="$event && toggle($event)"
+                        <mat-checkbox #selectAvailableRowsCheckbox
+                                      (change)="$event && toggle($event)"
                                       [disabled]="!dataManager.length"
                                       [checked]="isEveryVisibleRowChecked"
                                       [indeterminate]="hasValueOnVisiblePage && !isEveryVisibleRowChecked"
