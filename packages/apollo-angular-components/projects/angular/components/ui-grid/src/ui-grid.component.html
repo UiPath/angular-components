@@ -127,6 +127,7 @@
                          role="columnheader">
                         <mat-checkbox #selectAvailableRowsCheckbox
                                       (change)="$event && toggle($event)"
+                                      (indeterminateChange)="checkIndeterminateState($event)"
                                       [disabled]="!dataManager.length"
                                       [checked]="isEveryVisibleRowChecked"
                                       [indeterminate]="hasValueOnVisiblePage && !isEveryVisibleRowChecked"

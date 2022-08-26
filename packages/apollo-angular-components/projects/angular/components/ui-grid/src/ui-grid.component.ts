@@ -933,6 +933,19 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
         this.filterManager.clearCustomFilters();
     }
 
+    checkIndeterminateState(indeterminateState: boolean) {
+        // If the grid has disabled rows the indeterminate can be set to false and still not have all the rows selected,
+        // in that case we set the indeterminate to true
+        if (
+            !indeterminateState &&
+            this.selectAvailableRowsCheckbox &&
+            this.hasValueOnVisiblePage &&
+            !this.isEveryVisibleRowChecked
+        ) {
+            this.selectAvailableRowsCheckbox.indeterminate = true;
+        }
+    }
+
     private _announceGridHeaderActions() {
         this._queuedAnnouncer.enqueue(this.intl.gridHeaderActionsNotice);
     }
