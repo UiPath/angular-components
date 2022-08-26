@@ -1,3 +1,7 @@
+# v13.6.8 (2022-08-26)
+* **grid** set indeterminate to true if not all rows are selected
+* **grid** unselect header checkbox if selection manager has no value
+
 # v13.6.7 (2022-08-18)
 * **dateformat** trigger change detection on setting input
 
