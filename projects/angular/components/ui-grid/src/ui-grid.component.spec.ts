@@ -779,6 +779,32 @@ describe('Component: UiGrid', () => {
                         const matCheckbox = checkboxHeader.query(By.css('mat-checkbox')).componentInstance as MatCheckbox;
                         expect(matCheckbox.checked).toEqual(false);
                     });
+
+                    it('should show indeterminate header checkbox if selected after a row is selected and grid has disabled rows',
+                        fakeAsync(() => {
+                            const disableSelectionByEntry = (entry?: ITestEntity) => entry && entry.id % 2 === 1 ? 'unselectable' : null;
+
+                            component.disableSelectionByEntry = disableSelectionByEntry;
+                            grid.selectionManager.disableSelectionByEntry = disableSelectionByEntry;
+                            fixture.detectChanges();
+
+                            fixture.debugElement.query(By.css('[role="gridcell"] input[type="checkbox"]:not([disabled])'))
+                                .nativeElement.dispatchEvent(EventGenerator.click);
+
+                            fixture.detectChanges();
+
+                            const checkboxHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell.ui-grid-checkbox-cell'));
+                            const checkboxInput = checkboxHeader.query(By.css('input'));
+
+                            checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+
+                            fixture.detectChanges();
+                            tick();
+                            fixture.detectChanges();
+
+                            const matCheckbox = checkboxHeader.query(By.css('mat-checkbox')).componentInstance as MatCheckbox;
+                            expect(matCheckbox.indeterminate).toBeTrue();
+                        }));
                 });
             });
         });
