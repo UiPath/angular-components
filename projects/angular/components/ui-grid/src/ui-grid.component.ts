@@ -53,7 +53,10 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import {
+    MatCheckbox,
+    MatCheckboxChange,
+} from '@angular/material/checkbox';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
 
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
@@ -468,6 +471,15 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
      */
     @ViewChild('gridActionButtons')
     gridActionButtons!: ElementRef;
+
+    /**
+     * Reference to select all available rows checkbox
+     *
+     * @ignore
+     */
+    @ViewChild('selectAvailableRowsCheckbox')
+    selectAvailableRowsCheckbox?: MatCheckbox;
+
     /**
      * Toggle filters row display state
      *
@@ -728,6 +740,11 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
         this._performanceMonitor = new PerformanceMonitor(_ref.nativeElement);
         this.paintTime$ = this._performanceMonitor.paintTime$;
 
+        this.selectionManager.hasValue$.pipe(
+            filter(hasValue => !hasValue && this.selectAvailableRowsCheckbox?.checked === true),
+            takeUntil(this._destroyed$),
+        ).subscribe(() => this.selectAvailableRowsCheckbox!.checked = false);
+
         this._initDisplayToggleColumnsDivider();
     }
 
@@ -914,6 +931,19 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
     clearCustomFilter() {
         this.removeCustomFilter.emit();
         this.filterManager.clearCustomFilters();
+    }
+
+    checkIndeterminateState(indeterminateState: boolean) {
+        // If the grid has disabled rows the indeterminate can be set to false and still not have all the rows selected,
+        // in that case we set the indeterminate to true
+        if (
+            !indeterminateState &&
+            this.selectAvailableRowsCheckbox &&
+            this.hasValueOnVisiblePage &&
+            !this.isEveryVisibleRowChecked
+        ) {
+            this.selectAvailableRowsCheckbox.indeterminate = true;
+        }
     }
 
     private _announceGridHeaderActions() {
