@@ -114,7 +114,7 @@ describe('Component: UiGrid', () => {
         refreshable?: boolean;
         showHeaderRow = true;
         virtualScroll = false;
-        disableSelectionByEntry: () => null | string = () => null;
+        disableSelectionByEntry: (entry?: ITestEntity) => null | string = () => null;
     }
     describe('Scenario: simple grid', () => {
         let fixture: ComponentFixture<TestFixtureSimpleGridComponent>;
@@ -736,6 +736,75 @@ describe('Component: UiGrid', () => {
                         expect(grid.selectionManager.selected.length).toEqual(0);
                         expect(grid.isEveryVisibleRowChecked).toEqual(false);
                     });
+
+                    it('should unselect header checkbox if data changes', () => {
+                        const disableSelectionByEntry = (entry?: ITestEntity) => entry && entry.id % 2 === 1 ? 'unselectable' : null;
+
+                        component.disableSelectionByEntry = disableSelectionByEntry;
+                        grid.selectionManager.disableSelectionByEntry = disableSelectionByEntry;
+                        fixture.detectChanges();
+
+                        const checkboxHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell.ui-grid-checkbox-cell'));
+                        const checkboxInput = checkboxHeader.query(By.css('input'));
+
+                        checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        const newData = generateListFactory(generateEntity)(50);
+                        component.data = newData;
+
+                        fixture.detectChanges();
+
+                        const matCheckbox = checkboxHeader.query(By.css('mat-checkbox')).componentInstance as MatCheckbox;
+                        expect(matCheckbox.checked).toEqual(false);
+                    });
+
+                    it('should unselect heade checkbox if all grid rows are unselected', () => {
+                        const disableSelectionByEntry = (entry?: ITestEntity) => entry && entry.id % 2 === 1 ? 'unselectable' : null;
+
+                        component.disableSelectionByEntry = disableSelectionByEntry;
+                        grid.selectionManager.disableSelectionByEntry = disableSelectionByEntry;
+                        fixture.detectChanges();
+
+                        const checkboxHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell.ui-grid-checkbox-cell'));
+                        const checkboxInput = checkboxHeader.query(By.css('input'));
+
+                        checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        fixture.debugElement.queryAll(By.css('[role="gridcell"] input[type="checkbox"]:not([disabled])'))
+                            .map(checkboxDebugElement => checkboxDebugElement.nativeElement)
+                            .forEach(checkboxNativeElement => checkboxNativeElement.dispatchEvent(EventGenerator.click));
+
+                        const matCheckbox = checkboxHeader.query(By.css('mat-checkbox')).componentInstance as MatCheckbox;
+                        expect(matCheckbox.checked).toEqual(false);
+                    });
+
+                    it('should show indeterminate header checkbox if selected after a row is selected and grid has disabled rows',
+                        fakeAsync(() => {
+                            const disableSelectionByEntry = (entry?: ITestEntity) => entry && entry.id % 2 === 1 ? 'unselectable' : null;
+
+                            component.disableSelectionByEntry = disableSelectionByEntry;
+                            grid.selectionManager.disableSelectionByEntry = disableSelectionByEntry;
+                            fixture.detectChanges();
+
+                            fixture.debugElement.query(By.css('[role="gridcell"] input[type="checkbox"]:not([disabled])'))
+                                .nativeElement.dispatchEvent(EventGenerator.click);
+
+                            fixture.detectChanges();
+
+                            const checkboxHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell.ui-grid-checkbox-cell'));
+                            const checkboxInput = checkboxHeader.query(By.css('input'));
+
+                            checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
+
+                            fixture.detectChanges();
+                            tick();
+                            fixture.detectChanges();
+
+                            const matCheckbox = checkboxHeader.query(By.css('mat-checkbox')).componentInstance as MatCheckbox;
+                            expect(matCheckbox.indeterminate).toBeTrue();
+                        }));
                 });
             });
         });
@@ -3721,18 +3790,22 @@ describe('Component: UiGrid', () => {
 
         it('should show custom filter after setting the grid\'s custom filter input', () => {
             expect(document.querySelector('.ui-grid-collapsible-filters-toggle')).toBeTruthy();
-            fixture.componentInstance.customFilter = [{ property: 'myNumber1',
+            fixture.componentInstance.customFilter = [{
+                property: 'myNumber1',
                 method: 'eq',
-                value: '2' }];
+                value: '2',
+            }];
             fixture.detectChanges();
             expect(document.querySelector('.ui-grid-collapsible-filters-toggle')).toBeFalsy();
             expect(document.querySelector('[data-cy="clear-custom-filter"]')).toBeTruthy();
         });
 
         it('should revert to old filter value after clearing the custom filter', fakeAsync(() => {
-            fixture.componentInstance.customFilter = [{ property: 'myNumber2',
+            fixture.componentInstance.customFilter = [{
+                property: 'myNumber2',
                 method: 'eq',
-                value: '2' }];
+                value: '2',
+            }];
             fixture.detectChanges();
             expect(JSON.stringify(fixture.componentInstance.grid.filterManager.filter$.value))
                 .toEqual(JSON.stringify(fixture.componentInstance.customFilter));
@@ -3745,7 +3818,7 @@ describe('Component: UiGrid', () => {
             expect(document.querySelector('.ui-grid-collapsible-filters-toggle')).toBeTruthy();
             expect(fixture.componentInstance.grid.filterManager.hasCustomFilter$.value).toBeFalse();
             expect(fixture.componentInstance.grid.filterManager.filter$.value[0].value)
-            .toEqual(fixture.componentInstance.filterValue.value);
+                .toEqual(fixture.componentInstance.filterValue.value);
         }));
 
         it('should NOT display expanded filters when grid has custom filter', fakeAsync(() => {
