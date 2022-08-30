@@ -400,7 +400,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (!this.isOpen) { return 0; }
 
         const actualCount = Math.max(
-            this.renderItems.filter(Boolean).length + (this.headerItems!.length ?? Number(this.isCustomValueVisible)),
+            this.renderItems.filter(Boolean).length + (this.enableCustomValue ?
+                (Number(this.isCustomValueVisible)) : (this.headerItems!.length)),
             1,
         );
         const displayedCount = Math.min(this.displayCount, actualCount);
