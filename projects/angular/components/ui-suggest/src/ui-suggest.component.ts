@@ -476,7 +476,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @Input()
-    minChars = 0;
+    get minChars() {
+        return this._minChars;
+    }
+    set minChars(value: number) {
+        this._minChars = value;
+        this._checkUnsuportedScenarios();
+    }
 
     /**
      * Configure the `control` width.
@@ -638,6 +644,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     private _multiple = false;
     private _lastSetItems: ISuggestValue[] = [];
     private _enableCustomValue = false;
+    private _minChars = 0;
 
     private _triggerViewportRefresh$ = new BehaviorSubject<null>(null);
     private _destroyed$ = new Subject<void>();
@@ -1408,6 +1415,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             {
                 errorText: 'enableCustomValue and headerItems are mutually exclusive options',
                 scenario: !!this.headerItems!.length && this.enableCustomValue,
+            },
+            {
+                errorText: 'enableCustomValue should not be used with minChars',
+                scenario: this.enableCustomValue && this.minChars > 0,
             },
             {
                 errorText: 'direction up is not supported when used in conjunction with headerItems',

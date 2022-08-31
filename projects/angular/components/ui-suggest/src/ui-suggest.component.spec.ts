@@ -159,6 +159,16 @@ const sharedSpecifications = (
             });
         });
 
+        it('should throw error when enableCustomValue is used with minChars', () => {
+            const error = new Error('enableCustomValue should not be used with minChars');
+            component.minChars = 3;
+            component.enableCustomValue = true;
+
+            expect(() => {
+                fixture.detectChanges();
+            }).toThrow(error);
+        });
+
         it('should have value set to an empty array if NULL or Undefined is provided', () => {
             component.value = undefined;
 
