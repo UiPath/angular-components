@@ -298,19 +298,23 @@
 
 <ng-template #customValueTemplate
              let-renderDirection>
-    <mat-list-item *ngIf="isCustomValueVisible && direction === renderDirection"
-                   [class.active]="(renderDirection === 'down' ? -1 : items.length) === activeIndex"
-                   [matTooltip]="customValueLabelTranslator(inputControl.value)"
-                   [style.height.px]="itemSize"
-                   (click)="preventDefault($event); updateValue(inputControl.value, !multiple, true);"
-                   [attr.role]="'option'"
-                   matTooltipPosition="right"
-                   class="text-ellipsis custom-item">
-        <div class="text-label text-ellipsis">
-            <mat-icon>add</mat-icon>
-            <span class="text-label-rendered">{{ customValueLabelTranslator(inputControl.value) }}</span>
-        </div>
-    </mat-list-item>
+    <ng-container *ngLet="isCustomValueAlreadySelected
+             ? intl.customValueAlreadySelected
+             : customValueLabelTranslator(inputControl.value) as customValueText">
+        <mat-list-item *ngIf="isCustomValueVisible && direction === renderDirection"
+                       [class.active]="(renderDirection === 'down' ? -1 : items.length) === activeIndex"
+                       [matTooltip]="customValueText"
+                       [style.height.px]="itemSize"
+                       (click)="preventDefault($event); updateValue(inputControl.value, !multiple, true);"
+                       [attr.role]="'option'"
+                       matTooltipPosition="right"
+                       class="text-ellipsis custom-item">
+            <div class="text-label text-ellipsis">
+                <mat-icon *ngIf="!isCustomValueAlreadySelected">add</mat-icon>
+                <span class="text-label-rendered">{{ customValueText }}</span>
+            </div>
+        </mat-list-item>
+    </ng-container>
 </ng-template>
 
 <ng-template #clearIcon>

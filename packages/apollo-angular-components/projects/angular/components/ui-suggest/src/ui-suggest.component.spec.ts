@@ -1148,14 +1148,14 @@ const sharedSpecifications = (
                 discardPeriodicTasks();
             }));
 
-            it('should NOT render a custom value item if already selected', fakeAsync(() => {
+            it('should render info message when the value in input is already selected', fakeAsync(() => {
                 addCustomValue('A');
                 searchFor('A', fixture);
                 fixture.detectChanges();
                 tick(5000);
 
-                const itemContainer = fixture.debugElement.query(By.css('.custom-item'));
-                expect(itemContainer).toBeFalsy();
+                const itemContainerText = fixture.debugElement.query(By.css('.custom-item .text-label-rendered'));
+                expect(itemContainerText.nativeElement.innerText).toEqual('This item is already added.');
 
                 discardPeriodicTasks();
             }));
@@ -2747,7 +2747,7 @@ describe('Component: UiSuggest', () => {
             </ng-template>
         `,
     })
-    class UiSuggestCustomTemplateFixtureComponent extends UiSuggestFixtureDirective {}
+    class UiSuggestCustomTemplateFixtureComponent extends UiSuggestFixtureDirective { }
 
     describe('Type: custom template', () => {
         let fixture: ComponentFixture<UiSuggestCustomTemplateFixtureComponent>;
