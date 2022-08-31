@@ -13,6 +13,11 @@ import {
 @Injectable()
 export class UiSuggestIntl implements OnDestroy {
     /**
+     * Label displayed when you re-enter an existing custom value.
+     *
+     */
+    customValueAlreadySelected = 'This item is already added.';
+    /**
      * Label for the selection clear tooltip.
      *
      */
