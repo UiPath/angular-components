@@ -1,3 +1,8 @@
+# v13.7.0 (2022-09-01)
+* **suggest** flag unsupported minChars & enableCustomValue combo
+* **suggest** same label name triggers the add option
+* **suggest** suggestion list size is too small
+
 # v13.6.8 (2022-08-26)
 * **grid** set indeterminate to true if not all rows are selected
 * **grid** unselect header checkbox if selection manager has no value

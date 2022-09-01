@@ -327,7 +327,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             return false;
         }
 
-        return !this.multiple || !this._value.some(v => v.text === this.inputControl.value);
+        return !this.multiple || !this._value.some(v => v.text === this.inputControl.value.trim()) || this.isCustomValueAlreadySelected;
     }
 
     get isCustomHeaderItemsVisible(): boolean {
@@ -390,6 +390,20 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      */
     get hasNoResults() {
         return !this.loading$.value && !this.items.length;
+    }
+
+    /**
+     * @ignore
+     */
+    get isCustomValueAlreadySelected() {
+        if (
+            !this._hasCustomValue$.value ||
+            this.loading$.value
+        ) {
+            return false;
+        }
+
+        return this.isItemSelected(toSuggestValue(this.inputControl.value.trim()));
     }
 
     /**
@@ -462,7 +476,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @Input()
-    minChars = 0;
+    get minChars() {
+        return this._minChars;
+    }
+    set minChars(value: number) {
+        this._minChars = value;
+        this._checkUnsuportedScenarios();
+    }
 
     /**
      * Configure the `control` width.
@@ -511,15 +531,15 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * Use compact summary info instead of chips
      *
      */
-     @Input()
-     compact = false;
+    @Input()
+    compact = false;
 
-     /**
-      * The template to use for compact summary
-      *
-      */
-     @Input()
-     compactSummaryTemplate?: TemplateRef<any>;
+    /**
+     * The template to use for compact summary
+     *
+     */
+    @Input()
+    compactSummaryTemplate?: TemplateRef<any>;
 
     /**
      * Emits `once` when `data` is retrieved for the `first time`.
@@ -624,6 +644,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     private _multiple = false;
     private _lastSetItems: ISuggestValue[] = [];
     private _enableCustomValue = false;
+    private _minChars = 0;
 
     private _triggerViewportRefresh$ = new BehaviorSubject<null>(null);
     private _destroyed$ = new Subject<void>();
@@ -1394,6 +1415,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             {
                 errorText: 'enableCustomValue and headerItems are mutually exclusive options',
                 scenario: !!this.headerItems!.length && this.enableCustomValue,
+            },
+            {
+                errorText: 'enableCustomValue should not be used with minChars',
+                scenario: this.enableCustomValue && this.minChars > 0,
             },
             {
                 errorText: 'direction up is not supported when used in conjunction with headerItems',
