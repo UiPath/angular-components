@@ -161,5 +161,38 @@ describe('Component: UiGrid', () => {
                 });
             });
         });
+
+        describe('State: doubled one column', () => {
+            let columns: UiGridColumnDirective<ITestEntity>[];
+
+            beforeEach(() => {
+                columns = generateColumnList('random');
+                columns.forEach(column => column.sortable = true);
+
+            });
+
+            it('should emit the reference property', (done) => {
+                const [firstColumn, duplicateColumn ] = columns;
+                firstColumn.property = 'prop1';
+                duplicateColumn.property = 'prop2';
+                duplicateColumn.queryProperty = 'prop1';
+                duplicateColumn.sort = 'desc';
+                manager.columns = columns;
+
+                manager.sort$
+                    .pipe(
+                        skip(1),
+                        take(1),
+                        finalize(done),
+                    ).subscribe(sort => {
+                        expect(sort.field).toEqual(duplicateColumn.queryProperty!);
+                        expect(sort.direction).toEqual(duplicateColumn.sort);
+                        expect(sort.userEvent).toBeTrue();
+                    });
+
+                manager.changeSort(duplicateColumn);
+            });
+        });
+
     });
 });
