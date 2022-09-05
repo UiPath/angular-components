@@ -92,7 +92,7 @@ export class FilterManager<T> {
             this._columns
                 .filter(column => column.searchable)
                 .map(column => ({
-                    property: column.property,
+                    property: column.queryProperty ?? column.property,
                     value: term,
                     method: column.method,
                 })) as IFilterModel<T>[] :
