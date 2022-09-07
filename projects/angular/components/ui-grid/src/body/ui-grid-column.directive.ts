@@ -122,6 +122,13 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     property?: keyof T | string; // nested property
 
     /**
+     * If defined, this will be used for sorting and filtering
+     *
+     */
+    @Input()
+    queryProperty?: keyof T | string; // nested property
+
+    /**
      * The method metadata used for searches.
      *
      */

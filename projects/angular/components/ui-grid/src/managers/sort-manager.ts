@@ -70,7 +70,7 @@ export class SortManager<T> {
     private _emitSort(column: UiGridColumnDirective<T>, userEvent = false) {
         const updatedSort = {
             direction: column.sort,
-            field: column.property,
+            field: column.queryProperty ?? column.property,
             title: column.title,
             userEvent,
         } as ISortModel<T>;
