@@ -1,3 +1,6 @@
+# v13.7.1 (2022-09-07)
+* **grid** add column input used for sorting
+
 # v13.7.0 (2022-09-01)
 * **suggest** flag unsupported minChars & enableCustomValue combo
 * **suggest** same label name triggers the add option
