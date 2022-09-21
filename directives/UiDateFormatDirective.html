@@ -215,7 +215,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="148" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:148</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="150" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:150</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -309,7 +309,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="140" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:140</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="142" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:142</a></div>
                                 </td>
                             </tr>
 
@@ -506,8 +506,10 @@ export class UiDateFormatDirective extends UiFormatDirective {
      */
     @Input()
     set date(date: Date | string | undefined) {
-        this._date &#x3D; date;
-        this._cd.detectChanges();
+        if (this._isDifferentValue(date, this._date)) {
+            this._date &#x3D; date;
+            this._cd.detectChanges();
+        }
     }
     get date() {
         return this._date;
@@ -628,6 +630,14 @@ export class UiDateFormatDirective extends UiFormatDirective {
     private _timeForType &#x3D; (type: DisplayType) &#x3D;&gt; this._isRelative(type) ?
         this._relativeTime :
         this._absoluteTime;
+
+    private _isDifferentValue &#x3D; (value: Date | string | undefined, compareValue: Date | string | undefined) &#x3D;&gt; {
+        if (value instanceof Date &amp;&amp; compareValue instanceof Date) {
+            return value.getTime() !&#x3D;&#x3D; compareValue.getTime();
+        }
+
+        return value !&#x3D;&#x3D; compareValue;
+    };
 }
 </code></pre>
     </div>
