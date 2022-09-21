@@ -530,6 +530,37 @@ describe('Directive: UiDateFormat', () => {
             expect(momentOutputDate.hour()).toEqual(momentInputDate.hour());
             expect(momentOutputDate.minute()).toEqual(momentInputDate.minute());
         });
+
+        it('should call detectChanges if the date input value changes', () => {
+            fixture = TestBed.createComponent(TestHostComponent);
+
+            component = fixture.componentInstance;
+            const changeDetectorRef = (component.uiDateFormat as any)._cd;
+            const detectChangesSpy = spyOn(changeDetectorRef, 'detectChanges').and.callThrough();
+
+            const now = Date.now();
+
+            component.date = new Date(now);
+            fixture.detectChanges();
+
+            component.date = new Date(now);
+            fixture.detectChanges();
+
+            const stringDate = '09/21/2022';
+            component.date = stringDate;
+            fixture.detectChanges();
+
+            component.date = stringDate;
+            fixture.detectChanges();
+
+            component.date = undefined;
+            fixture.detectChanges();
+
+            component.date = undefined;
+            fixture.detectChanges();
+
+            expect(detectChangesSpy).toHaveBeenCalledTimes(3);
+        });
     });
 
     describe('Configure inputs by setting injection token properties', () => {
