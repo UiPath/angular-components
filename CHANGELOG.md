@@ -1,3 +1,6 @@
+# v13.7.2 (2022-09-21)
+* **dateformat** run detectChanges only if date input value changes
+
 # v13.7.1 (2022-09-07)
 * **grid** add column input used for sorting
 
