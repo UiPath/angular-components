@@ -134,8 +134,10 @@ export class UiDateFormatDirective extends UiFormatDirective {
      */
     @Input()
     set date(date: Date | string | undefined) {
-        this._date = date;
-        this._cd.detectChanges();
+        if (this._isDifferentValue(date, this._date)) {
+            this._date = date;
+            this._cd.detectChanges();
+        }
     }
     get date() {
         return this._date;
@@ -256,4 +258,12 @@ export class UiDateFormatDirective extends UiFormatDirective {
     private _timeForType = (type: DisplayType) => this._isRelative(type) ?
         this._relativeTime :
         this._absoluteTime;
+
+    private _isDifferentValue = (value: Date | string | undefined, compareValue: Date | string | undefined) => {
+        if (value instanceof Date && compareValue instanceof Date) {
+            return value.getTime() !== compareValue.getTime();
+        }
+
+        return value !== compareValue;
+    };
 }
