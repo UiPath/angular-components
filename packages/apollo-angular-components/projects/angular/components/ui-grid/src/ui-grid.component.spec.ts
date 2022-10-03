@@ -349,6 +349,15 @@ describe('Component: UiGrid', () => {
                     expect(secondCell.nativeElement.getAttribute('role')).toBe('rowheader');
                     expect(thirdCell.nativeElement.getAttribute('role')).toBe('gridcell');
                 }));
+
+                it('should emit event when row is clicked', () => {
+                    spyOn(grid.rowClick, 'emit');
+                    const firstRow = fixture.debugElement.query(By.css('.ui-grid-row'));
+                    firstRow.nativeElement.dispatchEvent(EventGenerator.click);
+                    expect(grid.rowClick.emit).toHaveBeenCalledWith(jasmine.objectContaining({
+                        row: data[0],
+                      }));
+                });
             });
         });
 
@@ -3953,5 +3962,126 @@ describe('Component: UiGrid', () => {
             const colTitleParagraphElement = document.querySelector('.ui-grid-header-title p');
             expect(colTitleParagraphElement!.getAttribute('aria-label')).toEqual('Number Header');
         }));
+    });
+
+    @Component({
+        template: `
+            <ui-grid [data]="data"
+                     [expandedEntry]="expandedEntry"
+                     [expandedEntries]="expandedEntries">
+                <ui-grid-column [property]="'myNumber'"
+                                title="Number Header"
+                                width="25%">
+                </ui-grid-column>
+
+                <ui-grid-column [property]="'myBool'"
+                                title="Boolean Header"
+                                width="25%">
+                </ui-grid-column>
+                <ui-grid-expanded-row>
+                    <ng-template let-entry="data">
+                        <div class="expanded-row">
+                            <h2>Expanded row ID: {{ entry.id }}</h2>
+                        </div>
+                    </ng-template>
+                </ui-grid-expanded-row>
+            </ui-grid>
+        `,
+    })
+    class TestFixtureExpandedGridComponent {
+        @ViewChild(UiGridComponent, {
+            static: true,
+        })
+        grid!: UiGridComponent<ITestEntity>;
+
+        data: ITestEntity[] = [];
+        expandedEntries?: ITestEntity[];
+        expandedEntry?: ITestEntity;
+    }
+    describe('Scenario: expanded grid rows', () => {
+        let fixture: ComponentFixture<TestFixtureExpandedGridComponent>;
+        let component: TestFixtureExpandedGridComponent;
+        let data: ITestEntity[];
+        let grid: UiGridComponent<ITestEntity>;
+
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    UiGridModule,
+                    NoopAnimationsModule,
+                ],
+                declarations: [TestFixtureExpandedGridComponent],
+            });
+
+            fixture = TestBed.createComponent(TestFixtureExpandedGridComponent);
+            component = fixture.componentInstance;
+            data = generateListFactory(generateEntity)(6);
+            component.data = data;
+            grid = component.grid;
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should handle expanded row via expandedEntry', () => {
+            component.expandedEntry = data[0];
+            fixture.detectChanges();
+
+            let expandedRows = fixture.debugElement.queryAll(By.css('.expanded-row'));
+            expect(expandedRows.length).toBe(1);
+            expect((grid.expandedEntries as ITestEntity[])[0].id).toBe(component.expandedEntry.id);
+
+            component.expandedEntry = data[1];
+            fixture.detectChanges();
+
+            expandedRows = fixture.debugElement.queryAll(By.css('.expanded-row'));
+            expect(expandedRows.length).toBe(1);
+            expect((grid.expandedEntries as ITestEntity[])[0].id).toBe(component.expandedEntry.id);
+
+            component.expandedEntry = undefined;
+            fixture.detectChanges();
+
+            expandedRows = fixture.debugElement.queryAll(By.css('.expanded-row'));
+            expect(expandedRows).toBeEmptyArray();
+        });
+
+        it('should not have any expanded rows', () => {
+            expect(component.expandedEntries).toBeUndefined();
+
+            const expandedRows = fixture.debugElement.queryAll(By.css('.expanded-row'));
+            expect(expandedRows).toBeEmptyArray();
+        });
+
+        it('should have a single expanded row', fakeAsync(() => {
+            component.expandedEntries = [data[0]];
+            fixture.detectChanges();
+
+            const expandedRows = fixture.debugElement.queryAll(By.css('.expanded-row'));
+            expect(expandedRows.length).toBe(1);
+        }));
+
+        it('should collapse row', fakeAsync(() => {
+            component.expandedEntries = [data[0]];
+            fixture.detectChanges();
+
+            let expandedRows = fixture.debugElement.queryAll(By.css('.expanded-row'));
+            expect(expandedRows.length).toBe(1);
+
+            component.expandedEntries = undefined;
+            fixture.detectChanges();
+
+            expandedRows = fixture.debugElement.queryAll(By.css('.expanded-row'));
+            expect(expandedRows).toBeEmptyArray();
+        }));
+
+        it('should have multiple expanded rows', () => {
+            fixture.componentInstance.expandedEntries = [...data];
+            fixture.detectChanges();
+
+            const expandedRows = fixture.debugElement.queryAll(By.css('.expanded-row'));
+            expect(expandedRows.length).toBe(fixture.componentInstance.expandedEntries.length);
+        });
     });
 });

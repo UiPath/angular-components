@@ -145,7 +145,8 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
             }
 
             &-header-row,
-            &-row {
+            &-row,
+            &-row-state-expanded {
                 border-bottom-color: $ui-grid-border-color;
                 transition: $ui-grid-opacity-transition;
             }

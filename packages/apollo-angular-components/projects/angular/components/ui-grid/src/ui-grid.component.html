@@ -240,7 +240,7 @@
                             <ng-container *ngTemplateOutlet="rowTemplate; context: {
                                     data: row,
                                     index: index,
-                                    expanded: expandedEntry,
+                                    expanded: expandedEntries,
                                     last: last
                                 }">
                             </ng-container>
@@ -255,7 +255,7 @@
                         <ng-container *ngTemplateOutlet="rowTemplate; context: {
                                 data: row,
                                 index: index,
-                                expanded: expandedEntry,
+                                expanded: expandedEntries,
                                 last: last
                             }">
                         </ng-container>
@@ -280,12 +280,14 @@
              let-index="index">
     <div cdkMonitorSubtreeFocus
          class="ui-grid-row"
-         *ngIf="expanded?.id !== row?.id || expandMode === 'preserve'"
-         [class.ui-grid-row-state-expanded]="expanded?.id === row?.id"
+         *ngIf="!isRowExpanded(row?.id) || expandMode === 'preserve'"
+         [class.ui-grid-row-state-expanded]="isRowExpanded(row?.id)"
          [class.ui-grid-border-none]="!footer && last"
          [ngClass]="rowConfig?.ngClassFn(row) ?? ''"
          [tabIndex]="0"
          [attr.data-row-index]="index"
+         (click)="onRowClick($event, row)"
+         (keyup.enter)="onRowClick($event, row)"
          role="row">
 
         <div *ngIf="isProjected"
@@ -379,8 +381,8 @@
             </div>
         </div>
     </div>
-    <div *ngIf="expanded?.id === row?.id"
-         [class.ui-grid-row-state-expanded]="expanded?.id === row?.id"
+    <div *ngIf="isRowExpanded(row?.id)"
+         [class.ui-grid-row-state-expanded]="isRowExpanded(row?.id)"
          [class.ui-grid-border-none]="!footer && last"
          role="row">
         <div class="ui-grid-expanded-row-container">

@@ -83,6 +83,7 @@ import { ResizableGrid } from './managers/resize/types';
 import {
     GridOptions,
     IFilterModel,
+    IGridDataEntry,
     ISortModel,
 } from './models';
 import { UiGridIntl } from './ui-grid.intl';
@@ -128,7 +129,7 @@ const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), 
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class UiGridComponent<T extends { id: number | string }> extends ResizableGrid<T> implements AfterContentInit, OnChanges, OnDestroy {
+export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> implements AfterContentInit, OnChanges, OnDestroy {
     /**
      * The data list that needs to be rendered within the grid.
      *
@@ -318,9 +319,31 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
     /**
      * Set the expanded entry.
      *
+     * @deprecated Use `expandedEntries` instead.
      */
     @Input()
-    expandedEntry?: T;
+    set expandedEntry(entry: T | undefined) {
+        this.expandedEntries = entry;
+    }
+    get expandedEntry() {
+        return this._expandedEntries[0];
+    }
+
+    /**
+     * Set the expanded entry / entries.
+     *
+     */
+    @Input()
+    set expandedEntries(entry: T | T[] | undefined) {
+        if (!entry) {
+            this._expandedEntries = [];
+            return;
+        }
+        this._expandedEntries = Array.isArray(entry) ? entry : [entry];
+    }
+    get expandedEntries() {
+        return this._expandedEntries;
+    }
 
     /**
      * Configure if the expanded entry should replace the active row, or add a new row with the expanded view.
@@ -380,6 +403,13 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
 
     @Output()
     removeCustomFilter = new EventEmitter<void>();
+
+    /**
+     * Emits an event when a row is clicked.
+     *
+     */
+    @Output()
+    rowClick = new EventEmitter<{event: Event; row: T}>();
 
     /**
      * Emits the column definitions when their definition changes.
@@ -632,7 +662,7 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
     private _isShiftPressed = false;
     private _lastCheckboxIdx = 0;
     private _resizeSubscription$: null | Subscription = null;
-
+    private _expandedEntries: T[] = [];
     /**
      * @ignore
      */
@@ -931,6 +961,21 @@ export class UiGridComponent<T extends { id: number | string }> extends Resizabl
     clearCustomFilter() {
         this.removeCustomFilter.emit();
         this.filterManager.clearCustomFilters();
+    }
+
+    isRowExpanded(rowId?: IGridDataEntry['id']) {
+        if (rowId == null) {
+            return false;
+        }
+
+        return this._expandedEntries.some(el => el.id === rowId);
+    }
+
+    onRowClick(event: Event, row: T) {
+        this.rowClick.emit({
+            event,
+            row,
+        });
     }
 
     checkIndeterminateState(indeterminateState: boolean) {
