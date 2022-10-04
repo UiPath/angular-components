@@ -1,3 +1,6 @@
+# v13.8.0 (2022-10-04)
+* **grid** multiple expanded rows
+
 # v13.7.2 (2022-09-21)
 * **dateformat** run detectChanges only if date input value changes
 
