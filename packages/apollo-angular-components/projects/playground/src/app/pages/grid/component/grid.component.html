@@ -12,7 +12,7 @@
          [virtualScroll]="inputs.virtualScroll"
          [showPaintTime]="inputs.showPaintTime"
          [showHeaderRow]="inputs.showHeaderRow"
-         [expandedEntry]="editedEntity"
+         [expandedEntries]="editedEntity"
          [expandMode]="'preserve'"
          [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []">
 
@@ -74,12 +74,11 @@
     </ui-grid-column>
 
     <ui-grid-row-action>
-        <ng-template let-index="index"
-                     let-entry="data">
-            <button (click)="editedEntity = editedEntity && index == editedIndex ? undefined : entry; editedIndex = editedIndex === index ? undefined : index;"
+        <ng-template let-entry="data">
+            <button (click)="editedEntity = editedEntity?.id === entry.id ? undefined : entry"
                     mat-icon-button
                     type="button">
-                <mat-icon>{{index === editedIndex && editedEntity ? 'close' : 'edit'}}</mat-icon>
+                <mat-icon>{{editedEntity?.id === entry.id ? 'close' : 'edit'}}</mat-icon>
             </button>
         </ng-template>
     </ui-grid-row-action>

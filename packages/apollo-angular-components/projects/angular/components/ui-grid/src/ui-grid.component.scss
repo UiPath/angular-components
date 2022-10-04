@@ -385,6 +385,7 @@ ui-grid {
                 width: 100%;
                 height: 100%;
                 padding: $ui-grid-default-spacing;
+                box-sizing: border-box;
             }
 
             .ui-grid-row {
@@ -397,7 +398,8 @@ ui-grid {
             }
 
             .ui-grid-header-row,
-            .ui-grid-row {
+            .ui-grid-row,
+            .ui-grid-row-state-expanded {
                 display: flex;
                 align-items: center;
                 border-width: 0;
