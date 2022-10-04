@@ -1,0 +1,27 @@
+name: Publish new version
+
+on:
+  workflow_dispatch:
+    inputs:
+      VersionBumpType:
+        type: choice
+        description: 'Version bump type'
+        required: true
+        options:
+        - patch
+        - minor
+        - major
+        - stable
+        - rc
+        - patch:rc
+        - minor:rc
+        - major:rc
+
+jobs:
+  test-job:
+    name: Log version-bump type
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo the version-bump type
+        run: |
+          echo ${{ github.event.inputs.VersionBumpType }}
