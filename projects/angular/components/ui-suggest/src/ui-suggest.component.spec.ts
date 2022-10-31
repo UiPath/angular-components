@@ -1710,6 +1710,24 @@ const sharedSpecifications = (
             }
         }));
 
+        it('should not have a checkbox next to preventSelection item entry', waitForAsync(async () => {
+            component.items![0].preventSelection = true;
+            fixture.detectChanges();
+
+            const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+            display.nativeElement.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const itemList = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+
+            const itemEntry = itemList[0];
+            const checkbox = itemEntry.query(By.css('.mat-checkbox'));
+            expect(checkbox).toBeNull();
+        }));
+
         it('should have the chechbox checked for selected items', waitForAsync(async () => {
             const selectedValues = component.items!.slice(0, 5);
             component.value = selectedValues;
