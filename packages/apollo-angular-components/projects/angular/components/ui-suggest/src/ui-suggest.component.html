@@ -368,7 +368,7 @@
                  [attr.data-item-id]="item.id"
                  matTooltipPosition="right"
                  class="ui-suggest-item">
-                <mat-checkbox *ngIf="multiple"
+                <mat-checkbox *ngIf="multiple && !item.preventSelection"
                               [checked]="isItemSelected(item)"
                               [indeterminate]="false">
                 </mat-checkbox>
