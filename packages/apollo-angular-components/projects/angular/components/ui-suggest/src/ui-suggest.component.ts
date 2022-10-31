@@ -1039,7 +1039,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     // eslint-disable-next-line complexity
     updateValue(inputValue: ISuggestValue | string, closeAfterSelect = true, refocus = true) {
         let value = toSuggestValue(inputValue, this._isOnCustomValueIndex);
-        if (value.loading !== VirtualScrollItemStatus.loaded || value.preventSelection === true) { return; }
+        if (value.loading !== VirtualScrollItemStatus.loaded || value.disabled === true) { return; }
 
         if (this.inDrillDownMode) {
             value = {

@@ -1713,8 +1713,8 @@ const sharedSpecifications = (
             }
         }));
 
-        it('should not have a checkbox next to preventSelection item entry', waitForAsync(async () => {
-            component.items![0].preventSelection = true;
+        it('should have the checkbox disabled next to disabled item entry', waitForAsync(async () => {
+            component.items![0].disabled = true;
             fixture.detectChanges();
 
             const display = fixture.debugElement.query(By.css('.mat-chip-list'));
@@ -1727,8 +1727,7 @@ const sharedSpecifications = (
             const itemList = fixture.debugElement.queryAll(By.css('.mat-list-item'));
 
             const itemEntry = itemList[0];
-            const checkbox = itemEntry.query(By.css('.mat-checkbox'));
-            expect(checkbox).toBeNull();
+            expect(itemEntry.nativeElement).toHaveClass('disabled');
         }));
 
         it('should have the chechbox checked for selected items', waitForAsync(async () => {

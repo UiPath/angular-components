@@ -350,7 +350,9 @@
                                                 !multiple &&
                                                 isItemSelected(item)"
                    [class.is-expandable]="itemExpandable"
+                   [class.disabled]="item.disabled"
                    [style.height.px]="!!item ? itemSize : 0"
+                   [disabled]="item.disabled"
                    (click)="preventDefault($event);
                                         updateValue(item, !multiple, true);"
                    [attr.role]="'option'"
@@ -368,7 +370,8 @@
                  [attr.data-item-id]="item.id"
                  matTooltipPosition="right"
                  class="ui-suggest-item">
-                <mat-checkbox *ngIf="multiple && !item.preventSelection"
+                <mat-checkbox *ngIf="multiple"
+                              [disabled]="item.disabled"
                               [checked]="isItemSelected(item)"
                               [indeterminate]="false">
                 </mat-checkbox>
