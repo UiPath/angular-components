@@ -41,9 +41,9 @@ export interface ISuggestValue extends VirtualScrollItem {
      */
     expandable?: boolean;
     /**
-     * Flag that marks if item is non-selectable.
+     * Flag that marks if item is disabled.
      */
-     preventSelection?: boolean;
+     disabled?: boolean;
     /**
      * Optional icon that will be displayed to the left of the item.
      *
