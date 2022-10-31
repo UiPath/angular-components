@@ -2834,7 +2834,7 @@ describe('Component: UiSuggest', () => {
                 });
             }));
 
-            fit('should render the compact summary using the provided value factory when custom template is not defined', (async () => {
+            it('should render the compact summary using the provided value factory when custom template is not defined', (async () => {
                 const expectedDisplaySummary = 'My Custom Test Display';
                 const items = generateSuggetionItemList(5);
                 component.items = items;
