@@ -454,6 +454,15 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      */
     @Input()
     searchSourceFactory?: (searchTerm?: string, fetchCount?: number, skip?: number) => Observable<ISuggestValues<any>>;
+
+    /**
+     * A display value factory, generally used to compute the display value for multiple items.
+     * By `default`, a display value factory is generated that does an array.join.
+     *
+     */
+    @Input()
+    displayValueFactory?: (value?: ISuggestValue[]) => string;
+
     @Input()
     customValueLabelTranslator!: (value: string) => string;
 
@@ -1432,6 +1441,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _getValueSummary() {
-        return this.value.map(v => this.intl.translateLabel(v.text)).join(', ');
+        return (this.displayValueFactory ?? this._defaultDisplayValueFactory)(this.value);
     }
+
+    private _defaultDisplayValueFactory = (value?: ISuggestValue[]) => (value ?? []).map(v => this.intl.translateLabel(v.text)).join(', ');
 }

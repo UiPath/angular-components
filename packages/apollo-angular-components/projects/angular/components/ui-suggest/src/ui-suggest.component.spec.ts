@@ -75,6 +75,7 @@ class UiSuggestFixtureDirective {
     clearable?: boolean;
     searchable?: boolean;
     compact?: boolean;
+    useCompactTemplate = true;
     searchableCountInfo?: { count: number; message: string };
     alwaysExpanded?: boolean;
     disabled?: boolean;
@@ -89,6 +90,8 @@ class UiSuggestFixtureDirective {
     displayPriority: 'default' | 'selected' = 'default';
     fetchStrategy: 'eager' | 'onOpen' = 'eager';
     minChars = 0;
+
+    displayValueFactory?: (value: ISuggestValue[]) => string;
 
     set value(value: ISuggestValue[] | undefined) {
         this._value = value;
@@ -2758,7 +2761,8 @@ describe('Component: UiSuggest', () => {
                 [minChars]="minChars"
                 [drillDown]="drillDown"
                 [compact]="compact"
-                [compactSummaryTemplate]="compactSummaryTemplate"
+                [displayValueFactory]="displayValueFactory"
+                [compactSummaryTemplate]="useCompactTemplate ? compactSummaryTemplate : undefined"
             >
                 <ng-template let-item>
                     <div class="item-template">{{ item.text }}</div>
@@ -2828,6 +2832,29 @@ describe('Component: UiSuggest', () => {
                 items.forEach((item, index) => {
                     expect(item.text).toBe(generatedItems[index].nativeElement.innerText);
                 });
+            }));
+
+            fit('should render the compact summary using the provided value factory when custom template is not defined', (async () => {
+                const expectedDisplaySummary = 'My Custom Test Display';
+                const items = generateSuggetionItemList(5);
+                component.items = items;
+                component.useCompactTemplate = false;
+                component.displayValueFactory = () => expectedDisplaySummary;
+
+                const selectedValues = faker.helpers.shuffle(component.items!).slice(0, 3);
+                component.value = selectedValues;
+
+                component.multiple = true;
+                component.compact = true;
+                component.searchable = true;
+
+                fixture.detectChanges();
+
+                const displayContainer = fixture.debugElement.query(By.css('.display-container'));
+                const displayValue = displayContainer.query(By.css('.display-value'));
+                const summaryText = displayValue.nativeElement.innerText.trim();
+
+                expect(summaryText).toBe(expectedDisplaySummary);
             }));
 
             it('should render the compact summary using the provided custom template', () => {
