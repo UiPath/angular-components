@@ -83,7 +83,7 @@
     "core-js": "^3.19.3",
     "lodash-es": "4.17.21",
     "moment": "2.29.1",
-    "moment-timezone": "0.5.33",
+    "moment-timezone": "0.5.35",
     "object-hash": "2.2.0",
     "rxjs": "7.4.0",
     "scroll-into-view-if-needed": "2.2.28",
