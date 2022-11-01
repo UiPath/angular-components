@@ -75,6 +75,7 @@ class UiSuggestFixtureDirective {
     clearable?: boolean;
     searchable?: boolean;
     compact?: boolean;
+    useCompactTemplate = true;
     searchableCountInfo?: { count: number; message: string };
     alwaysExpanded?: boolean;
     disabled?: boolean;
@@ -89,6 +90,8 @@ class UiSuggestFixtureDirective {
     displayPriority: 'default' | 'selected' = 'default';
     fetchStrategy: 'eager' | 'onOpen' = 'eager';
     minChars = 0;
+
+    displayValueFactory?: (value: ISuggestValue[]) => string;
 
     set value(value: ISuggestValue[] | undefined) {
         this._value = value;
@@ -1710,6 +1713,23 @@ const sharedSpecifications = (
             }
         }));
 
+        it('should have the checkbox disabled next to disabled item entry', waitForAsync(async () => {
+            component.items![0].disabled = true;
+            fixture.detectChanges();
+
+            const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+            display.nativeElement.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const itemList = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+
+            const itemEntry = itemList[0];
+            expect(itemEntry.nativeElement).toHaveClass('disabled');
+        }));
+
         it('should have the chechbox checked for selected items', waitForAsync(async () => {
             const selectedValues = component.items!.slice(0, 5);
             component.value = selectedValues;
@@ -2740,7 +2760,8 @@ describe('Component: UiSuggest', () => {
                 [minChars]="minChars"
                 [drillDown]="drillDown"
                 [compact]="compact"
-                [compactSummaryTemplate]="compactSummaryTemplate"
+                [displayValueFactory]="displayValueFactory"
+                [compactSummaryTemplate]="useCompactTemplate ? compactSummaryTemplate : undefined"
             >
                 <ng-template let-item>
                     <div class="item-template">{{ item.text }}</div>
@@ -2810,6 +2831,29 @@ describe('Component: UiSuggest', () => {
                 items.forEach((item, index) => {
                     expect(item.text).toBe(generatedItems[index].nativeElement.innerText);
                 });
+            }));
+
+            it('should render the compact summary using the provided value factory when custom template is not defined', (async () => {
+                const expectedDisplaySummary = 'My Custom Test Display';
+                const items = generateSuggetionItemList(5);
+                component.items = items;
+                component.useCompactTemplate = false;
+                component.displayValueFactory = () => expectedDisplaySummary;
+
+                const selectedValues = faker.helpers.shuffle(component.items!).slice(0, 3);
+                component.value = selectedValues;
+
+                component.multiple = true;
+                component.compact = true;
+                component.searchable = true;
+
+                fixture.detectChanges();
+
+                const displayContainer = fixture.debugElement.query(By.css('.display-container'));
+                const displayValue = displayContainer.query(By.css('.display-value'));
+                const summaryText = displayValue.nativeElement.innerText.trim();
+
+                expect(summaryText).toBe(expectedDisplaySummary);
             }));
 
             it('should render the compact summary using the provided custom template', () => {
