@@ -1,3 +1,8 @@
+# v13.9.0 (2022-11-01)
+* **suggest** add disabled flag to ISuggestValue
+* **suggest** add displayValueFactory input
+* **chore** bump minor version
+
 # v13.8.0 (2022-10-04)
 * **grid** multiple expanded rows
 
