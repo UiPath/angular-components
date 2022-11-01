@@ -7,12 +7,13 @@ import {
 import { MockData } from 'projects/playground/src/app/pages/grid/grid.page';
 import {
     BehaviorSubject,
-    combineLatest,
+    combineLatest, Observable, of,
     Subject,
 } from 'rxjs';
 import {
-    startWith,
-    takeUntil,
+    delay,
+    startWith, switchMap,
+    takeUntil, tap,
 } from 'rxjs/operators';
 
 import {
@@ -30,6 +31,7 @@ import {
     PageChangeEvent,
     UiGridComponent,
 } from '@uipath/angular/components/ui-grid';
+import { ISuggestValues } from '@uipath/angular/components/ui-suggest';
 
 // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
@@ -92,10 +94,16 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
         ).subscribe(([searchFilters, filters]) => {
             this.filteredData = cloneDeep(this.allData);
             const filterValues = (filter: IFilterModel<any>) => {
-                this.filteredData = this.filteredData.filter((row: any) =>
-                row[filter.property]
-                    .toString()
-                    .includes(filter.value?.toString()));
+                this.filteredData = this.filteredData.filter((row: any) => {
+                    if (Array.isArray(filter.value)) {
+                        return filter.value.length > 0 ? filter.value.some(value => row[filter.property]
+                            .toString()
+                            .includes(value)) : true;
+                    }
+                    return row[filter.property]
+                        .toString()
+                        .includes(filter.value?.toString());
+                });
             };
 
             searchFilters.forEach(filterValues);
@@ -126,4 +134,30 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
         this.pageIndex = event.pageIndex;
         this.paginateData(this.filteredData, event.pageIndex, event.pageSize);
     }
+
+    getResults(searchTerm: string): Observable<ISuggestValues<any>> {
+        const filteredData = this.allData.map(d => ({
+            id: d.name,
+            text: d.name,
+            expandable: true,
+        })).filter(a => a.text.includes(searchTerm.trim()));
+
+        return of({
+            total: filteredData.length,
+            data: filteredData,
+        });
+    }
+
+    searchSourceFactory: SearchSourceFactory = (searchTerm = '', top = 10, skip = 0) => of(searchTerm).pipe(
+        switchMap(() => this.getResults(searchTerm)),
+        tap((results: any) => console.log({
+            searchTerm,
+            top,
+            skip,
+            results,
+        })),
+        delay(50),
+    );
 }
+
+type SearchSourceFactory = (searchTerm?: string, fetchCount?: number, skip?: number) => Observable<ISuggestValues<any>>;

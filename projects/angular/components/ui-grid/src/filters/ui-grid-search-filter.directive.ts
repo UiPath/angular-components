@@ -66,7 +66,7 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> imp
      *
      */
     @Input()
-    value?: ISuggestValue;
+    value?: ISuggestValue | ISuggestValue[];
 
     /**
      * Wether the filter should be rendered in the grid.
@@ -77,6 +77,13 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> imp
     set visible(visible: boolean) { this.visible$.next(visible); }
 
     /**
+     * Allow multiple selection
+     *
+     */
+    @Input()
+    multiple = false;
+
+    /**
      * @ignore
      */
     visible$ = new BehaviorSubject(true);
@@ -85,8 +92,27 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> imp
      * Updates the dropdown option.
      *
      */
-    updateValue(value?: ISuggestValue) {
-        this.value = value;
+    updateValue(value?: ISuggestValue, isSelected?: boolean) {
+        if (!value) {
+            return;
+        }
+
+        if (this.multiple) {
+            if (!this.value) {
+                this.value = [];
+            }
+
+            if (isSelected) {
+                (this.value as ISuggestValue[]).push(value);
+            } else {
+                const index = (this.value as ISuggestValue[]).findIndex(item => item.id === value.id);
+                if (index > -1) {
+                    (this.value as ISuggestValue[]).splice(index, 1);
+                }
+            }
+        } else {
+            this.value = value;
+        }
     }
 
     /**

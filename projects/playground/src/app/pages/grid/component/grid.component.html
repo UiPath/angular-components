@@ -61,9 +61,10 @@
                     method="eq"
                     title="Name"
                     width="34%">
-        <ui-grid-dropdown-filter [visible]="header.showFilter"
-                                 [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
-        </ui-grid-dropdown-filter>
+        <ui-grid-search-filter [visible]="header.showFilter"
+                               [searchSourceFactory]="searchSourceFactory"
+                               [multiple]="true">
+        </ui-grid-search-filter>
     </ui-grid-column>
     <ui-grid-column [property]="'parity'"
                     title="Parity"

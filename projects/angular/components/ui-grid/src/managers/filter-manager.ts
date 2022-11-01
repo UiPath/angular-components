@@ -80,11 +80,11 @@ export class FilterManager<T> {
         this.filter$.complete();
     }
 
-    searchableDropdownUpdate = (column?: UiGridColumnDirective<T>, value?: ISuggestValue) =>
-        this._updateFilterValue(column, value, this._mapSearchableDropdownItem);
+    searchableDropdownUpdate = (column?: UiGridColumnDirective<T>, value?: ISuggestValue, selected?: boolean) =>
+        this._updateFilterValue(column, value, selected, this._mapSearchableDropdownItem);
 
     dropdownUpdate = (column?: UiGridColumnDirective<T>, value?: IDropdownOption) =>
-        this._updateFilterValue(column, value, this._mapDropdownItem);
+        this._updateFilterValue(column, value, false, this._mapDropdownItem);
 
     searchChange(term: string | undefined, header: UiGridHeaderDirective<T>, footer?: UiGridFooterDirective) {
         if (term === header.searchValue) { return; }
@@ -123,6 +123,7 @@ export class FilterManager<T> {
     private _updateFilterValue = (
         column: UiGridColumnDirective<T> | undefined,
         value: ISuggestValue | IDropdownOption | undefined,
+        selected: boolean | undefined,
         mapper: (column: UiGridColumnDirective<T>) => IFilterModel<T>,
     ): void => {
         if (!column) { return; }
@@ -132,8 +133,8 @@ export class FilterManager<T> {
         if (!dropdown) { return; }
 
         (dropdown as {
-            updateValue: (value: ISuggestValue | IDropdownOption | undefined) => void;
-        }).updateValue(value);
+            updateValue: (value: ISuggestValue | IDropdownOption | undefined, selected: boolean | undefined) => void;
+        }).updateValue(value, selected);
         dropdown.filterChange.emit(value ? mapper(column) : null);
 
         this._emitFilterOptions();
@@ -157,6 +158,7 @@ export class FilterManager<T> {
             : [];
         if (isEqual(this.filter$.getValue(), updatedFilters)) { return; }
 
+        console.log(updatedFilters.map(it => it.value));
         this.filter$.next(
             this.hasCustomFilter$.value
             ? this.customFilters!
@@ -180,11 +182,15 @@ export class FilterManager<T> {
         value: column.dropdown!.emptyStateValue,
     }) as IFilterModel<T>;
 
-    private _mapSearchableDropdownItem = (column: UiGridColumnDirective<T>): IFilterModel<T> => ({
-        method: column.searchableDropdown!.method,
-        property: column.searchableDropdown!.property ?? column.property,
-        value: column.searchableDropdown!.value!.id,
-    }) as IFilterModel<T>;
+    private _mapSearchableDropdownItem(column: UiGridColumnDirective<T>): IFilterModel<T> {
+        return {
+            method: column.searchableDropdown!.method,
+            property: column.searchableDropdown!.property ?? column.property,
+            value: column.searchableDropdown!.multiple ?
+                (column.searchableDropdown!.value! as ISuggestValue[]).map(value => value.id)
+                : (column.searchableDropdown!.value! as ISuggestValue).id,
+        } as IFilterModel<T>;
+    }
 
     private _sortByProperty(filters: IFilterModel<T>[]): any {
         return filters.sort((a, b) => (a.property > b.property) ? 1 : -1);
