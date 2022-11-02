@@ -456,6 +456,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     searchSourceFactory?: (searchTerm?: string, fetchCount?: number, skip?: number) => Observable<ISuggestValues<any>>;
 
     /**
+     * Configure the `searchSourceStrategy` for requesting data using searchSourceFactory:
+     * `default` - need total count
+     * `lazy` - items will be fetched only when reaching bottom of the list (no need of total count)
+     */
+    @Input()
+    searchSourceStrategy: 'default' | 'lazy' = 'default';
+
+    /**
      * A display value factory, generally used to compute the display value for multiple items.
      * By `default`, a display value factory is generated that does an array.join.
      *
@@ -625,9 +633,18 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             .pipe(
                 takeUntil(this._destroyed$),
             )
-            .subscribe(start => this._visibleRange = {
-                start,
-                end: start + this.displayCount,
+            .subscribe(start => {
+                if (this._isLazyMode
+                    && this.isDown
+                    && this._items[start + this.displayCount]?.loading === VirtualScrollItemStatus.initial) {
+
+                    this._loadMore();
+
+                }
+                this._visibleRange = {
+                    start,
+                    end: start + this.displayCount,
+                };
             });
     }
 
@@ -671,6 +688,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
     private _inputChange$: Observable<string>;
     private _drillDown = false;
+    private _lazyLoadLastArgument: any[] = ['', 0, 0];
 
     /**
      * @ignore
@@ -769,6 +787,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        if (this.searchSourceStrategy === 'lazy' && this.direction === 'up') {
+            throw new Error('Currently support only down direction for lazy mode');
+        }
+
+        if (this.searchSourceStrategy === 'lazy' && !this.searchSourceFactory) {
+            throw new Error('Should provide a searchSourceFactory for lazyMode');
+        }
         const { displayPriority } = changes;
 
         if (displayPriority?.currentValue !== displayPriority?.previousValue) {
@@ -981,8 +1006,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         this.preventDefault(ev);
 
         if (
-            !this.items.length &&
-            !this.enableCustomValue
+            this._cantNavigate()
         ) { return; }
 
         const [value] = this.value;
@@ -1282,7 +1306,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             this.displayPriority,
             this.value,
             this.intl.loadingLabel,
-            this.isDown);
+            this.isDown,
+            this._isLazyMode,
+        );
+
+        if (this._shouldAddLoadingElementInLazyMode(searchResponse?.data ?? [])) {
+            this._addLoadingElementInLazyMode();
+        }
 
         if (!this.sourceInitialized.closed) {
             this.sourceInitialized.emit(this.items);
@@ -1363,20 +1393,38 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             throw new Error('searchSourceFactory is not defined');
         }
 
-        const fetchCount = end - start + 1;
-        const mappedStart = this.isDown ? start : this._items.length - end - 1;
-        const mappedEnd = this.isDown ? end : this._items.length - start - 1;
+        const fetchStart = this._isLazyMode ? end : start;
+        const fetchCount = this._isLazyMode ? this.displayCount : end - start + 1;
+
+        const newArguments = [this.inputControl.value.trim(), fetchCount, fetchStart];
+
+        const isRedundantCall = this._isLazyMode
+            && (isEqual(this._lazyLoadLastArgument, newArguments)
+                || (!this.isDown && end < this._lazyLoadLastArgument?.[2]));
+
+        if (isRedundantCall) {
+            return;
+        }
+
+        this._lazyLoadLastArgument = newArguments;
+
+        const mappedStart = this.isDown ?
+            this._isLazyMode ? this._items.length - 1 : start :
+            this._isLazyMode ? -1 : this._items.length - end - 1;
+        const mappedEnd = this.isDown ?
+            this._isLazyMode ? this._items.length - 1 : end :
+            this._isLazyMode ? 0 : this._items.length - start - 1;
 
         setPendingState(this._items, mappedStart, mappedEnd);
 
-        this.searchSourceFactory(this.inputControl.value.trim(), fetchCount, start)
+        this.searchSourceFactory(...newArguments)
             .pipe(
                 retry(1),
                 map(res => this.isDown ? res : {
                     data: (res.data ?? []).reverse(),
                     total: res.total,
                 }),
-                tap(this._resetIfTotalCountChange),
+                tap(() => !this._isLazyMode && this._resetIfTotalCountChange),
                 takeUntil(
                     merge(
                         this.inputControl.valueChanges.pipe(
@@ -1390,11 +1438,25 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                 ),
             )
             .subscribe(({ data = [] }) => {
-                this._items = setLoadedState(
-                    data,
-                    mappedStart,
-                    this._items,
-                );
+                if (data.length === 0) {
+                    this._removeUnresolvedElements();
+                } else {
+                    this._items = setLoadedState(
+                        data,
+                        mappedStart,
+                        this._items,
+                        this._isLazyMode,
+                    );
+
+                    if (this._shouldAddLoadingElementInLazyMode(data)) {
+                        this._addLoadingElementInLazyMode();
+                    }
+
+                    if (this._shouldLoadMoreOnUpDirection()) {
+                        this._loadMore();
+                    }
+                }
+
                 this._cd.detectChanges();
             });
     };
@@ -1445,4 +1507,53 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _defaultDisplayValueFactory = (value?: ISuggestValue[]) => (value ?? []).map(v => this.intl.translateLabel(v.text)).join(', ');
+
+    private _cantNavigate() {
+        return (!this.items.length &&
+            !this.enableCustomValue) ||
+            (this._isLazyMode &&
+                this._items[this.activeIndex] &&
+                this._items[this.activeIndex]?.loading !== VirtualScrollItemStatus.loaded
+            );
+    }
+
+    private get _isLazyMode() {
+        return this.searchSourceStrategy === 'lazy';
+    }
+
+    private _removeUnresolvedElements() {
+        this._items = this._items
+            .filter(({ loading }) => loading === VirtualScrollItemStatus.loaded);
+
+    }
+
+    private _shouldAddLoadingElementInLazyMode(currentResponse: ISuggestValue[]) {
+        return this._isLazyMode && currentResponse.length >= this.displayCount;
+    }
+
+    private _addLoadingElementInLazyMode() {
+        const loadingElement = generateLoadingInitialCollection(this.intl.loadingLabel, 1)[0];
+
+        if (this.isDown) {
+            this._items.push(loadingElement);
+        } else {
+            this._items.unshift(loadingElement);
+        }
+
+    }
+
+    private _shouldLoadMoreOnUpDirection() {
+        const isUp = !this.isDown;
+        const areMoreItemsThankVSKnows = this._virtualScroller?.getDataLength() !== this._items.length;
+        const isVSAtTop = (this._virtualScroller?.measureScrollOffset() ?? 0) < this.itemSize * 10;
+
+        return this._isLazyMode && isUp && areMoreItemsThankVSKnows && isVSAtTop;
+    }
+
+    private _loadMore() {
+        this.rangeLoad({
+            start: this._items.length - 1,
+            end: this._items.length - 1,
+        });
+    }
 }
