@@ -58,3 +58,11 @@
         </div>
     </ng-template>
 </mat-form-field>
+
+
+<h1>Lazy Load</h1>
+<mat-form-field>
+    <ui-suggest [searchSourceStrategy]="'lazy'"
+                [searchSourceFactory]="lazySearchSourceFactory">
+    </ui-suggest>
+</mat-form-field>
