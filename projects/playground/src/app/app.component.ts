@@ -26,5 +26,9 @@ export class AppComponent {
             name: 'Suggest',
             link: '/suggest',
         },
+        {
+            name: 'Tree select',
+            link: '/tree',
+        },
     ];
 }
