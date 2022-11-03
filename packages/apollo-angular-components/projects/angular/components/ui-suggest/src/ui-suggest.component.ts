@@ -37,6 +37,7 @@ import {
     HostBinding,
     Input,
     isDevMode,
+    NgZone,
     OnChanges,
     OnDestroy,
     OnInit,
@@ -214,6 +215,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      */
     @Input()
     alwaysExpanded = false;
+
+    /**
+     * If true, component will always render the list upfront
+     */
+    @Input()
+    expandInline = false;
 
     /**
      * Configure if the component allows multi-selection.
@@ -413,6 +420,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     get viewportMaxHeight() {
         if (!this.isOpen) { return 0; }
 
+        if (this.expandInline && this._height$.value) {
+            return this._height$.value;
+        }
+
         const actualCount = Math.max(
             this.renderItems.filter(Boolean).length + (this.enableCustomValue ?
                 (Number(this.isCustomValueVisible)) : (this.headerItems!.length)),
@@ -506,7 +517,15 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @Input()
-    width = '150px';
+    get width() {
+        return !this._width ?
+            this.expandInline ? '100%' : '150px' :
+            this._width;
+    }
+
+    set width(value: string) {
+        this._width = value;
+    }
     /**
      * Configure the `maximum` search length.
      *
@@ -524,7 +543,15 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      */
     @Input()
-    displayCount = 10;
+    get displayCount() {
+        return this._displayCount ?? 10;
+    }
+
+    set displayCount(value: number) {
+        if (!this.expandInline) {
+            this._displayCount = value;
+        }
+    }
     /**
      * Configure if the component allows selection clearing.
      *
@@ -628,6 +655,11 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         this._virtualScroller = value;
 
+        if (this.expandInline) {
+            this._matListElement = this._virtualScroller?.getElementRef().nativeElement.parentElement!;
+            this._observer?.observe(this._matListElement);
+        }
+
         this._virtualScroller!
             .scrolledIndexChange
             .pipe(
@@ -664,6 +696,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
     private _readonly = false;
 
+    private _displayCount?: number;
+
+    private _width?: string;
+
+    private _observer!: ResizeObserver;
+
+    private _height$ = new BehaviorSubject(0);
+
     private _searchSub?: Subscription;
 
     private _disabled$ = new BehaviorSubject(false);
@@ -690,6 +730,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     private _drillDown = false;
     private _lazyLoadLastArgument: any[] = ['', 0, 0];
 
+    private _matListElement?: HTMLElement;
+
     /**
      * @ignore
      */
@@ -705,6 +747,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         @Optional()
         public intl: UiSuggestIntl,
         private _liveAnnouncer: LiveAnnouncer,
+        private _zone: NgZone,
     ) {
         super(
             elementRef,
@@ -742,6 +785,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             map(([value]) => value),
         );
 
+        this._initResizeObserver();
+
+        this._height$.subscribe(heightValue => {
+            if (this.expandInline) {
+                this._displayCount = Math.round(heightValue / this.itemSize);
+            }
+        });
+
         this.intl = this.intl || new UiSuggestIntl();
         this.intl
             .changes
@@ -762,7 +813,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * @ignore
      */
     ngOnInit() {
-        if (this.alwaysExpanded) {
+        if (this.alwaysExpanded || this.expandInline) {
             this.open();
         }
 
@@ -794,6 +845,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (this.searchSourceStrategy === 'lazy' && !this.searchSourceFactory) {
             throw new Error('Should provide a searchSourceFactory for lazyMode');
         }
+
         const { displayPriority } = changes;
 
         if (displayPriority?.currentValue !== displayPriority?.previousValue) {
@@ -813,6 +865,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         this.sourceUpdated.complete();
         this.closed.complete();
         this.opened.complete();
+
+        if (this._matListElement) {
+            this._observer?.unobserve(this._matListElement);
+        }
 
         if (!this.sourceInitialized.closed) {
             this.sourceInitialized.complete();
@@ -937,7 +993,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * @param [refocus=true] If the dropdown should be focused after closing.
      */
     close(refocus = true) {
-        if (this.alwaysExpanded || !this.isOpen) { return; }
+        if (this.alwaysExpanded || this.expandInline || !this.isOpen) { return; }
 
         if (
             (this._isOnCustomValueIndex && !this.headerItems!.length) &&
@@ -1006,7 +1062,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         this.preventDefault(ev);
 
         if (
-            this._cantNavigate()
+            this._cantNavigate(increment)
         ) { return; }
 
         const [value] = this.value;
@@ -1177,6 +1233,15 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         return this.value.length > 0
             ? this._getValueSummary()
             : this.defaultValue;
+    }
+
+    private _initResizeObserver() {
+        this._observer = new ResizeObserver(entries => {
+            this._zone.run(() => {
+                this._height$.next(entries?.[0]?.contentRect.height);
+                this._cd.markForCheck();
+            });
+        });
     }
 
     private _selectActiveItem(closeAfterSelect: boolean) {
@@ -1478,7 +1543,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
     private _focusChipInput() {
         // direct focus needed as chip component doesn't expose a focus to input mechanism
-        document.querySelector<HTMLInputElement>(MAT_CHIP_INPUT_SELECTOR)?.focus();
+        (this._elementRef.nativeElement as HTMLElement).querySelector<HTMLInputElement>(MAT_CHIP_INPUT_SELECTOR)?.focus();
     }
 
     private _checkUnsuportedScenarios() {
@@ -1508,12 +1573,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
     private _defaultDisplayValueFactory = (value?: ISuggestValue[]) => (value ?? []).map(v => this.intl.translateLabel(v.text)).join(', ');
 
-    private _cantNavigate() {
+    private _cantNavigate(increment: number) {
         return (!this.items.length &&
             !this.enableCustomValue) ||
             (this._isLazyMode &&
                 this._items[this.activeIndex] &&
-                this._items[this.activeIndex]?.loading !== VirtualScrollItemStatus.loaded
+                this._items[this.activeIndex]?.loading !== VirtualScrollItemStatus.loaded &&
+                increment > 0
             );
     }
 

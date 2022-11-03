@@ -331,6 +331,34 @@ const sharedSpecifications = (
             expect(itemListEntries.length).toEqual(items.length);
         })));
 
+        it('should always render the list upfront if expandInline is true', (fakeAsync(() => {
+            const items = generateSuggetionItemList(10);
+
+            uiSuggest.expandInline = true;
+            component.items = items;
+
+            fixture.detectChanges();
+            tick(400);
+
+            const combobox = fixture.debugElement.queryAll(By.css('.combobox'));
+            expect(combobox).toEqual([]);
+
+            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+
+            expect(itemListEntries).not.toBeNull();
+            expect(itemListEntries.length).toEqual(items.length);
+
+            const itemIndex = Math.floor(Math.random() * items.length);
+            const currentListItem = itemListEntries[itemIndex];
+
+            currentListItem.nativeElement.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+            tick(400);
+
+            expect(itemListEntries).not.toBeNull();
+            expect(itemListEntries.length).toEqual(items.length);
+        })));
+
         it('should filter items if typed into', (done) => {
             let items = generateSuggetionItemList(40);
             const filteredItem: ISuggestValue = {
