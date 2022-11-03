@@ -31,6 +31,9 @@
             "@uipath/angular/components/ui-suggest": [
                 "./projects/angular/components/ui-suggest/src/public_api.ts"
             ],
+            "@uipath/angular/components/ui-tree-select": [
+                "./projects/angular/components/ui-tree-select/src/public_api.ts"
+            ],
             "@uipath/angular/components/ui-grid": [
                 "./projects/angular/components/ui-grid/src/public_api.ts"
             ],
