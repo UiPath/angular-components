@@ -58,6 +58,7 @@ import {
     MatCheckboxChange,
 } from '@angular/material/checkbox';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
+import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
@@ -87,6 +88,7 @@ import {
     ISortModel,
 } from './models';
 import { UiGridIntl } from './ui-grid.intl';
+import { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.directive';
 
 export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid DataManager options.');
 const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
@@ -989,6 +991,16 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         ) {
             this.selectAvailableRowsCheckbox.indeterminate = true;
         }
+    }
+
+    searchableDropdownValue(searchableDropdown: UiGridSearchFilterDirective<T>): ISuggestValue[] {
+        if (searchableDropdown.value) {
+            if (searchableDropdown.multiple) {
+                return searchableDropdown.value as ISuggestValue[];
+            }
+            return [searchableDropdown.value as ISuggestValue];
+        }
+        return [];
     }
 
     private _announceGridHeaderActions() {

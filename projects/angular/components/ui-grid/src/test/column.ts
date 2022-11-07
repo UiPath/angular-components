@@ -40,7 +40,7 @@ export interface ISearchableDropdownFilterDefinition<T> {
     items: ISuggestValue[];
 }
 
-export const generateSearchFilterDefinition = (): ISearchableDropdownFilterDefinition<ITestEntity> => {
+export const generateSearchFilterDefinition = (multiple?: boolean): ISearchableDropdownFilterDefinition<ITestEntity> => {
     const dropdown = new UiGridSearchFilterDirective<ITestEntity>();
 
     const items = faker.random.words(15)
@@ -55,6 +55,7 @@ export const generateSearchFilterDefinition = (): ISearchableDropdownFilterDefin
         data: items,
         total: items.length,
     });
+    dropdown.multiple = !!multiple;
 
     return {
         dropdown,
