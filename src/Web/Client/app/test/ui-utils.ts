@@ -189,6 +189,10 @@ export class IntegrationUtils<T> {
         this._isCheckBoxDisabled(
             this.getDebugElement(selector, debugEl),
         );
+    public isMatSelectDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
+        this._isMatSelectDisabled(
+            this.getDebugElement(selector, debugEl),
+        );
 
     public changeTheme = (theme: 'light' | 'dark') => {
         window.document.body.classList.remove('light');
@@ -202,6 +206,9 @@ export class IntegrationUtils<T> {
 
     private _isCheckBoxDisabled = (debugEl: DebugElement) =>
         debugEl.nativeElement.classList.contains('mat-checkbox-disabled');
+
+    private _isMatSelectDisabled = (debugEl: DebugElement) =>
+        debugEl.nativeElement.classList.contains('mat-select-disabled');
 }
 
 export class UIUtils {
