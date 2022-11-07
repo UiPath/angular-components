@@ -125,6 +125,9 @@
                                 <a href="#fetchStrategy" >fetchStrategy</a>
                             </li>
                             <li>
+                                <a href="#multiple" >multiple</a>
+                            </li>
+                            <li>
                                 <a href="#noFilterPlaceholder" >noFilterPlaceholder</a>
                             </li>
                             <li>
@@ -230,6 +233,38 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="multiple"></a>
+                        <b>multiple</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts:84</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Allow multiple selection</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="noFilterPlaceholder"></a>
                         <b>noFilterPlaceholder</b>
                     </td>
@@ -317,7 +352,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/ISuggestValue.html" target="_self" >ISuggestValue</a></code>
+                        <i>Type : </i>        <code><a href="../interfaces/ISuggestValue.html" target="_self" >ISuggestValue | ISuggestValue[]</a></code>
 
                     </td>
                 </tr>
@@ -383,15 +418,15 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>updateValue(value?: <a href="../interfaces/ISuggestValue.html" target="_self">ISuggestValue</a>)</code>
+<code>updateValue(value?: <a href="../interfaces/ISuggestValue.html" target="_self">ISuggestValue</a>, isSelected?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="88"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts:88</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="95"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts:95</a></div>
                 </td>
             </tr>
 
@@ -417,6 +452,18 @@
                                     <td>value</td>
                                     <td>
                                                 <code><a href="../interfaces/ISuggestValue.html" target="_self" >ISuggestValue</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>isSelected</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
                                     </td>
 
                                     <td>
@@ -597,7 +644,7 @@ export class UiGridSearchFilterDirective&lt;T&gt; extends UiGridFilterDirective&
      *
      */
     @Input()
-    value?: ISuggestValue;
+    value?: ISuggestValue | ISuggestValue[];
 
     /**
      * Wether the filter should be rendered in the grid.
@@ -608,6 +655,13 @@ export class UiGridSearchFilterDirective&lt;T&gt; extends UiGridFilterDirective&
     set visible(visible: boolean) { this.visible$.next(visible); }
 
     /**
+     * Allow multiple selection
+     *
+     */
+    @Input()
+    multiple &#x3D; false;
+
+    /**
      * @ignore
      */
     visible$ &#x3D; new BehaviorSubject(true);
@@ -616,8 +670,27 @@ export class UiGridSearchFilterDirective&lt;T&gt; extends UiGridFilterDirective&
      * Updates the dropdown option.
      *
      */
-    updateValue(value?: ISuggestValue) {
-        this.value &#x3D; value;
+    updateValue(value?: ISuggestValue, isSelected?: boolean) {
+        if (!value) {
+            return;
+        }
+
+        if (this.multiple) {
+            if (!this.value) {
+                this.value &#x3D; [];
+            }
+
+            if (isSelected) {
+                (this.value as ISuggestValue[]).push(value);
+            } else {
+                const index &#x3D; (this.value as ISuggestValue[]).findIndex(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; value.id);
+                if (index &gt; -1) {
+                    (this.value as ISuggestValue[]).splice(index, 1);
+                }
+            }
+        } else {
+            this.value &#x3D; value;
+        }
     }
 
     /**
