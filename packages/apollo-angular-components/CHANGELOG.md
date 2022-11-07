@@ -1,3 +1,14 @@
+# v13.10.0 (2022-11-07)
+* **grid** add support for multiple selection suggest filter
+* **deps** bump follow-redirects from 1.14.7 to 1.15.2
+* **deps** bump trim-newlines and @commitlint/cli
+* **deps** bump minimist and commitizen
+* **deps** bump async from 2.6.3 to 2.6.4
+* **deps** bump moment from 2.29.1 to 2.29.4
+* **deps** bump terser and @angular-devkit/build-angular
+* **deps** bump ansi-regex
+* **chore** bump minor version
+
 # v13.9.0 (2022-11-01)
 * **suggest** add disabled flag to ISuggestValue
 * **suggest** add displayValueFactory input

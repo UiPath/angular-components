@@ -342,6 +342,106 @@ describe('Component: UiGrid', () => {
                             );
                     });
                 });
+
+                describe('FilterType: multiple searchable dropdown', () => {
+                    let searchableDropdownItemList: ISearchableDropdownFilterDefinition<ITestEntity>[];
+
+                    beforeEach(() => {
+                        searchableDropdownItemList = [];
+
+                        columnWithSearchableList = generateColumnList('random');
+                        columnWithSearchableList.forEach(column => {
+                            const defintion = generateSearchFilterDefinition(true);
+                            column.searchableDropdown = defintion.dropdown;
+                            searchableDropdownItemList.push(defintion);
+                        });
+
+                        manager.columns = columnWithSearchableList;
+                    });
+
+                    it('should emit the list value of the filter when ONE option is selected', (done) => {
+                        const columnOptionDefinition = searchableDropdownToFilterOptionDefinition(
+                            faker.helpers.randomize(columnWithSearchableList),
+                            searchableDropdownItemList,
+                        );
+
+                        manager.filter$.pipe(
+                            skip(1),
+                            take(1),
+                            finalize(done),
+                        ).subscribe(filters => {
+                            const [filter] = filters;
+
+                            expect(filter).toBeDefined();
+                            expect(Array.isArray(filter.value)).toEqual(true);
+                            expect(filter.value).toEqual([columnOptionDefinition.option.id] as unknown as []);
+                            expect(filter.method).toBe(columnOptionDefinition.column.searchableDropdown!.method!);
+                        });
+
+                        manager.searchableDropdownUpdate(columnOptionDefinition.column, columnOptionDefinition.option, true);
+                    });
+
+                    it('should emit the an empty list if the value is deselected', (done) => {
+                        const columnOptionDefinition = searchableDropdownToFilterOptionDefinition(
+                            faker.helpers.randomize(columnWithSearchableList),
+                            searchableDropdownItemList,
+                        );
+
+                        manager.filter$.pipe(
+                            skip(2),
+                            take(1),
+                            finalize(done),
+                        ).subscribe(filters => {
+                            const [filter] = filters;
+
+                            expect(filter).toBeDefined();
+                            expect(Array.isArray(filter.value)).toEqual(true);
+                            expect(filter.value).toEqual([]);
+                            expect(filter.method).toBe(columnOptionDefinition.column.searchableDropdown!.method!);
+                        });
+
+                        manager.searchableDropdownUpdate(columnOptionDefinition.column, columnOptionDefinition.option, true);
+                        manager.searchableDropdownUpdate(columnOptionDefinition.column, columnOptionDefinition.option, false);
+                    });
+
+                    it('should emit the list value of the filter with ALL selected values', (done) => {
+                        const columnOptionDefinition1 = searchableDropdownToFilterOptionDefinition(
+                            faker.helpers.randomize(columnWithSearchableList),
+                            searchableDropdownItemList,
+                        );
+
+                        let columnOptionDefinition2 = searchableDropdownToFilterOptionDefinition(
+                            faker.helpers.randomize(columnWithSearchableList),
+                            searchableDropdownItemList,
+                        );
+
+                        while (columnOptionDefinition1.option === columnOptionDefinition2.option) {
+                            columnOptionDefinition2 = searchableDropdownToFilterOptionDefinition(
+                                faker.helpers.randomize(columnWithSearchableList),
+                                searchableDropdownItemList,
+                            );
+                        }
+
+                        columnOptionDefinition2.column = columnOptionDefinition1.column;
+
+                        manager.filter$.pipe(
+                            skip(2),
+                            take(1),
+                            finalize(done),
+                        ).subscribe(filters => {
+                            const [filter] = filters;
+
+                            expect(filter).toBeDefined();
+                            expect(Array.isArray(filter.value)).toEqual(true);
+                            expect(filter.value).toEqual(
+                                [columnOptionDefinition1.option.id, columnOptionDefinition2.option.id] as unknown as []);
+                            expect(filter.method).toBe(columnOptionDefinition1.column.searchableDropdown!.method!);
+                        });
+
+                        manager.searchableDropdownUpdate(columnOptionDefinition1.column, columnOptionDefinition1.option, true);
+                        manager.searchableDropdownUpdate(columnOptionDefinition2.column, columnOptionDefinition2.option, true);
+                    });
+                });
             });
         });
     });
