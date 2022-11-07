@@ -158,7 +158,6 @@ export class FilterManager<T> {
             : [];
         if (isEqual(this.filter$.getValue(), updatedFilters)) { return; }
 
-        console.log(updatedFilters.map(it => it.value));
         this.filter$.next(
             this.hasCustomFilter$.value
             ? this.customFilters!
