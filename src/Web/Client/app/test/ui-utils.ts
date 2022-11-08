@@ -120,6 +120,12 @@ export class IntegrationUtils<T> {
         return input;
     };
 
+    public changeInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
+        const input = this.uiUtils.changeInput(selector, value, debugEl.nativeElement);
+        this.fixture.detectChanges();
+        return input;
+    };
+
     public isCheckboxChecked = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
             .nativeElement
@@ -220,6 +226,19 @@ export class UIUtils {
     setInput = (selector: string, value: any, element: HTMLElement = this._rootEl) => {
         const input = this.getElement<HTMLInputElement>(selector, element)!;
         input.value = value;
+        input.dispatchEvent(EventGenerator.input());
+        return input;
+    };
+
+    changeInput = (selector: string, value: any, element: HTMLElement = this._rootEl) => {
+        const input = this.getElement<HTMLInputElement>(selector, element)!;
+        input.value = value;
+
+        const changeEvent = EventGenerator.change();
+        const targetElement = changeEvent.target as any as { value: number };
+
+        targetElement.value = value;
+        input.dispatchEvent(changeEvent);
         input.dispatchEvent(EventGenerator.input());
         return input;
     };
