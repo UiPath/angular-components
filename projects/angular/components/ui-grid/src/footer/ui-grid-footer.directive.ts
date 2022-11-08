@@ -59,6 +59,12 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
     @Input()
     hidePageSize = false;
 
+    /*
+    * Support hiding footer even if it's defined.
+    */
+    @Input()
+    hidden = false;
+
     /**
      * Emits when the page is changed.
      *
