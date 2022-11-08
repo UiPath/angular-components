@@ -1,3 +1,6 @@
+# v13.10.1 (2022-11-07)
+* **grid** remove logging
+
 # v13.10.0 (2022-11-07)
 * **grid** add support for multiple selection suggest filter
 * **deps** bump follow-redirects from 1.14.7 to 1.15.2
