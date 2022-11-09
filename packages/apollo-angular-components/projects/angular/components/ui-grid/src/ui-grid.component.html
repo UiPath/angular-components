@@ -491,28 +491,28 @@
 </ng-template>
 
 <ng-template #classicFooter>
-    <mat-paginator *ngIf="!!footer"
-                   [pageIndex]="footer?.state?.pageIndex"
-                   [pageSize]="footer?.state?.pageSize"
-                   [pageSizeOptions]="footer?.pageSizes ?? []"
-                   [length]="footer?.length"
+    <mat-paginator *ngIf="!!footer && !footer.hidden"
+                   [pageIndex]="footer.state.pageIndex"
+                   [pageSize]="footer.state.pageSize"
+                   [pageSizeOptions]="footer.pageSizes"
+                   [length]="footer.length"
                    [disabled]="disabled"
                    [showFirstLastButtons]="true"
-                   [hidePageSize]="footer?.hidePageSize"
-                   (page)="footer?.pageChange?.next($event)">
+                   [hidePageSize]="footer.hidePageSize"
+                   (page)="footer.pageChange.next($event)">
     </mat-paginator>
 </ng-template>
 
 <ng-template #alternativeFooter>
-    <ui-grid-custom-paginator *ngIf="!!footer"
-                              [pageIndex]="footer?.state?.pageIndex"
-                              [pageSize]="footer?.state?.pageSize"
-                              [pageSizeOptions]="footer?.pageSizes ?? []"
-                              [length]="footer?.length"
+    <ui-grid-custom-paginator *ngIf="!!footer && !footer.hidden"
+                              [pageIndex]="footer.state.pageIndex"
+                              [pageSize]="footer.state.pageSize"
+                              [pageSizeOptions]="footer.pageSizes"
+                              [length]="footer.length"
                               [disabled]="disabled"
                               [showFirstLastButtons]="true"
-                              [hidePageSize]="footer?.hidePageSize"
-                              (page)="footer?.pageChange?.next($event)">
+                              [hidePageSize]="footer.hidePageSize"
+                              (page)="footer.pageChange.next($event)">
     </ui-grid-custom-paginator>
 </ng-template>
 
