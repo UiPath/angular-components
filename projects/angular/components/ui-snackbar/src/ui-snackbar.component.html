@@ -21,6 +21,9 @@
 
         <button [attr.aria-label]="data.closeAriaLabel"
                 (click)="snackBarRef.dismiss()"
+                [shortcutKeys]="[['Delete', 'x']]"
+                (shortcutPressed)="snackBarRef.dismiss()"
+                uiKeyboardShortcut
                 class="ui-snackbar-close"
                 type="button"
                 mat-icon-button>
