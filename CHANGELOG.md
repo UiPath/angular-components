@@ -1,3 +1,8 @@
+# v13.11.0 (2022-11-08)
+* **grid** add option for dynamic hiding footer
+* **deps** bump loader-utils from 2.0.2 to 2.0.3
+* **fix** bump version
+
 # v13.10.1 (2022-11-07)
 * **grid** remove logging
 

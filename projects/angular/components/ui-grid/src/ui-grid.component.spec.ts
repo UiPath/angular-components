@@ -1712,6 +1712,7 @@ describe('Component: UiGrid', () => {
                                 width="50%">
                 </ui-grid-column>
                 <ui-grid-footer [length]="data.length"
+                                [hidden]="hidden"
                                 [pageSize]="pageSize"
                                 [pageIndex]="pageIndex"
                                 [pageSizes]="[pageSize, pageSize+1]"
@@ -1731,6 +1732,7 @@ describe('Component: UiGrid', () => {
         pageSize = 2;
         pageIndex = 0;
         hidePageSize = true;
+        hidden = false;
         lastPageChange?: PageEvent;
     }
 
@@ -1758,6 +1760,21 @@ describe('Component: UiGrid', () => {
 
         afterEach(() => {
             fixture.destroy();
+        });
+
+        describe('Input: hidden', () => {
+            it('should not render the footer if hidden=true', () => {
+                component.hidden = true;
+                fixture.detectChanges();
+
+                const matPaginator = fixture.debugElement.query(By.css('.mat-paginator'));
+                expect(matPaginator).toBeNull();
+            });
+
+            it('should render the footer if hidden=false', () => {
+                const matPaginator = fixture.debugElement.query(By.css('.mat-paginator'));
+                expect(!!matPaginator).toEqual(true);
+            });
         });
 
         describe('State: populated', () => {
