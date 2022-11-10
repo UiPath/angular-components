@@ -162,7 +162,7 @@
                                     column.searchableDropdown?.value != null"
                                [matTooltip]="column.title ?? ''"
                                [matTooltipDisabled]="resizeManager.isResizing"
-                               [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '')">{{ column.title }}</p>
+                               [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')">{{ column.title }}</p>
                             <div *ngIf="column.sortable || column.description"
                                  [class.ui-grid-sort-indicator-asc]="column.sort === 'asc'"
                                  [class.ui-grid-sort-indicator-desc]="column.sort === 'desc'"
