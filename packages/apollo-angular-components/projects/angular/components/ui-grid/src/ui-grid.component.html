@@ -157,9 +157,7 @@
                          tabindex="0">
                         <div (click)="sortManager.changeSort(column)"
                              class="ui-grid-header-title">
-                            <p [class.ui-grid-header-title-filtered]="(column.dropdown?.value != null &&
-                                    column.dropdown!.value!.value !== column.dropdown!.emptyStateValue) ||
-                                    column.searchableDropdown?.value != null"
+                            <p [class.ui-grid-header-title-filtered]="isFilterApplied(column)"
                                [matTooltip]="column.title ?? ''"
                                [matTooltipDisabled]="resizeManager.isResizing"
                                [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')">{{ column.title }}</p>

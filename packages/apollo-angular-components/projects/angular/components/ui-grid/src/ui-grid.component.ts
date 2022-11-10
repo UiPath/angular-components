@@ -1003,6 +1003,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         return [];
     }
 
+    isFilterApplied(column: UiGridColumnDirective<T>) {
+        return (column.dropdown?.value != null && column.dropdown!.value!.value !== column.dropdown!.emptyStateValue)
+            || (column.searchableDropdown?.value != null && (column.searchableDropdown?.value as ISuggestValue[])?.length !== 0);
+    }
+
     private _announceGridHeaderActions() {
         this._queuedAnnouncer.enqueue(this.intl.gridHeaderActionsNotice);
     }
@@ -1018,4 +1023,5 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             map(([hasAnyFilterVisible, hasCustomFilters]) => hasAnyFilterVisible || hasCustomFilters),
         );
     }
+
 }

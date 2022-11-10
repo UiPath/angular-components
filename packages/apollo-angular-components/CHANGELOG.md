@@ -1,3 +1,7 @@
+# v13.12.1 (2022-11-10)
+* **grid** search grid filter
+* **grid** add label to declare sortable columns
+
 # v13.12.0 (2022-11-10)
 * consumer should provide localization for the message found in closeSnackbarShortcut
 * **snackbar** close snackbar using shortcut
