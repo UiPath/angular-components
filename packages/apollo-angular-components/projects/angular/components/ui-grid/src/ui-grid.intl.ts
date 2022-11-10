@@ -109,6 +109,11 @@ export class UiGridIntl implements OnDestroy {
      */
     gridHeaderActionsNotice = 'Grid header actions updated. Press Shift + Alt + Arrow Up to move there.';
     /**
+     * A message to let the users know when they've focused a sortable column.
+     * This is an optional property
+     */
+     sortableMessage: string | undefined;
+    /**
      * Message for the button that clears the applied custom filter.
      *
      */
