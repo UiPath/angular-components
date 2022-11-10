@@ -177,7 +177,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:89</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:90</a></div>
                             </td>
                         </tr>
 
@@ -278,7 +278,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:93</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:94</a></div>
                         </td>
                     </tr>
 
@@ -305,7 +305,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:94</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:95</a></div>
                         </td>
                     </tr>
 
@@ -334,7 +334,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:68</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:69</a></div>
                                 </td>
                             </tr>
 
@@ -367,6 +367,7 @@ import {
     MAT_SNACK_BAR_DATA,
     MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from &#x27;@angular/material/snack-bar&#x27;;
+
 import { UiSnackbarIntl } from &#x27;./ui-snackbar.intl&#x27;;
 
 interface ISnackBarAlert {
@@ -622,7 +623,7 @@ export class UiSnackBarService {
         const extraPanelClasses &#x3D; options.extraCssClasses ?? [];
         this._ref &#x3D; this._snackBar.openFromComponent(UiSnackBarComponent, {
             data: {
-                closeAriaLabel: this._snackIntl.closeAriaLabel,
+                closeAriaLabel: this._snackIntl.closeSnackbarShortcut,
                 ...options,
             },
             duration: options.duration,
@@ -659,6 +660,9 @@ export class UiSnackBarService {
 
         &lt;button [attr.aria-label]&#x3D;&quot;data.closeAriaLabel&quot;
                 (click)&#x3D;&quot;snackBarRef.dismiss()&quot;
+                [shortcutKeys]&#x3D;&quot;[[&#x27;Delete&#x27;, &#x27;x&#x27;]]&quot;
+                (shortcutPressed)&#x3D;&quot;snackBarRef.dismiss()&quot;
+                uiKeyboardShortcut
                 class&#x3D;&quot;ui-snackbar-close&quot;
                 type&#x3D;&quot;button&quot;
                 mat-icon-button&gt;
@@ -730,9 +734,9 @@ export class UiSnackBarService {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="ui-snackbar-container">    <div class="ui-snackbar-message">        <mat-icon *ngIf="data.icon">{{data.icon}}</mat-icon>        <span *ngIf="isPropertyString(data.message)"              [innerHTML]="data.message | nl2br"></span>        <ng-container *ngIf="isTemplateRef(data.message)"                      [ngTemplateOutlet]="data.message"                      [ngTemplateOutletContext]="{ $implicit: snackBarRef }"></ng-container>        <ng-template *ngIf="isComponentType(data.message)"                     [cdkPortalOutlet]="componentPortal"></ng-template>    </div>    <div class="ui-snackbar-dismiss">        <button *ngIf="data.actionMessage"                (click)="snackBarRef.dismissWithAction()"                class="ui-snackbar-action"                type="button"                mat-button>            {{ data.actionMessage }}        </button>        <button [attr.aria-label]="data.closeAriaLabel"                (click)="snackBarRef.dismiss()"                class="ui-snackbar-close"                type="button"                mat-icon-button>            <mat-icon>close</mat-icon>        </button>    </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="ui-snackbar-container">    <div class="ui-snackbar-message">        <mat-icon *ngIf="data.icon">{{data.icon}}</mat-icon>        <span *ngIf="isPropertyString(data.message)"              [innerHTML]="data.message | nl2br"></span>        <ng-container *ngIf="isTemplateRef(data.message)"                      [ngTemplateOutlet]="data.message"                      [ngTemplateOutletContext]="{ $implicit: snackBarRef }"></ng-container>        <ng-template *ngIf="isComponentType(data.message)"                     [cdkPortalOutlet]="componentPortal"></ng-template>    </div>    <div class="ui-snackbar-dismiss">        <button *ngIf="data.actionMessage"                (click)="snackBarRef.dismissWithAction()"                class="ui-snackbar-action"                type="button"                mat-button>            {{ data.actionMessage }}        </button>        <button [attr.aria-label]="data.closeAriaLabel"                (click)="snackBarRef.dismiss()"                [shortcutKeys]="[[\'Delete\', \'x\']]"                (shortcutPressed)="snackBarRef.dismiss()"                uiKeyboardShortcut                class="ui-snackbar-close"                type="button"                mat-icon-button>            <mat-icon>close</mat-icon>        </button>    </div></div></div>'
     var COMPONENTS = [{'name': 'UiButtonProgressBarComponent', 'selector': 'ui-button-progress-bar'},{'name': 'UiButtonProgressSpinnerComponent', 'selector': 'ui-button-progress-spinner'},{'name': 'UiContentSpinnerComponent', 'selector': 'ui-content-spinner'},{'name': 'UiGridComponent', 'selector': 'ui-grid'},{'name': 'UiGridCustomPaginatorComponent', 'selector': 'ui-grid-custom-paginator'},{'name': 'UiGridSearchComponent', 'selector': 'ui-grid-search'},{'name': 'UiGridToggleColumnsComponent', 'selector': 'COMPONENT_SELECTOR'},{'name': 'UiPasswordIndicatorComponent', 'selector': 'ui-password-indicator'},{'name': 'UiPasswordToggleComponent', 'selector': 'ui-password-toggle'},{'name': 'UiSecondFormatDirective', 'selector': 'ui-secondformat'},{'name': 'UiSnackBarComponent', 'selector': ''}];
-    var DIRECTIVES = [{'name': 'UiAutoAccessibleLabelDirective', 'selector': ''},{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiContentLoaderDirective', 'selector': '[uiContentLoading]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiFormatDirective', 'selector': ''},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridLoadingDirective', 'selector': '[uiGridLoading], ui-grid-loading'},{'name': 'UiGridNoContentDirective', 'selector': '[uiGridNoContent], ui-grid-no-content'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiLoaderButtonDirective', 'selector': ''},{'name': 'UiMatFormFieldRequiredDirective', 'selector': 'mat-form-field'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiProgressButtonDirective', 'selector': '
+    var DIRECTIVES = [{'name': 'KeyboardShortcutDirective', 'selector': '[uiKeyboardShortcut][shortcutKeys]'},{'name': 'UiAutoAccessibleLabelDirective', 'selector': ''},{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiContentLoaderDirective', 'selector': '[uiContentLoading]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiFormatDirective', 'selector': ''},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridLoadingDirective', 'selector': '[uiGridLoading], ui-grid-loading'},{'name': 'UiGridNoContentDirective', 'selector': '[uiGridNoContent], ui-grid-no-content'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiLoaderButtonDirective', 'selector': ''},{'name': 'UiMatFormFieldRequiredDirective', 'selector': 'mat-form-field'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiProgressButtonDirective', 'selector': '
         button[mat-button][ui-progress-button],
         button[mat-raised-button][ui-progress-button],
         button[mat-stroked-button][ui-progress-button],

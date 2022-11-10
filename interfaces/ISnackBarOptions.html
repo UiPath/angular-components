@@ -184,6 +184,7 @@ import {
     MAT_SNACK_BAR_DATA,
     MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from &#x27;@angular/material/snack-bar&#x27;;
+
 import { UiSnackbarIntl } from &#x27;./ui-snackbar.intl&#x27;;
 
 interface ISnackBarAlert {
@@ -439,7 +440,7 @@ export class UiSnackBarService {
         const extraPanelClasses &#x3D; options.extraCssClasses ?? [];
         this._ref &#x3D; this._snackBar.openFromComponent(UiSnackBarComponent, {
             data: {
-                closeAriaLabel: this._snackIntl.closeAriaLabel,
+                closeAriaLabel: this._snackIntl.closeSnackbarShortcut,
                 ...options,
             },
             duration: options.duration,

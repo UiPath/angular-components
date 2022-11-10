@@ -129,7 +129,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="200" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:200</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="201" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:201</a></div>
                             </td>
                         </tr>
 
@@ -228,8 +228,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="243"
-                            class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:243</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="244"
+                            class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:244</a></div>
                 </td>
             </tr>
 
@@ -272,7 +272,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="185" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:185</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="186" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:186</a></div>
                         </td>
                     </tr>
 
@@ -335,7 +335,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="178" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:178</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="179" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:179</a></div>
                         </td>
                     </tr>
 
@@ -397,7 +397,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="227" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:227</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="228" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:228</a></div>
                         </td>
                     </tr>
 
@@ -460,7 +460,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="192" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:192</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="193" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:193</a></div>
                         </td>
                     </tr>
 
@@ -523,7 +523,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="199" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:199</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="200" class="link-to-prism">projects/angular/components/ui-snackbar/src/ui-snackbar.component.ts:200</a></div>
                         </td>
                     </tr>
 
@@ -595,6 +595,7 @@ import {
     MAT_SNACK_BAR_DATA,
     MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from &#x27;@angular/material/snack-bar&#x27;;
+
 import { UiSnackbarIntl } from &#x27;./ui-snackbar.intl&#x27;;
 
 interface ISnackBarAlert {
@@ -850,7 +851,7 @@ export class UiSnackBarService {
         const extraPanelClasses &#x3D; options.extraCssClasses ?? [];
         this._ref &#x3D; this._snackBar.openFromComponent(UiSnackBarComponent, {
             data: {
-                closeAriaLabel: this._snackIntl.closeAriaLabel,
+                closeAriaLabel: this._snackIntl.closeSnackbarShortcut,
                 ...options,
             },
             duration: options.duration,
