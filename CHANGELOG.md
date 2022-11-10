@@ -1,3 +1,8 @@
+# v13.12.0 (2022-11-10)
+* consumer should provide localization for the message found in closeSnackbarShortcut
+* **snackbar** close snackbar using shortcut
+* **keyboard-shortcut** create directive
+
 # v13.11.0 (2022-11-08)
 * **grid** add option for dynamic hiding footer
 * **deps** bump loader-utils from 2.0.2 to 2.0.3
