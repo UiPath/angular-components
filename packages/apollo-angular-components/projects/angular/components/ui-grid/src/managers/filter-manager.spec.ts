@@ -381,7 +381,7 @@ describe('Component: UiGrid', () => {
                         manager.searchableDropdownUpdate(columnOptionDefinition.column, columnOptionDefinition.option, true);
                     });
 
-                    it('should emit the an empty list if the value is deselected', (done) => {
+                    it('should emit empty list if the value is deselected', (done) => {
                         const columnOptionDefinition = searchableDropdownToFilterOptionDefinition(
                             faker.helpers.randomize(columnWithSearchableList),
                             searchableDropdownItemList,
