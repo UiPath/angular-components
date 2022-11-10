@@ -7,6 +7,7 @@ import {
     MatSnackBarModule,
     MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
+import { KeyboardShortcutModule } from '@uipath/angular/directives/keyboard-shortcut';
 import { UiPipeModule } from '@uipath/angular/pipes';
 
 import { UiSnackBarComponent } from './ui-snackbar.component';
@@ -23,6 +24,7 @@ const DEFAULT_VERTICAL = 'top';
         PortalModule,
         UiPipeModule,
         CommonModule,
+        KeyboardShortcutModule,
     ],
     declarations: [UiSnackBarComponent],
     providers: [{

@@ -5,7 +5,7 @@
         "outDir": "./dist/out-tsc",
         "sourceMap": true,
         "declaration": false,
-        "allowSyntheticDefaultImports":true,
+        "allowSyntheticDefaultImports": true,
         "module": "es2020",
         "moduleResolution": "node",
         "noUnusedLocals": true,
@@ -45,6 +45,9 @@
             ],
             "@uipath/angular/directives/ui-clipboard": [
                 "projects/angular/directives/ui-clipboard/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/keyboard-shortcut": [
+                "projects/angular/directives/keyboard-shortcut/src/public_api.ts"
             ],
             "@uipath/angular/directives/ui-drag-and-drop-file": [
                 "projects/angular/directives/ui-drag-and-drop-file/src/public_api.ts"
