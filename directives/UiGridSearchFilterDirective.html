@@ -671,23 +671,8 @@ export class UiGridSearchFilterDirective&lt;T&gt; extends UiGridFilterDirective&
      *
      */
     updateValue(value?: ISuggestValue, isSelected?: boolean) {
-        if (!value) {
-            return;
-        }
-
         if (this.multiple) {
-            if (!this.value) {
-                this.value &#x3D; [];
-            }
-
-            if (isSelected) {
-                (this.value as ISuggestValue[]).push(value);
-            } else {
-                const index &#x3D; (this.value as ISuggestValue[]).findIndex(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; value.id);
-                if (index &gt; -1) {
-                    (this.value as ISuggestValue[]).splice(index, 1);
-                }
-            }
+            this.handleMultiple(value, isSelected);
         } else {
             this.value &#x3D; value;
         }
@@ -699,6 +684,31 @@ export class UiGridSearchFilterDirective&lt;T&gt; extends UiGridFilterDirective&
     ngOnDestroy() {
         super.ngOnDestroy();
         this.filterChange.complete();
+    }
+
+    private handleMultiple(value?: ISuggestValue, isSelected?: boolean) {
+        if (!value) {
+            return;
+        }
+
+        if (!this.value) {
+            this.value &#x3D; [];
+        }
+
+        if (isSelected) {
+            (this.value as ISuggestValue[]).push(value);
+        } else {
+            this.removeElement(value);
+        }
+    }
+
+    private removeElement(value: ISuggestValue) {
+        this.value &#x3D; this.value as ISuggestValue[];
+
+        const index &#x3D; this.value.findIndex(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; value.id);
+        if (index &gt; -1) {
+            this.value.splice(index, 1);
+        }
     }
 }
 </code></pre>
