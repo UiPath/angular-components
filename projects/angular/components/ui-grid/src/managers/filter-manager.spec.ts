@@ -381,7 +381,7 @@ describe('Component: UiGrid', () => {
                         manager.searchableDropdownUpdate(columnOptionDefinition.column, columnOptionDefinition.option, true);
                     });
 
-                    it('should emit the an empty list if the value is deselected', (done) => {
+                    it('should emit undefined if the value is deselected', (done) => {
                         const columnOptionDefinition = searchableDropdownToFilterOptionDefinition(
                             faker.helpers.randomize(columnWithSearchableList),
                             searchableDropdownItemList,
@@ -392,12 +392,7 @@ describe('Component: UiGrid', () => {
                             take(1),
                             finalize(done),
                         ).subscribe(filters => {
-                            const [filter] = filters;
-
-                            expect(filter).toBeDefined();
-                            expect(Array.isArray(filter.value)).toEqual(true);
-                            expect(filter.value).toEqual([]);
-                            expect(filter.method).toBe(columnOptionDefinition.column.searchableDropdown!.method!);
+                            expect(filters).toEqual([]);
                         });
 
                         manager.searchableDropdownUpdate(columnOptionDefinition.column, columnOptionDefinition.option, true);

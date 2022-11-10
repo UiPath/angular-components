@@ -186,7 +186,7 @@ export class FilterManager<T> {
             method: column.searchableDropdown!.method,
             property: column.searchableDropdown!.property ?? column.property,
             value: column.searchableDropdown!.multiple ?
-                (column.searchableDropdown!.value! as ISuggestValue[]).map(value => value.id)
+                (column.searchableDropdown!.value! as ISuggestValue[])?.map(value => value.id)
                 : (column.searchableDropdown!.value! as ISuggestValue).id,
         } as IFilterModel<T>;
     }
