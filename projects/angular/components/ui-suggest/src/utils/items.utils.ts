@@ -176,8 +176,9 @@ export function mapInitialItems(
     value: ISuggestValue[],
     loadingLabel: string,
     isDown: boolean,
+    isLazy?: boolean,
 ) {
-    const loadingLength = total - data.length;
+    const loadingLength = isLazy ? 0 : total - data.length;
     const queryResponse = data.map(r => ({
         ...r,
         loading: VirtualScrollItemStatus.loaded,
@@ -211,20 +212,30 @@ export function generateLoadingInitialCollection(text: string, total = 0): ISugg
 /**
  * @ignore
  */
-export function setLoadedState(data: ISuggestValueData<any>[], start: number, currentItems: ISuggestValue[]) {
-    const items = [...currentItems];
+export function setLoadedState(data: ISuggestValueData<any>[], start: number, currentItems: ISuggestValue[], isLazy?: boolean) {
+    const isLazyUp = isLazy && start === -1;
+    const items = [...(isLazyUp ? [] : currentItems)];
+
     data
         .map(r => ({
             ...r,
             loading: VirtualScrollItemStatus.loaded,
         }))
         .forEach((item, chunkIndex) => {
-            const itemIndex = chunkIndex + start;
-            if (items[itemIndex] && items[itemIndex].loading !== VirtualScrollItemStatus.loaded) {
+            const offset = isLazyUp ? 1 : 0;
+            const itemIndex = chunkIndex + start + offset;
+            if (isLazy || items[itemIndex] && items[itemIndex].loading !== VirtualScrollItemStatus.loaded) {
                 items[itemIndex] = item;
             }
         });
-    return items;
+
+    const onlyLoadedCurrentItems = currentItems.filter(({ loading }) => loading === VirtualScrollItemStatus.loaded);
+
+    return [...items,
+    ...(isLazyUp ?
+        onlyLoadedCurrentItems :
+        []
+    )];
 }
 
 /**
