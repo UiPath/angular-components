@@ -1,17 +1,17 @@
 import { range } from 'lodash';
 import {
-    Observable,
-    of,
+  Observable,
+  of,
 } from 'rxjs';
 import {
-    delay,
-    switchMap,
-    tap,
+  delay,
+  switchMap,
+  tap,
 } from 'rxjs/operators';
 
 import {
-    ChangeDetectionStrategy,
-    Component,
+  ChangeDetectionStrategy,
+  Component,
 } from '@angular/core';
 import { ISuggestValues } from '@uipath/angular/components/ui-suggest';
 
@@ -40,15 +40,47 @@ export class SuggestPageComponent {
     });
   }
 
+  generateData({ searchTerm = '', take = 20, skip = 0 }): Observable<ISuggestValues<any>> {
+    const options = range(0 + skip, 0 + skip + take).map(idx => ({
+      id: idx,
+      text: `Element ${idx}`,
+    }));
+
+    const filteredOptions = options.filter(option => option.text.includes(searchTerm.trim()));
+
+    if (skip >= 100) {
+      return of({
+        data: [],
+      });
+    }
+
+    return of({
+      data: filteredOptions,
+    });
+  }
+
   searchSourceFactory: SearchSourceFactory = (searchTerm = '', top = 10, skip = 0) => of(searchTerm).pipe(
     switchMap(this.getResults),
     tap((results: any) => console.log({
-        searchTerm,
-        top,
-        skip,
-        results,
-      })),
+      searchTerm,
+      top,
+      skip,
+      results,
+    })),
     delay(50),
+  );
+
+  lazySearchSourceFactory: SearchSourceFactory = (searchTerm = '', top = 20, skip = 0) => this.generateData({
+    searchTerm,
+    take: top,
+    skip,
+  }).pipe(
+    tap((results: any) => console.log({
+      top,
+      skip,
+      results,
+    })),
+    delay(1000),
   );
 }
 

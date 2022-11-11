@@ -3,7 +3,7 @@ mat-sidenav-container {
         text-align: center;
     }
 
-    height: 100vh;
+    min-height: 100vh;
 
     mat-sidenav {
         min-width: 300px;

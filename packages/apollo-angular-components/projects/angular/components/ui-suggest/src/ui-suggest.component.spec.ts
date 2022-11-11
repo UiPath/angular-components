@@ -45,6 +45,7 @@ import {
     Key,
 } from '@uipath/angular/testing';
 
+import { range } from 'lodash';
 import {
     ISuggestValue,
     ISuggestValues,
@@ -89,6 +90,7 @@ class UiSuggestFixtureDirective {
     direction: 'up' | 'down' = 'down';
     displayPriority: 'default' | 'selected' = 'default';
     fetchStrategy: 'eager' | 'onOpen' = 'eager';
+    searchSourceStrategy: 'default' | 'lazy' = 'default';
     minChars = 0;
 
     displayValueFactory?: (value: ISuggestValue[]) => string;
@@ -320,6 +322,34 @@ const sharedSpecifications = (
             const currentListItem = fixture.debugElement.queryAll(
                 By.css('.mat-list-item'),
             )[itemIndex];
+
+            currentListItem.nativeElement.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+            tick(400);
+
+            expect(itemListEntries).not.toBeNull();
+            expect(itemListEntries.length).toEqual(items.length);
+        })));
+
+        it('should always render the list upfront if expandInline is true', (fakeAsync(() => {
+            const items = generateSuggetionItemList(10);
+
+            uiSuggest.expandInline = true;
+            component.items = items;
+
+            fixture.detectChanges();
+            tick(400);
+
+            const combobox = fixture.debugElement.queryAll(By.css('.combobox'));
+            expect(combobox).toEqual([]);
+
+            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+
+            expect(itemListEntries).not.toBeNull();
+            expect(itemListEntries.length).toEqual(items.length);
+
+            const itemIndex = Math.floor(Math.random() * items.length);
+            const currentListItem = itemListEntries[itemIndex];
 
             currentListItem.nativeElement.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
@@ -2109,6 +2139,81 @@ const sharedSpecifications = (
                 // 6 characters
                 await typeChar();
                 expect(sourceSpy).toHaveBeenCalledTimes(3);
+            }));
+        });
+
+        describe('Feature: searchSourceStrategy', () => {
+            const NUMBER_OF_ITEMS_PER_VIEW = 5;
+            beforeEach(() => {
+                uiSuggest.searchSourceFactory = (searchTerm?: string, fetchCount?: number, start?: number) => of({
+                    data: range(start ?? 0, (start ?? 0) + (fetchCount ?? 0))
+                        .map(idx => ({
+                            id: idx,
+                            text: `Element ${idx}`,
+                            expandable: true,
+                        })).filter(option => option.text.includes((searchTerm ?? '').trim())),
+                });
+
+                fixture.detectChanges();
+
+                uiSuggest.searchSourceStrategy = 'lazy';
+                fixture.detectChanges();
+
+                uiSuggest.displayCount = NUMBER_OF_ITEMS_PER_VIEW;
+                fixture.detectChanges();
+            });
+
+            it('should not load more data if current response is empty', waitForAsync(async () => {
+                uiSuggest.searchSourceFactory = (_searchTerm?: string, _fetchCount?: number, _start?: number) => of({
+                    data: [],
+                });
+
+                fixture.detectChanges();
+
+                const display = fixture.debugElement.query(By.css('.display'));
+                display.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                await fixture.whenStable();
+
+                expect(uiSuggest.items.length).toBe(0);
+            }));
+
+            it('should display items even if the totalCount is not known', waitForAsync(async () => {
+                const display = fixture.debugElement.query(By.css('.display'));
+                display.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                await fixture.whenStable();
+
+                const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+
+                expect(uiSuggest.items.length).not.toBeNull();
+                expect(itemListEntries.length).toBe(NUMBER_OF_ITEMS_PER_VIEW + 1);
+                const lastItem = itemListEntries.slice(-1)[0];
+                expect(lastItem.nativeElement.innerText).toBe('Loading...');
+            }));
+
+            it('should load more data at bottom of the list', waitForAsync(async () => {
+                const display = fixture.debugElement.query(By.css('.display'));
+                display.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                await fixture.whenStable();
+
+                expect(uiSuggest.items.length).toBe(NUMBER_OF_ITEMS_PER_VIEW + 1);
+
+                const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+                for (let i = 0; i <= uiSuggest.items.length; i++) {
+                    itemContainer.nativeElement.dispatchEvent(
+                        EventGenerator.keyDown(Key.ArrowUp),
+                    );
+
+                }
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(uiSuggest.items.length).toBe(2 * NUMBER_OF_ITEMS_PER_VIEW + 1);
             }));
         });
 

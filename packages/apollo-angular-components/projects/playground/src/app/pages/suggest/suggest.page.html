@@ -58,3 +58,18 @@
         </div>
     </ng-template>
 </mat-form-field>
+
+
+<h1>Lazy Load</h1>
+<mat-form-field>
+    <ui-suggest [searchSourceStrategy]="'lazy'"
+                [searchSourceFactory]="lazySearchSourceFactory">
+    </ui-suggest>
+</mat-form-field>
+
+<h1>Expanded Inline</h1>
+<div class="expanded-list">
+    <ui-suggest [expandInline]="true"
+                [searchSourceFactory]="searchSourceFactory">
+    </ui-suggest>
+</div>
