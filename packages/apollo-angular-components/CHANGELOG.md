@@ -1,3 +1,10 @@
+# v13.12.2 (2022-11-11)
+* **playground** set the minimum height of page
+* **playground** add example for expanded inline ui-suggest
+* **suggest** add support for expandInline
+* **playground** add example of lazy load for ui-suggest
+* **suggest** add support lazy mode
+
 # v13.12.1 (2022-11-10)
 * **grid** search grid filter
 * **grid** add label to declare sortable columns
