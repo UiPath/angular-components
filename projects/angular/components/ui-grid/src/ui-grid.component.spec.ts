@@ -3894,7 +3894,7 @@ describe('Component: UiGrid', () => {
                 <ui-grid [data]="data"
                          [customFilterValue]="customFilter">
                     <ui-grid-column [property]="'myNumber'"
-                                    [sortable]="true"
+                                    [sortable]="sortable"
                                     [description]="columnDescription"
                                     title="Number Header"
                                     width="50%">
@@ -3904,11 +3904,13 @@ describe('Component: UiGrid', () => {
         })
         class TestFixtureCustomFilterGridComponent {
             columnDescription = 'some column description';
+            sortable = false;
         }
 
         let fixture: ComponentFixture<TestFixtureCustomFilterGridComponent>;
-
+        let intl: UiGridIntl;
         beforeEach(async () => {
+            intl = new UiGridIntl();
             TestBed.configureTestingModule({
                 imports: [
                     UiGridModule,
@@ -3922,6 +3924,10 @@ describe('Component: UiGrid', () => {
                         useValue: {
                             useLegacyDesign: false,
                         },
+                    },
+                    {
+                        provide: UiGridIntl,
+                        useValue: intl,
                     },
                 ],
                 declarations: [
@@ -3952,6 +3958,24 @@ describe('Component: UiGrid', () => {
             expect(document.querySelector('.ui-grid-info-icon ')).toBeNull();
             const colTitleParagraphElement = document.querySelector('.ui-grid-header-title p');
             expect(colTitleParagraphElement!.getAttribute('aria-label')).toEqual('Number Header');
+        }));
+
+        it('should not add sortable label if column is sortable but does not have message', fakeAsync(() => {
+            fixture.componentInstance.columnDescription = '';
+            fixture.detectChanges();
+            expect(document.querySelector('.ui-grid-info-icon ')).toBeNull();
+            const colTitleParagraphElement = document.querySelector('.ui-grid-header-title p');
+            expect(colTitleParagraphElement!.getAttribute('aria-label')).toEqual('Number Header');
+        }));
+
+        it('should add sortable label if column is sortable and has message', fakeAsync(() => {
+            intl.sortableMessage = 'This is sortable';
+            fixture.componentInstance.columnDescription = '';
+            fixture.componentInstance.sortable = true;
+            fixture.detectChanges();
+            expect(document.querySelector('.ui-grid-info-icon ')).toBeNull();
+            const colTitleParagraphElement = document.querySelector('.ui-grid-header-title p');
+            expect(colTitleParagraphElement!.getAttribute('aria-label')).toEqual('Number Header. This is sortable');
         }));
     });
 });
