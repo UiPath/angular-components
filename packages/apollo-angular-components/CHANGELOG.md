@@ -1,3 +1,6 @@
+# v13.12.3 (2022-11-14)
+* **grid** expose resize stream
+
 # v13.12.2 (2022-11-11)
 * **playground** set the minimum height of page
 * **playground** add example for expanded inline ui-suggest
