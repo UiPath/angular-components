@@ -1,3 +1,7 @@
+# v13.7.3 (2022-11-14)
+* **snackbar** close snackbar using shortcut
+* **keyboard-shortcut** create directive
+
 # v13.7.2 (2022-09-21)
 * **dateformat** run detectChanges only if date input value changes
 
