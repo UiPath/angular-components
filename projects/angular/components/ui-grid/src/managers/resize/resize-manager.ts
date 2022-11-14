@@ -40,7 +40,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     isResizing = false;
     current?: IResizeInfo<T>;
     resizeEnd$ = new Subject<void>();
-
+    resizeStart$ = new Subject<{ columnIndex: number; mouseEvent?: MouseEvent; direction?: 'left' | 'right' }>();
     protected set _resizeEvent(ev: MouseEvent) {
         if (!this.current) { return; }
 
@@ -130,7 +130,11 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
     handleResize = (ev: MouseEvent) => this._resizeEvent = ev;
 
-    startResize(ev: MouseEvent, column: UiGridColumnDirective<T>) {
+    startResize(ev: MouseEvent, column: UiGridColumnDirective<T>, columnIndex: number) {
+        this.resizeStart$.next({
+             mouseEvent: ev,
+             columnIndex,
+        });
         this.isResizing = true;
         // hook events
         this.setupState(ev, column);
@@ -159,9 +163,12 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         (this._grid as any)._cd.detach();
     }
 
-    startKeyboardResize(direction: 'left' | 'right', column: UiGridColumnDirective<T>) {
+    startKeyboardResize(direction: 'left' | 'right', column: UiGridColumnDirective<T>, columnIndex: number) {
         if (this.isResizing) { return; }
-
+        this.resizeStart$.next({
+            columnIndex,
+            direction,
+        });
         const columnElement = document.querySelector(`[data-property="${column.property}"]`);
         const { x, width } = columnElement!.getBoundingClientRect()!;
         let currentX = x + width;

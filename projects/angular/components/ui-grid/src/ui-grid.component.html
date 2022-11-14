@@ -140,7 +140,7 @@
                     <ng-container *ngIf="multiPageSelect then multiPageSelectionProjectedHeaderCell">
                     </ng-container>
 
-                    <div *ngFor="let column of visible$ | async; let last = last"
+                    <div *ngFor="let column of visible$ | async; let last = last; let columnIndex = index"
                          [class.ui-grid-header-cell-sortable]="column.sortable"
                          [class.ui-grid-resizeable]="column.resizeable"
                          [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
@@ -150,8 +150,8 @@
                          [style.width.%]="column.width"
                          (keyup.enter)="sortManager.changeSort(column)"
                          (keyup.space)="sortManager.changeSort(column)"
-                         (keydown.ArrowLeft)="!last && resizeManager.startKeyboardResize('left', column)"
-                         (keydown.ArrowRight)="!last && resizeManager.startKeyboardResize('right', column)"
+                         (keydown.ArrowLeft)="!last && resizeManager.startKeyboardResize('left', column, columnIndex)"
+                         (keydown.ArrowRight)="!last && resizeManager.startKeyboardResize('right', column, columnIndex)"
                          class="ui-grid-header-cell"
                          role="columnheader"
                          tabindex="0">
@@ -183,7 +183,7 @@
                         </div>
 
                         <div *ngIf="column.resizeable && !last"
-                             (mousedown)="resizeManager.startResize($event, column)"
+                             (mousedown)="resizeManager.startResize($event, column, columnIndex)"
                              class="ui-grid-resize-anchor">
                             <mat-icon>
                                 <svg xmlns="http://www.w3.org/2000/svg"
