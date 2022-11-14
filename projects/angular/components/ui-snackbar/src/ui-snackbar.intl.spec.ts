@@ -10,6 +10,6 @@ describe('Service: UiSnackbarIntlService', () => {
     it('should create', () => {
         const service: UiSnackbarIntl = TestBed.inject(UiSnackbarIntl);
         expect(service).toBeTruthy();
-        expect(service.closeAriaLabel).toEqual('Close');
+        expect(service.closeSnackbarShortcut).toEqual('Close the snackbar using the shortcut: Delete + x');
     });
 });
