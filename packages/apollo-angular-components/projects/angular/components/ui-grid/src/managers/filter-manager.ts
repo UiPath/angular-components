@@ -120,6 +120,15 @@ export class FilterManager<T> {
         this._emitFilterOptions();
     }
 
+    clear() {
+        this._columns.forEach(column => {
+            const dropdown = column.dropdown ?? column.searchableDropdown;
+
+            if (!dropdown) { return; }
+            dropdown.value = undefined;
+        });
+    }
+
     private _updateFilterValue = (
         column: UiGridColumnDirective<T> | undefined,
         value: ISuggestValue | IDropdownOption | undefined,
