@@ -781,6 +781,19 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     }
 
     /**
+     * Clear search term, filters and sorting and emits true after.
+     */
+    @Input()
+    reset: () => Observable<boolean> = () => {
+        if (this.header) {
+            this.header.searchValue = '';
+        }
+        this.filterManager.clear();
+        this.sortManager.clear();
+        return of(true);
+    };
+
+    /**
      * @ignore
      */
     ngAfterContentInit() {
