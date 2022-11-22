@@ -215,7 +215,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="150" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:150</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="157" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:157</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -309,7 +309,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="142" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:142</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="149" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:149</a></div>
                                 </td>
                             </tr>
 
@@ -507,8 +507,15 @@ export class UiDateFormatDirective extends UiFormatDirective {
     @Input()
     set date(date: Date | string | undefined) {
         if (this._isDifferentValue(date, this._date)) {
+            const initial &#x3D; this._date &#x3D;&#x3D;&#x3D; undefined;
             this._date &#x3D; date;
-            this._cd.detectChanges();
+
+            if (initial) {
+                // hack needed for initial render of mat-tooltip
+                // if not done only on initial may create a change detection loop
+                // seen on Edge ~107, cannot point to the exact root cause why
+                setTimeout(() &#x3D;&gt; this._cd.markForCheck(), 0);
+            }
         }
     }
     get date() {
