@@ -1,3 +1,6 @@
+# v13.7.5 (2022-11-22)
+* **dateformat** avoid using macrotasks using setTimeout generated a lot of macrotasks
+
 # v13.7.3 (2022-11-14)
 * **snackbar** close snackbar using shortcut
 * **keyboard-shortcut** create directive
