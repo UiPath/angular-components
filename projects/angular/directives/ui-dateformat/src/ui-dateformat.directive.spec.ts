@@ -531,12 +531,12 @@ describe('Directive: UiDateFormat', () => {
             expect(momentOutputDate.minute()).toEqual(momentInputDate.minute());
         });
 
-        it('should call detectChanges if the date input value changes', fakeAsync(() => {
+        it('should call markForCheck if the date input value changes', fakeAsync(() => {
             fixture = TestBed.createComponent(TestHostComponent);
 
             component = fixture.componentInstance;
             const changeDetectorRef = (component.uiDateFormat as any)._cd;
-            const detectChangesSpy = spyOn(changeDetectorRef, 'markForCheck').and.callThrough();
+            const markForCheckSpy = spyOn(changeDetectorRef, 'markForCheck').and.callThrough();
 
             const now = Date.now();
 
@@ -562,7 +562,7 @@ describe('Directive: UiDateFormat', () => {
             tick(0);
             fixture.detectChanges();
 
-            expect(detectChangesSpy).toHaveBeenCalledTimes(1);
+            expect(markForCheckSpy).toHaveBeenCalledTimes(1);
             discardPeriodicTasks();
         }));
     });
