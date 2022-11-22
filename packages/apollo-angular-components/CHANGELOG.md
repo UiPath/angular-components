@@ -1,3 +1,6 @@
+# v13.12.4 (2022-11-22)
+* **dateformat** call markForCheck only on initial assignment markForCheck is needed so that changes propagate to matTooltip
+
 # v13.12.3 (2022-11-14)
 * **grid** expose resize stream
 
