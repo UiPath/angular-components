@@ -167,7 +167,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:114</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:117</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -188,7 +188,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="136" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:136</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:139</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -215,7 +215,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="157" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:157</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="175" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:175</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -242,7 +242,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:130</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:133</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -269,7 +269,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:124</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:127</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -309,18 +309,18 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="149" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:149</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="167" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:167</a></div>
                                 </td>
                             </tr>
 
                 <tr>
                     <td class="col-md-4">
-                        <span class="accessor"><b>set</b><code>date(date: Date | string | undefined)</code></span>
+                        <span class="accessor"><b>set</b><code>date(date: Date | string | undefined | null)</code></span>
                     </td>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="136" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:136</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:139</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -343,7 +343,7 @@
                                                             <td>date</td>
                                                     
                                                             <td>
-                                                                        <code>Date | string | undefined</code>
+                                                                        <code>Date | string | undefined | null</code>
                                                             </td>
                                                     
                                                         <td>
@@ -380,7 +380,9 @@ import {
     of,
 } from &#x27;rxjs&#x27;;
 import {
+    delay,
     filter,
+    take,
     takeUntil,
 } from &#x27;rxjs/operators&#x27;;
 
@@ -391,6 +393,7 @@ import {
     Inject,
     InjectionToken,
     Input,
+    NgZone,
     Optional,
     Renderer2,
 } from &#x27;@angular/core&#x27;;
@@ -505,16 +508,31 @@ export class UiDateFormatDirective extends UiFormatDirective {
      *
      */
     @Input()
-    set date(date: Date | string | undefined) {
+    set date(date: Date | string | undefined | null) {
+        date &#x3D; date ?? undefined;
+
         if (this._isDifferentValue(date, this._date)) {
             const initial &#x3D; this._date &#x3D;&#x3D;&#x3D; undefined;
             this._date &#x3D; date;
 
             if (initial) {
-                // hack needed for initial render of mat-tooltip
-                // if not done only on initial may create a change detection loop
-                // seen on Edge ~107, cannot point to the exact root cause why
-                setTimeout(() &#x3D;&gt; this._cd.markForCheck(), 0);
+                this._zone.runOutsideAngular(() &#x3D;&gt; {
+                    merge(
+                        this._zone.onMicrotaskEmpty,
+                        // IE doesn&#x27;t play nicely with task empty only
+                        this._zone.onStable,
+                    )
+                        .pipe(
+                            take(1),
+                            // hack needed for initial render of mat-tooltip
+                            // if not done only on initial may create a change detection loop
+                            // seen on Edge ~107, cannot point to the exact root cause why
+                            delay(0),
+                        )
+                        .subscribe(() &#x3D;&gt; {
+                            this._cd.markForCheck();
+                        });
+                });
             }
         }
     }
@@ -561,6 +579,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
         @Optional()
         private _options: IDateFormatOptions,
         private _cd: ChangeDetectorRef,
+        private _zone: NgZone,
         renderer: Renderer2,
         elementRef: ElementRef,
     ) {
