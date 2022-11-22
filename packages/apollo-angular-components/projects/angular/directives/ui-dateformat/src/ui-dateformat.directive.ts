@@ -8,7 +8,9 @@ import {
     of,
 } from 'rxjs';
 import {
+    delay,
     filter,
+    take,
     takeUntil,
 } from 'rxjs/operators';
 
@@ -19,6 +21,7 @@ import {
     Inject,
     InjectionToken,
     Input,
+    NgZone,
     Optional,
     Renderer2,
 } from '@angular/core';
@@ -133,16 +136,31 @@ export class UiDateFormatDirective extends UiFormatDirective {
      *
      */
     @Input()
-    set date(date: Date | string | undefined) {
+    set date(date: Date | string | undefined | null) {
+        date = date ?? undefined;
+
         if (this._isDifferentValue(date, this._date)) {
             const initial = this._date === undefined;
             this._date = date;
 
             if (initial) {
-                // hack needed for initial render of mat-tooltip
-                // if not done only on initial may create a change detection loop
-                // seen on Edge ~107, cannot point to the exact root cause why
-                setTimeout(() => this._cd.markForCheck(), 0);
+                this._zone.runOutsideAngular(() => {
+                    merge(
+                        this._zone.onMicrotaskEmpty,
+                        // IE doesn't play nicely with task empty only
+                        this._zone.onStable,
+                    )
+                        .pipe(
+                            take(1),
+                            // hack needed for initial render of mat-tooltip
+                            // if not done only on initial may create a change detection loop
+                            // seen on Edge ~107, cannot point to the exact root cause why
+                            delay(0),
+                        )
+                        .subscribe(() => {
+                            this._cd.markForCheck();
+                        });
+                });
             }
         }
     }
@@ -189,6 +207,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
         @Optional()
         private _options: IDateFormatOptions,
         private _cd: ChangeDetectorRef,
+        private _zone: NgZone,
         renderer: Renderer2,
         elementRef: ElementRef,
     ) {
