@@ -135,8 +135,15 @@ export class UiDateFormatDirective extends UiFormatDirective {
     @Input()
     set date(date: Date | string | undefined) {
         if (this._isDifferentValue(date, this._date)) {
+            const initial = this._date === undefined;
             this._date = date;
-            this._cd.detectChanges();
+
+            if (initial) {
+                // hack needed for initial render of mat-tooltip
+                // if not done only on initial may create a change detection loop
+                // seen on Edge ~107, cannot point to the exact root cause why
+                setTimeout(() => this._cd.markForCheck(), 0);
+            }
         }
     }
     get date() {
