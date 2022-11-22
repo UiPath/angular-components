@@ -1,3 +1,8 @@
+# v13.12.5 (2022-11-22)
+* **dateformat** avoid using macrotasks using setTimeout generated a lot of macrotasks
+* **test** update test naming
+* **chore** bump
+
 # v13.12.4 (2022-11-22)
 * **dateformat** call markForCheck only on initial assignment markForCheck is needed so that changes propagate to matTooltip
 
