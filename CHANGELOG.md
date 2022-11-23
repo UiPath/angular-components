@@ -1,3 +1,6 @@
+# v13.13.0 (2022-11-23)
+* **grid** add overridable input that reset grid state and emits after (by default it clears search term, filters and sorting)
+
 # v13.12.5 (2022-11-22)
 * **dateformat** avoid using macrotasks using setTimeout generated a lot of macrotasks
 * **test** update test naming
