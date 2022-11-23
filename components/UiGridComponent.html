@@ -314,6 +314,9 @@
                                 <a href="#refreshable" >refreshable</a>
                             </li>
                             <li>
+                                <a href="#reset" >reset</a>
+                            </li>
+                            <li>
                                 <a href="#resizeStrategy" >resizeStrategy</a>
                             </li>
                             <li>
@@ -860,6 +863,45 @@ disabled message if the row should not be selectable</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="reset"></a>
+                        <b>reset</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {
+        if (this.header) {
+            this.header.searchValue &#x3D; &#x27;&#x27;;
+        }
+        this.filterManager.clear();
+        this.sortManager.clear();
+        return of(true);
+    }</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="787" class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:787</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Clear search term, filters and sorting and emits true after.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="resizeStrategy"></a>
                         <b>resizeStrategy</b>
                     </td>
@@ -1279,8 +1321,8 @@ disabled message if the row should not be selectable</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="952"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:952</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="965"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:965</a></div>
                 </td>
             </tr>
 
@@ -1356,8 +1398,8 @@ disabled message if the row should not be selectable</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="938"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:938</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="951"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:951</a></div>
                 </td>
             </tr>
 
@@ -1432,8 +1474,8 @@ disabled message if the row should not be selectable</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="983"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:983</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="996"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:996</a></div>
                 </td>
             </tr>
 
@@ -1501,8 +1543,8 @@ disabled message if the row should not be selectable</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="877"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:877</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="890"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:890</a></div>
                 </td>
             </tr>
 
@@ -1572,8 +1614,8 @@ disabled message if the row should not be selectable</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="963"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:963</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="976"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:976</a></div>
                 </td>
             </tr>
 
@@ -1609,8 +1651,8 @@ disabled message if the row should not be selectable</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="959"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:959</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="972"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:972</a></div>
                 </td>
             </tr>
 
@@ -1646,8 +1688,8 @@ disabled message if the row should not be selectable</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="889"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:889</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="902"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:902</a></div>
                 </td>
             </tr>
 
@@ -1738,8 +1780,8 @@ disabled message if the row should not be selectable</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1006"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:1006</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1019"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:1019</a></div>
                 </td>
             </tr>
 
@@ -1807,8 +1849,8 @@ disabled message if the row should not be selectable</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="968"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:968</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="981"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:981</a></div>
                 </td>
             </tr>
 
@@ -1872,8 +1914,8 @@ disabled message if the row should not be selectable</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="976"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:976</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="989"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:989</a></div>
                 </td>
             </tr>
 
@@ -1953,8 +1995,8 @@ disabled message if the row should not be selectable</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="996"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:996</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1009"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:1009</a></div>
                 </td>
             </tr>
 
@@ -2022,8 +2064,8 @@ disabled message if the row should not be selectable</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="924"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:924</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="937"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/ui-grid.component.ts:937</a></div>
                 </td>
             </tr>
 
@@ -4105,6 +4147,19 @@ export class UiGridComponent&lt;T extends IGridDataEntry&gt; extends ResizableGr
 
         this._initDisplayToggleColumnsDivider();
     }
+
+    /**
+     * Clear search term, filters and sorting and emits true after.
+     */
+    @Input()
+    reset: () &#x3D;&gt; Observable&lt;boolean&gt; &#x3D; () &#x3D;&gt; {
+        if (this.header) {
+            this.header.searchValue &#x3D; &#x27;&#x27;;
+        }
+        this.filterManager.clear();
+        this.sortManager.clear();
+        return of(true);
+    };
 
     /**
      * @ignore
