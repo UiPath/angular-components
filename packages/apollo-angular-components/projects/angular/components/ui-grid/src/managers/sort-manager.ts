@@ -63,6 +63,12 @@ export class SortManager<T> {
         this._emitSort(column, true);
     }
 
+    clear() {
+        this._columns
+            .filter(c => c.sortable)
+            .forEach(c => c.sort = '');
+    }
+
     destroy() {
         this.sort$.complete();
     }

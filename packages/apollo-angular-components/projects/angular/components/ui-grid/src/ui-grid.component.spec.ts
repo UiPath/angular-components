@@ -1697,6 +1697,55 @@ describe('Component: UiGrid', () => {
                 });
             });
         });
+
+        describe('Event: reset all', () => {
+            beforeEach(() => {
+                component.search = true;
+                fixture.detectChanges();
+            });
+
+            it(`should reset search term, filters and sorting and emit reset event`, (done) => {
+                component.dropdownItemList = generateListFactory(() => ({
+                    label: faker.random.word(),
+                    value: faker.random.number(),
+                }))();
+                fixture.detectChanges();
+
+                // Set search, filters and sorting before clearing them
+                component.grid.columns.forEach(column => {
+                    if (column.dropdown) {
+                        column.dropdown.value = component.dropdownItemList[0];
+                    }
+
+                    if (column.searchableDropdown) {
+                        column.searchableDropdown.value =
+                            {
+                                id: +component.dropdownItemList[0].value,
+                                text: component.dropdownItemList[0].label,
+                            };
+                    }
+
+                    if (column.sortable) {
+                        column.sort = 'asc';
+                    }
+
+                });
+
+                component.grid.reset().subscribe(() => done());
+
+                expect(component.grid.header!.searchValue).toBe('');
+                component.grid.columns.forEach(column => {
+                    const dropdown = column.dropdown ?? column.searchableDropdown;
+                    if (dropdown) {
+                        expect(dropdown.value).toBeUndefined();
+                    }
+
+                    if (column.sortable) {
+                        expect(column.sort).toBe('');
+                    }
+                });
+            });
+        });
     });
 
     @Component({
