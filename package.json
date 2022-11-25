@@ -34,6 +34,7 @@
     "build:theme": "scss-bundle angular -c scss-bundle.config.json",
     "build:readme": "cpx ./README.md ./dist/angular",
     "build:prod": "npm-run-all lint build build:theme build:readme",
+    "test": "npm run test:watch",
     "test:watch": "ng test",
     "test:headless": "ng test --watch=false --browsers ChromeHeadless",
     "test:coverage": "ng test --code-coverage --watch=false --browsers ChromeHeadless",
