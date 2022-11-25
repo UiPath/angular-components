@@ -28,14 +28,23 @@
             "@uipath/angular/a11y": [
                 "./projects/angular/a11y/src/public_api.ts"
             ],
+            "@uipath/angular/components/ui-grid": [
+                "./projects/angular/components/ui-grid/src/public_api.ts"
+            ],
+            "@uipath/angular/components/ui-password-indicator": [
+                "./projects/angular/components/ui-password-indicator/src/public_api.ts"
+            ],
+            "@uipath/angular/components/ui-password-toggle": [
+                "./projects/angular/components/ui-password-toggle/src/public_api.ts"
+            ],
+            "@uipath/angular/components/ui-snackbar": [
+                "./projects/angular/components/ui-snackbar/src/public_api.ts"
+            ],
             "@uipath/angular/components/ui-suggest": [
                 "./projects/angular/components/ui-suggest/src/public_api.ts"
             ],
             "@uipath/angular/components/ui-tree-select": [
                 "./projects/angular/components/ui-tree-select/src/public_api.ts"
-            ],
-            "@uipath/angular/components/ui-grid": [
-                "./projects/angular/components/ui-grid/src/public_api.ts"
             ],
             "@uipath/angular/utilities": [
                 "./projects/angular/utilities/src/public_api.ts"
@@ -43,35 +52,47 @@
             "@uipath/angular/directives/internal": [
                 "projects/angular/directives/internal/src/public_api.ts"
             ],
-            "@uipath/angular/directives/ui-autofocus": [
-                "projects/angular/directives/ui-autofocus/src/public_api.ts"
-            ],
-            "@uipath/angular/directives/ui-clipboard": [
-                "projects/angular/directives/ui-clipboard/src/public_api.ts"
-            ],
             "@uipath/angular/directives/keyboard-shortcut": [
                 "projects/angular/directives/keyboard-shortcut/src/public_api.ts"
             ],
-            "@uipath/angular/directives/ui-drag-and-drop-file": [
-                "projects/angular/directives/ui-drag-and-drop-file/src/public_api.ts"
-            ],
-            "@uipath/angular/directives/ui-scroll-into-view": [
-                "projects/angular/directives/ui-scroll-into-view/src/public_api.ts"
-            ],
-            "@uipath/angular/directives/ui-virtual-scroll-range-loader": [
-                "projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api.ts"
+            "@uipath/angular/directives/ui-autofocus": [
+                "projects/angular/directives/ui-autofocus/src/public_api.ts"
             ],
             "@uipath/angular/directives/ui-click-outside": [
                 "projects/angular/directives/ui-click-outside/src/public_api.ts"
             ],
+            "@uipath/angular/directives/ui-clipboard": [
+                "projects/angular/directives/ui-clipboard/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-content-loader": [
+                "projects/angular/directives/ui-content-loader/src/public_api.ts"
+            ],
             "@uipath/angular/directives/ui-dateformat": [
                 "projects/angular/directives/ui-dateformat/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-drag-and-drop-file": [
+                "projects/angular/directives/ui-drag-and-drop-file/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-matformfield-required": [
+                "projects/angular/directives/ui-matformfield-required/src/public_api.ts"
             ],
             "@uipath/angular/directives/ui-ng-let": [
                 "projects/angular/directives/ui-ng-let/src/public_api.ts"
             ],
+            "@uipath/angular/directives/ui-progress-button": [
+                "projects/angular/directives/ui-progress-button/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-scroll-into-view": [
+                "projects/angular/directives/ui-scroll-into-view/src/public_api.ts"
+            ],
             "@uipath/angular/directives/ui-secondformat": [
                 "projects/angular/directives/ui-secondformat/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-spinner-button": [
+                "projects/angular/directives/ui-spinner-button/src/public_api.ts"
+            ],
+            "@uipath/angular/directives/ui-virtual-scroll-range-loader": [
+                "projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api.ts"
             ],
             "@uipath/angular/directives/ui-virtual-scroll-viewport-resize": [
                 "projects/angular/directives/ui-virtual-scroll-viewport-resize/src/public_api.ts"
