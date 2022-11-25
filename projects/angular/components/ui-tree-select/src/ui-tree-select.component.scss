@@ -1,0 +1,24 @@
+.tree-item-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+}
+
+@mixin perLevelPadding($level, $padding) {
+  .node-level-#{$level} {
+      &:not(.node-type-leaf) {
+          padding-left: calc($padding * $level);
+      }
+
+      &.node-type-leaf {
+          padding-left: calc($padding + max($padding, calc($padding * ($level + 1))));
+      }
+  }
+}
+
+.tree-container {
+  @for $i from 0 through 7 {
+      @include perLevelPadding($i, var(--ui-tree-select-item-padding));
+  }
+}
