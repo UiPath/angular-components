@@ -22,7 +22,9 @@
         "strictMetadataEmit": true,
         "fullTemplateTypeCheck": true,
         "strictInjectionParameters": true,
-        "enableResourceInlining": true
+        "enableResourceInlining": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false
     },
     "exclude": [
         "./test.ts",
