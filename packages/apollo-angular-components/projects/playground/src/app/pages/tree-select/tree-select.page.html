@@ -1,1 +1,27 @@
-<ui-tree-select></ui-tree-select>
+<ui-tree-select [data]="data"
+                (selected)="selected($event)"
+                (expanded)="expanded($event)">
+    <p noDataMessage>no data</p>
+    <ng-template #itemTemplate
+                 let-node="node"
+                 let-expanded="expanded"
+                 let-selected="selected"
+                 let-loading="loading"
+                 let-toggle="toggle">
+        <button *ngIf="node.hasChildren"
+                (click)="toggle($event)"
+                [spinnerButtonLoading]="loading"
+                [attr.aria-label]="expanded ? 'expand' : 'collapse'"
+                uiSpinnerButton
+                mat-icon-button
+                class="toggle-button"
+                type="button"
+                tabindex="-1">
+            <mat-icon>{{ !expanded ? 'expand_more' : 'chevron_right' }}</mat-icon>
+        </button>
+        <mat-icon>{{ expanded ? 'folder_open' : 'folder'}}</mat-icon>
+        {{ node.name }}
+    </ng-template>
+</ui-tree-select>
+
+Selected: {{ selectedNode }}

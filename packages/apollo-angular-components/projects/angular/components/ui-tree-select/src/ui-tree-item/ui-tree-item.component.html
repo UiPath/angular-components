@@ -1,0 +1,11 @@
+<mat-list-item (click)="click()"
+               (dblclick)="dblclick()"
+               [class.selected]="isSelected"
+               [ngClass]="'node-level-' + node.level"
+               [class.node-type-leaf]="!node.hasChildren"
+               matRipple
+               tabindex="0"
+               role="listitem"
+               class="node tree-item-container">
+  <ng-content></ng-content>
+</mat-list-item>

@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { UiTreeSelectModule } from '@uipath/angular/components/ui-tree-select';
+import { UiSpinnerButtonModule } from '@uipath/angular/directives/ui-spinner-button';
 
 import { TreeSelectPageComponent } from './tree-select.page';
 
@@ -13,6 +16,9 @@ import { TreeSelectPageComponent } from './tree-select.page';
     CommonModule,
     UiTreeSelectModule,
     MatFormFieldModule,
+    MatIconModule,
+    UiSpinnerButtonModule,
+    MatButtonModule,
   ],
 })
 export class TreeSelectModue { }
