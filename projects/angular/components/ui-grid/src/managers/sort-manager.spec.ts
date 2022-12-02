@@ -61,7 +61,7 @@ describe('Component: UiGrid', () => {
 
                 manager.columns = cols;
                 expect(Object.keys(manager.sort$.getValue()).length).toBe(4);
-                expect(manager.sort$.getValue().userEvent).toBeFalse();
+                expect(manager.sort$.getValue().userEvent).toBeFalsy();
             });
 
             describe('Event: user sort change', () => {
@@ -122,7 +122,7 @@ describe('Component: UiGrid', () => {
                         ).subscribe(sort => {
                             expect(sort.field).toEqual(column.property!);
                             expect(sort.direction).toEqual(column.sort);
-                            expect(sort.userEvent).toBeTrue();
+                            expect(sort.userEvent).toBeTruthy();
                         });
 
                     manager.changeSort(column);
@@ -142,7 +142,7 @@ describe('Component: UiGrid', () => {
                         ).subscribe(sort => {
                             expect(sort.field).toEqual(first.property!);
                             expect(sort.direction).toEqual(first.sort);
-                            expect(sort.userEvent).toBeTrue();
+                            expect(sort.userEvent).toBeTruthy();
                         });
 
                     manager.sort$
@@ -153,7 +153,7 @@ describe('Component: UiGrid', () => {
                         ).subscribe(sort => {
                             expect(sort.field).toEqual(second.property!);
                             expect(sort.direction).toEqual(second.sort);
-                            expect(sort.userEvent).toBeTrue();
+                            expect(sort.userEvent).toBeTruthy();
                         });
 
                     manager.changeSort(first);
@@ -172,7 +172,7 @@ describe('Component: UiGrid', () => {
             });
 
             it('should emit the reference property', (done) => {
-                const [firstColumn, duplicateColumn ] = columns;
+                const [firstColumn, duplicateColumn] = columns;
                 firstColumn.property = 'prop1';
                 duplicateColumn.property = 'prop2';
                 duplicateColumn.queryProperty = 'prop1';
@@ -187,7 +187,7 @@ describe('Component: UiGrid', () => {
                     ).subscribe(sort => {
                         expect(sort.field).toEqual(duplicateColumn.queryProperty!);
                         expect(sort.direction).toEqual(duplicateColumn.sort);
-                        expect(sort.userEvent).toBeTrue();
+                        expect(sort.userEvent).toBeTruthy();
                     });
 
                 manager.changeSort(duplicateColumn);
