@@ -132,8 +132,8 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
     startResize(ev: MouseEvent, column: UiGridColumnDirective<T>, columnIndex: number) {
         this.resizeStart$.next({
-             mouseEvent: ev,
-             columnIndex,
+            mouseEvent: ev,
+            columnIndex,
         });
         this.isResizing = true;
         // hook events
@@ -169,7 +169,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             columnIndex,
             direction,
         });
-        const columnElement = document.querySelector(`[data-property="${column.property}"]`);
+        const columnElement = document.querySelector(`[data-property="${column.property as string}"]`);
         const { x, width } = columnElement!.getBoundingClientRect()!;
         let currentX = x + width;
         const maxSpeed = 50;
@@ -307,6 +307,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
     private _startResizeCommon(ev?: MouseEvent) {
         if (!ev) { return; }
+        if (!this._previous) { return; }
 
         this._previous = Object.assign(this._previous, {
             offsetPx: 0,

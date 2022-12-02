@@ -43,7 +43,7 @@ describe('Directive: KeyboardShortcut', () => {
         document.dispatchEvent(EventGenerator.keyDown(Key.a));
         document.dispatchEvent(EventGenerator.keyDown(Key.Control));
         fixture.detectChanges();
-        expect(fixture.componentInstance.shortcutWasPressed).toBeTrue();
+        expect(fixture.componentInstance.shortcutWasPressed).toBeTruthy();
     });
 
     it('should not emit if key combination is not simultaneously pressed', () => {
@@ -54,6 +54,6 @@ describe('Directive: KeyboardShortcut', () => {
         document.dispatchEvent(EventGenerator.keyDown(Key.Z));
         fixture.detectChanges();
 
-        expect(fixture.componentInstance.shortcutWasPressed).toBeFalse();
+        expect(fixture.componentInstance.shortcutWasPressed).toBeFalsy();
     });
 });
