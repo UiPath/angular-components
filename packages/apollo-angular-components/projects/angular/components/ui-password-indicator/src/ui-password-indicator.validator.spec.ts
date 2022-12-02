@@ -2,7 +2,7 @@ import * as faker from 'faker';
 
 import {
     AbstractControl,
-    FormControl,
+    UntypedFormControl,
 } from '@angular/forms';
 
 import { complexityValidator } from './ui-password-indicator.validator';
@@ -13,7 +13,7 @@ describe('Validator: complexity', () => {
     let control: AbstractControl;
 
     beforeEach(() => {
-        control = new FormControl('');
+        control = new UntypedFormControl('');
     });
 
     it('should return an AbstractControl validator', () => {

@@ -7,8 +7,8 @@ import {
     TestBed,
 } from '@angular/core/testing';
 import {
-    FormBuilder,
-    FormGroup,
+    UntypedFormBuilder,
+    UntypedFormGroup,
     FormsModule,
     ReactiveFormsModule,
 } from '@angular/forms';
@@ -57,11 +57,11 @@ export class PasswordIndicatorTestComponent {
         [Rule.dollarOrAt]: /(?=.*[$@])/,
     };
 
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     hideValidRuleDefinition = false;
 
-    constructor(fb: FormBuilder) {
+    constructor(fb: UntypedFormBuilder) {
         this.form = fb.group({
             password: [
                 '',

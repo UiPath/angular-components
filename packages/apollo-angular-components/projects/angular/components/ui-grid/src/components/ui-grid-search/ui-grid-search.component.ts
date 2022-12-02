@@ -16,7 +16,7 @@ import {
     Output,
     ViewEncapsulation,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /**
  * The grid search component.
@@ -83,7 +83,7 @@ export class UiGridSearchComponent implements OnInit, OnDestroy {
     /**
      * @ignore
      */
-    search = new FormControl('');
+    search = new UntypedFormControl('');
 
     /**
      * The search event.
