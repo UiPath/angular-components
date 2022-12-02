@@ -33,8 +33,8 @@ import {
     waitForAsync,
 } from '@angular/core/testing';
 import {
-    FormBuilder,
-    FormGroup,
+    UntypedFormBuilder,
+    UntypedFormGroup,
     ReactiveFormsModule,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -2678,7 +2678,7 @@ describe('Component: UiSuggest', () => {
         `,
     })
     class UiSuggestFormControlFixtureComponent extends UiSuggestFixtureDirective {
-        formGroup: FormGroup;
+        formGroup: UntypedFormGroup;
 
         set value(value: ISuggestValue[]) {
             this.formGroup.get('test')?.setValue(value);
@@ -2692,7 +2692,7 @@ describe('Component: UiSuggest', () => {
             return this.formGroup.get('test');
         }
 
-        constructor(fb: FormBuilder) {
+        constructor(fb: UntypedFormBuilder) {
             super();
 
             this.formGroup = fb.group({

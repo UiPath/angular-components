@@ -14,8 +14,8 @@ import {
     Component,
 } from '@angular/core';
 import {
-    FormBuilder,
-    FormGroup,
+    UntypedFormBuilder,
+    UntypedFormGroup,
     Validators,
 } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
@@ -74,19 +74,19 @@ export class GridPageComponent implements AfterViewInit {
         hidePageSize: false,
     };
 
-    actionsForm!: FormGroup;
-    get inputGroup(): FormGroup {
-        return this.actionsForm.get('inputs')! as FormGroup;
+    actionsForm!: UntypedFormGroup;
+    get inputGroup(): UntypedFormGroup {
+        return this.actionsForm.get('inputs')! as UntypedFormGroup;
     }
-    get headerGroup(): FormGroup {
-        return this.actionsForm.get('header')! as FormGroup;
+    get headerGroup(): UntypedFormGroup {
+        return this.actionsForm.get('header')! as UntypedFormGroup;
     }
-    get dataGroup(): FormGroup {
-        return this.actionsForm.get('data')! as FormGroup;
+    get dataGroup(): UntypedFormGroup {
+        return this.actionsForm.get('data')! as UntypedFormGroup;
     }
 
     constructor(
-        private _fb: FormBuilder,
+        private _fb: UntypedFormBuilder,
     ) {
         this.actionsForm = this._fb.group({
             inputs: this._fb.group({

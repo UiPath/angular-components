@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import {
     ControlValueAccessor,
-    FormControl,
+    UntypedFormControl,
     FormGroupDirective,
     NgControl,
     NgForm,
@@ -167,7 +167,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
     /**
      * @ignore
      */
-    inputControl = new FormControl('');
+    inputControl = new UntypedFormControl('');
 
     /**
      * Configure the component display priority.
@@ -253,7 +253,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
 
         const oldState = this.errorState;
         const control = this.ngControl ?
-            this.ngControl.control as FormControl :
+            this.ngControl.control as UntypedFormControl :
             null;
         const parent = this._parentFormGroup || this._parentForm;
         const newState = this._errorStateMatcher.isErrorState(control, parent);
