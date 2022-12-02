@@ -225,8 +225,7 @@ export class UiDragAndDropFileDirective implements OnChanges, AfterViewInit, OnD
 
     private _emitFiles(files: FileList) {
         if (
-            !files ||
-            !files.length ||
+            !files?.length ||
             this.disabled
         ) { return; }
 
