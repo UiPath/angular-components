@@ -80,15 +80,15 @@ describe('Directive: MatFormFieldRequired', () => {
 
     it('MatTooltip should be enabled if input enabled', () => {
         fixture.detectChanges();
-        expect((dir as any)._tooltip?.disabled).toBeFalse();
+        expect((dir as any)._tooltip?.disabled).toBeFalsy();
     });
 
     it('MatTooltip should be disabled if input disabled', () => {
         fixture.detectChanges();
-        expect((dir as any)._tooltip?.disabled).toBeFalse();
+        expect((dir as any)._tooltip?.disabled).toBeFalsy();
         fixture.componentInstance.disabled = true;
         fixture.detectChanges();
-        expect((dir as any)._tooltip?.disabled).toBeTrue();
+        expect((dir as any)._tooltip?.disabled).toBeTruthy();
     });
 
     it('MatTooltip should be visible on mouseEnter', fakeAsync(() => {
@@ -96,10 +96,10 @@ describe('Directive: MatFormFieldRequired', () => {
         const spanDgbEl = fixture.debugElement.query(By.css('span'));
         spanDgbEl.nativeElement.dispatchEvent(EventGenerator.mouseEnter);
         flush();
-        expect((dir as any)._tooltip?._isTooltipVisible()).toBeTrue();
+        expect((dir as any)._tooltip?._isTooltipVisible()).toBeTruthy();
         spanDgbEl.nativeElement.dispatchEvent(EventGenerator.mouseLeave);
         flush();
-        expect((dir as any)._tooltip?._isTooltipVisible()).toBeFalse();
+        expect((dir as any)._tooltip?._isTooltipVisible()).toBeFalsy();
     }));
 
     it('MatTooltip should NOT exist if input is NOT required', () => {
@@ -112,7 +112,7 @@ describe('Directive: MatFormFieldRequired', () => {
         fixture.detectChanges();
         fixture.componentInstance.required = false;
         fixture.detectChanges();
-        expect((dir as any)._tooltip?.disabled).toBeTrue();
+        expect((dir as any)._tooltip?.disabled).toBeTruthy();
     }));
 
     it('MatTooltip should be created and enabled if input changes to required', fakeAsync(() => {
@@ -121,6 +121,6 @@ describe('Directive: MatFormFieldRequired', () => {
         expect((dir as any)._tooltip).toBe(undefined);
         fixture.componentInstance.required = true;
         fixture.detectChanges();
-        expect((dir as any)._tooltip.disabled).toBeFalse();
+        expect((dir as any)._tooltip.disabled).toBeFalsy();
     }));
 });

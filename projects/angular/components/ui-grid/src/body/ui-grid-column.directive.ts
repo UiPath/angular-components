@@ -21,6 +21,7 @@ import { UiGridSearchFilterDirective } from '../filters/ui-grid-search-filter.di
  * @ignore
  */
 const ARIA_SORT_MAP: Record<SortDirection, string> = {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     '': 'none',
     asc: 'ascending',
     desc: 'descending',

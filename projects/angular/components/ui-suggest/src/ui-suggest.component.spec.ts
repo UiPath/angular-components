@@ -1,4 +1,5 @@
 import * as faker from 'faker';
+import { range } from 'lodash';
 import {
     a11y,
     axe,
@@ -33,9 +34,9 @@ import {
     waitForAsync,
 } from '@angular/core/testing';
 import {
-    FormBuilder,
-    FormGroup,
     ReactiveFormsModule,
+    UntypedFormBuilder,
+    UntypedFormGroup,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { By } from '@angular/platform-browser';
@@ -45,7 +46,6 @@ import {
     Key,
 } from '@uipath/angular/testing';
 
-import { range } from 'lodash';
 import {
     ISuggestValue,
     ISuggestValues,
@@ -1696,7 +1696,7 @@ const sharedSpecifications = (
             expect(selectedChipsInnerText.length).toBe(selectedValues.length);
             selectedValues
                 .map(value => value.text)
-                .forEach(valueText => expect(selectedChipsInnerText.includes(valueText)).toBeTrue());
+                .forEach(valueText => expect(selectedChipsInnerText.includes(valueText)).toBeTruthy());
         });
 
         it('should display all selected values in compact mode', () => {
@@ -2678,7 +2678,7 @@ describe('Component: UiSuggest', () => {
         `,
     })
     class UiSuggestFormControlFixtureComponent extends UiSuggestFixtureDirective {
-        formGroup: FormGroup;
+        formGroup: UntypedFormGroup;
 
         set value(value: ISuggestValue[]) {
             this.formGroup.get('test')?.setValue(value);
@@ -2692,7 +2692,7 @@ describe('Component: UiSuggest', () => {
             return this.formGroup.get('test');
         }
 
-        constructor(fb: FormBuilder) {
+        constructor(fb: UntypedFormBuilder) {
             super();
 
             this.formGroup = fb.group({
@@ -3033,7 +3033,8 @@ describe('Component: UiSuggest', () => {
 
                                 if (shouldRenderMessage) {
                                     expect(customInfoMessageCount).toBeDefined();
-                                    expect(customInfoMessageCount.nativeNode!.innerText.includes(searchableCountInfo!.message)).toBeTrue();
+                                    expect(customInfoMessageCount.nativeNode!.innerText
+                                        .includes(searchableCountInfo!.message)).toBeTruthy();
 
                                     populateSearchFor('a', fixture);
                                     tick(SEARCH_DEBOUNCE);

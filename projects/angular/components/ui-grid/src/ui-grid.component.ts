@@ -66,6 +66,7 @@ import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
 import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
+import { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 import {
@@ -88,7 +89,6 @@ import {
     ISortModel,
 } from './models';
 import { UiGridIntl } from './ui-grid.intl';
-import { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.directive';
 
 export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid DataManager options.');
 const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
@@ -411,7 +411,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     @Output()
-    rowClick = new EventEmitter<{event: Event; row: T}>();
+    rowClick = new EventEmitter<{ event: Event; row: T }>();
 
     /**
      * Emits the column definitions when their definition changes.
@@ -1014,6 +1014,10 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             return [searchableDropdown.value as ISuggestValue];
         }
         return [];
+    }
+
+    getColumnName(column: UiGridColumnDirective<T>, prefix = 'ui-grid-dropdown-filter') {
+        return prefix + '-' + ((column.property as string) ?? 'na');
     }
 
     isFilterApplied(column: UiGridColumnDirective<T>) {

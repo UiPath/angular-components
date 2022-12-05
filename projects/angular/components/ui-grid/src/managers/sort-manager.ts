@@ -11,6 +11,7 @@ import { ISortModel } from '../models';
  * @ignore
  */
 const SORT_CYCLE_MAP: Record<SortDirection, SortDirection> = {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     '': 'asc',
     asc: 'desc',
     desc: '',

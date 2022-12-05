@@ -1,6 +1,6 @@
 <ng-container *ngIf="showPaintTime && (paintTime$ | async) as paintTime">
     <div class="ui-grid-debug-information">
-        Painted {{ dataManager?.length }} rows in {{ paintTime }}ms
+        Painted {{ dataManager.length }} rows in {{ paintTime }}ms
     </div>
 </ng-container>
 
@@ -52,7 +52,7 @@
                     </ng-container>
 
                     <div *ngIf="!(hasSelection$ | async)"
-                        class="ui-grid-action-buttons ui-grid-action-buttons-inline">
+                         class="ui-grid-action-buttons ui-grid-action-buttons-inline">
                         <ng-container *ngFor="let button of header?.inlineButtons">
                             <ng-container *ngIf="button.visible">
                                 <ng-container *ngTemplateOutlet="button.html ?? null">
@@ -64,8 +64,8 @@
             </ng-template>
 
             <div #gridActionButtons
-                *ngIf="hasSelection$ | async"
-                class="ui-grid-action-buttons ui-grid-action-buttons-selection">
+                 *ngIf="hasSelection$ | async"
+                 class="ui-grid-action-buttons ui-grid-action-buttons-selection">
                 <ng-container *ngFor="let button of header?.actionButtons">
                     <ng-container *ngIf="button.visible">
                         <ng-container *ngTemplateOutlet="button.html?? null">
@@ -160,14 +160,15 @@
                             <p [class.ui-grid-header-title-filtered]="isFilterApplied(column)"
                                [matTooltip]="column.title ?? ''"
                                [matTooltipDisabled]="resizeManager.isResizing"
-                               [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')">{{ column.title }}</p>
+                               [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')">
+                                {{ column.title }}</p>
                             <div *ngIf="column.sortable || column.description"
                                  [class.ui-grid-sort-indicator-asc]="column.sort === 'asc'"
                                  [class.ui-grid-sort-indicator-desc]="column.sort === 'desc'"
                                  class="ui-grid-sort-indicator">
-                                 <mat-icon *ngIf="column.description"
-                                           [matTooltip]="column.description"
-                                           class="ui-grid-info-icon material-icons-outlined">info</mat-icon>
+                                <mat-icon *ngIf="column.description"
+                                          [matTooltip]="column.description"
+                                          class="ui-grid-info-icon material-icons-outlined">info</mat-icon>
                                 <mat-icon class="ui-grid-sort-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          viewBox="0 0 24 24">
@@ -536,7 +537,7 @@
              class="ui-grid-dropdown-filter-container ui-grid-filter-option">
             <button [matMenuTriggerFor]="filterOptions"
                     [disabled]="column.dropdown?.disabled || disabled"
-                    [attr.data-column-name]="'ui-grid-dropdown-filter-' + (column.property || 'na')"
+                    [attr.data-column-name]="getColumnName(column)"
                     mat-button
                     type="button"
                     class="ui-grid-dropdown-filter-button">
@@ -578,9 +579,9 @@
                         [drillDown]="column.searchableDropdown!.drillDown"
                         [maxLength]="64"
                         [fetchStrategy]="column.searchableDropdown!.fetchStrategy || fetchStrategy"
-                        [attr.data-cy]="'ui-grid-search-filter-' + (column.property || 'na')"
-                        [multiple] = "column.searchableDropdown!.multiple"
-                        [compact] = "column.searchableDropdown!.multiple"
+                        [attr.data-cy]="getColumnName(column, 'ui-grid-search-filter')"
+                        [multiple]="column.searchableDropdown!.multiple"
+                        [compact]="column.searchableDropdown!.multiple"
                         (selected)="filterManager.searchableDropdownUpdate(column, $event, true)"
                         (deselected)="filterManager.searchableDropdownUpdate(column, $event, false)"
                         (opened)="column.refetch && suggest.fetch()"
