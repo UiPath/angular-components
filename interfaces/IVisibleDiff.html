@@ -279,7 +279,7 @@ export class VisibilityManger&lt;T extends IGridDataEntry&gt; {
             const firstColumn &#x3D; columns.find(c &#x3D;&gt; c.property &#x3D;&#x3D;&#x3D; visibleOptions[0].property)!;
 
             if (isDevMode()) {
-                console.warn(&#x60;Did not find column with [disableToggle]&#x3D;&quot;true&quot;, locking &#x27;${firstColumn.property}&#x27; column&#x60;);
+                console.warn(&#x60;Did not find column with [disableToggle]&#x3D;&quot;true&quot;, locking &#x27;${firstColumn.property as string}&#x27; column&#x60;);
             }
 
             firstColumn.disableToggle &#x3D; true;
