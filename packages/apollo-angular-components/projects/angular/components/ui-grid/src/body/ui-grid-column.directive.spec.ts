@@ -91,11 +91,11 @@ describe('Component: UiGridColumn', () => {
             });
 
             it('should have visible set to false', () => {
-                expect(column.visible).toBeFalse();
+                expect(column.visible).toBeFalsy();
             });
 
             it('should have primary set to false', () => {
-                expect(column.primary).toBeFalse();
+                expect(column.primary).toBeFalsy();
             });
 
             it('should have all properties undefined', () => {

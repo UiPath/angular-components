@@ -169,8 +169,8 @@ export class FilterManager<T> {
 
         this.filter$.next(
             this.hasCustomFilter$.value
-            ? this.customFilters!
-            : updatedFilters,
+                ? this.customFilters!
+                : updatedFilters,
         );
     };
 
@@ -201,6 +201,6 @@ export class FilterManager<T> {
     }
 
     private _sortByProperty(filters: IFilterModel<T>[]): any {
-        return filters.sort((a, b) => (a.property > b.property) ? 1 : -1);
+        return filters.sort((a, b) => ((a.property as string) > (b.property as string)) ? 1 : -1);
     }
 }

@@ -212,7 +212,7 @@ describe('Service: UiSnackBarService', () => {
                             .afterDismissed()
                             .subscribe(response => {
 
-                                expect(response.dismissedByAction).toBeTrue(`dismissedByAction is false`);
+                                expect(response.dismissedByAction).toBeTruthy(`dismissedByAction is false`);
                                 done();
                             });
 
@@ -228,7 +228,7 @@ describe('Service: UiSnackBarService', () => {
                             .afterDismissed()
                             .subscribe(response => {
 
-                                expect(response.dismissedByAction).toBeFalse(`dismissedByAction is true`);
+                                expect(response.dismissedByAction).toBeFalsy(`dismissedByAction is true`);
                                 done();
                             });
                         const close = getSnack()!.querySelector<HTMLElement>('.ui-snackbar-close')!;
