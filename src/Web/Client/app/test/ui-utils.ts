@@ -307,7 +307,7 @@ class GridUtils<T> {
 
     public getHeaders = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
         return this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
-            .filter(el => this._utils.getDebugElement('.ui-grid-header-title', el));
+            .filter(el => this._utils.getDebugElement('.ui-grid-header-title:not(ui-grid ui-grid .ui-grid-header-title)', el));
     };
 
     public getColumnsProperties = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
