@@ -5,8 +5,8 @@ import {
   ComponentFixture, TestBed,
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UiTreeItemComponent } from '@uipath/angular/components/ui-tree-select';
 import { range } from 'lodash-es';
-import { UiTreeItemModule } from './ui-tree-item.module';
 
 @Component({
   template: `<ui-tree-item
@@ -37,7 +37,7 @@ describe('UiTreeItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, UiTreeItemModule],
+      imports: [NoopAnimationsModule, UiTreeItemComponent],
       declarations: [TestHostComponent],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();

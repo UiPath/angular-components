@@ -13,10 +13,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {
-    UiTreeSelectComponent,
-    UiTreeSelectModule,
-} from '@uipath/angular/components/ui-tree-select';
+import { UiTreeSelectComponent } from '@uipath/angular/components/ui-tree-select';
 import { UiSpinnerButtonModule } from '@uipath/angular/directives/ui-spinner-button';
 import { TreeUtils } from './utils/tree.utils';
 
@@ -92,7 +89,7 @@ describe('UiTreeSelectComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, UiTreeSelectModule, MatIconModule, MatButtonModule, UiSpinnerButtonModule],
+            imports: [NoopAnimationsModule, UiTreeSelectComponent, MatIconModule, MatButtonModule, UiSpinnerButtonModule],
             declarations: [TestHostComponent],
         }).compileComponents();
     });

@@ -1,4 +1,6 @@
-import { FlatTreeControl } from '@angular/cdk/tree';
+import {
+ CdkTreeModule, FlatTreeControl,
+} from '@angular/cdk/tree';
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -18,13 +20,30 @@ import { MatTreeFlatDataSource } from '@angular/material/tree';
 
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { BehaviorSubject } from 'rxjs';
-import { UiTreeItemComponent } from './ui-tree-item/ui-tree-item.component';
-import { TreeUtils } from './utils/tree.utils';
+import { MatListModule } from '@angular/material/list';
+import { CommonModule } from '@angular/common';
+import { UiSpinnerButtonModule } from '@uipath/angular/directives/ui-spinner-button';
+import { UiContentLoaderModule } from '@uipath/angular/directives/ui-content-loader';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import {
     ITreeNode, IFlatNodeObject,
 } from './models/tree.models';
+import { TreeUtils } from './utils/tree.utils';
+import { UiTreeItemComponent } from './ui-tree-item/ui-tree-item.component';
 
 @Component({
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatListModule,
+
+        UiSpinnerButtonModule,
+        UiTreeItemComponent,
+        UiContentLoaderModule,
+
+        CdkTreeModule,
+        ScrollingModule,
+    ],
     selector: 'ui-tree-select',
     templateUrl: './ui-tree-select.component.html',
     styleUrls: ['./ui-tree-select.component.scss'],

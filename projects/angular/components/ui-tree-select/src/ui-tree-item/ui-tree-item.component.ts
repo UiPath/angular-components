@@ -1,4 +1,5 @@
 import { FocusableOption } from '@angular/cdk/a11y';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -10,9 +11,15 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+import { MatListModule } from '@angular/material/list';
 import { IFlatNodeObject } from '../models/tree.models';
 
 @Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatListModule,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'ui-tree-item[node]',
   templateUrl: './ui-tree-item.component.html',
