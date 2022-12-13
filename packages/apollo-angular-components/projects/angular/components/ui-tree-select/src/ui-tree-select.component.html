@@ -3,7 +3,7 @@
                                  class="virtual-scroll-container"
                                  [itemSize]="itemSize"
                                  tabindex="0">
-        <mat-list role="list"
+        <mat-list role="tree"
                   class="tree-container">
             <ng-container *ngIf="dataSource.data.length == 0">
                 <ng-content select="[noDataMessage]"></ng-content>
