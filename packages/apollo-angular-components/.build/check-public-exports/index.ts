@@ -124,11 +124,10 @@ const searchForDecoratedClasses = (source: ts.SourceFile) => {
 
     decoratedClassNodes
         .forEach(decoratedClassNode => {
-            decoratedClassNode.decorators
-                .forEach(decoratorNode => {
+            const decorators = ts.canHaveDecorators(decoratedClassNode) ? ts.getDecorators(decoratedClassNode) : undefined;
+                decorators?.forEach(decoratorNode => {
                     const className = getChildren(decoratedClassNode)
-                        .find(classNode => ts.isIdentifier(classNode))
-                        .getText();
+                        .find(classNode => ts.isIdentifier(classNode))?.getText() ?? '';
 
                     const [decoratorName] = getChildren(decoratorNode.expression)
                         .map(expressionNode => expressionNode.getText());
