@@ -225,21 +225,6 @@ describe('UiTreeSelectComponent', () => {
         expect(nodeWithChildren.querySelector('.toggle-button mat-icon').textContent).toBe('chevron_right');
     });
 
-    it('should correctly render loading state', fakeAsync(() => {
-        // check that by default the spinner button class is not added on the first item
-        const nodeWithChildren = fixture.nativeElement.querySelectorAll('.tree-item-container')[1];
-        expect(nodeWithChildren.querySelector('.toggle-button')).not.toContain('ui-spinner-button-loading');
-
-        // set the loadingFolderExpansion$ stream with the key of the first folder and check that rendering is loaded
-        component.treeSelect.loadingFolderExpansion$.next({
-            value: true,
-            key: 'y',
-        });
-
-        fixture.detectChanges();
-        expect(nodeWithChildren.querySelector('.toggle-button').classList).toContain('ui-spinner-button-loading');
-    }));
-
     it('should correctly emit expanded or collapsed when toggle button is clicked', () => {
         // select the item with children
         const nodeWithChildren = fixture.nativeElement.querySelectorAll('.tree-item-container')[1];
