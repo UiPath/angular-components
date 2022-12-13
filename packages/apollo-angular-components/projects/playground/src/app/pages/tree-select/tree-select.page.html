@@ -6,11 +6,9 @@
                  let-node="node"
                  let-expanded="expanded"
                  let-selected="selected"
-                 let-loading="loading"
                  let-toggle="toggle">
         <button *ngIf="node.hasChildren"
                 (click)="toggle($event)"
-                [spinnerButtonLoading]="loading"
                 [attr.aria-label]="expanded ? 'expand' : 'collapse'"
                 uiSpinnerButton
                 mat-icon-button

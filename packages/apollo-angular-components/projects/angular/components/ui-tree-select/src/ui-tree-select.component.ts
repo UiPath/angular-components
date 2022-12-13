@@ -22,7 +22,6 @@ import { FocusKeyManager } from '@angular/cdk/a11y';
 import { BehaviorSubject } from 'rxjs';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
-import { UiSpinnerButtonModule } from '@uipath/angular/directives/ui-spinner-button';
 import { UiContentLoaderModule } from '@uipath/angular/directives/ui-content-loader';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import {
@@ -37,7 +36,6 @@ import { UiTreeItemComponent } from './ui-tree-item/ui-tree-item.component';
         CommonModule,
         MatListModule,
 
-        UiSpinnerButtonModule,
         UiTreeItemComponent,
         UiContentLoaderModule,
 
@@ -89,17 +87,13 @@ export class UiTreeSelectComponent implements AfterViewInit {
     @Input()
     set data(value: ITreeNode[]) {
         this._dataSource.data = value;
-        this.loadingFolderExpansion$.next({
-            value: false,
-        });
     }
 
     get dataSource() {
         return this._dataSource;
     }
 
-    loadingFolderExpansion$ = new BehaviorSubject<LoadingFolderExpansion>({ value: false });
-    currentSelectedNode = new Map<string, IFlatNodeObject>();
+    currentSelectedNodes = new Map<string, IFlatNodeObject>();
 
     private _keyManager!: FocusKeyManager<UiTreeItemComponent>;
     private _treeControl = new FlatTreeControl<IFlatNodeObject, string | number>(TreeUtils.getNodeLevel, TreeUtils.getIsNodeExpandable, {
@@ -166,10 +160,7 @@ export class UiTreeSelectComponent implements AfterViewInit {
         }
         this._treeControl.expand(node);
         this.expanded.emit(node);
-        this.loadingFolderExpansion$.next({
-            value: true,
-            key: node.key,
-        });
+        }
     }
 
     collapse(node: IFlatNodeObject) {
@@ -178,10 +169,6 @@ export class UiTreeSelectComponent implements AfterViewInit {
         }
         this._treeControl.collapse(node);
         this.collapsed.emit(node);
-        this.loadingFolderExpansion$.next({
-            value: false,
-            key: undefined,
-        });
     }
 
     toggle(node: IFlatNodeObject) {
@@ -196,7 +183,3 @@ export class UiTreeSelectComponent implements AfterViewInit {
     }
 }
 
-type LoadingFolderExpansion = {
-    value: boolean;
-    key?: string;
-};
