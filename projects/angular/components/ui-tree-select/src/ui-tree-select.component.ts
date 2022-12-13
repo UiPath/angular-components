@@ -66,10 +66,10 @@ export class UiTreeSelectComponent implements AfterViewInit {
     itemPadding = '20px';
 
     /**
-     * Emits a clone of the original node when it's selected
+     * Emits an array of the selected nodes (keep in mind they are clones of the original nodes)
      */
     @Output()
-    selected = new EventEmitter<ITreeNode | null>();
+    selected = new EventEmitter<ITreeNode[]>();
 
     /**
      * Emits a clone of the original node when it's expanded
@@ -99,7 +99,7 @@ export class UiTreeSelectComponent implements AfterViewInit {
     }
 
     loadingFolderExpansion$ = new BehaviorSubject<LoadingFolderExpansion>({ value: false });
-    currentSelectedNode: IFlatNodeObject | null = null;
+    currentSelectedNode = new Map<string, IFlatNodeObject>();
 
     private _keyManager!: FocusKeyManager<UiTreeItemComponent>;
     private _treeControl = new FlatTreeControl<IFlatNodeObject, string | number>(TreeUtils.getNodeLevel, TreeUtils.getIsNodeExpandable, {
@@ -115,19 +115,22 @@ export class UiTreeSelectComponent implements AfterViewInit {
     }
 
     onKeydown(event: KeyboardEvent) {
-        const selected = this._keyManager.activeItem?.node;
-        if (event.key === 'Enter') {
-            this.select(selected ?? null);
+        const activeNode = this._keyManager.activeItem?.node;
+        if (activeNode) {
+            if (event.key === 'Enter') {
+            this.select(activeNode);
             return;
         }
-        if (['ArrowRight', 'Right'].includes(event.key) && selected) {
-            this.expand(selected);
+            if (['ArrowRight', 'Right'].includes(event.key)) {
+            this.expand(activeNode);
             return;
         }
-        if (['ArrowLeft', 'Left'].includes(event.key) && selected) {
-            this.collapse(selected);
+            if (['ArrowLeft', 'Left'].includes(event.key)) {
+            this.collapse(activeNode);
             return;
         }
+        }
+
         this._keyManager.onKeydown(event);
     }
 
@@ -136,19 +139,25 @@ export class UiTreeSelectComponent implements AfterViewInit {
     }
 
     isSelected(node: IFlatNodeObject) {
-        return node.key === this.currentSelectedNode?.key;
+        return this.currentSelectedNode.has(node.key);
     }
 
     trackById(_idx: number, node: IFlatNodeObject): TrackByFunction<IFlatNodeObject> {
         return node.key as any;
     }
 
-    select(node: IFlatNodeObject | null, i?: number) {
+    select(node: IFlatNodeObject, i?: number) {
         if (i !== undefined && this._keyManager?.activeItemIndex !== i) {
             this._keyManager?.updateActiveItem(i);
         }
-        this.selected.emit(node != null ? TreeUtils.nodeBackTransformer(node) : null);
-        this.currentSelectedNode = node;
+        // NOTE: the `clear` call can be removed to implement multi-select
+        this.currentSelectedNode.clear();
+
+        this.currentSelectedNode.set(node.key, node);
+        const selection = Array.from(this.currentSelectedNode.values())
+            .map(v => TreeUtils.nodeBackTransformer(v))
+            .filter(Boolean) as ITreeNode[];
+        this.selected.emit(selection);
     }
 
     expand(node: IFlatNodeObject) {

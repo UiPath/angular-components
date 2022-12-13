@@ -120,7 +120,11 @@ describe('UiTreeSelectComponent', () => {
         const nodeWithChildren = fixture.nativeElement.querySelectorAll('.tree-item-container')[0];
         nodeWithChildren.click();
         fixture.detectChanges();
-        expect(component.selected).toHaveBeenCalledWith(jasmine.objectContaining({ key: 'x' }));
+        expect(component.selected).toHaveBeenCalledWith(
+            jasmine.arrayContaining([
+                jasmine.objectContaining({ key: 'x' }),
+            ]),
+        );
     });
 
     it('should correctly treat expanded & collapsed events', () => {
@@ -170,11 +174,15 @@ describe('UiTreeSelectComponent', () => {
 
         // select node when no focused node
         component.treeSelect.onKeydown(new KeyboardEvent('keydown', { key: 'Enter' }));
-        expect(component.selected).toHaveBeenCalledWith(null);
+        expect(component.selected).not.toHaveBeenCalled();
 
         spyOnProperty(component.treeSelect['_keyManager'], 'activeItem').and.returnValue({ node: { key: 'x' } });
         component.treeSelect.onKeydown(new KeyboardEvent('keydown', { key: 'Enter' }));
-        expect(component.selected).toHaveBeenCalledWith(jasmine.objectContaining({ key: 'x' }));
+        expect(component.selected).toHaveBeenCalledWith(
+            jasmine.arrayContaining([
+                jasmine.objectContaining({ key: 'x' }),
+            ]),
+        );
 
         // try to expand first node
         component.treeSelect.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowRight' }));

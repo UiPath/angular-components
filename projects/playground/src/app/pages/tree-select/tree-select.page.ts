@@ -20,7 +20,7 @@ export class TreeSelectPageComponent {
   selectedNode = '';
   constructor(private _cd: ChangeDetectorRef) { }
 
-  selected(data: ITreeNode | null) {
+  selected(data: ITreeNode[]) {
     this.selectedNode = JSON.stringify(data, null, 4);
   }
 
