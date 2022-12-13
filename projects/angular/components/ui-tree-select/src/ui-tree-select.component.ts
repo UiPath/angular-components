@@ -1,5 +1,5 @@
 import {
- CdkTreeModule, FlatTreeControl,
+    CdkTreeModule, FlatTreeControl,
 } from '@angular/cdk/tree';
 import {
     AfterViewInit,
@@ -19,7 +19,6 @@ import {
 import { MatTreeFlatDataSource } from '@angular/material/tree';
 
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { BehaviorSubject } from 'rxjs';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { UiContentLoaderModule } from '@uipath/angular/directives/ui-content-loader';
@@ -27,7 +26,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import {
     ITreeNode, IFlatNodeObject,
 } from './models/tree.models';
-import { TreeUtils } from './utils/tree.utils';
+import {
+    TreeUtils, TREE_ACTION_DEFAULTS,
+} from './utils/tree.utils';
 import { UiTreeItemComponent } from './ui-tree-item/ui-tree-item.component';
 
 @Component({
@@ -54,10 +55,22 @@ export class UiTreeSelectComponent implements AfterViewInit {
     items!: QueryList<UiTreeItemComponent>;
 
     @ContentChild('itemTemplate')
-    itemTemplate!: any;
+    itemTemplate?: any;
 
     @Input()
     itemSize = 26;
+
+    /**
+     * Path of keys key to the node that will be selected by default. The node must be present in the data array
+     * If the node is a lower level node, the parent nodes must be present in the data array and then they will be expanded automatically
+     */
+    @Input()
+    set initialSelection(value: string[] | null) {
+        this._initialSelection = value ?? [];
+        if (this._initialSelection.length > 0) {
+            this._selectInitialNode();
+        }
+    }
 
     @HostBinding('style.--ui-tree-select-item-padding')
     @Input()
@@ -85,8 +98,8 @@ export class UiTreeSelectComponent implements AfterViewInit {
      * An array of nodes. Keep in mind they will be flattened when rendered in the tree
      */
     @Input()
-    set data(value: ITreeNode[]) {
-        this._dataSource.data = value;
+    set data(value: ITreeNode[] | null) {
+        this._dataSource.data = value ?? [];
     }
 
     get dataSource() {
@@ -104,28 +117,26 @@ export class UiTreeSelectComponent implements AfterViewInit {
         TreeUtils.treeFlattener,
     );
 
+    private _initialSelection: string[] = [];
+
     ngAfterViewInit() {
         this._keyManager = new FocusKeyManager(this.items);
+        if (this._initialSelection.length) {
+            this._selectInitialNode();
+        }
     }
 
     onKeydown(event: KeyboardEvent) {
         const activeNode = this._keyManager.activeItem?.node;
-        if (activeNode) {
-            if (event.key === 'Enter') {
-            this.select(activeNode);
+        if (!activeNode) {
+            this._keyManager.onKeydown(event);
             return;
-        }
-            if (['ArrowRight', 'Right'].includes(event.key)) {
-            this.expand(activeNode);
-            return;
-        }
-            if (['ArrowLeft', 'Left'].includes(event.key)) {
-            this.collapse(activeNode);
-            return;
-        }
         }
 
-        this._keyManager.onKeydown(event);
+        const wasHandled = this._customKeydownHandle(event.key, activeNode);
+        if (!wasHandled) {
+            this._keyManager.onKeydown(event);
+        }
     }
 
     isExpanded(node: IFlatNodeObject) {
@@ -133,33 +144,37 @@ export class UiTreeSelectComponent implements AfterViewInit {
     }
 
     isSelected(node: IFlatNodeObject) {
-        return this.currentSelectedNode.has(node.key);
+        return this.currentSelectedNodes.has(node.key);
     }
 
     trackById(_idx: number, node: IFlatNodeObject): TrackByFunction<IFlatNodeObject> {
         return node.key as any;
     }
 
-    select(node: IFlatNodeObject, i?: number) {
-        if (i !== undefined && this._keyManager?.activeItemIndex !== i) {
+    select(node: IFlatNodeObject, i = this._keyManager?.activeItemIndex, opts = TREE_ACTION_DEFAULTS) {
+        if (i || i === 0) {
             this._keyManager?.updateActiveItem(i);
         }
         // NOTE: the `clear` call can be removed to implement multi-select
-        this.currentSelectedNode.clear();
+        this.currentSelectedNodes.clear();
 
-        this.currentSelectedNode.set(node.key, node);
-        const selection = Array.from(this.currentSelectedNode.values())
+        this.currentSelectedNodes.set(node.key, node);
+        const selection = Array.from(this.currentSelectedNodes.values())
             .map(v => TreeUtils.nodeBackTransformer(v))
             .filter(Boolean) as ITreeNode[];
-        this.selected.emit(selection);
+
+        if (opts.emitEvent) {
+            this.selected.emit(selection);
+        }
     }
 
-    expand(node: IFlatNodeObject) {
+    expand(node: IFlatNodeObject, opts = TREE_ACTION_DEFAULTS) {
         if (this._treeControl.isExpanded(node) || !node.hasChildren) {
             return;
         }
         this._treeControl.expand(node);
-        this.expanded.emit(node);
+        if (opts.emitEvent) {
+            this.expanded.emit(node);
         }
     }
 
@@ -180,6 +195,36 @@ export class UiTreeSelectComponent implements AfterViewInit {
                 this.expand(node);
             }
         };
+    }
+
+    private _customKeydownHandle(eventKey: string, activeNode: IFlatNodeObject) {
+        let wasHandled = false;
+        if (eventKey === 'Enter') {
+            this.select(activeNode);
+            wasHandled = true;
+        }
+        if (['ArrowRight', 'Right'].includes(eventKey)) {
+            this.expand(activeNode);
+            wasHandled = true;
+        }
+        if (['ArrowLeft', 'Left'].includes(eventKey)) {
+            this.collapse(activeNode);
+            wasHandled = true;
+        }
+        return wasHandled;
+    }
+
+    private _selectInitialNode() {
+        this._initialSelection.forEach((key, i) => {
+            const node = TreeUtils.getNodeByKey(key, i, this._treeControl);
+
+            if (i < this._initialSelection.length - 1) {
+                this.expand(node, { emitEvent: false });
+            } else {
+                const activeIndex = this._treeControl.dataNodes.findIndex(n => n.key === node.key);
+                this.select(node, activeIndex, { emitEvent: false });
+            }
+        });
     }
 }
 
