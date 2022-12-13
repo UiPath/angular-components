@@ -1,13 +1,30 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ViewEncapsulation,
 } from '@angular/core';
-import { ITreeNode } from '@uipath/angular/components/ui-tree-select';
-import { uniqueId } from 'lodash-es';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import {
+ ITreeNode, UiTreeSelectComponent,
+} from '@uipath/angular/components/ui-tree-select';
+import { UiSpinnerButtonModule } from '@uipath/angular/directives/ui-spinner-button';
+import { of } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    UiTreeSelectComponent,
+    MatFormFieldModule,
+    MatIconModule,
+    UiSpinnerButtonModule,
+    MatButtonModule,
+  ],
   selector: 'ui-app-tree-select',
   templateUrl: './tree-select.page.html',
   styleUrls: ['./tree-select.page.scss'],
@@ -15,7 +32,9 @@ import { uniqueId } from 'lodash-es';
   encapsulation: ViewEncapsulation.None,
 })
 export class TreeSelectPageComponent {
-  data = treeData;
+  data$ = of(treeData);
+
+  initialSelection = [treeData[1].key, treeData[1].children![1]!.key, treeData[1].children![1]!.children![0]!.key ];
 
   selectedNode = '';
   constructor(private _cd: ChangeDetectorRef) { }
@@ -25,14 +44,16 @@ export class TreeSelectPageComponent {
   }
 
   expanded(data: ITreeNode) {
+    console.log('received expanded event', data);
+    // NOTE: playground logic partially broken, feel free to change if you want to test something
     setTimeout(() => {
-      const x = this.data.map(n => {
+      const x = treeData.map(n => {
         if (n.key === data.key) {
-          n.children = [...getLevel(data!.name)];
+          n.children = [...n.children ?? [], ...getLevel(data!.name)];
         }
         return n;
       });
-      this.data = [...x];
+      this.data$ = of([...x]);
       this._cd.detectChanges();
     }, 1500);
 
@@ -57,7 +78,22 @@ const treeData: ITreeNode[] = [
   },
   {
     name: 'Folder B',
-    children: [],
+    children: [
+      {
+        key: uuidv4(),
+        name: 'Folder B-1',
+      },
+      {
+        key: uuidv4(),
+        name: 'Folder B-2',
+        children: [
+          {
+            key: uuidv4(),
+            name: 'Folder B-2-1',
+          },
+        ],
+      },
+    ],
   },
   {
     name: 'Folder C',
@@ -90,10 +126,10 @@ const treeData: ITreeNode[] = [
 ].map((f: any) => ({
   name: f.name,
   children: f.children,
-  key: uniqueId(),
+  key: uuidv4(),
 }));
 
 const getLevel = (parentFolderName: string) => ['A', 'B', 'C', 'D', 'E'].map(l => ({
   name: `${parentFolderName}-${l}`,
-  key: uniqueId(),
+  key: uuidv4(),
 }));
