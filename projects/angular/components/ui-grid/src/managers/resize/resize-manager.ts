@@ -7,6 +7,7 @@ import {
     Subject,
 } from 'rxjs';
 import {
+    delay,
     filter,
     map,
     take,
@@ -102,6 +103,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             // eslint-disable-next-line no-underscore-dangle
             (_grid as any)._columnChanges$,
         ).pipe(
+            delay(0),
             map(() => {
                 this._table = this._gridElement.querySelector<HTMLTableElement>('.ui-grid-container');
                 this._definitions = _grid.columns.filter(c => c.resizeable && c.visible);
