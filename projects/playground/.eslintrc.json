@@ -20,7 +20,9 @@
                 "sonarjs",
                 "eslint-plugin-rxjs"
             ],
-            "rules": {}
+            "rules": {
+                "no-unused-vars": "off"
+            }
         },
         {
             "files": [

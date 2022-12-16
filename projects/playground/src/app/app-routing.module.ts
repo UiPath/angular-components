@@ -8,6 +8,7 @@ import {
     RouterModule,
     Routes,
 } from '@angular/router';
+import { TreeSelectPageComponent } from 'projects/playground/src/app/pages/tree-select/tree-select.page';
 
 const routes: Routes = [
     {
@@ -25,6 +26,10 @@ const routes: Routes = [
     {
         path: 'suggest',
         component: SuggestPageComponent,
+    },
+    {
+        path: 'tree',
+        component: TreeSelectPageComponent,
     },
     {
         path: '**',
