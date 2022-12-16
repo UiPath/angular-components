@@ -28,6 +28,7 @@ module.exports = {
                 'virtual-scroll-viewport-resize',
                 'matformfield-required',
                 'keyboard-shortcut',
+                'tree-select',
             ];
 
             return [2, 'always', scopeList];

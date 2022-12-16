@@ -1,0 +1,24 @@
+.spacer {
+    $margin: 100px;
+
+    margin-top: $margin;
+    margin-bottom: $margin;
+}
+
+.virtual-scroll-container {
+    border: 2px solid cyan;
+    height: 500px;
+}
+
+.tree-item-container {
+    &:active,
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+        background-color: silver;
+    }
+
+    &.selected {
+        background-color: gold;
+    }
+}
