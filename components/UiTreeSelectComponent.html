@@ -1,0 +1,1789 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>UiPath Angular Components</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">UiPath Angular Components</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  UiTreeSelectComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">encapsulation</td>
+                <td class="col-md-9"><code>ViewEncapsulation.None</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>ui-tree-select</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./ui-tree-select.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./ui-tree-select.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#currentSelectedNodes" >currentSelectedNodes</a>
+                            </li>
+                            <li>
+                                <a href="#items" >items</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Optional</span>
+                                <a href="#itemTemplate" >itemTemplate</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#collapse" >collapse</a>
+                            </li>
+                            <li>
+                                <a href="#expand" >expand</a>
+                            </li>
+                            <li>
+                                <a href="#isExpanded" >isExpanded</a>
+                            </li>
+                            <li>
+                                <a href="#isSelected" >isSelected</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#onKeydown" >onKeydown</a>
+                            </li>
+                            <li>
+                                <a href="#select" >select</a>
+                            </li>
+                            <li>
+                                <a href="#toggle" >toggle</a>
+                            </li>
+                            <li>
+                                <a href="#trackById" >trackById</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#data" >data</a>
+                            </li>
+                            <li>
+                                <a href="#initialSelection" >initialSelection</a>
+                            </li>
+                            <li>
+                                <a href="#itemPadding" >itemPadding</a>
+                            </li>
+                            <li>
+                                <a href="#itemSize" >itemSize</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#collapsed" >collapsed</a>
+                            </li>
+                            <li>
+                                <a href="#expanded" >expanded</a>
+                            </li>
+                            <li>
+                                <a href="#selected" >selected</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#initialSelection" >initialSelection</a>
+                                </li>
+                                <li>
+                                    <a href="#data" >data</a>
+                                </li>
+                                <li>
+                                    <a href="#dataSource" >dataSource</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="data"></a>
+                        <b>data</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="101" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:101</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>An array of nodes. Keep in mind they will be flattened when rendered in the tree</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="initialSelection"></a>
+                        <b>initialSelection</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:68</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Path of keys key to the node that will be selected by default. The node must be present in the data array
+If the node is a lower level node, the parent nodes must be present in the data array and then they will be expanded automatically</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="itemPadding"></a>
+                        <b>itemPadding</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;20px&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:77</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="itemSize"></a>
+                        <b>itemSize</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>26</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:61</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="collapsed"></a>
+                        <b>collapsed</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:95</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits a clone of the original node when it&#39;s collapsed</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="expanded"></a>
+                        <b>expanded</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:89</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits a clone of the original node when it&#39;s expanded</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selected"></a>
+                        <b>selected</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:83</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emits an array of the selected nodes (keep in mind they are clones of the original nodes)</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="collapse"></a>
+                    <span class="name">
+                        <span ><b>collapse</b></span>
+                        <a href="#collapse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>collapse(node: <a href="../interfaces/IFlatNodeObject.html" target="_self">IFlatNodeObject</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="181"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:181</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                                <code><a href="../interfaces/IFlatNodeObject.html" target="_self" >IFlatNodeObject</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="expand"></a>
+                    <span class="name">
+                        <span ><b>expand</b></span>
+                        <a href="#expand"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>expand(node: <a href="../interfaces/IFlatNodeObject.html" target="_self">IFlatNodeObject</a>, opts)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="171"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:171</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                                <code><a href="../interfaces/IFlatNodeObject.html" target="_self" >IFlatNodeObject</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>opts</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>TREE_ACTION_DEFAULTS</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isExpanded"></a>
+                    <span class="name">
+                        <span ><b>isExpanded</b></span>
+                        <a href="#isExpanded"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isExpanded(node: <a href="../interfaces/IFlatNodeObject.html" target="_self">IFlatNodeObject</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="142"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:142</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                                <code><a href="../interfaces/IFlatNodeObject.html" target="_self" >IFlatNodeObject</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isSelected"></a>
+                    <span class="name">
+                        <span ><b>isSelected</b></span>
+                        <a href="#isSelected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isSelected(node: <a href="../interfaces/IFlatNodeObject.html" target="_self">IFlatNodeObject</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="146"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:146</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                                <code><a href="../interfaces/IFlatNodeObject.html" target="_self" >IFlatNodeObject</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewInit</b></span>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="122"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:122</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onKeydown"></a>
+                    <span class="name">
+                        <span ><b>onKeydown</b></span>
+                        <a href="#onKeydown"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onKeydown(event: <a href="../classes/Key.html" target="_self">KeyboardEvent</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="129"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:129</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                                <code><a href="../classes/Key.html" target="_self" >KeyboardEvent</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="select"></a>
+                    <span class="name">
+                        <span ><b>select</b></span>
+                        <a href="#select"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>select(node: <a href="../interfaces/IFlatNodeObject.html" target="_self">IFlatNodeObject</a>, i, opts)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="154"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:154</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                                <code><a href="../interfaces/IFlatNodeObject.html" target="_self" >IFlatNodeObject</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>i</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>this._keyManager?.activeItemIndex</code>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>opts</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>TREE_ACTION_DEFAULTS</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggle"></a>
+                    <span class="name">
+                        <span ><b>toggle</b></span>
+                        <a href="#toggle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggle(node: <a href="../interfaces/IFlatNodeObject.html" target="_self">IFlatNodeObject</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="189"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:189</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                                <code><a href="../interfaces/IFlatNodeObject.html" target="_self" >IFlatNodeObject</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>($event: MouseEvent) &#x3D;&gt; void</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="trackById"></a>
+                    <span class="name">
+                        <span ><b>trackById</b></span>
+                        <a href="#trackById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>trackById(_idx: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, node: <a href="../interfaces/IFlatNodeObject.html" target="_self">IFlatNodeObject</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="150"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:150</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>_idx</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                                <code><a href="../interfaces/IFlatNodeObject.html" target="_self" >IFlatNodeObject</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/IFlatNodeObject.html" target="_self" >TrackByFunction&lt;IFlatNodeObject&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentSelectedNodes"></a>
+                    <span class="name">
+                        <span ><b>currentSelectedNodes</b></span>
+                        <a href="#currentSelectedNodes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Map&lt;string, IFlatNodeObject&gt;()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="109" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:109</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="items"></a>
+                    <span class="name">
+                        <span ><b>items</b></span>
+                        <a href="#items"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/UiTreeItemComponent.html" target="_self" >QueryList&lt;UiTreeItemComponent&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChildren(UiTreeItemComponent)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="itemTemplate"></a>
+                    <span class="name">
+                            <span class="modifier">Optional</span>
+                        <span ><b>itemTemplate</b></span>
+                        <a href="#itemTemplate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ContentChild(&#x27;itemTemplate&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="initialSelection"></a>
+                        <span class="name"><b>initialSelection</b><a href="#initialSelection"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>initialSelection(value: string[] | null)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:68</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Path of keys key to the node that will be selected by default. The node must be present in the data array
+If the node is a lower level node, the parent nodes must be present in the data array and then they will be expanded automatically</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
+                                                            <td>
+                                                                        <code>string[] | null</code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="data"></a>
+                        <span class="name"><b>data</b><a href="#data"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>data(value: <a href="../interfaces/ITreeNode.html" target="_self">ITreeNode[] | null</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="101" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:101</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>An array of nodes. Keep in mind they will be flattened when rendered in the tree</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="../interfaces/ITreeNode.html" target="_self" >ITreeNode[] | null</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dataSource"></a>
+                        <span class="name"><b>dataSource</b><a href="#dataSource"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>dataSource()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="105" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-select.component.ts:105</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    CdkTreeModule, FlatTreeControl,
+} from &#x27;@angular/cdk/tree&#x27;;
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    ContentChild,
+    EventEmitter,
+    HostBinding,
+    Input,
+    Output,
+    QueryList,
+    TrackByFunction,
+    ViewChildren,
+    ViewEncapsulation,
+} from &#x27;@angular/core&#x27;;
+
+import { MatTreeFlatDataSource } from &#x27;@angular/material/tree&#x27;;
+
+import { FocusKeyManager } from &#x27;@angular/cdk/a11y&#x27;;
+import { MatListModule } from &#x27;@angular/material/list&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { UiContentLoaderModule } from &#x27;@uipath/angular/directives/ui-content-loader&#x27;;
+import { ScrollingModule } from &#x27;@angular/cdk/scrolling&#x27;;
+import {
+    ITreeNode, IFlatNodeObject,
+} from &#x27;./models/tree.models&#x27;;
+import {
+    TreeUtils, TREE_ACTION_DEFAULTS,
+} from &#x27;./utils/tree.utils&#x27;;
+import { UiTreeItemComponent } from &#x27;./ui-tree-item/ui-tree-item.component&#x27;;
+
+@Component({
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatListModule,
+
+        UiTreeItemComponent,
+        UiContentLoaderModule,
+
+        CdkTreeModule,
+        ScrollingModule,
+    ],
+    selector: &#x27;ui-tree-select&#x27;,
+    templateUrl: &#x27;./ui-tree-select.component.html&#x27;,
+    styleUrls: [&#x27;./ui-tree-select.component.scss&#x27;],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+})
+export class UiTreeSelectComponent implements AfterViewInit {
+
+    @ViewChildren(UiTreeItemComponent)
+    items!: QueryList&lt;UiTreeItemComponent&gt;;
+
+    @ContentChild(&#x27;itemTemplate&#x27;)
+    itemTemplate?: any;
+
+    @Input()
+    itemSize &#x3D; 26;
+
+    /**
+     * Path of keys key to the node that will be selected by default. The node must be present in the data array
+     * If the node is a lower level node, the parent nodes must be present in the data array and then they will be expanded automatically
+     */
+    @Input()
+    set initialSelection(value: string[] | null) {
+        this._initialSelection &#x3D; value ?? [];
+        if (this._initialSelection.length &gt; 0) {
+            this._selectInitialNode();
+        }
+    }
+
+    @HostBinding(&#x27;style.--ui-tree-select-item-padding&#x27;)
+    @Input()
+    itemPadding &#x3D; &#x27;20px&#x27;;
+
+    /**
+     * Emits an array of the selected nodes (keep in mind they are clones of the original nodes)
+     */
+    @Output()
+    selected &#x3D; new EventEmitter&lt;ITreeNode[]&gt;();
+
+    /**
+     * Emits a clone of the original node when it&#x27;s expanded
+     */
+    @Output()
+    expanded &#x3D; new EventEmitter&lt;ITreeNode&gt;();
+
+    /**
+     * Emits a clone of the original node when it&#x27;s collapsed
+     */
+    @Output()
+    collapsed &#x3D; new EventEmitter&lt;ITreeNode&gt;();
+
+    /**
+     * An array of nodes. Keep in mind they will be flattened when rendered in the tree
+     */
+    @Input()
+    set data(value: ITreeNode[] | null) {
+        this._dataSource.data &#x3D; value ?? [];
+    }
+
+    get dataSource() {
+        return this._dataSource;
+    }
+
+    currentSelectedNodes &#x3D; new Map&lt;string, IFlatNodeObject&gt;();
+
+    private _keyManager!: FocusKeyManager&lt;UiTreeItemComponent&gt;;
+    private _treeControl &#x3D; new FlatTreeControl&lt;IFlatNodeObject, string | number&gt;(TreeUtils.getNodeLevel, TreeUtils.getIsNodeExpandable, {
+        trackBy: (node) &#x3D;&gt; node.key,
+    });
+    private _dataSource: MatTreeFlatDataSource&lt;ITreeNode, IFlatNodeObject, string | number&gt; &#x3D; new MatTreeFlatDataSource(
+        this._treeControl,
+        TreeUtils.treeFlattener,
+    );
+
+    private _initialSelection: string[] &#x3D; [];
+
+    ngAfterViewInit() {
+        this._keyManager &#x3D; new FocusKeyManager(this.items);
+        if (this._initialSelection.length) {
+            this._selectInitialNode();
+        }
+    }
+
+    onKeydown(event: KeyboardEvent) {
+        const activeNode &#x3D; this._keyManager.activeItem?.node;
+        if (!activeNode) {
+            this._keyManager.onKeydown(event);
+            return;
+        }
+
+        const wasHandled &#x3D; this._customKeydownHandle(event.key, activeNode);
+        if (!wasHandled) {
+            this._keyManager.onKeydown(event);
+        }
+    }
+
+    isExpanded(node: IFlatNodeObject) {
+        return this._treeControl.isExpanded(node);
+    }
+
+    isSelected(node: IFlatNodeObject) {
+        return this.currentSelectedNodes.has(node.key);
+    }
+
+    trackById(_idx: number, node: IFlatNodeObject): TrackByFunction&lt;IFlatNodeObject&gt; {
+        return node.key as any;
+    }
+
+    select(node: IFlatNodeObject, i &#x3D; this._keyManager?.activeItemIndex, opts &#x3D; TREE_ACTION_DEFAULTS) {
+        if (i || i &#x3D;&#x3D;&#x3D; 0) {
+            this._keyManager?.updateActiveItem(i);
+        }
+        // NOTE: the &#x60;clear&#x60; call can be removed to implement multi-select
+        this.currentSelectedNodes.clear();
+
+        this.currentSelectedNodes.set(node.key, node);
+        const selection &#x3D; Array.from(this.currentSelectedNodes.values())
+            .map(v &#x3D;&gt; TreeUtils.nodeBackTransformer(v))
+            .filter(Boolean) as ITreeNode[];
+
+        if (opts.emitEvent) {
+            this.selected.emit(selection);
+        }
+    }
+
+    expand(node: IFlatNodeObject, opts &#x3D; TREE_ACTION_DEFAULTS) {
+        if (this._treeControl.isExpanded(node) || !node.hasChildren) {
+            return;
+        }
+        this._treeControl.expand(node);
+        if (opts.emitEvent) {
+            this.expanded.emit(node);
+        }
+    }
+
+    collapse(node: IFlatNodeObject) {
+        if (!this._treeControl.isExpanded(node) || !node.hasChildren) {
+            return;
+        }
+        this._treeControl.collapse(node);
+        this.collapsed.emit(node);
+    }
+
+    toggle(node: IFlatNodeObject) {
+        return ($event: MouseEvent) &#x3D;&gt; {
+            $event.stopPropagation();
+            if (this._treeControl.isExpanded(node)) {
+                this.collapse(node);
+            } else {
+                this.expand(node);
+            }
+        };
+    }
+
+    private _customKeydownHandle(eventKey: string, activeNode: IFlatNodeObject) {
+        let wasHandled &#x3D; false;
+        if (eventKey &#x3D;&#x3D;&#x3D; &#x27;Enter&#x27;) {
+            this.select(activeNode);
+            wasHandled &#x3D; true;
+        }
+        if ([&#x27;ArrowRight&#x27;, &#x27;Right&#x27;].includes(eventKey)) {
+            this.expand(activeNode);
+            wasHandled &#x3D; true;
+        }
+        if ([&#x27;ArrowLeft&#x27;, &#x27;Left&#x27;].includes(eventKey)) {
+            this.collapse(activeNode);
+            wasHandled &#x3D; true;
+        }
+        return wasHandled;
+    }
+
+    private _selectInitialNode() {
+        this._initialSelection.forEach((key, i) &#x3D;&gt; {
+            const node &#x3D; TreeUtils.getNodeByKey(key, i, this._treeControl);
+
+            if (i &lt; this._initialSelection.length - 1) {
+                this.expand(node, { emitEvent: false });
+            } else {
+                const activeIndex &#x3D; this._treeControl.dataNodes.findIndex(n &#x3D;&gt; n.key &#x3D;&#x3D;&#x3D; node.key);
+                this.select(node, activeIndex, { emitEvent: false });
+            }
+        });
+    }
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;cdk-virtual-scroll-viewport (keydown)&#x3D;&quot;onKeydown($event)&quot;
+                             class&#x3D;&quot;virtual-scroll-container&quot;
+                             [itemSize]&#x3D;&quot;itemSize&quot;
+                             tabindex&#x3D;&quot;0&quot;&gt;
+    &lt;mat-list role&#x3D;&quot;tree&quot;
+              class&#x3D;&quot;tree-container&quot;&gt;
+        &lt;ng-container *ngIf&#x3D;&quot;dataSource.data.length &#x3D;&#x3D; 0&quot;&gt;
+            &lt;ng-content select&#x3D;&quot;[noDataMessage]&quot;&gt;&lt;/ng-content&gt;
+        &lt;/ng-container&gt;
+        &lt;ng-container *cdkVirtualFor&#x3D;&quot;let node of dataSource; let i &#x3D; index; trackBy: trackById;&quot;&gt;
+            &lt;ui-tree-item (selected)&#x3D;&quot;select(node, i)&quot;
+                          (collapsed)&#x3D;&quot;collapse(node)&quot;
+                          (expanded)&#x3D;&quot;expand(node)&quot;
+                          [node]&#x3D;&quot;node&quot;
+                          [isSelected]&#x3D;&quot;isSelected(node)&quot;&gt;
+                &lt;ng-template *ngIf&#x3D;&quot;itemTemplate&quot;
+                             [ngTemplateOutlet]&#x3D;&quot;itemTemplate&quot;
+                             [ngTemplateOutletContext]&#x3D;&quot;{
+                                    node: node,
+                                    expanded: isExpanded(node),
+                                    selected: isSelected(node),
+                                    toggle: toggle(node)
+                                }&quot;&gt;
+                &lt;/ng-template&gt;
+            &lt;/ui-tree-item&gt;
+        &lt;/ng-container&gt;
+    &lt;/mat-list&gt;
+&lt;/cdk-virtual-scroll-viewport&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./ui-tree-select.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.tree-item-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+}
+
+@mixin perLevelPadding($level, $padding) {
+  .node-level-#{$level} {
+      &amp;:not(.node-type-leaf) {
+          padding-left: calc($padding * $level);
+      }
+
+      &amp;.node-type-leaf {
+          padding-left: calc($padding + max($padding, calc($padding * ($level + 1))));
+      }
+  }
+}
+
+.tree-container {
+  @for $i from 0 through 7 {
+      @include perLevelPadding($i, var(--ui-tree-select-item-padding));
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><cdk-virtual-scroll-viewport (keydown)="onKeydown($event)"                             class="virtual-scroll-container"                             [itemSize]="itemSize"                             tabindex="0">    <mat-list role="tree"              class="tree-container">        <ng-container *ngIf="dataSource.data.length == 0">            <ng-content select="[noDataMessage]"></ng-content>        </ng-container>        <ng-container *cdkVirtualFor="let node of dataSource; let i = index; trackBy: trackById;">            <ui-tree-item (selected)="select(node, i)"                          (collapsed)="collapse(node)"                          (expanded)="expand(node)"                          [node]="node"                          [isSelected]="isSelected(node)">                <ng-template *ngIf="itemTemplate"                             [ngTemplateOutlet]="itemTemplate"                             [ngTemplateOutletContext]="{                                    node: node,                                    expanded: isExpanded(node),                                    selected: isSelected(node),                                    toggle: toggle(node)                                }">                </ng-template>            </ui-tree-item>        </ng-container>    </mat-list></cdk-virtual-scroll-viewport></div>'
+    var COMPONENTS = [{'name': 'UiButtonProgressBarComponent', 'selector': 'ui-button-progress-bar'},{'name': 'UiButtonProgressSpinnerComponent', 'selector': 'ui-button-progress-spinner'},{'name': 'UiContentSpinnerComponent', 'selector': 'ui-content-spinner'},{'name': 'UiGridComponent', 'selector': 'ui-grid'},{'name': 'UiGridCustomPaginatorComponent', 'selector': 'ui-grid-custom-paginator'},{'name': 'UiGridSearchComponent', 'selector': 'ui-grid-search'},{'name': 'UiGridToggleColumnsComponent', 'selector': 'COMPONENT_SELECTOR'},{'name': 'UiPasswordIndicatorComponent', 'selector': 'ui-password-indicator'},{'name': 'UiPasswordToggleComponent', 'selector': 'ui-password-toggle'},{'name': 'UiSecondFormatDirective', 'selector': 'ui-secondformat'},{'name': 'UiSnackBarComponent', 'selector': ''},{'name': 'UiTreeItemComponent', 'selector': 'ui-tree-item[node]'},{'name': 'UiTreeSelectComponent', 'selector': 'ui-tree-select'}];
+    var DIRECTIVES = [{'name': 'KeyboardShortcutDirective', 'selector': '[uiKeyboardShortcut][shortcutKeys]'},{'name': 'UiAutoAccessibleLabelDirective', 'selector': ''},{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiContentLoaderDirective', 'selector': '[uiContentLoading]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiFormatDirective', 'selector': ''},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridLoadingDirective', 'selector': '[uiGridLoading], ui-grid-loading'},{'name': 'UiGridNoContentDirective', 'selector': '[uiGridNoContent], ui-grid-no-content'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiLoaderButtonDirective', 'selector': ''},{'name': 'UiMatFormFieldRequiredDirective', 'selector': 'mat-form-field'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiProgressButtonDirective', 'selector': '
+        button[mat-button][ui-progress-button],
+        button[mat-raised-button][ui-progress-button],
+        button[mat-stroked-button][ui-progress-button],
+        button[mat-flat-button][ui-progress-button],
+        button[mat-button][uiProgressButton],
+        button[mat-raised-button][uiProgressButton],
+        button[mat-stroked-button][uiProgressButton],
+        button[mat-flat-button][uiProgressButton],
+    '},{'name': 'UiScrollIntoViewDirective', 'selector': '[uiScrollIntoView]'},{'name': 'UiSpinnerButtonDirective', 'selector': '
+        button[mat-icon-button][ui-spinner-button],
+        button[mat-fab][ui-spinner-button],
+        button[mat-mini-fab][ui-spinner-button],
+        button[mat-icon-button][uiSpinnerButton],
+        button[mat-raised-button][ui-spinner-button],
+        button[mat-stroked-button][ui-spinner-button],
+        button[mat-flat-button][ui-spinner-button],
+        button[mat-button][uiSpinnerButton],
+        button[mat-raised-button][uiSpinnerButton],
+        button[mat-stroked-button][uiSpinnerButton],
+        button[mat-flat-button][uiSpinnerButton],
+        button[mat-fab][uiSpinnerButton],
+        button[mat-mini-fab][uiSpinnerButton],
+        button[mat-button][ui-spinner-button],
+    '},{'name': 'UiSuggestMatFormFieldDirective', 'selector': ''},{'name': 'UiVirtualScrollRangeLoaderDirective', 'selector': '[uiVirtualScrollRangeLoader], ui-virtual-scroll-range-loader'},{'name': 'UiVirtualScrollViewportResizeDirective', 'selector': '[uiVirtualScrollViewportResize], ui-virtual-scroll-viewport-resize'}];
+    var ACTUAL_COMPONENT = {'name': 'UiTreeSelectComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'UiTreeSelectComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

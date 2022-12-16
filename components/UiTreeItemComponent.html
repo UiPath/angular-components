@@ -38,7 +38,7 @@
   <li>Components</li>
   <li
   >
-  UiButtonProgressBarComponent</li>
+  UiTreeItemComponent</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -52,9 +52,6 @@
             <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
         </li>
         <li >
-            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
-        </li>
-        <li >
             <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
         </li>
 </ul>
@@ -64,7 +61,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>projects/angular/directives/ui-progress-button/src/internal/ui-button-progress-bar.component.ts</code>
+    <code>projects/angular/components/ui-tree-select/src/ui-tree-item/ui-tree-item.component.ts</code>
 </p>
 
 
@@ -74,7 +71,7 @@
         <h3>Implements</h3>
     </p>
     <p class="comment">
-                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+                <code>FocusableOption</code>
     </p>
 
 
@@ -103,19 +100,15 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>ui-button-progress-bar</code></td>
+                <td class="col-md-9"><code>ui-tree-item[node]</code></td>
             </tr>
 
-            <tr>
-                <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>./ui-button-progress-bar.component.scss</code></td>
-            </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>./ui-button-progress-bar.component.html</code></td>
+                <td class="col-md-9"><code>./ui-tree-item.component.html</code></td>
             </tr>
 
 
@@ -133,32 +126,6 @@
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <h6><b>Properties</b></h6>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <ul class="index-list">
-                            <li>
-                                <a href="#bufferValue$" >bufferValue$</a>
-                            </li>
-                            <li>
-                                <a href="#color$" >color$</a>
-                            </li>
-                            <li>
-                                <a href="#loading$" >loading$</a>
-                            </li>
-                            <li>
-                                <a href="#mode$" >mode$</a>
-                            </li>
-                            <li>
-                                <a href="#value$" >value$</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -169,7 +136,49 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                                <a href="#click" >click</a>
+                            </li>
+                            <li>
+                                <a href="#dblclick" >dblclick</a>
+                            </li>
+                            <li>
+                                <a href="#focus" >focus</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#isSelected" >isSelected</a>
+                            </li>
+                            <li>
+                                <a href="#node" >node</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#expanded" >expanded</a>
+                            </li>
+                            <li>
+                                <a href="#selected" >selected</a>
                             </li>
                         </ul>
                     </td>
@@ -177,15 +186,154 @@
 
 
 
-
-
         </tbody>
     </table>
 </section>
 
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_el: <a href="https://angular.io/api/core/ElementRef" target="_blank">ElementRef</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-item/ui-tree-item.component.ts:39</a></div>
+                            </td>
+                        </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_el</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
 
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isSelected"></a>
+                        <b>isSelected</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-item/ui-tree-item.component.ts:33</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="node"></a>
+                        <b>node</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/IFlatNodeObject.html" target="_self" >IFlatNodeObject</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-item/ui-tree-item.component.ts:30</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="expanded"></a>
+                        <b>expanded</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-item/ui-tree-item.component.ts:36</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selected"></a>
+                        <b>selected</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-item/ui-tree-item.component.ts:39</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
 
 
     <section>
@@ -197,24 +345,98 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="ngOnDestroy"></a>
+                    <a name="click"></a>
                     <span class="name">
-                        <span ><b>ngOnDestroy</b></span>
-                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>click</b></span>
+                        <a href="#click"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>ngOnDestroy()</code>
+<code>click()</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="26"
-                            class="link-to-prism">projects/angular/directives/ui-progress-button/src/internal/ui-button-progress-bar.component.ts:26</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="46"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-item/ui-tree-item.component.ts:46</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dblclick"></a>
+                    <span class="name">
+                        <span ><b>dblclick</b></span>
+                        <a href="#dblclick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>dblclick()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="50"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-item/ui-tree-item.component.ts:50</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="focus"></a>
+                    <span class="name">
+                        <span ><b>focus</b></span>
+                        <a href="#focus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>focus()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="55"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-item/ui-tree-item.component.ts:55</a></div>
                 </td>
             </tr>
 
@@ -231,208 +453,87 @@
         </tbody>
     </table>
 </section>
-    <section>
-    
-    <h3 id="inputs">
-        Properties
-    </h3>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="bufferValue$"></a>
-                    <span class="name">
-                        <span ><b>bufferValue$</b></span>
-                        <a href="#bufferValue$"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>new BehaviorSubject&lt;MatProgressBar[&#x27;bufferValue&#x27;]&gt;(0)</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">projects/angular/directives/ui-progress-button/src/internal/ui-button-progress-bar.component.ts:23</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="color$"></a>
-                    <span class="name">
-                        <span ><b>color$</b></span>
-                        <a href="#color$"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>new BehaviorSubject&lt;MatProgressBar[&#x27;color&#x27;]&gt;(&#x27;primary&#x27;)</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/angular/directives/ui-progress-button/src/internal/ui-button-progress-bar.component.ts:24</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="loading$"></a>
-                    <span class="name">
-                        <span ><b>loading$</b></span>
-                        <a href="#loading$"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>new BehaviorSubject(false)</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">projects/angular/directives/ui-progress-button/src/internal/ui-button-progress-bar.component.ts:19</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="mode$"></a>
-                    <span class="name">
-                        <span ><b>mode$</b></span>
-                        <a href="#mode$"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>new BehaviorSubject&lt;MatProgressBar[&#x27;mode&#x27;]&gt;(&#x27;indeterminate&#x27;)</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">projects/angular/directives/ui-progress-button/src/internal/ui-button-progress-bar.component.ts:21</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="value$"></a>
-                    <span class="name">
-                        <span ><b>value$</b></span>
-                        <a href="#value$"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>new BehaviorSubject&lt;MatProgressBar[&#x27;value&#x27;]&gt;(0)</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">projects/angular/directives/ui-progress-button/src/internal/ui-button-progress-bar.component.ts:22</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-</section>
 
 </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { BehaviorSubject } from &#x27;rxjs&#x27;;
-
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { FocusableOption } from &#x27;@angular/cdk/a11y&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
 import {
-    ChangeDetectionStrategy,
-    Component,
-    OnDestroy,
-    ViewEncapsulation,
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  ViewEncapsulation,
+  ElementRef,
+  forwardRef,
+  Inject,
+  Output,
+  EventEmitter,
 } from &#x27;@angular/core&#x27;;
-import { MatProgressBar } from &#x27;@angular/material/progress-bar&#x27;;
+import { MatListModule } from &#x27;@angular/material/list&#x27;;
+import { IFlatNodeObject } from &#x27;../models/tree.models&#x27;;
 
 @Component({
-    selector: &#x27;ui-button-progress-bar&#x27;,
-    templateUrl: &#x27;./ui-button-progress-bar.component.html&#x27;,
-    styleUrls: [&#x27;./ui-button-progress-bar.component.scss&#x27;],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatListModule,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: &#x27;ui-tree-item[node]&#x27;,
+  templateUrl: &#x27;./ui-tree-item.component.html&#x27;,
+  encapsulation: ViewEncapsulation.None,
 })
-export class UiButtonProgressBarComponent implements OnDestroy {
-    loading$ &#x3D; new BehaviorSubject(false);
+export class UiTreeItemComponent implements FocusableOption {
+  @Input()
+  node!: IFlatNodeObject;
 
-    mode$ &#x3D; new BehaviorSubject&lt;MatProgressBar[&#x27;mode&#x27;]&gt;(&#x27;indeterminate&#x27;);
-    value$ &#x3D; new BehaviorSubject&lt;MatProgressBar[&#x27;value&#x27;]&gt;(0);
-    bufferValue$ &#x3D; new BehaviorSubject&lt;MatProgressBar[&#x27;bufferValue&#x27;]&gt;(0);
-    color$ &#x3D; new BehaviorSubject&lt;MatProgressBar[&#x27;color&#x27;]&gt;(&#x27;primary&#x27;);
+  @Input()
+  isSelected &#x3D; false;
 
-    ngOnDestroy() {
-        this.loading$.complete();
-        this.mode$.complete();
-        this.value$.complete();
-        this.bufferValue$.complete();
-        this.color$.complete();
-    }
+  @Output()
+  expanded &#x3D; new EventEmitter&lt;void&gt;();
+
+  @Output()
+  selected &#x3D; new EventEmitter&lt;void&gt;();
+
+  constructor(
+    @Inject(forwardRef(() &#x3D;&gt; ElementRef))
+    private readonly _el: ElementRef,
+  ) { }
+
+  click() {
+    this.selected.emit();
+  }
+
+  dblclick() {
+    this.selected.emit();
+    this.expanded.emit();
+  }
+
+  focus() {
+    this._el.nativeElement.querySelector(&#x27;.mat-list-item&#x27;).focus();
+  }
 }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;mat-progress-bar *ngIf&#x3D;&quot;loading$ | async&quot;
-                  [mode]&#x3D;&quot;(mode$ | async) ?? &#x27;indeterminate&#x27;&quot;
-                  [color]&#x3D;&quot;color$ | async&quot;
-                  [value]&#x3D;&quot;value$ | async&quot;
-                  [bufferValue]&#x3D;&quot;(bufferValue$ | async) ?? 0&quot;&gt;
-&lt;/mat-progress-bar&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;mat-list-item (click)&#x3D;&quot;click()&quot;
+               (dblclick)&#x3D;&quot;dblclick()&quot;
+               [class.selected]&#x3D;&quot;isSelected&quot;
+               [ngClass]&#x3D;&quot;&#x27;node-level-&#x27; + node.level&quot;
+               [class.node-type-leaf]&#x3D;&quot;!node.hasChildren&quot;
+               matRipple
+               tabindex&#x3D;&quot;0&quot;
+               role&#x3D;&quot;treeitem&quot;
+               class&#x3D;&quot;node tree-item-container&quot;&gt;
+  &lt;ng-content&gt;&lt;/ng-content&gt;
+&lt;/mat-list-item&gt;
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-styleData">
-                <p class="comment">
-                    <code>./ui-button-progress-bar.component.scss</code>
-                </p>
-                <pre class="line-numbers"><code class="language-scss">ui-button-progress-bar {
-    display: block;
-    width: 100%;
-
-    .mat-progress-bar {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-}
-
-.ui-button-progress {
-    overflow: hidden;
-}
-</code></pre>
-    </div>
 
     <div class="tab-pane fade " id="c-tree">
         <div id="tree-container"></div>
@@ -459,7 +560,7 @@ export class UiButtonProgressBarComponent implements OnDestroy {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><mat-progress-bar *ngIf="loading$ | async"                  [mode]="(mode$ | async) ?? \'indeterminate\'"                  [color]="color$ | async"                  [value]="value$ | async"                  [bufferValue]="(bufferValue$ | async) ?? 0"></mat-progress-bar></div>'
+        var COMPONENT_TEMPLATE = '<div><mat-list-item (click)="click()"               (dblclick)="dblclick()"               [class.selected]="isSelected"               [ngClass]="\'node-level-\' + node.level"               [class.node-type-leaf]="!node.hasChildren"               matRipple               tabindex="0"               role="treeitem"               class="node tree-item-container">  <ng-content></ng-content></mat-list-item></div>'
     var COMPONENTS = [{'name': 'UiButtonProgressBarComponent', 'selector': 'ui-button-progress-bar'},{'name': 'UiButtonProgressSpinnerComponent', 'selector': 'ui-button-progress-spinner'},{'name': 'UiContentSpinnerComponent', 'selector': 'ui-content-spinner'},{'name': 'UiGridComponent', 'selector': 'ui-grid'},{'name': 'UiGridCustomPaginatorComponent', 'selector': 'ui-grid-custom-paginator'},{'name': 'UiGridSearchComponent', 'selector': 'ui-grid-search'},{'name': 'UiGridToggleColumnsComponent', 'selector': 'COMPONENT_SELECTOR'},{'name': 'UiPasswordIndicatorComponent', 'selector': 'ui-password-indicator'},{'name': 'UiPasswordToggleComponent', 'selector': 'ui-password-toggle'},{'name': 'UiSecondFormatDirective', 'selector': 'ui-secondformat'},{'name': 'UiSnackBarComponent', 'selector': ''},{'name': 'UiTreeItemComponent', 'selector': 'ui-tree-item[node]'},{'name': 'UiTreeSelectComponent', 'selector': 'ui-tree-select'}];
     var DIRECTIVES = [{'name': 'KeyboardShortcutDirective', 'selector': '[uiKeyboardShortcut][shortcutKeys]'},{'name': 'UiAutoAccessibleLabelDirective', 'selector': ''},{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiContentLoaderDirective', 'selector': '[uiContentLoading]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiFormatDirective', 'selector': ''},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridLoadingDirective', 'selector': '[uiGridLoading], ui-grid-loading'},{'name': 'UiGridNoContentDirective', 'selector': '[uiGridNoContent], ui-grid-no-content'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiLoaderButtonDirective', 'selector': ''},{'name': 'UiMatFormFieldRequiredDirective', 'selector': 'mat-form-field'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiProgressButtonDirective', 'selector': '
         button[mat-button][ui-progress-button],
@@ -486,7 +587,7 @@ export class UiButtonProgressBarComponent implements OnDestroy {
         button[mat-mini-fab][uiSpinnerButton],
         button[mat-button][ui-spinner-button],
     '},{'name': 'UiSuggestMatFormFieldDirective', 'selector': ''},{'name': 'UiVirtualScrollRangeLoaderDirective', 'selector': '[uiVirtualScrollRangeLoader], ui-virtual-scroll-range-loader'},{'name': 'UiVirtualScrollViewportResizeDirective', 'selector': '[uiVirtualScrollViewportResize], ui-virtual-scroll-viewport-resize'}];
-    var ACTUAL_COMPONENT = {'name': 'UiButtonProgressBarComponent'};
+    var ACTUAL_COMPONENT = {'name': 'UiTreeItemComponent'};
 </script>
 <script src="../js/tree.js"></script>
 
@@ -530,7 +631,7 @@ export class UiButtonProgressBarComponent implements OnDestroy {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
-            var COMPODOC_CURRENT_PAGE_URL = 'UiButtonProgressBarComponent.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'UiTreeItemComponent.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

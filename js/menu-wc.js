@@ -561,6 +561,22 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                 </ul>
                 </li>
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#components-links"' :
+                            'data-target="#xs-components-links"' }>
+                            <span class="icon ion-md-cog"></span>
+                            <span>Components</span>
+                            <span class="icon ion-ios-arrow-down"></span>
+                        </div>
+                        <ul class="links collapse " ${ isNormalMode ? 'id="components-links"' : 'id="xs-components-links"' }>
+                            <li class="link">
+                                <a href="components/UiTreeItemComponent.html" data-type="entity-link" >UiTreeItemComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/UiTreeSelectComponent.html" data-type="entity-link" >UiTreeSelectComponent</a>
+                            </li>
+                        </ul>
+                    </li>
                         <li class="chapter">
                             <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#directives-links"' :
                                 'data-target="#xs-directives-links"' }>
@@ -596,6 +612,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="classes/Key.html" data-type="entity-link" >Key</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TreeUtils.html" data-type="entity-link" >TreeUtils</a>
                             </li>
                             <li class="link">
                                 <a href="classes/UiMatSnackBarConfig.html" data-type="entity-link" >UiMatSnackBarConfig</a>
@@ -645,6 +664,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="interfaces/GridOptions.html" data-type="entity-link" >GridOptions</a>
                             </li>
                             <li class="link">
+                                <a href="interfaces/IBaseNode.html" data-type="entity-link" >IBaseNode</a>
+                            </li>
+                            <li class="link">
                                 <a href="interfaces/IDateFormatOptions.html" data-type="entity-link" >IDateFormatOptions</a>
                             </li>
                             <li class="link">
@@ -655,6 +677,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/IFilterModel.html" data-type="entity-link" >IFilterModel</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/IFlatNodeObject.html" data-type="entity-link" >IFlatNodeObject</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/IGridDataEntry.html" data-type="entity-link" >IGridDataEntry</a>
@@ -691,6 +716,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/ISuggestValues.html" data-type="entity-link" >ISuggestValues</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/ITreeNode.html" data-type="entity-link" >ITreeNode</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/IVisibleDiff.html" data-type="entity-link" >IVisibleDiff</a>
