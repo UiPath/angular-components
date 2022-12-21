@@ -1,3 +1,6 @@
+# v14.0.0-rc.2 (2022-12-21)
+* **grid** main action buttons spacing
+
 # v13.13.0 (2022-11-23)
 * **grid** add overridable input that reset grid state and emits after (by default it clears search term, filters and sorting)
 
