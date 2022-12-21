@@ -13,6 +13,7 @@ ui-grid {
     $ui-grid-button-size: 40px;
     $ui-grid-main-font-size: 13.5px;
     $ui-grid-secondary-font-size: 12px;
+    $ui-grid-action-buttons-spacing: 16px;
 
     position: relative;
     display: block;
@@ -164,6 +165,11 @@ ui-grid {
                 display: flex;
                 margin-left: auto;
                 align-items: center;
+
+                .ui-grid-action-buttons-main {
+                    display: flex;
+                    gap: $ui-grid-action-buttons-spacing;
+                }
             }
         }
 
