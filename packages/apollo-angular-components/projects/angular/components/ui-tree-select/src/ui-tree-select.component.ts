@@ -127,6 +127,7 @@ export class UiTreeSelectComponent implements AfterViewInit {
     }
 
     onKeydown(event: KeyboardEvent) {
+        this._preventDefault(event);
         const activeNode = this._keyManager.activeItem?.node;
         if (!activeNode) {
             this._keyManager.onKeydown(event);
@@ -199,9 +200,15 @@ export class UiTreeSelectComponent implements AfterViewInit {
         };
     }
 
+    private _preventDefault(event: KeyboardEvent) {
+        if (event.key === ' ') {
+            event.preventDefault();
+        }
+    }
+
     private _customKeydownHandle(eventKey: string, activeNode: IFlatNodeObject) {
         let wasHandled = false;
-        if (eventKey === 'Enter') {
+        if (['Enter', ' '].includes(eventKey)) {
             this.select(activeNode);
             wasHandled = true;
         }
