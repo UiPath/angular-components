@@ -182,6 +182,8 @@ export class UiTreeSelectComponent implements AfterViewInit {
         if (!this._treeControl.isExpanded(node) || !node.hasChildren) {
             return;
         }
+
+        this._treeControl.collapseDescendants(node);
         this._treeControl.collapse(node);
         this.collapsed.emit(node);
     }
