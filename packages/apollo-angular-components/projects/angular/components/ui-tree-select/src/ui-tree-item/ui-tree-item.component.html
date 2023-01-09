@@ -4,7 +4,7 @@
                [ngClass]="'node-level-' + node.level"
                [class.node-type-leaf]="!node.hasChildren"
                matRipple
-               tabindex="0"
+               tabindex="-1"
                role="treeitem"
                class="node tree-item-container">
   <ng-content></ng-content>
