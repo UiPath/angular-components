@@ -8,7 +8,7 @@
             <ng-content select="[noDataMessage]"></ng-content>
         </ng-container>
         <ng-container *cdkVirtualFor="let node of dataSource; let i = index; trackBy: trackById;">
-            <ui-tree-item (selected)="select(node, i)"
+            <ui-tree-item (selected)="select(node)"
                           (collapsed)="collapse(node)"
                           (expanded)="expand(node)"
                           [node]="node"

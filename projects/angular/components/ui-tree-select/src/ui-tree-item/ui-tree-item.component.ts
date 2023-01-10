@@ -55,4 +55,8 @@ export class UiTreeItemComponent implements FocusableOption {
   focus() {
     this._el.nativeElement.querySelector('.mat-list-item').focus();
   }
+
+  getBoundingClientRect() {
+    return this._el.nativeElement.querySelector('.mat-list-item').getBoundingClientRect();
+  }
 }

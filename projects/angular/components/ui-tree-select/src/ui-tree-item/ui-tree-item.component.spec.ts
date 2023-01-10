@@ -1,5 +1,5 @@
 import {
-  Component, NO_ERRORS_SCHEMA,
+  Component, NO_ERRORS_SCHEMA, ViewChild,
 } from '@angular/core';
 import {
   ComponentFixture, TestBed,
@@ -20,6 +20,9 @@ import { range } from 'lodash-es';
   </ui-tree-item>`,
 })
 export class TestHostComponent {
+  @ViewChild(UiTreeItemComponent)
+  treeItemComponent?: UiTreeItemComponent;
+
   node = {
     level: 0,
     name: 'nodename',
@@ -90,5 +93,18 @@ describe('UiTreeItemComponent', () => {
     fixture.detectChanges();
     expect(component.selected).toHaveBeenCalled();
     expect(component.expanded).toHaveBeenCalled();
+  });
+
+  it('should focus the inner mat-list-item component', () => {
+    const matListItem = fixture.nativeElement.querySelector('.mat-list-item');
+    expect(document.activeElement).not.toBe(matListItem);
+    component.treeItemComponent?.focus();
+    fixture.detectChanges();
+    expect(document.activeElement).toBe(matListItem);
+  });
+
+  it('should forward values for getBoundingClientRect', () => {
+    const matListItem = fixture.nativeElement.querySelector('.mat-list-item');
+    expect(component.treeItemComponent?.getBoundingClientRect()).toEqual(matListItem.getBoundingClientRect());
   });
 });
