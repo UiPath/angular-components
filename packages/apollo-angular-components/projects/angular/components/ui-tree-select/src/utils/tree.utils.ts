@@ -50,6 +50,15 @@ export class TreeUtils {
         return node;
     }
 
+    static getParentNode(activeIndex: number, level: number, dataNodes: IFlatNodeObject[]) {
+        for (let i = activeIndex; i >= 0; i--) {
+            if (dataNodes[i].level < level && dataNodes[i].hasChildren) {
+                return dataNodes[i];
+            }
+        }
+        return null;
+    }
+
 }
 
 type TreeActionOptions = {

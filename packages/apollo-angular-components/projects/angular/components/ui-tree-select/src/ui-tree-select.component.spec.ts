@@ -9,6 +9,7 @@ import {
     fakeAsync,
     flush,
     TestBed,
+    tick,
 } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -268,4 +269,27 @@ describe('UiTreeSelectComponent', () => {
             'Node with key invalidKey not found on level 0 in the data array',
         );
     });
+
+    it('should select parent on arrow left', fakeAsync(() => {
+        component.data = [
+            DATA_STUB[0],
+            {
+                ...DATA_STUB[1],
+                children: [{
+                    key: 'w',
+                    name: 'Folder C',
+                }] as any,
+            },
+        ];
+        fixture.detectChanges();
+        component.initialSelection = ['y', 'w'];
+        fixture.detectChanges();
+        tick();
+        component.treeSelect.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
+        expect(component.selected).toHaveBeenCalledWith(
+            jasmine.arrayContaining([
+                jasmine.objectContaining({ key: 'y' }),
+            ]),
+        );
+    }));
 });
