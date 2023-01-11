@@ -53,6 +53,7 @@ export class GridPageComponent implements AfterViewInit {
         'showPaintTime',
         'showHeaderRow',
         'customFilter',
+        'useCardView',
     ];
 
     buttonKeys = [
@@ -103,6 +104,7 @@ export class GridPageComponent implements AfterViewInit {
                 showPaintTime: [false],
                 showHeaderRow: [true],
                 customFilter: [false],
+                useCardView: [true],
             }),
             header: this._fb.group({
                 searchable: [true],

@@ -66,6 +66,7 @@ import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
 import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
+import { UiGridRowCardViewDirective } from './body/ui-grid-row-card-view.directive';
 import { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
@@ -376,6 +377,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     }
 
     /**
+     * Configure if Card view should be used
+     *
+     */
+    @Input()
+    useCardView = false;
+
+    /**
      * Emits an event with the sort model when a column sort changes.
      *
      */
@@ -496,6 +504,16 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         static: true,
     })
     loadingState?: UiGridLoadingDirective;
+
+    /**
+     * Custom card view template reference.
+     *
+     * @ignore
+     */
+    @ContentChild(UiGridRowCardViewDirective, {
+        static: true,
+    })
+    cardTemplate?: UiGridRowCardViewDirective;
     /**
      * Reference to the grid action buttons container
      *

@@ -13,6 +13,7 @@
          [showPaintTime]="inputs.showPaintTime"
          [showHeaderRow]="inputs.showHeaderRow"
          [expandedEntries]="editedEntity"
+         [useCardView]="inputs.useCardView"
          [expandMode]="'preserve'"
          [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []">
 
@@ -106,4 +107,18 @@
             </div>
         </ng-template>
     </ui-grid-expanded-row>
+
+    <ui-grid-row-card-view>
+        <ng-template
+            let-data="data"
+            let-expanded="expanded"
+            let-last="last"
+            let-index="index"
+        >
+            <div class="card">
+                <h2>{{data.name}}</h2>
+                <p>parity: <b>{{data.parity}}</b></p>
+            </div>
+        </ng-template>
+    </ui-grid-row-card-view>
 </ui-grid>
