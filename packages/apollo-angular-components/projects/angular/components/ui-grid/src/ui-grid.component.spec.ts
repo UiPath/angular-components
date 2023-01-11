@@ -4178,4 +4178,153 @@ describe('Component: UiGrid', () => {
             expect(expandedRows.length).toBe(fixture.componentInstance.expandedEntries.length);
         });
     });
+
+    describe('Scenatio: card view', () => {
+
+        describe('Behavior: default card view', () => {
+
+            @Component({
+                template: `
+                    <ui-grid [data]="data"
+                             [expandedEntry]="expandedEntry"
+                             [expandedEntries]="expandedEntries"
+                             [useCardView]="true">
+                             <ui-grid-column [property]="'myNumber'"
+                                [searchable]="true"
+                                [sortable]="true"
+                                title="Number Header"
+                                width="50%">
+                                <ui-grid-dropdown-filter [items]="dropdownItemList"
+                                                        [showAllOption]="showAllOption"></ui-grid-dropdown-filter>
+                            </ui-grid-column>
+                            <ui-grid-column [property]="'myString'"
+                                            [searchable]="true"
+                                            title="String Header"
+                                            width="50%">
+                                <ui-grid-search-filter [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
+                            </ui-grid-column>
+                    </ui-grid>
+                `,
+            })
+            class TextFixtureGridCardViewComponent {
+                @ViewChild(UiGridComponent, {
+                    static: true,
+                })
+                grid!: UiGridComponent<ITestEntity>;
+
+                data: ITestEntity[] = [];
+            }
+
+            let fixture: ComponentFixture<TextFixtureGridCardViewComponent>;
+            let component: TextFixtureGridCardViewComponent;
+            let data: ITestEntity[];
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        NoopAnimationsModule,
+                    ],
+                    declarations: [TextFixtureGridCardViewComponent],
+                });
+
+                fixture = TestBed.createComponent(TextFixtureGridCardViewComponent);
+                component = fixture.componentInstance;
+                data = generateListFactory(generateEntity)(6);
+                component.data = data;
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should render default card', () => {
+
+                const cardContainer = fixture.debugElement.query(By.css('.ui-grid-card-container'));
+                expect(cardContainer).toBeDefined();
+
+            });
+
+            it('should render properties defined in the column section', () => {
+
+                const cells = fixture.debugElement.queryAll(By.css('.ui-grid-cards-container .ui-grid-card-default-cell-content'));
+
+                expect((cells[0].nativeElement as HTMLElement).innerHTML).toContain('Number Header');
+                expect((cells[1].nativeElement as HTMLElement).innerHTML).toContain('String Header');
+
+            });
+
+        });
+
+        describe('Behavior: card view with a template', () => {
+            @Component({
+                template: `
+                    <ui-grid [data]="data"
+                             [expandedEntry]="expandedEntry"
+                             [expandedEntries]="expandedEntries"
+                             [useCardView]="true">
+                        <ui-grid-row-card-view>
+                            <ng-template let-entry="data">
+                                <div class="expanded-row">
+                                    <p data-propery="myNumber">{{entry.myNumber}}</p>
+                                    <p data-propery="myBool">{{entry.myBool}}</p>
+                                </div>
+                            </ng-template>
+                        </ui-grid-row-card-view>
+                    </ui-grid>
+                `,
+            })
+            class TextFixtureGridCardViewComponent {
+                @ViewChild(UiGridComponent, {
+                    static: true,
+                })
+                grid!: UiGridComponent<ITestEntity>;
+
+                data: ITestEntity[] = [];
+            }
+
+            let fixture: ComponentFixture<TextFixtureGridCardViewComponent>;
+            let component: TextFixtureGridCardViewComponent;
+            let data: ITestEntity[];
+
+            beforeEach(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        NoopAnimationsModule,
+                    ],
+                    declarations: [TextFixtureGridCardViewComponent],
+                });
+
+                fixture = TestBed.createComponent(TextFixtureGridCardViewComponent);
+                component = fixture.componentInstance;
+                data = generateListFactory(generateEntity)(6);
+                component.data = data;
+                fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should render provided card template', () => {
+
+                const cardContainer = fixture.debugElement.query(By.css('.expanded-row'));
+
+                console.log(cardContainer);
+                expect(cardContainer).toBeDefined();
+                expect(cardContainer.nativeElement.querySelector('[data-property="myNumber"]')).toBeDefined();
+                expect(cardContainer.nativeElement.querySelector('[data-property="myBool"]')).toBeDefined();
+
+            });
+
+            it('should not render any default card view', () => {
+                const cardContainer = fixture.debugElement.query(By.css('.ui-grid-card-container'));
+                expect(cardContainer).toBeNull();
+            });
+        });
+
+    });
+
 });

@@ -232,31 +232,64 @@
                                                  [itemSize]="rowSize"
                                                  uiVirtualScrollViewportResize
                                                  class="ui-grid-viewport">
-                        <ng-container *cdkVirtualFor="let row of dataManager.data$ | async;
+                        <ng-container *ngIf="useCardView">
+                            <div class="ui-grid-cards-container">
+                                <ng-container *cdkVirtualFor="let row of dataManager.data$ | async;
+                                let last = last;
+                                let index = index;
+                                trackBy: dataManager.hashTrack">
+                                    <ng-container *ngTemplateOutlet="cardTemplate?.html || defaultCardTemplate;context: {
+                                        data: row,
+                                        index: index,
+                                        expanded: expandedEntries,
+                                        last: last
+                                    }"></ng-container>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="!useCardView">
+                            <ng-container *cdkVirtualFor="let row of dataManager.data$ | async;
                                                       let last = last;
                                                       let index = index;
                                                       trackBy: dataManager.hashTrack">
-                            <ng-container *ngTemplateOutlet="rowTemplate; context: {
-                                    data: row,
-                                    index: index,
-                                    expanded: expandedEntries,
-                                    last: last
-                                }">
+                                <ng-container  *ngTemplateOutlet="rowTemplate; context: {
+                                        data: row,
+                                        index: index,
+                                        expanded: expandedEntries,
+                                        last: last
+                                    }">
+                                </ng-container>
                             </ng-container>
                         </ng-container>
                     </cdk-virtual-scroll-viewport>
                 </ng-container>
 
                 <ng-container *ngIf="!virtualScroll">
-                    <ng-container *ngFor="let row of dataManager.data$ | async;
+                    <ng-container *ngIf="useCardView">
+                        <div class="ui-grid-cards-container">
+                            <ng-container *ngFor="let row of dataManager.data$ | async;
+                                              let index = index;
+                                              let last = last;">
+                                <ng-container *ngTemplateOutlet="cardTemplate?.html || defaultCardTemplate;context: {
+                                    data: row,
+                                    index: index,
+                                    expanded: expandedEntries,
+                                    last: last
+                                }"></ng-container>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="!useCardView">
+                        <ng-container *ngFor="let row of dataManager.data$ | async;
                                           let index = index;
                                           let last = last;">
-                        <ng-container *ngTemplateOutlet="rowTemplate; context: {
-                                data: row,
-                                index: index,
-                                expanded: expandedEntries,
-                                last: last
-                            }">
+                            <ng-container  *ngTemplateOutlet="rowTemplate; context: {
+                                    data: row,
+                                    index: index,
+                                    expanded: expandedEntries,
+                                    last: last
+                                }">
+                            </ng-container>
                         </ng-container>
                     </ng-container>
                 </ng-container>
@@ -399,6 +432,35 @@
              let-property="property">
     <p [matTooltip]="dataManager.getProperty(row, property)"
        [matTooltipDisabled]="resizeManager.isResizing">{{ dataManager.getProperty(row, property) }}</p>
+</ng-template>
+
+<ng-template #defaultCardTemplate
+    let-row="data"
+    let-index="index">
+    <div class="ui-grid-card-default">
+        <ng-container *ngFor="let column of renderedColumns$ | async">
+            <div [class.ui-grid-primary]="column.directive.primary"
+                 [class.ui-grid-secondary]="!column.directive.primary"
+                 [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
+                 [attr.data-property]="column.directive.property"
+                 [attr.data-identifier]="column.directive.identifier"
+                 [attr.role]="column.role"
+                 class="ui-grid-card-default-cell">
+                <div *ngIf="isProjected"
+                     [matTooltip]="column.directive.title ?? ''"
+                     [matTooltipDisabled]="resizeManager.isResizing"
+                     class="ui-grid-card-default-cell-mobile-title">{{column.directive.title}}</div>
+                <div class="ui-grid-card-default-cell-content">
+                    <b>{{ column.directive.title ?? column.directive.property }}:</b> <ng-container *ngTemplateOutlet="column.directive.html || textCellTemplate; context: {
+                            data: row,
+                            index: index,
+                            property: column.directive.property
+                        }">
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+    </div>
 </ng-template>
 
 <ng-template #noData>

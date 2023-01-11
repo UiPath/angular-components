@@ -515,6 +515,34 @@ ui-grid {
             .ui-grid-header-cell-sortable {
                 cursor: pointer;
             }
+
+            .ui-grid-cards-container {
+                margin: 16px;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+
+                @supports (display: grid) {
+                    display: grid;
+                    grid-column-gap: 12px;
+                    grid-row-gap: 16px;
+                    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                }
+            }
+
+            .ui-grid-card-default {
+                border-radius: 5px;
+                background: #ffffff;
+                border: 1px solid #cfd8dd;
+                color: #273139;
+                padding: 16px;
+            }
+
+            .ui-grid-card-default-cell-content {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
         }
     }
 }
