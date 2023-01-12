@@ -238,7 +238,7 @@
                                 let last = last;
                                 let index = index;
                                 trackBy: dataManager.hashTrack">
-                                    <ng-container *ngTemplateOutlet="cardTemplate?.html || defaultCardTemplate;context: {
+                                    <ng-container *ngTemplateOutlet="rowCardTemplate; context: {
                                         data: row,
                                         index: index,
                                         expanded: expandedEntries,
@@ -270,12 +270,13 @@
                             <ng-container *ngFor="let row of dataManager.data$ | async;
                                               let index = index;
                                               let last = last;">
-                                <ng-container *ngTemplateOutlet="cardTemplate?.html || defaultCardTemplate;context: {
-                                    data: row,
-                                    index: index,
-                                    expanded: expandedEntries,
-                                    last: last
-                                }"></ng-container>
+                                <ng-container *ngTemplateOutlet="rowCardTemplate; context: {
+                                        data: row,
+                                        index: index,
+                                        expanded: expandedEntries,
+                                        last: last
+                                    }">
+                                </ng-container>
                             </ng-container>
                         </div>
                     </ng-container>
@@ -432,6 +433,30 @@
              let-property="property">
     <p [matTooltip]="dataManager.getProperty(row, property)"
        [matTooltipDisabled]="resizeManager.isResizing">{{ dataManager.getProperty(row, property) }}</p>
+</ng-template>
+
+<ng-template #rowCardTemplate
+    let-row="data"
+    let-expanded="expanded"
+    let-last="last"
+    let-index="index">
+    <div cdkMonitorSubtreeFocus
+        class="ui-grid-card-wrapper"
+        [ngClass]="rowConfig?.ngClassFn(row) ?? ''"
+        [tabIndex]="0"
+        [attr.data-row-index]="index"
+        (click)="onRowClick($event, row)"
+        (keyup.enter)="onRowClick($event, row)"
+    >
+        <ng-container *ngIf="cardTemplate?.html; else defaultCardTemplate">
+            <ng-container *ngTemplateOutlet="cardTemplate?.html || defaultCardTemplate;context: {
+                data: row,
+                index: index,
+                expanded: expandedEntries,
+                last: last
+            }"></ng-container>
+        </ng-container>
+    </div>
 </ng-template>
 
 <ng-template #defaultCardTemplate
