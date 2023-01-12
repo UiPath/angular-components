@@ -118,7 +118,18 @@
             <div class="card">
                 <h2>{{data.name}}</h2>
                 <p>parity: <b>{{data.parity}}</b></p>
+
+                <ui-grid-row-action>
+                    <ng-template let-entry="data">
+                        <button (click)="editedEntity = editedEntity?.id === entry.id ? undefined : entry"
+                                mat-icon-button
+                                type="button">
+                            <mat-icon>{{editedEntity?.id === entry.id ? 'close' : 'edit'}}</mat-icon>
+                        </button>
+                    </ng-template>
+                </ui-grid-row-action>
             </div>
+
         </ng-template>
     </ui-grid-row-card-view>
 </ui-grid>
