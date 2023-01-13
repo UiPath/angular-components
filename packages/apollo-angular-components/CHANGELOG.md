@@ -1,3 +1,10 @@
+# v14.0.0-rc.3 (2023-01-13)
+* **tree-select** focus parent on arrow left
+* **tree-select** select items with space
+* **tree-select** collapse children as well
+* **tree-select** exit tree on tab
+* **chore** bump version to v14.0.0-rc.2
+
 # v14.0.0-rc.2 (2022-12-21)
 * **grid** main action buttons spacing
 
