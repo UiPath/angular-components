@@ -144,6 +144,9 @@
                             <li>
                                 <a href="#focus" >focus</a>
                             </li>
+                            <li>
+                                <a href="#getBoundingClientRect" >getBoundingClientRect</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -452,6 +455,43 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getBoundingClientRect"></a>
+                    <span class="name">
+                        <span ><b>getBoundingClientRect</b></span>
+                        <a href="#getBoundingClientRect"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getBoundingClientRect()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="59"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/ui-tree-item/ui-tree-item.component.ts:59</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
 </div>
@@ -515,6 +555,10 @@ export class UiTreeItemComponent implements FocusableOption {
   focus() {
     this._el.nativeElement.querySelector(&#x27;.mat-list-item&#x27;).focus();
   }
+
+  getBoundingClientRect() {
+    return this._el.nativeElement.querySelector(&#x27;.mat-list-item&#x27;).getBoundingClientRect();
+  }
 }
 </code></pre>
     </div>
@@ -526,7 +570,7 @@ export class UiTreeItemComponent implements FocusableOption {
                [ngClass]&#x3D;&quot;&#x27;node-level-&#x27; + node.level&quot;
                [class.node-type-leaf]&#x3D;&quot;!node.hasChildren&quot;
                matRipple
-               tabindex&#x3D;&quot;0&quot;
+               tabindex&#x3D;&quot;-1&quot;
                role&#x3D;&quot;treeitem&quot;
                class&#x3D;&quot;node tree-item-container&quot;&gt;
   &lt;ng-content&gt;&lt;/ng-content&gt;
@@ -560,7 +604,7 @@ export class UiTreeItemComponent implements FocusableOption {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><mat-list-item (click)="click()"               (dblclick)="dblclick()"               [class.selected]="isSelected"               [ngClass]="\'node-level-\' + node.level"               [class.node-type-leaf]="!node.hasChildren"               matRipple               tabindex="0"               role="treeitem"               class="node tree-item-container">  <ng-content></ng-content></mat-list-item></div>'
+        var COMPONENT_TEMPLATE = '<div><mat-list-item (click)="click()"               (dblclick)="dblclick()"               [class.selected]="isSelected"               [ngClass]="\'node-level-\' + node.level"               [class.node-type-leaf]="!node.hasChildren"               matRipple               tabindex="-1"               role="treeitem"               class="node tree-item-container">  <ng-content></ng-content></mat-list-item></div>'
     var COMPONENTS = [{'name': 'UiButtonProgressBarComponent', 'selector': 'ui-button-progress-bar'},{'name': 'UiButtonProgressSpinnerComponent', 'selector': 'ui-button-progress-spinner'},{'name': 'UiContentSpinnerComponent', 'selector': 'ui-content-spinner'},{'name': 'UiGridComponent', 'selector': 'ui-grid'},{'name': 'UiGridCustomPaginatorComponent', 'selector': 'ui-grid-custom-paginator'},{'name': 'UiGridSearchComponent', 'selector': 'ui-grid-search'},{'name': 'UiGridToggleColumnsComponent', 'selector': 'COMPONENT_SELECTOR'},{'name': 'UiPasswordIndicatorComponent', 'selector': 'ui-password-indicator'},{'name': 'UiPasswordToggleComponent', 'selector': 'ui-password-toggle'},{'name': 'UiSecondFormatDirective', 'selector': 'ui-secondformat'},{'name': 'UiSnackBarComponent', 'selector': ''},{'name': 'UiTreeItemComponent', 'selector': 'ui-tree-item[node]'},{'name': 'UiTreeSelectComponent', 'selector': 'ui-tree-select'}];
     var DIRECTIVES = [{'name': 'KeyboardShortcutDirective', 'selector': '[uiKeyboardShortcut][shortcutKeys]'},{'name': 'UiAutoAccessibleLabelDirective', 'selector': ''},{'name': 'UiAutofocusDirective', 'selector': '[uiAutofocus]'},{'name': 'UiClickOutsideDirective', 'selector': '[uiClickOutside]'},{'name': 'UiClipboardDirective', 'selector': '[uiClipboard]'},{'name': 'UiContentLoaderDirective', 'selector': '[uiContentLoading]'},{'name': 'UiDateFormatDirective', 'selector': '[uiDateFormat], ui-dateformat'},{'name': 'UiDragAndDropFileDirective', 'selector': '[uiDragAndDropFile]'},{'name': 'UiFormatDirective', 'selector': ''},{'name': 'UiGridColumnDirective', 'selector': '[uiGridColumn], ui-grid-column'},{'name': 'UiGridDropdownFilterDirective', 'selector': '[uiGridDropdownFilter], ui-grid-dropdown-filter'},{'name': 'UiGridExpandedRowDirective', 'selector': '[uiGridExpandedRow], ui-grid-expanded-row'},{'name': 'UiGridFooterDirective', 'selector': '[uiGridFooter], ui-grid-footer'},{'name': 'UiGridHeaderButtonDirective', 'selector': '[uiHeaderButton], ui-header-button'},{'name': 'UiGridHeaderDirective', 'selector': '[uiGridHeader], ui-grid-header'},{'name': 'UiGridLoadingDirective', 'selector': '[uiGridLoading], ui-grid-loading'},{'name': 'UiGridNoContentDirective', 'selector': '[uiGridNoContent], ui-grid-no-content'},{'name': 'UiGridRowActionDirective', 'selector': '[uiGridRowAction], ui-grid-row-action'},{'name': 'UiGridRowConfigDirective', 'selector': '[uiGridRowConfig], ui-grid-row-config'},{'name': 'UiGridSearchFilterDirective', 'selector': '[uiGridSearchFilter], ui-grid-search-filter'},{'name': 'UiLoaderButtonDirective', 'selector': ''},{'name': 'UiMatFormFieldRequiredDirective', 'selector': 'mat-form-field'},{'name': 'UiNgLetDirective', 'selector': '[ngLet]'},{'name': 'UiProgressButtonDirective', 'selector': '
         button[mat-button][ui-progress-button],

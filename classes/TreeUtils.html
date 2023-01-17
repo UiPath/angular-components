@@ -115,6 +115,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Static</span>
+                                <a href="#getParentNode" >getParentNode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
                                 <a href="#nodeBackTransformer" >nodeBackTransformer</a>
                             </li>
                             <li>
@@ -486,6 +490,101 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getParentNode"></a>
+                    <span class="name">
+                        <span class="modifier">Static</span>
+                        <span ><b>getParentNode</b></span>
+                        <a href="#getParentNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getParentNode(activeIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, level: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, dataNodes: <a href="../interfaces/IFlatNodeObject.html" target="_self">IFlatNodeObject[]</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="53"
+                            class="link-to-prism">projects/angular/components/ui-tree-select/src/utils/tree.utils.ts:53</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>activeIndex</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>level</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>dataNodes</td>
+                                    <td>
+                                                <code><a href="../interfaces/IFlatNodeObject.html" target="_self" >IFlatNodeObject[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="nodeBackTransformer"></a>
                     <span class="name">
                         <span class="modifier">Static</span>
@@ -696,6 +795,15 @@ export class TreeUtils {
             throw new Error(&#x60;Node with key ${key} not found on level ${level} in the data array&#x60;);
         }
         return node;
+    }
+
+    static getParentNode(activeIndex: number, level: number, dataNodes: IFlatNodeObject[]) {
+        for (let i &#x3D; activeIndex; i &gt;&#x3D; 0; i--) {
+            if (dataNodes[i].level &lt; level &amp;&amp; dataNodes[i].hasChildren) {
+                return dataNodes[i];
+            }
+        }
+        return null;
     }
 
 }
