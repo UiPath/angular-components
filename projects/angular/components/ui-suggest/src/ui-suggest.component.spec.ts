@@ -2215,6 +2215,28 @@ const sharedSpecifications = (
 
                 expect(uiSuggest.items.length).toBe(2 * NUMBER_OF_ITEMS_PER_VIEW + 1);
             }));
+
+            it('should emit update event EVERY TIME the source queried', waitForAsync(async () => {
+                const spy = spyOn(uiSuggest.sourceUpdated, 'emit');
+
+                const display = fixture.debugElement.query(By.css('.display'));
+                display.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                await fixture.whenStable();
+                expect(spy).toHaveBeenCalledTimes(1);
+
+                const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+                for (let i = 0; i <= uiSuggest.items.length; i++) {
+                    itemContainer.nativeElement.dispatchEvent(
+                        EventGenerator.keyDown(Key.ArrowUp),
+                    );
+
+                }
+                fixture.detectChanges();
+                await fixture.whenStable();
+                expect(spy).toHaveBeenCalledTimes(2);
+            }));
         });
 
         it('should generate the same number of items as those in total if displayCount is set to a lower limit ', waitForAsync(async () => {
