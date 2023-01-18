@@ -1522,6 +1522,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                     }
                 }
 
+                this.sourceUpdated.emit(this.items);
                 this._cd.detectChanges();
             });
     };
