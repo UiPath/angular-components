@@ -1,3 +1,5 @@
+# v14.0.0 (2023-01-19)
+
 # v14.0.0-rc.3 (2023-01-13)
 * **tree-select** focus parent on arrow left
 * **tree-select** select items with space
