@@ -68,6 +68,9 @@
     </ui-grid-column>
     <ui-grid-column [property]="'parity'"
                     title="Parity"
+                    description="Parity description
+                    
+                    This is a description in a tooltip"
                     width="33%">
         <ui-grid-dropdown-filter [visible]="header.showFilter"
                                  [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">

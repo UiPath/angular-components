@@ -13,6 +13,15 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
     opacity: 0.1;
 }
 
+.mat-tooltip {
+    word-wrap: break-word;
+
+    &.preserve-whitespace {
+        white-space: pre-line;
+        text-align: left;
+    }
+}
+
 @mixin ui-grid-theme($theme) {
     $is-dark: map-get($theme, "is-dark");
     $foreground: map-get($theme, "foreground");
