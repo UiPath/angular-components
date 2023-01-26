@@ -583,6 +583,8 @@
                         [attr.data-cy]="getColumnName(column, 'ui-grid-search-filter')"
                         [multiple]="column.searchableDropdown!.multiple"
                         [compact]="column.searchableDropdown!.multiple"
+                        [displayCount]="column.searchableDropdown!.displayCount"
+                        [minChars]="column.searchableDropdown!.minChars ?? 0"
                         (selected)="filterManager.searchableDropdownUpdate(column, $event, true)"
                         (deselected)="filterManager.searchableDropdownUpdate(column, $event, false)"
                         (opened)="column.refetch && suggest.fetch()"

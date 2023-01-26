@@ -281,6 +281,7 @@ describe('Component: UiGrid', () => {
                                 expect(filter).toBeDefined();
                                 expect(filter!.value).toEqual(columnOptionDefinition.option.id);
                                 expect(filter!.method).toBe(columnOptionDefinition.column.searchableDropdown!.method!);
+                                expect(filter!.meta).toEqual(columnOptionDefinition.option);
                             });
 
                         manager.searchableDropdownUpdate(columnOptionDefinition.column, columnOptionDefinition.option);
@@ -302,6 +303,7 @@ describe('Component: UiGrid', () => {
                             expect(filter).toBeDefined();
                             expect(filter.value).toEqual(columnOptionDefinition.option.id);
                             expect(filter.method).toBe(columnOptionDefinition.column.searchableDropdown!.method!);
+                            expect(filter.meta).toEqual(columnOptionDefinition.option);
                         });
 
                         manager.searchableDropdownUpdate(columnOptionDefinition.column, columnOptionDefinition.option);
@@ -329,6 +331,7 @@ describe('Component: UiGrid', () => {
                                     expect(filter).toBeDefined();
                                     expect(filter.value).toEqual(columnOptionDefinition.option.id);
                                     expect(filter.method).toBe(columnOptionDefinition.column.searchableDropdown!.method!);
+                                    expect(filter.meta).toEqual(columnOptionDefinition.option);
                                 });
                             });
                         });
@@ -376,6 +379,7 @@ describe('Component: UiGrid', () => {
                             expect(Array.isArray(filter.value)).toEqual(true);
                             expect(filter.value).toEqual([columnOptionDefinition.option.id] as unknown as []);
                             expect(filter.method).toBe(columnOptionDefinition.column.searchableDropdown!.method!);
+                            expect(filter.meta).toEqual([columnOptionDefinition.option]);
                         });
 
                         manager.searchableDropdownUpdate(columnOptionDefinition.column, columnOptionDefinition.option, true);
