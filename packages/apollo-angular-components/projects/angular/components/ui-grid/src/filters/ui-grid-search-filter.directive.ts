@@ -84,6 +84,21 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> imp
     multiple = false;
 
     /**
+     * Configure the minimum number of characters that triggers the searchSourceFactory call
+     * This will have priority over the fetch strategy if set.
+     *
+     */
+    @Input()
+    minChars = 0;
+
+    /**
+     * The maximum number of items rendered in the viewport.
+     *
+     */
+    @Input()
+    displayCount = 10;
+
+    /**
      * @ignore
      */
     visible$ = new BehaviorSubject(true);
