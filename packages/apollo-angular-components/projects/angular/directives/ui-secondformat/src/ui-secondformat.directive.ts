@@ -1,3 +1,5 @@
+import humanizeDuration from 'humanize-duration';
+import { Duration } from 'luxon';
 import moment from 'moment';
 import {
     BehaviorSubject,
@@ -18,6 +20,7 @@ import {
     Input,
     Optional,
 } from '@angular/core';
+import { USE_LUXON } from '@uipath/angular/utilities';
 
 /**
  * The date format options schema.
@@ -48,6 +51,11 @@ export const UI_SECONDFORMAT_OPTIONS = new InjectionToken<Observable<void>>('UiS
  * In order to reduce bundle sizes, we strongly recommend using the following webpack plugins:
  * - [moment-locales-webpack-plugin](https://www.npmjs.com/package/moment-locales-webpack-plugin)
  * - [moment-timezone-data-webpack-plugin](https://www.npmjs.com/package/moment-timezone-data-webpack-plugin)
+ *
+ * Optionally, you can opt-in to use Luxon instead of Moment.
+ * Depends On:
+ * - [luxon](https://www.npmjs.com/package/luxon)
+ * - [humanize-duration](https://www.npmjs.com/package/humanize-duration)
  *
  * @export
  */
@@ -87,6 +95,9 @@ export class UiSecondFormatDirective {
         @Inject(UI_SECONDFORMAT_OPTIONS)
         @Optional()
         options: ISecondFormatOptions,
+        @Inject(USE_LUXON)
+        @Optional()
+        private _useLuxon?: boolean,
     ) {
         options = options || {};
         const redraw$ = options.redraw$ || of(null);
@@ -96,15 +107,49 @@ export class UiSecondFormatDirective {
             this._seconds$.pipe(distinctUntilChanged()),
         ).pipe(
             map(() => this.seconds),
-            map(seconds => seconds != null ? moment.duration(seconds, 'seconds') : undefined),
+            map(this._mapSecondsToDuration),
         );
 
         this.text$ = seconds$.pipe(
-            map(seconds => seconds?.humanize() ?? ''),
+            map(this._mapDurationToText),
         );
 
         this.tooltip$ = seconds$.pipe(
-            map(seconds => seconds?.toISOString()),
+            map(this._mapDurationToTooltip),
         );
     }
+
+    private _mapSecondsToDuration = (seconds: number | null) => {
+        if (seconds == null) {
+            return null;
+        }
+
+        return this._useLuxon
+            ? Duration.fromObject({ seconds })
+            : moment.duration(seconds, 'seconds');
+    };
+
+    private _mapDurationToText = (duration: Duration | moment.Duration | null) => {
+        if (duration == null) {
+            return '';
+        }
+
+        return moment.isDuration(duration)
+            ? duration.humanize()
+            : humanizeDuration(duration.toMillis(), {
+                language: duration.locale,
+                // Max number of units is set to 1 to mimic what moment does
+                largest: 1,
+            });
+    };
+
+    private _mapDurationToTooltip = (duration: Duration | moment.Duration | null) => {
+        if (duration == null) {
+            return '';
+        }
+
+        return moment.isDuration(duration)
+            ? duration.toISOString()
+            : duration.shiftTo('hours', 'minutes', 'seconds').toISO();
+    };
 }
