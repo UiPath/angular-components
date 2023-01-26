@@ -197,6 +197,7 @@ export class FilterManager<T> {
             value: column.searchableDropdown!.multiple ?
                 (column.searchableDropdown!.value! as ISuggestValue[]).map(value => value.id)
                 : (column.searchableDropdown!.value! as ISuggestValue).id,
+            meta: column.searchableDropdown!.value,
         } as IFilterModel<T>;
     }
 
