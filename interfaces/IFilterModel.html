@@ -90,6 +90,13 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#meta" 
+>
+                                            meta
+                                        </a>
+                                </li>
+                                <li>
                                         <a href="#method" 
 >
                                             method
@@ -125,6 +132,51 @@
 
             <section>
                 <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="meta"></a>
+                                        <span class="name "><b>meta</b>
+                                            <a href="#meta">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>meta:     <code>ISuggestValueData&lt;T&gt; | ISuggestValueData&lt;T&gt;[] | null</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>ISuggestValueData&lt;T&gt; | ISuggestValueData&lt;T&gt;[] | null</code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>The current filter meta.
+This will be additional suggest data sent to search filters in case you need more than the id from suggest.</p>
+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <table class="table table-sm table-bordered">
                         <tbody>
                                 <tr>
@@ -293,7 +345,14 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface IFilterModel&lt;T&gt; {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ISuggestValueData } from &#x27;@uipath/angular/components/ui-suggest&#x27;;
+
+/**
+ * The filter model schema.
+ *
+ * @export
+ */
+export interface IFilterModel&lt;T&gt; {
     /**
      * The targeted entity property.
      *
@@ -318,6 +377,12 @@
      *
      */
     type?: string;
+    /**
+     * The current filter meta.
+     * This will be additional suggest data sent to search filters in case you need more than the id from suggest.
+     *
+     */
+    meta?: ISuggestValueData&lt;T&gt; | ISuggestValueData&lt;T&gt;[] | null;
 }
 </code></pre>
     </div>

@@ -119,10 +119,16 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#displayCount" >displayCount</a>
+                            </li>
+                            <li>
                                 <a href="#drillDown" >drillDown</a>
                             </li>
                             <li>
                                 <a href="#fetchStrategy" >fetchStrategy</a>
+                            </li>
+                            <li>
+                                <a href="#minChars" >minChars</a>
                             </li>
                             <li>
                                 <a href="#multiple" >multiple</a>
@@ -170,6 +176,38 @@
 
             <section>
     <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="displayCount"></a>
+                        <b>displayCount</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>10</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts:99</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The maximum number of items rendered in the viewport.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -224,6 +262,39 @@
                 <tr>
                     <td class="col-md-4">
                         <div class="io-description"><p>The property associated to the dropdown search fetch strategy.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="minChars"></a>
+                        <b>minChars</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts:92</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Configure the minimum number of characters that triggers the searchSourceFactory call
+This will have priority over the fetch strategy if set.</p>
 </div>
                     </td>
                 </tr>
@@ -425,8 +496,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="95"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts:95</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="110"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/filters/ui-grid-search-filter.directive.ts:110</a></div>
                 </td>
             </tr>
 
@@ -660,6 +731,21 @@ export class UiGridSearchFilterDirective&lt;T&gt; extends UiGridFilterDirective&
      */
     @Input()
     multiple &#x3D; false;
+
+    /**
+     * Configure the minimum number of characters that triggers the searchSourceFactory call
+     * This will have priority over the fetch strategy if set.
+     *
+     */
+    @Input()
+    minChars &#x3D; 0;
+
+    /**
+     * The maximum number of items rendered in the viewport.
+     *
+     */
+    @Input()
+    displayCount &#x3D; 10;
 
     /**
      * @ignore
