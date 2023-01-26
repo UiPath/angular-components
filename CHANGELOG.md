@@ -1,3 +1,6 @@
+# v14.0.1 (2023-01-26)
+* **grid** add minchars and displaycount to search filter
+
 # v14.0.0 (2023-01-19)
 
 # v14.0.0-rc.3 (2023-01-13)

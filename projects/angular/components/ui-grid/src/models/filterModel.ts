@@ -1,3 +1,5 @@
+import { ISuggestValueData } from '@uipath/angular/components/ui-suggest';
+
 /**
  * The filter model schema.
  *
@@ -28,4 +30,10 @@ export interface IFilterModel<T> {
      *
      */
     type?: string;
+    /**
+     * The current filter meta.
+     * This will be additional suggest data sent to search filters in case you need more than the id from suggest.
+     *
+     */
+    meta?: ISuggestValueData<T> | ISuggestValueData<T>[] | null;
 }
