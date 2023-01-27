@@ -79,6 +79,12 @@ Depends On:</p>
 <li><a href="https://www.npmjs.com/package/moment-locales-webpack-plugin">moment-locales-webpack-plugin</a></li>
 <li><a href="https://www.npmjs.com/package/moment-timezone-data-webpack-plugin">moment-timezone-data-webpack-plugin</a></li>
 </ul>
+<p>Optionally, you can opt-in to use Luxon instead of Moment.
+Depends On:</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/luxon">luxon</a></li>
+<li><a href="https://www.npmjs.com/package/humanize-duration">humanize-duration</a></li>
+</ul>
 
     </p>
 
@@ -206,7 +212,7 @@ Depends On:</p>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/angular/directives/ui-secondformat/src/ui-secondformat.directive.ts:66</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">projects/angular/directives/ui-secondformat/src/ui-secondformat.directive.ts:74</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -246,7 +252,7 @@ Depends On:</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">projects/angular/directives/ui-secondformat/src/ui-secondformat.directive.ts:77</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">projects/angular/directives/ui-secondformat/src/ui-secondformat.directive.ts:85</a></div>
                         </td>
                     </tr>
 
@@ -272,7 +278,7 @@ Depends On:</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/angular/directives/ui-secondformat/src/ui-secondformat.directive.ts:72</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">projects/angular/directives/ui-secondformat/src/ui-secondformat.directive.ts:80</a></div>
                         </td>
                     </tr>
 
@@ -301,7 +307,7 @@ Depends On:</p>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/angular/directives/ui-secondformat/src/ui-secondformat.directive.ts:66</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">projects/angular/directives/ui-secondformat/src/ui-secondformat.directive.ts:74</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -319,7 +325,7 @@ Depends On:</p>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/angular/directives/ui-secondformat/src/ui-secondformat.directive.ts:67</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">projects/angular/directives/ui-secondformat/src/ui-secondformat.directive.ts:75</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -366,7 +372,9 @@ Depends On:</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import moment from &#x27;moment&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import humanizeDuration from &#x27;humanize-duration&#x27;;
+import { Duration } from &#x27;luxon&#x27;;
+import moment from &#x27;moment&#x27;;
 import {
     BehaviorSubject,
     merge,
@@ -386,6 +394,7 @@ import {
     Input,
     Optional,
 } from &#x27;@angular/core&#x27;;
+import { USE_LUXON } from &#x27;@uipath/angular/utilities&#x27;;
 
 /**
  * The date format options schema.
@@ -416,6 +425,11 @@ export const UI_SECONDFORMAT_OPTIONS &#x3D; new InjectionToken&lt;Observable&lt;
  * In order to reduce bundle sizes, we strongly recommend using the following webpack plugins:
  * - [moment-locales-webpack-plugin](https://www.npmjs.com/package/moment-locales-webpack-plugin)
  * - [moment-timezone-data-webpack-plugin](https://www.npmjs.com/package/moment-timezone-data-webpack-plugin)
+ *
+ * Optionally, you can opt-in to use Luxon instead of Moment.
+ * Depends On:
+ * - [luxon](https://www.npmjs.com/package/luxon)
+ * - [humanize-duration](https://www.npmjs.com/package/humanize-duration)
  *
  * @export
  */
@@ -455,6 +469,9 @@ export class UiSecondFormatDirective {
         @Inject(UI_SECONDFORMAT_OPTIONS)
         @Optional()
         options: ISecondFormatOptions,
+        @Inject(USE_LUXON)
+        @Optional()
+        private _useLuxon?: boolean,
     ) {
         options &#x3D; options || {};
         const redraw$ &#x3D; options.redraw$ || of(null);
@@ -464,17 +481,51 @@ export class UiSecondFormatDirective {
             this._seconds$.pipe(distinctUntilChanged()),
         ).pipe(
             map(() &#x3D;&gt; this.seconds),
-            map(seconds &#x3D;&gt; seconds !&#x3D; null ? moment.duration(seconds, &#x27;seconds&#x27;) : undefined),
+            map(this._mapSecondsToDuration),
         );
 
         this.text$ &#x3D; seconds$.pipe(
-            map(seconds &#x3D;&gt; seconds?.humanize() ?? &#x27;&#x27;),
+            map(this._mapDurationToText),
         );
 
         this.tooltip$ &#x3D; seconds$.pipe(
-            map(seconds &#x3D;&gt; seconds?.toISOString()),
+            map(this._mapDurationToTooltip),
         );
     }
+
+    private _mapSecondsToDuration &#x3D; (seconds: number | null) &#x3D;&gt; {
+        if (seconds &#x3D;&#x3D; null) {
+            return null;
+        }
+
+        return this._useLuxon
+            ? Duration.fromObject({ seconds })
+            : moment.duration(seconds, &#x27;seconds&#x27;);
+    };
+
+    private _mapDurationToText &#x3D; (duration: Duration | moment.Duration | null) &#x3D;&gt; {
+        if (duration &#x3D;&#x3D; null) {
+            return &#x27;&#x27;;
+        }
+
+        return moment.isDuration(duration)
+            ? duration.humanize()
+            : humanizeDuration(duration.toMillis(), {
+                language: duration.locale,
+                // Max number of units is set to 1 to mimic what moment does
+                largest: 1,
+            });
+    };
+
+    private _mapDurationToTooltip &#x3D; (duration: Duration | moment.Duration | null) &#x3D;&gt; {
+        if (duration &#x3D;&#x3D; null) {
+            return &#x27;&#x27;;
+        }
+
+        return moment.isDuration(duration)
+            ? duration.toISOString()
+            : duration.shiftTo(&#x27;hours&#x27;, &#x27;minutes&#x27;, &#x27;seconds&#x27;).toISO();
+    };
 }
 </code></pre>
     </div>

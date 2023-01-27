@@ -75,6 +75,12 @@
 <li><a href="https://www.npmjs.com/package/moment-locales-webpack-plugin">moment-locales-webpack-plugin</a></li>
 <li><a href="https://www.npmjs.com/package/moment-timezone-data-webpack-plugin">moment-timezone-data-webpack-plugin</a></li>
 </ul>
+<p>Optionally, you can opt-in to use Luxon instead of Moment.
+Depends On:</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/luxon">luxon</a></li>
+<li><a href="https://www.npmjs.com/package/humanize-duration">humanize-duration</a></li>
+</ul>
 
             </p>
 
@@ -167,7 +173,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:117</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="128" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:128</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -188,7 +194,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:139</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="150" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:150</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -209,18 +215,19 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                        <i>Type : </i>    <code>string | DateTimeFormatOptions</code>
 
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="175" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:175</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="187" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:187</a></div>
                             </td>
                         </tr>
                 <tr>
                     <td class="col-md-4">
-                        <div class="io-description"><p>The <code>moment</code> format, defaults to <code>L LTS</code>.</p>
+                        <div class="io-description"><p>The &#39;moment&#39; format defaults to &#39;L LTS&#39;.
+The <code>luxon</code> format defaults to `DateTime.DATETIME_SHORT.</p>
 </div>
                     </td>
                 </tr>
@@ -242,7 +249,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:133</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="144" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:144</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -269,7 +276,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:127</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="138" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:138</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -309,7 +316,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="167" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:167</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="178" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:178</a></div>
                                 </td>
                             </tr>
 
@@ -320,7 +327,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:139</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="150" class="link-to-prism">projects/angular/directives/ui-dateformat/src/ui-dateformat.directive.ts:150</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -372,6 +379,10 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import &#x27;moment-timezone&#x27;;
 
+import {
+ DateTime,
+ DateTimeFormatOptions,
+} from &#x27;luxon&#x27;;
 import moment from &#x27;moment&#x27;;
 import {
     interval,
@@ -398,6 +409,7 @@ import {
     Renderer2,
 } from &#x27;@angular/core&#x27;;
 import { UiFormatDirective } from &#x27;@uipath/angular/directives/internal&#x27;;
+import { USE_LUXON } from &#x27;@uipath/angular/utilities&#x27;;
 
 /**
  * The date format display type options.
@@ -435,9 +447,10 @@ export interface IDateFormatOptions {
     titleType?: DisplayType;
     /**
      * Overwrites the default dateformat used by moment.js.
+     * When supplied Luxon formatting options, Luxon will be used instead of moment.js.
      *
      */
-    format?: string;
+    format?: string | DateTimeFormatOptions;
 }
 
 /**
@@ -474,6 +487,11 @@ export const resolveTimezone &#x3D; (options: IDateFormatOptions) &#x3D;&gt; {
  * In order to reduce bundle sizes, we strongly recommend using the following webpack plugins:
  * - [moment-locales-webpack-plugin](https://www.npmjs.com/package/moment-locales-webpack-plugin)
  * - [moment-timezone-data-webpack-plugin](https://www.npmjs.com/package/moment-timezone-data-webpack-plugin)
+ *
+ * Optionally, you can opt-in to use Luxon instead of Moment.
+ * Depends On:
+ * - [luxon](https://www.npmjs.com/package/luxon)
+ * - [humanize-duration](https://www.npmjs.com/package/humanize-duration)
  *
  * @export
  */
@@ -540,11 +558,12 @@ export class UiDateFormatDirective extends UiFormatDirective {
         return this._date;
     }
     /**
-     * The &#x60;moment&#x60; format, defaults to &#x60;L LTS&#x60;.
+     * The &#x27;moment&#x27; format defaults to &#x27;L LTS&#x27;.
+     * The &#x60;luxon&#x60; format defaults to &#x60;DateTime.DATETIME_SHORT.
      *
      */
     @Input()
-    dateFormat!: string;
+    dateFormat!: string | DateTimeFormatOptions;
 
     protected _text?: HTMLElement;
 
@@ -552,17 +571,30 @@ export class UiDateFormatDirective extends UiFormatDirective {
         if (!this.date) { return &#x27;&#x27;; }
         if (!(this.date instanceof Date)) { return this.date; }
 
-        return moment(this.date)
-            .fromNow();
+        const relativeTime &#x3D; this._isMomentFormat(this.dateFormat)
+            ? moment(this.date)
+                .fromNow()
+            : DateTime.fromJSDate(this.date)
+                .toRelative();
+
+        return relativeTime ?? &#x27;&#x27;;
     }
 
     private get _absoluteTime() {
         if (!this.date) { return &#x27;&#x27;; }
         if (!(this.date instanceof Date)) { return this.date; }
 
-        return moment(this.date)
-            .tz(this.timezone ?? resolveTimezone(this._options))
-            .format(this.dateFormat);
+        const absoluteTime &#x3D; this._isMomentFormat(this.dateFormat)
+            ? moment(this.date)
+                .tz(this.timezone ?? resolveTimezone(this._options))
+                .format(this.dateFormat)
+            : DateTime
+                .fromJSDate(this.date, {
+                    zone: this.timezone ?? resolveTimezone(this._options),
+                })
+                .toLocaleString(this.dateFormat);
+
+        return absoluteTime ?? &#x27;&#x27;;
     }
 
     private _lastAbsoluteTime?: string;
@@ -582,14 +614,19 @@ export class UiDateFormatDirective extends UiFormatDirective {
         private _zone: NgZone,
         renderer: Renderer2,
         elementRef: ElementRef,
+        @Inject(USE_LUXON)
+        @Optional()
+        private _useLuxon?: boolean,
     ) {
         super(
             renderer,
             elementRef,
         );
 
+        const defaultFormat &#x3D; this._useLuxon ? DateTime.DATETIME_SHORT : &#x27;L LTS&#x27;;
+
         this._options &#x3D; _options || {};
-        this.dateFormat &#x3D; this._options.format ?? &#x27;L LTS&#x27;;
+        this.dateFormat &#x3D; this._options.format ?? defaultFormat;
         this.contentType &#x3D; this._options.contentType ?? &#x27;absolute&#x27;;
         this.titleType &#x3D; this._options.titleType ?? &#x27;absolute&#x27;;
 
@@ -644,6 +681,10 @@ export class UiDateFormatDirective extends UiFormatDirective {
         ) { return; }
 
         this._renderer.setAttribute(this._elementRef.nativeElement, &#x27;data-title&#x27;, this._timeForType(this.titleType));
+    }
+
+    private _isMomentFormat(format: string | DateTimeFormatOptions): format is string {
+        return typeof format &#x3D;&#x3D;&#x3D; &#x27;string&#x27;;
     }
 
     private _isRelative &#x3D; (type: DisplayType) &#x3D;&gt; type &#x3D;&#x3D;&#x3D; &#x27;relative&#x27;;
