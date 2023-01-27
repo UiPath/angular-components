@@ -1,3 +1,10 @@
+# v14.1.0 (2023-01-27)
+* **test** adds tests for luxon compatible directives
+* **feat** use luxon as an opt-in feature
+* **chore** add injection token to opt-in for luxon
+* **ci** use luxon for the version-bump script
+* **deps** install luxon and humanize-duration
+
 # v14.0.1 (2023-01-26)
 * **grid** add minchars and displaycount to search filter
 

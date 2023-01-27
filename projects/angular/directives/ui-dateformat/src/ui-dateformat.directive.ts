@@ -1,5 +1,9 @@
 import 'moment-timezone';
 
+import {
+ DateTime,
+ DateTimeFormatOptions,
+} from 'luxon';
 import moment from 'moment';
 import {
     interval,
@@ -26,6 +30,7 @@ import {
     Renderer2,
 } from '@angular/core';
 import { UiFormatDirective } from '@uipath/angular/directives/internal';
+import { USE_LUXON } from '@uipath/angular/utilities';
 
 /**
  * The date format display type options.
@@ -63,9 +68,10 @@ export interface IDateFormatOptions {
     titleType?: DisplayType;
     /**
      * Overwrites the default dateformat used by moment.js.
+     * When supplied Luxon formatting options, Luxon will be used instead of moment.js.
      *
      */
-    format?: string;
+    format?: string | DateTimeFormatOptions;
 }
 
 /**
@@ -102,6 +108,11 @@ export const resolveTimezone = (options: IDateFormatOptions) => {
  * In order to reduce bundle sizes, we strongly recommend using the following webpack plugins:
  * - [moment-locales-webpack-plugin](https://www.npmjs.com/package/moment-locales-webpack-plugin)
  * - [moment-timezone-data-webpack-plugin](https://www.npmjs.com/package/moment-timezone-data-webpack-plugin)
+ *
+ * Optionally, you can opt-in to use Luxon instead of Moment.
+ * Depends On:
+ * - [luxon](https://www.npmjs.com/package/luxon)
+ * - [humanize-duration](https://www.npmjs.com/package/humanize-duration)
  *
  * @export
  */
@@ -168,11 +179,12 @@ export class UiDateFormatDirective extends UiFormatDirective {
         return this._date;
     }
     /**
-     * The `moment` format, defaults to `L LTS`.
+     * The 'moment' format defaults to 'L LTS'.
+     * The `luxon` format defaults to `DateTime.DATETIME_SHORT.
      *
      */
     @Input()
-    dateFormat!: string;
+    dateFormat!: string | DateTimeFormatOptions;
 
     protected _text?: HTMLElement;
 
@@ -180,17 +192,30 @@ export class UiDateFormatDirective extends UiFormatDirective {
         if (!this.date) { return ''; }
         if (!(this.date instanceof Date)) { return this.date; }
 
-        return moment(this.date)
-            .fromNow();
+        const relativeTime = this._isMomentFormat(this.dateFormat)
+            ? moment(this.date)
+                .fromNow()
+            : DateTime.fromJSDate(this.date)
+                .toRelative();
+
+        return relativeTime ?? '';
     }
 
     private get _absoluteTime() {
         if (!this.date) { return ''; }
         if (!(this.date instanceof Date)) { return this.date; }
 
-        return moment(this.date)
-            .tz(this.timezone ?? resolveTimezone(this._options))
-            .format(this.dateFormat);
+        const absoluteTime = this._isMomentFormat(this.dateFormat)
+            ? moment(this.date)
+                .tz(this.timezone ?? resolveTimezone(this._options))
+                .format(this.dateFormat)
+            : DateTime
+                .fromJSDate(this.date, {
+                    zone: this.timezone ?? resolveTimezone(this._options),
+                })
+                .toLocaleString(this.dateFormat);
+
+        return absoluteTime ?? '';
     }
 
     private _lastAbsoluteTime?: string;
@@ -210,14 +235,19 @@ export class UiDateFormatDirective extends UiFormatDirective {
         private _zone: NgZone,
         renderer: Renderer2,
         elementRef: ElementRef,
+        @Inject(USE_LUXON)
+        @Optional()
+        private _useLuxon?: boolean,
     ) {
         super(
             renderer,
             elementRef,
         );
 
+        const defaultFormat = this._useLuxon ? DateTime.DATETIME_SHORT : 'L LTS';
+
         this._options = _options || {};
-        this.dateFormat = this._options.format ?? 'L LTS';
+        this.dateFormat = this._options.format ?? defaultFormat;
         this.contentType = this._options.contentType ?? 'absolute';
         this.titleType = this._options.titleType ?? 'absolute';
 
@@ -272,6 +302,10 @@ export class UiDateFormatDirective extends UiFormatDirective {
         ) { return; }
 
         this._renderer.setAttribute(this._elementRef.nativeElement, 'data-title', this._timeForType(this.titleType));
+    }
+
+    private _isMomentFormat(format: string | DateTimeFormatOptions): format is string {
+        return typeof format === 'string';
     }
 
     private _isRelative = (type: DisplayType) => type === 'relative';
