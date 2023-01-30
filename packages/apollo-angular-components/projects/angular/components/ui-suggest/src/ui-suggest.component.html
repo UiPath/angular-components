@@ -102,6 +102,14 @@
                           [matTooltip]="intl.translateLabel(option.text)"
                           (removed)="deselectItem(option)"
                           class="chip-selectable">
+                    <mat-icon *ngIf="!!option?.icon?.svgIcon"
+                              [svgIcon]="option!.icon!.svgIcon!"
+                              class="chip-selectable-icon">
+                    </mat-icon>
+                    <mat-icon *ngIf="!!option?.icon?.matIcon"
+                              class="chip-selectable-icon">
+                        {{option?.icon?.matIcon}}
+                    </mat-icon>
                     <span>
                         {{ intl.translateLabel(option.text) }}
                     </span>

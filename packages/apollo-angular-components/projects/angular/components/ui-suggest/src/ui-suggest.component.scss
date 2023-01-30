@@ -205,6 +205,10 @@ $componentName: "ui-suggest";
     .mat-chip {
         max-width: calc(100% - #{$chips-container-padding * 2});
 
+        .chip-selectable-icon {
+            padding-right: $chips-container-padding;
+        }
+
         span {
             @extend %ellipse;
         }
