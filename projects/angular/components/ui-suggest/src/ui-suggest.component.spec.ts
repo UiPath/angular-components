@@ -1076,6 +1076,26 @@ const sharedSpecifications = (
             component.defaultValue = undefined;
         });
 
+        it('should display icon in value if passed', fakeAsync(() => {
+            const suggestValue = {
+                id: '1',
+                text: '1',
+                icon: {
+                    matIcon: 'close',
+                },
+            };
+
+            component.items = [suggestValue];
+            component.value = [suggestValue];
+
+            fixture.detectChanges();
+            tick();
+
+            expect(fixture.debugElement.query(By.css('.chip-selectable-icon'))).toBeTruthy();
+
+            discardPeriodicTasks();
+        }));
+
         describe('a11y', () => {
             a11y.suite((runOptions) => {
                 a11y.it('should have no violations', async () => {
