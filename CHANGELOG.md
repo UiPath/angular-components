@@ -1,3 +1,8 @@
+# v14.2.0 (2023-01-30)
+* **grid** add icon on chips
+* **fix** version bump script
+* **chore** bump version to 14.1.0
+
 # v14.1.0 (2023-01-27)
 * **test** adds tests for luxon compatible directives
 * **feat** use luxon as an opt-in feature
