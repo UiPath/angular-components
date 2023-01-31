@@ -15,10 +15,10 @@ import {
         <input
         uiKeyboardShortcut
         [shortcutKeys]="shortcuts"
-        (shortcutPressed)="shortcutWasPressed=true"/>`,
+        (shortcutPressed)="shortcutEmissionCounter=shortcutEmissionCounter+1"/>`,
 })
 class KeyboardShortcutTestFixtureComponent {
-    shortcuts = [['Control', 'a'], ['X', 'Y', 'Z']]; shortcutWasPressed = false;
+    shortcuts = [['Control', 'a'], ['X', 'Y', 'Z']]; shortcutEmissionCounter = 0;
 }
 
 describe('Directive: KeyboardShortcut', () => {
@@ -43,7 +43,21 @@ describe('Directive: KeyboardShortcut', () => {
         document.dispatchEvent(EventGenerator.keyDown(Key.a));
         document.dispatchEvent(EventGenerator.keyDown(Key.Control));
         fixture.detectChanges();
-        expect(fixture.componentInstance.shortcutWasPressed).toBeTruthy();
+        expect(fixture.componentInstance.shortcutEmissionCounter).toBeTruthy();
+    });
+
+    it('should not emit second time until all keys are released and pressed again', () => {
+        document.dispatchEvent(EventGenerator.keyDown(Key.a));
+        document.dispatchEvent(EventGenerator.keyDown(Key.Control));
+        fixture.detectChanges();
+        expect(fixture.componentInstance.shortcutEmissionCounter).toEqual(1);
+        document.dispatchEvent(EventGenerator.keyUp(Key.a));
+        document.dispatchEvent(EventGenerator.keyDown(Key.a));
+        fixture.detectChanges();
+        expect(fixture.componentInstance.shortcutEmissionCounter).toEqual(1);
+        document.dispatchEvent(EventGenerator.keyUp(Key.Control));
+        document.dispatchEvent(EventGenerator.keyDown(Key.Control));
+        expect(fixture.componentInstance.shortcutEmissionCounter).toEqual(2);
     });
 
     it('should not emit if key combination is not simultaneously pressed', () => {
@@ -54,6 +68,6 @@ describe('Directive: KeyboardShortcut', () => {
         document.dispatchEvent(EventGenerator.keyDown(Key.Z));
         fixture.detectChanges();
 
-        expect(fixture.componentInstance.shortcutWasPressed).toBeFalsy();
+        expect(fixture.componentInstance.shortcutEmissionCounter).toBeFalsy();
     });
 });

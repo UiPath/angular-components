@@ -32,6 +32,7 @@ export class KeyboardShortcutDirective {
         this._pressedKeys[event.key] = true;
         if (this.shortcutKeys.find(keyCombination => keyCombination.every(key => this._pressedKeys[key]))) {
             this.shortcutPressed.emit();
+            this._pressedKeys = {};
         }
     }
 
