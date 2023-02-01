@@ -1,3 +1,6 @@
+# v14.2.1 (2023-02-01)
+* **keyboard-shortcut** require keys to be pressed again
+
 # v14.2.0 (2023-01-30)
 * **grid** add icon on chips
 * **fix** version bump script
