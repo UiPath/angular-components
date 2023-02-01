@@ -264,8 +264,8 @@ then emits an event</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="39"
-                            class="link-to-prism">projects/angular/directives/keyboard-shortcut/src/keyboard-shortcut.directive.ts:39</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="40"
+                            class="link-to-prism">projects/angular/directives/keyboard-shortcut/src/keyboard-shortcut.directive.ts:40</a></div>
                 </td>
             </tr>
 
@@ -381,8 +381,8 @@ then emits an event</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="39"
-                            class="link-to-prism">projects/angular/directives/keyboard-shortcut/src/keyboard-shortcut.directive.ts:39</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="40"
+                            class="link-to-prism">projects/angular/directives/keyboard-shortcut/src/keyboard-shortcut.directive.ts:40</a></div>
                 </td>
             </tr>
 
@@ -471,6 +471,7 @@ export class KeyboardShortcutDirective {
         this._pressedKeys[event.key] &#x3D; true;
         if (this.shortcutKeys.find(keyCombination &#x3D;&gt; keyCombination.every(key &#x3D;&gt; this._pressedKeys[key]))) {
             this.shortcutPressed.emit();
+            this._pressedKeys &#x3D; {};
         }
     }
 
