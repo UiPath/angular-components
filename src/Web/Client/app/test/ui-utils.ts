@@ -202,13 +202,13 @@ export class IntegrationUtils<T> {
     };
 
     private _isRadioButtonElementDisabled = (debugEl: DebugElement) =>
-        debugEl.nativeElement.classList.contains('mat-radio-disabled');
+        !!debugEl.nativeElement.classList.contains('mat-radio-disabled');
 
     private _isCheckBoxDisabled = (debugEl: DebugElement) =>
-        debugEl.nativeElement.classList.contains('mat-checkbox-disabled');
+        !!debugEl.nativeElement.classList.contains('mat-checkbox-disabled');
 
     private _isMatSelectDisabled = (debugEl: DebugElement) =>
-        debugEl.nativeElement.classList.contains('mat-select-disabled');
+        !!debugEl.nativeElement.classList.contains('mat-select-disabled');
 }
 
 export class UIUtils {
