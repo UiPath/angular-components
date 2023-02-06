@@ -1,3 +1,18 @@
+# v14.2.1 (2023-02-01)
+* **keyboard-shortcut** require keys to be pressed again
+
+# v14.2.0 (2023-01-30)
+* **grid** add icon on chips
+* **fix** version bump script
+* **chore** bump version to 14.1.0
+
+# v14.1.0 (2023-01-27)
+* **test** adds tests for luxon compatible directives
+* **feat** use luxon as an opt-in feature
+* **chore** add injection token to opt-in for luxon
+* **ci** use luxon for the version-bump script
+* **deps** install luxon and humanize-duration
+
 # v14.0.1 (2023-01-26)
 * **grid** add minchars and displaycount to search filter
 

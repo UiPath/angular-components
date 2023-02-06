@@ -1,6 +1,6 @@
 const fs = require('fs');
-const moment = require('moment');
 const { execSync } = require('child_process');
+const { DateTime } = require('luxon');
 
 const allowedBumps = ['fix-changelog-order', 'patch', 'minor', 'major', 'pre', 'stable'];
 const allowedRcBumps = ['patch', 'minor', 'major'];
@@ -59,7 +59,7 @@ function bumpVersion() {
     fs.writeFileSync('./projects/angular/package.json', updatedAngularProject);
 
     const packageLock = fs.readFileSync('./package-lock.json', 'utf-8');
-    const updatedPackageLock = packageLock.replace(initialVersionLine, updatedVersionLine);
+    const updatedPackageLock = packageLock.replaceAll(initialVersionLine, updatedVersionLine);
 
     fs.writeFileSync('./package-lock.json', updatedPackageLock);
 
@@ -79,7 +79,7 @@ function changeLog([initialVersion, bumpedVersion]) {
         process.exit(1);
     }
 
-    let initialChangeLog = `# v${bumpedVersion} (${moment().format('YYYY-MM-DD')})\n`;
+    let initialChangeLog = `# v${bumpedVersion} (${DateTime.now().toISODate()})\n`;
 
     if (commitsSinceTag) {
         commitsSinceTag.split('\n').forEach(commit => {
