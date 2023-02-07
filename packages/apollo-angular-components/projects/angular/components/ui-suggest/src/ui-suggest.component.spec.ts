@@ -84,6 +84,7 @@ class UiSuggestFixtureDirective {
     drillDown?: boolean;
     readonly?: boolean;
     enableCustomValue?: boolean;
+    applyItemTemplateToCustomValue?: boolean;
     items?: ISuggestValue[];
     headerItems?: ISuggestValue[];
     displayTemplateValue?: boolean;
@@ -182,7 +183,7 @@ const sharedSpecifications = (
             expect(uiSuggest.value instanceof Array).toBeTruthy();
         });
 
-        it('should display the provided placeholder and default value', () => {
+       it('should display the provided placeholder and default value', () => {
             fixture.detectChanges();
 
             const displayContainer = fixture.debugElement.query(By.css('.display-container'));
@@ -1517,6 +1518,41 @@ const sharedSpecifications = (
             expect(displayValue.nativeElement.innerText.trim()).toBe(selectedItem.text);
         });
 
+        [true, false].forEach(applyItemTemplateToCustomValue => {
+            it(`should use default template for custom value with applyItemTemplateToCustomValue flag set to ${applyItemTemplateToCustomValue}`, fakeAsync(() => {
+                const searchTerm = 'Item';
+                component.alwaysExpanded = true;
+                component.items = [];
+                component.searchable = true;
+
+                component.enableCustomValue = true;
+                component.applyItemTemplateToCustomValue = applyItemTemplateToCustomValue;
+
+                fixture.detectChanges();
+                tick(1000);
+
+                searchFor(searchTerm, fixture);
+
+                fixture.detectChanges();
+                tick(1000);
+
+                const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item .mat-list-item-content'));
+                expect(itemListEntries).not.toBeNull();
+                expect(itemListEntries.length).toEqual(1);
+
+                const [entry] = itemListEntries;
+
+                if (uiSuggest.itemTemplate && component.applyItemTemplateToCustomValue) {
+                      // Using custom template
+                      expect(entry.nativeElement.innerText).toBe(`Custom template ${searchTerm}`);
+                } else {
+                      // Using default template
+                      const label = entry.query(By.css('.text-label-rendered'));
+                      expect(label.nativeElement.innerText).toBe(searchTerm);
+                }
+            }));
+        });
+
         it('should set the selected item from the list as active when clicked', waitForAsync(async () => {
             component.items = generateSuggetionItemList(10);
             const randomItem = faker.helpers.randomize(component.items);
@@ -2619,6 +2655,7 @@ describe('Component: UiSuggest', () => {
                         [clearable]="clearable"
                         [searchable]="searchable"
                         [enableCustomValue]="enableCustomValue"
+                        [applyItemTemplateToCustomValue]="applyItemTemplateToCustomValue"
                         [alwaysExpanded]="alwaysExpanded"
                         [headerItems]="headerItems"
                         [items]="items"
@@ -2701,6 +2738,7 @@ describe('Component: UiSuggest', () => {
                             [clearable]="clearable"
                             [searchable]="searchable"
                             [enableCustomValue]="enableCustomValue"
+                            [applyItemTemplateToCustomValue]="applyItemTemplateToCustomValue"
                             [headerItems]="headerItems"
                             [alwaysExpanded]="alwaysExpanded"
                             [items]="items"
@@ -2892,6 +2930,7 @@ describe('Component: UiSuggest', () => {
                 [clearable]="clearable"
                 [searchable]="searchable"
                 [enableCustomValue]="enableCustomValue"
+                [applyItemTemplateToCustomValue]="applyItemTemplateToCustomValue"
                 [alwaysExpanded]="alwaysExpanded"
                 [headerItems]="headerItems"
                 [items]="items"
@@ -2910,10 +2949,18 @@ describe('Component: UiSuggest', () => {
                 [displayValueFactory]="displayValueFactory"
                 [compactSummaryTemplate]="useCompactTemplate ? compactSummaryTemplate : undefined"
             >
-                <ng-template let-item>
-                    <div class="item-template">{{ item.text }}</div>
+                <ng-template let-item
+                             let-isCustomValue="isCustomValue">
+                    <ng-container *ngIf="!isCustomValue">
+                        <div class="item-template">{{ item.text }}</div>
+                    </ng-container>
+
+                    <ng-container *ngIf="isCustomValue">
+                        <div class="item-template">Custom template {{ item }}</div>
+                    </ng-container>
                 </ng-template>
             </ui-suggest>
+
             <ng-template #compactSummaryTemplate let-value>
                 <div class="custom-display-value">
                     <span class="text-ellipsis">{{value?.[0]?.text}}</span>
@@ -2930,6 +2977,7 @@ describe('Component: UiSuggest', () => {
     describe('Type: custom template', () => {
         let fixture: ComponentFixture<UiSuggestCustomTemplateFixtureComponent>;
         let component: UiSuggestCustomTemplateFixtureComponent;
+        let uiSuggest: UiSuggestComponent;
 
         const beforeEachFn = () => {
             TestBed.configureTestingModule({
@@ -2958,6 +3006,42 @@ describe('Component: UiSuggest', () => {
                 const setup = beforeEachFn();
                 fixture = setup.fixture;
                 component = setup.component;
+                uiSuggest = setup.uiSuggest;
+            });
+
+            [true, false].forEach(applyItemTemplateToCustomValue => {
+                it(`should use default template for custom value with applyItemTemplateToCustomValue flag set to ${applyItemTemplateToCustomValue}`, fakeAsync(() => {
+                    const searchTerm = 'Item';
+                    component.alwaysExpanded = true;
+                    component.items = [];
+                    component.searchable = true;
+
+                    component.enableCustomValue = true;
+                    component.applyItemTemplateToCustomValue = applyItemTemplateToCustomValue;
+
+                    fixture.detectChanges();
+                    tick(1000);
+
+                    searchFor(searchTerm, fixture);
+
+                    fixture.detectChanges();
+                    tick(1000);
+
+                    const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item .mat-list-item-content'));
+                    expect(itemListEntries).not.toBeNull();
+                    expect(itemListEntries.length).toEqual(1);
+
+                    const [entry] = itemListEntries;
+
+                    if (uiSuggest.itemTemplate && component.applyItemTemplateToCustomValue) {
+                          // Using custom template
+                          expect(entry.nativeElement.innerText).toBe(`Custom template ${searchTerm}`);
+                    } else {
+                          // Using default template
+                          const label = entry.query(By.css('.text-label-rendered'));
+                          expect(label.nativeElement.innerText).toBe(searchTerm);
+                    }
+                }));
             });
 
             it('should render the list items using the provided custom template', (async () => {
