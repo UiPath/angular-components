@@ -189,6 +189,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     ignoreOpenOnFetch = false;
 
     /**
+     * Controls whether to use the default custom value template or use the custom item template
+     *
+     */
+    @Input()
+    applyItemTemplateToCustomValue = false;
+
+    /**
      * A list of options that will be presented at the top of the list.
      *
      */

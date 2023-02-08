@@ -129,7 +129,7 @@ $componentName: "ui-suggest";
             &-item {
                 cursor: pointer;
 
-                &.text-ellipsis .mat-list-item-content {
+                &.text-ellipsis:not(.custom-value-template) .mat-list-item-content {
                     display: block;
                 }
 

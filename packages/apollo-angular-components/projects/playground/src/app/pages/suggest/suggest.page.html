@@ -13,6 +13,32 @@
     </ui-suggest>
 </mat-form-field>
 
+<h1>Custom value custom template</h1>
+<mat-form-field>
+    <ui-suggest [fetchStrategy]="'onOpen'"
+                [enableCustomValue]="true"
+                [applyItemTemplateToCustomValue]="true"
+                [customItemSize]="60"
+                [searchSourceFactory]="searchSourceFactory">
+        <ng-template let-item
+                     let-isCustomValue="isCustomValue"
+                     let-isCustomValueAlreadySelected="isCustomValueAlreadySelected">
+
+            <ng-container *ngIf="!isCustomValue">
+                {{item.text}}
+            </ng-container>
+
+            <ng-container *ngIf="isCustomValue && !isCustomValueAlreadySelected">
+                + Add {{item}}
+            </ng-container>
+
+            <ng-container *ngIf="isCustomValue && isCustomValueAlreadySelected">
+                Value already selected
+            </ng-container>
+        </ng-template>
+    </ui-suggest>
+</mat-form-field>
+
 <hr class="spacer">
 
 <h2>Multiple select suggest</h2>
