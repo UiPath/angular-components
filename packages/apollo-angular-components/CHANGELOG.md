@@ -1,3 +1,14 @@
+# v14.3.0 (2023-02-08)
+* **playground** showcase custom value template support
+* **suggest** add custom value template support
+* **grid** take into account noDateMessage
+* **deps** bump jszip from 3.7.1 to 3.10.1
+* **deps** bump http-cache-semantics from 4.1.0 to 4.1.1
+* **deps** bump json5 from 1.0.1 to 1.0.2
+* **deps** bump qs from 6.5.2 to 6.5.3
+* **deps-dev** bump json from 9.0.6 to 10.0.0
+* **deps** bump ua-parser-js from 0.7.31 to 0.7.33
+
 # v14.2.1 (2023-02-01)
 * **keyboard-shortcut** require keys to be pressed again
 
