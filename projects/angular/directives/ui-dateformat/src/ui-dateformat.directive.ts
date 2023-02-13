@@ -180,7 +180,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
     }
     /**
      * The 'moment' format defaults to 'L LTS'.
-     * The `luxon` format defaults to `DateTime.DATETIME_SHORT.
+     * The `luxon` format defaults to `DateTime.DATETIME_SHORT_WITH_SECONDS.
      *
      */
     @Input()
@@ -192,11 +192,11 @@ export class UiDateFormatDirective extends UiFormatDirective {
         if (!this.date) { return ''; }
         if (!(this.date instanceof Date)) { return this.date; }
 
-        const relativeTime = this._isMomentFormat(this.dateFormat)
-            ? moment(this.date)
-                .fromNow()
-            : DateTime.fromJSDate(this.date)
-                .toRelative();
+        const relativeTime = this._useLuxon
+            ? DateTime.fromJSDate(this.date)
+                .toRelative()
+            : moment(this.date)
+                .fromNow();
 
         return relativeTime ?? '';
     }
@@ -244,7 +244,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
             elementRef,
         );
 
-        const defaultFormat = this._useLuxon ? DateTime.DATETIME_SHORT : 'L LTS';
+        const defaultFormat = this._useLuxon ? DateTime.DATETIME_SHORT_WITH_SECONDS : 'L LTS';
 
         this._options = _options || {};
         this.dateFormat = this._options.format ?? defaultFormat;
