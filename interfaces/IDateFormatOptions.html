@@ -531,7 +531,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
     }
     /**
      * The &#x27;moment&#x27; format defaults to &#x27;L LTS&#x27;.
-     * The &#x60;luxon&#x60; format defaults to &#x60;DateTime.DATETIME_SHORT.
+     * The &#x60;luxon&#x60; format defaults to &#x60;DateTime.DATETIME_SHORT_WITH_SECONDS.
      *
      */
     @Input()
@@ -543,11 +543,11 @@ export class UiDateFormatDirective extends UiFormatDirective {
         if (!this.date) { return &#x27;&#x27;; }
         if (!(this.date instanceof Date)) { return this.date; }
 
-        const relativeTime &#x3D; this._isMomentFormat(this.dateFormat)
-            ? moment(this.date)
-                .fromNow()
-            : DateTime.fromJSDate(this.date)
-                .toRelative();
+        const relativeTime &#x3D; this._useLuxon
+            ? DateTime.fromJSDate(this.date)
+                .toRelative()
+            : moment(this.date)
+                .fromNow();
 
         return relativeTime ?? &#x27;&#x27;;
     }
@@ -595,7 +595,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
             elementRef,
         );
 
-        const defaultFormat &#x3D; this._useLuxon ? DateTime.DATETIME_SHORT : &#x27;L LTS&#x27;;
+        const defaultFormat &#x3D; this._useLuxon ? DateTime.DATETIME_SHORT_WITH_SECONDS : &#x27;L LTS&#x27;;
 
         this._options &#x3D; _options || {};
         this.dateFormat &#x3D; this._options.format ?? defaultFormat;
