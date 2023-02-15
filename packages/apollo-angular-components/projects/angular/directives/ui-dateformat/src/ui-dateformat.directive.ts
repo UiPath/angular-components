@@ -1,8 +1,8 @@
 import 'moment-timezone';
 
 import {
- DateTime,
- DateTimeFormatOptions,
+    DateTime,
+    DateTimeFormatOptions,
 } from 'luxon';
 import moment from 'moment';
 import {
@@ -205,15 +205,15 @@ export class UiDateFormatDirective extends UiFormatDirective {
         if (!this.date) { return ''; }
         if (!(this.date instanceof Date)) { return this.date; }
 
-        const absoluteTime = this._isMomentFormat(this.dateFormat)
-            ? moment(this.date)
+        let absoluteTime;
+
+        if (this._useLuxon) {
+            absoluteTime = this._luxonAbsoluteTime(this.date);
+        } else if (this._isStringFormat(this.dateFormat)) {
+            absoluteTime = moment(this.date)
                 .tz(this.timezone ?? resolveTimezone(this._options))
-                .format(this.dateFormat)
-            : DateTime
-                .fromJSDate(this.date, {
-                    zone: this.timezone ?? resolveTimezone(this._options),
-                })
-                .toLocaleString(this.dateFormat);
+                .format(this.dateFormat);
+        }
 
         return absoluteTime ?? '';
     }
@@ -304,7 +304,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
         this._renderer.setAttribute(this._elementRef.nativeElement, 'data-title', this._timeForType(this.titleType));
     }
 
-    private _isMomentFormat(format: string | DateTimeFormatOptions): format is string {
+    private _isStringFormat(format: string | DateTimeFormatOptions): format is string {
         return typeof format === 'string';
     }
 
@@ -326,4 +326,15 @@ export class UiDateFormatDirective extends UiFormatDirective {
 
         return value !== compareValue;
     };
+
+    private _luxonAbsoluteTime(date: Date) {
+        const time = DateTime
+        .fromJSDate(date, {
+            zone: this.timezone ?? resolveTimezone(this._options),
+        });
+
+        return this._isStringFormat(this.dateFormat)
+            ? time.toFormat(this.dateFormat)
+            : time.toLocaleString(this.dateFormat);
+    }
 }
