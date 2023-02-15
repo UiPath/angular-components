@@ -352,8 +352,8 @@ When supplied Luxon formatting options, Luxon will be used instead of moment.js.
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import &#x27;moment-timezone&#x27;;
 
 import {
- DateTime,
- DateTimeFormatOptions,
+    DateTime,
+    DateTimeFormatOptions,
 } from &#x27;luxon&#x27;;
 import moment from &#x27;moment&#x27;;
 import {
@@ -556,15 +556,15 @@ export class UiDateFormatDirective extends UiFormatDirective {
         if (!this.date) { return &#x27;&#x27;; }
         if (!(this.date instanceof Date)) { return this.date; }
 
-        const absoluteTime &#x3D; this._isMomentFormat(this.dateFormat)
-            ? moment(this.date)
+        let absoluteTime;
+
+        if (this._useLuxon) {
+            absoluteTime &#x3D; this._luxonAbsoluteTime(this.date);
+        } else if (this._isStringFormat(this.dateFormat)) {
+            absoluteTime &#x3D; moment(this.date)
                 .tz(this.timezone ?? resolveTimezone(this._options))
-                .format(this.dateFormat)
-            : DateTime
-                .fromJSDate(this.date, {
-                    zone: this.timezone ?? resolveTimezone(this._options),
-                })
-                .toLocaleString(this.dateFormat);
+                .format(this.dateFormat);
+        }
 
         return absoluteTime ?? &#x27;&#x27;;
     }
@@ -655,7 +655,7 @@ export class UiDateFormatDirective extends UiFormatDirective {
         this._renderer.setAttribute(this._elementRef.nativeElement, &#x27;data-title&#x27;, this._timeForType(this.titleType));
     }
 
-    private _isMomentFormat(format: string | DateTimeFormatOptions): format is string {
+    private _isStringFormat(format: string | DateTimeFormatOptions): format is string {
         return typeof format &#x3D;&#x3D;&#x3D; &#x27;string&#x27;;
     }
 
@@ -677,6 +677,17 @@ export class UiDateFormatDirective extends UiFormatDirective {
 
         return value !&#x3D;&#x3D; compareValue;
     };
+
+    private _luxonAbsoluteTime(date: Date) {
+        const time &#x3D; DateTime
+        .fromJSDate(date, {
+            zone: this.timezone ?? resolveTimezone(this._options),
+        });
+
+        return this._isStringFormat(this.dateFormat)
+            ? time.toFormat(this.dateFormat)
+            : time.toLocaleString(this.dateFormat);
+    }
 }
 </code></pre>
     </div>
