@@ -162,13 +162,15 @@
                                [matTooltipDisabled]="resizeManager.isResizing"
                                [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')">
                                 {{ column.title }}</p>
-                            <div *ngIf="column.sortable || column.description"
+
+                            <mat-icon *ngIf="column.description"
+                                      [matTooltip]="column.description"
+                                      class="ui-grid-info-icon material-icons-outlined">info</mat-icon>
+
+                            <div *ngIf="column.sortable"
                                  [class.ui-grid-sort-indicator-asc]="column.sort === 'asc'"
                                  [class.ui-grid-sort-indicator-desc]="column.sort === 'desc'"
                                  class="ui-grid-sort-indicator">
-                                <mat-icon *ngIf="column.description"
-                                          [matTooltip]="column.description"
-                                          class="ui-grid-info-icon material-icons-outlined">info</mat-icon>
                                 <mat-icon class="ui-grid-sort-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          viewBox="0 0 24 24">
