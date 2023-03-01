@@ -152,13 +152,17 @@
                          (keyup.space)="sortManager.changeSort(column)"
                          (keydown.ArrowLeft)="!last && resizeManager.startKeyboardResize('left', column, columnIndex)"
                          (keydown.ArrowRight)="!last && resizeManager.startKeyboardResize('right', column, columnIndex)"
+                         (focus)="focusedColumnHeader = true; columnTooltip.show()"
+                         (focusout)="focusedColumnHeader = false; columnTooltip.hide()"
                          class="ui-grid-header-cell"
                          role="columnheader"
                          tabindex="0">
+
                         <div (click)="sortManager.changeSort(column)"
                              class="ui-grid-header-title">
-                            <p [class.ui-grid-header-title-filtered]="isFilterApplied(column)"
-                               [matTooltip]="column.title ?? ''"
+                            <p #columnTooltip="matTooltip"
+                               [class.ui-grid-header-title-filtered]="isFilterApplied(column)"
+                               [matTooltip]="column.title + (focusedColumnHeader ? (' ' + column.description) : '')"
                                [matTooltipDisabled]="resizeManager.isResizing"
                                [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')">
                                 {{ column.title }}</p>

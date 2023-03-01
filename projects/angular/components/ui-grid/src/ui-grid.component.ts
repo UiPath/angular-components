@@ -603,6 +603,12 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     scrollCompensationWidth = 0;
 
     /**
+     * True if the column header is focused.
+     *
+     */
+    focusedColumnHeader = false;
+
+    /**
      * @internal
      * @ignore
      */
