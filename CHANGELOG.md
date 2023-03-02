@@ -1,3 +1,6 @@
+# v14.5.0 (2023-03-02)
+* **grid** add card view support
+
 # v14.4.1 (2023-02-15)
 * **dateformat** use luxon for absolute time if enabled
 
