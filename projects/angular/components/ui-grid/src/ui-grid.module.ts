@@ -21,6 +21,7 @@ import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
 import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
+import { UiGridRowCardViewDirective } from './body/ui-grid-row-card-view.directive';
 import { UiGridCustomPaginatorModule } from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.module';
 import { UiGridSearchModule } from './components/ui-grid-search/ui-grid-search.module';
 import { UiGridToggleColumnsModule } from './components/ui-grid-toggle-columns/ui-grid-toggle-columns.module';
@@ -65,6 +66,7 @@ import { UiGridComponent } from './ui-grid.component';
         UiGridExpandedRowDirective,
         UiGridNoContentDirective,
         UiGridLoadingDirective,
+        UiGridRowCardViewDirective,
     ],
     exports: [
         UiGridComponent,
@@ -79,6 +81,7 @@ import { UiGridComponent } from './ui-grid.component';
         UiGridExpandedRowDirective,
         UiGridNoContentDirective,
         UiGridLoadingDirective,
+        UiGridRowCardViewDirective,
     ],
 })
 export class UiGridModule { }

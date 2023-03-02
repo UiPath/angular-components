@@ -28,4 +28,5 @@ export interface IInputs {
     showPaintTime: boolean;
     showHeaderRow: boolean;
     customFilter: boolean;
+    useCardView: boolean;
 }
