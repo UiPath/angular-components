@@ -1,3 +1,6 @@
+# v14.5.2 (2023-03-01)
+* **grid** display sort icon correctly
+
 # v14.5.0 (2023-03-02)
 * **grid** add card view support
 
