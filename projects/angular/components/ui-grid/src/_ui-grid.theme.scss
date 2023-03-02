@@ -151,6 +151,10 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
                 border-bottom-color: $ui-grid-border-color;
                 transition: $ui-grid-opacity-transition;
             }
+
+            &-card-wrapper {
+                transition: $ui-grid-opacity-transition;
+            }
         }
 
         .ui-grid-row {
