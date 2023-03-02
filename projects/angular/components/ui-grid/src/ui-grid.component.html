@@ -183,7 +183,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf="column.resizeable && !last"
+                        <div *ngIf="column.resizeable && !last && !useCardView"
                              (mousedown)="resizeManager.startResize($event, column, columnIndex)"
                              class="ui-grid-resize-anchor">
                             <mat-icon>
@@ -466,7 +466,6 @@
         <ng-container *ngFor="let column of renderedColumns$ | async">
             <div [class.ui-grid-primary]="column.directive.primary"
                  [class.ui-grid-secondary]="!column.directive.primary"
-                 [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
                  [attr.data-property]="column.directive.property"
                  [attr.data-identifier]="column.directive.identifier"
                  [attr.role]="column.role"
