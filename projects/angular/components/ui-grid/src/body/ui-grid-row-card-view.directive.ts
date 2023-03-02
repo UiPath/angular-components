@@ -3,16 +3,16 @@ import {
  Directive, TemplateRef,
 } from '@angular/core';
 
-export interface IGridRowCardViewContext {
+export interface IGridRowCardViewContext<T> {
     index: number;
     last: boolean;
-    data: any;
+    data: T;
 }
 
 @Directive({ selector: '[uiGridRowCardView], ui-grid-row-card-view' })
-export class UiGridRowCardViewDirective {
+export class UiGridRowCardViewDirective<T> {
     @ContentChild(TemplateRef, {
         static: true,
     })
-    html?: TemplateRef<IGridRowCardViewContext>;
+    html?: TemplateRef<IGridRowCardViewContext<T>>;
 }

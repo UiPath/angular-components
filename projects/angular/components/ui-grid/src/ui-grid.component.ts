@@ -513,7 +513,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     @ContentChild(UiGridRowCardViewDirective, {
         static: true,
     })
-    cardTemplate?: UiGridRowCardViewDirective;
+    cardTemplate?: UiGridRowCardViewDirective<T>;
     /**
      * Reference to the grid action buttons container
      *
