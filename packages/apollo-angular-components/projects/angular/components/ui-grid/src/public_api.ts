@@ -15,6 +15,7 @@ export { UiGridColumnDirective } from './body/ui-grid-column.directive';
 export { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
 export { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 export { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
+export { UiGridRowCardViewDirective } from './body/ui-grid-row-card-view.directive';
 export { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
 export { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 export { UiGridSearchComponent } from './components/ui-grid-search/ui-grid-search.component';

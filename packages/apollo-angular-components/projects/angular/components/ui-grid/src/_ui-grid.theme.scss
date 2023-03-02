@@ -52,7 +52,8 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
         }
 
         &.ui-grid-state-loading {
-            .ui-grid-row {
+            .ui-grid-row,
+            .ui-grid-card-wrapper {
                 pointer-events: none;
                 opacity: 0.5;
             }
@@ -148,6 +149,10 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
             &-row,
             &-row-state-expanded {
                 border-bottom-color: $ui-grid-border-color;
+                transition: $ui-grid-opacity-transition;
+            }
+
+            &-card-wrapper {
                 transition: $ui-grid-opacity-transition;
             }
         }
