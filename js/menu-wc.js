@@ -233,13 +233,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/UiGridModule.html" data-type="entity-link" >UiGridModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-UiGridModule-9e0949453a4c4debf7288ebe3568b55270bb7e481a1b50c09e004065daff9dbb1cdbb11c932da72fd85ca3bc377588da7dd90453216d5780cffd16159716fb9d"' : 'data-target="#xs-components-links-module-UiGridModule-9e0949453a4c4debf7288ebe3568b55270bb7e481a1b50c09e004065daff9dbb1cdbb11c932da72fd85ca3bc377588da7dd90453216d5780cffd16159716fb9d"' }>
+                                            'data-target="#components-links-module-UiGridModule-5b4d5a62602471589c73ab0975efae73b9c8ef7b0fe1b68fb041b044a6fd1e5a3d6405a62e3b8e4d6030d582592e7474c66f04c89053959b31303ea13624f088"' : 'data-target="#xs-components-links-module-UiGridModule-5b4d5a62602471589c73ab0975efae73b9c8ef7b0fe1b68fb041b044a6fd1e5a3d6405a62e3b8e4d6030d582592e7474c66f04c89053959b31303ea13624f088"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiGridModule-9e0949453a4c4debf7288ebe3568b55270bb7e481a1b50c09e004065daff9dbb1cdbb11c932da72fd85ca3bc377588da7dd90453216d5780cffd16159716fb9d"' :
-                                            'id="xs-components-links-module-UiGridModule-9e0949453a4c4debf7288ebe3568b55270bb7e481a1b50c09e004065daff9dbb1cdbb11c932da72fd85ca3bc377588da7dd90453216d5780cffd16159716fb9d"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-UiGridModule-5b4d5a62602471589c73ab0975efae73b9c8ef7b0fe1b68fb041b044a6fd1e5a3d6405a62e3b8e4d6030d582592e7474c66f04c89053959b31303ea13624f088"' :
+                                            'id="xs-components-links-module-UiGridModule-5b4d5a62602471589c73ab0975efae73b9c8ef7b0fe1b68fb041b044a6fd1e5a3d6405a62e3b8e4d6030d582592e7474c66f04c89053959b31303ea13624f088"' }>
                                             <li class="link">
                                                 <a href="components/UiGridComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >UiGridComponent</a>
                                             </li>
@@ -247,13 +247,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UiGridModule-9e0949453a4c4debf7288ebe3568b55270bb7e481a1b50c09e004065daff9dbb1cdbb11c932da72fd85ca3bc377588da7dd90453216d5780cffd16159716fb9d"' : 'data-target="#xs-directives-links-module-UiGridModule-9e0949453a4c4debf7288ebe3568b55270bb7e481a1b50c09e004065daff9dbb1cdbb11c932da72fd85ca3bc377588da7dd90453216d5780cffd16159716fb9d"' }>
+                                        'data-target="#directives-links-module-UiGridModule-5b4d5a62602471589c73ab0975efae73b9c8ef7b0fe1b68fb041b044a6fd1e5a3d6405a62e3b8e4d6030d582592e7474c66f04c89053959b31303ea13624f088"' : 'data-target="#xs-directives-links-module-UiGridModule-5b4d5a62602471589c73ab0975efae73b9c8ef7b0fe1b68fb041b044a6fd1e5a3d6405a62e3b8e4d6030d582592e7474c66f04c89053959b31303ea13624f088"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiGridModule-9e0949453a4c4debf7288ebe3568b55270bb7e481a1b50c09e004065daff9dbb1cdbb11c932da72fd85ca3bc377588da7dd90453216d5780cffd16159716fb9d"' :
-                                        'id="xs-directives-links-module-UiGridModule-9e0949453a4c4debf7288ebe3568b55270bb7e481a1b50c09e004065daff9dbb1cdbb11c932da72fd85ca3bc377588da7dd90453216d5780cffd16159716fb9d"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UiGridModule-5b4d5a62602471589c73ab0975efae73b9c8ef7b0fe1b68fb041b044a6fd1e5a3d6405a62e3b8e4d6030d582592e7474c66f04c89053959b31303ea13624f088"' :
+                                        'id="xs-directives-links-module-UiGridModule-5b4d5a62602471589c73ab0975efae73b9c8ef7b0fe1b68fb041b044a6fd1e5a3d6405a62e3b8e4d6030d582592e7474c66f04c89053959b31303ea13624f088"' }>
                                         <li class="link">
                                             <a href="directives/UiGridColumnDirective.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >UiGridColumnDirective</a>
                                         </li>
@@ -280,6 +280,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         </li>
                                         <li class="link">
                                             <a href="directives/UiGridRowActionDirective.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >UiGridRowActionDirective</a>
+                                        </li>
+                                        <li class="link">
+                                            <a href="directives/UiGridRowCardViewDirective.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >UiGridRowCardViewDirective</a>
                                         </li>
                                         <li class="link">
                                             <a href="directives/UiGridRowConfigDirective.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >UiGridRowConfigDirective</a>
@@ -683,6 +686,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/IGridDataEntry.html" data-type="entity-link" >IGridDataEntry</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/IGridRowCardViewContext.html" data-type="entity-link" >IGridRowCardViewContext</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/IKey.html" data-type="entity-link" >IKey</a>
