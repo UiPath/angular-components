@@ -1,5 +1,11 @@
 @import "../../styles/ellipse";
 
+.preserve-whitespace {
+    word-wrap: break-word;
+    white-space: pre-line;
+    text-align: left;
+}
+
 ui-grid {
     $ui-grid-header-row-height: 56px;
     $ui-grid-header-alternate-row-height: 52px;
