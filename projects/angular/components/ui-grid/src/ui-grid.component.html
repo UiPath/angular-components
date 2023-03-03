@@ -139,7 +139,6 @@
 
                     <ng-container *ngIf="multiPageSelect then multiPageSelectionProjectedHeaderCell">
                     </ng-container>
-
                     <div *ngFor="let column of visible$ | async; let last = last; let columnIndex = index"
                          [class.ui-grid-header-cell-sortable]="column.sortable"
                          [class.ui-grid-resizeable]="column.resizeable"
@@ -148,19 +147,24 @@
                          [attr.data-property]="column.property"
                          [attr.data-identifier]="column.identifier"
                          [style.width.%]="column.width"
+                         (cdkFocusChange)="triggerColumnHeaderTooltip($event, columnTooltip)"
+                         (focusout)="hideColumnHeaderTooltip(columnTooltip)"
                          (keyup.enter)="sortManager.changeSort(column)"
                          (keyup.space)="sortManager.changeSort(column)"
                          (keydown.ArrowLeft)="!last && resizeManager.startKeyboardResize('left', column, columnIndex)"
                          (keydown.ArrowRight)="!last && resizeManager.startKeyboardResize('right', column, columnIndex)"
+                         cdkMonitorElementFocus
                          class="ui-grid-header-cell"
                          role="columnheader"
                          tabindex="0">
                         <div (click)="sortManager.changeSort(column)"
                              class="ui-grid-header-title">
-                            <p [class.ui-grid-header-title-filtered]="isFilterApplied(column)"
-                               [matTooltip]="column.title ?? ''"
+                            <p #columnTooltip="matTooltip"
+                               [class.ui-grid-header-title-filtered]="isFilterApplied(column)"
+                               [matTooltip]="column.title + (focusedColumnHeader ? ('\n' + column.description) : '')"
                                [matTooltipDisabled]="resizeManager.isResizing"
-                               [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')">
+                               [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')"
+                               matTooltipClass="preserve-whitespace">
                                 {{ column.title }}</p>
 
                             <mat-icon *ngIf="column.description"
