@@ -55,6 +55,9 @@
             "@uipath/angular/directives/ui-scroll-into-view": [
                 "projects/angular/directives/ui-scroll-into-view/src/public_api.ts"
             ],
+            "@uipath/angular/directives/custom-mat-menu-trigger": [
+                "projects/angular/directives/custom-mat-menu-trigger/src/public_api.ts"
+            ],
             "@uipath/angular/directives/ui-virtual-scroll-range-loader": [
                 "projects/angular/directives/ui-virtual-scroll-range-loader/src/public_api.ts"
             ],
