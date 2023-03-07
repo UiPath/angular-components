@@ -7,6 +7,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {
     AfterContentInit,
     Directive,
+    ElementRef,
     HostBinding,
     inject,
     Input,
@@ -24,10 +25,7 @@ export class UiCustomMatMenuTriggerDirective extends _MatMenuTriggerBase impleme
     @Input()
     expandedTranslation = 'expanded';
 
-    get nativeElement() {
-        // eslint-disable-next-line no-underscore-dangle
-        return (this as any)._element.nativeElement as HTMLElement;
-    }
+    nativeElement = inject(ElementRef<HTMLElement>).nativeElement;
 
     private _liveAnnouncer = inject(LiveAnnouncer);
     private _destroyed$ = new Subject<void>();
