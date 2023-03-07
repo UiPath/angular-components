@@ -1091,6 +1091,8 @@ describe('Component: UiGrid', () => {
 
                 expect(headerSelectionAction).toBeFalsy();
                 expect((grid.selectionManager as any)._hasValue$.getValue()).toBe(false);
+                tick(100);
+                discardPeriodicTasks();
             }));
 
             it('should be able to move focus to selection action button if at least one row is selected', () => {
