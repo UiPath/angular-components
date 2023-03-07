@@ -537,6 +537,8 @@
             <button [matMenuTriggerFor]="filterOptions"
                     [disabled]="column.dropdown?.disabled || disabled"
                     [attr.data-column-name]="'ui-grid-dropdown-filter-' + (column.property || 'na')"
+                    [expandedTranslation]="intl.menuExpanded"
+                    uiCustomMatMenuTriggerFor
                     mat-button
                     type="button"
                     class="ui-grid-dropdown-filter-button">
