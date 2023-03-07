@@ -630,6 +630,8 @@
             <button [matMenuTriggerFor]="filterOptions"
                     [disabled]="column.dropdown?.disabled || disabled"
                     [attr.data-column-name]="getColumnName(column)"
+                    [expandedTranslation]="intl.menuExpanded"
+                    uiCustomMatMenuTriggerFor
                     mat-button
                     type="button"
                     class="ui-grid-dropdown-filter-button">
