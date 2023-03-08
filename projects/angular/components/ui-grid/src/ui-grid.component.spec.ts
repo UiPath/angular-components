@@ -285,6 +285,33 @@ describe('Component: UiGrid', () => {
                     expect(Math.round(initialCol1Width + initialCol2Width)).toEqual(Math.round(newCol1Width + newCol2Width));
                     discardPeriodicTasks();
                 }));
+
+                it('should show tooltip on keyboard focus and hide it on focusout', fakeAsync(() => {
+                    const spyTriggerTooltip = spyOn(grid, 'triggerColumnHeaderTooltip').and.callThrough();
+                    const spyHideTooltip = spyOn(grid, 'hideColumnHeaderTooltip').and.callThrough();
+                    const event = new KeyboardEvent('keydown', { key: 'Tab' });
+                    const focusEvent = new FocusEvent('focus', { bubbles: true });
+                    const focusOutEvent = new FocusEvent('focusout', { bubbles: true });
+                    const [columnHeader1, columnHeader2 ] = document.querySelectorAll('div[role="columnheader"]')!;
+
+                    columnHeader1.dispatchEvent(event);
+                    fixture.detectChanges();
+
+                    columnHeader1.dispatchEvent(focusEvent);
+                    fixture.detectChanges();
+                    tick(500);
+
+                    const tooltip = document.querySelectorAll('.preserve-whitespace');
+                    expect(tooltip).toBeTruthy();
+                    expect(spyTriggerTooltip).toHaveBeenCalled();
+
+                    columnHeader2.dispatchEvent(focusOutEvent);
+                    fixture.detectChanges();
+                    tick(500);
+
+                    expect(spyHideTooltip).toHaveBeenCalled();
+                    discardPeriodicTasks();
+                }));
             });
 
             describe('State: populated', () => {
