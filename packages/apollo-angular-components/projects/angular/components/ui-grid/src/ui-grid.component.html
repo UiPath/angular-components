@@ -612,6 +612,7 @@
         <button *ngIf="hasAnyFiltersVisible$ | async"
                 [disabled]="disabled"
                 (click)="showFilters = !showFilters"
+                [attr.aria-expanded]="showFilters"
                 mat-button
                 type="button"
                 class="ui-grid-collapsible-filters-toggle">
