@@ -35,10 +35,9 @@ export class UiSuggestAssert {
             expect(combo).toHaveAttr('aria-expanded', expectedIsOpen.toString());
         }
 
-        const itemList = this._root.query(By.css('.item-list-container'));
-        const itemListClasses = itemList.nativeElement.classList;
-        expect(itemListClasses.contains('item-list-container-state-open')).toBe(expectedIsOpen);
-        expect(itemListClasses.contains('item-list-container-state-closed')).toBe(!expectedIsOpen);
+        const dropdownOverlay = document.querySelector('.cdk-overlay-container');
+        const itemList = dropdownOverlay?.querySelector('.ui-suggest-dropdown-item-list-container');
+        expect(!!itemList).toBe(expectedIsOpen);
     }
 
     private _assertDisableState(expected: 'enabled' | 'disabled'): void {

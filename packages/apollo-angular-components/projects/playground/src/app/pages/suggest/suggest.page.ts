@@ -14,6 +14,7 @@ import {
   Component,
 } from '@angular/core';
 import { ISuggestValues } from '@uipath/angular/components/ui-suggest';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'ui-app-suggest',
@@ -22,6 +23,7 @@ import { ISuggestValues } from '@uipath/angular/components/ui-suggest';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SuggestPageComponent {
+  control = new FormControl();
 
   constructor() { }
 

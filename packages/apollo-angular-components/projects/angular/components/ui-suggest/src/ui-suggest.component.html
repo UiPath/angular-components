@@ -1,6 +1,8 @@
 <div *ngLet="focus$ | async as focus"
-     (uiClickOutside)="focused && close(false)"
      [style.height]="expandInline ? '100%' : undefined"
+     #optionsDropdownTrigger="cdkOverlayOrigin"
+     #suggestContainer
+     cdkOverlayOrigin
      class="ui-suggest-container"
      role="application">
     <!--
@@ -138,106 +140,114 @@
         </ng-template>
     </ng-container>
 
-
-    <div class="item-list-container-wrapper"
-         [class.multi-select]="multiple && !expandInline"
-         [style.height]="expandInline ? '100%' : undefined">
-        <div [style.width]="isFormControl ? null : width"
-             [style.height]="expandInline ? '100%' : undefined"
-             [class.item-list-container-state-open]="isOpen"
-             [class.item-list-container-state-closed]="!isOpen"
-             [class.item-list-container-direction-down]="isDown"
-             [class.item-list-container-direction-up]="!isDown"
-             [class.item-list-container-expanded-inline]="expandInline"
-             [class.searchable]="searchable && !multiple"
-             [class.mat-elevation-z4]="!expandInline"
-             [uiAutofocus]="!searchable && !multiple"
-             [refocus]="isOpen && !multiple"
-             [@displayState]="isOpen ? 'open' : 'closed'"
-             (keydown.arrowup)="navigate(-1, $event)"
-             (keydown.arrowdown)="navigate(1, $event)"
-             (keyup.enter)="preventDefault($event);"
-             (keydown.enter)="preventDefault($event);
-                        setSelectedItem();"
-             (keydown.esc)="preventDefault($event)"
-             (keyup.esc)="preventDefault($event);
-                      close();"
-             (keydown.tab)="close(false)"
-             (keydown.shift.tab)="close()"
-             tabindex="-1"
-             class="item-list-container">
-            <ng-container *ngIf="!isDown">
-                <ng-container *ngTemplateOutlet="searchableCountInfoTmpl"></ng-container>
-
-                <ng-container *ngTemplateOutlet="resultList">
-                </ng-container>
+    <ng-container *ngIf="!expandInline; else optionsDropdown">
+        <ng-template cdkConnectedOverlay
+                     cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+                     [cdkConnectedOverlayOrigin]="optionsDropdownTrigger"
+                     [cdkConnectedOverlayPositions]="dropdownPosition"
+                     [cdkConnectedOverlayHasBackdrop]="true"
+                     [cdkConnectedOverlayOpen]="isOpen"
+                     (backdropClick)="close(false)">
+            <ng-container *ngTemplateOutlet="optionsDropdown">
             </ng-container>
+        </ng-template>
+    </ng-container>
 
-            <mat-form-field *ngIf="searchable && (!multiple || compact)"
-                            floatLabel="never">
-                <input #searchInput
-                       [placeholder]="isFormControl ? '' : placeholder"
-                       [formControl]="inputControl"
-                       [uiAutofocus]="isOpen &&
-                                  searchable"
-                       [attr.maxlength]="maxLength"
-                       [refocus]="isOpen"
-                       selectionLocation="end"
-                       autocomplete="off"
-                       aria-autocomplete="list"
-                       matInput>
-
-                <mat-icon *ngIf="inDrillDownMode"
-                          [matTooltip]="intl.clearSelectionLabel"
-                          (keydown.space)="removeSelection($event)"
-                          (keydown.enter)="removeSelection($event)"
-                          (click)="removeSelection($event)"
-                          matSuffix
-                          tabindex="0"
-                          role="button"
-                          aria-hidden="false"
-                          class="clear">
-                    <svg width="100%"
-                         height="100%"
-                         viewBox="0 0 20 20"
-                         style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
-                        <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2.0011213" />
-                    </svg>
-                </mat-icon>
-
-                <mat-icon *ngIf="!drillDown || !searchInput.value"
-                          matSuffix>search</mat-icon>
-            </mat-form-field>
-
-            <ng-container *ngIf="isDown">
-                <ng-container *ngTemplateOutlet="resultList">
-                </ng-container>
-
-                <ng-container *ngTemplateOutlet="searchableCountInfoTmpl"></ng-container>
-            </ng-container>
-
-            <ng-template #searchableCountInfoTmpl>
-                <mat-list-item *ngIf="items.length &&
-                                  (loading$ | async) === false &&
-                                  searchableCountInfo?.count === items.length &&
-                                  searchable &&
-                                  !inputControl.value"
-                               [matTooltip]="searchableCountInfo?.message ?? ''"
-                               [attr.role]="'option'"
-                               matTooltipPosition="right"
-                               class="text-ellipsis item-max-count-info-message">
-                    <mat-divider *ngIf="isDown"></mat-divider>
-                    <mat-icon>info_outline</mat-icon>
-                    <span>{{searchableCountInfo?.message}}</span>
-                    <mat-divider *ngIf="!isDown"></mat-divider>
-                </mat-list-item>
-            </ng-template>
-        </div>
-    </div>
 </div>
+
+<ng-template #optionsDropdown>
+    <div [class.is-form-control]="isFormControl"
+         [style.width]="isFormControl ? (this.suggestContainerWidth+1)+'px' : width"
+         [style.height]="expandInline ? '100%' : undefined"
+         [class.ui-suggest-dropdown-item-list-container-expanded-inline]="expandInline"
+         [class.searchable]="searchable && !multiple"
+         [class.mat-elevation-z4]="!expandInline"
+         [uiAutofocus]="!searchable && !multiple"
+         [refocus]="isOpen && !multiple"
+         [@displayState]="'open'"
+         (keydown.arrowup)="navigate(-1, $event)"
+         (keydown.arrowdown)="navigate(1, $event)"
+         (keyup.enter)="preventDefault($event);"
+         (keydown.enter)="preventDefault($event);
+            setSelectedItem();"
+         (keydown.esc)="preventDefault($event)"
+         (keyup.esc)="preventDefault($event);
+            close();"
+         (keydown.tab)="close(false)"
+         (keydown.shift.tab)="close()"
+         tabindex="-1"
+         class="ui-suggest-dropdown-item-list-container">
+        <ng-container *ngIf="!isDown">
+            <ng-container *ngTemplateOutlet="searchableCountInfoTmpl"></ng-container>
+
+            <ng-container *ngTemplateOutlet="resultList">
+            </ng-container>
+        </ng-container>
+
+        <mat-form-field *ngIf="searchable && (!multiple || compact)"
+                        floatLabel="never">
+            <input #searchInput
+                   [placeholder]="isFormControl ? '' : placeholder"
+                   [formControl]="inputControl"
+                   [uiAutofocus]="isOpen &&
+                         searchable"
+                   [attr.maxlength]="maxLength"
+                   [refocus]="isOpen"
+                   selectionLocation="end"
+                   autocomplete="off"
+                   aria-autocomplete="list"
+                   matInput>
+
+            <mat-icon *ngIf="inDrillDownMode"
+                      [matTooltip]="intl.clearSelectionLabel"
+                      (keydown.space)="removeSelection($event)"
+                      (keydown.enter)="removeSelection($event)"
+                      (click)="removeSelection($event)"
+                      matSuffix
+                      tabindex="0"
+                      role="button"
+                      aria-hidden="false"
+                      class="clear">
+                <svg width="100%"
+                     height="100%"
+                     viewBox="0 0 20 20"
+                     style="color:currentColor;fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
+                    <path d="M6.505 13.498l7-7M13.505 13.5l-7-7"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.0011213" />
+                </svg>
+            </mat-icon>
+
+            <mat-icon *ngIf="!drillDown || !searchInput.value"
+                      matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <ng-container *ngIf="isDown">
+            <ng-container *ngTemplateOutlet="resultList">
+            </ng-container>
+
+            <ng-container *ngTemplateOutlet="searchableCountInfoTmpl"></ng-container>
+        </ng-container>
+
+        <ng-template #searchableCountInfoTmpl>
+            <mat-list-item *ngIf="items.length &&
+                         (loading$ | async) === false &&
+                         searchableCountInfo?.count === items.length &&
+                         searchable &&
+                         !inputControl.value"
+                           [matTooltip]="searchableCountInfo?.message ?? ''"
+                           [attr.role]="'option'"
+                           matTooltipPosition="right"
+                           class="text-ellipsis item-max-count-info-message">
+                <mat-divider *ngIf="isDown"></mat-divider>
+                <mat-icon>info_outline</mat-icon>
+                <span>{{searchableCountInfo?.message}}</span>
+                <mat-divider *ngIf="!isDown"></mat-divider>
+            </mat-list-item>
+        </ng-template>
+    </div>
+</ng-template>
 
 <ng-template #resultList>
     <mat-list [attr.role]="'listbox'"

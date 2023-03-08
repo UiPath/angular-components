@@ -107,6 +107,12 @@ class UiSuggestFixtureDirective {
     private _value?: ISuggestValue[];
 }
 
+const openDropdown = (fixture: ComponentFixture<UiSuggestFixtureDirective>) => {
+    const display = fixture.debugElement.query(By.css('.display'));
+    display.nativeElement.dispatchEvent(EventGenerator.click);
+    fixture.detectChanges();
+};
+
 const getNativeElement = <T = HTMLElement>(debugElement: DebugElement) => debugElement.nativeElement as T;
 
 const getDisplayElement = (fixture: ComponentFixture<UiSuggestFixtureDirective>) => fixture.debugElement
@@ -119,7 +125,6 @@ const getDisplayElement = (fixture: ComponentFixture<UiSuggestFixtureDirective>)
 const searchFor = (value: string, fixture: ComponentFixture<UiSuggestFixtureDirective>) => {
     const display = getDisplayElement(fixture);
     display.nativeElement.dispatchEvent(EventGenerator.click);
-
     fixture.detectChanges();
 
     populateSearchFor(value, fixture);
@@ -183,7 +188,7 @@ const sharedSpecifications = (
             expect(uiSuggest.value instanceof Array).toBeTruthy();
         });
 
-       it('should display the provided placeholder and default value', () => {
+        it('should display the provided placeholder and default value', () => {
             fixture.detectChanges();
 
             const displayContainer = fixture.debugElement.query(By.css('.display-container'));
@@ -255,8 +260,9 @@ const sharedSpecifications = (
 
         it('should have an input if searchable', () => {
             component.searchable = true;
-
             fixture.detectChanges();
+
+            openDropdown(fixture);
 
             const input = fixture.debugElement.query(By.css('input'));
 
@@ -267,10 +273,7 @@ const sharedSpecifications = (
             component.searchable = true;
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.display'));
-            display.nativeElement.dispatchEvent(EventGenerator.click);
-
-            fixture.detectChanges();
+            openDropdown(fixture);
 
             await fixture.whenStable();
 
@@ -282,15 +285,13 @@ const sharedSpecifications = (
         it('should render the list before the input if the direction is up', () => {
             component.searchable = true;
             component.direction = 'up';
-
-            fixture.detectChanges();
-            const display = fixture.debugElement.query(By.css('.display'));
-            display.nativeElement.dispatchEvent(EventGenerator.click);
-
             fixture.detectChanges();
 
-            const inputContainer = fixture.debugElement.query(By.css('ui-suggest .mat-form-field'));
-            const previousSibling = inputContainer.nativeElement.previousElementSibling;
+            openDropdown(fixture);
+
+            const dropdownOverlay = document.querySelector('.cdk-overlay-container')!;
+            const inputContainer = dropdownOverlay.querySelector('.mat-form-field')!;
+            const previousSibling = inputContainer.previousElementSibling!;
 
             expect(previousSibling).not.toBeNull();
             expect(previousSibling.tagName).toEqual('MAT-LIST');
@@ -418,6 +419,7 @@ const sharedSpecifications = (
             const items = generateSuggetionItemList(25);
 
             component.searchable = true;
+            component.multiple = true;
             component.items = items;
 
             uiSuggest.sourceUpdated
@@ -477,7 +479,7 @@ const sharedSpecifications = (
 
             await fixture.whenStable();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
             itemContainer.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.Enter),
             );
@@ -552,6 +554,7 @@ const sharedSpecifications = (
 
             component.searchable = true;
             component.items = items;
+            component.multiple = true;
 
             fixture.detectChanges();
 
@@ -587,11 +590,9 @@ const sharedSpecifications = (
                 const display = fixture.debugElement.query(By.css('.display'));
 
                 display.nativeElement.dispatchEvent(EventGenerator.click);
-
                 fixture.detectChanges();
 
                 assert.isOpen();
-
                 component[state] = true;
 
                 fixture.detectChanges();
@@ -712,10 +713,8 @@ const sharedSpecifications = (
             const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
             uiSuggest.loading$.next(true);
 
-            const display = fixture.debugElement.query(By.css('.display'));
-            display.nativeElement.dispatchEvent(EventGenerator.click);
+            openDropdown(fixture);
 
-            fixture.detectChanges();
             expect(spy).toHaveBeenCalledTimes(0);
         });
 
@@ -724,10 +723,8 @@ const sharedSpecifications = (
             fixture.detectChanges();
 
             const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
-            const display = fixture.debugElement.query(By.css('.display'));
-            display.nativeElement.dispatchEvent(EventGenerator.click);
+            openDropdown(fixture);
 
-            fixture.detectChanges();
             expect(spy).toHaveBeenCalledWith(`${component.items[0].text} item 1 out of ${component.items.length}`);
         });
     });
@@ -797,14 +794,15 @@ const sharedSpecifications = (
 
         it('should increment positively if DIRECTION is DOWN and NAVIGATING DOWN', () => {
             component.direction = 'down';
-
             fixture.detectChanges();
+
             const display = fixture.debugElement.query(By.css('.display'));
             display.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.Enter),
             );
+            fixture.detectChanges();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
             itemContainer.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.ArrowDown),
@@ -815,14 +813,15 @@ const sharedSpecifications = (
 
         it('should increment positively if DIRECTION is DOWN and NAVIGATING UP', () => {
             component.direction = 'down';
-
             fixture.detectChanges();
+
             const display = fixture.debugElement.query(By.css('.display'));
             display.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.Enter),
             );
+            fixture.detectChanges();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
             itemContainer.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.ArrowUp),
@@ -833,14 +832,15 @@ const sharedSpecifications = (
 
         it('should increment negatively if DIRECTION is UP and NAVIGATING UP', () => {
             component.direction = 'up';
-
             fixture.detectChanges();
+
             const display = fixture.debugElement.query(By.css('.display'));
             display.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.Enter),
             );
+            fixture.detectChanges();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
             itemContainer.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.ArrowUp),
@@ -851,14 +851,15 @@ const sharedSpecifications = (
 
         it('should increment positively if DIRECTION is UP and NAVIGATING DOWN', () => {
             component.direction = 'up';
-
             fixture.detectChanges();
+
             const display = fixture.debugElement.query(By.css('.display'));
             display.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.Enter),
             );
+            fixture.detectChanges();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
             itemContainer.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.ArrowDown),
@@ -875,8 +876,9 @@ const sharedSpecifications = (
             display.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.Enter),
             );
+            fixture.detectChanges();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
             itemContainer.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.ArrowDown),
@@ -891,8 +893,9 @@ const sharedSpecifications = (
             display.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.Enter),
             );
+            fixture.detectChanges();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
             const randomBoundItem = faker.helpers.randomize(items.slice(0, items.length - 2));
             const keyDownPresses = items.indexOf(randomBoundItem) + 1;
@@ -920,8 +923,9 @@ const sharedSpecifications = (
             display.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.Enter),
             );
+            fixture.detectChanges();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
             const keyDownPresses = items.length + 1;
 
@@ -946,7 +950,7 @@ const sharedSpecifications = (
 
             assert.isOpen();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
             itemContainer.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.ArrowDown),
@@ -973,7 +977,7 @@ const sharedSpecifications = (
             fixture.detectChanges();
             assert.isOpen();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
             itemContainer.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.ArrowDown),
@@ -997,7 +1001,7 @@ const sharedSpecifications = (
 
             assert.isOpen();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
             itemContainer.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.Tab),
@@ -1019,7 +1023,7 @@ const sharedSpecifications = (
 
             assert.isOpen();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
             itemContainer.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.Tab, Key.Shift),
@@ -1041,7 +1045,7 @@ const sharedSpecifications = (
 
             assert.isOpen();
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
             itemContainer.nativeElement.dispatchEvent(
                 EventGenerator.keyUp(Key.Escape),
@@ -1170,7 +1174,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 tick(5000);
 
-                const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+                const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
                 itemContainer.nativeElement.dispatchEvent(
                     EventGenerator.keyDown(Key.Enter),
                 );
@@ -1271,6 +1275,8 @@ const sharedSpecifications = (
                 const someAvailableItems = component.items!.slice(0, 4);
                 const initiallySelectedItems = someAvailableItems.slice(0, 3);
                 component.value = initiallySelectedItems;
+                component.searchable = true;
+
                 fixture.detectChanges();
                 tick();
 
@@ -1284,11 +1290,10 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 tick(5000);
 
-                const currentListItem = fixture.debugElement.queryAll(
-                    By.css('.mat-list-item'),
-                )[3];
+                const dropdownOverlay = document.querySelector('.cdk-overlay-container')!;
+                const currentListItem = dropdownOverlay.querySelectorAll('.mat-list-item')[0]!;
 
-                currentListItem.nativeElement.dispatchEvent(EventGenerator.click);
+                currentListItem.dispatchEvent(EventGenerator.click);
 
                 fixture.detectChanges();
                 tick(5000);
@@ -1486,9 +1491,7 @@ const sharedSpecifications = (
             component.items = generateSuggetionItemList(10);
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.display'));
-            display.nativeElement.dispatchEvent(EventGenerator.click);
-            fixture.detectChanges();
+            openDropdown(fixture);
 
             await fixture.whenStable();
 
@@ -1543,12 +1546,12 @@ const sharedSpecifications = (
                 const [entry] = itemListEntries;
 
                 if (uiSuggest.itemTemplate && component.applyItemTemplateToCustomValue) {
-                      // Using custom template
-                      expect(entry.nativeElement.innerText).toBe(`Custom template ${searchTerm}`);
+                    // Using custom template
+                    expect(entry.nativeElement.innerText).toBe(`Custom template ${searchTerm}`);
                 } else {
-                      // Using default template
-                      const label = entry.query(By.css('.text-label-rendered'));
-                      expect(label.nativeElement.innerText).toBe(searchTerm);
+                    // Using default template
+                    const label = entry.query(By.css('.text-label-rendered'));
+                    expect(label.nativeElement.innerText).toBe(searchTerm);
                 }
             }));
         });
@@ -1559,9 +1562,7 @@ const sharedSpecifications = (
             const randomIdx = component.items.indexOf(randomItem);
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.display'));
-            display.nativeElement.dispatchEvent(EventGenerator.click);
-            fixture.detectChanges();
+            openDropdown(fixture);
 
             await fixture.whenStable();
 
@@ -2024,7 +2025,8 @@ const sharedSpecifications = (
 
                     expect(sourceSpy).toHaveBeenCalledTimes(2);
 
-                    const search = fixture.debugElement.query(By.css('ui-suggest input')).nativeElement as HTMLInputElement;
+                    const dropdownOverlay = document.querySelector('.cdk-overlay-container');
+                    const search = dropdownOverlay?.querySelector('input') as HTMLInputElement;
 
                     expect(search.value).toEqual(`${itemText}:`);
                 });
@@ -2154,11 +2156,14 @@ const sharedSpecifications = (
             it(`should fetch call after the 'minChars' is met`, waitForAsync(async () => {
                 const MIN_CHARS = 5;
                 component.minChars = MIN_CHARS;
+                component.searchable = true;
 
                 fixture.detectChanges();
+                openDropdown(fixture);
                 await fixture.whenStable();
 
-                const searchInput = fixture.debugElement.query(By.css('.mat-input-element')).nativeElement;
+                const dropdownOverlay = document.querySelector('.cdk-overlay-container')!;
+                const searchInput = dropdownOverlay.querySelector('.mat-input-element')! as HTMLInputElement;
 
                 const typeChar = async () => {
                     searchInput.value = searchInput.value + faker.random.alphaNumeric(1);
@@ -2259,7 +2264,7 @@ const sharedSpecifications = (
 
                 expect(uiSuggest.items.length).toBe(NUMBER_OF_ITEMS_PER_VIEW + 1);
 
-                const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+                const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
                 for (let i = 0; i <= uiSuggest.items.length; i++) {
                     itemContainer.nativeElement.dispatchEvent(
                         EventGenerator.keyDown(Key.ArrowUp),
@@ -2282,7 +2287,7 @@ const sharedSpecifications = (
                 await fixture.whenStable();
                 expect(spy).toHaveBeenCalledTimes(1);
 
-                const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+                const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
                 for (let i = 0; i <= uiSuggest.items.length; i++) {
                     itemContainer.nativeElement.dispatchEvent(
                         EventGenerator.keyDown(Key.ArrowUp),
@@ -2299,10 +2304,8 @@ const sharedSpecifications = (
             uiSuggest.displayCount = 5;
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.display'));
-            display.nativeElement.dispatchEvent(EventGenerator.click);
+            openDropdown(fixture);
 
-            fixture.detectChanges();
             await fixture.whenStable();
 
             expect(uiSuggest.items.length).toBe(items.length);
@@ -2314,12 +2317,10 @@ const sharedSpecifications = (
             uiSuggest.displayCount = 5;
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.display'));
-            display.nativeElement.dispatchEvent(EventGenerator.click);
-            fixture.detectChanges();
+            openDropdown(fixture);
             tick(SEARCH_DEBOUNCE);
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
             for (let i = 0; i <= uiSuggest.displayCount; i++) {
                 itemContainer.nativeElement.dispatchEvent(
                     EventGenerator.keyDown(Key.ArrowDown),
@@ -2338,12 +2339,10 @@ const sharedSpecifications = (
             uiSuggest.displayCount = 5;
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.display'));
-            display.nativeElement.dispatchEvent(EventGenerator.click);
-            fixture.detectChanges();
+            openDropdown(fixture);
             tick(SEARCH_DEBOUNCE);
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
             for (let i = 0; i <= uiSuggest.displayCount; i++) {
                 itemContainer.nativeElement.dispatchEvent(
                     EventGenerator.keyDown(Key.ArrowDown),
@@ -2369,39 +2368,48 @@ const sharedSpecifications = (
             expect(sourceSpy).toHaveBeenCalledTimes(2);
         }));
 
-        it('should render items in a loading state the new data has not arrived', fakeAsync(() => {
+        it('should render items in a loading state if the new data has not arrived and load the data when it arrives', fakeAsync(() => {
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.display'));
-            display.nativeElement.dispatchEvent(EventGenerator.click);
-            fixture.detectChanges();
+            openDropdown(fixture);
             tick(SEARCH_DEBOUNCE);
 
-            const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+            let itemsThatNeedToBeLoaded = uiSuggest.items.slice(uiSuggest.displayCount, uiSuggest.displayCount + uiSuggest.displayCount);
+            let loadingStates = itemsThatNeedToBeLoaded.map(item => item.loading);
+            expect(loadingStates.some(loadingState => loadingState !== 'initial')).toBeFalsy();
 
-            for (let i = 0; i < uiSuggest.items.length - 1; i++) {
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
+            for (let i = 0; i < uiSuggest.displayCount; i++) {
                 itemContainer.nativeElement.dispatchEvent(
                     EventGenerator.keyDown(Key.ArrowDown),
                 );
                 fixture.detectChanges();
                 tick(1);
-
-                const idx = uiSuggest.activeIndex;
-
-                // update the view when scrolling occurs
-                if (idx >= uiSuggest.displayCount) {
-                    fixture.detectChanges();
-                    tick(1);
-
-                    const currentItem = uiSuggest.items[idx];
-                    expect(currentItem.loading).toBe(VirtualScrollItemStatus.initial);
-
-                    const selectedItem = fixture.debugElement.query(By.css('.mat-list-item.active'));
-                    const elementClasses = selectedItem.nativeElement.classList;
-                    expect(uiSuggest.activeIndex).toEqual(i + 1);
-                    expect(elementClasses.contains('is-loading')).toBeTruthy();
-                }
             }
+
+            tick(10);
+            fixture.detectChanges();
+
+            const idx = uiSuggest.activeIndex;
+            const currentItem = uiSuggest.items[idx];
+            expect(currentItem.loading).toBe(VirtualScrollItemStatus.initial);
+
+            const selectedItem = fixture.debugElement.query(By.css('.mat-list-item.active'))!;
+            const elementClasses = selectedItem.nativeElement.classList;
+            expect(uiSuggest.activeIndex).toEqual(uiSuggest.displayCount);
+            expect(elementClasses.contains('is-loading')).toBeTruthy();
+
+            tick(100);
+            fixture.detectChanges();
+
+            itemsThatNeedToBeLoaded = uiSuggest.items.slice(uiSuggest.displayCount, uiSuggest.displayCount + uiSuggest.displayCount);
+            loadingStates = itemsThatNeedToBeLoaded.map(item => item.loading);
+            expect(loadingStates.some(loadingState => loadingState === 'initial')).toBeFalsy();
+
+            const newRenderedItemText = fixture.debugElement
+                .query(By.css('.mat-list-item.active'))
+                .query(By.css('.text-label-rendered')).nativeElement.innerHTML;
+            expect(newRenderedItemText).toEqual(uiSuggest.items[uiSuggest.displayCount].text);
 
             tick(VIRTUAL_SCROLL_DEBOUNCE);
         }));
@@ -2430,7 +2438,7 @@ const sharedSpecifications = (
                 const [query] = sourceSpy.calls.mostRecent().args;
                 expect(query).toBe(randomString);
 
-                const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+                const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
                 itemContainer.nativeElement.dispatchEvent(
                     EventGenerator.keyDown(Key.Enter),
                 );
@@ -2512,7 +2520,7 @@ const sharedSpecifications = (
                 expect(uiSuggest.items.length).toBeGreaterThan(0);
                 expect(!!customItem).toBe(true);
 
-                const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+                const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
                 for (let i = 0; i <= uiSuggest.items.length; i++) {
                     itemContainer.nativeElement.dispatchEvent(
                         EventGenerator.keyDown(Key.ArrowUp),
@@ -2570,7 +2578,7 @@ const sharedSpecifications = (
                 expect(uiSuggest.items.length).toBeGreaterThan(0);
                 expect(!!customItem).toBe(true);
 
-                const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+                const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
                 itemContainer.nativeElement.dispatchEvent(
                     EventGenerator.keyDown(Key.ArrowUp),
                 );
@@ -2622,7 +2630,7 @@ const sharedSpecifications = (
                 expect(uiSuggest.items.length).toBeGreaterThan(0);
                 expect(!!customItem).toBe(true);
 
-                const itemContainer = fixture.debugElement.query(By.css('.item-list-container'));
+                const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
 
                 [Key.ArrowUp, Key.ArrowDown, Key.Tab].forEach(key => {
                     itemContainer.nativeElement.dispatchEvent(
@@ -3034,12 +3042,12 @@ describe('Component: UiSuggest', () => {
                     const [entry] = itemListEntries;
 
                     if (uiSuggest.itemTemplate && component.applyItemTemplateToCustomValue) {
-                          // Using custom template
-                          expect(entry.nativeElement.innerText).toBe(`Custom template ${searchTerm}`);
+                        // Using custom template
+                        expect(entry.nativeElement.innerText).toBe(`Custom template ${searchTerm}`);
                     } else {
-                          // Using default template
-                          const label = entry.query(By.css('.text-label-rendered'));
-                          expect(label.nativeElement.innerText).toBe(searchTerm);
+                        // Using default template
+                        const label = entry.query(By.css('.text-label-rendered'));
+                        expect(label.nativeElement.innerText).toBe(searchTerm);
                     }
                 }));
             });
@@ -3055,12 +3063,13 @@ describe('Component: UiSuggest', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const generatedItems = fixture.debugElement.queryAll(By.css('ui-suggest .item-template'));
+                const dropdownOverlay = document.querySelector('.cdk-overlay-container')!;
+                const generatedItems = dropdownOverlay.querySelectorAll('.item-template')!;
 
                 expect(items.length).toBe(generatedItems.length);
 
                 items.forEach((item, index) => {
-                    expect(item.text).toBe(generatedItems[index].nativeElement.innerText);
+                    expect(item.text).toBe(generatedItems[index].textContent!);
                 });
             }));
 
