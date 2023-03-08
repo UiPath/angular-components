@@ -30,6 +30,7 @@ import {
     transition,
     trigger,
 } from '@angular/animations';
+import { FocusOrigin } from '@angular/cdk/a11y';
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
@@ -57,6 +58,7 @@ import {
     MatCheckbox,
     MatCheckboxChange,
 } from '@angular/material/checkbox';
+import { MatTooltip } from '@angular/material/tooltip';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
@@ -65,8 +67,8 @@ import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directiv
 import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
 import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
-import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
 import { UiGridRowCardViewDirective } from './body/ui-grid-row-card-view.directive';
+import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
 import { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
@@ -621,6 +623,12 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     scrollCompensationWidth = 0;
 
     /**
+     * Whether column header is focused.
+     *
+     */
+    focusedColumnHeader = false;
+
+    /**
      * @internal
      * @ignore
      */
@@ -1041,6 +1049,18 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     isFilterApplied(column: UiGridColumnDirective<T>) {
         return (column.dropdown?.value != null && column.dropdown!.value!.value !== column.dropdown!.emptyStateValue)
             || (column.searchableDropdown?.value != null && (column.searchableDropdown?.value as ISuggestValue[])?.length !== 0);
+    }
+
+    triggerColumnHeaderTooltip(event: FocusOrigin, tooltip: MatTooltip) {
+        if (event === 'keyboard') {
+            this.focusedColumnHeader = true;
+            tooltip.show();
+        }
+    }
+
+    hideColumnHeaderTooltip(tooltip: MatTooltip) {
+        tooltip.hide();
+        this.focusedColumnHeader = false;
     }
 
     private _announceGridHeaderActions() {

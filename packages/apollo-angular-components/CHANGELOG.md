@@ -1,3 +1,7 @@
+# v14.5.3 (2023-03-03)
+* **grid** add test for tooltip on focus
+* **grid** display title & description tooltip on focus
+
 # v14.5.2 (2023-03-01)
 * **grid** display sort icon correctly
 
