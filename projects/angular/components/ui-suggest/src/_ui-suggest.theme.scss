@@ -21,25 +21,25 @@
         }
     }
 
-    #{$componentName} {
-        .item-list-container {
-            background-color: map-get($background, "dialog");
-            .mat-list {
-                &-item {
-                    &.selected {
-                        background-color: map-get($background, "disabled-button");
-                    }
+    .ui-suggest-dropdown-item-list-container {
+        background-color: map-get($background, "dialog");
+        .mat-list {
+            &-item {
+                &.selected {
+                    background-color: map-get($background, "disabled-button");
+                }
 
-                    &.selected.active,
-                    &.active,
-                    &:hover,
-                    &.selected:hover {
-                        background-color: map-get($background, "hover");
-                    }
+                &.selected.active,
+                &.active,
+                &:hover,
+                &.selected:hover {
+                    background-color: map-get($background, "hover");
                 }
             }
         }
+    }
 
+    #{$componentName} {
         .display {
             mat-icon {
                 color: inherit;
