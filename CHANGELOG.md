@@ -1,3 +1,10 @@
+# v14.5.4 (2023-03-08)
+* **grid** add aria-expanded to filters btn
+* **grid** add tick to test
+* **grid** announce filter menu state collapsed/expanded
+* **a11y** filter messages that are announced
+* **a11y** add menu-trigger directive that sets aria-expanded
+
 # v14.5.3 (2023-03-03)
 * **grid** add test for tooltip on focus
 * **grid** display title & description tooltip on focus
