@@ -159,7 +159,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>enqueue(msg: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>enqueue(msg: string | undefined)</code>
                 </td>
             </tr>
 
@@ -190,7 +190,7 @@
                                 <tr>
                                     <td>msg</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <code>string | undefined</code>
                                     </td>
 
                                     <td>
@@ -239,7 +239,8 @@ export class QueuedAnnouncer {
 
     constructor(private _liveAnnouncer: LiveAnnouncer) { }
 
-    enqueue(msg: string) {
+    enqueue(msg: string | undefined) {
+        if (!msg) { return; }
         this._msgQueue.push(msg);
 
         if (!this._isAnnouncing) {
