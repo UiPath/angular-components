@@ -3,6 +3,7 @@ export interface IFooter {
     pageSize: number;
     hidePageSize: boolean;
     hideTotalCount?: boolean;
+    showFirstLastButtons?: boolean;
 }
 
 export interface IHeader {

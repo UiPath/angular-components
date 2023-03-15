@@ -74,6 +74,7 @@ export class GridPageComponent implements AfterViewInit {
         pageSize: 10,
         hidePageSize: false,
         hideTotalCount: false,
+        showFirstLastButtons: true,
     };
 
     actionsForm!: UntypedFormGroup;
@@ -119,6 +120,7 @@ export class GridPageComponent implements AfterViewInit {
             }),
             footer: this._fb.group({
                 hideTotalCount: [false],
+                showFirstLastButtons: [true],
             }),
             data: this._fb.group({
                 totalData: [this.footer.total, [Validators.min(0), Validators.max(1000)]],
@@ -149,6 +151,7 @@ export class GridPageComponent implements AfterViewInit {
         this.inputs = this.actionsForm.get('inputs')!.value;
         this.header = this.actionsForm.get('header')!.value;
         this.footer.hideTotalCount = this.actionsForm.get('footer')!.value.hideTotalCount;
+        this.footer.showFirstLastButtons = this.actionsForm.get('footer')!.value.showFirstLastButtons;
         this.generateData(this.actionsForm.get('data')!.value);
 
         of(0).pipe(
