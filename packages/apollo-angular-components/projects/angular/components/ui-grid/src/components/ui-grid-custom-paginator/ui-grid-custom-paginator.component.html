@@ -1,7 +1,12 @@
 <div class="mat-paginator-outer-container">
     <div class="mat-paginator-container">
         <div class="mat-paginator-range-label">
-            {{_intl.getRangeLabel(pageIndex, pageSize, length)}}
+            <ng-container *ngIf="!hideTotalCount">
+                {{_intl.getRangeLabel(pageIndex, pageSize, length)}}
+            </ng-container>
+            <ng-container *ngIf="hideTotalCount">
+                {{ (pageIndex * pageSize + 1) + ' - ' + ((pageIndex + 1) * pageSize) }}
+            </ng-container>
         </div>
 
         <div class="mat-paginator-range-actions">
@@ -37,7 +42,12 @@
                 </svg>
             </button>
             <div class="mat-paginator-page-label">
-                {{_intl.getPageLabel(pageIndex+1, pageCount)}}
+                <ng-container *ngIf="!hideTotalCount">
+                    {{_intl.getPageLabel(pageIndex+1, pageCount)}}
+                </ng-container>
+                <ng-container *ngIf="hideTotalCount">
+                    {{ pageIndex + 1 }}
+                </ng-container>
             </div>
             <button [attr.aria-label]="_intl.nextPageLabel"
                     [matTooltip]="_intl.nextPageLabel"

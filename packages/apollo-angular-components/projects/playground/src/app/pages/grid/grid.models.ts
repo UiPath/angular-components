@@ -2,6 +2,7 @@ export interface IFooter {
     total: number;
     pageSize: number;
     hidePageSize: boolean;
+    hideTotalCount?: boolean;
 }
 
 export interface IHeader {
@@ -29,4 +30,5 @@ export interface IInputs {
     showHeaderRow: boolean;
     customFilter: boolean;
     useCardView: boolean;
+    hideTotalCount: boolean;
 }

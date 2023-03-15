@@ -5,6 +5,7 @@ import {
     HostBinding,
     Inject,
     Injectable,
+    Input,
     Optional,
     ViewEncapsulation,
 } from '@angular/core';
@@ -40,6 +41,13 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginat
     public _formFieldAppearance?: MatFormFieldAppearance;
     // eslint-disable-next-line
     public _intl!: UiMatPaginatorIntl;
+
+    /**
+     * Whether to show total count in custom paginator
+     *
+     */
+    @Input()
+        hideTotalCount = false;
 
     @HostBinding('class')
     hostClass = 'mat-paginator';
