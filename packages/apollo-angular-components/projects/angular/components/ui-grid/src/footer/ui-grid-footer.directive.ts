@@ -59,6 +59,13 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
     @Input()
     hidePageSize = false;
 
+    /**
+     * Whether to show the first/last buttons UI to the user.
+     *
+     */
+    @Input()
+    showFirstLastButtons = true;
+
     /*
     * Support hiding footer even if it's defined.
     */
