@@ -15,6 +15,7 @@ import { UiAutofocusModule } from '@uipath/angular/directives/ui-autofocus';
 import { UiClickOutsideModule } from '@uipath/angular/directives/ui-click-outside';
 import { UiNgLetModule } from '@uipath/angular/directives/ui-ng-let';
 import { UiVirtualScrollRangeLoaderModule } from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 import { UiSuggestComponent } from './ui-suggest.component';
 
@@ -36,6 +37,7 @@ import { UiSuggestComponent } from './ui-suggest.component';
         UiVirtualScrollRangeLoaderModule,
         MatChipsModule,
         UiAutoAccessibleLabelModule,
+        OverlayModule,
     ],
     declarations: [
         UiSuggestComponent,

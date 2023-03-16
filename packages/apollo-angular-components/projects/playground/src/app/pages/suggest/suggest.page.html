@@ -99,3 +99,39 @@
                 [searchSourceFactory]="searchSourceFactory">
     </ui-suggest>
 </div>
+
+<h1>Container with overflow hidden</h1>
+<div class="container-overflow-hidden">
+    <mat-form-field>
+        <ui-suggest [searchSourceFactory]="searchSourceFactory">
+        </ui-suggest>
+    </mat-form-field>
+</div>
+
+<h1>Direction down</h1>
+<div>
+    <mat-form-field>
+        <ui-suggest [searchSourceFactory]="searchSourceFactory"
+                    [direction]="'down'">
+        </ui-suggest>
+    </mat-form-field>
+</div>
+
+<h1>Direction up</h1>
+<div>
+    <mat-form-field>
+        <ui-suggest [searchSourceFactory]="searchSourceFactory"
+                    [direction]="'up'">
+        </ui-suggest>
+    </mat-form-field>
+</div>
+
+<h1>With form control</h1>
+<mat-form-field>
+    <ui-suggest [formControl]="control"
+                [direction]="'up'"
+                [searchSourceFactory]="searchSourceFactory"
+                [searchable]="true"
+                [clearable]="false">
+    </ui-suggest>
+</mat-form-field>

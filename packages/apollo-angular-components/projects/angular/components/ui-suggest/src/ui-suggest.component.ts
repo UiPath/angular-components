@@ -1,6 +1,7 @@
 import cloneDeep from 'lodash-es/cloneDeep';
 import isEqual from 'lodash-es/isEqual';
 import {
+    animationFrameScheduler,
     BehaviorSubject,
     combineLatest,
     merge,
@@ -16,7 +17,9 @@ import {
     filter,
     finalize,
     map,
+    observeOn,
     retry,
+    skip,
     startWith,
     switchMap,
     takeUntil,
@@ -59,6 +62,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { VirtualScrollItemStatus } from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
 
+import { ConnectedPosition } from '@angular/cdk/overlay';
 import {
     ISuggestValue,
     ISuggestValues,
@@ -102,9 +106,7 @@ export const MAT_CHIP_INPUT_SELECTOR = '.mat-chip-list input';
             useExisting: UiSuggestComponent,
         },
     ],
-    animations: [
-        UI_SUGGEST_ANIMATIONS.transformMenuList,
-    ],
+    animations: [UI_SUGGEST_ANIMATIONS.transformMenuList],
 })
 export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     implements
@@ -230,6 +232,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     expandInline = false;
 
     /**
+     * If true, component wil place the dropdown over the input
+     */
+    @Input()
+    forceDisplayDropdownOverInput = false;
+
+    /**
      * Configure if the component allows multi-selection.
      *
      */
@@ -273,7 +281,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     /**
-     * Configure the direction in which to open the overlay: `up` or `down`.
+     * Configure the direction in which to open the overlay: `up` or `down'.
      *
      */
     @Input()
@@ -526,7 +534,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     @Input()
     get width() {
         return !this._width ?
-            this.expandInline ? '100%' : '150px' :
+            this.expandInline ? '100%' : this.suggestContainerWidth + 'px' :
             this._width;
     }
 
@@ -656,9 +664,30 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      */
     focus$ = new Subject<boolean>();
 
+    upPosition: ConnectedPosition = {
+        originX: 'start',
+        originY: 'bottom',
+        overlayX: 'start',
+        overlayY: 'bottom',
+        offsetY: 3,
+    };
+
+    downPosition: ConnectedPosition = {
+        originX: 'start',
+        originY: 'top',
+        overlayX: 'start',
+        overlayY: 'top',
+        offsetY: -3,
+    };
+    dropdownPosition: ConnectedPosition[] = [];
+
+    suggestContainerWidth = 0;
+
+    @ViewChild('suggestContainer') suggestContainer!: ElementRef;
+
     @ViewChild(CdkVirtualScrollViewport)
     protected set _virtualScrollerQuery(value: CdkVirtualScrollViewport) {
-        if (this._virtualScroller === value) { return; }
+        if (!value || this._virtualScroller === value) { return; }
 
         this._virtualScroller = value;
 
@@ -670,6 +699,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         this._virtualScroller!
             .scrolledIndexChange
             .pipe(
+                skip(1),
                 takeUntil(this._destroyed$),
             )
             .subscribe(start => {
@@ -708,6 +738,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     private _width?: string;
 
     private _observer!: ResizeObserver;
+    private _suggestContainerObserver!: ResizeObserver;
 
     private _height$ = new BehaviorSubject(0);
 
@@ -815,7 +846,6 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     @Input()
     canRemoveChip: (value: ISuggestValue) => boolean
         = () => !this.readonly;
-
     /**
      * @ignore
      */
@@ -823,6 +853,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (this.alwaysExpanded || this.expandInline) {
             this.open();
         }
+
+        this._visibleRange = {
+            start: 0,
+            end: this.displayCount,
+        };
+
+        this._initOverlayPositions();
+        this.dropdownPosition = [this.direction && this.direction === 'up' ? this.upPosition : this.downPosition];
 
         merge(
             this._reset$.pipe(
@@ -838,6 +876,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         this._scrollTo$
             .pipe(
                 delay(0),
+                observeOn(animationFrameScheduler),
                 filter(_ => this.isOpen),
                 takeUntil(this._destroyed$),
             )
@@ -845,6 +884,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        if (changes.direction) {
+            this.dropdownPosition = [this._getDropdownPositionAccordingToDirection()];
+        }
+
         if (this.searchSourceStrategy === 'lazy' && this.direction === 'up') {
             throw new Error('Currently support only down direction for lazy mode');
         }
@@ -875,6 +918,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         if (this._matListElement) {
             this._observer?.unobserve(this._matListElement);
+        }
+
+        if (this.isOpen) {
+            this._suggestContainerObserver.unobserve(this.suggestContainer.nativeElement);
         }
 
         if (!this.sourceInitialized.closed) {
@@ -971,7 +1018,6 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      */
     open() {
         if (this._isOpenDisabled) { return; }
-
         this.isOpen = true;
         this.opened.emit();
         this._focusChanged(true);
@@ -992,6 +1038,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (!this.loading$.value) {
             this._announceNavigate();
         }
+
+        if (!this.expandInline) {
+            this._suggestContainerObserver.observe(this.suggestContainer.nativeElement);
+        }
     }
 
     /**
@@ -1001,6 +1051,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      */
     close(refocus = true) {
         if (this.alwaysExpanded || this.expandInline || !this.isOpen) { return; }
+
+        this._suggestContainerObserver.unobserve(this.suggestContainer.nativeElement);
 
         if (
             (this._isOnCustomValueIndex && !this.headerItems!.length) &&
@@ -1242,12 +1294,61 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             : this.defaultValue;
     }
 
+    private _getDropdownPositionAccordingToDirection() {
+        return this.direction === 'up' ? this.upPosition : this.downPosition;
+    }
+
+    private _initOverlayPositions() {
+        const mustBePlacedBesideTheInput = !this.forceDisplayDropdownOverInput && this.multiple;
+
+        // We need this because we want to show the dropdown below the mat-form-field and not below the ui-suggest component
+        if (this.isFormControl) {
+            this._setDropdownOffset(mustBePlacedBesideTheInput);
+        }
+
+        if (mustBePlacedBesideTheInput) {
+            this._setDropdownOrigin();
+        }
+    }
+
+    private _setDropdownOrigin() {
+        this.upPosition = {
+            ...this.upPosition,
+            originX: 'start',
+            originY: 'top',
+        };
+        this.downPosition = {
+            ...this.downPosition,
+            originX: 'start',
+            originY: 'bottom',
+        };
+
+    }
+
+    private _setDropdownOffset(mustBePlacedBesideTheInput: boolean) {
+        this.upPosition = {
+            ...this.upPosition,
+            offsetX: -1,
+            offsetY: mustBePlacedBesideTheInput ? -10 : 11,
+        };
+        this.downPosition = {
+            ...this.downPosition,
+            offsetX: -1,
+            offsetY: mustBePlacedBesideTheInput ? 10 : -11,
+        };
+    }
+
     private _initResizeObserver() {
         this._observer = new ResizeObserver(entries => {
             this._zone.run(() => {
                 this._height$.next(entries?.[0]?.contentRect.height);
                 this._cd.markForCheck();
             });
+        });
+
+        this._suggestContainerObserver = new ResizeObserver(entries => {
+            this.suggestContainerWidth = entries[0].target.clientWidth;
+            this._cd.markForCheck();
         });
     }
 
