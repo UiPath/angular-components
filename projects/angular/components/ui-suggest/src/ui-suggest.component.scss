@@ -18,10 +18,6 @@ $componentName: "ui-suggest";
     position: relative;
     display: block;
 
-    .text-ellipsis {
-        @extend %ellipse;
-    }
-
     .item-max-count-info-message {
         .mat-divider {
             margin: 0;
@@ -35,8 +31,7 @@ $componentName: "ui-suggest";
         opacity: 0.38;
     }
 
-    &,
-    .item-list-container .mat-list-item {
+    & {
         .readonly,
         &.disabled {
             pointer-events: none;
@@ -55,128 +50,6 @@ $componentName: "ui-suggest";
         &:after {
             content: "";
             display: inline-block;
-        }
-    }
-
-    .item-list-container {
-        &:not(&-expanded-inline) {
-            position: absolute;
-        }
-
-        &-expanded-inline {
-            display: flex;
-            flex-direction: column;
-        }
-
-        display: block;
-        z-index: 5;
-        border-radius: $default-border-radius;
-        width: 100%;
-
-        &-wrapper.multi-select {
-            position: absolute;
-            bottom: 0;
-            height: 0;
-            width: 100%;
-        }
-
-        .ui-suggest-item {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-        }
-
-        &:focus,
-        &:hover {
-            outline: none;
-        }
-
-        .mat-form-field {
-            $field-padding: 16px;
-
-            padding: 0 $field-padding;
-            width: calc(100% - #{$field-padding * 2}) !important;
-            margin-bottom: 0 !important;
-            height: $height;
-            &-infix {
-                border: 7px solid transparent;
-                border-left: none;
-                border-right: none;
-                padding: 0 0 5px 0;
-                border-left: 0;
-                border-right: 0;
-            }
-            &-suffix {
-                align-self: center;
-
-                mat-icon {
-                    font-size: 24px;
-                }
-            }
-            &-wrapper {
-                padding-bottom: 0;
-            }
-            &-underline {
-                bottom: 7px;
-            }
-        }
-
-        .mat-list {
-            overflow-y: auto;
-            padding-top: 0;
-
-            &-item {
-                cursor: pointer;
-
-                &.text-ellipsis:not(.custom-value-template) .mat-list-item-content {
-                    display: block;
-                }
-
-                &.is-expandable {
-                    .mat-list-item-content {
-                        padding-right: 30px;
-                    }
-                }
-
-                mat-progress-spinner {
-                    margin: 0 auto;
-                }
-
-                .mat-icon {
-                    vertical-align: middle;
-                    &:not(.expand-icon) {
-                        padding-right: 5px;
-                        margin-top: -3px;
-                    }
-
-                    &.expand-icon {
-                        position: absolute;
-                        right: 0;
-                    }
-                }
-
-                .text-label {
-                    outline: none;
-                    margin-left: 5px;
-                    user-select: none;
-                    font-weight: normal;
-                }
-            }
-        }
-
-        &-state-closed {
-            display: none;
-        }
-
-        cdk-virtual-scroll-viewport {
-            height: 100vh;
-            overflow-x: hidden;
-
-            .cdk-virtual-scroll-content-wrapper {
-                width: 100%;
-                overflow: hidden;
-            }
         }
     }
 
@@ -234,44 +107,6 @@ $componentName: "ui-suggest";
             max-width: 200px;
         }
     }
-
-    .item-list-container {
-        left: $searchLeft;
-        &-direction {
-            &-down {
-                top: $searchUpDown;
-                transform-origin: top left;
-
-                .mat-list-item:last-child {
-                    border-bottom-left-radius: $default-border-radius;
-                    border-bottom-right-radius: $default-border-radius;
-                }
-            }
-            &-up {
-                bottom: -$searchUpDown;
-                transform-origin: bottom left;
-
-                .mat-list-item:first-child {
-                    border-top-left-radius: $default-border-radius;
-                    border-top-right-radius: $default-border-radius;
-                }
-            }
-        }
-
-        .mat-list {
-            &-item {
-                height: $height;
-
-                &.text-ellipsis .mat-list-item-content {
-                    line-height: $height;
-                }
-
-                &.no-results-text .mat-list-item-content {
-                    font-size: 14px;
-                }
-            }
-        }
-    }
 }
 
 #{$componentName}.form-control {
@@ -285,34 +120,14 @@ $componentName: "ui-suggest";
         height: $form-control-height;
         line-height: $form-control-height;
     }
+}
 
-    .item-list-container {
-        &-direction {
-            &-down {
-                top: -7px;
+.text-ellipsis {
+    @extend %ellipse;
+}
 
-                .mat-list-item:last-child {
-                    border-bottom-left-radius: $default-border-radius;
-                    border-bottom-right-radius: $default-border-radius;
-                }
-                &.searchable {
-                    top: -5px;
-                }
-            }
-            &-up {
-                bottom: -5px;
-
-                .mat-list-item:first-child {
-                    border-top-left-radius: $default-border-radius;
-                    border-top-right-radius: $default-border-radius;
-                }
-
-                &.searchable {
-                    bottom: -17px;
-                }
-            }
-        }
-
+.ui-suggest-dropdown-item-list-container {
+    &.is-form-control {
         .mat-list {
             .mat-icon {
                 height: $icon-size;
@@ -335,6 +150,139 @@ $componentName: "ui-suggest";
                 left: -7px;
                 top: -7px;
             }
+        }
+    }
+
+    &:not(.is-form-control) {
+        .mat-list {
+            &-item {
+                height: $height;
+
+                &.text-ellipsis .mat-list-item-content {
+                    line-height: $height;
+                }
+
+                &.no-results-text .mat-list-item-content {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+
+    &-expanded-inline {
+        display: flex;
+        flex-direction: column;
+    }
+
+    display: block;
+    z-index: 5;
+    border-radius: $default-border-radius;
+
+    .ui-suggest-item {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    &:focus,
+    &:hover {
+        outline: none;
+    }
+
+    .mat-form-field {
+        $field-padding: 16px;
+
+        padding: 0 $field-padding;
+        width: calc(100% - #{$field-padding * 2}) !important;
+        margin-bottom: 0 !important;
+        height: $height;
+        &-infix {
+            border: 7px solid transparent;
+            border-left: none;
+            border-right: none;
+            border-left: 0;
+            border-right: 0;
+        }
+        &-suffix {
+            align-self: center;
+
+            mat-icon {
+                font-size: 24px;
+            }
+        }
+        &-wrapper {
+            padding-bottom: 0;
+        }
+        &-underline {
+            bottom: 7px;
+        }
+    }
+
+    .mat-list {
+        margin-top: 6px;
+        overflow-y: auto;
+        padding-top: 0;
+
+        &-item {
+            cursor: pointer;
+
+            .readonly,
+            &.disabled {
+                pointer-events: none;
+            }
+            &.is-loading {
+                font-style: italic;
+                opacity: 0.8;
+            }
+
+            &.text-ellipsis:not(.custom-value-template) .mat-list-item-content {
+                display: block;
+            }
+
+            &.is-expandable {
+                .mat-list-item-content {
+                    padding-right: 30px;
+                }
+            }
+
+            mat-progress-spinner {
+                margin: 0 auto;
+            }
+
+            .mat-icon {
+                vertical-align: middle;
+                &:not(.expand-icon) {
+                    padding-right: 5px;
+                    margin-top: -3px;
+                }
+
+                &.expand-icon {
+                    position: absolute;
+                    right: 0;
+                }
+            }
+
+            .text-label {
+                outline: none;
+                margin-left: 5px;
+                user-select: none;
+                font-weight: normal;
+            }
+        }
+    }
+
+    &-state-closed {
+        display: none;
+    }
+
+    cdk-virtual-scroll-viewport {
+        height: 100vh;
+        overflow-x: hidden;
+
+        .cdk-virtual-scroll-content-wrapper {
+            width: 100%;
+            overflow: hidden;
         }
     }
 }
