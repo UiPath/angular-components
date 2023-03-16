@@ -1485,19 +1485,24 @@ You can disable this directive using the boolean ${DISABLE_AUTO_ACCESSIBLE_LABEL
                     <td class="col-md-4">
                         <i>Default value : </i><code>{
     transformMenuList: trigger(&#x27;displayState&#x27;, [
-        state(&#x27;closed&#x27;, style({
-            opacity: 0,
-            transform: &#x27;scale(0.8)&#x27;,
-        })),
-        transition(&#x27;closed &#x3D;&gt; open&#x27;, group([
-            animate(&#x27;100ms linear&#x27;, style({
-                opacity: 1,
-            })),
-            animate(&#x27;120ms cubic-bezier(0, 0, 0.2, 1)&#x27;, style({
-                transform: &#x27;scale(1)&#x27;,
-            })),
-        ])),
-        transition(&#x27;* &#x3D;&gt; closed&#x27;, animate(&#x27;100ms 25ms linear&#x27;, style({ opacity: 0 }))),
+        state(
+            &#x27;void&#x27;,
+            style({
+                opacity: 0,
+                transform: &#x27;scale(0.8)&#x27;,
+            }),
+        ),
+        transition(
+            &#x27;void &#x3D;&gt; open&#x27;,
+            group([
+                animate(&#x27;100ms linear&#x27;, style({
+                    opacity: 1,
+                })),
+                animate(&#x27;120ms cubic-bezier(0, 0, 0.2, 1)&#x27;, style({
+                    transform: &#x27;scale(1)&#x27;,
+                })),
+            ]),
+        ),
     ]),
 }</code>
                     </td>
