@@ -1,3 +1,6 @@
+# v14.6.0 (2023-03-16)
+* **suggest** use CDK Layout to display the dropdown (breaking change)
+
 # v14.5.4 (2023-03-08)
 * **grid** add aria-expanded to filters btn
 * **grid** add tick to test
