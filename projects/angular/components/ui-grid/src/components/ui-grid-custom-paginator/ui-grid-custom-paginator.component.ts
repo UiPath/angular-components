@@ -56,6 +56,10 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginat
         return Math.ceil(this.length / this.pageSize);
     }
 
+    get totalCount(): number {
+        return Math.min(this.length, (this.pageIndex + 1) * this.pageSize);
+    }
+
     constructor(
         changeDetectorRef: ChangeDetectorRef,
         @Optional()
