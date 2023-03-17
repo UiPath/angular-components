@@ -70,6 +70,16 @@
                             <mat-error>Enter a value between 0 and 1000</mat-error>
                         </mat-form-field>
                     </div>
+
+                    <div [formGroup]="footerGroup"
+                         class="grid-playground-actions-header">
+                        <h4>Grid Footer</h4>
+
+                        <mat-checkbox class="header-search-checkbox"
+                                      formControlName="hideTotalCount">
+                            Hide Total Count
+                        </mat-checkbox>
+                    </div>
                 </div>
 
                 <button [disabled]="actionsForm.invalid"

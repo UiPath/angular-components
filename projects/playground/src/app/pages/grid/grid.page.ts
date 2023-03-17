@@ -73,6 +73,7 @@ export class GridPageComponent implements AfterViewInit {
         total: 100,
         pageSize: 10,
         hidePageSize: false,
+        hideTotalCount: false,
     };
 
     actionsForm!: UntypedFormGroup;
@@ -81,6 +82,9 @@ export class GridPageComponent implements AfterViewInit {
     }
     get headerGroup(): UntypedFormGroup {
         return this.actionsForm.get('header')! as UntypedFormGroup;
+    }
+    get footerGroup(): UntypedFormGroup {
+        return this.actionsForm.get('footer')! as UntypedFormGroup;
     }
     get dataGroup(): UntypedFormGroup {
         return this.actionsForm.get('data')! as UntypedFormGroup;
@@ -113,6 +117,9 @@ export class GridPageComponent implements AfterViewInit {
                 inline: [0, [Validators.min(0), Validators.max(5)]],
                 action: [0, [Validators.min(0), Validators.max(5)]],
             }),
+            footer: this._fb.group({
+                hideTotalCount: [false],
+            }),
             data: this._fb.group({
                 totalData: [this.footer.total, [Validators.min(0), Validators.max(1000)]],
                 pageSize: [this.footer.pageSize, [Validators.min(0), Validators.max(1000)]],
@@ -141,6 +148,7 @@ export class GridPageComponent implements AfterViewInit {
 
         this.inputs = this.actionsForm.get('inputs')!.value;
         this.header = this.actionsForm.get('header')!.value;
+        this.footer.hideTotalCount = this.actionsForm.get('footer')!.value.hideTotalCount;
         this.generateData(this.actionsForm.get('data')!.value);
 
         of(0).pipe(

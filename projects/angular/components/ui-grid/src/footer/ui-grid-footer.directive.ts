@@ -66,6 +66,13 @@ export class UiGridFooterDirective implements OnDestroy, OnInit {
     hidden = false;
 
     /**
+     * Whether to show total count in custom paginator
+     *
+     */
+    @Input()
+    hideTotalCount = false;
+
+    /**
      * Emits when the page is changed.
      *
      */
