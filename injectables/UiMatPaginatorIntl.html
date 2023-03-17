@@ -124,8 +124,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="21"
-                            class="link-to-prism">projects/angular/components/ui-grid/src/components/ui-grid-custom-paginator/ui-grid-custom-paginator.component.ts:21</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">projects/angular/components/ui-grid/src/components/ui-grid-custom-paginator/ui-grid-custom-paginator.component.ts:22</a></div>
                 </td>
             </tr>
 
@@ -198,6 +198,7 @@
     HostBinding,
     Inject,
     Injectable,
+    Input,
     Optional,
     ViewEncapsulation,
 } from &#x27;@angular/core&#x27;;
@@ -234,11 +235,22 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase&lt;MatPagi
     // eslint-disable-next-line
     public _intl!: UiMatPaginatorIntl;
 
+    /**
+     * Whether to show total count in custom paginator
+     *
+     */
+    @Input()
+        hideTotalCount &#x3D; false;
+
     @HostBinding(&#x27;class&#x27;)
     hostClass &#x3D; &#x27;mat-paginator&#x27;;
 
     get pageCount(): number {
         return Math.ceil(this.length / this.pageSize);
+    }
+
+    get totalCount(): number {
+        return Math.min(this.length, (this.pageIndex + 1) * this.pageSize);
     }
 
     constructor(
