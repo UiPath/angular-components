@@ -588,7 +588,7 @@
                    [pageSizeOptions]="footer.pageSizes"
                    [length]="footer.length"
                    [disabled]="disabled"
-                   [showFirstLastButtons]="true"
+                   [showFirstLastButtons]="footer.showFirstLastButtons"
                    [hidePageSize]="footer.hidePageSize"
                    (page)="footer.pageChange.next($event)">
     </mat-paginator>
@@ -601,7 +601,7 @@
                               [pageSizeOptions]="footer.pageSizes"
                               [length]="footer.length"
                               [disabled]="disabled"
-                              [showFirstLastButtons]="true"
+                              [showFirstLastButtons]="footer.showFirstLastButtons"
                               [hidePageSize]="footer.hidePageSize"
                               [hideTotalCount]="footer.hideTotalCount"
                               (page)="footer.pageChange.next($event)">
