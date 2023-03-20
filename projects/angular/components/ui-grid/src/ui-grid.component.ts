@@ -1063,6 +1063,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this.focusedColumnHeader = false;
     }
 
+    focusActiveFilterItem() {
+        const activeItem: HTMLElement | null = document.querySelector('.cdk-overlay-container .active[role="menuitem"]');
+        activeItem?.focus();
+    }
+
     private _announceGridHeaderActions() {
         this._queuedAnnouncer.enqueue(this.intl.gridHeaderActionsNotice);
     }
