@@ -1,10 +1,7 @@
-import 'moment-timezone';
-
 import {
     DateTime,
     DateTimeFormatOptions,
 } from 'luxon';
-import moment from 'moment';
 import {
     interval,
     merge,
@@ -30,7 +27,6 @@ import {
     Renderer2,
 } from '@angular/core';
 import { UiFormatDirective } from '@uipath/angular/directives/internal';
-import { USE_LUXON } from '@uipath/angular/utilities';
 
 /**
  * The date format display type options.
@@ -67,8 +63,7 @@ export interface IDateFormatOptions {
      */
     titleType?: DisplayType;
     /**
-     * Overwrites the default dateformat used by moment.js.
-     * When supplied Luxon formatting options, Luxon will be used instead of moment.js.
+     * Overwrites the default dateformat.
      *
      */
     format?: string | DateTimeFormatOptions;
@@ -101,15 +96,6 @@ export const resolveTimezone = (options: IDateFormatOptions) => {
 /**
  * A directive that formats a given `Date` input in a `relative` or `absolute` format.
  *
- * Depends On:
- * - [moment](https://www.npmjs.com/package/moment)
- * - [moment-timezone](https://www.npmjs.com/package/moment-timezone)
- *
- * In order to reduce bundle sizes, we strongly recommend using the following webpack plugins:
- * - [moment-locales-webpack-plugin](https://www.npmjs.com/package/moment-locales-webpack-plugin)
- * - [moment-timezone-data-webpack-plugin](https://www.npmjs.com/package/moment-timezone-data-webpack-plugin)
- *
- * Optionally, you can opt-in to use Luxon instead of Moment.
  * Depends On:
  * - [luxon](https://www.npmjs.com/package/luxon)
  * - [humanize-duration](https://www.npmjs.com/package/humanize-duration)
@@ -179,7 +165,6 @@ export class UiDateFormatDirective extends UiFormatDirective {
         return this._date;
     }
     /**
-     * The 'moment' format defaults to 'L LTS'.
      * The `luxon` format defaults to `DateTime.DATETIME_SHORT_WITH_SECONDS.
      *
      */
@@ -192,11 +177,8 @@ export class UiDateFormatDirective extends UiFormatDirective {
         if (!this.date) { return ''; }
         if (!(this.date instanceof Date)) { return this.date; }
 
-        const relativeTime = this._useLuxon
-            ? DateTime.fromJSDate(this.date)
-                .toRelative()
-            : moment(this.date)
-                .fromNow();
+        const relativeTime = DateTime.fromJSDate(this.date)
+                .toRelative();
 
         return relativeTime ?? '';
     }
@@ -205,15 +187,14 @@ export class UiDateFormatDirective extends UiFormatDirective {
         if (!this.date) { return ''; }
         if (!(this.date instanceof Date)) { return this.date; }
 
-        let absoluteTime;
+        const time = DateTime
+            .fromJSDate(this.date, {
+                zone: this.timezone ?? resolveTimezone(this._options),
+            });
 
-        if (this._useLuxon) {
-            absoluteTime = this._luxonAbsoluteTime(this.date);
-        } else if (this._isStringFormat(this.dateFormat)) {
-            absoluteTime = moment(this.date)
-                .tz(this.timezone ?? resolveTimezone(this._options))
-                .format(this.dateFormat);
-        }
+        const absoluteTime = this._isStringFormat(this.dateFormat)
+            ? time.toFormat(this.dateFormat)
+            : time.toLocaleString(this.dateFormat);
 
         return absoluteTime ?? '';
     }
@@ -235,16 +216,13 @@ export class UiDateFormatDirective extends UiFormatDirective {
         private _zone: NgZone,
         renderer: Renderer2,
         elementRef: ElementRef,
-        @Inject(USE_LUXON)
-        @Optional()
-        private _useLuxon?: boolean,
     ) {
         super(
             renderer,
             elementRef,
         );
 
-        const defaultFormat = this._useLuxon ? DateTime.DATETIME_SHORT_WITH_SECONDS : 'L LTS';
+        const defaultFormat = DateTime.DATETIME_SHORT_WITH_SECONDS;
 
         this._options = _options || {};
         this.dateFormat = this._options.format ?? defaultFormat;
@@ -326,15 +304,4 @@ export class UiDateFormatDirective extends UiFormatDirective {
 
         return value !== compareValue;
     };
-
-    private _luxonAbsoluteTime(date: Date) {
-        const time = DateTime
-        .fromJSDate(date, {
-            zone: this.timezone ?? resolveTimezone(this._options),
-        });
-
-        return this._isStringFormat(this.dateFormat)
-            ? time.toFormat(this.dateFormat)
-            : time.toLocaleString(this.dateFormat);
-    }
 }
