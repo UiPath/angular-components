@@ -1,4 +1,8 @@
-import * as moment from 'moment';
+import {
+    DateTime,
+    DateTimeFormatOptions,
+    Settings,
+} from 'luxon';
 import { BehaviorSubject } from 'rxjs';
 
 import {
@@ -23,10 +27,8 @@ import {
     UI_DATEFORMAT_OPTIONS,
 } from './ui-dateformat.directive';
 
-const defaultDateFormat = 'L LTS';
-const referenceFormatLongDateFormatKey = 'LLLL';
-const referenceFormat = 'dddd, MMMM Do, YYYY LT';
-const updatedReferenceFormat = 'YYYY年M月D日 dddd LT';
+const defaultDateFormat = DateTime.DATETIME_SHORT;
+const referenceFormatLongDateFormatKey = DateTime.DATETIME_FULL;
 const updatedTimezone = 'Europe/London';
 
 @Component({
@@ -35,7 +37,7 @@ const updatedTimezone = 'Europe/London';
 })
 class TestHostComponent {
     date?: Date | string;
-    dateFormat?: string;
+    dateFormat?: DateTimeFormatOptions;
     timezone?: string;
     contentType?: DisplayType;
     titleType?: DisplayType;
@@ -50,37 +52,17 @@ describe('Directive: UiDateFormat', () => {
     let fixture: ComponentFixture<TestHostComponent>;
     let component: TestHostComponent;
     let referenceDate: Date;
-    let momentInputDate: moment.Moment;
+    let inputDate: DateTime;
     let options: IDateFormatOptions;
     const beforeConfig = (optionsConfig: IDateFormatOptions) => {
         options = optionsConfig;
-        moment.updateLocale('en', {
-            longDateFormat: {
-                LT: 'h:mm A',
-                LTS: 'h:mm:ss A',
-                L: 'MM/DD/YYYY',
-                LL: 'MMMM D',
-                LLL: 'MMMM D, LT',
-                LLLL: referenceFormat,
-            },
-        });
 
-        moment.updateLocale('ja', {
-            longDateFormat: {
-                LT: 'HH時mm分',
-                LTS: 'HH時mm分ss秒',
-                L: 'YYYY年M月D日',
-                LL: 'M月D日',
-                LLL: 'M月D日 LT',
-                LLLL: updatedReferenceFormat,
-            },
-        });
+        Settings.defaultLocale = 'en';
 
-        moment.locale('en');
-
-        momentInputDate = moment()
-            .tz(resolveTimezone(options));
-        referenceDate = momentInputDate.toDate();
+        inputDate = DateTime
+            .now()
+            .setZone(resolveTimezone(options));
+        referenceDate = inputDate.toJSDate();
 
         TestBed.configureTestingModule({
             declarations: [
@@ -98,13 +80,14 @@ describe('Directive: UiDateFormat', () => {
 
     afterEach(() => {
         fixture.destroy();
-        moment.locale('en');
+        Settings.defaultLocale = 'en';
     });
 
     describe('Generic injection token:', () => {
         beforeEach(waitForAsync(() => beforeConfig({
             timezone: 'Europe/Bucharest',
             redraw$: new BehaviorSubject<void>(void 0),
+            format: defaultDateFormat,
         })));
 
         it('should create', () => {
@@ -132,17 +115,7 @@ describe('Directive: UiDateFormat', () => {
                 .innerText
                 .trim();
 
-            const momentOutputDate = moment.tz(
-                formattedDateText,
-                defaultDateFormat,
-                resolveTimezone(options),
-            );
-
-            expect(momentOutputDate.day()).toEqual(momentInputDate.day());
-            expect(momentOutputDate.month()).toEqual(momentInputDate.month());
-            expect(momentOutputDate.year()).toEqual(momentInputDate.year());
-            expect(momentOutputDate.hour()).toEqual(momentInputDate.hour());
-            expect(momentOutputDate.minute()).toEqual(momentInputDate.minute());
+            expect(formattedDateText).toEqual(inputDate.toLocaleString(defaultDateFormat));
         });
 
         it('should format the absolute date in the specified format', () => {
@@ -170,17 +143,7 @@ describe('Directive: UiDateFormat', () => {
                 .innerText
                 .trim();
 
-            const momentOutputDate = moment.tz(
-                formattedDateText,
-                referenceFormat,
-                resolveTimezone(options),
-            );
-
-            expect(momentOutputDate.day()).toEqual(momentInputDate.day());
-            expect(momentOutputDate.month()).toEqual(momentInputDate.month());
-            expect(momentOutputDate.year()).toEqual(momentInputDate.year());
-            expect(momentOutputDate.hour()).toEqual(momentInputDate.hour());
-            expect(momentOutputDate.minute()).toEqual(momentInputDate.minute());
+            expect(formattedDateText).toEqual(inputDate.toLocaleString(referenceFormatLongDateFormatKey));
         });
 
         it('should format the absolute date in the specified timezone', () => {
@@ -195,8 +158,9 @@ describe('Directive: UiDateFormat', () => {
                 .createComponent(TestHostComponent);
 
             // Update the input date to the new timezone and check if UiDateFormatDirective returns the same date.
-            momentInputDate = moment(referenceDate)
-                .tz(updatedTimezone);
+            inputDate = DateTime.fromJSDate(referenceDate, {
+                zone: updatedTimezone,
+            });
 
             component = fixture.componentInstance;
             component.date = referenceDate;
@@ -214,17 +178,7 @@ describe('Directive: UiDateFormat', () => {
                 .innerText
                 .trim();
 
-            const momentOutputDate = moment.tz(
-                formattedDateText,
-                referenceFormat,
-                updatedTimezone,
-            );
-
-            expect(momentOutputDate.day()).toEqual(momentInputDate.day());
-            expect(momentOutputDate.month()).toEqual(momentInputDate.month());
-            expect(momentOutputDate.year()).toEqual(momentInputDate.year());
-            expect(momentOutputDate.hour()).toEqual(momentInputDate.hour());
-            expect(momentOutputDate.minute()).toEqual(momentInputDate.minute());
+            expect(formattedDateText).toEqual(inputDate.toLocaleString(referenceFormatLongDateFormatKey));
         });
 
         it('should show the relative time', () => {
@@ -238,7 +192,7 @@ describe('Directive: UiDateFormat', () => {
                 .createComponent(TestHostComponent);
 
             component = fixture.componentInstance;
-            component.date = momentInputDate.subtract(2, 'minutes').toDate();
+            component.date = inputDate.minus({ minutes: 2 }).toJSDate();
 
             fixture.detectChanges();
 
@@ -265,7 +219,7 @@ describe('Directive: UiDateFormat', () => {
                 .createComponent(TestHostComponent);
 
             component = fixture.componentInstance;
-            component.date = momentInputDate.subtract(2, 'minutes').toDate();
+            component.date = inputDate.minus({ minutes: 2 }).toJSDate();
 
             fixture.detectChanges();
 
@@ -291,7 +245,7 @@ describe('Directive: UiDateFormat', () => {
                 .createComponent(TestHostComponent);
 
             component = fixture.componentInstance;
-            component.date = momentInputDate.subtract(30, 'seconds').toDate();
+            component.date = inputDate.minus({ seconds: 30 }).toJSDate();
 
             fixture.detectChanges();
 
@@ -302,12 +256,12 @@ describe('Directive: UiDateFormat', () => {
                 )
                 .nativeElement;
 
-            expect(textElement.innerText.trim()).toContain('a few seconds ago');
+            expect(textElement.innerText.trim()).toContain('30 seconds ago');
 
             tick(30000);
             fixture.detectChanges();
 
-            expect(textElement.innerText.trim()).toContain('a minute ago');
+            expect(textElement.innerText.trim()).toContain('1 minute ago');
             discardPeriodicTasks();
         }));
 
@@ -327,7 +281,7 @@ describe('Directive: UiDateFormat', () => {
 
             fixture.detectChanges();
 
-            moment.locale('ja');
+            Settings.defaultLocale = 'ja';
             (options.redraw$ as BehaviorSubject<void>).next();
 
             fixture.detectChanges();
@@ -339,17 +293,14 @@ describe('Directive: UiDateFormat', () => {
                 )
                 .nativeElement;
 
-            const momentOutputDate = moment.tz(
-                textElement.innerText.trim(),
-                updatedReferenceFormat,
-                resolveTimezone(options),
+            const expectedDateText = inputDate.toLocaleString(
+                referenceFormatLongDateFormatKey,
+                {
+                    locale: 'ja',
+                },
             );
 
-            expect(momentOutputDate.day()).toEqual(momentInputDate.day());
-            expect(momentOutputDate.month()).toEqual(momentInputDate.month());
-            expect(momentOutputDate.year()).toEqual(momentInputDate.year());
-            expect(momentOutputDate.hour()).toEqual(momentInputDate.hour());
-            expect(momentOutputDate.minute()).toEqual(momentInputDate.minute());
+            expect(textElement.innerText.trim()).toEqual(expectedDateText);
             expect(textElement.dataset.title.trim()).toEqual(textElement.textContent.trim());
         });
 
@@ -365,11 +316,11 @@ describe('Directive: UiDateFormat', () => {
                 .createComponent(TestHostComponent);
 
             component = fixture.componentInstance;
-            component.date = momentInputDate.subtract(30, 'seconds').toDate();
+            component.date = inputDate.minus({ seconds: 30 }).toJSDate();
 
             fixture.detectChanges();
 
-            moment.locale('ja');
+            Settings.defaultLocale = 'ja';
             (options.redraw$ as BehaviorSubject<void>).next();
 
             fixture.detectChanges();
@@ -381,8 +332,8 @@ describe('Directive: UiDateFormat', () => {
                 )
                 .nativeElement;
 
-            expect(textElement.innerText.trim()).toContain('数秒前');
-            expect(textElement.dataset.title).toContain('数秒前');
+            expect(textElement.innerText.trim()).toContain('30 秒前');
+            expect(textElement.dataset.title).toContain('30 秒前');
         });
 
         it('should return the input when it is not a Date object', () => {
@@ -417,8 +368,13 @@ describe('Directive: UiDateFormat', () => {
                 })
                 .createComponent(TestHostComponent);
 
+            const inputJSDate = inputDate.minus({ seconds: 30 }).toJSDate();
+            const expectedAbsoluteDate = DateTime.fromJSDate(inputJSDate)
+                .setZone(inputDate.zone)
+                .toLocaleString(defaultDateFormat);
+
             component = fixture.componentInstance;
-            component.date = momentInputDate.subtract(30, 'seconds').toDate();
+            component.date = inputJSDate;
 
             const textElement = fixture
                 .debugElement
@@ -432,41 +388,21 @@ describe('Directive: UiDateFormat', () => {
 
             fixture.detectChanges();
 
-            let momentOutputDate = moment.tz(
-                textElement.innerText.trim(),
-                defaultDateFormat,
-                resolveTimezone(options),
-            );
-
-            expect(momentOutputDate.day()).toEqual(momentInputDate.day());
-            expect(momentOutputDate.month()).toEqual(momentInputDate.month());
-            expect(momentOutputDate.year()).toEqual(momentInputDate.year());
-            expect(momentOutputDate.hour()).toEqual(momentInputDate.hour());
-            expect(momentOutputDate.minute()).toEqual(momentInputDate.minute());
+            expect(textElement.innerText.trim()).toEqual(expectedAbsoluteDate);
 
             // Secondly, check that the format switches to relative when the property changes.
             component.contentType = 'relative';
 
             fixture.detectChanges();
 
-            expect(textElement.innerText.trim()).toContain('a few seconds ago');
+            expect(textElement.innerText.trim()).toContain('30 seconds ago');
 
             // Lastly, check that changing from relative to absolute formats the text correctly.
             component.contentType = 'absolute';
 
             fixture.detectChanges();
 
-            momentOutputDate = moment.tz(
-                textElement.innerText.trim(),
-                defaultDateFormat,
-                resolveTimezone(options),
-            );
-
-            expect(momentOutputDate.day()).toEqual(momentInputDate.day());
-            expect(momentOutputDate.month()).toEqual(momentInputDate.month());
-            expect(momentOutputDate.year()).toEqual(momentInputDate.year());
-            expect(momentOutputDate.hour()).toEqual(momentInputDate.hour());
-            expect(momentOutputDate.minute()).toEqual(momentInputDate.minute());
+            expect(textElement.innerText.trim()).toEqual(expectedAbsoluteDate);
         });
 
         it('should update the tooltip when titleType changes', () => {
@@ -479,8 +415,13 @@ describe('Directive: UiDateFormat', () => {
                 })
                 .createComponent(TestHostComponent);
 
+            const inputJSDate = inputDate.minus({ seconds: 30 }).toJSDate();
+            const expectedAbsoluteDate = DateTime.fromJSDate(inputJSDate)
+                .setZone(inputDate.zone)
+                .toLocaleString(defaultDateFormat);
+
             component = fixture.componentInstance;
-            component.date = momentInputDate.subtract(30, 'seconds').toDate();
+            component.date = inputJSDate;
 
             const textElement = fixture
                 .debugElement
@@ -494,41 +435,21 @@ describe('Directive: UiDateFormat', () => {
 
             fixture.detectChanges();
 
-            let momentOutputDate = moment.tz(
-                textElement.dataset.title,
-                defaultDateFormat,
-                resolveTimezone(options),
-            );
-
-            expect(momentOutputDate.day()).toEqual(momentInputDate.day());
-            expect(momentOutputDate.month()).toEqual(momentInputDate.month());
-            expect(momentOutputDate.year()).toEqual(momentInputDate.year());
-            expect(momentOutputDate.hour()).toEqual(momentInputDate.hour());
-            expect(momentOutputDate.minute()).toEqual(momentInputDate.minute());
+            expect(textElement.dataset.title).toEqual(expectedAbsoluteDate);
 
             // Secondly, check that the format switches to relative when the property changes.
             component.titleType = 'relative';
 
             fixture.detectChanges();
 
-            expect(textElement.dataset.title).toContain('a few seconds ago');
+            expect(textElement.dataset.title).toContain('30 seconds ago');
 
             // Lastly, check that changing from relative to absolute formats the text correctly.
             component.titleType = 'absolute';
 
             fixture.detectChanges();
 
-            momentOutputDate = moment.tz(
-                textElement.dataset.title,
-                defaultDateFormat,
-                resolveTimezone(options),
-            );
-
-            expect(momentOutputDate.day()).toEqual(momentInputDate.day());
-            expect(momentOutputDate.month()).toEqual(momentInputDate.month());
-            expect(momentOutputDate.year()).toEqual(momentInputDate.year());
-            expect(momentOutputDate.hour()).toEqual(momentInputDate.hour());
-            expect(momentOutputDate.minute()).toEqual(momentInputDate.minute());
+            expect(textElement.dataset.title).toEqual(expectedAbsoluteDate);
         });
 
         it('should call markForCheck if the date input value changes', fakeAsync(() => {
@@ -573,7 +494,7 @@ describe('Directive: UiDateFormat', () => {
             redraw$: new BehaviorSubject<void>(void 0),
             titleType: 'relative',
             contentType: 'relative',
-            format: 'MM/DD/YYYY H:mm:ss.SSS',
+            format: DateTime.DATETIME_SHORT_WITH_SECONDS,
         })));
 
         it('should show explicit date', () => {
@@ -586,7 +507,7 @@ describe('Directive: UiDateFormat', () => {
                 .createComponent(TestHostComponent);
 
             component = fixture.componentInstance;
-            component.date = momentInputDate.subtract(2, 'minutes').toDate();
+            component.date = inputDate.minus({ minutes: 2 }).toJSDate();
 
             fixture.detectChanges();
             const dateformatElement = fixture
@@ -598,7 +519,7 @@ describe('Directive: UiDateFormat', () => {
             const formattedDateText = dateformatElement.dataset.title;
             const contentText = dateformatElement.innerText;
             expect(formattedDateText).toContain('2 minutes ago');
-            expect(component.uiDateFormat.dateFormat).toEqual('MM/DD/YYYY H:mm:ss.SSS');
+            expect(component.uiDateFormat.dateFormat).toEqual(DateTime.DATETIME_SHORT_WITH_SECONDS);
             expect(contentText).toEqual('2 minutes ago');
         });
     });

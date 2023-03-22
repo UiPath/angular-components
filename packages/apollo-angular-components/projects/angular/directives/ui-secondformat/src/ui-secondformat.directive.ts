@@ -1,6 +1,5 @@
 import humanizeDuration from 'humanize-duration';
 import { Duration } from 'luxon';
-import moment from 'moment';
 import {
     BehaviorSubject,
     merge,
@@ -20,7 +19,6 @@ import {
     Input,
     Optional,
 } from '@angular/core';
-import { USE_LUXON } from '@uipath/angular/utilities';
 
 /**
  * The date format options schema.
@@ -44,15 +42,6 @@ export const UI_SECONDFORMAT_OPTIONS = new InjectionToken<Observable<void>>('UiS
  *
  * eg:
  * For input `61` -> output `1 minute` with the tooltip PT1M1S.
- * Depends On:
- * - [moment](https://www.npmjs.com/package/moment)
- * - [moment-timezone](https://www.npmjs.com/package/moment-timezone)
- *
- * In order to reduce bundle sizes, we strongly recommend using the following webpack plugins:
- * - [moment-locales-webpack-plugin](https://www.npmjs.com/package/moment-locales-webpack-plugin)
- * - [moment-timezone-data-webpack-plugin](https://www.npmjs.com/package/moment-timezone-data-webpack-plugin)
- *
- * Optionally, you can opt-in to use Luxon instead of Moment.
  * Depends On:
  * - [luxon](https://www.npmjs.com/package/luxon)
  * - [humanize-duration](https://www.npmjs.com/package/humanize-duration)
@@ -95,9 +84,6 @@ export class UiSecondFormatDirective {
         @Inject(UI_SECONDFORMAT_OPTIONS)
         @Optional()
         options: ISecondFormatOptions,
-        @Inject(USE_LUXON)
-        @Optional()
-        private _useLuxon?: boolean,
     ) {
         options = options || {};
         const redraw$ = options.redraw$ || of(null);
@@ -124,32 +110,26 @@ export class UiSecondFormatDirective {
             return null;
         }
 
-        return this._useLuxon
-            ? Duration.fromObject({ seconds })
-            : moment.duration(seconds, 'seconds');
+        return Duration.fromObject({ seconds });
     };
 
-    private _mapDurationToText = (duration: Duration | moment.Duration | null) => {
+    private _mapDurationToText = (duration: Duration | null) => {
         if (duration == null) {
             return '';
         }
 
-        return moment.isDuration(duration)
-            ? duration.humanize()
-            : humanizeDuration(duration.toMillis(), {
+        return humanizeDuration(duration.toMillis(), {
                 language: duration.locale,
                 // Max number of units is set to 1 to mimic what moment does
                 largest: 1,
             });
     };
 
-    private _mapDurationToTooltip = (duration: Duration | moment.Duration | null) => {
+    private _mapDurationToTooltip = (duration: Duration | null) => {
         if (duration == null) {
             return '';
         }
 
-        return moment.isDuration(duration)
-            ? duration.toISOString()
-            : duration.shiftTo('hours', 'minutes', 'seconds').toISO();
+        return duration.shiftTo('hours', 'minutes', 'seconds').toISO();
     };
 }
