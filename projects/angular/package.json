@@ -1,6 +1,6 @@
 {
     "name": "@uipath/angular",
-    "version": "14.6.0",
+    "version": "14.7.0",
     "license": "MIT",
     "author": {
         "name": "UiPath Inc",
@@ -42,8 +42,6 @@
         "humanize-duration": "^3.28.0",
         "lodash-es": "^4.17.21",
         "luxon": "^3.2.1",
-        "moment": "^2.29.1",
-        "moment-timezone": "^0.5.33",
         "object-hash": "^2.2.0",
         "rxjs": "^7.0.1",
         "scroll-into-view-if-needed": "^2.2.28"

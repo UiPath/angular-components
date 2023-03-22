@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import { Settings } from 'luxon';
 import {
     BehaviorSubject,
     firstValueFrom,
@@ -47,7 +47,7 @@ describe('Directive: UiSecondFormat', () => {
     };
 
     beforeEach(waitForAsync(() => {
-        moment.locale('en');
+        Settings.defaultLocale = 'en';
 
         TestBed.configureTestingModule({
             imports: [
@@ -70,7 +70,7 @@ describe('Directive: UiSecondFormat', () => {
 
     afterEach(() => {
         fixture.destroy();
-        moment.locale('en');
+        Settings.defaultLocale = 'en';
     });
 
     it('should create', () => {
@@ -117,12 +117,12 @@ describe('Directive: UiSecondFormat', () => {
             const text = fixture.debugElement.query(By.directive(UiSecondFormatDirective));
 
             expect(text.nativeElement.innerText)
-                .toBe('a day');
+                .toBe('1 day');
             const tooltip = await firstValueFrom(component.uiSecondFormat.tooltip$);
             expect(tooltip).toBe('PT25H1M1S');
         });
 
-        it('should display a few seconds / P0D if the total amount of seconds is 0', async () => {
+        it('should display 0 seconds / PT0S if the total amount of seconds is 0', async () => {
             component.seconds = 0;
 
             fixture.detectChanges();
@@ -130,28 +130,28 @@ describe('Directive: UiSecondFormat', () => {
             const text = fixture.debugElement.query(By.directive(UiSecondFormatDirective));
 
             expect(text.nativeElement.innerText)
-                .toBe('a few seconds');
+                .toBe('0 seconds');
             const tooltip = await firstValueFrom(component.uiSecondFormat.tooltip$);
-            expect(tooltip).toBe('P0D');
+            expect(tooltip).toBe('PT0S');
         });
     });
 
     describe('changing languages', () => {
         it('should render the ja version after changing', async () => {
-            moment.locale('en');
+            Settings.defaultLocale = 'en';
 
             component.seconds = 40;
             fixture.detectChanges();
 
             const text = fixture.debugElement.query(By.directive(UiSecondFormatDirective));
-            expect(text.nativeElement.innerText).toBe('a few seconds');
+            expect(text.nativeElement.innerText).toBe('40 seconds');
             const enTooltip = await firstValueFrom(component.uiSecondFormat.tooltip$);
 
-            moment.locale('ja');
+            Settings.defaultLocale = 'ja';
             (options.redraw$ as BehaviorSubject<void>).next();
 
             fixture.detectChanges();
-            expect(text.nativeElement.innerText).toBe('数秒');
+            expect(text.nativeElement.innerText).toBe('40 秒');
             const jaTooltip = await firstValueFrom(component.uiSecondFormat.tooltip$);
             expect(enTooltip).toBe(jaTooltip);
         });
