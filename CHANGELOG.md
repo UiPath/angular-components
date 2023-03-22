@@ -1,3 +1,11 @@
+# v14.7.0 (2023-03-22)
+* **chore** remove moment
+* **grid** focus active filter item
+* **suggest** update styling
+* **grid** add showFirstLastButtons option
+* **grid** modern footer total count
+* **grid** add hideTotalCount option
+
 # v14.6.0 (2023-03-16)
 * **suggest** use CDK Layout to display the dropdown (breaking change)
 
