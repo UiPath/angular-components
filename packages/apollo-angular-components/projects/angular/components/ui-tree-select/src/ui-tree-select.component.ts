@@ -68,6 +68,12 @@ export class UiTreeSelectComponent implements AfterViewInit, OnDestroy {
     @Input()
     itemSize = 26;
 
+    @Input()
+    expandOnSelect = false;
+
+    @Input()
+    loading = false;
+
     /**
      * Path of keys key to the node that will be selected by default. The node must be present in the data array
      * If the node is a lower level node, the parent nodes must be present in the data array and then they will be expanded automatically
@@ -217,6 +223,9 @@ export class UiTreeSelectComponent implements AfterViewInit, OnDestroy {
         if (opts.emitEvent) {
             this.selected.emit(selection);
         }
+        if (this.expandOnSelect) {
+            this.expand(node, { emitEvent: true });
+        }
     }
 
     expand(node: IFlatNodeObject, opts = TREE_ACTION_DEFAULTS) {
@@ -317,6 +326,9 @@ export class UiTreeSelectComponent implements AfterViewInit, OnDestroy {
         }
         const viewportBoundingRect = viewport.elementRef.nativeElement.getBoundingClientRect();
         const nodeBoundingRect = this.items.find(n => n.node.key === node.key)?.getBoundingClientRect();
+        if (!nodeBoundingRect) {
+            return false;
+        }
         return ((viewportBoundingRect.top + viewportBoundingRect.height) - nodeBoundingRect.bottom) > 0;
     }
 
