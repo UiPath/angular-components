@@ -472,6 +472,8 @@ class GridUtils<T> {
 }
 
 class SuggestUtils<T> {
+    dropdownSelector = '.ui-suggest-dropdown-item-list-container';
+
     constructor(
         private _utils: IntegrationUtils<T>,
     ) { }
@@ -484,11 +486,10 @@ class SuggestUtils<T> {
     };
 
     // eslint-disable-next-line complexity
-    public searchAndSelect = (selector: string, httpRequest?: Function, searchStr = '', nth = 0) => {
-        const suggest = this._utils.getDebugElement(selector);
+    public searchAndSelect = (selector: string, httpRequest?: Function, searchStr = '', nth = 0, debugEl?: DebugElement) => {
+        const suggest = this._utils.getDebugElement(selector, debugEl);
         const multiple = this.isMultiple(selector);
-        const searchInput = this._utils.getDebugElement('input', suggest);
-        const strategy = this.getFetchStrategy(selector);
+        const strategy = this.getFetchStrategy(selector, debugEl);
 
         if (!multiple && !this.isOpen(selector)) {
             this._utils.fixture.detectChanges();
@@ -509,9 +510,13 @@ class SuggestUtils<T> {
             }
         }
 
+        const suggestDropdown = this._utils.getDebugElement(this.dropdownSelector, debugEl);
+        const parentContainer = multiple ? suggest : suggestDropdown;
+        const searchInput = this._utils.getDebugElement('input', parentContainer);
+
         if (searchInput) { // && searchStr
             if (multiple && !this.isOpen(selector)) {
-                this._utils.click('input', suggest);
+                searchInput.nativeElement.dispatchEvent(EventGenerator.click);
                 this._utils.fixture.detectChanges();
 
                 if (httpRequest && strategy === 'onOpen') {
@@ -521,17 +526,19 @@ class SuggestUtils<T> {
                 }
             }
 
-            this._utils.setInput('input', searchStr, suggest);
+            this._utils.setInput('input', searchStr, parentContainer);
             tick(SUGGEST_DEBOUNCE);
             this._utils.fixture.detectChanges();
 
             if (httpRequest) { httpRequest(); }
         }
+
+        tick(100);
         this._utils.fixture.detectChanges();
 
-        const listItems = suggest.queryAll(By.css('.mat-list-item'));
+        const listItems = parentContainer.queryAll(By.css('.mat-list-item'));
 
-        const reverseOrder = !!suggest.query(By.css('.item-list-container-direction-up'));
+        const reverseOrder = !!parentContainer.query(By.css('mat-list:first-child:not(:only-child)'));
 
         const listItem = listItems[reverseOrder ? listItems.length - nth - 1 : nth].nativeElement;
         listItem.dispatchEvent(EventGenerator.click);
@@ -544,8 +551,8 @@ class SuggestUtils<T> {
         }
     };
 
-    public getFetchStrategy = (selector: string) => {
-        const suggest = this._utils.getDebugElement(selector);
+    public getFetchStrategy = (selector: string, debugEl?: DebugElement) => {
+        const suggest = this._utils.getDebugElement(selector, debugEl);
         // maybe add a getter along the setter for fetchStrategy ?
         return (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$']?.value ?? 'eager';
     };
@@ -553,8 +560,8 @@ class SuggestUtils<T> {
     public selectNthItem = (selector: string, nth = 0, config?: {
         httpMock: HttpTestingController;
         stub: IStubEndpoint;
-    }) => {
-        const suggest = this._utils.getDebugElement(selector);
+    }, debugEl?: DebugElement) => {
+        const suggest = this._utils.getDebugElement(selector, debugEl);
         const multiple = this.isMultiple(selector);
 
         if (!this.isOpen(selector)) {
@@ -562,16 +569,21 @@ class SuggestUtils<T> {
             this._utils.fixture.detectChanges();
         }
 
-        const strategy = this.getFetchStrategy(selector);
+        const strategy = this.getFetchStrategy(selector, debugEl);
 
         if (!!config && strategy === 'onOpen') {
             tick(1000);
             this._utils.expectAndFlush(config.stub, config.httpMock);
         }
 
-        const listItems = suggest.queryAll(By.css('.mat-list-item'));
+        tick(100);
+        this._utils.fixture.detectChanges();
 
-        const reverseOrder = !!suggest.query(By.css('.item-list-container-direction-up'));
+        const suggestDropdown = this._utils.getDebugElement(this.dropdownSelector, debugEl);
+
+        const listItems = suggestDropdown.queryAll(By.css('.mat-list-item'));
+
+        const reverseOrder = !!suggestDropdown.query(By.css('mat-list:first-child:not(:only-child)'));
 
         const listItem = listItems[reverseOrder ? listItems.length - nth - 1 : nth].nativeElement;
 
@@ -586,12 +598,12 @@ class SuggestUtils<T> {
         return listItem;
     };
 
-    public isMultiple = (selector: string) => {
-        return !!this._utils.getNativeElement(`${selector} .multi-select`);
+    public isMultiple = (selector: string, debugEl?: DebugElement) => {
+        return !!this._utils.getNativeElement(`${selector} mat-chip-list`, debugEl);
     };
 
-    public isOpen = (selector: string) => {
-        return !!this._utils.getNativeElement(`${selector} [aria-expanded="true"]`);
+    public isOpen = (selector: string, debugEl?: DebugElement) => {
+        return !!this._utils.getNativeElement(`${selector} [aria-expanded="true"]`, debugEl);
     };
 
     public getValue = (selector: string, debugEl = this._utils.fixture.debugElement) => {
