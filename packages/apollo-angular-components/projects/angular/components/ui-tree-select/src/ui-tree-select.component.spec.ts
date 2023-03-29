@@ -37,6 +37,7 @@ const DATA_STUB = [
         <ui-tree-select
         [initialSelection]="initialSelection"
     [data]="data"
+    [expandOnSelect]="expandOnSelect"
     (selected)="selected($event)"
     (expanded)="expanded($event)"
     (collapsed)="collapsed($event)">
@@ -82,6 +83,7 @@ export class TestHostComponent {
     expanded = jasmine.createSpy();
     collapsed = jasmine.createSpy();
     initialSelection: string[] = [];
+    expandOnSelect = false;
 }
 
 describe('UiTreeSelectComponent', () => {
@@ -292,4 +294,18 @@ describe('UiTreeSelectComponent', () => {
             ]),
         );
     }));
+
+    it('should correctly expand on select', () => {
+        const nodeA = fixture.nativeElement.querySelectorAll('.tree-item-container')[0];
+        nodeA.click();
+        fixture.detectChanges();
+        expect(component.expanded).not.toHaveBeenCalledWith();
+
+        component.expandOnSelect = true;
+        fixture.detectChanges();
+        const nodeB = fixture.nativeElement.querySelectorAll('.tree-item-container')[1];
+        nodeB.click();
+        fixture.detectChanges();
+        expect(component.expanded).toHaveBeenCalledWith(jasmine.objectContaining({ key: 'y' }));
+    });
 });
