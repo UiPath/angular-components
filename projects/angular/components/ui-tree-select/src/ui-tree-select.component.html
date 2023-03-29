@@ -2,7 +2,8 @@
                              class="virtual-scroll-container"
                              [itemSize]="itemSize"
                              tabindex="0">
-    <mat-list role="tree"
+    <mat-list *uiContentLoading="loading"
+              role="tree"
               class="tree-container">
         <ng-container *ngIf="dataSource.data.length == 0">
             <ng-content select="[noDataMessage]"></ng-content>
@@ -12,6 +13,7 @@
                           (collapsed)="collapse(node)"
                           (expanded)="expand(node)"
                           [node]="node"
+                          [attr.nodekey]="node.key"
                           [isSelected]="isSelected(node)">
                 <ng-template *ngIf="itemTemplate"
                              [ngTemplateOutlet]="itemTemplate"

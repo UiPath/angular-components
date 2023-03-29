@@ -1,3 +1,6 @@
+# v14.7.1 (2023-03-28)
+* **tree-select** add option to expand on select
+
 # v14.7.0 (2023-03-22)
 * **chore** remove moment
 * **grid** focus active filter item
