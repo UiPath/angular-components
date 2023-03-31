@@ -1,3 +1,7 @@
+# v14.7.2 (2023-03-31)
+* **fix** humanize duration in different locales
+* **deps** bump webpack and @angular-devkit/build-angular
+
 # v14.7.1 (2023-03-28)
 * **tree-select** add option to expand on select
 
