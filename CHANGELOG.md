@@ -1,3 +1,6 @@
+# v14.5.5 (2023-03-31)
+* **fix** humanize duration in different locales
+
 # v14.5.3 (2023-03-03)
 * **grid** add test for tooltip on focus
 * **grid** display title & description tooltip on focus
