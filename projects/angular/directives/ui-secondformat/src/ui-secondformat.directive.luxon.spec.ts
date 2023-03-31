@@ -1,3 +1,4 @@
+import { Settings } from 'luxon';
 import {
     BehaviorSubject,
     firstValueFrom,
@@ -13,9 +14,8 @@ import {
     waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
-import { Settings } from 'luxon';
 import { USE_LUXON } from '@uipath/angular/utilities';
+
 import {
     ISecondFormatOptions,
     UiSecondFormatDirective,
@@ -159,6 +159,37 @@ describe('Directive: UiSecondFormat with luxon', () => {
             expect(text.nativeElement.innerText).toBe('40 秒');
             const jaTooltip = await firstValueFrom(component.uiSecondFormat.tooltip$);
             expect(enTooltip).toBe(jaTooltip);
+        });
+    });
+
+    describe('humanize in different locales', () => {
+        [
+            {
+                code: 'es-mx',
+                unit: ' segundos',
+            },
+            {
+                code: 'pt-br',
+                unit: ' segundos',
+            },
+            {
+                code: 'zh-cn',
+                unit: '秒钟',
+            },
+        ].forEach(locale => {
+            it(`should humanize in ${locale.code}`, async () => {
+                Settings.defaultLocale = locale.code;
+
+                component.seconds = 40;
+                fixture.detectChanges();
+
+                const text = fixture.debugElement.query(By.directive(UiSecondFormatDirective));
+
+                (options.redraw$ as BehaviorSubject<void>).next();
+
+                fixture.detectChanges();
+                expect(text.nativeElement.innerText).toBe(`40${locale.unit}`);
+            });
         });
     });
 });
