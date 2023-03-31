@@ -156,4 +156,35 @@ describe('Directive: UiSecondFormat', () => {
             expect(enTooltip).toBe(jaTooltip);
         });
     });
+
+    describe('humanize in different locales', () => {
+        [
+            {
+                code: 'es-mx',
+                unit: ' segundos',
+            },
+            {
+                code: 'pt-br',
+                unit: ' segundos',
+            },
+            {
+                code: 'zh-cn',
+                unit: '秒钟',
+            },
+        ].forEach(locale => {
+            it(`should humanize in ${locale.code}`, async () => {
+                Settings.defaultLocale = locale.code;
+
+                component.seconds = 40;
+                fixture.detectChanges();
+
+                const text = fixture.debugElement.query(By.directive(UiSecondFormatDirective));
+
+                (options.redraw$ as BehaviorSubject<void>).next();
+
+                fixture.detectChanges();
+                expect(text.nativeElement.innerText).toBe(`40${locale.unit}`);
+            });
+        });
+    });
 });
