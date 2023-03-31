@@ -112,7 +112,6 @@ export const resolveTimezone = (options: IDateFormatOptions) => {
  * Optionally, you can opt-in to use Luxon instead of Moment.
  * Depends On:
  * - [luxon](https://www.npmjs.com/package/luxon)
- * - [humanize-duration](https://www.npmjs.com/package/humanize-duration)
  *
  * @export
  */

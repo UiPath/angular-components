@@ -1,5 +1,7 @@
-import humanizeDuration from 'humanize-duration';
-import { Duration } from 'luxon';
+import {
+    Duration,
+    DurationObjectUnits,
+} from 'luxon';
 import moment from 'moment';
 import {
     BehaviorSubject,
@@ -55,7 +57,6 @@ export const UI_SECONDFORMAT_OPTIONS = new InjectionToken<Observable<void>>('UiS
  * Optionally, you can opt-in to use Luxon instead of Moment.
  * Depends On:
  * - [luxon](https://www.npmjs.com/package/luxon)
- * - [humanize-duration](https://www.npmjs.com/package/humanize-duration)
  *
  * @export
  */
@@ -87,6 +88,8 @@ export class UiSecondFormatDirective {
     protected _text?: HTMLElement;
 
     private _seconds$ = new BehaviorSubject<number | null>(null);
+
+    private _units: (keyof DurationObjectUnits)[] = ['years', 'months', 'days', 'hours', 'minutes', 'seconds', 'milliseconds'];
 
     /**
      * @ignore
@@ -134,13 +137,15 @@ export class UiSecondFormatDirective {
             return '';
         }
 
-        return moment.isDuration(duration)
-            ? duration.humanize()
-            : humanizeDuration(duration.toMillis(), {
-                language: duration.locale,
-                // Max number of units is set to 1 to mimic what moment does
-                largest: 1,
-            });
+        if (moment.isDuration(duration)) {
+            return duration.humanize();
+        }
+
+        const rescaledDuration = duration.rescale();
+
+        const largestUnit = this._getDurationLargestUnit(rescaledDuration);
+
+        return Duration.fromObject({ [largestUnit]: rescaledDuration[largestUnit] }).toHuman();
     };
 
     private _mapDurationToTooltip = (duration: Duration | moment.Duration | null) => {
@@ -152,4 +157,8 @@ export class UiSecondFormatDirective {
             ? duration.toISOString()
             : duration.shiftTo('hours', 'minutes', 'seconds').toISO();
     };
+
+    private _getDurationLargestUnit(duration: Duration) {
+        return this._units.find(unit => !!duration[unit]) ?? 'seconds';
+    }
 }
