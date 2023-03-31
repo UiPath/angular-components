@@ -1,5 +1,7 @@
-import humanizeDuration from 'humanize-duration';
-import { Duration } from 'luxon';
+import {
+    Duration,
+    DurationObjectUnits,
+} from 'luxon';
 import {
     BehaviorSubject,
     merge,
@@ -77,6 +79,8 @@ export class UiSecondFormatDirective {
 
     private _seconds$ = new BehaviorSubject<number | null>(null);
 
+    private _units: (keyof DurationObjectUnits)[] = ['years', 'months', 'days', 'hours', 'minutes', 'seconds', 'milliseconds'];
+
     /**
      * @ignore
      */
@@ -118,11 +122,11 @@ export class UiSecondFormatDirective {
             return '';
         }
 
-        return humanizeDuration(duration.toMillis(), {
-                language: duration.locale,
-                // Max number of units is set to 1 to mimic what moment does
-                largest: 1,
-            });
+        const rescaledDuration = duration.rescale();
+
+        const largestUnit = this._getDurationLargestUnit(rescaledDuration);
+
+        return Duration.fromObject({ [largestUnit]: rescaledDuration[largestUnit] }).toHuman();
     };
 
     private _mapDurationToTooltip = (duration: Duration | null) => {
@@ -132,4 +136,8 @@ export class UiSecondFormatDirective {
 
         return duration.shiftTo('hours', 'minutes', 'seconds').toISO();
     };
+
+    private _getDurationLargestUnit(duration: Duration) {
+        return this._units.find(unit => !!duration[unit]) ?? 'seconds';
+    }
 }

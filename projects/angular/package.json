@@ -1,6 +1,6 @@
 {
     "name": "@uipath/angular",
-    "version": "14.7.1",
+    "version": "14.7.2",
     "license": "MIT",
     "author": {
         "name": "UiPath Inc",
@@ -39,7 +39,6 @@
         "@angular/platform-browser-dynamic": ">=14.1.0",
         "@angular/router": ">=14.1.0",
         "clipboard": "^2.0.8",
-        "humanize-duration": "^3.28.0",
         "lodash-es": "^4.17.21",
         "luxon": "^3.2.1",
         "object-hash": "^2.2.0",
