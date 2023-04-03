@@ -5,9 +5,14 @@
     margin-bottom: $margin;
 }
 
-.virtual-scroll-container {
+.ui-tree-select-container {
     border: 2px solid cyan;
     height: 500px;
+
+    .header {
+        display: flex;
+        align-items: center;
+    }
 }
 
 .tree-item-container {
