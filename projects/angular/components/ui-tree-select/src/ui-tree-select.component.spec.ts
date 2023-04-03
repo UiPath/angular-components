@@ -42,6 +42,15 @@ const DATA_STUB = [
     (expanded)="expanded($event)"
     (collapsed)="collapsed($event)">
     <p noDataMessage>no data</p>
+
+    <ng-template #headerTemplate>
+        <ng-container *ngIf="showHeaderTemplate">
+            <div class="header">
+                header template
+            </div>
+        </ng-container>
+    </ng-template>
+
     <ng-template #itemTemplate
                  let-node="node"
                  let-expanded="expanded"
@@ -69,7 +78,7 @@ const DATA_STUB = [
     .test-host-container {
         height: 100%;
     }
-        .virtual-scroll-container {
+        .ui-tree-select-container {
             height: 500px;
         }
     `],
@@ -84,6 +93,7 @@ export class TestHostComponent {
     collapsed = jasmine.createSpy();
     initialSelection: string[] = [];
     expandOnSelect = false;
+    showHeaderTemplate = false;
 }
 
 describe('UiTreeSelectComponent', () => {
@@ -117,6 +127,14 @@ describe('UiTreeSelectComponent', () => {
         const nodes = fixture.nativeElement.querySelectorAll('.tree-item-container');
         expect(nodes.length).toBe(0);
         expect(fixture.nativeElement.textContent.trim()).toBe('no data');
+    });
+
+    it('should correctly render header template', () => {
+        component.showHeaderTemplate = true;
+        fixture.detectChanges();
+        const headerElement = fixture.nativeElement.querySelector('.header');
+        expect(headerElement).toBeTruthy();
+        expect(headerElement.textContent.trim()).toBe('header template');
     });
 
     it('should correctly emit selected event', () => {
