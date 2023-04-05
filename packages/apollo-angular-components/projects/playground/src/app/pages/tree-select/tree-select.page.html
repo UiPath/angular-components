@@ -3,6 +3,14 @@
                 (selected)="selected($event)"
                 (expanded)="expanded($event)">
     <p noDataMessage>no data</p>
+
+    <ng-template #headerTemplate>
+        <div class="header">
+            <mat-icon>folder</mat-icon>
+            <span>Header</span>
+        </div>
+    </ng-template>
+
     <ng-template #itemTemplate
                  let-node="node"
                  let-expanded="expanded"

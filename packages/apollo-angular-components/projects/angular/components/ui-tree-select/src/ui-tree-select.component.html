@@ -1,30 +1,37 @@
-<cdk-virtual-scroll-viewport (keydown)="onKeydown($event)"
-                             class="virtual-scroll-container"
-                             [itemSize]="itemSize"
-                             tabindex="0">
-    <mat-list *uiContentLoading="loading"
-              role="tree"
-              class="tree-container">
-        <ng-container *ngIf="dataSource.data.length == 0">
-            <ng-content select="[noDataMessage]"></ng-content>
-        </ng-container>
-        <ng-container *cdkVirtualFor="let node of dataSource; let i = index; trackBy: trackById;">
-            <ui-tree-item (selected)="select(node)"
-                          (collapsed)="collapse(node)"
-                          (expanded)="expand(node)"
-                          [node]="node"
-                          [attr.nodekey]="node.key"
-                          [isSelected]="isSelected(node)">
-                <ng-template *ngIf="itemTemplate"
-                             [ngTemplateOutlet]="itemTemplate"
-                             [ngTemplateOutletContext]="{
+<div cdkVirtualScrollingElement
+     class="ui-tree-select-container">
+    <ng-template *ngIf="headerTemplate"
+                 [ngTemplateOutlet]="headerTemplate">
+    </ng-template>
+
+    <cdk-virtual-scroll-viewport (keydown)="onKeydown($event)"
+                                 [itemSize]="itemSize"
+                                 class="virtual-scroll-container"
+                                 tabindex="0">
+        <mat-list *uiContentLoading="loading"
+                  role="tree"
+                  class="tree-container">
+            <ng-container *ngIf="dataSource.data.length == 0">
+                <ng-content select="[noDataMessage]"></ng-content>
+            </ng-container>
+            <ng-container *cdkVirtualFor="let node of dataSource; let i = index; trackBy: trackById;">
+                <ui-tree-item (selected)="select(node)"
+                              (collapsed)="collapse(node)"
+                              (expanded)="expand(node)"
+                              [node]="node"
+                              [attr.nodekey]="node.key"
+                              [isSelected]="isSelected(node)">
+                    <ng-template *ngIf="itemTemplate"
+                                 [ngTemplateOutlet]="itemTemplate"
+                                 [ngTemplateOutletContext]="{
                                     node: node,
                                     expanded: isExpanded(node),
                                     selected: isSelected(node),
                                     toggle: toggle(node)
                                 }">
-                </ng-template>
-            </ui-tree-item>
-        </ng-container>
-    </mat-list>
-</cdk-virtual-scroll-viewport>
+                    </ng-template>
+                </ui-tree-item>
+            </ng-container>
+        </mat-list>
+    </cdk-virtual-scroll-viewport>
+</div>

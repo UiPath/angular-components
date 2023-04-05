@@ -1,3 +1,6 @@
+# v14.7.3 (2023-04-05)
+* **tree-select** add option to provide custom header
+
 # v14.7.2 (2023-03-31)
 * **fix** humanize duration in different locales
 * **deps** bump webpack and @angular-devkit/build-angular

@@ -62,6 +62,9 @@ export class UiTreeSelectComponent implements AfterViewInit, OnDestroy {
     @ViewChildren(UiTreeItemComponent)
     items!: QueryList<UiTreeItemComponent>;
 
+    @ContentChild('headerTemplate')
+    headerTemplate?: any;
+
     @ContentChild('itemTemplate')
     itemTemplate?: any;
 
