@@ -1,3 +1,6 @@
+# v14.7.4 (2023-04-12)
+* **tree-select** add option to collapse all
+
 # v14.7.3 (2023-04-05)
 * **tree-select** add option to provide custom header
 
