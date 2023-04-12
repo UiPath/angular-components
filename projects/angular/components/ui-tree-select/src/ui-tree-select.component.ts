@@ -262,6 +262,10 @@ export class UiTreeSelectComponent implements AfterViewInit, OnDestroy {
         };
     }
 
+    collapseAll() {
+        this._treeControl.collapseAll();
+    }
+
     private _preventDefault(event: KeyboardEvent) {
         if (event.key === ' ') {
             event.preventDefault();
