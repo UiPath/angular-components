@@ -19,9 +19,22 @@ if (rcType && !allowedRcBumps.includes(rcType)) {
 }
 
 if (bumpType !== 'fix-changelog-order') {
-    changeLog(bumpVersion());
+    bumpAndTagVersion();
 } else {
     fixChangelogOrder();
+}
+
+function bumpAndTagVersion() {
+    const [initialVersion, bumpedVersion] = bumpVersion();
+    changeLog([initialVersion, bumpedVersion]);
+
+    execSync('git reset HEAD -- .');
+
+    execSync('git add package.json package-lock.json CHANGELOG.md projects/angular/package.json');
+
+    execSync(`git commit -m "chore: bump version to v${bumpedVersion}"`);
+
+    execSync(`git tag v${bumpedVersion}`);
 }
 
 
@@ -62,8 +75,6 @@ function bumpVersion() {
     const updatedPackageLock = packageLock.replaceAll(initialVersionLine, updatedVersionLine);
 
     fs.writeFileSync('./package-lock.json', updatedPackageLock);
-
-    execSync(`git tag v${bumpedVersion}`);
 
     return [initialVersion, bumpedVersion];
 }
