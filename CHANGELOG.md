@@ -1,3 +1,10 @@
+# v13.7.6 (2023-04-26)
+* **grid** add aria-expanded to filters btn
+* **grid** add tick to test
+* **grid** announce filter menu state collapsed/expanded
+* **a11y** filter messages that are announced
+* **a11y** add menu-trigger directive that sets aria-expanded
+
 # v13.7.5 (2022-11-22)
 * **dateformat** avoid using macrotasks using setTimeout generated a lot of macrotasks
 
