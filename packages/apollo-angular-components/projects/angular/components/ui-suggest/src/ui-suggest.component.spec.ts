@@ -990,6 +990,29 @@ const sharedSpecifications = (
             assert.isOpen();
         });
 
+        it('should focus the display element if Tab key is pressed and the dropdown is open', () => {
+            fixture.detectChanges();
+
+            const display = fixture.debugElement.query(By.css('.display'));
+            display.nativeElement.dispatchEvent(
+                EventGenerator.keyDown(Key.Enter),
+            );
+
+            fixture.detectChanges();
+
+            const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
+            itemContainer.nativeElement.dispatchEvent(
+                EventGenerator.keyDown(Key.Tab),
+            );
+
+            fixture.detectChanges();
+
+            // We can't test if the next element is focused because jasmine can't simulate the default behavior of the TAB key.
+            // We will test if the implemented logic is working.
+            // https://stackoverflow.com/questions/25032300/jasmine-test-simulate-tab-keydown-and-detect-newly-focused-element
+            expect(document.activeElement).toBe(display.nativeElement);
+        });
+
         it('should close if Tab is pressed', () => {
             fixture.detectChanges();
             const display = fixture.debugElement.query(By.css('.display'));
@@ -2760,7 +2783,7 @@ describe('Component: UiSuggest', () => {
                             [drillDown]="drillDown"
                             [compact]="compact"
                             formControlName="test">
-            </ui-suggest>
+                </ui-suggest>
             </mat-form-field>
         </form>
         `,

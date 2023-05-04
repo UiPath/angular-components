@@ -684,6 +684,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     suggestContainerWidth = 0;
 
     @ViewChild('suggestContainer') suggestContainer!: ElementRef;
+    @ViewChild('displayContainer') displayContainer?: ElementRef;
 
     @ViewChild(CdkVirtualScrollViewport)
     protected set _virtualScrollerQuery(value: CdkVirtualScrollViewport) {
@@ -1292,6 +1293,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         return this.value.length > 0
             ? this._getValueSummary()
             : this.defaultValue;
+    }
+
+    onOptionsDropdownTabPressed() {
+        if (this.isOpen && !this.expandInline) {
+            this.displayContainer?.nativeElement.focus();
+        }
+        this.close(false);
     }
 
     private _getDropdownPositionAccordingToDirection() {
