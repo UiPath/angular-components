@@ -119,6 +119,11 @@ export class UiGridIntl implements OnDestroy {
      */
     clearCustomFilter = 'Clear custom filter';
     /**
+     * Menu expanded message for live announcer.
+     *
+     */
+    menuExpanded = 'expanded';
+    /**
      * No data row message alternative function.
      *
      */
