@@ -1,3 +1,8 @@
+# v14.7.5 (2023-05-05)
+* **grid** fix styling of resize icon
+* **suggest** change focus logic
+* **chore** add automatic commit for bump version
+
 # v14.7.4 (2023-04-12)
 * **tree-select** add option to collapse all
 
