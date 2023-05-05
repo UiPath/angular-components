@@ -37,6 +37,7 @@
                  (keydown.space)="preventDefault($event)"
                  (focus)="onFocus();"
                  (blur)="onBlur()"
+                 #displayContainer
                  matRipple
                  class="display"
                  role="combobox">
@@ -173,7 +174,7 @@
          (keydown.esc)="preventDefault($event)"
          (keyup.esc)="preventDefault($event);
             close();"
-         (keydown.tab)="close(false)"
+         (keydown.tab)="onOptionsDropdownTabPressed()"
          (keydown.shift.tab)="close()"
          tabindex="-1"
          class="ui-suggest-dropdown-item-list-container">

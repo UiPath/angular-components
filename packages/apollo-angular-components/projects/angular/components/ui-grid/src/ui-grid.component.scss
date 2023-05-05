@@ -321,10 +321,7 @@ ui-grid {
             justify-content: center;
             display: flex;
             align-items: center;
-
-            mat-icon {
-                margin-right: $ui-grid-default-spacing;
-            }
+            margin-right: $ui-grid-default-spacing;
         }
 
         &-dropdown-filter {
