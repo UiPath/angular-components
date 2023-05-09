@@ -16,10 +16,10 @@ import {
 } from '@angular/core';
 import {
     ControlValueAccessor,
-    UntypedFormControl,
     FormGroupDirective,
     NgControl,
     NgForm,
+    UntypedFormControl,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -102,6 +102,13 @@ export abstract class UiSuggestMatFormFieldDirective implements
         this._placeholder = placeholder;
         this.stateChanges.next();
     }
+
+    /**
+     * Hides the combo box title.
+     *
+     */
+    @Input()
+    shouldHideTitle = false;
 
     /**
      * Set a custom size for the list items.
