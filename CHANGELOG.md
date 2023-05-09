@@ -1,3 +1,6 @@
+# v14.7.6 (2023-05-09)
+* **suggest** condition title display by input
+
 # v14.7.5 (2023-05-05)
 * **grid** fix styling of resize icon
 * **suggest** change focus logic
