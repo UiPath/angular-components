@@ -1,3 +1,6 @@
+# v14.7.7 (2023-05-10)
+* **suggest** add aria-selected to item
+
 # v14.7.6 (2023-05-09)
 * **suggest** condition title display by input
 
