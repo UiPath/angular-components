@@ -1,3 +1,6 @@
+# v13.7.7 (2023-05-10)
+* **suggest** add aria-selected to item
+
 # v13.7.6 (2023-04-26)
 * **grid** add aria-expanded to filters btn
 * **grid** add tick to test
