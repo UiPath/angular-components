@@ -165,6 +165,14 @@ ui-grid {
                 margin-left: auto;
                 align-items: center;
             }
+
+            ui-suggest {
+                .display {
+                    &:focus {
+                        outline: revert;
+                    }
+                }
+            }
         }
 
         // single main button on default design
