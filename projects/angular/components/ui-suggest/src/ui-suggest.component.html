@@ -397,6 +397,7 @@
                    (click)="preventDefault($event);
                                         updateValue(item, !multiple, true);"
                    [attr.role]="'option'"
+                   [attr.aria-selected]="isItemSelected(item)"
                    matRipple>
         <ng-container *ngIf="!!item">
             <ng-container *ngIf="itemTemplate; else defaultItem">
