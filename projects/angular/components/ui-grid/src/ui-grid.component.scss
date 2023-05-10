@@ -177,6 +177,14 @@ ui-grid {
                     gap: $ui-grid-action-buttons-spacing;
                 }
             }
+
+            ui-suggest {
+                .display {
+                    &:focus {
+                        outline: revert;
+                    }
+                }
+            }
         }
 
         // single main button on default design
