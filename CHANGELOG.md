@@ -1,3 +1,6 @@
+# v14.5.6 (2023-05-10)
+* **fix** display outline on suggest grid filter
+
 # v14.5.5 (2023-03-31)
 * **fix** humanize duration in different locales
 
