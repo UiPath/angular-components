@@ -1,3 +1,6 @@
+# v14.7.8 (2023-05-10)
+* **fix** display outline on suggest grid filter
+
 # v14.7.7 (2023-05-10)
 * **suggest** add aria-selected to item
 
