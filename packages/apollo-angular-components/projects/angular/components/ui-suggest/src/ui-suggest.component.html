@@ -193,6 +193,7 @@
                    [uiAutofocus]="isOpen &&
                          searchable"
                    [attr.maxlength]="maxLength"
+                   [attr.aria-label]="ariaLabel ?? placeholder"
                    [refocus]="isOpen"
                    selectionLocation="end"
                    autocomplete="off"
