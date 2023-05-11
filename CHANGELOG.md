@@ -1,3 +1,7 @@
+# v13.7.9 (2023-05-11)
+* **suggest** add input for aria-label
+* **suggest** condition title display by input
+
 # v13.7.8 (2023-05-10)
 * **fix** display outline on suggest grid filter
 
