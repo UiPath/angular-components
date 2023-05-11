@@ -21,7 +21,7 @@
                  [uiAutofocus]="!isOpen && focus"
                  [refocus]="!isOpen && focus"
                  [matRippleDisabled]="isFormControl"
-                 [attr.aria-label]="placeholder"
+                 [attr.aria-label]="ariaLabel ?? placeholder"
                  [attr.aria-describedby]="describedBy"
                  [attr.aria-required]="required"
                  [attr.aria-disabled]="disabled || readonly"
@@ -80,7 +80,7 @@
         <ng-template #chipsTemplate>
             <mat-chip-list #chipList
                            [attr.tabindex]="!disabled && !readonly ? 0 : null"
-                           [attr.aria-label]="placeholder"
+                           [attr.aria-label]="ariaLabel ?? placeholder"
                            [attr.aria-describedby]="describedBy"
                            [attr.aria-required]="required"
                            [attr.aria-disabled]="disabled || readonly"
@@ -130,7 +130,7 @@
                            [formControl]="inputControl"
                            [matChipInputFor]="chipList"
                            [attr.maxlength]="maxLength"
-                           [attr.aria-label]="placeholder"
+                           [attr.aria-label]="ariaLabel ?? placeholder"
                            selectionLocation="end"
                            autocomplete="off"
                            aria-autocomplete="list"
