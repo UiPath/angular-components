@@ -16,7 +16,7 @@
              [uiAutofocus]="!isOpen && focus"
              [refocus]="!isOpen && focus"
              [matRippleDisabled]="isFormControl"
-             [attr.aria-label]="placeholder"
+             [attr.aria-label]="ariaLabel ?? placeholder"
              [attr.aria-describedby]="describedBy"
              [attr.aria-required]="required"
              [attr.aria-disabled]="disabled || readonly"
@@ -44,7 +44,7 @@
             <ng-template #showDefaultValue>
                 <div [matTooltip]="tooltip ?? ''"
                      class="display-container text-ellipsis">
-                    <span *ngIf="!isFormControl && placeholder"
+                    <span *ngIf="!isFormControl && placeholder && !shouldHideTitle"
                           class="display-title"
                           aria-hidden="true">
                         {{ placeholder }}:
@@ -74,7 +74,7 @@
     <ng-template #chipsTemplate>
         <mat-chip-list #chipList
                        [attr.tabindex]="!disabled && !readonly ? 0 : null"
-                       [attr.aria-label]="placeholder"
+                       [attr.aria-label]="ariaLabel ?? placeholder"
                        [attr.aria-describedby]="describedBy"
                        [attr.aria-required]="required"
                        [attr.aria-disabled]="disabled || readonly"
@@ -116,7 +116,7 @@
                        [formControl]="inputControl"
                        [matChipInputFor]="chipList"
                        [attr.maxlength]="maxLength"
-                       [attr.aria-label]="placeholder"
+                       [attr.aria-label]="ariaLabel ?? placeholder"
                        selectionLocation="end"
                        autocomplete="off"
                        aria-autocomplete="list"

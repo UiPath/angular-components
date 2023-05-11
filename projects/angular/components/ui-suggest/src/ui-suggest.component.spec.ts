@@ -89,6 +89,7 @@ class UiSuggestFixtureDirective {
     displayPriority: 'default' | 'selected' = 'default';
     fetchStrategy: 'eager' | 'onOpen' = 'eager';
     minChars = 0;
+    shouldHideTitle = false;
 
     set value(value: ISuggestValue[] | undefined) {
         this._value = value;
@@ -148,6 +149,21 @@ const sharedSpecifications = (
     });
 
     describe('Behavior: standard usage', () => {
+        ([true, false].forEach(shouldHideTitle => {
+            it(`should ${shouldHideTitle ? 'not' : ''} display title if shouldHideTitle is ${shouldHideTitle}`, () => {
+                component.placeholder = 'some place holder';
+                component.shouldHideTitle = shouldHideTitle;
+
+                fixture.detectChanges();
+                const spanElem = document.querySelector('.display-title');
+                if (shouldHideTitle || uiSuggest.isFormControl) {
+                    expect(spanElem).toBeNull();
+                } else {
+                    expect(spanElem).toBeTruthy();
+                }
+            });
+        }));
+
         it('should be initialized', () => {
             expect(uiSuggest).toBeDefined();
         });
@@ -2464,7 +2480,8 @@ describe('Component: UiSuggest', () => {
                         [minChars]="minChars"
                         [drillDown]="drillDown"
                         [readonly]="readonly"
-                        [compact]="compact">
+                        [compact]="compact"
+                        [shouldHideTitle]="shouldHideTitle">
             </ui-suggest>
         `,
     })
