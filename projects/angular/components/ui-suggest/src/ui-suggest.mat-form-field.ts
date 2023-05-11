@@ -104,6 +104,13 @@ export abstract class UiSuggestMatFormFieldDirective implements
     }
 
     /**
+     * Hides the combo box title.
+     *
+     */
+    @Input()
+    shouldHideTitle = false;
+
+    /**
      * Set a custom size for the list items.
      *
      */
