@@ -1,9 +1,5 @@
 # v14.7.9 (2023-05-11)
 * **suggest** add input for aria-label
-* **chore** bump version to v14.7.8
-* **fix** display outline on suggest grid filter
-* **chore** bump version to v14.7.7
-* **suggest** add aria-selected to item
 
 # v14.7.8 (2023-05-10)
 * **fix** display outline on suggest grid filter
