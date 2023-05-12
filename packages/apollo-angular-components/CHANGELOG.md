@@ -1,3 +1,6 @@
+# v14.7.10 (2023-05-12)
+* **suggest** add aria label to search input
+
 # v14.7.9 (2023-05-11)
 * **suggest** add input for aria-label
 
