@@ -3,7 +3,9 @@ import {
     ElementRef,
     HostBinding,
     Input,
+    OnChanges,
     Optional,
+    SimpleChanges,
 } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
 
@@ -23,19 +25,32 @@ You can disable this directive using the boolean ${DISABLE_AUTO_ACCESSIBLE_LABEL
     selector: ` [mat-fab]:not([${DISABLE_AUTO_ACCESSIBLE_LABEL_ATTRIBUTE}]),
                 [mat-mini-fab]:not([${DISABLE_AUTO_ACCESSIBLE_LABEL_ATTRIBUTE}]),
                 [mat-icon-button]:not([${DISABLE_AUTO_ACCESSIBLE_LABEL_ATTRIBUTE}]),
-                mat-icon[tabindex]:not([${DISABLE_AUTO_ACCESSIBLE_LABEL_ATTRIBUTE}])`,
+                mat-icon:not([${DISABLE_AUTO_ACCESSIBLE_LABEL_ATTRIBUTE}])`,
 })
-export class UiAutoAccessibleLabelDirective {
+export class UiAutoAccessibleLabelDirective implements OnChanges {
     @HostBinding('attr.aria-label')
     @Input()
     matTooltip?: string;
 
     constructor(
-        elementRef: ElementRef,
+        private _elementRef: ElementRef<HTMLUnknownElement>,
         @Optional() tooltip?: MatTooltip,
     ) {
-        if (!tooltip) {
-            console.warn(MAT_TOOLTIP_MISSING_WARNING, elementRef.nativeElement);
+        if (!tooltip && _elementRef.nativeElement.tabIndex !== -1) {
+            console.warn(MAT_TOOLTIP_MISSING_WARNING, _elementRef.nativeElement);
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.matTooltip) {
+            const element = this._elementRef.nativeElement;
+            if (
+                element.tagName === 'MAT-ICON'
+                && !!changes.matTooltip.currentValue
+                && element.tabIndex === -1
+            ) {
+                element.tabIndex = 0;
+            }
         }
     }
 }
