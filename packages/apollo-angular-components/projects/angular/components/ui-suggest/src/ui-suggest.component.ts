@@ -28,6 +28,7 @@ import {
 
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ListRange } from '@angular/cdk/collections';
+import { ConnectedPosition } from '@angular/cdk/overlay';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
     AfterViewInit,
@@ -62,7 +63,6 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { VirtualScrollItemStatus } from '@uipath/angular/directives/ui-virtual-scroll-range-loader';
 
-import { ConnectedPosition } from '@angular/cdk/overlay';
 import {
     ISuggestValue,
     ISuggestValues,
@@ -629,6 +629,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     opened = new EventEmitter<void>();
 
     /**
+     * Emits on losing or receiving focus.
+     *
+     */
+    @Output()
+    focusEvent = new EventEmitter<FocusEvent>();
+
+    /**
      * @ignore
      */
     VirtualScrollItemStatus = VirtualScrollItemStatus;
@@ -991,7 +998,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @ignore
      */
-    onBlur() {
+    onBlur(event: FocusEvent) {
+        this.focusEvent.emit(event);
         this._focusChanged(this.isOpen);
     }
 
@@ -1000,7 +1008,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      *
      * @ignore
      */
-    onFocus() {
+    onFocus(event: FocusEvent) {
+        this.focusEvent.emit(event);
         this._focusChanged(true);
     }
 
