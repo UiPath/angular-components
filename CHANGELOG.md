@@ -1,3 +1,6 @@
+# v14.5.7 (2023-05-17)
+* **suggest** remove chip remove button from tabindex
+
 # v14.5.6 (2023-05-10)
 * **fix** display outline on suggest grid filter
 
