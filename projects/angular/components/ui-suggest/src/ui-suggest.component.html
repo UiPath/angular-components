@@ -113,7 +113,9 @@
                     <span>
                         {{ intl.translateLabel(option.text) }}
                     </span>
-                    <button matChipRemove>
+                    <button [attr.aria-hidden]="true"
+                            matChipRemove
+                            tabindex="-1">
                         <mat-icon>close</mat-icon>
                     </button>
                 </mat-chip>
