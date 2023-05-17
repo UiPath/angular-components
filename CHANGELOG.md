@@ -1,3 +1,6 @@
+# v14.7.11 (2023-05-17)
+* **feat** add tabIndex to matIcons with matTooltips in UiAutoAccessibleLabelDirective
+
 # v14.7.10 (2023-05-12)
 * **suggest** add aria label to search input
 
