@@ -51,12 +51,16 @@ export class SelectionManager<T extends IGridDataEntry> {
     hasValue$ = this._hasValue$.pipe(distinctUntilChanged());
 
     private _selection = new Map<number | string, T>();
+    private _indeterminate = new Map<number | string, T>();
 
     private _selectionSnapshot = new Map<number | string, T>();
+    private _indeterminateSnapshot = new Map<number | string, T>();
 
     private _deselectedToEmit: T[] = [];
 
     private _selectedToEmit: T[] = [];
+
+    private _indeterminateToEmit: T[] = [];
 
     private _disableSelectionByEntry!: (entry: T) => null | string;
 
@@ -77,6 +81,9 @@ export class SelectionManager<T extends IGridDataEntry> {
     deselect = (...values: T[]): void =>
         this._updateState(this._unmarkSelected, values);
 
+    setIndeterminate = (...values: T[]): void =>
+        this._updateState(this._markIndeterminate, values);
+
     toggle(value: T): void {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.isSelected(value) ? this.deselect(value) : this.select(value);
@@ -85,11 +92,16 @@ export class SelectionManager<T extends IGridDataEntry> {
     clear(): void {
         this._selection.forEach(v => this._unmarkSelected(v));
         this._selection.clear();
+        this._indeterminate.clear();
         this._emitChangeEvent();
     }
 
     isSelected(value: T): boolean {
         return this._selection.has(value.id);
+    }
+
+    isIndeterminate(value: T): boolean {
+        return this._indeterminate.has(value.id);
     }
 
     isEmpty(): boolean {
@@ -102,11 +114,14 @@ export class SelectionManager<T extends IGridDataEntry> {
 
     snapshot() {
         this._selectionSnapshot = cloneDeep(this._selection);
+        this._indeterminateSnapshot = cloneDeep(this._indeterminate);
     }
 
     destroy() {
         this._selection.clear();
         this._selectionSnapshot.clear();
+        this._indeterminate.clear();
+        this._indeterminateSnapshot.clear();
         this._hasValue$.next(false);
     }
 
@@ -125,10 +140,12 @@ export class SelectionManager<T extends IGridDataEntry> {
                 source: {} as SelectionModel<T>,
                 added: this._selectedToEmit,
                 removed: this._deselectedToEmit,
+                indeterminate: this._indeterminateToEmit,
             } as SelectionChange<T>);
 
             this._deselectedToEmit = [];
             this._selectedToEmit = [];
+            this._indeterminateToEmit = [];
         }
     }
 
@@ -145,9 +162,20 @@ export class SelectionManager<T extends IGridDataEntry> {
     private _unmarkSelected = (value: T) => {
         if (this.isSelected(value)) {
             this._selection.delete(value.id);
+            this._indeterminate.delete(value.id);
 
             if (this._emitChanges) {
                 this._deselectedToEmit.push(value);
+            }
+        }
+    };
+
+    private _markIndeterminate = (value: T) => {
+        if (!this.isIndeterminate(value)) {
+            this._indeterminate.set(value.id, cloneDeep(value));
+
+            if (this._emitChanges) {
+                this._indeterminateToEmit.push(value);
             }
         }
     };
