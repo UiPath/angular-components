@@ -35,8 +35,8 @@
                  (keydown.esc)="isOpen &&
                             preventDefault($event)"
                  (keydown.space)="preventDefault($event)"
-                 (focus)="onFocus();"
-                 (blur)="onBlur()"
+                 (focus)="onFocus($event);"
+                 (blur)="onBlur($event)"
                  #displayContainer
                  matRipple
                  class="display"
@@ -88,8 +88,8 @@
                            [style.width]="isFormControl ? null : width"
                            [disabled]="disabled"
                            (click)="open()"
-                           (focus)="onFocus()"
-                           (blur)="onBlur()"
+                           (focus)="onFocus($event)"
+                           (blur)="onBlur($event)"
                            (keydown.backspace)="backspaceBehavior()"
                            (keydown.arrowup)="navigate(-1, $event)"
                            (keydown.arrowdown)="navigate(1, $event)"
