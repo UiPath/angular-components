@@ -1,3 +1,7 @@
+# v14.7.13 (2023-05-18)
+* **grid** add indeterminate state support for checkboxes
+ * **suggest** emit on blur & focus
+
 # v14.7.12 (2023-05-17)
 * **suggest** remove chip remove button from tabindex
 
