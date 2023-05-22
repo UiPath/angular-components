@@ -1056,6 +1056,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                 this._focusChipInput();
             }
             this._pushEntry(value);
+
+            this._announceSelectStatus(value.text, true);
         }
 
         const alreadySelectedNormalValue = this.multiple &&
@@ -1065,6 +1067,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         if (alreadySelectedNormalValue) {
             this._removeEntry(value);
+
+            this._announceSelectStatus(value.text, false);
         }
 
         if (closeAfterSelect) {
@@ -1248,14 +1252,26 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             this._liveAnnouncer.announce(this.intl.noResultsLabel);
             return;
         }
+
+        const item = this.activeIndex < this.headerItems!.length
+            ? this.headerItems![this.activeIndex]
+            : this.items[this.activeIndex - this.headerItems!.length];
+
+        const isCurrentItemSelected = !this._isOnCustomValueIndex
+            ? this.isItemSelected(item)
+            : undefined;
+
         const textToAnnounce = !this._isOnCustomValueIndex
-            ? this.activeIndex < this.headerItems!.length
-                ? this.headerItems![this.activeIndex].text
-                : this.items[this.activeIndex - this.headerItems!.length].text
+            ? item.text
             : `${this.intl.customValueLiveLabel} ${this.customValueLabelTranslator(this.inputControl.value)}`;
 
         this._liveAnnouncer.announce(
-            this.intl.currentItemLabel(textToAnnounce, this.activeIndex + 1, this.headerItems!.length + this._items.length),
+            this.intl.currentItemLabel(
+                textToAnnounce,
+                this.activeIndex + 1,
+                this.headerItems!.length + this._items.length,
+                isCurrentItemSelected,
+            ),
         );
     }
 
@@ -1433,5 +1449,11 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
     private _getValueSummary() {
         return this.value.map(v => this.intl.translateLabel(v.text)).join(', ');
+    }
+
+    private _announceSelectStatus(text: string, status: boolean) {
+        if (text) {
+            this._liveAnnouncer.announce(this.intl.currentItemSelectionStatus(text, status));
+        }
     }
 }
