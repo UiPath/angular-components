@@ -1195,6 +1195,57 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 expect(spy).toHaveBeenCalledWith(`${component.items[0].text} item 1 out of ${component.items.length}`);
             });
+
+            it(`should announce as highlighted and selected for first time`, () => {
+                component.items = generateSuggetionItemList('random');
+                component.value = [component.items[0]];
+                fixture.detectChanges();
+
+                const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
+                const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+                display.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+
+                expect(spy).toHaveBeenCalledWith(`${component.items[0].text} (selected) item 1 out of ${component.items.length}`);
+            });
+
+            it(`should announce status of item`, () => {
+                component.items = generateSuggetionItemList('random');
+                fixture.detectChanges();
+
+                const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
+                const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+                display.nativeElement.dispatchEvent(EventGenerator.click);
+
+                fixture.detectChanges();
+
+                const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
+                itemContainer.nativeElement.dispatchEvent(
+                    EventGenerator.keyDown(Key.Enter),
+                );
+                itemContainer.nativeElement.dispatchEvent(
+                    EventGenerator.keyDown(Key.ArrowDown),
+                );
+                itemContainer.nativeElement.dispatchEvent(
+                    EventGenerator.keyDown(Key.Enter),
+                );
+                itemContainer.nativeElement.dispatchEvent(
+                    EventGenerator.keyDown(Key.Enter),
+                );
+                itemContainer.nativeElement.dispatchEvent(
+                    EventGenerator.keyDown(Key.ArrowUp),
+                );
+
+                expect(spy.calls.allArgs()).toEqual([
+                    [`${component.items[0].text} item 1 out of ${component.items.length}`],
+                    [`${component.items[0].text} item is selected`],
+                    [`${component.items[1].text} item 2 out of ${component.items.length}`],
+                    [`${component.items[1].text} item is selected`],
+                    [`${component.items[1].text} item is removed from selection`],
+                    [`${component.items[0].text} (selected) item 1 out of ${component.items.length}`],
+                ]);
+            });
         });
 
         describe('With custom', () => {
@@ -1252,6 +1303,7 @@ const sharedSpecifications = (
 
                 expect(fixture.debugElement.query(By.css('.mat-chip.mat-standard-chip span'))).toBeFalsy();
 
+                flush();
                 discardPeriodicTasks();
             }));
 
@@ -2295,20 +2347,20 @@ const sharedSpecifications = (
             }));
 
             it('should load more data at bottom of the list', waitForAsync(async () => {
+                fixture.detectChanges();
                 const display = fixture.debugElement.query(By.css('.display'));
                 display.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
 
+                fixture.detectChanges();
                 await fixture.whenStable();
 
                 expect(uiSuggest.items.length).toBe(NUMBER_OF_ITEMS_PER_VIEW + 1);
 
                 const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
-                for (let i = 0; i <= uiSuggest.items.length; i++) {
+                for (let i = 0; i <= uiSuggest.items.length + 1; i++) {
                     itemContainer.nativeElement.dispatchEvent(
                         EventGenerator.keyDown(Key.ArrowUp),
                     );
-
                 }
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -2321,9 +2373,10 @@ const sharedSpecifications = (
 
                 const display = fixture.debugElement.query(By.css('.display'));
                 display.nativeElement.dispatchEvent(EventGenerator.click);
-                fixture.detectChanges();
 
+                fixture.detectChanges();
                 await fixture.whenStable();
+
                 expect(spy).toHaveBeenCalledTimes(1);
 
                 const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
@@ -2333,6 +2386,8 @@ const sharedSpecifications = (
                     );
 
                 }
+                fixture.detectChanges();
+                await fixture.whenStable();
                 fixture.detectChanges();
                 await fixture.whenStable();
                 expect(spy).toHaveBeenCalledTimes(2);
