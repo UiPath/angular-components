@@ -1,3 +1,6 @@
+# v14.5.8 (2023-05-23)
+* **suggest** announce status of current item
+
 # v14.5.7 (2023-05-17)
 * **suggest** remove chip remove button from tabindex
 
