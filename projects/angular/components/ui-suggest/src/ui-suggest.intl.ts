@@ -54,7 +54,9 @@ export class UiSuggestIntl implements OnDestroy {
      * @param itemNo The current item index.
      * @param itemCount The total item count.
      */
-    currentItemLabel = (text: string, itemNo: number, itemCount: number) => `${text} item ${itemNo} out of ${itemCount}`;
+    currentItemLabel = (text: string, itemNo: number, itemCount: number, selectedStatus?: boolean) => `${text}${this._selectedStatusText(selectedStatus)} item ${itemNo} out of ${itemCount}`;
+
+    currentItemSelectionStatus = (text: string, isItemSelected: boolean) => `${text} item is ${isItemSelected ? 'selected' : 'removed from selection'}`;
 
     /**
      * Custom value label generator function.
@@ -85,5 +87,13 @@ export class UiSuggestIntl implements OnDestroy {
         this._destroyed$.next();
         this._destroyed$.complete();
         this.changes.complete();
+    }
+
+    private _selectedStatusText(selectedStatus?: boolean) {
+        if (selectedStatus) {
+            return ' (selected)';
+        }
+
+        return '';
     }
 }
