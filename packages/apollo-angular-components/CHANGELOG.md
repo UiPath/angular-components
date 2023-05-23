@@ -1,3 +1,6 @@
+# v14.7.14 (2023-05-23)
+* **suggest** announce status of current item
+
 # v14.7.13 (2023-05-18)
 * **grid** add indeterminate state support for checkboxes
  * **suggest** emit on blur & focus
