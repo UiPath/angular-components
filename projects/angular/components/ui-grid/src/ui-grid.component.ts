@@ -252,11 +252,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     selectable = true;
 
     /**
-     * Configure if the grid allows radio button selection its items.
+     * Configure if the grid allows radio button selection for its items.
      *
      */
     @Input()
-    singleSelectable = true;
+    singleSelectable = false;
 
     /**
      * Option to select an alternate layout for footer pagination.

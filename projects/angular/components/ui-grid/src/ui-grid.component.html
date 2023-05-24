@@ -350,7 +350,7 @@
             </div>
             <div *ngIf="singleSelectable"
                  class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
-                <mat-radio-button></mat-radio-button>
+                <mat-radio-button (change)="rowSelected(row)"></mat-radio-button>
             </div>
 
             <div *ngIf="!!actions"
