@@ -122,7 +122,7 @@
                 <div *ngIf="showHeaderRow"
                      class="ui-grid-header-row"
                      role="row">
-                    <div *ngIf="selectable"
+                    <div *ngIf="selectable && !singleSelectable"
                          class="ui-grid-header-cell ui-grid-checkbox-cell ui-grid-feature-cell"
                          role="columnheader">
                         <mat-checkbox #selectAvailableRowsCheckbox
@@ -165,7 +165,8 @@
                                [matTooltipDisabled]="resizeManager.isResizing"
                                [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')"
                                matTooltipClass="preserve-whitespace">
-                                {{ column.title }}</p>
+                                {{ column.title }}
+                                </p>
 
                             <mat-icon *ngIf="column.description"
                                       [matTooltip]="column.description"
@@ -258,7 +259,7 @@
                                                       let last = last;
                                                       let index = index;
                                                       trackBy: dataManager.hashTrack">
-                                <ng-container  *ngTemplateOutlet="rowTemplate; context: {
+                                <ng-container *ngTemplateOutlet="rowTemplate; context: {
                                         data: row,
                                         index: index,
                                         expanded: expandedEntries,
@@ -290,7 +291,7 @@
                         <ng-container *ngFor="let row of dataManager.data$ | async;
                                           let index = index;
                                           let last = last;">
-                            <ng-container  *ngTemplateOutlet="rowTemplate; context: {
+                            <ng-container *ngTemplateOutlet="rowTemplate; context: {
                                     data: row,
                                     index: index,
                                     expanded: expandedEntries,
@@ -347,6 +348,11 @@
                               tabindex="0">
                 </mat-checkbox>
             </div>
+            <div *ngIf="singleSelectable"
+                 class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
+                <mat-radio-button></mat-radio-button>
+            </div>
+
             <div *ngIf="!!actions"
                  role="gridcell"
                  class="ui-grid-mobile-feature-container ui-grid-mobile-action-container">
@@ -358,22 +364,26 @@
             </div>
         </div>
 
-        <div *ngIf="!isProjected &&
-                    selectable"
+        <div *ngIf="!isProjected && (selectable || singleSelectable)"
              class="ui-grid-cell ui-grid-checkbox-cell ui-grid-feature-cell"
              role="gridcell">
-            <mat-checkbox *ngLet="disableSelectionByEntry(row) as disabledReason"
-                          (click)="checkShift($event)"
-                          (keyup.shift.space)="checkShift($event)"
-                          (keyup.space)="checkShift($event)"
-                          (change)="handleSelection(index, row)"
-                          [checked]="selectionManager.isSelected(row)"
-                          [indeterminate]="selectionManager.isIndeterminate(row)"
-                          [matTooltip]="disabledReason || checkboxTooltip(row)"
-                          [aria-label]="disabledReason || checkboxTooltip(row)"
-                          [disabled]="disabledReason"
-                          tabindex="0">
-            </mat-checkbox>
+            <mat-radio-button *ngIf="singleSelectable; else multiSelectable"
+                (change)="rowSelected(row)"></mat-radio-button>
+            
+            <ng-template #multiSelectable>
+                <mat-checkbox *ngLet="disableSelectionByEntry(row) as disabledReason"
+                              (click)="checkShift($event)"
+                              (keyup.shift.space)="checkShift($event)"
+                              (keyup.space)="checkShift($event)"
+                              (change)="handleSelection(index, row)"
+                              [checked]="selectionManager.isSelected(row)"
+                              [indeterminate]="selectionManager.isIndeterminate(row)"
+                              [matTooltip]="disabledReason || checkboxTooltip(row)"
+                              [aria-label]="disabledReason || checkboxTooltip(row)"
+                              [disabled]="disabledReason"
+                              tabindex="0">
+                </mat-checkbox>
+            </ng-template>
         </div>
 
         <ng-container *ngFor="let column of renderedColumns$ | async">
@@ -444,18 +454,17 @@
 </ng-template>
 
 <ng-template #rowCardTemplate
-    let-row="data"
-    let-expanded="expanded"
-    let-last="last"
-    let-index="index">
+             let-row="data"
+             let-expanded="expanded"
+             let-last="last"
+             let-index="index">
     <div cdkMonitorSubtreeFocus
-        class="ui-grid-card-wrapper"
-        [ngClass]="rowConfig?.ngClassFn(row) ?? ''"
-        [tabIndex]="0"
-        [attr.data-row-index]="index"
-        (click)="onRowClick($event, row)"
-        (keyup.enter)="onRowClick($event, row)"
-    >
+         class="ui-grid-card-wrapper"
+         [ngClass]="rowConfig?.ngClassFn(row) ?? ''"
+         [tabIndex]="0"
+         [attr.data-row-index]="index"
+         (click)="onRowClick($event, row)"
+         (keyup.enter)="onRowClick($event, row)">
         <ng-container *ngIf="cardTemplate?.html; else defaultCardTemplate">
             <ng-container *ngTemplateOutlet="cardTemplate?.html || defaultCardTemplate;context: {
                 data: row,
@@ -468,8 +477,8 @@
 </ng-template>
 
 <ng-template #defaultCardTemplate
-    let-row="data"
-    let-index="index">
+             let-row="data"
+             let-index="index">
     <div class="ui-grid-card-default">
         <ng-container *ngFor="let column of renderedColumns$ | async">
             <div [class.ui-grid-primary]="column.directive.primary"

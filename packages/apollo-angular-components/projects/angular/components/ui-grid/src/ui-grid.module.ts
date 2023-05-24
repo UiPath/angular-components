@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UiAutoAccessibleLabelModule } from '@uipath/angular/a11y';
@@ -21,8 +22,8 @@ import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directiv
 import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
 import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
-import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
 import { UiGridRowCardViewDirective } from './body/ui-grid-row-card-view.directive';
+import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
 import { UiGridCustomPaginatorModule } from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.module';
 import { UiGridSearchModule } from './components/ui-grid-search/ui-grid-search.module';
 import { UiGridToggleColumnsModule } from './components/ui-grid-toggle-columns/ui-grid-toggle-columns.module';
@@ -44,6 +45,7 @@ import { UiGridComponent } from './ui-grid.component';
         MatSelectModule,
         MatTooltipModule,
         MatProgressBarModule,
+        MatRadioModule,
         ScrollingModule,
         UiGridSearchModule,
         UiGridToggleColumnsModule,
