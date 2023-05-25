@@ -70,6 +70,7 @@ describe('Component: UiGrid', () => {
                      [disableSelectionByEntry]="disableSelectionByEntry"
                      [refreshable]="refreshable"
                      [selectable]="selectable"
+                     [singleSelectable]="singleSelectable"
                      [showHeaderRow]="showHeaderRow"
                      [virtualScroll]="virtualScroll">
                 <ui-grid-column [property]="'myNumber'"
@@ -111,6 +112,7 @@ describe('Component: UiGrid', () => {
         isColumnVisible = true;
         isFilterVisible = true;
         selectable?: boolean;
+        singleSelectable?: boolean;
         refreshable?: boolean;
         showHeaderRow = true;
         virtualScroll = false;
@@ -480,6 +482,40 @@ describe('Component: UiGrid', () => {
                         expect(boolCell.nativeElement.innerText).toContain(dataEntry.myBool.toString());
                         expect(nestedStringCell.nativeElement.innerText).toContain(dataEntry.myObj.myObjString);
                         expect(nestedDateCell.nativeElement.innerText).toContain(dataEntry.myObj.myObjDate.toString());
+                    });
+                });
+
+                describe('Feature: radio button selection', () => {
+                    beforeEach(() => {
+                        component.selectable = false;
+                        component.singleSelectable = true;
+                        fixture.detectChanges();
+                    });
+
+                    it('should have correct selection', () => {
+                        const radioBtns = fixture.debugElement.queryAll(By.css('.mat-radio-label'));
+                        expect(radioBtns.length).toEqual(50);
+
+                        const firstRadioBtn = radioBtns[0];
+                        firstRadioBtn.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        expect(component.grid.selectionManager.selected[0].id).toEqual(component.data[0].id);
+                    });
+
+                    it('should have only one selection', () => {
+                        const radioBtns = fixture.debugElement.queryAll(By.css('.mat-radio-label'));
+
+                        const firstRadioBtn = radioBtns[0];
+                        firstRadioBtn.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        const secondRadioBtn = radioBtns[1];
+                        secondRadioBtn.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        expect(component.grid.selectionManager.selected[0].id).toEqual(component.data[1].id);
+                        expect(component.grid.selectionManager.selected.length).toEqual(1);
                     });
                 });
 
