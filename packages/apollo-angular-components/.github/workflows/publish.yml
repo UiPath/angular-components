@@ -6,6 +6,9 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Set up Node.js
@@ -16,19 +19,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Authenticate
-        env:
-          AUTH_TOKEN: ${{ secrets.GH_NPM_REGISTRY_TOKEN }}
-        run: echo -e "//npm.pkg.github.com/:_authToken=${AUTH_TOKEN}" > .npmrc
-
       - name: Install dependencies
+        env:
+          GH_NPM_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm ci --force
 
       - name: Build for production
         run: npm run build:prod
 
       - name: Publish to GitHub Packages
+        env:
+          GH_NPM_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run publish:gh
 
+      - name: Authenticate to NPMJS
+        run: echo -e "//registry.npmjs.org/:_authToken=${NPMJS_PUBLISH_TOKEN}" >> .npmrc
+
       - name: Publish to npm
+        env:
+          NPMJS_PUBLISH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
         run: npm run publish:npm
