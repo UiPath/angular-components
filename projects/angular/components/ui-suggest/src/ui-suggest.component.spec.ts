@@ -1171,6 +1171,7 @@ const sharedSpecifications = (
 
                 expect(fixture.debugElement.query(By.css('.mat-chip.mat-standard-chip span'))).toBeFalsy();
 
+                flush();
                 discardPeriodicTasks();
             }));
 

@@ -1,3 +1,6 @@
+# v13.7.11 (2023-05-23)
+* **suggest** announce status of current item
+
 # v13.7.10 (2023-05-12)
 * **suggest** add aria label to search input
 
