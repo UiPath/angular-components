@@ -27,11 +27,6 @@ jobs:
       - name: Build for production
         run: npm run build:prod
 
-      - name: Publish to GitHub Packages
-        env:
-          GH_NPM_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run publish:gh
-
       - name: Authenticate to NPMJS
         run: echo -e "//registry.npmjs.org/:_authToken=${NPMJS_PUBLISH_TOKEN}" >> .npmrc
 
