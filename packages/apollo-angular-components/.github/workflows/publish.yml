@@ -20,8 +20,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        env:
-          GH_NPM_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm ci --force
 
       - name: Build for production
@@ -33,7 +31,7 @@ jobs:
         run: npm run publish:gh
 
       - name: Authenticate to NPMJS
-        run: echo -e "//registry.npmjs.org/:_authToken=${NPMJS_PUBLISH_TOKEN}" >> .npmrc
+        run: echo -e '//registry.npmjs.org/:_authToken=${NPMJS_PUBLISH_TOKEN}' > .npmrc
 
       - name: Publish to npm
         env:
