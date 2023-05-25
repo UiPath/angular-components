@@ -28,7 +28,7 @@ jobs:
         run: npm run build:prod
 
       - name: Authenticate to NPMJS
-        run: echo -e "\n//registry.npmjs.org/:_authToken=${NPMJS_PUBLISH_TOKEN}" >> .npmrc
+        run: echo -e '//registry.npmjs.org/:_authToken=${NPMJS_PUBLISH_TOKEN}' > .npmrc
 
       - name: Publish to npm
         env:
