@@ -166,7 +166,7 @@
                                [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')"
                                matTooltipClass="preserve-whitespace">
                                 {{ column.title }}
-                                </p>
+                            </p>
 
                             <mat-icon *ngIf="column.description"
                                       [matTooltip]="column.description"
@@ -333,26 +333,30 @@
         <div *ngIf="isProjected"
              class="ui-grid-cell ui-grid-feature-cell ui-grid-mobile-feature-cell"
              role="gridcell">
-            <div *ngIf="selectable"
-                 class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
-                <mat-checkbox *ngLet="disableSelectionByEntry(row) as disabledReason"
-                              (click)="checkShift($event)"
-                              (keyup.shift.space)="checkShift($event)"
-                              (keyup.space)="checkShift($event)"
-                              (change)="handleSelection(index, row)"
-                              [checked]="selectionManager.isSelected(row)"
-                              [indeterminate]="selectionManager.isIndeterminate(row)"
-                              [matTooltip]="disabledReason || checkboxTooltip(row)"
-                              [aria-label]="disabledReason || checkboxTooltip(row)"
-                              [disabled]="!!disabledReason"
-                              tabindex="0">
-                </mat-checkbox>
-            </div>
-            <div *ngIf="singleSelectable"
-                 class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
-                <mat-radio-button (change)="rowSelected(row)"></mat-radio-button>
-            </div>
-
+            <ng-container *ngLet="disableSelectionByEntry(row) as disabledReason">
+                <div *ngIf="selectable && !singleSelectable"
+                     class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
+                    <mat-checkbox (click)="checkShift($event)"
+                                  (keyup.shift.space)="checkShift($event)"
+                                  (keyup.space)="checkShift($event)"
+                                  (change)="handleSelection(index, row)"
+                                  [checked]="selectionManager.isSelected(row)"
+                                  [indeterminate]="selectionManager.isIndeterminate(row)"
+                                  [matTooltip]="disabledReason || checkboxTooltip(row)"
+                                  [aria-label]="disabledReason || checkboxTooltip(row)"
+                                  [disabled]="!!disabledReason"
+                                  tabindex="0">
+                    </mat-checkbox>
+                </div>
+                <div *ngIf="singleSelectable"
+                     class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
+                    <mat-radio-button [checked]="selectionManager.isSelected(row)"
+                                      [disabled]="disabledReason"
+                                      [matTooltip]="disabledReason || checkboxTooltip(row)"
+                                      [aria-label]="disabledReason || checkboxTooltip(row)"
+                                      (change)="rowSelected(row)"></mat-radio-button>
+                </div>
+            </ng-container>
             <div *ngIf="!!actions"
                  role="gridcell"
                  class="ui-grid-mobile-feature-container ui-grid-mobile-action-container">
@@ -367,23 +371,27 @@
         <div *ngIf="!isProjected && (selectable || singleSelectable)"
              class="ui-grid-cell ui-grid-checkbox-cell ui-grid-feature-cell"
              role="gridcell">
-            <mat-radio-button *ngIf="singleSelectable; else multiSelectable"
-                (change)="rowSelected(row)"></mat-radio-button>
-            
-            <ng-template #multiSelectable>
-                <mat-checkbox *ngLet="disableSelectionByEntry(row) as disabledReason"
-                              (click)="checkShift($event)"
-                              (keyup.shift.space)="checkShift($event)"
-                              (keyup.space)="checkShift($event)"
-                              (change)="handleSelection(index, row)"
-                              [checked]="selectionManager.isSelected(row)"
-                              [indeterminate]="selectionManager.isIndeterminate(row)"
-                              [matTooltip]="disabledReason || checkboxTooltip(row)"
-                              [aria-label]="disabledReason || checkboxTooltip(row)"
-                              [disabled]="disabledReason"
-                              tabindex="0">
-                </mat-checkbox>
-            </ng-template>
+            <ng-container *ngLet="disableSelectionByEntry(row) as disabledReason">
+                <mat-radio-button *ngIf="singleSelectable; else multiSelectable"
+                                  [checked]="selectionManager.isSelected(row)"
+                                  [disabled]="disabledReason"
+                                  [matTooltip]="disabledReason || checkboxTooltip(row)"
+                                  [aria-label]="disabledReason || checkboxTooltip(row)"
+                                  (change)="rowSelected(row)"></mat-radio-button>
+                <ng-template #multiSelectable>
+                    <mat-checkbox (click)="checkShift($event)"
+                                  (keyup.shift.space)="checkShift($event)"
+                                  (keyup.space)="checkShift($event)"
+                                  (change)="handleSelection(index, row)"
+                                  [checked]="selectionManager.isSelected(row)"
+                                  [indeterminate]="selectionManager.isIndeterminate(row)"
+                                  [matTooltip]="disabledReason || checkboxTooltip(row)"
+                                  [aria-label]="disabledReason || checkboxTooltip(row)"
+                                  [disabled]="disabledReason"
+                                  tabindex="0">
+                    </mat-checkbox>
+                </ng-template>
+            </ng-container>
         </div>
 
         <ng-container *ngFor="let column of renderedColumns$ | async">
