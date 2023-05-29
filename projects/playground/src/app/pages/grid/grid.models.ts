@@ -23,6 +23,7 @@ export interface IInputs {
     isProjected: boolean;
     disabled: boolean;
     selectable: boolean;
+    singleSelectable: boolean;
     toggleColumns: boolean;
     multiPageSelect: boolean;
     refreshable: boolean;
