@@ -5,6 +5,7 @@ import {
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { UiSuggestModule } from '@uipath/angular/components/ui-suggest';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { SuggestPageComponent } from './suggest.page';
 
@@ -18,6 +19,7 @@ import { SuggestPageComponent } from './suggest.page';
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
+    MatRadioModule,
   ],
 })
 export class SuggestModule { }
