@@ -86,6 +86,16 @@
 </mat-form-field>
 
 
+<h1>Using custom template with field interaction output</h1>
+<mat-form-field>
+    <ui-suggest [searchSourceFactory]="searchSourceFactory"
+                (itemSelected)="itemClicked($event)">
+        <ng-template let-item>
+            <mat-radio-button [checked]="isItemAdded(item)">{{item.text}}</mat-radio-button>
+        </ng-template>
+    </ui-suggest>
+</mat-form-field>
+
 <h1>Lazy Load</h1>
 <mat-form-field>
     <ui-suggest [searchSourceStrategy]="'lazy'"

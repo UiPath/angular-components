@@ -621,6 +621,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     @Output()
     closed = new EventEmitter<void>();
 
+    @Output()
+    // eslint-disable-next-line rxjs/finnish
+    itemSelected = new Subject<ISuggestValue>();
+
     /**
      * Emits when the overlay is displayed (dropdown open).
      *
@@ -1189,6 +1193,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     updateValue(inputValue: ISuggestValue | string, closeAfterSelect = true, refocus = true) {
         let value = toSuggestValue(inputValue, this._isOnCustomValueIndex);
         if (value.loading !== VirtualScrollItemStatus.loaded || value.disabled === true) { return; }
+
+        this.itemSelected.next(value);
 
         if (this.inDrillDownMode) {
             value = {
