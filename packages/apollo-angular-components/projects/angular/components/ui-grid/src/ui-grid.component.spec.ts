@@ -70,6 +70,7 @@ describe('Component: UiGrid', () => {
                      [disableSelectionByEntry]="disableSelectionByEntry"
                      [refreshable]="refreshable"
                      [selectable]="selectable"
+                     [singleSelectable]="singleSelectable"
                      [showHeaderRow]="showHeaderRow"
                      [virtualScroll]="virtualScroll">
                 <ui-grid-column [property]="'myNumber'"
@@ -111,6 +112,7 @@ describe('Component: UiGrid', () => {
         isColumnVisible = true;
         isFilterVisible = true;
         selectable?: boolean;
+        singleSelectable?: boolean;
         refreshable?: boolean;
         showHeaderRow = true;
         virtualScroll = false;
@@ -483,6 +485,89 @@ describe('Component: UiGrid', () => {
                     });
                 });
 
+                describe('Feature: radio button selection', () => {
+                    beforeEach(() => {
+                        component.selectable = false;
+                        component.singleSelectable = true;
+                        fixture.detectChanges();
+                    });
+
+                    it('should have correct selection', () => {
+                        const radioBtns = fixture.debugElement.queryAll(By.css('.mat-radio-label'));
+                        expect(radioBtns.length).toEqual(50);
+
+                        const firstRadioBtn = radioBtns[0];
+                        firstRadioBtn.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        expect(component.grid.selectionManager.selected[0].id).toEqual(component.data[0].id);
+                    });
+
+                    it('should have only one selection', () => {
+                        const radioBtns = fixture.debugElement.queryAll(By.css('.mat-radio-label'));
+
+                        const firstRadioBtn = radioBtns[0];
+                        firstRadioBtn.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        const secondRadioBtn = radioBtns[1];
+                        secondRadioBtn.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        expect(component.grid.selectionManager.selected[0].id).toEqual(component.data[1].id);
+                        expect(component.grid.selectionManager.selected.length).toEqual(1);
+                    });
+
+                    it('should have preselected option displayed', () => {
+                        const randomIdx = faker.random.number({ max: 49 });
+                        grid.selectionManager.select(data[randomIdx]);
+                        fixture.detectChanges();
+                        const radioBtns = fixture.debugElement.queryAll(By.css('[role="gridcell"] mat-radio-button'));
+                        const checkedRadioBtn = radioBtns[randomIdx];
+                        expect(checkedRadioBtn.nativeElement.classList.contains('mat-radio-checked')).toBeTruthy();
+                    });
+
+                    it('should display Select / Deselect according to button state', () => {
+                        const checkedBtnIdx = faker.random.number({ max: 25 });
+                        const uncheckedBtnIdx = faker.random.number({
+                            min: 26,
+                            max: 49,
+                        });
+                        grid.selectionManager.select(data[checkedBtnIdx]);
+                        fixture.detectChanges();
+                        const radioBtns = fixture.debugElement.queryAll(By.css('[role="gridcell"] mat-radio-button'));
+                        const checkedRadioBtn = radioBtns[checkedBtnIdx].nativeElement;
+                        const uncheckedRadioBtn = radioBtns[uncheckedBtnIdx].nativeElement;
+                        expect(checkedRadioBtn.getAttribute('ng-reflect-message')).toEqual(`Deselect row ${checkedBtnIdx}`);
+                        expect(uncheckedRadioBtn.getAttribute('ng-reflect-message')).toEqual(`Select row ${uncheckedBtnIdx}`);
+                    });
+
+                    it('should disable radio btn according to disableSelectionByEntry', () => {
+                        const selectableBtnIdx = faker.random.number({ max: 25 });
+                        const disabledBtnIdx = faker.random.number({
+                            min: 26,
+                            max: 49,
+                        });
+                        const disableSelectionByEntry = (entry?: ITestEntity) => entry && entry.id === data[disabledBtnIdx].id
+                            ? 'unselectable'
+                            : null;
+
+                        component.disableSelectionByEntry = disableSelectionByEntry;
+                        grid.selectionManager.disableSelectionByEntry = disableSelectionByEntry;
+                        fixture.detectChanges();
+
+                        const radioBtns = fixture.debugElement.queryAll(By.css('[role="gridcell"] mat-radio-button'));
+                        const selectableRadioBtn = radioBtns[selectableBtnIdx].nativeElement;
+                        const disabledRadioBtn = radioBtns[disabledBtnIdx].nativeElement;
+
+                        expect(selectableRadioBtn.getAttribute('ng-reflect-message')).toEqual(`Select row ${selectableBtnIdx}`);
+                        expect(selectableRadioBtn.classList.contains('mat-radio-disabled')).toBeFalsy();
+
+                        expect(disabledRadioBtn.getAttribute('ng-reflect-message')).toEqual(`unselectable`);
+                        expect(disabledRadioBtn.classList.contains('mat-radio-disabled')).toBeTruthy();
+                    });
+                });
+
                 describe('Feature: checkbox', () => {
                     it('should have ariaLabel set correctly for toggle selection', () => {
                         const checkboxHeader = fixture.debugElement.query(By.css('.ui-grid-header-cell.ui-grid-checkbox-cell'));
@@ -795,7 +880,7 @@ describe('Component: UiGrid', () => {
                         expect(matCheckbox.checked).toEqual(false);
                     });
 
-                    it('should unselect heade checkbox if all grid rows are unselected', () => {
+                    it('should unselect header checkbox if all grid rows are unselected', () => {
                         const disableSelectionByEntry = (entry?: ITestEntity) => entry && entry.id % 2 === 1 ? 'unselectable' : null;
 
                         component.disableSelectionByEntry = disableSelectionByEntry;
@@ -4338,10 +4423,8 @@ describe('Component: UiGrid', () => {
             });
 
             it('should render provided card template', () => {
-
                 const cardContainer = fixture.debugElement.query(By.css('.expanded-row'));
 
-                console.log(cardContainer);
                 expect(cardContainer).toBeDefined();
                 expect(cardContainer.nativeElement.querySelector('[data-property="myNumber"]')).toBeDefined();
                 expect(cardContainer.nativeElement.querySelector('[data-property="myBool"]')).toBeDefined();

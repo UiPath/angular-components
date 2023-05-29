@@ -252,6 +252,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     selectable = true;
 
     /**
+     * Configure if the grid allows radio button selection for its items.
+     *
+     */
+    @Input()
+    singleSelectable = false;
+
+    /**
      * Option to select an alternate layout for footer pagination.
      *
      */
@@ -1066,6 +1073,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     focusActiveFilterItem() {
         const activeItem: HTMLElement | null = document.querySelector('.cdk-overlay-container .active[role="menuitem"]');
         activeItem?.focus();
+    }
+
+    rowSelected(row: T) {
+        this.selectionManager.clear();
+        this.selectionManager.select(row);
     }
 
     private _announceGridHeaderActions() {
