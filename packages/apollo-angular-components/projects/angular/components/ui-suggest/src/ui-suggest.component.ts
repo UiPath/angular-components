@@ -622,6 +622,13 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     closed = new EventEmitter<void>();
 
     /**
+     * Emits when an item is selected.
+     *
+     */
+    @Output()
+    itemSelected = new EventEmitter<ISuggestValue>();
+
+    /**
      * Emits when the overlay is displayed (dropdown open).
      *
      */
@@ -1189,6 +1196,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     updateValue(inputValue: ISuggestValue | string, closeAfterSelect = true, refocus = true) {
         let value = toSuggestValue(inputValue, this._isOnCustomValueIndex);
         if (value.loading !== VirtualScrollItemStatus.loaded || value.disabled === true) { return; }
+
+        this.itemSelected.emit(value);
 
         if (this.inDrillDownMode) {
             value = {
