@@ -13,7 +13,9 @@ import {
   ChangeDetectionStrategy,
   Component,
 } from '@angular/core';
-import { ISuggestValues } from '@uipath/angular/components/ui-suggest';
+import {
+  ISuggestValue, ISuggestValues,
+} from '@uipath/angular/components/ui-suggest';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -23,9 +25,22 @@ import { FormControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SuggestPageComponent {
-  control = new FormControl();
+  control = new FormControl<ISuggestValue[]>([]);
 
   constructor() { }
+
+  itemClicked(item: ISuggestValue) {
+    this.control.setValue([item]);
+  }
+
+  isItemAdded(item: ISuggestValue) {
+    const value = this.control.value;
+    if (!value) {
+      return false;
+    }
+
+    return value.findIndex(itm => item.id === itm.id) !== -1;
+  }
 
   getResults(searchTerm: string): Observable<ISuggestValues<any>> {
     const options = range(0, 20).map(idx => ({
