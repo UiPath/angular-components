@@ -350,11 +350,14 @@
                 </div>
                 <div *ngIf="singleSelectable"
                      class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
-                    <mat-radio-button [checked]="selectionManager.isSelected(row)"
-                                      [disabled]="disabledReason"
-                                      [matTooltip]="disabledReason || checkboxTooltip(row)"
-                                      [aria-label]="disabledReason || checkboxTooltip(row)"
-                                      (change)="rowSelected(row)"></mat-radio-button>
+                    <mat-radio-group>
+                        <mat-radio-button [value]="row.id"
+                                          [checked]="selectionManager.isSelected(row)"
+                                          [disabled]="disabledReason"
+                                          [matTooltip]="disabledReason || checkboxTooltip(row)"
+                                          [aria-label]="disabledReason || checkboxTooltip(row)"
+                                          (change)="rowSelected(row)"></mat-radio-button>
+                    </mat-radio-group>
                 </div>
             </ng-container>
             <div *ngIf="!!actions"
@@ -372,12 +375,14 @@
              class="ui-grid-cell ui-grid-checkbox-cell ui-grid-feature-cell"
              role="gridcell">
             <ng-container *ngLet="disableSelectionByEntry(row) as disabledReason">
-                <mat-radio-button *ngIf="singleSelectable; else multiSelectable"
-                                  [checked]="selectionManager.isSelected(row)"
-                                  [disabled]="disabledReason"
-                                  [matTooltip]="disabledReason || checkboxTooltip(row)"
-                                  [aria-label]="disabledReason || checkboxTooltip(row)"
-                                  (change)="rowSelected(row)"></mat-radio-button>
+                <mat-radio-group *ngIf="singleSelectable; else multiSelectable">
+                    <mat-radio-button [value]="row.id"
+                                      [checked]="selectionManager.isSelected(row)"
+                                      [disabled]="disabledReason"
+                                      [matTooltip]="disabledReason || checkboxTooltip(row)"
+                                      [aria-label]="disabledReason || checkboxTooltip(row)"
+                                      (change)="rowSelected(row)"></mat-radio-button>
+                </mat-radio-group>
                 <ng-template #multiSelectable>
                     <mat-checkbox (click)="checkShift($event)"
                                   (keyup.shift.space)="checkShift($event)"
