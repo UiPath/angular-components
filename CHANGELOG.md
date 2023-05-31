@@ -1,3 +1,6 @@
+# v14.8.2 (2023-05-31)
+* **grid** move radio btn in radio group
+
 # v14.8.1 (2023-05-29)
 * **grid** add tooltips & disable state for radio selection
 * **grid** add tests for radio selection
