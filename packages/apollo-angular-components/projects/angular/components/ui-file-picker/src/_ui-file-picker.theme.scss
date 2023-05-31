@@ -1,0 +1,31 @@
+@mixin ui-file-picker-theme($theme) {
+    $background: map-get($theme, "background");
+    $foreground: map-get($theme, "foreground");
+    $primary: map-get($theme, "primary");
+
+    $color-primary: mat.get-color-from-palette($primary);
+    $color-background: mat.get-color-from-palette($background, "background");
+    $border-color: mat.get-color-from-palette($foreground, "divider");
+    $color-hint: mat.get-color-from-palette($foreground, "hint-text");
+
+    .ui-file-picker {
+        .upload-wrapper {
+            border-color: $border-color;
+            &.file-drop-zone-highlight {
+                border-color: $color-primary;
+            }
+            .upload-input-wrapper {
+                border-top-color: $border-color;
+                .primary {
+                    color: $color-primary;
+                    .placeholder {
+                        color: $color-hint;
+                    }
+                }
+                .mat-stroked-button {
+                    background: $color-background;
+                }
+            }
+        }
+    }
+}

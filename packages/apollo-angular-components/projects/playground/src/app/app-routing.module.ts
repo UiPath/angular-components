@@ -8,6 +8,7 @@ import {
     RouterModule,
     Routes,
 } from '@angular/router';
+import { FilePickerPageComponent } from 'projects/playground/src/app/pages/file-picker/file-picker.page';
 import { TreeSelectPageComponent } from 'projects/playground/src/app/pages/tree-select/tree-select.page';
 
 const routes: Routes = [
@@ -30,6 +31,10 @@ const routes: Routes = [
     {
         path: 'tree',
         component: TreeSelectPageComponent,
+    },
+    {
+        path: 'file-picker',
+        component: FilePickerPageComponent,
     },
     {
         path: '**',

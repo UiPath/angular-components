@@ -30,5 +30,9 @@ export class AppComponent {
             name: 'Tree select',
             link: '/tree',
         },
+        {
+            name: 'File Picker',
+            link: '/file-picker',
+        },
     ];
 }

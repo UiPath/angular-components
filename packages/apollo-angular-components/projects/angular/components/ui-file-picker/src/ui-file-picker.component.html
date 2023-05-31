@@ -1,0 +1,98 @@
+<ng-container *ngrxLet="{
+    files: (displayedFiles$ | ngrxPush) ?? [],
+    filesLoading: filesLoading$ | ngrxPush,
+    fileError: fileError$ | ngrxPush
+} as state">
+    <div #uploadWrapper
+         class="upload-wrapper"
+         [class.disabled]="!!disabled">
+        <div *ngIf="!state.filesLoading && state.files.length > 0 && !hideSummaryAfterFilesSelection"
+             class="grid-wrapper">
+            <button (click)="clearAll()"
+                    #deleteAll
+                    mat-button
+                    class="delete-all-button"
+                    color="primary"
+                    type="button"
+                    data-testid="delete-all-button">
+                <mat-icon>delete_outline</mat-icon>
+                {{intl.deleteAll$ | ngrxPush}}
+            </button>
+            <ui-grid #filesGrid
+                     [data]="state.files"
+                     [selectable]="false"
+                     [refreshable]="false"
+                     (rendered)="detectDeleteButtonSize()">
+                <ui-grid-column width="40%"
+                                property="name"
+                                [title]="intl.fileName$ | ngrxPush"
+                                [disableToggle]="true">
+                    <ng-template let-entry="data">{{entry.name}}</ng-template>
+                </ui-grid-column>
+                <ui-grid-column width="20%"
+                                property="type"
+                                [title]="intl.type$ | ngrxPush">
+                    <ng-template let-entry="data">
+                        {{getFileExtension(entry.name)}}
+                    </ng-template>
+                </ui-grid-column>
+                <ui-grid-column property="pages"
+                                width="40%"
+                                [minWidth]="deleteButtonSize"
+                                [title]="intl.size$ | ngrxPush">
+                    <ng-template let-entry="data">{{entry.size | uiFileSize | ngrxPush}}
+                    </ng-template>
+                </ui-grid-column>
+                <ui-grid-row-action>
+                    <ng-template let-entry="data">
+                        <button mat-button
+                                data-testid="delete-file-button"
+                                [attr.aria-label]="intl.deleteFile$(entry.name) | ngrxPush"
+                                [matTooltip]="(intl.deleteFile$(entry.name) | ngrxPush) ?? ''"
+                                (click)="removeFile(entry)">
+                            <mat-icon class="remove-file">delete_outline</mat-icon>
+                        </button>
+                    </ng-template>
+                </ui-grid-row-action>
+            </ui-grid>
+        </div>
+        <div class="upload-input-wrapper"
+             [class.large]="state.filesLoading || state.files.length === 0 || hideSummaryAfterFilesSelection">
+            <ui-file-drop-zone #fileDropzone
+                               [single]="single"
+                               [accept]="accept"
+                               [customDropZone]="uploadWrapper"
+                               [disabled]="disabled"
+                               (filesReceived)="addFiles($event)"
+                               (filesLoading)="displayLoadingIndicator($event)"
+                               (fileError)="handleFileError($event)">
+                <div *ngIf="state.filesLoading"
+                     class="spinner-container">
+                    <mat-progress-spinner color="primary"
+                                          mode="indeterminate"
+                                          diameter="32">
+                    </mat-progress-spinner>
+                </div>
+                <div *ngIf="!state.filesLoading"
+                     class="message">
+                    <button mat-icon-button
+                            color="primary"
+                            data-testid="browse-files-button"
+                            [attr.aria-label]="intl.clickUploadDragDrop$ | ngrxPush"
+                            [disabled]="disabled"
+                            (click)="onBrowseFilesClick()">
+                        <mat-icon>cloud_upload</mat-icon>
+                    </button>
+                    <div class="primary">
+                        <div translate>
+                            {{intl.clickUploadDragDrop$ | ngrxPush}}
+                        </div>
+                        <span *ngIf="secondaryMessage"
+                              class="placeholder">{{secondaryMessage}}</span>
+                    </div>
+                </div>
+            </ui-file-drop-zone>
+        </div>
+    </div>
+    <mat-error *ngIf="state.fileError">{{ state.fileError }}</mat-error>
+</ng-container>
