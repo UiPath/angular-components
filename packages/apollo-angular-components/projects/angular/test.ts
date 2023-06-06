@@ -19,8 +19,6 @@ import {
 
 import { JASMINE_STYLES } from './test.theme';
 
-declare const require: any;
-
 const SEED = 1337;
 
 const materialIconsLink = document.createElement('link');
@@ -65,9 +63,3 @@ getTestBed().initTestEnvironment(
         teardown: { destroyAfterEach: true },
     },
 );
-
-// Then we find all the tests.
-const context = require.context('./', true, /\.spec\.ts$/);
-
-// And load the modules.
-context.keys().map(context);
