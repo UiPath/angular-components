@@ -28,9 +28,9 @@ import {
     tick,
     waitForAsync,
 } from '@angular/core/testing';
-import { MatCheckbox } from '@angular/material/checkbox';
-import { MatMenuItem } from '@angular/material/menu';
-import { PageEvent } from '@angular/material/paginator';
+import { MatLegacyCheckbox as MatCheckbox } from '@angular/material/legacy-checkbox';
+import { MatLegacyMenuItem as MatMenuItem } from '@angular/material/legacy-menu';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {

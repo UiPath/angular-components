@@ -14,12 +14,12 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    MatSnackBar,
-    MatSnackBarConfig,
-    MatSnackBarRef,
-    MAT_SNACK_BAR_DATA,
-    MAT_SNACK_BAR_DEFAULT_OPTIONS,
-} from '@angular/material/snack-bar';
+    MatLegacySnackBar as MatSnackBar,
+    MatLegacySnackBarConfig as MatSnackBarConfig,
+    MatLegacySnackBarRef as MatSnackBarRef,
+    MAT_LEGACY_SNACK_BAR_DATA as MAT_SNACK_BAR_DATA,
+    MAT_LEGACY_SNACK_BAR_DEFAULT_OPTIONS as MAT_SNACK_BAR_DEFAULT_OPTIONS,
+} from '@angular/material/legacy-snack-bar';
 
 import { UiSnackbarIntl } from './ui-snackbar.intl';
 

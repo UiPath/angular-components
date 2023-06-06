@@ -9,13 +9,13 @@ import {
     Optional,
     ViewEncapsulation,
 } from '@angular/core';
-import { MatFormFieldAppearance } from '@angular/material/form-field';
+import { MatLegacyFormFieldAppearance as MatFormFieldAppearance } from '@angular/material/legacy-form-field';
 import {
-    MatPaginatorDefaultOptions,
-    MatPaginatorIntl,
-    MAT_PAGINATOR_DEFAULT_OPTIONS,
-    _MatPaginatorBase,
-} from '@angular/material/paginator';
+    MatLegacyPaginatorDefaultOptions as MatPaginatorDefaultOptions,
+    MatLegacyPaginatorIntl as MatPaginatorIntl,
+    MAT_LEGACY_PAGINATOR_DEFAULT_OPTIONS as MAT_PAGINATOR_DEFAULT_OPTIONS,
+    _MatLegacyPaginatorBase as _MatPaginatorBase,
+} from '@angular/material/legacy-paginator';
 
 @Injectable()
 export class UiMatPaginatorIntl extends MatPaginatorIntl {

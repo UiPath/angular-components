@@ -6,7 +6,7 @@ import {
     OnDestroy,
     ViewEncapsulation,
 } from '@angular/core';
-import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatLegacyProgressBar as MatProgressBar } from '@angular/material/legacy-progress-bar';
 
 @Component({
     selector: 'ui-button-progress-bar',

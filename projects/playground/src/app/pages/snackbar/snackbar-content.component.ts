@@ -5,7 +5,7 @@ import {
     Inject,
     NgModule,
 } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { UI_MAT_SNACK_BAR_PAYLOAD } from 'projects/angular/components/ui-snackbar/src/public_api';
 
 export type SnackbarContentPayload = {

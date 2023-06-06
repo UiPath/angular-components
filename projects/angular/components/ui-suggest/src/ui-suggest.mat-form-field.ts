@@ -22,7 +22,7 @@ import {
     UntypedFormControl,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatLegacyFormFieldControl as MatFormFieldControl } from '@angular/material/legacy-form-field';
 import { identifier } from '@uipath/angular/utilities';
 
 import {

@@ -6,7 +6,7 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatLegacyProgressBar as MatProgressBar } from '@angular/material/legacy-progress-bar';
 import { UiLoaderButtonDirective } from '@uipath/angular/directives/internal';
 
 import { UiButtonProgressBarComponent } from './internal/ui-button-progress-bar.component';

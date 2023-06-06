@@ -18,7 +18,7 @@ import {
     TemplateRef,
     ViewContainerRef,
 } from '@angular/core';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatLegacyProgressSpinner as MatProgressSpinner } from '@angular/material/legacy-progress-spinner';
 
 import { UiContentSpinnerComponent } from './internal/ui-content-spinner.component';
 
