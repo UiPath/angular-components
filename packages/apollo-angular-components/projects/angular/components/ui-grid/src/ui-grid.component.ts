@@ -55,10 +55,10 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    MatCheckbox,
-    MatCheckboxChange,
-} from '@angular/material/checkbox';
-import { MatTooltip } from '@angular/material/tooltip';
+    MatLegacyCheckbox as MatCheckbox,
+    MatLegacyCheckboxChange as MatCheckboxChange,
+} from '@angular/material/legacy-checkbox';
+import { MatLegacyTooltip as MatTooltip } from '@angular/material/legacy-tooltip';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 

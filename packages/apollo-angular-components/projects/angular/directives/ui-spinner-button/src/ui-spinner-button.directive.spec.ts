@@ -6,8 +6,8 @@ import {
     ComponentFixture,
     TestBed,
 } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatLegacyProgressSpinner as MatProgressSpinner } from '@angular/material/legacy-progress-spinner';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

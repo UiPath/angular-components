@@ -7,7 +7,7 @@ import {
     Optional,
     SimpleChanges,
 } from '@angular/core';
-import { MatTooltip } from '@angular/material/tooltip';
+import { MatLegacyTooltip as MatTooltip } from '@angular/material/legacy-tooltip';
 
 export const DISABLE_AUTO_ACCESSIBLE_LABEL_ATTRIBUTE = 'disable-auto-accessible-label';
 

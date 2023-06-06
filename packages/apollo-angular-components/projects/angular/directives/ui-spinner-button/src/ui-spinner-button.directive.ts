@@ -6,8 +6,8 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import { MatButton } from '@angular/material/button';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatLegacyButton as MatButton } from '@angular/material/legacy-button';
+import { MatLegacyProgressSpinner as MatProgressSpinner } from '@angular/material/legacy-progress-spinner';
 import { UiLoaderButtonDirective } from '@uipath/angular/directives/internal';
 
 import { UiButtonProgressSpinnerComponent } from './internal/ui-button-progress-spinner.component';
