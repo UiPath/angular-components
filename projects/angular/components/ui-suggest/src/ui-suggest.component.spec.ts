@@ -617,6 +617,9 @@ const sharedSpecifications = (
             });
 
             it(`should not open if the component is ${state}`, () => {
+                // CVA side-effect which sets disabled state to false
+                fixture.detectChanges();
+
                 component[state] = true;
 
                 fixture.detectChanges();
@@ -636,6 +639,9 @@ const sharedSpecifications = (
             it('should toggle loading state if it is searchable with items', () => {
                 const items = generateSuggetionItemList();
                 component.items = items;
+                // CVA side-effect which sets disabled state to false
+                fixture.detectChanges();
+
                 component.disabled = true;
                 component.searchable = true;
 
@@ -656,6 +662,9 @@ const sharedSpecifications = (
             });
 
             it('should not be in loading state if it has a searchSourceFactory', async () => {
+                // CVA side-effect which sets disabled state to false
+                fixture.detectChanges();
+
                 const items = generateSuggetionItemList();
                 component.disabled = true;
                 uiSuggest.searchSourceFactory = (term) => of([...items]).pipe(
