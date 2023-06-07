@@ -1,3 +1,6 @@
+# 15.0.0-rc.0 (2023-06-07)
+* ng update to 15
+
 # v14.8.7 (2023-07-20)
 * **grid** arrow cursor on grid header text
 
