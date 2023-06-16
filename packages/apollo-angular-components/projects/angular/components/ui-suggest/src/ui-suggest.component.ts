@@ -779,7 +779,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         end: Number.POSITIVE_INFINITY,
     };
 
-    private _inputChange$: Observable<string>;
+    private _inputChange$!: Observable<string>;
     private _drillDown = false;
     private _lazyLoadLastArgument: any[] = ['', 0, 0];
 
@@ -810,34 +810,6 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             cd,
             ngControl,
         );
-
-        this._inputChange$ = combineLatest([
-            this.inputControl.valueChanges.pipe(
-                startWith(''),
-                map((v = '') => v.trim()),
-                distinctUntilChanged(),
-                filter(v => v.length >= this.minChars),
-                tap(v => v && this.multiple && this.open()),
-                tap(this._setLoadingState),
-                debounceTime(this.debounceTime),
-                filter(_ => !!this.searchSourceFactory),
-            ),
-            this._disabled$.pipe(filter(v => !v)),
-            this._fetchStrategy$
-                .pipe(
-                    switchMap(strategy => {
-                        switch (strategy) {
-                            case 'onOpen':
-                                return this._isOpen$.pipe(filter(o => !!o));
-                            case 'eager':
-                                return of(strategy);
-                        }
-                    }),
-                ),
-        ]).pipe(
-            map(([value]) => value),
-        );
-
         this._initResizeObserver();
 
         this._height$.subscribe(heightValue => {
@@ -876,6 +848,35 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         this._initOverlayPositions();
         this.dropdownPosition = [this.direction && this.direction === 'up' ? this.upPosition : this.downPosition];
+
+        this._inputChange$ = combineLatest([
+            this.inputControl.valueChanges.pipe(
+                startWith(''),
+                map((v = '') => v.trim()),
+                distinctUntilChanged(),
+                filter(v => v.length >= this.minChars),
+                tap(v => v && this.multiple && this.open()),
+                tap(this._setLoadingState),
+                debounceTime(this.debounceTime),
+                filter(_ => !!this.searchSourceFactory),
+            ),
+            this._disabled$.pipe(
+                filter(v => !v),
+            ),
+            this._fetchStrategy$
+                .pipe(
+                    switchMap(strategy => {
+                        switch (strategy) {
+                            case 'onOpen':
+                                return this._isOpen$.pipe(filter(o => !!o));
+                            case 'eager':
+                                return of(strategy);
+                        }
+                    }),
+                ),
+        ]).pipe(
+            map(([value]) => value as any),
+        );
 
         merge(
             this._reset$.pipe(
