@@ -1,3 +1,6 @@
+# v14.8.3 (2023-06-16)
+* **suggest** use debounceTime input after it is set
+
 # v14.8.2 (2023-05-31)
 * **grid** move radio btn in radio group
 
