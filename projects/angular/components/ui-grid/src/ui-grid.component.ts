@@ -96,6 +96,7 @@ import { UiGridIntl } from './ui-grid.intl';
 export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid DataManager options.');
 const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
 const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), textarea, select, details, [tabindex]:not([tabindex="-1"])';
+const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'select'];
 
 @Component({
     selector: 'ui-grid',
@@ -257,6 +258,13 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @Input()
     singleSelectable = false;
+
+    /**
+     * Configure if the grid selects entity on row click.
+     *
+     */
+    @Input()
+    shouldSelectOnRowClick = false;
 
     /**
      * Option to select an alternate layout for footer pagination.
@@ -1020,6 +1028,14 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     }
 
     onRowClick(event: Event, row: T) {
+        if (this.shouldSelectOnRowClick && (event.target instanceof Element) &&
+            !EXCLUDED_ROW_SELECTION_ELEMENTS.find(el => (event.target as Element).closest(el))) {
+            if (this.singleSelectable) {
+                this.rowSelected(row);
+            } else {
+                this.selectionManager.toggle(row);
+            }
+        }
         this.rowClick.emit({
             event,
             row,
