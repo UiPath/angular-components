@@ -316,8 +316,18 @@ class GridUtils<T> {
             .map(el => el.attributes['data-property']);
     };
 
-    public getHeader = (property: string, debugEl = this._utils.fixture.debugElement) => {
-        return this._utils.getDebugElement(`.ui-grid-header-cell[data-property="${property}"] .ui-grid-header-title`, debugEl);
+    public getHeaderCell = (property: string, debugEl = this._utils.fixture.debugElement) => {
+        return this._utils.getDebugElement(`.ui-grid-header-cell[data-property="${property}"]`, debugEl);
+    };
+
+    public getHeaderTitle = (property: string, debugEl = this._utils.fixture.debugElement) => {
+        return this.getHeaderCell(property, debugEl).query(By.css('.ui-grid-header-title'));
+    };
+
+    public isSortable = (property: string, debugEl = this._utils.fixture.debugElement) => {
+        const headerCell = this.getHeaderCell(property, debugEl);
+
+        return !!headerCell.nativeElement.classList.contains('ui-grid-header-cell-sortable');
     };
 
     public getRowItem = (
