@@ -503,6 +503,16 @@ describe('Component: UiGrid', () => {
                         expect(component.grid.selectionManager.selected[0].id).toEqual(component.data[0].id);
                     });
 
+                    it('should select by clicking on the row', () => {
+                        grid.shouldSelectOnRowClick = true;
+                        fixture.detectChanges();
+                        const firstRow = fixture.debugElement.query(By.css('.ui-grid-row'));
+                        firstRow.nativeElement.dispatchEvent(EventGenerator.click);
+                        fixture.detectChanges();
+
+                        expect(component.grid.selectionManager.selected[0].id).toEqual(component.data[0].id);
+                    });
+
                     it('should have only one selection', () => {
                         const radioBtns = fixture.debugElement.queryAll(By.css('.mat-radio-label'));
 

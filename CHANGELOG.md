@@ -1,3 +1,6 @@
+# v14.8.4 (2023-06-20)
+* **grid** select by clicking the row
+
 # v14.8.3 (2023-06-16)
 * **suggest** use debounceTime input after it is set
 
