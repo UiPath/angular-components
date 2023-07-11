@@ -1,3 +1,6 @@
+# v14.8.5 (2023-07-10)
+* **grid** search filters initial value
+
 # v14.8.4 (2023-06-20)
 * **grid** select by clicking the row
 
