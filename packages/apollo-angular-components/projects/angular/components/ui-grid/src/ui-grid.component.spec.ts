@@ -38,6 +38,7 @@ import {
     ResizeStrategy,
 } from '@uipath/angular/components/ui-grid';
 import {
+    ISuggestValueData,
     ISuggestValues,
     UiSuggestComponent,
 } from '@uipath/angular/components/ui-suggest';
@@ -1327,7 +1328,7 @@ describe('Component: UiGrid', () => {
                                 [searchable]="true"
                                 title="String Header"
                                 width="50%">
-                    <ui-grid-search-filter [searchSourceFactory]="searchFactory"></ui-grid-search-filter>
+                    <ui-grid-search-filter [searchSourceFactory]="searchFactory" [value]="value" [multiple]="multiple"></ui-grid-search-filter>
                 </ui-grid-column>
             </ui-grid>
         `,
@@ -1342,6 +1343,9 @@ describe('Component: UiGrid', () => {
         dropdownItemList: IDropdownOption[] = [];
         showAllOption?: boolean;
         search?: boolean;
+
+        value?: ISuggestValueData<ITestEntity>[];
+        multiple = false;
 
         searchFactory = (): Observable<ISuggestValues<any>> => of({
             data: this.dropdownItemList
@@ -1372,7 +1376,7 @@ describe('Component: UiGrid', () => {
             fixture = TestBed.createComponent(TestFixtureGridHeaderWithFilterComponent);
             component = fixture.componentInstance;
             grid = component.grid;
-            grid.data = generateListFactory(generateEntity)();
+            component.data = generateListFactory(generateEntity)();
         });
 
         afterEach(() => {
@@ -1614,6 +1618,26 @@ describe('Component: UiGrid', () => {
 
                 expect(searchFilter.items.length).toEqual(0);
             }));
+
+            it('should correctly set the initial value', () => {
+                component.multiple = true;
+                component.value = [{
+                    id: component.data?.[0]?.id ?? '',
+                    text: component.data?.[0]?.myString ?? '',
+                }];
+
+                fixture.detectChanges();
+
+                expect(grid.filterManager.filter$.value).toEqual([{
+                    method: undefined as any,
+                    property: 'myString',
+                    value: [component.data?.[0]?.id ?? ''] as any,
+                    meta: [{
+                        id: component.data?.[0]?.id ?? '',
+                        text: component.data?.[0]?.myString ?? '',
+                    }],
+                }]);
+            });
         });
 
         describe('Event: dropdown filter change', () => {
