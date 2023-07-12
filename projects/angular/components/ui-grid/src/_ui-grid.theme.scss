@@ -5,14 +5,6 @@ $ui-grid-default-transition: 200ms cubic-bezier(0.35, 0, 0.25, 1);
 $ui-grid-background-transition: background-color $ui-grid-default-transition;
 $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
-%resize-anchor-hover {
-    opacity: 0.9;
-}
-
-%resize-anchor-default {
-    opacity: 0.1;
-}
-
 @mixin ui-grid-theme($theme) {
     $is-dark: map-get($theme, "is-dark");
     $foreground: map-get($theme, "foreground");
@@ -59,14 +51,6 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
             }
         }
 
-        &.ui-grid-state-resizing {
-            .ui-grid-header-cell:not(.ui-grid-state-resizing) {
-                .ui-grid-resize-anchor {
-                    @extend %resize-anchor-default;
-                }
-            }
-        }
-
         &.ui-grid-state-projected {
             .ui-grid-row {
                 &:hover,
@@ -110,12 +94,7 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
             }
 
             &-resize-anchor {
-                @extend %resize-anchor-default;
                 transition: $ui-grid-opacity-transition;
-
-                &:hover {
-                    @extend %resize-anchor-hover;
-                }
             }
 
             &-header-cell:not(.ui-grid-feature-cell):focus {
@@ -126,19 +105,6 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
             &-state-resizing {
                 background-color: $ui-grid-hover-background;
                 outline: none;
-            }
-
-            &-header-cell:focus {
-                .ui-grid-resize-anchor {
-                    opacity: 0.5;
-                }
-            }
-
-            &-header-cell:hover,
-            &-state-resizing {
-                .ui-grid-resize-anchor {
-                    @extend %resize-anchor-hover;
-                }
             }
 
             &-header-cell.ui-grid-primary {
