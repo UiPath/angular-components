@@ -1,3 +1,7 @@
+# v14.8.6 (2023-07-19)
+* **a11y** certain aria roles must contain particular children in grid
+* **deps-dev** bump word-wrap from 1.2.3 to 1.2.4
+
 # v14.8.5 (2023-07-10)
 * **grid** search filters initial value
 
