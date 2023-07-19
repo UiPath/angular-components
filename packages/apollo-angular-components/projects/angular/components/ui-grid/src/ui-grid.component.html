@@ -474,10 +474,10 @@
     <div cdkMonitorSubtreeFocus
          class="ui-grid-card-wrapper"
          [ngClass]="rowConfig?.ngClassFn(row) ?? ''"
-         [tabIndex]="0"
          [attr.data-row-index]="index"
          (click)="onRowClick($event, row)"
-         (keyup.enter)="onRowClick($event, row)">
+         (keyup.enter)="onRowClick($event, row)"
+         role="row">
         <ng-container *ngIf="cardTemplate?.html; else defaultCardTemplate">
             <ng-container *ngTemplateOutlet="cardTemplate?.html || defaultCardTemplate;context: {
                 data: row,
@@ -492,13 +492,15 @@
 <ng-template #defaultCardTemplate
              let-row="data"
              let-index="index">
-    <div class="ui-grid-card-default">
+    <div
+         class="ui-grid-card-default"
+         role="gridcell"
+         tabindex="0">
         <ng-container *ngFor="let column of renderedColumns$ | async">
             <div [class.ui-grid-primary]="column.directive.primary"
                  [class.ui-grid-secondary]="!column.directive.primary"
                  [attr.data-property]="column.directive.property"
                  [attr.data-identifier]="column.directive.identifier"
-                 [attr.role]="column.role"
                  class="ui-grid-card-default-cell">
                 <div *ngIf="isProjected"
                      [matTooltip]="column.directive.title ?? ''"
