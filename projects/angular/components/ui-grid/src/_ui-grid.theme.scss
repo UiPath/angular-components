@@ -6,11 +6,11 @@ $ui-grid-background-transition: background-color $ui-grid-default-transition;
 $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
 %resize-anchor-hover {
-    opacity: 0.9;
+    opacity: 1;
 }
 
 %resize-anchor-default {
-    opacity: 0.1;
+    opacity: 0;
 }
 
 @mixin ui-grid-theme($theme) {
@@ -18,6 +18,10 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
     $foreground: map-get($theme, "foreground");
     $background: map-get($theme, "background");
     $accent-palette: map-get($theme, "accent");
+
+    $primary-palette: map-get($theme, "primary");
+    $primary-color: map-get($primary-palette, "default");
+
 
     $ui-grid-primary-text-color: map-get($foreground, "text");
     $ui-grid-secondary-text-color: map-get($foreground, "secondary-text");
@@ -112,6 +116,7 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
             &-resize-anchor {
                 @extend %resize-anchor-default;
                 transition: $ui-grid-opacity-transition;
+                background: $primary-color;
 
                 &:hover {
                     @extend %resize-anchor-hover;
@@ -128,11 +133,6 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
                 outline: none;
             }
 
-            &-header-cell:focus {
-                .ui-grid-resize-anchor {
-                    opacity: 0.5;
-                }
-            }
 
             &-header-cell:hover,
             &-state-resizing {

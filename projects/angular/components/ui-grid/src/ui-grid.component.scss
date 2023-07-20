@@ -13,7 +13,7 @@ ui-grid {
     $ui-grid-row-horizontal-padding: 24px;
     $ui-feature-cell-width: 50px;
     $ui-row-border-width: 1px;
-    $ui-header-resize-handle-width: 15px;
+    $ui-header-resize-handle-width: 1px;
     $ui-grid-default-spacing: 5px;
     $ui-border-radius: 4px;
     $ui-grid-button-size: 40px;
@@ -329,7 +329,6 @@ ui-grid {
             justify-content: center;
             display: flex;
             align-items: center;
-            margin-right: $ui-grid-default-spacing;
         }
 
         &-dropdown-filter {
