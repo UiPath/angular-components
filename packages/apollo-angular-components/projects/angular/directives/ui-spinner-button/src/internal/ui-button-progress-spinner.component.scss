@@ -5,7 +5,7 @@ $ui-button-progress-default-transition: 200ms cubic-bezier(0.35, 0, 0.25, 1);
 $ui-button-progress-opacity-transition: opacity $ui-button-progress-default-transition;
 
 ui-button-progress-spinner {
-    .mat-progress-spinner {
+    .mat-mdc-progress-spinner {
         position: absolute;
         top: 0;
         left: 0;
@@ -28,12 +28,14 @@ ui-button-progress-spinner {
 }
 
 .ui-spinner-button {
+    /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
     .mat-button-wrapper {
         transition: $ui-button-progress-opacity-transition;
     }
 }
 
 .ui-spinner-button-loading {
+    /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
     .mat-button-wrapper {
         opacity: 0;
     }

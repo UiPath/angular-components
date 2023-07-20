@@ -27,13 +27,13 @@ import {
     Optional,
     ViewContainerRef,
 } from '@angular/core';
-import { MatLegacyFormFieldControl as MatFormFieldControl } from '@angular/material/legacy-form-field';
+import { MatFormFieldControl } from '@angular/material/form-field';
 import {
-    MatLegacyTooltip as MatTooltip,
-    MatLegacyTooltipDefaultOptions as MatTooltipDefaultOptions,
-    MAT_LEGACY_TOOLTIP_DEFAULT_OPTIONS as MAT_TOOLTIP_DEFAULT_OPTIONS,
-    MAT_LEGACY_TOOLTIP_SCROLL_STRATEGY as MAT_TOOLTIP_SCROLL_STRATEGY,
-} from '@angular/material/legacy-tooltip';
+    MatTooltip,
+    MatTooltipDefaultOptions,
+    MAT_TOOLTIP_DEFAULT_OPTIONS,
+    MAT_TOOLTIP_SCROLL_STRATEGY,
+} from '@angular/material/tooltip';
 
 import { UiMatFormFieldRequiredIntl } from './ui-matformfield-required.directive.intl';
 

@@ -6,8 +6,8 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import { MatLegacyButton as MatButton } from '@angular/material/legacy-button';
-import { MatLegacyProgressSpinner as MatProgressSpinner } from '@angular/material/legacy-progress-spinner';
+import { MatButton } from '@angular/material/button';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { UiLoaderButtonDirective } from '@uipath/angular/directives/internal';
 
 import { UiButtonProgressSpinnerComponent } from './internal/ui-button-progress-spinner.component';
@@ -63,8 +63,10 @@ export class UiSpinnerButtonDirective
             container,
         );
 
-        const isRound = button.isIconButton ||
-            button.isRoundButton;
+        // FIXME: check if this is a round button
+        // const isRound = button.isIconButton ||
+        //     button.isRoundButton;
+        const isRound = true;
 
         this._loader.isRound$.next(isRound);
 

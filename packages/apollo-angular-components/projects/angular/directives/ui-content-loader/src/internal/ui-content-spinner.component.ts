@@ -8,7 +8,7 @@ import {
     OnDestroy,
     ViewEncapsulation,
 } from '@angular/core';
-import { MatLegacyProgressSpinner as MatProgressSpinner } from '@angular/material/legacy-progress-spinner';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'ui-content-spinner',

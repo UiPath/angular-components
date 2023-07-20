@@ -11,19 +11,20 @@
     $componentName: "ui-suggest";
 
     .mat-toolbar #{$componentName} {
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-focused .mat-form-field-ripple,
         .mat-form-field-ripple {
             background-color: map-get($primary-palette, "default");
         }
 
-        .mat-input-element {
+        .mat-mdc-input-element {
             color: map-get($foreground, "text");
         }
     }
 
     .ui-suggest-dropdown-item-list-container {
         background-color: map-get($background, "dialog");
-        .mat-list {
+        .mat-mdc-list {
             &-item {
                 &.selected {
                     background-color: map-get($background, "disabled-button");
@@ -50,9 +51,10 @@
                 color: map-get($warn-palette, "default");
             }
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
         .mat-chip-list {
-            .mat-chip button {
+            .mat-mdc-chip button {
                 position: relative;
                 background-color: unset;
                 border: unset;
@@ -61,8 +63,10 @@
     }
 
     mat-form-field.mat-form-field-hide-placeholder #{$componentName} {
+        /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
         .mat-chip-list {
-            .mat-input-element::placeholder {
+            .mat-mdc-input-element::placeholder {
                 color: currentColor !important;
                 -webkit-text-fill-color: currentColor !important;
             }

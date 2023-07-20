@@ -6,8 +6,8 @@ import {
     ComponentFixture,
     TestBed,
 } from '@angular/core/testing';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { MatLegacyProgressBar as MatProgressBar } from '@angular/material/legacy-progress-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBar } from '@angular/material/progress-bar';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

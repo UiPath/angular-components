@@ -78,7 +78,7 @@
         </ng-container>
 
         <ng-template #chipsTemplate>
-            <mat-chip-list #chipList
+            <mat-chip-grid #chipList
                            [attr.tabindex]="!disabled && !readonly ? 0 : null"
                            [attr.aria-label]="ariaLabel ?? placeholder"
                            [attr.aria-describedby]="describedBy"
@@ -100,7 +100,7 @@
                            (keydown.esc)="preventDefault($event)"
                            (keydown.tab)="close(false)"
                            (keydown.shift.tab)="close()">
-                <mat-chip *ngFor="let option of value; let i = index"
+                <mat-chip-row *ngFor="let option of value; let i = index"
                           [removable]="canRemoveChip(option)"
                           [matTooltip]="intl.translateLabel(option.text)"
                           (removed)="deselectItem(option)"
@@ -121,7 +121,7 @@
                             tabindex="-1">
                         <mat-icon>close</mat-icon>
                     </button>
-                </mat-chip>
+                </mat-chip-row>
 
                 <ng-container *ngIf="searchable">
                     <input #searchInput
@@ -139,7 +139,7 @@
                            matInput>
                 </ng-container>
 
-            </mat-chip-list>
+            </mat-chip-grid>
         </ng-template>
     </ng-container>
 
@@ -187,8 +187,7 @@
             </ng-container>
         </ng-container>
 
-        <mat-form-field *ngIf="searchable && (!multiple || compact)"
-                        floatLabel="never">
+        <mat-form-field *ngIf="searchable && (!multiple || compact)">
             <input #searchInput
                    [placeholder]="isFormControl ? '' : placeholder"
                    [formControl]="inputControl"

@@ -85,7 +85,7 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
                 background: $ui-grid-background;
             }
 
-            &-container mat-paginator.mat-paginator {
+            &-container mat-paginator.mat-mdc-paginator {
                 background: transparent;
             }
 

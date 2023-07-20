@@ -9,7 +9,7 @@ import {
     ComponentFixture,
     TestBed,
 } from '@angular/core/testing';
-import { MatLegacyProgressSpinner as MatProgressSpinner } from '@angular/material/legacy-progress-spinner';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { By } from '@angular/platform-browser';
 
 import { UiContentSpinnerComponent } from './internal/ui-content-spinner.component';

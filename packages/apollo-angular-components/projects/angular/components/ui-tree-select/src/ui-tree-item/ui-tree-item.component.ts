@@ -11,7 +11,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
+import { MatListModule } from '@angular/material/list';
 import { IFlatNodeObject } from '../models/tree.models';
 
 @Component({

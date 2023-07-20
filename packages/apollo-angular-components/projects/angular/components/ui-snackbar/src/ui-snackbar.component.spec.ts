@@ -18,7 +18,7 @@ import {
     tick,
     waitForAsync,
 } from '@angular/core/testing';
-import { MAT_LEGACY_SNACK_BAR_DEFAULT_OPTIONS as MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/legacy-snack-bar';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EventGenerator } from '@uipath/angular/testing';
 import { asyncOf } from '@uipath/angular/utilities';
