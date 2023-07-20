@@ -1,7 +1,7 @@
 ui-grid-search {
     mat-form-field {
         width: 140px;
-
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-flex {
             align-items: flex-end;
         }

@@ -75,7 +75,7 @@ $componentName: "ui-suggest";
         }
     }
 
-    .mat-chip {
+    .mat-mdc-chip {
         max-width: calc(100% - #{$chips-container-padding * 2});
 
         .chip-selectable-icon {
@@ -91,7 +91,7 @@ $componentName: "ui-suggest";
 #{$componentName}:not(.form-control) {
     $searchUpDown: 3px;
     $searchLeft: -1px;
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .display,
     .mat-form-field-label {
         font-size: 0.8rem;
@@ -110,6 +110,7 @@ $componentName: "ui-suggest";
 }
 
 #{$componentName}.form-control {
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-flex {
         padding: 0;
         background: inherit;
@@ -128,7 +129,7 @@ $componentName: "ui-suggest";
 
 .ui-suggest-dropdown-item-list-container {
     &.is-form-control {
-        .mat-list {
+        .mat-mdc-list {
             .mat-icon {
                 height: $icon-size;
                 font-size: $icon-size;
@@ -138,12 +139,12 @@ $componentName: "ui-suggest";
             &-item {
                 height: $item-height;
                 font-size: 14px;
-
+                /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
                 &.text-ellipsis .mat-list-item-content {
                     line-height: $item-height;
                 }
             }
-
+            /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
             .mat-checkbox-ripple.mat-ripple {
                 height: 33px;
                 width: 33px;
@@ -154,14 +155,14 @@ $componentName: "ui-suggest";
     }
 
     &:not(.is-form-control) {
-        .mat-list {
+        .mat-mdc-list {
             &-item {
                 height: $height;
-
+                /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
                 &.text-ellipsis .mat-list-item-content {
                     line-height: $height;
                 }
-
+                /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
                 &.no-results-text .mat-list-item-content {
                     font-size: 14px;
                 }
@@ -190,7 +191,7 @@ $componentName: "ui-suggest";
         outline: none;
     }
 
-    .mat-form-field {
+    .mat-mdc-form-field {
         $field-padding: 16px;
 
         padding: 0 $field-padding;
@@ -219,7 +220,7 @@ $componentName: "ui-suggest";
         }
     }
 
-    .mat-list {
+    .mat-mdc-list {
         overflow-y: auto;
         padding-top: 0;
 
@@ -234,12 +235,13 @@ $componentName: "ui-suggest";
                 font-style: italic;
                 opacity: 0.8;
             }
-
+            /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
             &.text-ellipsis:not(.custom-value-template) .mat-list-item-content {
                 display: block;
             }
 
             &.is-expandable {
+                /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
                 .mat-list-item-content {
                     padding-right: 30px;
                 }
@@ -296,7 +298,8 @@ $componentName: "ui-suggest";
             }
         }
 
-        .mat-form-field {
+        .mat-mdc-form-field {
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-suffix {
                 height: 36px;
             }
@@ -314,7 +317,8 @@ $componentName: "ui-suggest";
             }
         }
 
-        .mat-form-field {
+        .mat-mdc-form-field {
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-suffix {
                 height: 32px;
             }
@@ -324,7 +328,8 @@ $componentName: "ui-suggest";
 
 .mat-form-field-appearance-standard {
     ui-suggest {
-        .mat-form-field {
+        .mat-mdc-form-field {
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-suffix {
                 height: 32px;
             }

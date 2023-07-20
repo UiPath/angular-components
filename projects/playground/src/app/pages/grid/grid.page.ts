@@ -18,7 +18,7 @@ import {
     UntypedFormGroup,
     Validators,
 } from '@angular/forms';
-import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
+import { PageEvent } from '@angular/material/paginator';
 
 export interface MockData {
     id: number;

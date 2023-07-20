@@ -13,7 +13,7 @@ import {
     Input,
     OnDestroy,
 } from '@angular/core';
-import { MatLegacyMenuTrigger as _MatMenuTriggerBase } from '@angular/material/legacy-menu';
+import { MatMenuTrigger as _MatMenuTriggerBase } from '@angular/material/menu';
 
 //  FIXME: this directive will not be necessary anymore in the @angular/material@15.x version
 // its sole purpose is to fix the aria-expanded issue https://github.com/angular/components/issues/26262

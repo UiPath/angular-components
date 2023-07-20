@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import {
   FormsModule, ReactiveFormsModule,
 } from '@angular/forms';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { UiSuggestModule } from '@uipath/angular/components/ui-suggest';
-import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { SuggestPageComponent } from './suggest.page';
 

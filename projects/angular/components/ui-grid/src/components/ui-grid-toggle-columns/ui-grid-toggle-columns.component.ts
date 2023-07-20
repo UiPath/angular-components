@@ -22,11 +22,11 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
-import type { MatLegacyAnchor as MatAnchor } from '@angular/material/legacy-button';
+import type { MatAnchor } from '@angular/material/button';
 import {
-    MatLegacySelect as MatSelect,
-    MatLegacySelectChange as MatSelectChange,
-} from '@angular/material/legacy-select';
+    MatSelect,
+    MatSelectChange,
+} from '@angular/material/select';
 
 import {
     IGridDataEntry,

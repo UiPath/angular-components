@@ -22,7 +22,7 @@ import {
 import { MatTreeFlatDataSource } from '@angular/material/tree';
 
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
+import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { UiContentLoaderModule } from '@uipath/angular/directives/ui-content-loader';
 import {

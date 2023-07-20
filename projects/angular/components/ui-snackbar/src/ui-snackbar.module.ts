@@ -1,12 +1,12 @@
 import { PortalModule } from '@angular/cdk/portal';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {
-    MatLegacySnackBarModule as MatSnackBarModule,
-    MAT_LEGACY_SNACK_BAR_DEFAULT_OPTIONS as MAT_SNACK_BAR_DEFAULT_OPTIONS,
-} from '@angular/material/legacy-snack-bar';
+    MatSnackBarModule,
+    MAT_SNACK_BAR_DEFAULT_OPTIONS,
+} from '@angular/material/snack-bar';
 import { KeyboardShortcutModule } from '@uipath/angular/directives/keyboard-shortcut';
 import { UiPipeModule } from '@uipath/angular/pipes';
 
