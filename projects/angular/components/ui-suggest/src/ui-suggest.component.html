@@ -123,12 +123,11 @@
                     </button>
                 </mat-chip-row>
 
-                <ng-container *ngIf="searchable">
-                    <input #searchInput
+                <input #searchInput
                            [uiAutofocus]="isOpen"
                            [refocus]="isOpen"
                            [placeholder]="(isFormControl && !empty) ? '' : defaultValue"
-                           [readonly]="readonly"
+                           [readonly]="readonly || !searchable"
                            [formControl]="inputControl"
                            [matChipInputFor]="chipList"
                            [attr.maxlength]="maxLength"
@@ -137,7 +136,6 @@
                            autocomplete="off"
                            aria-autocomplete="list"
                            matInput>
-                </ng-container>
 
             </mat-chip-grid>
         </ng-template>
