@@ -1,3 +1,6 @@
+# v14.8.7 (2023-07-20)
+* **grid** show border for column resize, instead of drag icon
+
 # v14.8.6 (2023-07-19)
 * **a11y** certain aria roles must contain particular children in grid
 * **deps-dev** bump word-wrap from 1.2.3 to 1.2.4
