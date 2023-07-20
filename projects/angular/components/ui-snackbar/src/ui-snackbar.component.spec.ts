@@ -73,7 +73,7 @@ describe('Service: UiSnackBarService', () => {
     const getSnack = () =>
         overlayContainer
             .getContainerElement()
-            .querySelector('.mat-snack-bar-container');
+            .querySelector('.mat-mdc-snack-bar-container');
 
     beforeEach(waitForAsync(() => {
         securitySettings = {

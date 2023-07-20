@@ -6,21 +6,20 @@ $theme: mat.define-light-theme(
     mat.define-palette(mat.$amber-palette, 500)
 );
 
-// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
-//  The following line adds:
-//    1. Default typography styles for all components
-//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
-//  If you specify typography styles for the components you use elsewhere, you should delete this line.
-//  If you don't need the default component typographies but still want the hierarchy styles,
-//  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies();
-@include mat.legacy-core();
-@include mat.all-legacy-component-themes($theme);
+@include mat.core();
+@include mat.all-component-themes($theme);
 @include uipath-angular-theme($theme);
-@include mat.legacy-snack-bar-theme($theme);
+@include mat.snack-bar-theme($theme);
 
 body {
     margin: 0;
     padding: 0;
+}
+
+.mat-mdc-form-field {
+    .mat-mdc-text-field-wrapper,
+    .mat-mdc-form-field-focus-overlay {
+        background-color: unset;
+        padding: 0;
+    }
 }
