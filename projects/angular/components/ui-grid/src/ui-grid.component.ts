@@ -41,6 +41,7 @@ import {
     ElementRef,
     EventEmitter,
     HostBinding,
+    HostListener,
     Inject,
     InjectionToken,
     Input,
@@ -928,10 +929,14 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     /**
      * Marks if the `Shift` key is pressed.
      */
-    checkShift(event: Event) {
-        event.stopPropagation();
+    @HostListener('document:keydown', ['$event'])
+    handleKeyDown(event: KeyboardEvent): void {
+        this._isShiftPressed = event.shiftKey;
+    }
 
-        this._isShiftPressed = (event as MouseEvent | KeyboardEvent).shiftKey;
+    @HostListener('document:keyup', ['$event'])
+    handleKeyUp(event: KeyboardEvent): void {
+        this._isShiftPressed = event.shiftKey;
     }
 
     /**

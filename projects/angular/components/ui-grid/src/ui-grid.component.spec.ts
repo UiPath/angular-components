@@ -434,7 +434,7 @@ describe('Component: UiGrid', () => {
                     expect(checkbox).toBeDefined();
                     expect(refresh).toBeDefined();
 
-                    const matCheckbox = checkbox.query(By.css('.mat-checkbox'));
+                    const matCheckbox = checkbox.query(By.css('.mat-mdc-checkbox'));
                     expect(matCheckbox).toBeDefined();
                     expect(matCheckbox.nativeElement).toBeDefined();
 
@@ -494,7 +494,7 @@ describe('Component: UiGrid', () => {
                     });
 
                     it('should have correct selection', () => {
-                        const radioBtns = fixture.debugElement.queryAll(By.css('.mat-radio-label'));
+                        const radioBtns = fixture.debugElement.queryAll(By.css('.mat-mdc-radio-button .mdc-radio__native-control'));
                         expect(radioBtns.length).toEqual(50);
 
                         const firstRadioBtn = radioBtns[0];
@@ -515,7 +515,7 @@ describe('Component: UiGrid', () => {
                     });
 
                     it('should have only one selection', () => {
-                        const radioBtns = fixture.debugElement.queryAll(By.css('.mat-radio-label'));
+                        const radioBtns = fixture.debugElement.queryAll(By.css('.mat-mdc-radio-button .mdc-radio__native-control'));
 
                         const firstRadioBtn = radioBtns[0];
                         firstRadioBtn.nativeElement.dispatchEvent(EventGenerator.click);
@@ -535,7 +535,7 @@ describe('Component: UiGrid', () => {
                         fixture.detectChanges();
                         const radioBtns = fixture.debugElement.queryAll(By.css('[role="gridcell"] mat-radio-button'));
                         const checkedRadioBtn = radioBtns[randomIdx];
-                        expect(checkedRadioBtn.nativeElement.classList.contains('mat-radio-checked')).toBeTruthy();
+                        expect(checkedRadioBtn.nativeElement.classList.contains('mat-mdc-radio-checked')).toBeTruthy();
                     });
 
                     it('should display Select / Deselect according to button state', () => {
@@ -568,14 +568,14 @@ describe('Component: UiGrid', () => {
                         fixture.detectChanges();
 
                         const radioBtns = fixture.debugElement.queryAll(By.css('[role="gridcell"] mat-radio-button'));
-                        const selectableRadioBtn = radioBtns[selectableBtnIdx].nativeElement;
-                        const disabledRadioBtn = radioBtns[disabledBtnIdx].nativeElement;
+                        const selectableRadioBtn = radioBtns[selectableBtnIdx];
+                        const disabledRadioBtn = radioBtns[disabledBtnIdx];
 
-                        expect(selectableRadioBtn.getAttribute('ng-reflect-message')).toEqual(`Select row ${selectableBtnIdx}`);
-                        expect(selectableRadioBtn.classList.contains('mat-radio-disabled')).toBeFalsy();
+                        expect(selectableRadioBtn.nativeElement.getAttribute('ng-reflect-message')).toEqual(`Select row ${selectableBtnIdx}`);
+                        expect(selectableRadioBtn.query(By.css('.mdc-radio--disabled'))).toBeFalsy();
 
-                        expect(disabledRadioBtn.getAttribute('ng-reflect-message')).toEqual(`unselectable`);
-                        expect(disabledRadioBtn.classList.contains('mat-radio-disabled')).toBeTruthy();
+                        expect(disabledRadioBtn.nativeElement.getAttribute('ng-reflect-message')).toEqual(`unselectable`);
+                        expect(disabledRadioBtn.query(By.css('.mdc-radio--disabled'))).toBeTruthy();
                     });
                 });
 
@@ -729,10 +729,9 @@ describe('Component: UiGrid', () => {
                         const rowCheckboxInputList = fixture.debugElement
                             .queryAll(By.css('.ui-grid-row .ui-grid-cell.ui-grid-checkbox-cell input'));
 
-                        const event = document.createEvent('MouseEvent');
-                        event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, true, false, 0, null);
+                        const event = new KeyboardEvent('keydown', { shiftKey: true });
 
-                        fixture.componentInstance.grid.checkShift(event);
+                        document.dispatchEvent(event);
 
                         rowCheckboxInputList[10].nativeElement.dispatchEvent(EventGenerator.click);
 
@@ -748,10 +747,9 @@ describe('Component: UiGrid', () => {
 
                             rowCheckboxInputList[5].nativeElement.dispatchEvent(EventGenerator.click);
 
-                            const event = document.createEvent('MouseEvent');
-                            event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, true, false, 0, null);
+                            const event = new KeyboardEvent('keydown', { shiftKey: true });
 
-                            fixture.componentInstance.grid.checkShift(event);
+                            document.dispatchEvent(event);
                         });
 
                         it('should select rows between last clicked and current clicked when shift key is pressed', () => {
@@ -1964,19 +1962,19 @@ describe('Component: UiGrid', () => {
                 component.hidden = true;
                 fixture.detectChanges();
 
-                const matPaginator = fixture.debugElement.query(By.css('.mat-paginator'));
+                const matPaginator = fixture.debugElement.query(By.css('.mat-mdc-paginator'));
                 expect(matPaginator).toBeNull();
             });
 
             it('should render the footer if hidden=false', () => {
-                const matPaginator = fixture.debugElement.query(By.css('.mat-paginator'));
+                const matPaginator = fixture.debugElement.query(By.css('.mat-mdc-paginator'));
                 expect(!!matPaginator).toEqual(true);
             });
         });
 
         describe('State: populated', () => {
             it('should render pagination', () => {
-                const matPaginator = fixture.debugElement.query(By.css('.mat-paginator'));
+                const matPaginator = fixture.debugElement.query(By.css('.mat-mdc-paginator'));
                 expect(!!matPaginator).toEqual(true);
             });
 
@@ -1984,7 +1982,7 @@ describe('Component: UiGrid', () => {
                 component.hidePageSize = false;
                 fixture.detectChanges();
 
-                const pageSize = fixture.debugElement.query(By.css('.mat-paginator-page-size'));
+                const pageSize = fixture.debugElement.query(By.css('.mat-mdc-paginator-page-size'));
                 expect(pageSize).toBeDefined();
             });
 
@@ -1992,12 +1990,12 @@ describe('Component: UiGrid', () => {
                 component.pageIndex = 1;
                 fixture.detectChanges();
 
-                const pageIndexRange = fixture.debugElement.query(By.css('.mat-paginator-range-label'));
+                const pageIndexRange = fixture.debugElement.query(By.css('.mat-mdc-paginator-range-label'));
                 expect(pageIndexRange.nativeElement.textContent.trim()).toBe('3 – 4 of 6');
             });
 
             it('should NOT render pageSize if input [hidePageSize]="true"', () => {
-                const pageSize = fixture.debugElement.query(By.css('.mat-paginator-page-size'));
+                const pageSize = fixture.debugElement.query(By.css('.mat-mdc-paginator-page-size'));
                 expect(pageSize).toBeNull();
             });
         });
@@ -2009,7 +2007,7 @@ describe('Component: UiGrid', () => {
             });
 
             it('should emit PageEvent object if next page is clicked', () => {
-                const next = fixture.debugElement.query(By.css('.mat-paginator-navigation-next'));
+                const next = fixture.debugElement.query(By.css('.mat-mdc-paginator-navigation-next'));
 
                 next.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
@@ -2033,7 +2031,7 @@ describe('Component: UiGrid', () => {
             });
 
             it('should update inner state if next page is clicked', () => {
-                const next = fixture.debugElement.query(By.css('.mat-paginator-navigation-next'));
+                const next = fixture.debugElement.query(By.css('.mat-mdc-paginator-navigation-next'));
 
                 next.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
@@ -2187,7 +2185,7 @@ describe('Component: UiGrid', () => {
             });
 
             it('should render toggle button', () => {
-                const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
+                const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mdc-button')).nativeElement;
 
                 expect(buttonToggle).toBeDefined();
             });
@@ -2198,7 +2196,7 @@ describe('Component: UiGrid', () => {
                 beforeEach(async () => {
                     fixture.detectChanges();
 
-                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
+                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mdc-button')).nativeElement;
                     buttonToggle.dispatchEvent(EventGenerator.click);
 
                     await fixture.whenStable();
@@ -2212,25 +2210,27 @@ describe('Component: UiGrid', () => {
                 });
 
                 it('should have a select menu with options equal to number of columns', () => {
-                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option'));
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-mdc-option'));
 
                     expect(options).toBeDefined();
                     expect(options.length).toEqual(4);
                 });
 
                 it('should have first visible option disabled', () => {
-                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option'));
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-mdc-option'));
 
                     options
                         .forEach((o, i) => {
-                            expect(o.nativeElement.classList.contains('mat-option-disabled'))
+                            expect(o.nativeElement.classList.contains('mdc-list-item--disabled'))
                                 .toBe(i === 0);
                         },
                         );
                 });
 
                 it('should be able to hide all available columns', fakeAsync(async () => {
-                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option:not(.mat-option-disabled)'));
+                    const options = fixture.debugElement.queryAll(
+                        By.css('.ui-grid-toggle-panel .mat-mdc-option:not(.mdc-list-item--disabled)'),
+                        );
                     expect(options.length).toEqual(3);
 
                     options.forEach(async o => {
@@ -2254,7 +2254,9 @@ describe('Component: UiGrid', () => {
                 );
 
                 it('should update grid if options are toggled', fakeAsync(() => {
-                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option:not(.mat-option-disabled)'));
+                    const options = fixture.debugElement.queryAll(
+                        By.css('.ui-grid-toggle-panel .mat-mdc-option:not(.mdc-list-item--disabled)'),
+                        );
                     expect(options.length).toEqual(3);
 
                     options.forEach(async o => {
@@ -2313,7 +2315,7 @@ describe('Component: UiGrid', () => {
                 beforeEach(async () => {
                     fixture.detectChanges();
 
-                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
+                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mdc-button')).nativeElement;
                     buttonToggle.dispatchEvent(EventGenerator.click);
 
                     await fixture.whenStable();
@@ -2329,7 +2331,7 @@ describe('Component: UiGrid', () => {
                 it('should render reset button if option is changed', fakeAsync(
                     () => {
                         const firstOption = fixture.debugElement
-                            .query(By.css('.ui-grid-toggle-panel .mat-option:not(.mat-option-disabled)'));
+                            .query(By.css('.ui-grid-toggle-panel .mat-mdc-option:not(.mdc-list-item--disabled)'));
 
                         const checkbox = firstOption.query(By.css('.mat-pseudo-checkbox'));
                         expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(true);
@@ -2352,7 +2354,7 @@ describe('Component: UiGrid', () => {
                 it('should be able to reset if in dirty state', fakeAsync(
                     async () => {
                         const firstOption = fixture.debugElement
-                            .query(By.css('.ui-grid-toggle-panel .mat-option:not(.mat-option-disabled)'));
+                            .query(By.css('.ui-grid-toggle-panel .mat-mdc-option:not(.mdc-list-item--disabled)'));
 
                         const checkbox = firstOption.query(By.css('.mat-pseudo-checkbox'));
                         expect(checkbox.classes['mat-pseudo-checkbox-checked']).toBe(true, 'first option NOT checked initially');
@@ -2376,7 +2378,7 @@ describe('Component: UiGrid', () => {
                         expect(headers).toBeDefined();
                         expect(headers.length).toEqual(6, 'Not all columns rendered');
 
-                        buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
+                        buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mdc-button')).nativeElement;
                         buttonToggle.dispatchEvent(EventGenerator.click);
 
                         fixture.detectChanges();
@@ -2394,7 +2396,7 @@ describe('Component: UiGrid', () => {
                         fakeAsync(
                             () => {
                                 const firstOption = fixture.debugElement
-                                    .query(By.css('.ui-grid-toggle-panel .mat-option:not(.mat-option-disabled)'));
+                                    .query(By.css('.ui-grid-toggle-panel .mat-mdc-option:not(.mdc-list-item--disabled)'));
                                 const checkbox = firstOption.query(By.css('.mat-pseudo-checkbox'));
                                 checkbox.nativeElement.dispatchEvent(EventGenerator.click);
 
@@ -2432,7 +2434,7 @@ describe('Component: UiGrid', () => {
 
                                 expect(reset.nativeElement).not.toEqual(document.activeElement, 'Reset is still focused');
 
-                                const highlightedOption = fixture.debugElement.query(By.css('.mat-option.mat-active'));
+                                const highlightedOption = fixture.debugElement.query(By.css('.mat-mdc-option.mat-mdc-option-active'));
 
                                 expect(highlightedOption).toBeDefined();
                                 discardPeriodicTasks();
@@ -2461,7 +2463,7 @@ describe('Component: UiGrid', () => {
                                 expect(headers.length).toEqual(6, 'Not all columns rendered');
 
                                 expect(
-                                    fixture.debugElement.query(By.css('.mat-select')).nativeElement,
+                                    fixture.debugElement.query(By.css('.mat-mdc-select')).nativeElement,
                                 ).toBe(document.activeElement, 'Menu is not selected');
 
                                 discardPeriodicTasks();
@@ -2496,7 +2498,7 @@ describe('Component: UiGrid', () => {
 
                                 expect(reset.nativeElement).not.toEqual(document.activeElement, 'Reset is still focused');
 
-                                const highlightedOption = fixture.debugElement.query(By.css('.mat-option.mat-active'));
+                                const highlightedOption = fixture.debugElement.query(By.css('.mat-mdc-option.mat-mdc-option-active'));
                                 const checkbox = highlightedOption.query(By.css('.mat-pseudo-checkbox'));
 
                                 checkbox.nativeElement.dispatchEvent(EventGenerator.click);
@@ -2593,7 +2595,7 @@ describe('Component: UiGrid', () => {
             });
 
             it('should render toggle icon button', () => {
-                const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
+                const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mdc-button')).nativeElement;
                 expect(buttonToggle).toBeDefined();
             });
 
@@ -2603,7 +2605,7 @@ describe('Component: UiGrid', () => {
                 beforeEach(async () => {
                     fixture.detectChanges();
 
-                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
+                    buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mdc-button')).nativeElement;
                     buttonToggle.dispatchEvent(EventGenerator.click);
 
                     await fixture.whenStable();
@@ -2612,7 +2614,7 @@ describe('Component: UiGrid', () => {
 
                 it('should not render columns hidden and with disableToggle', () => {
                     fixture.detectChanges();
-                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option'));
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-mdc-option'));
 
                     expect(options).toBeDefined();
                     expect(options.length).toEqual(3);
@@ -2620,7 +2622,7 @@ describe('Component: UiGrid', () => {
 
                 it('should render option as disabled if disableToggle is set to true', () => {
                     fixture.detectChanges();
-                    const option = fixture.debugElement.query(By.css('.ui-grid-toggle-panel .mat-option-disabled'));
+                    const option = fixture.debugElement.query(By.css('.ui-grid-toggle-panel .mdc-list-item--disabled'));
 
                     expect(option).toBeDefined();
                     expect(option.nativeElement.innerText).toEqual('Prop 2');
@@ -2682,7 +2684,7 @@ describe('Component: UiGrid', () => {
                 const customFooter = fixture.debugElement.query(By.css('ui-grid-custom-paginator'));
                 expect(customFooter).toBeTruthy();
 
-                const customFilters = fixture.debugElement.query(By.css('ui-grid-toggle-columns .mat-button-wrapper span'));
+                const customFilters = fixture.debugElement.query(By.css('ui-grid-toggle-columns .mdc-button .mdc-button__label'));
                 expect(customFilters.nativeElement.innerText).toBe('Columns');
             });
         });
@@ -2764,7 +2766,7 @@ describe('Component: UiGrid', () => {
 
             it('should use proper template when no data for search', fakeAsync(() => {
                 const debounceTime = 500;
-                const searchInput = fixture.debugElement.query(By.css('input.mat-input-element'));
+                const searchInput = fixture.debugElement.query(By.css('input.mat-mdc-input-element'));
                 const randomInput = faker.random.alphaNumeric(10);
 
                 searchInput.nativeElement.value = randomInput;
@@ -2787,7 +2789,7 @@ describe('Component: UiGrid', () => {
                 filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
 
-                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-mdc-menu-item:not(.active)'));
                 filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
 
@@ -2803,12 +2805,12 @@ describe('Component: UiGrid', () => {
                 filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
 
-                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-mdc-menu-item:not(.active)'));
                 filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
 
                 const debounceTime = 500;
-                const searchInput = fixture.debugElement.query(By.css('input.mat-input-element'));
+                const searchInput = fixture.debugElement.query(By.css('input.mat-mdc-input-element'));
                 const randomInput = faker.random.alphaNumeric(10);
 
                 searchInput.nativeElement.value = randomInput;
@@ -2879,7 +2881,7 @@ describe('Component: UiGrid', () => {
                 const customFooter = fixture.debugElement.query(By.css('ui-grid-custom-paginator'));
                 expect(customFooter).toBeFalsy();
 
-                const customFilters = fixture.debugElement.query(By.css('ui-grid-toggle-columns .mat-button-wrapper span'));
+                const customFilters = fixture.debugElement.query(By.css('ui-grid-toggle-columns .mdc-button .mdc-button__label'));
                 expect(customFilters).toBeFalsy();
             });
         });
@@ -3163,7 +3165,7 @@ describe('Component: UiGrid', () => {
                     filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                     fixture.detectChanges();
 
-                    const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                    const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-mdc-menu-item:not(.active)'));
                     filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
                     fixture.detectChanges();
 
@@ -3555,7 +3557,7 @@ describe('Component: UiGrid', () => {
                     filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                     fixture.detectChanges();
 
-                    const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                    const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-mdc-menu-item:not(.active)'));
                     filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
                     fixture.detectChanges();
 
@@ -3766,7 +3768,7 @@ describe('Component: UiGrid', () => {
                 filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
 
-                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-menu-item:not(.active)'));
+                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-mdc-menu-item:not(.active)'));
                 filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
 
@@ -3776,7 +3778,7 @@ describe('Component: UiGrid', () => {
             it('should provide search context', fakeAsync(() => {
                 const debounceTime = 500;
                 const searchString = fixture.debugElement.query(By.css('#search-text'));
-                const searchInput = fixture.debugElement.query(By.css('input.mat-input-element'));
+                const searchInput = fixture.debugElement.query(By.css('input.mat-mdc-input-element'));
                 const randomInput = faker.random.alphaNumeric(10);
 
                 searchInput.nativeElement.value = randomInput;
