@@ -22,20 +22,21 @@
                 <mat-icon class="material-icons-outlined">view_column</mat-icon> {{ toggleTitle }}
             </span>
 
-            <a #resetBtn
-               *ngIf="dirty"
-               [matTooltip]="resetToDefaults ?? ''"
-               (click)="reset()"
-               (keydown.enter)="reset()"
-               (keydown.space)="reset()"
-               (keydown)="resetKeyDown($event)"
-               class="ui-grid-toggle-reset"
-               role="button"
-               color="primary"
-               tabindex="-1"
-               mat-button>
+            <button #resetBtn
+                    *ngIf="dirty"
+                    [matTooltip]="resetToDefaults ?? ''"
+                    (click)="reset()"
+                    (keydown.enter)="reset()"
+                    (keydown.space)="reset()"
+                    (keydown)="resetKeyDown($event)"
+                    mat-button
+                    type="button"
+                    class="ui-grid-toggle-reset"
+                    role="button"
+                    color="primary"
+                    tabindex="-1">
                 {{resetToDefaults}}
-            </a>
+            </button>
 
             <mat-option *ngFor="let o of options"
                         [matTooltip]="o.label"
