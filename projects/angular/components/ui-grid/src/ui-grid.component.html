@@ -164,7 +164,8 @@
                                [matTooltip]="column.title + (focusedColumnHeader ? ('\n' + column.description) : '')"
                                [matTooltipDisabled]="resizeManager.isResizing"
                                [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')"
-                               matTooltipClass="preserve-whitespace">
+                               matTooltipClass="preserve-whitespace"
+                               class="ui-grid-header-text">
                                 {{ column.title }}
                             </p>
 

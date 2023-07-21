@@ -373,6 +373,10 @@ ui-grid {
                 p {
                     @extend %ellipse;
                 }
+
+                .ui-grid-header-text {
+                    cursor: default;
+                }
             }
 
             .ui-grid-cell-content {
