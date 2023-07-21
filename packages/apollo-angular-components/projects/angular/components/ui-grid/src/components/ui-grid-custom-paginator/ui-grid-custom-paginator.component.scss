@@ -52,8 +52,7 @@ ui-grid-custom-paginator {
     .mat-mdc-paginator-page-size-label {
         margin: $mat-paginator-items-per-page-label-margin;
     }
-    /* TODO(mdc-migration): The following rule targets internal classes of paginator that may no longer apply for the MDC version.*/
-    .mat-paginator-page-size-select {
+    .mat-mdc-paginator-page-size-select {
         margin: $mat-paginator-selector-margin;
         width: $mat-paginator-selector-trigger-width;
 
@@ -65,8 +64,7 @@ ui-grid-custom-paginator {
             width: $mat-paginator-selector-trigger-fill-width;
         }
     }
-    /* TODO(mdc-migration): The following rule targets internal classes of paginator that may no longer apply for the MDC version.*/
-    .mat-mdc-paginator-range-actions .mat-paginator-page-label {
+    .mat-mdc-paginator-range-actions .mat-mdc-paginator-page-label {
         margin: $mat-paginator-page-label-margin;
         min-width: 7em;
         text-align: center;

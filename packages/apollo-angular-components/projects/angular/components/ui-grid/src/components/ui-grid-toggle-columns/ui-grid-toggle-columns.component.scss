@@ -10,10 +10,10 @@ $toggle-col-width: 10em;
         height: 32px;
         align-self: center;
     }
-    /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
     mat-select {
         overflow: hidden;
         width: 0;
+        min-width: 0;
         // adjustments in order to match trigger icon with optgroup-label icon
         position: relative;
         top: -10px;

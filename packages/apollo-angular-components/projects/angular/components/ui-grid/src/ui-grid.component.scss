@@ -208,16 +208,13 @@ ui-grid {
                 &-container {
                     min-height: $ui-grid-header-row-height - 1;
                 }
-                /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
                 .mat-mdc-paginator-page-size-label,
                 .mat-mdc-paginator-range-label,
-                .mat-select-value {
+                .mat-mdc-select-value {
                     font-size: $ui-grid-secondary-font-size;
                     line-height: $ui-grid-secondary-font-size;
                 }
-                /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-                /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-                .mat-form-field-infix {
+                .mat-mdc-form-field-infix {
                     padding: 0;
 
                     .mat-mdc-select {
@@ -252,8 +249,7 @@ ui-grid {
                 }
 
                 ui-grid-custom-paginator {
-                    /* TODO(mdc-migration): The following rule targets internal classes of paginator that may no longer apply for the MDC version.*/
-                    .mat-paginator-page-label {
+                    .mat-mdc-paginator-page-label {
                         font-size: $ui-grid-secondary-font-size;
                     }
                     .mat-mdc-paginator-page-size .mat-mdc-form-field {
@@ -398,7 +394,6 @@ ui-grid {
             }
 
             .ui-grid-header {
-                /* TODO(mdc-migration): The following rule targets internal classes of progress-bar that may no longer apply for the MDC version.*/
                 mat-progress-bar {
                     position: absolute;
                     right: 0;
