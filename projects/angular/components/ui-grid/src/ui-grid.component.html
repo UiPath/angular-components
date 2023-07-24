@@ -191,18 +191,14 @@
                             </div>
                         </div>
 
-                        <div *ngIf="column.resizeable && !last && !useCardView"
-                             (mousedown)="resizeManager.startResize($event, column, columnIndex)"
-                             class="ui-grid-resize-anchor">
-                            <mat-icon>
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     width="24"
-                                     height="24">
-                                    <path
-                                          d="M11 18l-2 2-2-2 2-2 2 2zm-2-8l-2 2 2 2 2-2-2-2zm0-6L7 6l2 2 2-2-2-2zm6 4l2-2-2-2-2 2 2 2zm0 2l-2 2 2 2 2-2-2-2zm0 6l-2 2 2 2 2-2-2-2z" />
-                                </svg>
-                            </mat-icon>
-                        </div>
+                        <ng-container *ngIf="column.resizeable && !last && !useCardView">
+                            <div (click)="sortManager.changeSort(column)"
+                                class="ui-grid-resize-anchor">
+                            </div>
+                            <div (mousedown)="resizeManager.startResize($event, column, columnIndex)"
+                                class="ui-grid-resize-anchor-border">
+                            </div>
+                        </ng-container>
                     </div>
 
                     <div *ngIf="virtualScroll"
@@ -336,28 +332,28 @@
              role="gridcell">
             <ng-container *ngLet="disableSelectionByEntry(row) as disabledReason">
                 <div *ngIf="selectable && !singleSelectable"
-                     class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
+                    class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
                     <mat-checkbox (click)="checkShift($event)"
-                                  (keyup.shift.space)="checkShift($event)"
-                                  (keyup.space)="checkShift($event)"
-                                  (change)="handleSelection(index, row)"
-                                  [checked]="selectionManager.isSelected(row)"
-                                  [indeterminate]="selectionManager.isIndeterminate(row)"
-                                  [matTooltip]="disabledReason || checkboxTooltip(row)"
-                                  [aria-label]="disabledReason || checkboxTooltip(row)"
-                                  [disabled]="!!disabledReason"
-                                  tabindex="0">
+                                (keyup.shift.space)="checkShift($event)"
+                                (keyup.space)="checkShift($event)"
+                                (change)="handleSelection(index, row)"
+                                [checked]="selectionManager.isSelected(row)"
+                                [indeterminate]="selectionManager.isIndeterminate(row)"
+                                [matTooltip]="disabledReason || checkboxTooltip(row)"
+                                [aria-label]="disabledReason || checkboxTooltip(row)"
+                                [disabled]="!!disabledReason"
+                                tabindex="0">
                     </mat-checkbox>
                 </div>
                 <div *ngIf="singleSelectable"
-                     class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
+                    class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
                     <mat-radio-group>
                         <mat-radio-button [value]="row.id"
-                                          [checked]="selectionManager.isSelected(row)"
-                                          [disabled]="disabledReason"
-                                          [matTooltip]="disabledReason || checkboxTooltip(row)"
-                                          [aria-label]="disabledReason || checkboxTooltip(row)"
-                                          (change)="rowSelected(row)"></mat-radio-button>
+                                        [checked]="selectionManager.isSelected(row)"
+                                        [disabled]="disabledReason"
+                                        [matTooltip]="disabledReason || checkboxTooltip(row)"
+                                        [aria-label]="disabledReason || checkboxTooltip(row)"
+                                        (change)="rowSelected(row)"></mat-radio-button>
                     </mat-radio-group>
                 </div>
             </ng-container>
@@ -378,29 +374,29 @@
             <ng-container *ngLet="disableSelectionByEntry(row) as disabledReason">
                 <mat-radio-group *ngIf="singleSelectable; else multiSelectable">
                     <mat-radio-button [value]="row.id"
-                                      [checked]="selectionManager.isSelected(row)"
-                                      [disabled]="disabledReason"
-                                      [matTooltip]="disabledReason || checkboxTooltip(row)"
-                                      [aria-label]="disabledReason || checkboxTooltip(row)"
-                                      (change)="rowSelected(row)"></mat-radio-button>
+                                    [checked]="selectionManager.isSelected(row)"
+                                    [disabled]="disabledReason"
+                                    [matTooltip]="disabledReason || checkboxTooltip(row)"
+                                    [aria-label]="disabledReason || checkboxTooltip(row)"
+                                    (change)="rowSelected(row)"></mat-radio-button>
                 </mat-radio-group>
                 <ng-template #multiSelectable>
                     <mat-checkbox (click)="checkShift($event)"
-                                  (keyup.shift.space)="checkShift($event)"
-                                  (keyup.space)="checkShift($event)"
-                                  (change)="handleSelection(index, row)"
-                                  [checked]="selectionManager.isSelected(row)"
-                                  [indeterminate]="selectionManager.isIndeterminate(row)"
-                                  [matTooltip]="disabledReason || checkboxTooltip(row)"
-                                  [aria-label]="disabledReason || checkboxTooltip(row)"
-                                  [disabled]="disabledReason"
-                                  tabindex="0">
+                                (keyup.shift.space)="checkShift($event)"
+                                (keyup.space)="checkShift($event)"
+                                (change)="handleSelection(index, row)"
+                                [checked]="selectionManager.isSelected(row)"
+                                [indeterminate]="selectionManager.isIndeterminate(row)"
+                                [matTooltip]="disabledReason || checkboxTooltip(row)"
+                                [aria-label]="disabledReason || checkboxTooltip(row)"
+                                [disabled]="disabledReason"
+                                tabindex="0">
                     </mat-checkbox>
                 </ng-template>
             </ng-container>
         </div>
 
-        <ng-container *ngFor="let column of renderedColumns$ | async">
+        <ng-container *ngFor="let column of renderedColumns$ | async; let lastColumn = last">
             <div [class.ui-grid-primary]="column.directive.primary"
                  [class.ui-grid-secondary]="!column.directive.primary"
                  [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
@@ -410,17 +406,19 @@
                  [attr.role]="column.role"
                  class="ui-grid-cell">
                 <div *ngIf="isProjected"
-                     [matTooltip]="column.directive.title ?? ''"
-                     [matTooltipDisabled]="resizeManager.isResizing"
-                     class="ui-grid-cell-mobile-title">{{column.directive.title}}</div>
-                <div class="ui-grid-cell-content">
-                    <ng-container *ngTemplateOutlet="column.directive.html || textCellTemplate; context: {
-                            data: row,
-                            index: index,
-                            property: column.directive.property
-                        }">
-                    </ng-container>
-                </div>
+                [matTooltip]="column.directive.title ?? ''"
+                [matTooltipDisabled]="resizeManager.isResizing"
+                class="ui-grid-cell-mobile-title">{{column.directive.title}}</div>
+
+                 <div *ngIf="!isProjected" class="ui-grid-cell-inner">
+                    <ng-container *ngTemplateOutlet="uiGridCellContent; context: { column, row, index }"></ng-container>
+                 </div>
+
+                 <ng-container *ngIf="isProjected">
+                    <ng-container *ngTemplateOutlet="uiGridCellContent; context: { column, row, index }"></ng-container>
+                 </ng-container>
+
+                <div *ngIf="!isProjected && column.directive.resizeable && !lastColumn && !useCardView" class="ui-grid-resizing-border"></div>
             </div>
         </ng-container>
 
@@ -457,6 +455,17 @@
             }">
             </ng-container>
         </div>
+    </div>
+</ng-template>
+
+<ng-template #uiGridCellContent let-column="column" let-row="row" let-index="index">
+    <div class="ui-grid-cell-content">
+        <ng-container *ngTemplateOutlet="column.directive.html || textCellTemplate; context: {
+            data: row,
+            index: index,
+            property: column.directive.property
+        }">
+        </ng-container>
     </div>
 </ng-template>
 
