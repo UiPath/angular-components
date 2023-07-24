@@ -6,7 +6,6 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { UiLoaderButtonDirective } from '@uipath/angular/directives/internal';
 
@@ -52,7 +51,6 @@ export class UiSpinnerButtonDirective
     spinnerButtonColor: MatProgressSpinner['color'] = 'accent';
 
     constructor(
-        button: MatButton,
         componentFactory: ComponentFactoryResolver,
         container: ViewContainerRef,
         private _renderer: Renderer2,
@@ -63,10 +61,7 @@ export class UiSpinnerButtonDirective
             container,
         );
 
-        // FIXME: check if this is a round button
-        // const isRound = button.isIconButton ||
-        //     button.isRoundButton;
-        const isRound = true;
+        const isRound = this._hasHostAttributes('mdc-fab', 'mdc-icon-button');
 
         this._loader.isRound$.next(isRound);
 
@@ -108,4 +103,8 @@ export class UiSpinnerButtonDirective
 
         this._loader.loading$.next(this.spinnerButtonLoading);
     };
+
+    private _hasHostAttributes(...attributes: string[]) {
+        return attributes.some(attribute => this._buttonElement.hasAttribute(attribute));
+    }
 }
