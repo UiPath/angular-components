@@ -1,12 +1,16 @@
+import { range } from 'lodash-es';
+
 import {
-  Component, NO_ERRORS_SCHEMA, ViewChild,
+    Component,
+    NO_ERRORS_SCHEMA,
+    ViewChild,
 } from '@angular/core';
 import {
-  ComponentFixture, TestBed,
+    ComponentFixture,
+    TestBed,
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { UiTreeItemComponent } from '@uipath/angular/components/ui-tree-select';
-import { range } from 'lodash-es';
 
 @Component({
   template: `<ui-tree-item
@@ -95,8 +99,8 @@ describe('UiTreeItemComponent', () => {
     expect(component.expanded).toHaveBeenCalled();
   });
 
-  it('should focus the inner mat-list-item component', () => {
-    const matListItem = fixture.nativeElement.querySelector('.mat-list-item');
+  it('should focus the inner list item component', () => {
+    const matListItem = fixture.nativeElement.querySelector('.mat-mdc-list-item');
     expect(document.activeElement).not.toBe(matListItem);
     component.treeItemComponent?.focus();
     fixture.detectChanges();
@@ -104,7 +108,7 @@ describe('UiTreeItemComponent', () => {
   });
 
   it('should forward values for getBoundingClientRect', () => {
-    const matListItem = fixture.nativeElement.querySelector('.mat-list-item');
+    const matListItem = fixture.nativeElement.querySelector('.mat-mdc-list-item');
     expect(component.treeItemComponent?.getBoundingClientRect()).toEqual(matListItem.getBoundingClientRect());
   });
 });
