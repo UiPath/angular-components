@@ -1,3 +1,6 @@
+# v14.8.8 (2023-07-24)
+* **grid** show border for column resize, instead of drag icon
+
 # v14.8.7 (2023-07-20)
 * **grid** arrow cursor on grid header text
 
