@@ -13,13 +13,16 @@ ui-grid {
     $ui-grid-row-horizontal-padding: 24px;
     $ui-feature-cell-width: 50px;
     $ui-row-border-width: 1px;
-    $ui-header-resize-handle-width: 15px;
-    $ui-grid-default-spacing: 5px;
+    $ui-header-resize-border-width: 6px;
+    $ui-header-resize-anchor-width: 24px;
+    $ui-grid-default-spacing: 10px;
     $ui-border-radius: 4px;
     $ui-grid-button-size: 40px;
     $ui-grid-main-font-size: 13.5px;
     $ui-grid-secondary-font-size: 12px;
     $ui-grid-action-buttons-spacing: 16px;
+    $ui-grid-resize-border-width: 3px;
+    $ui-grid-resize-border-margin-right: 1px;
 
     position: relative;
     display: block;
@@ -323,13 +326,18 @@ ui-grid {
         }
 
         &-resize-anchor {
+            position: absolute;
+            right: $ui-header-resize-border-width;
             height: 100%;
-            width: $ui-header-resize-handle-width + $ui-grid-default-spacing;
+            width: $ui-header-resize-anchor-width;
+        }
+
+        &-resize-anchor-border {
+            position: absolute;
+            right: 0;
             cursor: col-resize;
-            justify-content: center;
-            display: flex;
-            align-items: center;
-            margin-right: $ui-grid-default-spacing;
+            width: $ui-header-resize-border-width;
+            height: 100%;
         }
 
         &-dropdown-filter {
@@ -365,7 +373,7 @@ ui-grid {
             display: block;
 
             .ui-grid-header-title {
-                width: calc(100% - #{$ui-header-resize-handle-width + $ui-grid-default-spacing});
+                width: calc(100% - #{$ui-header-resize-border-width + $ui-grid-default-spacing});
                 height: 100%;
                 display: inline-flex;
                 align-items: center;
@@ -438,6 +446,38 @@ ui-grid {
                 }
             }
 
+            .ui-grid-cell {
+                justify-content: space-between;
+
+                .ui-grid-cell-inner {
+                    overflow: hidden;
+                    display: flex;
+                    flex: 1;
+                    flex-basis: auto;
+                    word-wrap: break-word;
+                    align-items: center;
+                    height: 100%;
+                }
+
+                .ui-grid-resizing-border {
+                    flex: 0 0 $ui-grid-resize-border-width;
+                    margin-right: $ui-grid-resize-border-margin-right;
+                    height: $ui-grid-row-height + $ui-row-border-width;
+                    visibility: hidden;
+                }
+
+                &.ui-grid-state-resizing {
+                    .ui-grid-resizing-border {
+                        visibility: visible;
+                    }
+                }
+            }
+
+            .ui-grid-header-cell {
+                overflow: hidden;
+                position: relative;
+            }
+
             .ui-grid-cell,
             .ui-grid-header-cell {
                 flex: 1;
@@ -473,6 +513,13 @@ ui-grid {
                 &.ui-grid-refresh-cell,
                 &.ui-grid-checkbox-cell {
                     min-width: $ui-feature-cell-width;
+                }
+
+                &.ui-grid-checkbox-cell {
+                    justify-content: center;
+                }
+
+                &.ui-grid-checkbox-cell .ui-grid-cell-inner {
                     justify-content: center;
                 }
 
