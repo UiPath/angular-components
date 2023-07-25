@@ -170,7 +170,7 @@ const describeForButtonType = (type: ButtonType) => {
                 });
 
                 it('should cycle from 1 to 100', () => {
-                    const spy = spyOn(progress, '_primaryTransform');
+                    const spy = spyOn(progress, '_getPrimaryBarTransform');
 
                     for (let i = 0; i <= 100; i++) {
                         component.value = i;
@@ -198,7 +198,7 @@ const describeForButtonType = (type: ButtonType) => {
                 });
 
                 it('should cycle from 1 to 100', () => {
-                    const spy = spyOn(progress, '_bufferTransform');
+                    const spy = spyOn(progress, '_getBufferBarFlexBasis');
 
                     for (let i = 0; i <= 100; i++) {
                         component.bufferValue = i;

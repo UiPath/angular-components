@@ -1248,7 +1248,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * @ignore
      */
     preventDefault(ev?: Event) {
-        if (!ev) { return; }
+        if (!ev || this._isCheckbox(ev?.target)) { return; }
         ev.preventDefault();
         ev.stopImmediatePropagation();
     }
@@ -1779,5 +1779,9 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         if (text) {
             this._liveAnnouncer.announce(this.intl.currentItemSelectionStatus(text, status));
         }
+    }
+
+    private _isCheckbox(elem?: EventTarget | null) {
+        return elem instanceof HTMLInputElement && elem.type === 'checkbox';
     }
 }

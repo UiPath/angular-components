@@ -119,11 +119,11 @@ ui-grid {
             }
         }
 
-        .mat-paginator-container {
+        .mat-mdc-paginator-container {
             justify-content: center;
         }
     }
-    .mat-paginator-container {
+    .mat-mdc-paginator-container {
         padding: 0 $ui-grid-default-spacing;
     }
 
@@ -204,22 +204,20 @@ ui-grid {
         &-container {
             border-radius: $ui-border-radius;
 
-            .mat-paginator {
+            .mat-mdc-paginator {
                 &-container {
                     min-height: $ui-grid-header-row-height - 1;
                 }
-
-                .mat-paginator-page-size-label,
-                .mat-paginator-range-label,
-                .mat-select-value {
+                .mat-mdc-paginator-page-size-label,
+                .mat-mdc-paginator-range-label,
+                .mat-mdc-select-value {
                     font-size: $ui-grid-secondary-font-size;
                     line-height: $ui-grid-secondary-font-size;
                 }
-
-                .mat-form-field-infix {
+                .mat-mdc-form-field-infix {
                     padding: 0;
 
-                    .mat-select {
+                    .mat-mdc-select {
                         padding: 0.4375em 0;
                     }
                 }
@@ -251,14 +249,14 @@ ui-grid {
                 }
 
                 ui-grid-custom-paginator {
-                    .mat-paginator-page-label {
+                    .mat-mdc-paginator-page-label {
                         font-size: $ui-grid-secondary-font-size;
                     }
-                    .mat-paginator-page-size .mat-form-field {
+                    .mat-mdc-paginator-page-size .mat-mdc-form-field {
                         padding: unset;
                         margin: unset;
 
-                        .mat-select {
+                        .mat-mdc-select {
                             padding: 0.4375em 0;
                         }
                     }
@@ -299,7 +297,7 @@ ui-grid {
                 }
             }
 
-            button.mat-icon-button,
+            button.mat-mdc-icon-button,
             .ui-grid-selection-info-icon {
                 margin-left: 5px;
             }

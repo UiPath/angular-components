@@ -75,7 +75,9 @@ $componentName: "ui-suggest";
         }
     }
 
-    .mat-chip {
+    .mat-mdc-chip {
+        box-sizing: border-box;
+
         max-width: calc(100% - #{$chips-container-padding * 2});
 
         .chip-selectable-icon {
@@ -91,9 +93,8 @@ $componentName: "ui-suggest";
 #{$componentName}:not(.form-control) {
     $searchUpDown: 3px;
     $searchLeft: -1px;
-
     .display,
-    .mat-form-field-label {
+    .mat-mdc-form-field-label {
         font-size: 0.8rem;
     }
 
@@ -110,7 +111,7 @@ $componentName: "ui-suggest";
 }
 
 #{$componentName}.form-control {
-    .mat-form-field-flex {
+    .mat-mdc-form-field-flex {
         padding: 0;
         background: inherit;
     }
@@ -128,7 +129,7 @@ $componentName: "ui-suggest";
 
 .ui-suggest-dropdown-item-list-container {
     &.is-form-control {
-        .mat-list {
+        .mat-mdc-list {
             .mat-icon {
                 height: $icon-size;
                 font-size: $icon-size;
@@ -138,13 +139,11 @@ $componentName: "ui-suggest";
             &-item {
                 height: $item-height;
                 font-size: 14px;
-
                 &.text-ellipsis .mat-list-item-content {
                     line-height: $item-height;
                 }
             }
-
-            .mat-checkbox-ripple.mat-ripple {
+            .mat-mdc-checkbox-ripple.mat-ripple {
                 height: 33px;
                 width: 33px;
                 left: -7px;
@@ -154,15 +153,13 @@ $componentName: "ui-suggest";
     }
 
     &:not(.is-form-control) {
-        .mat-list {
+        .mat-mdc-list {
             &-item {
                 height: $height;
-
-                &.text-ellipsis .mat-list-item-content {
+                &.text-ellipsis .mdc-list-item__content {
                     line-height: $height;
                 }
-
-                &.no-results-text .mat-list-item-content {
+                &.no-results-text .mdc-list-item__content {
                     font-size: 14px;
                 }
             }
@@ -190,12 +187,12 @@ $componentName: "ui-suggest";
         outline: none;
     }
 
-    .mat-form-field {
+    .mat-mdc-form-field {
         $field-padding: 16px;
 
         padding: 0 $field-padding;
         width: calc(100% - #{$field-padding * 2}) !important;
-        margin-bottom: 0 !important;
+        margin: 0 !important;
         height: $height;
         &-infix {
             border: 7px solid transparent;
@@ -204,27 +201,37 @@ $componentName: "ui-suggest";
             border-left: 0;
             border-right: 0;
         }
-        &-suffix {
+
+        &-icon-suffix {
             align-self: center;
 
             mat-icon {
                 font-size: 24px;
+                padding: 0;
             }
         }
-        &-wrapper {
-            padding-bottom: 0;
-        }
+
         &-underline {
             bottom: 7px;
         }
+
+        &-subscript-wrapper {
+            display: none;
+        }
+
+        .mat-mdc-text-field-wrapper {
+            align-items: center;
+        }
     }
 
-    .mat-list {
+    .mat-mdc-list {
         overflow-y: auto;
-        padding-top: 0;
+        padding: 0;
 
         &-item {
-            cursor: pointer;
+            &:not(.mat-mdc-list-item-interactive) {
+                cursor: pointer;
+            }
 
             .readonly,
             &.disabled {
@@ -234,13 +241,12 @@ $componentName: "ui-suggest";
                 font-style: italic;
                 opacity: 0.8;
             }
-
-            &.text-ellipsis:not(.custom-value-template) .mat-list-item-content {
+            &.text-ellipsis:not(.custom-value-template) .mdc-list-item__content {
                 display: block;
             }
 
             &.is-expandable {
-                .mat-list-item-content {
+                .mdc-list-item__content {
                     padding-right: 30px;
                 }
             }
@@ -282,52 +288,6 @@ $componentName: "ui-suggest";
         .cdk-virtual-scroll-content-wrapper {
             width: 100%;
             overflow: hidden;
-        }
-    }
-}
-
-.mat-form-field-appearance-outline {
-    ui-suggest {
-        margin-top: -1px;
-
-        .display {
-            > mat-icon.arrow-down {
-                margin-top: -6px;
-            }
-        }
-
-        .mat-form-field {
-            .mat-form-field-suffix {
-                height: 36px;
-            }
-        }
-    }
-}
-
-.mat-form-field-appearance-fill {
-    ui-suggest {
-        margin-top: -2px;
-
-        .display {
-            > mat-icon.arrow-down {
-                margin-top: -12px;
-            }
-        }
-
-        .mat-form-field {
-            .mat-form-field-suffix {
-                height: 32px;
-            }
-        }
-    }
-}
-
-.mat-form-field-appearance-standard {
-    ui-suggest {
-        .mat-form-field {
-            .mat-form-field-suffix {
-                height: 32px;
-            }
         }
     }
 }

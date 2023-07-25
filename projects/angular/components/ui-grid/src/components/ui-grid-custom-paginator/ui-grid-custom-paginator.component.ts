@@ -50,7 +50,7 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginat
         hideTotalCount = false;
 
     @HostBinding('class')
-    hostClass = 'mat-paginator';
+    hostClass = 'mat-mdc-paginator';
 
     get pageCount(): number {
         return Math.ceil(this.length / this.pageSize);

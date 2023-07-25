@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MAT_SELECT_CONFIG } from '@angular/material/select';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -39,9 +40,15 @@ import { GridPageComponent } from './grid.page';
         MatIconModule,
         MatInputModule,
     ],
-    providers: [{
-        provide: UiGridIntl,
-        useClass: UiGridTable,
-    }],
+    providers: [
+        {
+            provide: UiGridIntl,
+            useClass: UiGridTable,
+        },
+        {
+            provide: MAT_SELECT_CONFIG,
+            useValue: { overlayPanelClass: 'expandable-overlay-panel' },
+        },
+    ],
 })
 export class GridModule { }

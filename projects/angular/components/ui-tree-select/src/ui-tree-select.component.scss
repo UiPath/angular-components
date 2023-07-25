@@ -1,8 +1,11 @@
 .tree-item-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   height: 100%;
+
+  .mdc-list-item__primary-text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 }
 
 @mixin perLevelPadding($level, $padding) {
