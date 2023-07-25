@@ -66,13 +66,13 @@ describe('Component: UiGrid', () => {
         });
 
         it('should display correct page label', () => {
-            const label = fixture.debugElement.query(By.css('.mat-paginator-page-label'));
+            const label = fixture.debugElement.query(By.css('.mat-mdc-paginator-page-label'));
             expect(label.nativeElement.innerText).toEqual(intl.getPageLabel(1, 12));
         });
 
         it('should update page label on page change', () => {
-            const nextButton = fixture.debugElement.query(By.css('.mat-paginator-navigation-next'));
-            const label = fixture.debugElement.query(By.css('.mat-paginator-page-label'));
+            const nextButton = fixture.debugElement.query(By.css('.mat-mdc-paginator-navigation-next'));
+            const label = fixture.debugElement.query(By.css('.mat-mdc-paginator-page-label'));
 
             component.pageIndex = 0;
             nextButton.nativeElement.dispatchEvent(EventGenerator.click);

@@ -13,24 +13,24 @@ $mat-paginator-button-icon-size: 14px;
 $mat-paginator-button-size: 32px;
 
 ui-grid-custom-paginator {
-    .mat-icon-button {
+    .mat-mdc-icon-button {
         width: $mat-paginator-button-size;
         height: $mat-paginator-button-size;
         line-height: unset;
     }
 
-    .mat-paginator {
+    .mat-mdc-paginator {
         display: block;
     }
 
     // Note: this wrapper element is only used to get the flexbox vertical centering to work
     // with the `min-height` on IE11. It can be removed if we drop support for IE.
-    .mat-paginator-outer-container {
+    .mat-mdc-paginator-outer-container {
         display: flex;
         font-size: 14px;
     }
 
-    .mat-paginator-container {
+    .mat-mdc-paginator-container {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -39,7 +39,7 @@ ui-grid-custom-paginator {
         width: 100%;
     }
 
-    .mat-paginator-page-size {
+    .mat-mdc-paginator-page-size {
         display: flex;
         align-items: baseline;
         margin-right: $mat-paginator-page-size-margin-right;
@@ -49,11 +49,10 @@ ui-grid-custom-paginator {
         }
     }
 
-    .mat-paginator-page-size-label {
+    .mat-mdc-paginator-page-size-label {
         margin: $mat-paginator-items-per-page-label-margin;
     }
-
-    .mat-paginator-page-size-select {
+    .mat-mdc-paginator-page-size-select {
         margin: $mat-paginator-selector-margin;
         width: $mat-paginator-selector-trigger-width;
 
@@ -65,24 +64,23 @@ ui-grid-custom-paginator {
             width: $mat-paginator-selector-trigger-fill-width;
         }
     }
-
-    .mat-paginator-range-actions .mat-paginator-page-label {
+    .mat-mdc-paginator-range-actions .mat-mdc-paginator-page-label {
         margin: $mat-paginator-page-label-margin;
         min-width: 7em;
         text-align: center;
     }
 
-    .mat-paginator-range-label {
+    .mat-mdc-paginator-range-label {
         margin-left: $mat-paginator-range-label-margin-right;
         min-width: 7em;
     }
 
-    .mat-paginator-range-actions {
+    .mat-mdc-paginator-range-actions {
         display: flex;
         align-items: center;
     }
 
-    .mat-paginator-icon {
+    .mat-mdc-paginator-icon {
         width: $mat-paginator-button-icon-size;
         height: $mat-paginator-button-icon-size;
         fill: currentColor;

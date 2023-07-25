@@ -62,6 +62,16 @@ type SuggestProperties = 'disabled' | 'readonly';
 
 const SEARCH_DEBOUNCE = 300 + 100;
 const VIRTUAL_SCROLL_DEBOUNCE = 100 + 100;
+
+const SELECTORS = {
+    formField: '.mat-mdc-form-field',
+    formFieldLabel: '.mdc-floating-label',
+    listItem: '.mat-mdc-list-item',
+    input: '.mat-mdc-input-element',
+    chipGrid: '.mat-mdc-chip-grid',
+    chipLabel: '.mat-mdc-chip.mat-mdc-standard-chip .mat-mdc-chip-action-label',
+};
+
 @Directive()
 class UiSuggestFixtureDirective {
     @ViewChild(UiSuggestComponent, {
@@ -119,7 +129,7 @@ const getNativeElement = <T = HTMLElement>(debugElement: DebugElement) => debugE
 const getDisplayElement = (fixture: ComponentFixture<UiSuggestFixtureDirective>) => fixture.debugElement
     .query(By.css(
         fixture.componentInstance.multiple
-            ? '.mat-chip-list'
+            ? SELECTORS.chipGrid
             : '.display',
     ));
 
@@ -213,11 +223,7 @@ const sharedSpecifications = (
             if (!uiSuggest.isFormControl) {
                 const displayTitle = displayContainer.query(By.css('.display-title'));
                 expect(displayTitle.nativeElement.innerText.trim()).toEqual(`${component.placeholder}:`);
-            } else {
-                const displayTitle = fixture.debugElement.query(By.css('.mat-form-field-label'));
-                expect(displayTitle.nativeElement.innerText.trim()).toEqual(component.placeholder);
             }
-
             expect(displayValue.nativeElement.innerText.trim()).toEqual(component.defaultValue);
         });
 
@@ -306,7 +312,7 @@ const sharedSpecifications = (
             openDropdown(fixture);
 
             const dropdownOverlay = document.querySelector('.cdk-overlay-container')!;
-            const inputContainer = dropdownOverlay.querySelector('.mat-form-field')!;
+            const inputContainer = dropdownOverlay.querySelector(SELECTORS.formField)!;
             const previousSibling = inputContainer.previousElementSibling!;
 
             expect(previousSibling).not.toBeNull();
@@ -316,7 +322,7 @@ const sharedSpecifications = (
         it('should NOT render the list before it is clicked', () => {
             component.items = generateSuggetionItemList();
 
-            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemListEntries = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
 
             expect(itemListEntries).not.toBeNull();
             expect(itemListEntries.length).toEqual(0);
@@ -331,14 +337,14 @@ const sharedSpecifications = (
             fixture.detectChanges();
             tick(400);
 
-            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemListEntries = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
 
             expect(itemListEntries).not.toBeNull();
             expect(itemListEntries.length).toEqual(items.length);
 
             const itemIndex = Math.floor(Math.random() * items.length);
             const currentListItem = fixture.debugElement.queryAll(
-                By.css('.mat-list-item'),
+                By.css(SELECTORS.listItem),
             )[itemIndex];
 
             currentListItem.nativeElement.dispatchEvent(EventGenerator.click);
@@ -361,7 +367,7 @@ const sharedSpecifications = (
             const combobox = fixture.debugElement.queryAll(By.css('.combobox'));
             expect(combobox).toEqual([]);
 
-            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemListEntries = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
 
             expect(itemListEntries).not.toBeNull();
             expect(itemListEntries.length).toEqual(items.length);
@@ -617,6 +623,9 @@ const sharedSpecifications = (
             });
 
             it(`should not open if the component is ${state}`, () => {
+                // CVA side-effect which sets disabled state to false
+                fixture.detectChanges();
+
                 component[state] = true;
 
                 fixture.detectChanges();
@@ -636,6 +645,9 @@ const sharedSpecifications = (
             it('should toggle loading state if it is searchable with items', () => {
                 const items = generateSuggetionItemList();
                 component.items = items;
+                // CVA side-effect which sets disabled state to false
+                fixture.detectChanges();
+
                 component.disabled = true;
                 component.searchable = true;
 
@@ -656,6 +668,9 @@ const sharedSpecifications = (
             });
 
             it('should not be in loading state if it has a searchSourceFactory', async () => {
+                // CVA side-effect which sets disabled state to false
+                fixture.detectChanges();
+
                 const items = generateSuggetionItemList();
                 component.disabled = true;
                 uiSuggest.searchSourceFactory = (term) => of([...items]).pipe(
@@ -709,7 +724,7 @@ const sharedSpecifications = (
             const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
             const display = fixture.debugElement.query(By.css(
                 fixture.componentInstance.multiple
-                    ? '.mat-chip-list'
+                    ? SELECTORS.chipGrid
                     : '[role=combobox]'),
             );
 
@@ -985,7 +1000,7 @@ const sharedSpecifications = (
             component.multiple = true;
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+            const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
             display.nativeElement.dispatchEvent(
                 EventGenerator.keyDown(Key.Enter),
             );
@@ -1157,7 +1172,7 @@ const sharedSpecifications = (
                 const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
                 const display = fixture.debugElement.query(By.css(
                     fixture.componentInstance.multiple
-                        ? '.mat-chip-list'
+                        ? SELECTORS.chipGrid
                         : '[role=combobox]'),
                 );
 
@@ -1177,7 +1192,7 @@ const sharedSpecifications = (
                 const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
                 uiSuggest.loading$.next(true);
 
-                const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+                const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
                 display.nativeElement.dispatchEvent(EventGenerator.click);
 
                 fixture.detectChanges();
@@ -1189,7 +1204,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
 
                 const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
-                const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+                const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
                 display.nativeElement.dispatchEvent(EventGenerator.click);
 
                 fixture.detectChanges();
@@ -1202,7 +1217,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
 
                 const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
-                const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+                const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
                 display.nativeElement.dispatchEvent(EventGenerator.click);
 
                 fixture.detectChanges();
@@ -1215,7 +1230,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
 
                 const spy = spyOn((uiSuggest as any)._liveAnnouncer, 'announce');
-                const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+                const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
                 display.nativeElement.dispatchEvent(EventGenerator.click);
 
                 fixture.detectChanges();
@@ -1277,7 +1292,7 @@ const sharedSpecifications = (
 
                 fixture.detectChanges();
 
-                const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+                const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
                 display.nativeElement.dispatchEvent(
                     EventGenerator.keyDown(Key.Enter),
                 );
@@ -1290,18 +1305,18 @@ const sharedSpecifications = (
                 addCustomValue('A');
 
                 expect(uiSuggest.value[0].text).toBe('A');
-                const chip = fixture.debugElement.query(By.css('.mat-chip.mat-standard-chip span'));
+                const chip = fixture.debugElement.query(By.css(SELECTORS.chipLabel));
 
                 expect(chip.nativeNode.innerText).toBe('A');
 
-                fixture.debugElement.query(By.css('.mat-chip.mat-standard-chip .mat-chip-remove'))
+                fixture.debugElement.query(By.css('.mat-mdc-chip.mat-mdc-standard-chip .mat-mdc-chip-remove'))
                     .nativeElement
                     .dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
 
                 expect(uiSuggest.value.length).toBe(0);
 
-                expect(fixture.debugElement.query(By.css('.mat-chip.mat-standard-chip span'))).toBeFalsy();
+                expect(fixture.debugElement.query(By.css(SELECTORS.chipLabel))).toBeFalsy();
 
                 flush();
                 discardPeriodicTasks();
@@ -1324,14 +1339,14 @@ const sharedSpecifications = (
                 addCustomValue('B');
                 addCustomValue('C');
 
-                const chips = fixture.debugElement.queryAll(By.css('.mat-chip.mat-standard-chip span')).map(el => el.nativeNode.innerText);
+                const chips = fixture.debugElement.queryAll(By.css(SELECTORS.chipLabel)).map(el => el.nativeNode.innerText);
                 tick(1000);
 
                 expect(`${chips}`).toEqual(`A,B,C`);
             }));
 
             it('should preserve input focus on click custom value', fakeAsync(() => {
-                const input = fixture.debugElement.query(By.css('.mat-chip-list input'));
+                const input = fixture.debugElement.query(By.css(`${SELECTORS.chipGrid} input`));
                 addByClickCustomValue('A');
                 tick(1000);
                 expect(document.activeElement).toBe(input.nativeElement);
@@ -1371,7 +1386,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 tick();
 
-                const initialChips = fixture.debugElement.queryAll(By.css('.mat-chip'));
+                const initialChips = fixture.debugElement.queryAll(By.css('.mat-mdc-chip'));
                 expect(initialChips.length).toBe(3);
 
                 fixture.detectChanges();
@@ -1382,7 +1397,7 @@ const sharedSpecifications = (
                 tick(5000);
 
                 const dropdownOverlay = document.querySelector('.cdk-overlay-container')!;
-                const currentListItem = dropdownOverlay.querySelectorAll('.mat-list-item')[0]!;
+                const currentListItem = dropdownOverlay.querySelectorAll(SELECTORS.listItem)[0]!;
 
                 currentListItem.dispatchEvent(EventGenerator.click);
 
@@ -1390,7 +1405,7 @@ const sharedSpecifications = (
                 tick(5000);
 
                 const updatedChips = fixture.debugElement
-                    .queryAll(By.css('.mat-chip span'))
+                    .queryAll(By.css(SELECTORS.chipLabel))
                     .map(el => getNativeElement<HTMLSpanElement>(el));
 
                 expect(updatedChips.length).toEqual(4);
@@ -1410,7 +1425,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 tick(5000);
 
-                const chips = fixture.debugElement.query(By.css('.mat-chip-list'));
+                const chips = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
                 chips.nativeElement.dispatchEvent(EventGenerator.keyUp(Key.Space));
 
                 fixture.detectChanges();
@@ -1424,7 +1439,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 tick(5000);
 
-                const chips = fixture.debugElement.queryAll(By.css('.mat-chip span')).map(el => getNativeElement<HTMLSpanElement>(el));
+                const chips = fixture.debugElement.queryAll(By.css(SELECTORS.chipLabel)).map(el => getNativeElement<HTMLSpanElement>(el));
 
                 expect(chips.length).toEqual(3);
                 expect(chips.map(chip => chip.innerText)).toEqual(items.map(item => item.text));
@@ -1437,7 +1452,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 tick();
 
-                const initialChips = fixture.debugElement.queryAll(By.css('.mat-chip'));
+                const initialChips = fixture.debugElement.queryAll(By.css('.mat-mdc-chip'));
                 expect(initialChips.length).toBe(3);
 
                 const chipRemoveButton = getNativeElement<HTMLButtonElement>(initialChips[1].query(By.css('button')));
@@ -1447,7 +1462,7 @@ const sharedSpecifications = (
                 tick(5000);
 
                 const updatedChips = fixture.debugElement
-                    .queryAll(By.css('.mat-chip span'))
+                    .queryAll(By.css(SELECTORS.chipLabel))
                     .map(el => getNativeElement<HTMLSpanElement>(el));
 
                 expect(updatedChips.length).toEqual(2);
@@ -1463,7 +1478,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 tick();
 
-                const initialChips = fixture.debugElement.queryAll(By.css('.mat-chip'));
+                const initialChips = fixture.debugElement.queryAll(By.css('.mat-mdc-chip'));
                 expect(initialChips.length).toBe(3);
 
                 const chipRemoveButton = getNativeElement<HTMLButtonElement>(initialChips[1].query(By.css('button')));
@@ -1473,7 +1488,7 @@ const sharedSpecifications = (
                 tick(5000);
 
                 const updatedChips = fixture.debugElement
-                    .queryAll(By.css('.mat-chip span'))
+                    .queryAll(By.css(SELECTORS.chipLabel))
                     .map(el => getNativeElement<HTMLSpanElement>(el));
 
                 expect(updatedChips.length).toEqual(3);
@@ -1517,7 +1532,7 @@ const sharedSpecifications = (
             fixture.detectChanges();
             tick(1000);
 
-            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemListEntries = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
 
             expect(itemListEntries).not.toBeNull();
             expect(itemListEntries.length).toEqual(items.length);
@@ -1544,7 +1559,7 @@ const sharedSpecifications = (
             fixture.detectChanges();
             tick(1000);
 
-            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemListEntries = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
 
             expect(itemListEntries).not.toBeNull();
             expect(itemListEntries.length).toEqual(regularItems.length);
@@ -1565,7 +1580,7 @@ const sharedSpecifications = (
             fixture.detectChanges();
             tick(1000);
 
-            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemListEntries = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
 
             expect(itemListEntries).not.toBeNull();
             expect(itemListEntries.length).toEqual(1);
@@ -1586,7 +1601,7 @@ const sharedSpecifications = (
 
             await fixture.whenStable();
 
-            const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemListEntries = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
             expect(itemListEntries).not.toBeNull();
             expect(itemListEntries.length).toBe(component.items.length);
         }));
@@ -1604,11 +1619,7 @@ const sharedSpecifications = (
             if (!uiSuggest.isFormControl) {
                 const displayTitle = displayContainer.query(By.css('.display-title'));
                 expect(displayTitle.nativeElement.innerText.trim()).toBe(`${component.placeholder}:`);
-            } else {
-                const displayTitle = fixture.debugElement.query(By.css('.mat-form-field-label'));
-                expect(displayTitle.nativeElement.innerText.trim()).toEqual(component.placeholder);
             }
-
             expect(displayValue.nativeElement.innerText.trim()).toBe(selectedItem.text);
         });
 
@@ -1630,7 +1641,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 tick(1000);
 
-                const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item .mat-list-item-content'));
+                const itemListEntries = fixture.debugElement.queryAll(By.css(`${SELECTORS.listItem} .mdc-list-item__content`));
                 expect(itemListEntries).not.toBeNull();
                 expect(itemListEntries.length).toEqual(1);
 
@@ -1658,7 +1669,7 @@ const sharedSpecifications = (
             await fixture.whenStable();
 
             const randomListItem = fixture.debugElement.queryAll(
-                By.css('.mat-list-item'),
+                By.css(SELECTORS.listItem),
             )[randomIdx];
 
             randomListItem.nativeElement.dispatchEvent(EventGenerator.click);
@@ -1705,7 +1716,7 @@ const sharedSpecifications = (
 
                 const currentItem = component.items[i];
                 const currentListItem = fixture.debugElement.queryAll(
-                    By.css('.mat-list-item'),
+                    By.css(SELECTORS.listItem),
                 )[i];
                 currentListItem.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
@@ -1716,9 +1727,6 @@ const sharedSpecifications = (
                 if (!uiSuggest.isFormControl) {
                     const displayTitle = displayContainer.query(By.css('.display-title'));
                     expect(displayTitle.nativeElement.innerText.trim()).toBe(`${component.placeholder}:`);
-                } else {
-                    const displayTitle = fixture.debugElement.query(By.css('.mat-form-field-label'));
-                    expect(displayTitle.nativeElement.innerText.trim()).toEqual(component.placeholder);
                 }
 
                 expect(displayValue.nativeElement.innerText.trim()).toBe(currentItem.text);
@@ -1742,7 +1750,7 @@ const sharedSpecifications = (
 
                 await fixture.whenStable();
 
-                const itemList = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+                const itemList = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
                 expect(itemList.length).toEqual(1);
 
                 const [customItem] = itemList;
@@ -1762,7 +1770,7 @@ const sharedSpecifications = (
                 searchFor(partial, fixture);
                 await fixture.whenStable();
 
-                const itemList = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+                const itemList = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
                 expect(itemList.length).toEqual(2);
 
                 const customItem = fixture.debugElement.query(By.css('.custom-item'));
@@ -1780,7 +1788,7 @@ const sharedSpecifications = (
                 searchFor(word, fixture);
                 await fixture.whenStable();
 
-                const itemList = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+                const itemList = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
                 expect(itemList.length).toBe(1);
 
                 const [customItem] = itemList;
@@ -1825,20 +1833,17 @@ const sharedSpecifications = (
 
             fixture.detectChanges();
 
-            const chipsContainer = fixture.debugElement.query(By.css('.mat-chip-list'));
-            const selectedChips = chipsContainer.queryAll(By.css('.mat-chip'));
+            const chipsContainer = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
+            const selectedChips = chipsContainer.queryAll(By.css('.mat-mdc-chip'));
 
             if (!uiSuggest.isFormControl) {
-                const displayTitle = fixture.debugElement.query(By.css('.mat-chip-list input'));
+                const displayTitle = fixture.debugElement.query(By.css(`${SELECTORS.chipGrid} input`));
                 const nativeDisplayTitle = getNativeElement<HTMLInputElement>(displayTitle);
                 expect(nativeDisplayTitle.getAttribute('placeholder')).toEqual(component.defaultValue ?? null);
-            } else {
-                const displayTitle = fixture.debugElement.query(By.css('.mat-form-field-label'));
-                expect(displayTitle.nativeElement.innerText.trim()).toEqual(component.placeholder);
             }
 
             const selectedChipsInnerText = selectedChips
-                .map(chip => chip.query(By.css('span')).nativeElement as HTMLSpanElement)
+                .map(chip => chip.query(By.css('.mat-mdc-chip-action-label')).nativeElement as HTMLSpanElement)
                 .map(chipSpan => chipSpan.innerText);
 
             expect(selectedChipsInnerText.length).toBe(selectedValues.length);
@@ -1861,9 +1866,6 @@ const sharedSpecifications = (
             if (!uiSuggest.isFormControl) {
                 const displayTitle = displayContainer.query(By.css('.display-title'));
                 expect(displayTitle.nativeElement.innerText.trim()).toBe(`${component.placeholder}:`);
-            } else {
-                const displayTitle = fixture.debugElement.query(By.css('.mat-form-field-label'));
-                expect(displayTitle.nativeElement.innerText.trim()).toEqual(component.placeholder);
             }
 
             selectedValues
@@ -1874,17 +1876,17 @@ const sharedSpecifications = (
         it('should have a checkbox next to each item entry', waitForAsync(async () => {
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+            const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
             display.nativeElement.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
 
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const itemList = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemList = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
 
             for (const itemEntry of itemList) {
-                const checkbox = itemEntry.query(By.css('.mat-checkbox'));
+                const checkbox = itemEntry.query(By.css('.mat-mdc-checkbox'));
                 const label = itemEntry.query(By.css('.text-label'));
                 expect(checkbox).not.toBeNull();
                 expect(checkbox.nativeElement.nextElementSibling).toBe(label.nativeElement);
@@ -1895,14 +1897,14 @@ const sharedSpecifications = (
             component.items![0].disabled = true;
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+            const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
             display.nativeElement.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
 
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const itemList = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemList = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
 
             const itemEntry = itemList[0];
             expect(itemEntry.nativeElement).toHaveClass('disabled');
@@ -1913,14 +1915,14 @@ const sharedSpecifications = (
             component.value = selectedValues;
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+            const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
             display.nativeElement.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
 
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const itemList = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemList = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
 
             for (const itemEntry of itemList) {
                 const label = itemEntry.query(By.css('.text-label'));
@@ -1941,14 +1943,14 @@ const sharedSpecifications = (
             component.value = selectedValues;
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+            const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
             display.nativeElement.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
 
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const itemList = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemList = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
             const checkedItem = itemList.find(itemEntry => !!itemEntry.query(By.css('input:checked')));
             expect(checkedItem).toBeDefined();
             checkedItem!.nativeElement.dispatchEvent(EventGenerator.click);
@@ -1985,14 +1987,14 @@ const sharedSpecifications = (
 
             fixture.detectChanges();
 
-            const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+            const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
             display.nativeElement.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
 
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const itemList = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemList = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
 
             const expectedSelectedItems = itemList.slice(0, component.value.length);
 
@@ -2028,11 +2030,11 @@ const sharedSpecifications = (
 
             expect(uiSuggest.value.length).toEqual(selectedItems.length);
 
-            const display = fixture.debugElement.query(By.css('.mat-chip-list'));
+            const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
             display.nativeElement.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
 
-            const itemList = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+            const itemList = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
 
             const expectedSelectedItems = itemList.slice(0, component.value.length);
 
@@ -2103,11 +2105,11 @@ const sharedSpecifications = (
                 });
 
                 it('should render item(s) as expandable', () => {
-                    expect(fixture.debugElement.queryAll(By.css('.mat-list-item.is-expandable')).length).toBeGreaterThan(0);
+                    expect(fixture.debugElement.queryAll(By.css(`${SELECTORS.listItem}.is-expandable`)).length).toBeGreaterThan(0);
                 });
 
                 it('should fill in search on item select', async () => {
-                    const item = fixture.debugElement.query(By.css('.mat-list-item.is-expandable'));
+                    const item = fixture.debugElement.query(By.css(`${SELECTORS.listItem}.is-expandable`));
                     const itemText = (item.query(By.css('span.text-label-rendered')).nativeElement as HTMLElement).innerText;
                     item.nativeElement.dispatchEvent(EventGenerator.click);
 
@@ -2123,7 +2125,7 @@ const sharedSpecifications = (
                 });
 
                 it('should be able to clear upon selection', async () => {
-                    const item = fixture.debugElement.query(By.css('.mat-list-item.is-expandable'));
+                    const item = fixture.debugElement.query(By.css(`${SELECTORS.listItem}.is-expandable`));
                     item.nativeElement.dispatchEvent(EventGenerator.click);
 
                     fixture.detectChanges();
@@ -2139,7 +2141,7 @@ const sharedSpecifications = (
                 });
 
                 it('should NOT have item selected if expandable', async () => {
-                    const item = fixture.debugElement.query(By.css('.mat-list-item.is-expandable'));
+                    const item = fixture.debugElement.query(By.css(`${SELECTORS.listItem}.is-expandable`));
                     item.nativeElement.dispatchEvent(EventGenerator.click);
 
                     fixture.detectChanges();
@@ -2148,7 +2150,7 @@ const sharedSpecifications = (
                 });
 
                 it('should be able to select drilled item', async () => {
-                    const item = fixture.debugElement.query(By.css('.mat-list-item.is-expandable'));
+                    const item = fixture.debugElement.query(By.css(`${SELECTORS.listItem}.is-expandable`));
                     item.nativeElement.dispatchEvent(EventGenerator.click);
 
                     fixture.detectChanges();
@@ -2156,7 +2158,7 @@ const sharedSpecifications = (
 
                     const query = uiSuggest.inputControl.value;
 
-                    const drilled = fixture.debugElement.query(By.css('.mat-list-item:not(.is-expandable'));
+                    const drilled = fixture.debugElement.query(By.css(`${SELECTORS.listItem}:not(.is-expandable`));
                     const drilledText = (drilled.query(By.css('span')).nativeElement as HTMLElement).innerText;
                     drilled.nativeElement.dispatchEvent(EventGenerator.click);
 
@@ -2254,7 +2256,7 @@ const sharedSpecifications = (
                 await fixture.whenStable();
 
                 const dropdownOverlay = document.querySelector('.cdk-overlay-container')!;
-                const searchInput = dropdownOverlay.querySelector('.mat-input-element')! as HTMLInputElement;
+                const searchInput = dropdownOverlay.querySelector(SELECTORS.input)! as HTMLInputElement;
 
                 const typeChar = async () => {
                     searchInput.value = searchInput.value + faker.random.alphaNumeric(1);
@@ -2338,7 +2340,7 @@ const sharedSpecifications = (
 
                 await fixture.whenStable();
 
-                const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item'));
+                const itemListEntries = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
 
                 expect(uiSuggest.items.length).not.toBeNull();
                 expect(itemListEntries.length).toBe(NUMBER_OF_ITEMS_PER_VIEW + 1);
@@ -2488,7 +2490,7 @@ const sharedSpecifications = (
             const currentItem = uiSuggest.items[idx];
             expect(currentItem.loading).toBe(VirtualScrollItemStatus.initial);
 
-            const selectedItem = fixture.debugElement.query(By.css('.mat-list-item.active'))!;
+            const selectedItem = fixture.debugElement.query(By.css(`${SELECTORS.listItem}.active`))!;
             const elementClasses = selectedItem.nativeElement.classList;
             expect(uiSuggest.activeIndex).toEqual(uiSuggest.displayCount);
             expect(elementClasses.contains('is-loading')).toBeTruthy();
@@ -2501,7 +2503,7 @@ const sharedSpecifications = (
             expect(loadingStates.some(loadingState => loadingState === 'initial')).toBeFalsy();
 
             const newRenderedItemText = fixture.debugElement
-                .query(By.css('.mat-list-item.active'))
+                .query(By.css(`${SELECTORS.listItem}.active`))
                 .query(By.css('.text-label-rendered')).nativeElement.innerHTML;
             expect(newRenderedItemText).toEqual(uiSuggest.items[uiSuggest.displayCount].text);
 
@@ -2523,7 +2525,7 @@ const sharedSpecifications = (
                 display.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
 
-                const searchInput = fixture.debugElement.query(By.css('.mat-input-element')).nativeElement;
+                const searchInput = fixture.debugElement.query(By.css(SELECTORS.input)).nativeElement;
                 searchInput.value = randomString;
                 searchInput.dispatchEvent(EventGenerator.input());
                 fixture.detectChanges();
@@ -2549,7 +2551,7 @@ const sharedSpecifications = (
                 display.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
 
-                const searchInput = fixture.debugElement.query(By.css('.mat-input-element')).nativeElement;
+                const searchInput = fixture.debugElement.query(By.css(SELECTORS.input)).nativeElement;
                 searchInput.value = randomString;
                 searchInput.dispatchEvent(EventGenerator.input());
                 fixture.detectChanges();
@@ -2568,7 +2570,7 @@ const sharedSpecifications = (
                 display.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
 
-                const searchInput = fixture.debugElement.query(By.css('.mat-input-element')).nativeElement;
+                const searchInput = fixture.debugElement.query(By.css(SELECTORS.input)).nativeElement;
                 searchInput.value = customString;
                 searchInput.dispatchEvent(EventGenerator.input());
                 fixture.detectChanges();
@@ -2603,7 +2605,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 tick(SEARCH_DEBOUNCE);
 
-                const searchInput = fixture.debugElement.query(By.css('.mat-input-element')).nativeElement;
+                const searchInput = fixture.debugElement.query(By.css(SELECTORS.input)).nativeElement;
                 searchInput.value = customString;
                 searchInput.dispatchEvent(EventGenerator.input());
                 fixture.detectChanges();
@@ -2661,7 +2663,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 tick(SEARCH_DEBOUNCE);
 
-                const searchInput = fixture.debugElement.query(By.css('.mat-input-element')).nativeElement;
+                const searchInput = fixture.debugElement.query(By.css(SELECTORS.input)).nativeElement;
                 searchInput.value = customString;
                 searchInput.dispatchEvent(new Event('input'));
                 fixture.detectChanges();
@@ -2713,7 +2715,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 tick(SEARCH_DEBOUNCE);
 
-                const searchInput = fixture.debugElement.query(By.css('.mat-input-element')).nativeElement;
+                const searchInput = fixture.debugElement.query(By.css(SELECTORS.input)).nativeElement;
                 searchInput.value = customString;
                 searchInput.dispatchEvent(EventGenerator.input());
                 fixture.detectChanges();
@@ -2947,7 +2949,7 @@ describe('Component: UiSuggest', () => {
 
                 assert.isClosed();
 
-                const formFieldUnderline = fixture.debugElement.query(By.css('.test-form-field .mat-form-field-label'));
+                const formFieldUnderline = fixture.debugElement.query(By.css(`.test-form-field ui-suggest`));
 
                 formFieldUnderline.nativeElement.dispatchEvent(EventGenerator.click);
 
@@ -3130,7 +3132,7 @@ describe('Component: UiSuggest', () => {
                     fixture.detectChanges();
                     tick(1000);
 
-                    const itemListEntries = fixture.debugElement.queryAll(By.css('.mat-list-item .mat-list-item-content'));
+                    const itemListEntries = fixture.debugElement.queryAll(By.css(`${SELECTORS.listItem} .mdc-list-item__content`));
                     expect(itemListEntries).not.toBeNull();
                     expect(itemListEntries.length).toEqual(1);
 

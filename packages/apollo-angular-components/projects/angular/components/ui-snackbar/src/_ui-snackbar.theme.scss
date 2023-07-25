@@ -77,7 +77,7 @@ $default-snackbar-theme: (
         }
 
         &-dismiss {
-            .mat-icon-button:hover {
+            .mat-mdc-icon-button:hover {
                 color: inherit !important;
             }
         }

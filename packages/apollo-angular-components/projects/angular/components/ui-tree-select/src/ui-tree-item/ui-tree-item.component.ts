@@ -1,18 +1,21 @@
 import { FocusableOption } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
 import {
-  Component,
-  ChangeDetectionStrategy,
-  Input,
-  ViewEncapsulation,
-  ElementRef,
-  forwardRef,
-  Inject,
-  Output,
-  EventEmitter,
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Inject,
+    Input,
+    Output,
+    ViewEncapsulation,
 } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
+
 import { IFlatNodeObject } from '../models/tree.models';
+
+const LIST_ITEM_SELECTOR = '.mat-mdc-list-item';
 
 @Component({
   standalone: true,
@@ -53,10 +56,10 @@ export class UiTreeItemComponent implements FocusableOption {
   }
 
   focus() {
-    this._el.nativeElement.querySelector('.mat-list-item').focus();
+    this._el.nativeElement.querySelector(LIST_ITEM_SELECTOR).focus();
   }
 
   getBoundingClientRect() {
-    return this._el.nativeElement.querySelector('.mat-list-item').getBoundingClientRect();
+    return this._el.nativeElement.querySelector(LIST_ITEM_SELECTOR).getBoundingClientRect();
   }
 }

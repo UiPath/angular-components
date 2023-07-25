@@ -337,10 +337,7 @@
             <ng-container *ngLet="disableSelectionByEntry(row) as disabledReason">
                 <div *ngIf="selectable && !singleSelectable"
                      class="ui-grid-mobile-feature-container ui-grid-mobile-refresh-container">
-                    <mat-checkbox (click)="checkShift($event)"
-                                  (keyup.shift.space)="checkShift($event)"
-                                  (keyup.space)="checkShift($event)"
-                                  (change)="handleSelection(index, row)"
+                    <mat-checkbox (change)="handleSelection(index, row)"
                                   [checked]="selectionManager.isSelected(row)"
                                   [indeterminate]="selectionManager.isIndeterminate(row)"
                                   [matTooltip]="disabledReason || checkboxTooltip(row)"
@@ -385,10 +382,7 @@
                                       (change)="rowSelected(row)"></mat-radio-button>
                 </mat-radio-group>
                 <ng-template #multiSelectable>
-                    <mat-checkbox (click)="checkShift($event)"
-                                  (keyup.shift.space)="checkShift($event)"
-                                  (keyup.space)="checkShift($event)"
-                                  (change)="handleSelection(index, row)"
+                    <mat-checkbox (change)="handleSelection(index, row)"
                                   [checked]="selectionManager.isSelected(row)"
                                   [indeterminate]="selectionManager.isIndeterminate(row)"
                                   [matTooltip]="disabledReason || checkboxTooltip(row)"
@@ -646,7 +640,7 @@
                 class="ui-grid-collapsible-filters-toggle">
             <mat-icon>filter_list</mat-icon>
             <span>{{ intl.filters(filterManager.activeCount$ | async) }}</span>
-            <mat-icon>{{ showFilters ? 'expand_less' : 'expand_more' }}</mat-icon>
+            <mat-icon iconPositionEnd>{{ showFilters ? 'expand_less' : 'expand_more' }}</mat-icon>
         </button>
     </ng-container>
 </ng-template>
@@ -670,7 +664,7 @@
                     {{ !!column.dropdown?.value ? intl.translateDropdownOption(column.dropdown!.value!) :
                     intl.noFilterPlaceholder }}
                 </span>
-                <mat-icon>keyboard_arrow_down</mat-icon>
+                <mat-icon iconPositionEnd>keyboard_arrow_down</mat-icon>
             </button>
             <mat-menu #filterOptions="matMenu"
                       [overlapTrigger]="true">
