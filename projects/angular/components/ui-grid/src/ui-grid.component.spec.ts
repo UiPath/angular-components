@@ -295,7 +295,7 @@ describe('Component: UiGrid', () => {
                     const event = new KeyboardEvent('keydown', { key: 'Tab' });
                     const focusEvent = new FocusEvent('focus', { bubbles: true });
                     const focusOutEvent = new FocusEvent('focusout', { bubbles: true });
-                    const [columnHeader1, columnHeader2 ] = document.querySelectorAll('div[role="columnheader"]')!;
+                    const [columnHeader1, columnHeader2] = document.querySelectorAll('div[role="columnheader"]')!;
 
                     columnHeader1.dispatchEvent(event);
                     fixture.detectChanges();
@@ -429,16 +429,15 @@ describe('Component: UiGrid', () => {
                 });
 
                 it('should render checkbox and refresh cells', () => {
-                    const [checkbox, refresh] = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell.ui-grid-feature-cell'));
+                    const [checkbox] = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell.ui-grid-feature-cell'));
 
                     expect(checkbox).toBeDefined();
-                    expect(refresh).toBeDefined();
 
                     const matCheckbox = checkbox.query(By.css('.mat-mdc-checkbox'));
                     expect(matCheckbox).toBeDefined();
                     expect(matCheckbox.nativeElement).toBeDefined();
 
-                    const refreshBtn = refresh.query(By.css('.grid-refresh-button'));
+                    const refreshBtn = fixture.debugElement.query(By.css('[data-cy=grid-refresh]'));
                     expect(refreshBtn).toBeDefined();
                     expect(refreshBtn.nativeElement).toBeDefined();
                     expect(refreshBtn.nativeElement).toHaveAttr('aria-label', intl.refreshTooltip);
@@ -2248,7 +2247,7 @@ describe('Component: UiGrid', () => {
                     const headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
 
                     expect(headers).toBeDefined();
-                    expect(headers.length).toEqual(3);
+                    expect(headers.length).toEqual(2);
                     discardPeriodicTasks();
                 }),
                 );
@@ -2274,7 +2273,7 @@ describe('Component: UiGrid', () => {
                     let headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
 
                     expect(headers).toBeDefined();
-                    expect(headers.length).toEqual(3);
+                    expect(headers.length).toEqual(2);
 
                     options.forEach(async o => {
                         const checkbox = o.query(By.css('.mat-pseudo-checkbox'));
@@ -2291,7 +2290,7 @@ describe('Component: UiGrid', () => {
                     headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
 
                     expect(headers).toBeDefined();
-                    expect(headers.length).toEqual(6);
+                    expect(headers.length).toEqual(5);
                     discardPeriodicTasks();
                 }));
 
@@ -2376,7 +2375,7 @@ describe('Component: UiGrid', () => {
                         const headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
 
                         expect(headers).toBeDefined();
-                        expect(headers.length).toEqual(6, 'Not all columns rendered');
+                        expect(headers.length).toEqual(5, 'Not all columns rendered');
 
                         buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mdc-button')).nativeElement;
                         buttonToggle.dispatchEvent(EventGenerator.click);
@@ -2460,7 +2459,7 @@ describe('Component: UiGrid', () => {
                                 const headers = fixture.debugElement.queryAll(By.css('.ui-grid-header-cell'));
 
                                 expect(headers).toBeDefined();
-                                expect(headers.length).toEqual(6, 'Not all columns rendered');
+                                expect(headers.length).toEqual(5, 'Not all columns rendered');
 
                                 expect(
                                     fixture.debugElement.query(By.css('.mat-mdc-select')).nativeElement,
@@ -3928,7 +3927,7 @@ describe('Component: UiGrid', () => {
 
         it('should have multiple main actions', () => {
             const buttons = fixture.debugElement.queryAll(By.css('.ui-grid-action-buttons-main button'));
-            expect(buttons.length).toEqual(2);
+            expect(buttons.length).toEqual(3);
         });
     });
 
