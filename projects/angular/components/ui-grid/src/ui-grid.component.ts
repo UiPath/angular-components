@@ -268,13 +268,6 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     shouldSelectOnRowClick = false;
 
     /**
-     * Option to select an alternate layout for footer pagination.
-     *
-     */
-    @Input()
-    useLegacyDesign: boolean;
-
-    /**
      * Option to have collapsible filters.
      *
      * @deprecated - use `[collapseFiltersCount]="0" to render collapsed or leave out to always render inline`
@@ -724,7 +717,6 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         super();
 
         this.disableSelectionByEntry = () => null;
-        this.useLegacyDesign = _gridOptions?.useLegacyDesign ?? false;
         this._fetchStrategy = _gridOptions?.fetchStrategy ?? 'onOpen';
         this.rowSize = _gridOptions?.rowSize ?? DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
         this._collapseFiltersCount$ = new BehaviorSubject(
