@@ -1,5 +1,4 @@
 <ui-grid [data]="data$ | async"
-         [useLegacyDesign]="inputs.useLegacyDesign"
          [collapsibleFilters]="inputs.collapsibleFilters ?? false"
          [collapseFiltersCount]="inputs.collapseFiltersCount"
          [isProjected]="inputs.isProjected"
@@ -112,13 +111,13 @@
     </ui-grid-expanded-row>
 
     <ui-grid-row-card-view>
-        <ng-template
-            let-data="data"
-            let-expanded="expanded"
-            let-last="last"
-            let-index="index"
-        >
-            <div class="card" role="gridcell" tabindex="0">
+        <ng-template let-data="data"
+                     let-expanded="expanded"
+                     let-last="last"
+                     let-index="index">
+            <div class="card"
+                 role="gridcell"
+                 tabindex="0">
                 <h2>{{data.name}}</h2>
                 <p>parity: <b>{{data.parity}}</b></p>
 
