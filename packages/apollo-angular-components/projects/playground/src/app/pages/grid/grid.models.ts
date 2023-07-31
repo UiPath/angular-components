@@ -34,3 +34,9 @@ export interface IInputs {
     useCardView: boolean;
     hideTotalCount: boolean;
 }
+
+export interface IGridSettings {
+    inputs: IInputs;
+    header: IHeader;
+    footer: IFooter;
+}
