@@ -112,7 +112,6 @@ export class GridPageComponent implements AfterViewInit, OnDestroy {
 
         this.actionsForm = this._fb.group({
             inputs: this._fb.group({
-                useLegacyDesign: [true],
                 collapseFiltersCount: [20, [Validators.min(0), Validators.max(500)]],
                 loading: [false],
                 isProjected: [false],
