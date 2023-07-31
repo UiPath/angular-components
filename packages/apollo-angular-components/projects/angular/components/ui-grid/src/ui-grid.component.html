@@ -25,10 +25,6 @@
             </ng-container>
             <ng-template #noCustomFilter>
                 <ng-container>
-                    <ng-container *ngIf="useLegacyDesign">
-                        <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
-                    </ng-container>
-
                     <ng-container *ngIf="!(hasSelection$ | async) ||
                             !header?.actionButtons?.length">
                         <ui-grid-search *ngIf="header?.search"
@@ -43,9 +39,7 @@
                                         class="ui-grid-search ui-grid-filter-option">
                         </ui-grid-search>
 
-                        <ng-container *ngIf="!useLegacyDesign">
-                            <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
-                        </ng-container>
+                        <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
 
                         <ng-container *ngTemplateOutlet="filtersTmpl">
                         </ng-container>
@@ -84,12 +78,24 @@
         </div>
     </div>
 
-    <div class="ui-grid-filter-container-rhs-group">
-        <div *ngIf="!useLegacyDesign || header?.mainButtons?.length ?? 0 > 1"
-             class="ui-grid-action-buttons ui-grid-action-buttons-main">
-            <ng-container *ngFor="let button of header?.mainButtons">
-                <ng-container *ngIf="button.visible">
-                    <ng-container *ngTemplateOutlet="button.html ?? null">
+    <div class="ui-grid-filter-container-rhs-group"
+         *ngLet="(hasSelection$ | async) as hasSelections">
+        <div class="ui-grid-action-buttons ui-grid-action-buttons-main">
+            <div #gridActionButtons
+                 *ngIf="hasSelections">
+                <ng-container *ngFor="let button of header?.actionButtons">
+                    <ng-container *ngIf="button.visible">
+                        <ng-container *ngTemplateOutlet="button.html?? null">
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </div>
+
+            <ng-container *ngIf="!hasSelections">
+                <ng-container *ngFor="let button of header?.mainButtons">
+                    <ng-container *ngIf="button.visible">
+                        <ng-container *ngTemplateOutlet="button.html ?? null">
+                        </ng-container>
                     </ng-container>
                 </ng-container>
             </ng-container>
@@ -97,24 +103,13 @@
     </div>
 </div>
 
-<ng-container *ngIf="!useLegacyDesign && multiPageSelect then multiPageSelectionRow">
+<ng-container *ngIf="multiPageSelect then multiPageSelectionRow">
 </ng-container>
 
-<div [class.use-alternate-design]="!useLegacyDesign"
-     (keydown.shift.alt.arrowup)="focusRowHeader()"
+<div (keydown.shift.alt.arrowup)="focusRowHeader()"
      class="ui-grid-container">
 
     <div class="ui-grid-table-container">
-        <div *ngIf="useLegacyDesign && header?.mainButtons?.length === 1"
-             class="ui-grid-action-button">
-            <ng-container *ngIf="header!.mainButtons![0] as mainBtn">
-                <ng-container *ngIf="mainBtn.visible">
-                    <ng-container *ngTemplateOutlet="mainBtn.html ?? null">
-                    </ng-container>
-                </ng-container>
-            </ng-container>
-        </div>
-
         <div [class.ui-grid-table-refreshable]="refreshable"
              class="ui-grid-table"
              role="grid">
@@ -139,6 +134,7 @@
 
                     <ng-container *ngIf="multiPageSelect then multiPageSelectionProjectedHeaderCell">
                     </ng-container>
+
                     <div *ngFor="let column of visible$ | async; let last = last; let columnIndex = index"
                          [class.ui-grid-header-cell-sortable]="column.sortable"
                          [class.ui-grid-resizeable]="column.resizeable"
@@ -231,8 +227,6 @@
                                   class="ui-grid-loader">
                 </mat-progress-bar>
             </div>
-            <ng-container *ngIf="useLegacyDesign && multiPageSelect then multiPageSelectionRow">
-            </ng-container>
 
             <ng-container *ngIf="dataManager?.length; else noData">
                 <ng-container *ngIf="virtualScroll">
@@ -310,7 +304,17 @@
         </div>
     </div>
     <div class="ui-grid-footer-container">
-        <ng-container *ngTemplateOutlet="useLegacyDesign ? classicFooter  : alternativeFooter"></ng-container>
+        <ui-grid-custom-paginator *ngIf="!!footer && !footer.hidden"
+                                  [pageIndex]="footer.state.pageIndex"
+                                  [pageSize]="footer.state.pageSize"
+                                  [pageSizeOptions]="footer.pageSizes"
+                                  [length]="footer.length"
+                                  [disabled]="disabled"
+                                  [showFirstLastButtons]="footer.showFirstLastButtons"
+                                  [hidePageSize]="footer.hidePageSize"
+                                  [hideTotalCount]="footer.hideTotalCount"
+                                  (page)="footer.pageChange.next($event)">
+        </ui-grid-custom-paginator>
     </div>
 </div>
 
@@ -487,8 +491,7 @@
 <ng-template #defaultCardTemplate
              let-row="data"
              let-index="index">
-    <div
-         class="ui-grid-card-default"
+    <div class="ui-grid-card-default"
          role="gridcell"
          tabindex="0">
         <ng-container *ngFor="let column of renderedColumns$ | async">
@@ -527,17 +530,6 @@
 </ng-template>
 
 <ng-template #defaultNoData>
-    <ng-container *ngIf="useLegacyDesign; else defaultNoDataAlternative">
-        <div *ngIf="!dataManager.pristine"
-             class="ui-grid-row ui-grid-no-data-container"
-             [class.ui-grid-border-none]="!footer">
-            <mat-icon>list</mat-icon>
-            <p>{{noDataMessage || intl.noDataMessage }}</p>
-        </div>
-    </ng-container>
-</ng-template>
-
-<ng-template #defaultNoDataAlternative>
     <ng-container *ngLet="(filterManager.activeCount$ | async) as activeFilterCount">
         <div *ngIf="!dataManager.pristine"
              class="ui-grid-row ui-grid-no-data-container"
@@ -549,19 +541,10 @@
     </ng-container>
 </ng-template>
 
-<ng-template #multiPageSelectionAlternate>
-    <div *ngIf="!isProjected &&
-                showMultiPageSelectionInfo"
-         class="ui-grid-selection-info-container ui-grid-selection-info-container-alternate">
-        <ng-container *ngTemplateOutlet="multiPageSelectionInfo"></ng-container>
-    </div>
-</ng-template>
-
 <ng-template #multiPageSelectionRow>
     <div *ngIf="!isProjected &&
                 showMultiPageSelectionInfo"
-         class="ui-grid-row ui-grid-selection-info-container"
-         [class.ui-grid-selection-info-container-alternate]="!useLegacyDesign">
+         class="ui-grid-row ui-grid-selection-info-container ui-grid-selection-info-container-alternate">
         <ng-container *ngTemplateOutlet="multiPageSelectionInfo"></ng-container>
     </div>
 </ng-template>
@@ -592,41 +575,9 @@
 </ng-template>
 
 <ng-template #noSelectionTmpl>
-    <mat-icon *ngIf="useLegacyDesign"
-              [matTooltip]="intl.multiPageSelectionInfoTooltip"
-              [matTooltipDisabled]="resizeManager.isResizing"
-              class="ui-grid-selection-info-icon"
-              tabindex="0">info</mat-icon>
     <span class="ui-grid-selection-info-message">
         {{ intl.noSelectionMessage }}
     </span>
-</ng-template>
-
-<ng-template #classicFooter>
-    <mat-paginator *ngIf="!!footer && !footer.hidden"
-                   [pageIndex]="footer.state.pageIndex"
-                   [pageSize]="footer.state.pageSize"
-                   [pageSizeOptions]="footer.pageSizes"
-                   [length]="footer.length"
-                   [disabled]="disabled"
-                   [showFirstLastButtons]="footer.showFirstLastButtons"
-                   [hidePageSize]="footer.hidePageSize"
-                   (page)="footer.pageChange.next($event)">
-    </mat-paginator>
-</ng-template>
-
-<ng-template #alternativeFooter>
-    <ui-grid-custom-paginator *ngIf="!!footer && !footer.hidden"
-                              [pageIndex]="footer.state.pageIndex"
-                              [pageSize]="footer.state.pageSize"
-                              [pageSizeOptions]="footer.pageSizes"
-                              [length]="footer.length"
-                              [disabled]="disabled"
-                              [showFirstLastButtons]="footer.showFirstLastButtons"
-                              [hidePageSize]="footer.hidePageSize"
-                              [hideTotalCount]="footer.hideTotalCount"
-                              (page)="footer.pageChange.next($event)">
-    </ui-grid-custom-paginator>
 </ng-template>
 
 <ng-template #filtersTmpl>
@@ -648,7 +599,7 @@
 <ng-template #inlineFiltersTmpl>
     <ng-container *ngFor="let column of columns$ | async">
         <div *ngIf="column.dropdown?.visible$ | async"
-             [ngClass]="{'ui-grid-alternate-filter-container': collapsibleFilters}"
+             [attr.data-collapsed]="!collapseFiltersCount || null"
              class="ui-grid-dropdown-filter-container ui-grid-filter-option">
             <button [matMenuTriggerFor]="filterOptions"
                     [disabled]="column.dropdown?.disabled || disabled"
@@ -720,8 +671,7 @@
                             [resetToDefaults]="intl.toggleResetToDefaults"
                             [toggleTitle]="intl.toggleTitle"
                             [togglePlaceholderTitle]="intl.togglePlaceholderTitle"
-                            [useLegacyDesign]="useLegacyDesign"
-                            [showDivider]="!useLegacyDesign && (displayToggleColumnsDivider$ | async) ?? false"
+                            [showDivider]="(displayToggleColumnsDivider$ | async) ?? false"
                             (visibleColumns)="visibilityManager.update($event)"
                             (resetColumns)="visibilityManager.reset()"
                             (visibleColumnsToggled)="visibleColumnsToggle$.next($event)">
