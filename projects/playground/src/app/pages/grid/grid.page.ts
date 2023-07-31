@@ -1,17 +1,25 @@
 import {
     IFooter,
+    IGridSettings,
     IHeader,
     IInputs,
 } from 'projects/playground/src/app/pages/grid/grid.models';
+import { SettingsStore } from 'projects/playground/src/app/utils/settings-store';
 import {
     BehaviorSubject,
     of,
+    Subject,
 } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import {
+    delay,
+    takeUntil,
+    tap,
+} from 'rxjs/operators';
 
 import {
     AfterViewInit,
     Component,
+    OnDestroy,
 } from '@angular/core';
 import {
     UntypedFormBuilder,
@@ -32,7 +40,7 @@ export interface MockData {
     templateUrl: './grid.page.html',
     styleUrls: ['./grid.page.scss'],
 })
-export class GridPageComponent implements AfterViewInit {
+export class GridPageComponent implements AfterViewInit, OnDestroy {
     allData: MockData[] = [];
     data$ = new BehaviorSubject<MockData[]>([]);
     lastPageChange?: PageEvent;
@@ -79,6 +87,9 @@ export class GridPageComponent implements AfterViewInit {
     };
 
     actionsForm!: UntypedFormGroup;
+
+    settingsStore: SettingsStore<IGridSettings>;
+
     get inputGroup(): UntypedFormGroup {
         return this.actionsForm.get('inputs')! as UntypedFormGroup;
     }
@@ -92,9 +103,13 @@ export class GridPageComponent implements AfterViewInit {
         return this.actionsForm.get('data')! as UntypedFormGroup;
     }
 
+    private _destroyed$ = new Subject<void>();
+
     constructor(
         private _fb: UntypedFormBuilder,
     ) {
+        this.settingsStore = new SettingsStore<IGridSettings>('grid-settings');
+
         this.actionsForm = this._fb.group({
             inputs: this._fb.group({
                 useLegacyDesign: [true],
@@ -129,10 +144,22 @@ export class GridPageComponent implements AfterViewInit {
                 pageSize: [this.footer.pageSize, [Validators.min(0), Validators.max(1000)]],
             }),
         });
+
+        this.actionsForm.patchValue(this.settingsStore.get());
+
+        this.actionsForm.valueChanges.pipe(
+            tap(({ data, ...rest }) => this.settingsStore.store(rest)),
+            takeUntil(this._destroyed$),
+        ).subscribe();
     }
 
     ngAfterViewInit(): void {
         this.generateGrid();
+    }
+
+    ngOnDestroy(): void {
+        this._destroyed$.next();
+        this._destroyed$.complete();
     }
 
     generateData({ totalData, pageSize }: { totalData: number; pageSize: number }) {
