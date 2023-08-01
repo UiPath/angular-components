@@ -1104,7 +1104,14 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     private _initResizeManager() {
         this._resizeSubscription$?.unsubscribe();
         this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
-        this._resizeSubscription$ = this.resizeManager.resizeEnd$.subscribe(() => this.resizeEnd.emit());
+        this._resizeSubscription$ = this.resizeManager.resizeEnd$.subscribe((resizeInfo) => {
+            if (resizeInfo) {
+                const gridHeaderCellElement = resizeInfo.element;
+                gridHeaderCellElement.focus();
+            }
+
+            this.resizeEnd.emit();
+        });
     }
 
     private _initDisplayToggleColumnsDivider() {
@@ -1112,5 +1119,4 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             map(([hasAnyFilterVisible, hasCustomFilters]) => hasAnyFilterVisible || hasCustomFilters),
         );
     }
-
 }
