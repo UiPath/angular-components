@@ -67,9 +67,6 @@ export class UiGridToggleColumnsComponent<T extends IGridDataEntry> implements A
     }
 
     @Input()
-    useLegacyDesign = false;
-
-    @Input()
     toggleTooltip?: string;
 
     @Input()

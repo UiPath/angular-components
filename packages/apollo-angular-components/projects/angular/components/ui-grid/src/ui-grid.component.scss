@@ -123,6 +123,7 @@ ui-grid {
             justify-content: center;
         }
     }
+
     .mat-mdc-paginator-container {
         padding: 0 $ui-grid-default-spacing;
     }
@@ -134,6 +135,7 @@ ui-grid {
     }
 
     .ui-grid {
+
         &-primary,
         &-header-cell {
             font-weight: 500;
@@ -208,12 +210,14 @@ ui-grid {
                 &-container {
                     min-height: $ui-grid-header-row-height - 1;
                 }
+
                 .mat-mdc-paginator-page-size-label,
                 .mat-mdc-paginator-range-label,
                 .mat-mdc-select-value {
                     font-size: $ui-grid-secondary-font-size;
                     line-height: $ui-grid-secondary-font-size;
                 }
+
                 .mat-mdc-form-field-infix {
                     padding: 0;
 
@@ -223,45 +227,47 @@ ui-grid {
                 }
             }
 
-            &.use-alternate-design {
-                .ui-grid-header {
-                    &-row,
-                    &-cell {
-                        height: $ui-grid-header-alternate-row-height;
-                    }
+
+            .ui-grid-header {
+
+                &-row,
+                &-cell {
+                    height: $ui-grid-header-alternate-row-height;
+                }
+            }
+
+            .ui-grid-selection-info {
+                &-clear-button {
+                    order: 1;
+                }
+            }
+
+            .ui-grid-no-data-container {
+                height: 4 * $ui-grid-row-height;
+                align-items: flex-start;
+
+                &.ui-grid-no-content-available {
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                }
+            }
+
+            ui-grid-custom-paginator {
+                .mat-mdc-paginator-page-label {
+                    font-size: $ui-grid-secondary-font-size;
                 }
 
-                .ui-grid-selection-info {
-                    &-clear-button {
-                        order: 1;
-                    }
-                }
+                .mat-mdc-paginator-page-size .mat-mdc-form-field {
+                    padding: unset;
+                    margin: unset;
 
-                .ui-grid-no-data-container {
-                    height: 4 * $ui-grid-row-height;
-                    align-items: flex-start;
-
-                    &.ui-grid-no-content-available {
-                        align-items: center;
-                        justify-content: center;
-                        flex-direction: column;
-                    }
-                }
-
-                ui-grid-custom-paginator {
-                    .mat-mdc-paginator-page-label {
-                        font-size: $ui-grid-secondary-font-size;
-                    }
-                    .mat-mdc-paginator-page-size .mat-mdc-form-field {
-                        padding: unset;
-                        margin: unset;
-
-                        .mat-mdc-select {
-                            padding: 0.4375em 0;
-                        }
+                    .mat-mdc-select {
+                        padding: 0.4375em 0;
                     }
                 }
             }
+
         }
 
         &-table-container {
@@ -301,6 +307,7 @@ ui-grid {
             .ui-grid-selection-info-icon {
                 margin-left: 5px;
             }
+
             .ui-grid-selection-info-message {
                 margin-left: $ui-grid-default-spacing * 2;
             }
@@ -380,7 +387,7 @@ ui-grid {
             .ui-grid-cell-content {
                 @extend %ellipse;
 
-                > * {
+                >* {
                     @extend %ellipse;
                 }
             }
@@ -480,7 +487,7 @@ ui-grid {
                     padding: 0;
                     overflow: visible;
 
-                    > div {
+                    >div {
                         display: inline-flex;
                         justify-content: flex-end;
                         align-items: center;
@@ -502,12 +509,15 @@ ui-grid {
 
                     //sorted asc
                     &-asc {
+
                         // desc path
                         .path-desc {
                             opacity: 0;
                         }
                     }
+
                     &-desc {
+
                         //sorted desc
                         .path-asc {
                             // asc path
