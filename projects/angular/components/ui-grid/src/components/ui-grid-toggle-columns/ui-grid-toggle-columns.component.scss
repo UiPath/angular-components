@@ -10,6 +10,7 @@ $toggle-col-width: 10em;
         height: 32px;
         align-self: center;
     }
+
     mat-select {
         overflow: hidden;
         width: 0;
@@ -17,12 +18,7 @@ $toggle-col-width: 10em;
         // adjustments in order to match trigger icon with optgroup-label icon
         position: relative;
         top: -10px;
-        left: -4px;
-
-        &.use-alternate {
-            top: -10px;
-            left: -67px;
-        }
+        left: -67px;
     }
 }
 
@@ -32,20 +28,14 @@ $toggle-col-width: 10em;
     width: 210px !important;
 
     .mat-mdc-optgroup-label {
-        padding-left: 12px;
         display: flex;
-        padding-right: 6px;
+        padding-left: 12px;
+        padding-right: 3px;
         justify-content: space-between;
         align-items: center;
 
         .mat-icon {
             margin-right: 0;
-        }
-    }
-
-    &-alternate {
-        .mat-mdc-optgroup-label {
-            padding-right: 3px;
         }
     }
 }

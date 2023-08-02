@@ -22,7 +22,6 @@ export interface IGridDataEntry {
 export interface GridOptions<T> {
     useCache?: boolean;
     fetchStrategy?: 'eager' | 'onOpen';
-    useLegacyDesign?: boolean;
     collapsibleFilters?: boolean;
     collapseFiltersCount?: number;
     idProperty?: keyof T;

@@ -1,20 +1,20 @@
 <ng-container *ngIf="options!.length">
-    <button *ngIf="!useLegacyDesign; else classicColumnToggleTmpl"
-            [color]="dirty ? 'primary' : undefined"
+    <button [color]="dirty ? 'primary' : undefined"
             (click)="selectColumns!.open(); selectColumns!.focus()"
             type="button"
             mat-button>
         <mat-icon class="material-icons-outlined">table_chart</mat-icon>
         <span>{{togglePlaceholderTitle}}</span>
-        <mat-icon class="material-icons-outlined" iconPositionEnd>keyboard_arrow_down</mat-icon>
+        <mat-icon class="material-icons-outlined"
+                  iconPositionEnd>keyboard_arrow_down</mat-icon>
     </button>
 
     <mat-select [value]="selected"
                 [aria-label]="togglePlaceholderTitle ?? ''"
                 [disableOptionCentering]="true"
-                [class.use-alternate]="!useLegacyDesign"
-                [panelClass]="['ui-grid-toggle-panel', useLegacyDesign ?  '' : 'ui-grid-toggle-panel-alternate']"
                 (selectionChange)="selectionChange($event)"
+                panelClass="ui-grid-toggle-panel"
+                class="use-alternate"
                 tabIndex="-1"
                 multiple>
         <mat-optgroup>
@@ -48,14 +48,3 @@
     <mat-divider *ngIf="showDivider"
                  [vertical]="true"></mat-divider>
 </ng-container>
-
-<ng-template #classicColumnToggleTmpl>
-    <button [matTooltip]="togglePlaceholderTitle ?? ''"
-            [color]="dirty ? 'primary' : undefined"
-            (click)="selectColumns!.open(); selectColumns!.focus()"
-            matTooltipPosition="right"
-            type="button"
-            mat-icon-button>
-        <mat-icon class="material-icons-outlined">table_chart</mat-icon>
-    </button>
-</ng-template>

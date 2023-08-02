@@ -15,7 +15,6 @@ export interface IHeader {
 }
 
 export interface IInputs {
-    useLegacyDesign: boolean;
     collapseFiltersCount: number;
     // deprecated
     collapsibleFilters?: boolean;
@@ -33,4 +32,10 @@ export interface IInputs {
     customFilter: boolean;
     useCardView: boolean;
     hideTotalCount: boolean;
+}
+
+export interface IGridSettings {
+    inputs: IInputs;
+    header: IHeader;
+    footer: IFooter;
 }

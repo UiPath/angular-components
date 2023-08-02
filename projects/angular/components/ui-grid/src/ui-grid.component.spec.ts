@@ -295,7 +295,7 @@ describe('Component: UiGrid', () => {
                     const event = new KeyboardEvent('keydown', { key: 'Tab' });
                     const focusEvent = new FocusEvent('focus', { bubbles: true });
                     const focusOutEvent = new FocusEvent('focusout', { bubbles: true });
-                    const [columnHeader1, columnHeader2 ] = document.querySelectorAll('div[role="columnheader"]')!;
+                    const [columnHeader1, columnHeader2] = document.querySelectorAll('div[role="columnheader"]')!;
 
                     columnHeader1.dispatchEvent(event);
                     fixture.detectChanges();
@@ -2230,7 +2230,7 @@ describe('Component: UiGrid', () => {
                 it('should be able to hide all available columns', fakeAsync(async () => {
                     const options = fixture.debugElement.queryAll(
                         By.css('.ui-grid-toggle-panel .mat-mdc-option:not(.mdc-list-item--disabled)'),
-                        );
+                    );
                     expect(options.length).toEqual(3);
 
                     options.forEach(async o => {
@@ -2256,7 +2256,7 @@ describe('Component: UiGrid', () => {
                 it('should update grid if options are toggled', fakeAsync(() => {
                     const options = fixture.debugElement.queryAll(
                         By.css('.ui-grid-toggle-panel .mat-mdc-option:not(.mdc-list-item--disabled)'),
-                        );
+                    );
                     expect(options.length).toEqual(3);
 
                     options.forEach(async o => {
@@ -2660,12 +2660,6 @@ describe('Component: UiGrid', () => {
                     ],
                     providers: [
                         UiMatPaginatorIntl,
-                        {
-                            provide: UI_GRID_OPTIONS,
-                            useValue: {
-                                useLegacyDesign: false,
-                            },
-                        },
                     ],
                     declarations: [
                         TestFixtureAlternateDesignGridComponent,
@@ -2736,12 +2730,6 @@ describe('Component: UiGrid', () => {
                         {
                             provide: UiGridIntl,
                             useValue: intl,
-                        },
-                        {
-                            provide: UI_GRID_OPTIONS,
-                            useValue: {
-                                useLegacyDesign: false,
-                            },
                         },
                     ],
                     declarations: [
@@ -2832,11 +2820,12 @@ describe('Component: UiGrid', () => {
         describe('Behavior: override injection token value', () => {
             @Component({
                 template: `
-                <ui-grid [toggleColumns]="true"
-                         [useLegacyDesign]="true">
+                <ui-grid [toggleColumns]="true">
                     <ui-grid-header>
                     </ui-grid-header>
                     <ui-grid-column property="id">
+                        <ui-grid-dropdown-filter [items]="[]">
+                        </ui-grid-dropdown-filter>
                     </ui-grid-column>
                     <ui-grid-footer [length]="5"
                                     [pageSize]="5">
@@ -2860,7 +2849,7 @@ describe('Component: UiGrid', () => {
                         {
                             provide: UI_GRID_OPTIONS,
                             useValue: {
-                                useLegacyDesign: false,
+                                collapseFiltersCount: 0,
                             },
                         },
                     ],
@@ -2878,11 +2867,8 @@ describe('Component: UiGrid', () => {
             });
 
             it('should override injection token value', () => {
-                const customFooter = fixture.debugElement.query(By.css('ui-grid-custom-paginator'));
-                expect(customFooter).toBeFalsy();
-
-                const customFilters = fixture.debugElement.query(By.css('ui-grid-toggle-columns .mdc-button .mdc-button__label'));
-                expect(customFilters).toBeFalsy();
+                const customFooter = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
+                expect(customFooter).toBeTruthy();
             });
         });
 
@@ -2940,12 +2926,6 @@ describe('Component: UiGrid', () => {
                     ],
                     providers: [
                         UiMatPaginatorIntl,
-                        {
-                            provide: UI_GRID_OPTIONS,
-                            useValue: {
-                                useLegacyDesign: false,
-                            },
-                        },
                     ],
                     declarations: [
                         TestFixtureAlternateDesignGridComponent,
@@ -3048,7 +3028,6 @@ describe('Component: UiGrid', () => {
                             {
                                 provide: UI_GRID_OPTIONS,
                                 useValue: {
-                                    useLegacyDesign: false,
                                     collapsibleFilters: true,
                                 },
                             },
@@ -3121,8 +3100,7 @@ describe('Component: UiGrid', () => {
                             {
                                 provide: UI_GRID_OPTIONS,
                                 useValue: {
-                                    useLegacyDesign: false,
-                                    collapsibleFilters: true,
+                                    collapseFiltersCount: 0,
                                     fetchStrategy: 'eager',
                                 },
                             },
@@ -3174,13 +3152,13 @@ describe('Component: UiGrid', () => {
 
                 it('should toggle filters', () => {
                     const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
-                    let filtersRow = fixture.debugElement.query(By.css('.ui-grid-alternate-filter-container'));
+                    let filtersRow = fixture.debugElement.query(By.css('.ui-grid-filter-option[data-collapsed=true]'));
                     expect(filtersRow).toBeFalsy();
 
                     collapisbleFiltersToggle.nativeElement.dispatchEvent(EventGenerator.click);
                     fixture.detectChanges();
 
-                    filtersRow = fixture.debugElement.query(By.css('.ui-grid-alternate-filter-container'));
+                    filtersRow = fixture.debugElement.query(By.css('.ui-grid-filter-option[data-collapsed=true]'));
                     expect(filtersRow).toBeTruthy();
                 });
             });
@@ -3228,7 +3206,6 @@ describe('Component: UiGrid', () => {
                             {
                                 provide: UI_GRID_OPTIONS,
                                 useValue: {
-                                    useLegacyDesign: false,
                                     collapsibleFilters: true,
                                     fetchStrategy: 'eager',
                                 },
@@ -3441,7 +3418,6 @@ describe('Component: UiGrid', () => {
                             {
                                 provide: UI_GRID_OPTIONS,
                                 useValue: {
-                                    useLegacyDesign: false,
                                     collapseFiltersCount: 0,
                                 },
                             },
@@ -3514,7 +3490,6 @@ describe('Component: UiGrid', () => {
                             {
                                 provide: UI_GRID_OPTIONS,
                                 useValue: {
-                                    useLegacyDesign: false,
                                     collapseFiltersCount: 0,
                                 },
                             },
@@ -3566,13 +3541,13 @@ describe('Component: UiGrid', () => {
 
                 it('should toggle filters', () => {
                     const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
-                    let filtersRow = fixture.debugElement.query(By.css('.ui-grid-alternate-filter-container'));
+                    let filtersRow = fixture.debugElement.query(By.css('.ui-grid-filter-option[data-collapsed=true]'));
                     expect(filtersRow).toBeFalsy();
 
                     collapisbleFiltersToggle.nativeElement.dispatchEvent(EventGenerator.click);
                     fixture.detectChanges();
 
-                    filtersRow = fixture.debugElement.query(By.css('.ui-grid-alternate-filter-container'));
+                    filtersRow = fixture.debugElement.query(By.css('.ui-grid-filter-option[data-collapsed=true]'));
                     expect(filtersRow).toBeTruthy();
                 });
             });
@@ -3901,12 +3876,6 @@ describe('Component: UiGrid', () => {
                 ],
                 providers: [
                     UiMatPaginatorIntl,
-                    {
-                        provide: UI_GRID_OPTIONS,
-                        useValue: {
-                            useLegacyDesign: false,
-                        },
-                    },
                 ],
                 declarations: [
                     TestFixtureAlternateDesignGridComponent,
@@ -3996,7 +3965,6 @@ describe('Component: UiGrid', () => {
                     {
                         provide: UI_GRID_OPTIONS,
                         useValue: {
-                            useLegacyDesign: false,
                             collapseFiltersCount: 1,
                         },
                     },
@@ -4148,12 +4116,6 @@ describe('Component: UiGrid', () => {
                 ],
                 providers: [
                     UiMatPaginatorIntl,
-                    {
-                        provide: UI_GRID_OPTIONS,
-                        useValue: {
-                            useLegacyDesign: false,
-                        },
-                    },
                     {
                         provide: UiGridIntl,
                         useValue: intl,
