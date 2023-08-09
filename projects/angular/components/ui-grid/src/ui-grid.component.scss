@@ -440,7 +440,7 @@ ui-grid {
                 }
             }
 
-            &:not(.ui-grid-table-refreshable) {
+            &:not(.ui-grid-table-refreshable):not(.ui-grid-table-show-actions-on-hover) {
                 .ui-grid-action-cell {
                     min-width: $ui-feature-cell-width;
                 }

@@ -111,6 +111,7 @@
 
     <div class="ui-grid-table-container">
         <div [class.ui-grid-table-refreshable]="refreshable"
+             [class.ui-grid-table-show-actions-on-hover]="showActionButtonsOnHover"
              class="ui-grid-table"
              role="grid">
             <div class="ui-grid-header">
@@ -218,7 +219,7 @@
                         </button>
                     </div>
                     <div *ngIf="!!actions"
-                         class="ui-grid-header-cell ui-grid-action-cell ui-grid-feature-cell">
+                         class="ui-grid-header-cell ui-grid-action-cell test1001 ui-grid-feature-cell">
                     </div>
                 </div>
                 <mat-progress-bar *ngIf="loading && !loadingState"
@@ -439,7 +440,7 @@
         <div *ngIf="!isProjected &&
                     !!actions"
              role="gridcell"
-             class="ui-grid-cell ui-grid-action-cell ui-grid-feature-cell">
+             class="ui-grid-cell ui-grid-action-cell test1001 ui-grid-feature-cell">
             <div class="ui-grid-action-cell-container">
                 <ng-container *ngTemplateOutlet="actions.html ?? null; context: {
                         data: row,

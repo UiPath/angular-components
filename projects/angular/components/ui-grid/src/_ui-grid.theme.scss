@@ -211,6 +211,10 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
             }
         }
 
+        // .ui-grid-pseudo-row:hover + .ui-grid-row {
+        //     background-color: $ui-grid-hover-background;
+        // }
+
         .ui-grid-sort-icon {
             .path-asc,
             .path-desc {

@@ -32,6 +32,7 @@ export interface IInputs {
     customFilter: boolean;
     useCardView: boolean;
     hideTotalCount: boolean;
+    showActionButtonsOnHover: boolean;
 }
 
 export interface IGridSettings {

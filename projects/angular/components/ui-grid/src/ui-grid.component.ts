@@ -395,6 +395,12 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     useCardView = false;
 
     /**
+     * Should action buttons only be visible on hover
+     */
+    @Input()
+    showActionButtonsOnHover = false;
+
+    /**
      * Emits an event with the sort model when a column sort changes.
      *
      */

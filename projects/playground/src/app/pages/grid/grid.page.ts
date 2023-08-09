@@ -64,6 +64,7 @@ export class GridPageComponent implements AfterViewInit, OnDestroy {
         'showHeaderRow',
         'customFilter',
         'useCardView',
+        'showActionButtonsOnHover',
     ];
 
     buttonKeys = [
@@ -127,6 +128,7 @@ export class GridPageComponent implements AfterViewInit, OnDestroy {
                 showHeaderRow: [true],
                 customFilter: [false],
                 useCardView: [false],
+                showActionButtonsOnHover: [true],
             }),
             header: this._fb.group({
                 searchable: [true],
