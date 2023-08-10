@@ -401,6 +401,12 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     showActionButtonsOnHover = false;
 
     /**
+     * tbd
+     */
+    @Input()
+    width!: string;
+
+    /**
      * Emits an event with the sort model when a column sort changes.
      *
      */

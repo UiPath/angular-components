@@ -108,3 +108,36 @@
                            (visibleColumnsToggled)="visibilityColumnsOpened = $event">
     </ui-app-grid-component>
 </ng-container>
+
+<div style="height:20px"></div>
+
+<!-- tests for scrolling grid -->
+<div style="position: relative">
+    <div style="overflow: auto">
+        <ui-grid [data]="someData"
+                 width="1200px">
+            <ui-grid-column title="To be covered"
+                            width="34%">
+            </ui-grid-column>
+            <ui-grid-column [property]="'name'"
+                            title="Name"
+                            width="33%">
+            </ui-grid-column>
+            <ui-grid-column [property]="'parity'"
+                            title="Parity"
+                            width="33%">
+            </ui-grid-column>
+
+            <ui-grid-footer [pageSize]="15"></ui-grid-footer>
+        </ui-grid>
+    </div>
+    <div style="position: absolute; top: 0; left: 0">
+        <ui-grid [data]="someData"
+                 width="200px">
+            <ui-grid-column [property]="'id'"
+                            title="Id"
+                            width="34%">
+            </ui-grid-column>
+        </ui-grid>
+    </div>
+</div>

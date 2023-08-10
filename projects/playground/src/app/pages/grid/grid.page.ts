@@ -43,6 +43,25 @@ export interface MockData {
 })
 export class GridPageComponent implements AfterViewInit, OnDestroy {
     allData: MockData[] = [];
+
+    someData: any[] = [
+        {
+            id: 1,
+            name: 'name1',
+            parity: 'odd',
+        },
+        {
+            id: 2,
+            name: 'name2',
+            parity: 'even',
+        },
+        {
+            id: 3,
+            name: 'name3',
+            parity: 'odd',
+        },
+    ];
+
     data$ = new BehaviorSubject<MockData[]>([]);
     lastPageChange?: PageEvent;
     generatedGrid = false;
