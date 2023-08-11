@@ -1,3 +1,13 @@
+# v15.0.1-rc.0 (2023-08-11)
+* **suggest** add custom tooltip
+* **grid** show border for column resize
+* **grid** drop useLegacy in grid tests
+* **grid** drop legacy mode in ui-grid
+* **grid** drop legacy mode in playground
+* **playground** implement settings store for grid page
+* **playground** implement settings store
+* **a11y** make columns reset button focusable
+
 # 15.0.0-rc.0 (2023-06-07)
 * ng update to 15
 
