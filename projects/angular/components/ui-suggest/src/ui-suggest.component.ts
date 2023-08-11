@@ -331,7 +331,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             !this.isOpen &&
             this._hasValue
         ) {
-            return this._getValueSummary();
+            return this._getValueSummary(true);
         }
 
         return null;
@@ -1719,11 +1719,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         });
     }
 
-    private _getValueSummary() {
-        return (this.displayValueFactory ?? this._defaultDisplayValueFactory)(this.value);
+    private _getValueSummary(fromTooltip = false) {
+        return (this.displayValueFactory ?? this._defaultDisplayValueFactory)(this.value, fromTooltip);
     }
 
-    private _defaultDisplayValueFactory = (value?: ISuggestValue[]) => (value ?? []).map(v => this.intl.translateLabel(v.text)).join(', ');
+    private _defaultDisplayValueFactory = (value?: ISuggestValue[], fromTooltip = false) =>
+        (value ?? []).map(v => this.intl.translateLabel((fromTooltip && v.tooltip) || v.text)).join(', ');
 
     private _cantNavigate(increment: number) {
         return (!this.items.length &&
