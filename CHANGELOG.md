@@ -1,3 +1,8 @@
+# v14.8.8 (2023-08-11)
+* **suggest** add custom tooltip
+* **a11y** make columns reset button focusable
+* **chore** bump version to v14.8.7
+
 # v14.8.7 (2023-07-20)
 * **grid** arrow cursor on grid header text
 
