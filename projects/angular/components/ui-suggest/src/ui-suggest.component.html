@@ -100,28 +100,31 @@
                            (keydown.esc)="preventDefault($event)"
                            (keydown.tab)="close(false)"
                            (keydown.shift.tab)="close()">
-                <mat-chip *ngFor="let option of value; let i = index"
-                          [removable]="canRemoveChip(option)"
-                          [matTooltip]="intl.translateLabel(option.text)"
-                          (removed)="deselectItem(option)"
-                          class="chip-selectable">
-                    <mat-icon *ngIf="!!option?.icon?.svgIcon"
-                              [svgIcon]="option!.icon!.svgIcon!"
-                              class="chip-selectable-icon">
-                    </mat-icon>
-                    <mat-icon *ngIf="!!option?.icon?.matIcon"
-                              class="chip-selectable-icon">
-                        {{option?.icon?.matIcon}}
-                    </mat-icon>
-                    <span>
-                        {{ intl.translateLabel(option.text) }}
-                    </span>
-                    <button [attr.aria-hidden]="true"
-                            matChipRemove
-                            tabindex="-1">
-                        <mat-icon>close</mat-icon>
-                    </button>
-                </mat-chip>
+                <ng-container *ngFor="let option of value; let i = index">
+                    <mat-chip *ngLet="canRemoveChip(option) as canRemoveChip"
+                               [removable]="canRemoveChip"
+                               [matTooltip]="intl.translateLabel(option.text)"
+                               (removed)="deselectItem(option)"
+                               class="chip-selectable">
+                        <mat-icon *ngIf="!!option?.icon?.svgIcon"
+                                [svgIcon]="option!.icon!.svgIcon!"
+                                class="chip-selectable-icon">
+                        </mat-icon>
+                        <mat-icon *ngIf="!!option?.icon?.matIcon"
+                                class="chip-selectable-icon">
+                            {{option?.icon?.matIcon}}
+                        </mat-icon>
+                        <span>
+                            {{ intl.translateLabel(option.text) }}
+                        </span>
+                        <button *ngIf="canRemoveChip"
+                                [attr.aria-hidden]="true"
+                                matChipRemove
+                                tabindex="-1">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-chip>
+                </ng-container>
 
                 <ng-container *ngIf="searchable">
                     <input #searchInput
@@ -411,7 +414,7 @@
             </ng-container>
         </ng-container>
         <ng-template #defaultItem>
-            <div [matTooltip]="disableTooltip ? '' : intl.translateLabel(item.text)"
+            <div [matTooltip]="disableTooltip ? '' : intl.translateLabel(item.tooltip ?? item.text)"
                  [attr.data-item-id]="item.id"
                  matTooltipPosition="right"
                  class="ui-suggest-item">
