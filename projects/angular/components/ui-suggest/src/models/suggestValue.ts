@@ -53,4 +53,9 @@ export interface ISuggestValue extends VirtualScrollItem {
         svgIcon?: string;
         matIcon?: string;
     };
+
+    /**
+     * Tooltip associated to the entry.
+     */
+    tooltip?: string;
 }
