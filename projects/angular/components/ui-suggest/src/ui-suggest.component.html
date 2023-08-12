@@ -103,7 +103,7 @@
                 <ng-container *ngFor="let option of value; let i = index">
                     <mat-chip *ngLet="canRemoveChip(option) as canRemoveChip"
                                [removable]="canRemoveChip"
-                               [matTooltip]="intl.translateLabel(option.text)"
+                               [matTooltip]="intl.translateLabel(option.tooltip ?? option.text)"
                                (removed)="deselectItem(option)"
                                class="chip-selectable">
                         <mat-icon *ngIf="!!option?.icon?.svgIcon"
