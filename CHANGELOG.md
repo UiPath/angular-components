@@ -1,3 +1,6 @@
+# v14.8.9 (2023-08-11)
+* **suggest** use tooltip or text on matTooltip
+
 # v14.8.8 (2023-08-11)
 * **suggest** add custom tooltip
 * **a11y** make columns reset button focusable
