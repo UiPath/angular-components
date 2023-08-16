@@ -1,3 +1,6 @@
+# v15.0.2-rc.0 (2023-08-16)
+* **progress-button** fix styling & add playground page
+
 # v15.0.1-rc.0 (2023-08-11)
 * **suggest** add custom tooltip
 * **grid** show border for column resize
