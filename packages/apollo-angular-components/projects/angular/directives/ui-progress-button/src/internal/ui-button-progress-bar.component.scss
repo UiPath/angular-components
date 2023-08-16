@@ -1,6 +1,8 @@
 ui-button-progress-bar {
     display: block;
-    width: 100%;
+    width: 0;
+    padding: 0;
+    margin: 0;
 
     .mat-mdc-progress-bar {
         position: absolute;
