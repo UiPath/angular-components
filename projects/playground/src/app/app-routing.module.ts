@@ -9,6 +9,7 @@ import {
     Routes,
 } from '@angular/router';
 import { TreeSelectPageComponent } from 'projects/playground/src/app/pages/tree-select/tree-select.page';
+import { ProgressButtonPageComponent } from 'projects/playground/src/app/pages/progress-button/progress-button.page';
 
 const routes: Routes = [
     {
@@ -30,6 +31,10 @@ const routes: Routes = [
     {
         path: 'tree',
         component: TreeSelectPageComponent,
+    },
+    {
+        path: 'progress-button',
+        component: ProgressButtonPageComponent,
     },
     {
         path: '**',

@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    > button {
+        width: fit-content;
+    }
+
+    .group {
+        display: flex;
+        gap: 10px;
+    }
+}
