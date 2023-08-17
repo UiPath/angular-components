@@ -29,47 +29,47 @@ const selectors = {
 };
 
 export class IntegrationUtils<T> {
-    public get component() {
+    get component() {
         return this.fixture.componentInstance;
     }
 
-    public grid = new GridUtils<T>(this);
-    public suggest = new SuggestUtils<T>(this);
-    public kvpUtils = new KVPUtils<T>(this);
-    public uiUtils = new UIUtils(this.fixture.nativeElement);
+    grid = new GridUtils<T>(this);
+    suggest = new SuggestUtils<T>(this);
+    kvpUtils = new KVPUtils<T>(this);
+    uiUtils = new UIUtils(this.fixture.nativeElement);
 
     constructor(
         public fixture: ComponentFixture<T>,
     ) { }
 
-    public getDebugElement = (selector: string, debugEl = this.fixture.debugElement) =>
+    getDebugElement = (selector: string, debugEl = this.fixture.debugElement) =>
         debugEl.query(By.css(selector));
 
-    public getAllDebugElements = (selector: string, debugEl = this.fixture.debugElement) =>
+    getAllDebugElements = (selector: string, debugEl = this.fixture.debugElement) =>
         debugEl.queryAll(By.css(selector));
 
-    public getChildComponentInstance = (type: Type<any>, debugEl = this.fixture.debugElement) =>
+    getChildComponentInstance = (type: Type<any>, debugEl = this.fixture.debugElement) =>
         debugEl.query(By.directive(type))?.componentInstance;
 
-    public getAllChildComponentInstances = (type: Type<any>, debugEl = this.fixture.debugElement) =>
+    getAllChildComponentInstances = (type: Type<any>, debugEl = this.fixture.debugElement) =>
         debugEl.queryAll(By.directive(type)).map(el => el.componentInstance);
 
-    public getNativeElement = <U extends HTMLElement>(selector: string, debugEl = this.fixture.debugElement) => {
+    getNativeElement = <U extends HTMLElement>(selector: string, debugEl = this.fixture.debugElement) => {
         const debugElement = this.getDebugElement(selector, debugEl);
         return debugElement ? debugElement.nativeElement as U : null;
     };
 
-    public getAllNativeElements = <U extends HTMLElement>(selector: string, debugEl = this.fixture.debugElement) => {
+    getAllNativeElements = <U extends HTMLElement>(selector: string, debugEl = this.fixture.debugElement) => {
         const debugElements = this.getAllDebugElements(selector, debugEl);
         return debugElements.map(e => e.nativeElement as U);
     };
 
-    public getComponent = (selector: string, debugEl = this.fixture.debugElement) => {
+    getComponent = (selector: string, debugEl = this.fixture.debugElement) => {
         const debugElement = this.getDebugElement(selector, debugEl);
         return debugElement ? debugElement.componentInstance : null;
     };
 
-    public switchToTab = async (number: number, debugEl = this.fixture.debugElement) => {
+    switchToTab = async (number: number, debugEl = this.fixture.debugElement) => {
         const tab = this.getDebugElement(`.mat-tab-label:nth-of-type(${number}) .mat-tab-label-content`, debugEl);
         tab.nativeElement.dispatchEvent(EventGenerator.click);
         this.fixture.detectChanges();
@@ -77,18 +77,18 @@ export class IntegrationUtils<T> {
         this.fixture.detectChanges();
     };
 
-    public click = (selector: string, debugEl = this.fixture.debugElement) =>
+    click = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getNativeElement(selector, debugEl)!
             .dispatchEvent(EventGenerator.click);
 
-    public clickRadioButton = (selector: string, debugEl = this.fixture.debugElement) =>
+    clickRadioButton = (selector: string, debugEl = this.fixture.debugElement) =>
         this.click(`${selector} .mat-radio-label`, debugEl);
 
-    public enter = (selector: string, debugEl = this.fixture.debugElement) =>
+    enter = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getNativeElement(selector, debugEl)!
             .dispatchEvent(EventGenerator.keyDown(Key.Enter));
 
-    public expectAndFlush = (stub: IStubEndpoint, httpClient: HttpTestingController, params: Record<string, string> = {}) => {
+    expectAndFlush = (stub: IStubEndpoint, httpClient: HttpTestingController, params: Record<string, string> = {}) => {
         const urlWithParams = stub.url.includes('?');
 
         const testReq = httpClient.expectOne(request => {
@@ -106,7 +106,7 @@ export class IntegrationUtils<T> {
         return testReq;
     };
 
-    public flushDiscardAndDetect = (times = 1) => {
+    flushDiscardAndDetect = (times = 1) => {
         new Array(times).fill(0).forEach(() => {
             flush();
             discardPeriodicTasks();
@@ -114,37 +114,37 @@ export class IntegrationUtils<T> {
         });
     };
 
-    public setInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
+    setInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
         const input = this.uiUtils.setInput(selector, value, debugEl.nativeElement);
         this.fixture.detectChanges();
         return input;
     };
 
-    public changeInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
+    changeInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
         const input = this.uiUtils.changeInput(selector, value, debugEl.nativeElement);
         this.fixture.detectChanges();
         return input;
     };
 
-    public isCheckboxChecked = (selector: string, debugEl = this.fixture.debugElement) =>
+    isCheckboxChecked = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
             .nativeElement
             .classList
             .contains('mat-checkbox-checked');
 
-    public isCheckboxIndeterminate = (selector: string, debugEl = this.fixture.debugElement) =>
+    isCheckboxIndeterminate = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
             .nativeElement
             .classList
             .contains('mat-checkbox-indeterminate');
 
-    public toggleCheckbox = (selector: string, debugEl = this.fixture.debugElement) =>
+    toggleCheckbox = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
             .query(By.css('.mat-checkbox-label'))
             .nativeElement
             .dispatchEvent(EventGenerator.click);
 
-    public setCheckboxState = (selector: string, state: boolean, debugEl = this.fixture.debugElement) => {
+    setCheckboxState = (selector: string, state: boolean, debugEl = this.fixture.debugElement) => {
         const isChecked = this.isCheckboxChecked(selector, debugEl);
         if (
             !isChecked && state ||
@@ -154,10 +154,10 @@ export class IntegrationUtils<T> {
         }
     };
 
-    public toggleSlider = (selector: string, debugEl = this.fixture.debugElement) =>
+    toggleSlider = (selector: string, debugEl = this.fixture.debugElement) =>
         this.uiUtils.toggleSlider(selector, debugEl.nativeElement);
 
-    public setSliderState(selector: string, state: boolean, debugEl = this.fixture.debugElement) {
+    setSliderState(selector: string, state: boolean, debugEl = this.fixture.debugElement) {
         const isToggled = this.isToggleChecked(selector, debugEl);
         if (
             isToggled && !state ||
@@ -167,48 +167,48 @@ export class IntegrationUtils<T> {
         }
     }
 
-    public isToggleChecked = (selector: string, debugEl = this.fixture.debugElement) =>
+    isToggleChecked = (selector: string, debugEl = this.fixture.debugElement) =>
         this.uiUtils.isToggleChecked(selector, debugEl.nativeElement);
 
-    public isRadioButtonChecked = (selector: string, debugEl = this.fixture.debugElement) =>
+    isRadioButtonChecked = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
             .nativeElement
             .classList
             .contains('mat-radio-checked');
 
-    public isRadioGroupDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
+    isRadioGroupDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
             .queryAll(By.css('mat-radio-button'))
-            .every((elem) => this._isRadioButtonElementDisabled(elem));
+            .every((elem) => this._elementHasClass('mat-radio-button', elem, 'mat-radio-disabled'));
 
-    public isRadioButtonDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
-        this._isRadioButtonElementDisabled(
-            this.getDebugElement(selector, debugEl),
+    isRadioButtonDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
+        this._elementHasClass(
+            selector, debugEl, 'mat-radio-disabled',
         );
-    public isCheckBoxDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
-        this._isCheckBoxDisabled(
-            this.getDebugElement(selector, debugEl),
+    isCheckBoxDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
+        this._elementHasClass(
+            selector, debugEl, 'mat-checkbox-disabled',
         );
-    public isMatSelectDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
-        this._isMatSelectDisabled(
-            this.getDebugElement(selector, debugEl),
+    isMatSelectDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
+        this._elementHasClass(
+            selector, debugEl, 'mat-select-disabled',
+        );
+    isSlideToggleDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
+        this._elementHasClass(
+            selector, debugEl, 'mat-disabled',
         );
 
-    public changeTheme = (theme: 'light' | 'dark') => {
+    changeTheme = (theme: 'light' | 'dark') => {
         window.document.body.classList.remove('light');
         window.document.body.classList.remove('dark');
         window.document.body.classList.add(theme);
         this.fixture.detectChanges();
     };
 
-    private _isRadioButtonElementDisabled = (debugEl: DebugElement) =>
-        !!debugEl.nativeElement.classList.contains('mat-radio-disabled');
-
-    private _isCheckBoxDisabled = (debugEl: DebugElement) =>
-        !!debugEl.nativeElement.classList.contains('mat-checkbox-disabled');
-
-    private _isMatSelectDisabled = (debugEl: DebugElement) =>
-        !!debugEl.nativeElement.classList.contains('mat-select-disabled');
+    private _elementHasClass = (selector: string, debugEl: DebugElement, className: string) => {
+        debugEl = this.getDebugElement(selector, debugEl);
+        return !!debugEl.nativeElement.classList.contains(className);
+    };
 }
 
 export class UIUtils {
@@ -259,7 +259,7 @@ class GridUtils<T> {
         private _utils: IntegrationUtils<T>,
     ) { }
 
-    public flush = (stub: IStubEndpoint, httpClient: HttpTestingController) => {
+    flush = (stub: IStubEndpoint, httpClient: HttpTestingController) => {
         this._utils.fixture.detectChanges();
         tick(500);
         this._utils.fixture.detectChanges();
@@ -280,7 +280,7 @@ class GridUtils<T> {
      * @param startColumn The beginning of the specified portion of the array.
      * @param endColumn The end of the specified portion of the array. This is exclusive of the element at the index 'end'.
      */
-    public getCellsText = (
+    getCellsText = (
         rowNumber: number,
         {
             startColumn,
@@ -305,32 +305,32 @@ class GridUtils<T> {
             .map(getter);
     };
 
-    public getHeaders = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
+    getHeaders = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
         return this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
             .filter(el => this._utils.getDebugElement('.ui-grid-header-title:not(ui-grid ui-grid .ui-grid-header-title)', el));
     };
 
-    public getColumnsProperties = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
+    getColumnsProperties = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
         return this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
             .filter(el => this._utils.getDebugElement('.ui-grid-header-title', el))
             .map(el => el.attributes['data-property']);
     };
 
-    public getHeaderCell = (property: string, debugEl = this._utils.fixture.debugElement) => {
+    getHeaderCell = (property: string, debugEl = this._utils.fixture.debugElement) => {
         return this._utils.getDebugElement(`.ui-grid-header-cell[data-property="${property}"]`, debugEl);
     };
 
-    public getHeaderTitle = (property: string, debugEl = this._utils.fixture.debugElement) => {
+    getHeaderTitle = (property: string, debugEl = this._utils.fixture.debugElement) => {
         return this.getHeaderCell(property, debugEl).query(By.css('.ui-grid-header-title'));
     };
 
-    public isSortable = (property: string, debugEl = this._utils.fixture.debugElement) => {
+    isSortable = (property: string, debugEl = this._utils.fixture.debugElement) => {
         const headerCell = this.getHeaderCell(property, debugEl);
 
         return !!headerCell.nativeElement.classList.contains('ui-grid-header-cell-sortable');
     };
 
-    public getRowItem = (
+    getRowItem = (
         rowNumber: number,
         selector: string,
         {
@@ -346,7 +346,7 @@ class GridUtils<T> {
         );
     };
 
-    public getMenuDictionary = (
+    getMenuDictionary = (
         rowNumber: number,
         cfg: {
             gridSelector?: string;
@@ -363,7 +363,7 @@ class GridUtils<T> {
         }, {} as Record<string, { text: string; href: string | undefined }>);
     };
 
-    public getMenuItems = (
+    getMenuItems = (
         rowNumber: number,
         {
             gridSelector,
@@ -389,7 +389,7 @@ class GridUtils<T> {
         }));
     };
 
-    public clickMenuItem = (
+    clickMenuItem = (
         rowIndex: number,
         actionSelector: string,
         {
@@ -411,7 +411,7 @@ class GridUtils<T> {
         this._utils.fixture.detectChanges();
     };
 
-    public clickRowItem = (
+    clickRowItem = (
         rowNumber: number,
         selector: string,
         {
@@ -425,7 +425,7 @@ class GridUtils<T> {
             .dispatchEvent(EventGenerator.click);
     };
 
-    public getRowCheckbox = (rowNumber: number, gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
+    getRowCheckbox = (rowNumber: number, gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
         const rowEl = this._utils.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"]`, debugEl);
 
         const rowCheckbox = this._utils.getDebugElement('mat-checkbox input', rowEl);
@@ -433,18 +433,18 @@ class GridUtils<T> {
         return rowCheckbox;
     };
 
-    public checkRow = (rowNumber: number, gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
+    checkRow = (rowNumber: number, gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
         this.getRowCheckbox(rowNumber, gridSelector, debugEl).nativeElement.dispatchEvent(EventGenerator.click);
         this._utils.fixture.detectChanges();
     };
 
-    public openContextMenu = (rowNumber: number) => {
+    openContextMenu = (rowNumber: number) => {
         const selector = `${`[data-row-index="${rowNumber - 1}"]`} ${'[data-cy="grid-action-menu"]'}`;
         const button = this._utils.fixture.debugElement.query(By.css(selector));
         button.nativeElement.dispatchEvent(EventGenerator.click);
     };
 
-    public openSearchFilter = ({
+    openSearchFilter = ({
         columnName,
     }: {
         columnName: string;
@@ -458,7 +458,7 @@ class GridUtils<T> {
         tick(300);
     };
 
-    public filterData = ({
+    filterData = ({
         columnName,
         nth,
         overlayContainerElement,
@@ -488,7 +488,7 @@ class SuggestUtils<T> {
         private _utils: IntegrationUtils<T>,
     ) { }
 
-    public openAndFlush = (selector: string, httpRequest: Function) => {
+    openAndFlush = (selector: string, httpRequest: Function) => {
         this._utils.click('.display', this._utils.getDebugElement(selector));
         this._utils.fixture.detectChanges();
         httpRequest();
@@ -496,7 +496,7 @@ class SuggestUtils<T> {
     };
 
     // eslint-disable-next-line complexity
-    public searchAndSelect = (selector: string, httpRequest?: Function, searchStr = '', nth = 0, debugEl?: DebugElement) => {
+    searchAndSelect = (selector: string, httpRequest?: Function, searchStr = '', nth = 0, debugEl?: DebugElement) => {
         const suggest = this._utils.getDebugElement(selector, debugEl);
         const multiple = this.isMultiple(selector);
         const strategy = this.getFetchStrategy(selector, debugEl);
@@ -561,13 +561,13 @@ class SuggestUtils<T> {
         }
     };
 
-    public getFetchStrategy = (selector: string, debugEl?: DebugElement) => {
+    getFetchStrategy = (selector: string, debugEl?: DebugElement) => {
         const suggest = this._utils.getDebugElement(selector, debugEl);
         // maybe add a getter along the setter for fetchStrategy ?
         return (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$']?.value ?? 'eager';
     };
 
-    public selectNthItem = (selector: string, nth = 0, config?: {
+    selectNthItem = (selector: string, nth = 0, config?: {
         httpMock: HttpTestingController;
         stub: IStubEndpoint;
     }, debugEl?: DebugElement) => {
@@ -608,15 +608,15 @@ class SuggestUtils<T> {
         return listItem;
     };
 
-    public isMultiple = (selector: string, debugEl?: DebugElement) => {
+    isMultiple = (selector: string, debugEl?: DebugElement) => {
         return !!this._utils.getNativeElement(`${selector} mat-chip-list`, debugEl);
     };
 
-    public isOpen = (selector: string, debugEl?: DebugElement) => {
+    isOpen = (selector: string, debugEl?: DebugElement) => {
         return !!this._utils.getNativeElement(`${selector} [aria-expanded="true"]`, debugEl);
     };
 
-    public getValue = (selector: string, debugEl = this._utils.fixture.debugElement) => {
+    getValue = (selector: string, debugEl = this._utils.fixture.debugElement) => {
         if (this.isMultiple(selector)) {
             return this._utils.getAllNativeElements(`${selector} .mat-chip span`, debugEl)
                 .map(el => el.innerText.trim())
@@ -628,7 +628,7 @@ class SuggestUtils<T> {
             .trim();
     };
 
-    public clear = (selector: string) =>
+    clear = (selector: string) =>
         this._utils.getNativeElement(`${selector} [role=button].mat-icon`)?.dispatchEvent(EventGenerator.click);
 }
 
