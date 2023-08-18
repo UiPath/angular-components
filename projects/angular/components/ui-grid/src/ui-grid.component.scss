@@ -136,8 +136,6 @@ ui-grid {
     }
 
     .ui-grid {
-
-
         &-primary,
         &-header-cell {
             font-weight: 500;
@@ -229,9 +227,7 @@ ui-grid {
                 }
             }
 
-
             .ui-grid-header {
-
                 &-row,
                 &-cell {
                     height: $ui-grid-header-alternate-row-height;
@@ -269,7 +265,6 @@ ui-grid {
                     }
                 }
             }
-
         }
 
         &-table-container {
@@ -331,13 +326,12 @@ ui-grid {
 
         &-resize-handle {
             flex: 0 0 $ui-header-resize-handle-width;
-            margin-left: - $ui-cell-resizing-border-width;
+            margin-left: -$ui-cell-resizing-border-width;
             position: relative;
             height: 100%;
             display: flex;
             cursor: col-resize;
         }
-
 
         &-dropdown-filter {
             &-button {
@@ -390,7 +384,7 @@ ui-grid {
             .ui-grid-cell-content {
                 @extend %ellipse;
 
-                >* {
+                > * {
                     @extend %ellipse;
                 }
             }
@@ -508,7 +502,7 @@ ui-grid {
                     padding: 0;
                     overflow: visible;
 
-                    >div {
+                    > div {
                         display: inline-flex;
                         justify-content: flex-end;
                         align-items: center;
@@ -530,7 +524,6 @@ ui-grid {
 
                     //sorted asc
                     &-asc {
-
                         // desc path
                         .path-desc {
                             opacity: 0;
@@ -538,7 +531,6 @@ ui-grid {
                     }
 
                     &-desc {
-
                         //sorted desc
                         .path-asc {
                             // asc path
@@ -589,4 +581,14 @@ ui-grid {
             }
         }
     }
+}
+
+.test1001 {
+    position: sticky !important;
+    // background: white !important;
+    left: 0;
+    z-index: 1;
+}
+.ui-grid-table-container {
+    overflow: auto;
 }

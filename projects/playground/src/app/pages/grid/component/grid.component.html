@@ -15,7 +15,9 @@
          [expandedEntries]="editedEntity"
          [useCardView]="inputs.useCardView"
          [expandMode]="'preserve'"
-         [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []">
+         [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []"
+         [freezeColumns]="4"
+         width="1600px">
 
     <ui-grid-header [search]="header.searchable">
         <ui-header-button *ngFor="let button of generateButtons(header.main)"
@@ -52,7 +54,7 @@
     <ui-grid-column [property]="'id'"
                     [sortable]="true"
                     title="Id"
-                    width="33%">
+                    width="10%">
         <ui-grid-dropdown-filter [visible]="header.showFilter"
                                  [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
         </ui-grid-dropdown-filter>
@@ -60,16 +62,28 @@
     <ui-grid-column [property]="'name'"
                     [searchable]="true"
                     method="eq"
-                    title="Name"
-                    width="34%">
+                    title="Name 1"
+                    width="20%">
         <ui-grid-search-filter [visible]="header.showFilter"
                                [searchSourceFactory]="searchSourceFactory"
                                [multiple]="true">
         </ui-grid-search-filter>
     </ui-grid-column>
+    <ui-grid-column [property]="'name'"
+                    [searchable]="true"
+                    method="eq"
+                    title="Name 2"
+                    width="20%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'name'"
+                    [searchable]="true"
+                    method="eq"
+                    title="Name 3"
+                    width="20%">
+    </ui-grid-column>
     <ui-grid-column [property]="'parity'"
                     title="Parity"
-                    width="33%">
+                    width="50%">
         <ui-grid-dropdown-filter [visible]="header.showFilter"
                                  [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
         </ui-grid-dropdown-filter>

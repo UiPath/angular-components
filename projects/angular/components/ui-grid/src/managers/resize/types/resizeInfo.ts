@@ -10,4 +10,5 @@ export interface IResizeInfo<T> {
     cells: HTMLDivElement[];
     index: number;
     dragInitX?: number;
+    firstDragInitX?: number;
 }

@@ -44,6 +44,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     protected set _resizeEvent(ev: MouseEvent) {
         if (!this.current) { return; }
 
+        // console.log(`RM: ${this.current.dragInitX}`);
         const value = Math.round(ev.clientX - this.current.dragInitX!);
 
         // compute the current direction and determine if it has changed
@@ -57,18 +58,24 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             this._neighbourIndexOffset = 0;
         }
 
+        const globalOffsetPx = Math.round(ev.clientX - this.current.firstDragInitX!);
+
         const nextEvent: IResizeEvent<T> = {
             previous: this._previous!,
             current: {
                 resized: this.current,
                 neighbour: this._getResizedPairAt(this.current.index + direction + this._neighbourIndexOffset),
                 oppositeNeighbour: this._getResizedPairAt(this.current.index + -direction),
+                globalOffsetPx,
                 offsetPx: value,
+                globalOffsetPercent: Math.round(globalOffsetPx / this._table!.clientWidth * 1000),
                 offsetPercent: Math.round(value / this._table!.clientWidth * 1000),
                 direction,
                 event: ev,
             },
         };
+
+        // console.log(`RM offsetPercent ${nextEvent.current.offsetPercent}`);
 
         this._resize$.next(nextEvent);
     }
@@ -86,7 +93,8 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
     private _previous?: IResizeState<T> = {} as IResizeState<T>;
     private _direction?: ResizeDirection;
-    private _resize$ = new Subject<IResizeEvent<T>>();
+    // eslint-disable-next-line @typescript-eslint/member-ordering, @typescript-eslint/naming-convention
+    _resize$ = new Subject<IResizeEvent<T>>();
     private _stopped$ = new Subject<void>();
     private _widthMap = new Map<string, number>();
     private _gridElement: HTMLDivElement;
@@ -313,6 +321,11 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         this._previous = Object.assign(this._previous, {
             offsetPx: 0,
         });
+
+        if (this.current!.firstDragInitX === undefined) {
+            this.current!.firstDragInitX = ev.clientX;
+        }
+
         this.current!.dragInitX = ev.clientX;
     }
 

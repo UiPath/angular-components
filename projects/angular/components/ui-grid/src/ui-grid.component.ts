@@ -33,6 +33,7 @@ import {
 import { FocusOrigin } from '@angular/cdk/a11y';
 import {
     AfterContentInit,
+    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
@@ -85,7 +86,10 @@ import {
     SortManager,
     VisibilityManger,
 } from './managers';
-import { ResizableGrid } from './managers/resize/types';
+import {
+    IResizeEvent,
+    ResizableGrid,
+} from './managers/resize/types';
 import {
     GridOptions,
     IFilterModel,
@@ -136,7 +140,9 @@ const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'se
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> implements AfterContentInit, OnChanges, OnDestroy {
+export class UiGridComponent<T extends IGridDataEntry>
+    extends ResizableGrid<T>
+    implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
     /**
      * The data list that needs to be rendered within the grid.
      *
@@ -393,6 +399,12 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @Input()
     useCardView = false;
+
+    @Input()
+    freezeColumns = 0;
+
+    @Input()
+    width = '';
 
     /**
      * Emits an event with the sort model when a column sort changes.
@@ -865,6 +877,88 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             );
     }
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    columnLeft: number[] = [];
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    gridResizeHandleLeft: number[] = [];
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    cellResizingBorderLeft: number[] = [];
+
+    ngAfterViewInit(): void {
+        this.initializeOffsetsLeft();
+    }
+
+    initializeOffsetsLeft() {
+        const firstRow = this._ref.nativeElement.querySelector('.ui-grid-header-row') as HTMLDivElement;
+        const firstRowCells = firstRow!.querySelectorAll('.ui-grid-header-cell');
+
+        let totalWidth = 0;
+        for (let i = 0; i < this.columns.length && i < this.freezeColumns; i++) {
+            this.columnLeft[i] = totalWidth;
+            totalWidth += firstRowCells[i].getBoundingClientRect().width;
+            totalWidth += 3; // grid resize handle
+            this.gridResizeHandleLeft[i] = totalWidth - 3;
+            this.cellResizingBorderLeft[i] = totalWidth;
+
+            if (i !== 0) {
+                totalWidth += 3; // resizing border
+            }
+        }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    previousColumnLeft: number[] = [];
+
+    updateOffsetsLeft(resizeEvent: IResizeEvent<T>) {
+        if (this.freezeColumns <= 1) {
+            return;
+        }
+
+        const currentColumn = resizeEvent?.current.resized.column;
+        // TBD: the first checkbox column is not in the column directives list, so we need to add 1 here
+        const columnIndex = this._getIndexOfColumn(currentColumn) + 1;
+
+        //       x
+        // [][][]
+        if (columnIndex >= this.freezeColumns) {
+            return;
+        }
+
+        //    x
+        // [][][]
+
+        const firstRow = this._ref.nativeElement.querySelector('.ui-grid-header-row') as HTMLDivElement;
+        const firstRowCells = firstRow!.querySelectorAll('.ui-grid-header-cell');
+
+        let totalWidth = 0;
+
+        for (let i = 0; i <= columnIndex + 1; i++) {
+            if (i >= columnIndex) {
+                // the columns left and right of the resizing border
+                console.log(`Setting left ${totalWidth} for column ${i}`);
+                this.columnLeft[i] = totalWidth;
+                // TBD: this is not necessary for columnIndex == this.freezeColumns - 1
+            }
+
+            totalWidth += firstRowCells[i].getBoundingClientRect().width;
+
+            if (i >= columnIndex) {
+                this.gridResizeHandleLeft[i] = totalWidth - 3;
+                this.cellResizingBorderLeft[i] = totalWidth;
+            }
+
+            if (i !== 0) {
+                // the first column doesn't have a resizing border
+                totalWidth += 3; // resizing border
+            }
+        }
+
+        this._cd.detectChanges();
+    }
+
+    onResizeEnd() {
+    }
+
     /**
      * @ignore
      */
@@ -1093,6 +1187,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this.selectionManager.select(row);
     }
 
+    private _getIndexOfColumn(column: UiGridColumnDirective<T>): number {
+        const index = this.columns.toArray().findIndex(c => c === column);
+        return index;
+    }
+
     private _announceGridHeaderActions() {
         this._queuedAnnouncer.enqueue(this.intl.gridHeaderActionsNotice);
     }
@@ -1100,11 +1199,20 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     private _initResizeManager() {
         this._resizeSubscription$?.unsubscribe();
         this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
+
+        // eslint-disable-next-line no-underscore-dangle
+        this.resizeManager._resize$.subscribe((resizeEvent: IResizeEvent<T>) => {
+            // KEK
+            this.updateOffsetsLeft(resizeEvent);
+        });
+
         this._resizeSubscription$ = this.resizeManager.resizeEnd$.subscribe((resizeInfo) => {
             if (resizeInfo) {
                 const gridHeaderCellElement = resizeInfo.element;
                 gridHeaderCellElement.focus();
             }
+
+            this.onResizeEnd();
 
             this.resizeEnd.emit();
         });
