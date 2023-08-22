@@ -244,7 +244,7 @@ ui-grid {
                 }
             }
 
-            .ui-grid-no-data-container {
+            .ui-grid-row.ui-grid-no-data-container {
                 height: 4 * $ui-grid-row-height;
                 align-items: flex-start;
 
