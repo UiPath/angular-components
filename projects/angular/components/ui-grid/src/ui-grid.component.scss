@@ -160,6 +160,10 @@ ui-grid {
                     display: flex;
                     flex-wrap: wrap;
                     align-items: center;
+
+                    .ui-grid-action-buttons-selection {
+                        display: flex;
+                    }
                 }
 
                 &-filters {
@@ -244,7 +248,7 @@ ui-grid {
                 }
             }
 
-            .ui-grid-no-data-container {
+            .ui-grid-row.ui-grid-no-data-container {
                 height: 4 * $ui-grid-row-height;
                 align-items: flex-start;
 
