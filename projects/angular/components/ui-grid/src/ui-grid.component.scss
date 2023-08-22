@@ -160,6 +160,10 @@ ui-grid {
                     display: flex;
                     flex-wrap: wrap;
                     align-items: center;
+
+                    .ui-grid-action-buttons-selection {
+                        display: flex;
+                    }
                 }
 
                 &-filters {
