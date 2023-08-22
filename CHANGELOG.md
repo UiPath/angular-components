@@ -1,3 +1,7 @@
+# v15.0.2-rc.1 (2023-08-22)
+* **grid** display action buttons on one row
+* **grid** styles specificity for empty grid
+
 # v15.0.2-rc.0 (2023-08-16)
 * **progress-button** fix styling & add playground page
 
