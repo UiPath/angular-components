@@ -6,5 +6,5 @@ export enum ResizeStrategy {
     AggresiveNeighbourPush = 0,
     PassiveNeighbourPush,
     ImmediateNeighbourHalt,
-    AggressiveGridResizer
+    ScrollableGridNeighbourPush,
 }

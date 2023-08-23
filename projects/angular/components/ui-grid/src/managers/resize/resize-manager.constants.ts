@@ -21,6 +21,10 @@ export function isMinWidth<T>(entry?: IResizeInfo<T>) {
     return !!entry && parseInt(entry.element.style.width!, 10) === entry.column.minWidth;
 }
 
+export function isMaxWidth<T>(entry?: IResizeInfo<T>) {
+    return !!entry && parseInt(entry.element.style.width!, 10) === entry.column.maxWidth;
+}
+
 /**
  * Detects if the resize direction has changed compared to it's previous state.
  *

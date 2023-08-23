@@ -192,6 +192,13 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     minWidth = 30;
 
     /**
+     * The maximum width percentage that the column should have when resizing.
+     *
+     */
+    @Input()
+    maxWidth = 120;
+
+    /**
      * If the searchable dropdown associated to the column should trigger a data fetch when opened.
      *
      */
