@@ -878,6 +878,9 @@ export class UiGridComponent<T extends IGridDataEntry>
     }
 
     // eslint-disable-next-line @typescript-eslint/member-ordering
+    readonly ResizeStrategy = ResizeStrategy;
+
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     columnLeft: number[] = [];
     // eslint-disable-next-line @typescript-eslint/member-ordering
     gridResizeHandleLeft: number[] = [];
@@ -910,50 +913,54 @@ export class UiGridComponent<T extends IGridDataEntry>
     previousColumnLeft: number[] = [];
 
     updateOffsetsLeft(resizeEvent: IResizeEvent<T>) {
-        if (this.freezeColumns <= 1) {
-            return;
-        }
-
-        const currentColumn = resizeEvent?.current.resized.column;
-        // TBD: the first checkbox column is not in the column directives list, so we need to add 1 here
-        const columnIndex = this._getIndexOfColumn(currentColumn) + 1;
-
-        //       x
-        // [][][]
-        if (columnIndex >= this.freezeColumns) {
-            return;
-        }
-
-        //    x
-        // [][][]
-
-        const firstRow = this._ref.nativeElement.querySelector('.ui-grid-header-row') as HTMLDivElement;
-        const firstRowCells = firstRow!.querySelectorAll('.ui-grid-header-cell');
-
-        let totalWidth = 0;
-
-        for (let i = 0; i <= columnIndex + 1; i++) {
-            if (i >= columnIndex) {
-                // the columns left and right of the resizing border
-                console.log(`Setting left ${totalWidth} for column ${i}`);
-                this.columnLeft[i] = totalWidth;
-                // TBD: this is not necessary for columnIndex == this.freezeColumns - 1
+        setTimeout(() => {
+            if (this.freezeColumns <= 1) {
+                return;
             }
 
-            totalWidth += firstRowCells[i].getBoundingClientRect().width;
+            const currentColumn = resizeEvent?.current.resized.column;
+            // TBD: the first checkbox column is not in the column directives list, so we need to add 1 here
+            const columnIndex = this._getIndexOfColumn(currentColumn) + 1;
 
-            if (i >= columnIndex) {
-                this.gridResizeHandleLeft[i] = totalWidth - 3;
-                this.cellResizingBorderLeft[i] = totalWidth;
+            //       x
+            // [][][]
+            if (columnIndex >= this.freezeColumns) {
+                return;
             }
 
-            if (i !== 0) {
-                // the first column doesn't have a resizing border
-                totalWidth += 3; // resizing border
-            }
-        }
+            //    x
+            // [][][]
 
-        this._cd.detectChanges();
+            const firstRow = this._ref.nativeElement.querySelector('.ui-grid-header-row') as HTMLDivElement;
+            const firstRowCells = firstRow!.querySelectorAll('.ui-grid-header-cell');
+
+            // todo: get width of resizing border from DOM (do not hardcode it)
+
+            let totalWidth = 0;
+
+            for (let i = 0; i <= columnIndex + 1; i++) {
+                // if (i >= columnIndex) {
+                    // the columns left and right of the resizing border
+                    // console.log(`Setting left ${totalWidth} for column ${i}`);
+                    this.columnLeft[i] = totalWidth;
+                    // TBD: this is not necessary for columnIndex == this.freezeColumns - 1
+                // }
+
+                totalWidth += firstRowCells[i].getBoundingClientRect().width;
+
+                // if (i >= columnIndex) {
+                    this.gridResizeHandleLeft[i] = totalWidth - 3;
+                    this.cellResizingBorderLeft[i] = totalWidth;
+                // }
+
+                if (i !== 0) {
+                    // the first column doesn't have a resizing border
+                    totalWidth += 3; // resizing border
+                }
+            }
+
+            this._cd.detectChanges();
+        }, 0);
     }
 
     onResizeEnd() {

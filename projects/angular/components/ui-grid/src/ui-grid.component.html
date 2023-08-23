@@ -379,7 +379,7 @@
             </div>
         </div>
 
-        <ng-container *ngIf="freezeColumns > 0">
+        <ng-container *ngIf="(freezeColumns && freezeColumns > 0) || !freezeColumns">
             <div *ngIf="!isProjected && (selectable || singleSelectable)"
                  [class.test1001]="freezeColumns > 0"
                  class="ui-grid-cell ui-grid-checkbox-cell ui-grid-feature-cell"

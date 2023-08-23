@@ -1,3 +1,5 @@
+import { AggressiveGridResizer } from 'projects/angular/components/ui-grid/src/managers/resize/strategies/aggressive-grid-resizer';
+
 import { IGridDataEntry } from '../../models';
 import { ResizeManager } from './resize-manager';
 import {
@@ -25,5 +27,7 @@ export const ResizeManagerFactory =
                 return new AggresiveNeighbourPushResizer(grid);
             case ResizeStrategy.ImmediateNeighbourHalt:
                 return new ImmediateNeighbourHaltResizer(grid);
+            case ResizeStrategy.AggressiveGridResizer:
+                return new AggressiveGridResizer(grid);
         }
     };
