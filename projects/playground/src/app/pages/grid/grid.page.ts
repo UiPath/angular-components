@@ -28,6 +28,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+import { ResizeStrategy } from '@uipath/angular/components/ui-grid';
 
 export interface MockData {
     id: number;
@@ -47,6 +48,8 @@ export class GridPageComponent implements AfterViewInit, OnDestroy {
     lastPageChange?: PageEvent;
     generatedGrid = false;
     visibilityColumnsOpened = false;
+
+    readonly ResizeStrategy = ResizeStrategy;
 
     inputKeys = [
         'useLegacyDesign',
@@ -131,6 +134,7 @@ export class GridPageComponent implements AfterViewInit, OnDestroy {
             header: this._fb.group({
                 searchable: [true],
                 showFilter: [true],
+                resizeStrategy: [ResizeStrategy.ImmediateNeighbourHalt],
                 main: [0, [Validators.min(0), Validators.max(5)]],
                 inline: [0, [Validators.min(0), Validators.max(5)]],
                 action: [0, [Validators.min(0), Validators.max(5)]],

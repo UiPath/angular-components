@@ -1,3 +1,5 @@
+import { ResizeStrategy } from 'dist/angular/components/ui-grid';
+
 export interface IFooter {
     total: number;
     pageSize: number;
@@ -12,6 +14,7 @@ export interface IHeader {
     main: number;
     inline: number;
     action: number;
+    resizeStrategy: ResizeStrategy;
 }
 
 export interface IInputs {

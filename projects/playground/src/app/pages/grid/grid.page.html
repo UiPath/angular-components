@@ -42,6 +42,26 @@
                             Header search
                         </mat-checkbox>
 
+                        <mat-form-field>
+                            <mat-select formControlName="resizeStrategy">
+                                <mat-option [value]="ResizeStrategy.AggresiveNeighbourPush">
+                                    AggresiveNeighbourPush
+                                </mat-option>
+
+                                <mat-option [value]="ResizeStrategy.PassiveNeighbourPush">
+                                    PassiveNeighbourPush
+                                </mat-option>
+
+                                <mat-option [value]="ResizeStrategy.ImmediateNeighbourHalt">
+                                    ImmediateNeighbourHalt
+                                </mat-option>
+
+                                <mat-option [value]="ResizeStrategy.ScrollableGridNeighbourPush">
+                                    ScrollableGridNeighbourPush
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
                         <mat-checkbox class="header-search-checkbox"
                                       formControlName="showFilter">
                             Show Filter
