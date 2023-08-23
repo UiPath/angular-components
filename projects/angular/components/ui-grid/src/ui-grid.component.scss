@@ -25,6 +25,15 @@ ui-grid {
     position: relative;
     display: block;
 
+
+    .ui-grid-cell,
+    .ui-grid-header-cell,
+    .ui-grid-cell-resizing-border,
+    .ui-grid-resize-handle {
+        background-color: white !important;
+
+    }
+
     &.ui-grid-mode-multi-select {
         .ui-grid-table {
             cdk-virtual-scroll-viewport.ui-grid-viewport {
@@ -136,6 +145,7 @@ ui-grid {
     }
 
     .ui-grid {
+
         &-primary,
         &-header-cell {
             font-weight: 500;
@@ -228,6 +238,7 @@ ui-grid {
             }
 
             .ui-grid-header {
+
                 &-row,
                 &-cell {
                     height: $ui-grid-header-alternate-row-height;
@@ -384,7 +395,7 @@ ui-grid {
             .ui-grid-cell-content {
                 @extend %ellipse;
 
-                > * {
+                >* {
                     @extend %ellipse;
                 }
             }
@@ -502,7 +513,7 @@ ui-grid {
                     padding: 0;
                     overflow: visible;
 
-                    > div {
+                    >div {
                         display: inline-flex;
                         justify-content: flex-end;
                         align-items: center;
@@ -524,6 +535,7 @@ ui-grid {
 
                     //sorted asc
                     &-asc {
+
                         // desc path
                         .path-desc {
                             opacity: 0;
@@ -531,6 +543,7 @@ ui-grid {
                     }
 
                     &-desc {
+
                         //sorted desc
                         .path-asc {
                             // asc path
@@ -589,6 +602,7 @@ ui-grid {
     left: 0;
     z-index: 1;
 }
+
 .ui-grid-table-container {
     overflow: auto;
 }
