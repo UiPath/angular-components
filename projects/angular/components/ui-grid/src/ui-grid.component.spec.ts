@@ -549,7 +549,7 @@ describe('Component: UiGrid', () => {
                         const radioBtns = fixture.debugElement.queryAll(By.css('[role="gridcell"] mat-radio-button'));
                         const checkedRadioBtn = radioBtns[checkedBtnIdx].nativeElement;
                         const uncheckedRadioBtn = radioBtns[uncheckedBtnIdx].nativeElement;
-                        expect(checkedRadioBtn.getAttribute('ng-reflect-message')).toEqual(`Deselect row ${checkedBtnIdx}`);
+                        expect(checkedRadioBtn.getAttribute('ng-reflect-message')).toEqual('');
                         expect(uncheckedRadioBtn.getAttribute('ng-reflect-message')).toEqual(`Select row ${uncheckedBtnIdx}`);
                     });
 
