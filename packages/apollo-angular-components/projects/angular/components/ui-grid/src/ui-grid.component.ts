@@ -990,6 +990,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         if (!row) {
             return this.intl.checkboxTooltip(this.isEveryVisibleRowChecked);
         }
+        if (this.singleSelectable && this.selectionManager.isSelected(row)) { return ''; }
 
         return this.intl.checkboxTooltip(this.selectionManager.isSelected(row), this.dataManager.indexOf(row));
     }
