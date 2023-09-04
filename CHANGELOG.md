@@ -1,3 +1,6 @@
+# v14.8.10 (2023-09-04)
+* **grid** remove tooltip on selected radio btn
+
 # v14.8.9 (2023-08-11)
 * **suggest** use tooltip or text on matTooltip
 
