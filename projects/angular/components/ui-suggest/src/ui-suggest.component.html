@@ -304,7 +304,7 @@
             </ng-container>
 
             <mat-list-item *ngIf="loading$ | async"
-                           [style.height.px]="itemSize">
+                           [style.height.px]="baseSize">
                 <mat-progress-spinner color="primary"
                                       mode="indeterminate"
                                       diameter="20"
