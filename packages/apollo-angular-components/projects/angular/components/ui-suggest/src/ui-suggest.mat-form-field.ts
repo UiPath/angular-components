@@ -131,6 +131,10 @@ export abstract class UiSuggestMatFormFieldDirective implements
     get itemSize() {
         if (this.customItemSize) { return this.customItemSize; }
 
+        return this.baseSize;
+    }
+
+    get baseSize() {
         return this.isFormControl ? 32 : 40;
     }
 
