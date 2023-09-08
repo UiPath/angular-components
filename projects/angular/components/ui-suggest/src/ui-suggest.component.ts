@@ -439,13 +439,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             return this._height$.value;
         }
 
-        const actualCount = Math.max(
-            this.renderItems.filter(Boolean).length + (this.enableCustomValue ?
-                (Number(this.isCustomValueVisible)) : (this.headerItems!.length)),
-            1,
-        );
-        const displayedCount = Math.min(this.displayCount, actualCount);
+        const actualCount = this.renderItems.filter(Boolean).length + (this.enableCustomValue ?
+            (Number(this.isCustomValueVisible)) : (this.headerItems!.length));
 
+        if (actualCount === 0) {
+            return this.baseSize + Number(!!this.headerItems!.length);
+        }
+
+        const displayedCount = Math.min(this.displayCount, Math.max(actualCount, 1));
         return this.itemSize * displayedCount + Number(!!this.headerItems!.length);
     }
 

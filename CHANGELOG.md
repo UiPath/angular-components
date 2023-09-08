@@ -1,3 +1,6 @@
+# v14.8.11 (2023-09-06)
+* **suggest** reduce height when no results found
+
 # v14.8.10 (2023-09-04)
 * **grid** remove tooltip on selected radio btn
 
