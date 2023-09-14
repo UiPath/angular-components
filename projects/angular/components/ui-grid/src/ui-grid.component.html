@@ -115,9 +115,11 @@
              role="grid">
             <div class="ui-grid-header">
                 <div *ngIf="showHeaderRow"
+                     [style.width]="isScrollable ? width : ''"
                      class="ui-grid-header-row"
                      role="row">
                     <div *ngIf="selectable && !singleSelectable"
+                         [class.ui-grid-sticky-element]="isScrollable"
                          class="ui-grid-header-cell ui-grid-checkbox-cell ui-grid-feature-cell"
                          role="columnheader">
                         <mat-checkbox #selectAvailableRowsCheckbox
@@ -143,10 +145,12 @@
                         <div [class.ui-grid-header-cell-sortable]="column.sortable"
                              [class.ui-grid-resizeable]="column.resizeable"
                              [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
+                             [class.ui-grid-sticky-element]="isScrollable && column.isFrozen"
                              [attr.aria-sort]="column.ariaSort"
                              [attr.data-property]="column.property"
                              [attr.data-identifier]="column.identifier"
                              [style.width.%]="column.width"
+                             [style.left.px]="isScrollable && column.isFrozen ? columnLeft[computeIndex(columnIndex)] : ''"
                              (cdkFocusChange)="triggerColumnHeaderTooltip($event, columnTooltip)"
                              (focusout)="hideColumnHeaderTooltip(columnTooltip)"
                              (keyup.enter)="sortManager.changeSort(column)"
@@ -193,10 +197,16 @@
 
                         </div>
 
-                        <div *ngIf="!isProjected && column.resizeable && !last && !useCardView"
-                             [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
-                             (mousedown)="resizeManager.startResize($event, column, columnIndex)"
-                             class="ui-grid-resize-handle">
+                        <div [class.ui-grid-sticky-element]="isScrollable && column.isFrozen"
+                             [style.left.px]="isScrollable && column.isFrozen ? gridResizeHandleLeft[computeIndex(columnIndex)] : ''"
+                             class="ui-grid-resize-handle-container">
+                            <div *ngIf="isScrollable && isLastFrozenColumn(columnIndex)"
+                                 class="ui-grid-frozen-boundary"></div>
+                            <div *ngIf="!isProjected && column.resizeable && !last && !useCardView"
+                                 [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
+                                 (mousedown)="resizeManager.startResize($event, column, columnIndex)"
+                                 class="ui-grid-resize-handle">
+                            </div>
                         </div>
                     </ng-container>
 
@@ -330,6 +340,7 @@
          [ngClass]="rowConfig?.ngClassFn(row) ?? ''"
          [tabIndex]="0"
          [attr.data-row-index]="index"
+         [style.width]="isScrollable ? width : ''"
          (click)="onRowClick($event, row)"
          (keyup.enter)="onRowClick($event, row)"
          role="row">
@@ -372,39 +383,44 @@
             </div>
         </div>
 
-        <div *ngIf="!isProjected && (selectable || singleSelectable)"
-             class="ui-grid-cell ui-grid-checkbox-cell ui-grid-feature-cell"
-             role="gridcell">
-            <ng-container *ngLet="disableSelectionByEntry(row) as disabledReason">
-                <mat-radio-group *ngIf="singleSelectable; else multiSelectable">
-                    <mat-radio-button [value]="row.id"
+        <ng-container>
+            <div *ngIf="!isProjected && (selectable || singleSelectable)"
+                 [class.ui-grid-sticky-element]="isScrollable"
+                 class="ui-grid-cell ui-grid-checkbox-cell ui-grid-feature-cell"
+                 role="gridcell">
+                <ng-container *ngLet="disableSelectionByEntry(row) as disabledReason">
+                    <mat-radio-group *ngIf="singleSelectable; else multiSelectable">
+                        <mat-radio-button [value]="row.id"
+                                          [checked]="selectionManager.isSelected(row)"
+                                          [disabled]="disabledReason"
+                                          [matTooltip]="disabledReason || checkboxTooltip(row)"
+                                          [aria-label]="disabledReason || checkboxTooltip(row)"
+                                          (change)="rowSelected(row)"></mat-radio-button>
+                    </mat-radio-group>
+                    <ng-template #multiSelectable>
+                        <mat-checkbox (change)="handleSelection(index, row)"
                                       [checked]="selectionManager.isSelected(row)"
-                                      [disabled]="disabledReason"
+                                      [indeterminate]="selectionManager.isIndeterminate(row)"
                                       [matTooltip]="disabledReason || checkboxTooltip(row)"
                                       [aria-label]="disabledReason || checkboxTooltip(row)"
-                                      (change)="rowSelected(row)"></mat-radio-button>
-                </mat-radio-group>
-                <ng-template #multiSelectable>
-                    <mat-checkbox (change)="handleSelection(index, row)"
-                                  [checked]="selectionManager.isSelected(row)"
-                                  [indeterminate]="selectionManager.isIndeterminate(row)"
-                                  [matTooltip]="disabledReason || checkboxTooltip(row)"
-                                  [aria-label]="disabledReason || checkboxTooltip(row)"
-                                  [disabled]="disabledReason"
-                                  tabindex="0">
-                    </mat-checkbox>
-                </ng-template>
-            </ng-container>
-        </div>
+                                      [disabled]="disabledReason"
+                                      tabindex="0">
+                        </mat-checkbox>
+                    </ng-template>
+                </ng-container>
+            </div>
+        </ng-container>
 
-        <ng-container *ngFor="let column of renderedColumns$ | async; let lastColumn = last">
+        <ng-container *ngFor="let column of renderedColumns$ | async; let lastColumn = last; let columnIndex = index">
             <div [class.ui-grid-primary]="column.directive.primary"
                  [class.ui-grid-secondary]="!column.directive.primary"
                  [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
                  [attr.data-property]="column.directive.property"
                  [attr.data-identifier]="column.directive.identifier"
                  [style.width.%]="column.directive.width"
+                 [style.left.px]="isScrollable && column.directive.isFrozen ? columnLeft[computeIndex(columnIndex)] : ''"
                  [attr.role]="column.role"
+                 [class.ui-grid-sticky-element]="isScrollable && column.directive.isFrozen"
                  class="ui-grid-cell">
                 <div *ngIf="isProjected"
                      [matTooltip]="column.directive.title ?? ''"
@@ -413,18 +429,24 @@
 
                 <div class="ui-grid-cell-content">
                     <ng-container *ngTemplateOutlet="column.directive.html || textCellTemplate; context: {
-                                    data: row,
-                                    index: index,
-                                    property: column.directive.property
-                                }">
+                          data: row,
+                          index: index,
+                          property: column.directive.property
+                      }">
                     </ng-container>
                 </div>
-
-
             </div>
-            <div *ngIf="!isProjected && column.directive.resizeable && !lastColumn && !useCardView"
-                 [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
-                 class="ui-grid-cell-resizing-border"></div>
+            <div [class.ui-grid-sticky-element]="isScrollable && column.directive.isFrozen"
+                 [style.left.px]="isScrollable && column.directive.isFrozen ? cellResizingBorderLeft[computeIndex(columnIndex)] : ''"
+                 class="ui-grid-cell-resizing-border-container">
+                <div *ngIf="isScrollable && isLastFrozenColumn(columnIndex)"
+                     class="ui-grid-frozen-boundary"></div>
+                <div *ngIf="!isProjected && column.directive.resizeable && !lastColumn && !useCardView"
+                     [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
+                     class="ui-grid-cell-resizing-border">
+                </div>
+            </div>
+
         </ng-container>
 
         <div *ngIf="virtualScroll"
@@ -438,6 +460,7 @@
 
         <div *ngIf="!isProjected &&
                     !!actions"
+             [class.ui-grid-sticky-element]="isScrollable"
              role="gridcell"
              class="ui-grid-cell ui-grid-action-cell ui-grid-feature-cell">
             <div class="ui-grid-action-cell-container">

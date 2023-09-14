@@ -33,6 +33,7 @@ import {
 import { FocusOrigin } from '@angular/cdk/a11y';
 import {
     AfterContentInit,
+    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
@@ -136,7 +137,9 @@ const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'se
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> implements AfterContentInit, OnChanges, OnDestroy {
+export class UiGridComponent<T extends IGridDataEntry>
+    extends ResizableGrid<T>
+    implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
     /**
      * The data list that needs to be rendered within the grid.
      *
@@ -395,6 +398,16 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     useCardView = false;
 
     /**
+     * Configure if grid is fix sized (takes up all parent container space) or scrollable
+     *
+     */
+    @Input()
+    isScrollable = false;
+
+    @Input()
+    width = '';
+
+    /**
      * Emits an event with the sort model when a column sort changes.
      *
      */
@@ -484,7 +497,18 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * @ignore
      */
     @ContentChildren(UiGridColumnDirective)
-    columns!: QueryList<UiGridColumnDirective<T>>;
+    get columns() {
+        return this._orderedFrozenColumns;
+    }
+    set columns(value: QueryList<UiGridColumnDirective<T>>) {
+        this._orderedFrozenColumns = value;
+
+        if (this.isScrollable) {
+            const frozenColumns = value.filter(c => c.isFrozen);
+            const freeColumns = value.filter(c => !c.isFrozen);
+            this._orderedFrozenColumns.reset([...frozenColumns, ...freeColumns]);
+        }
+    }
 
     /**
      * Expanded row template reference.
@@ -688,8 +712,14 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             );
     }
 
+    readonly ResizeStrategy = ResizeStrategy;
+    columnLeft: number[] = [];
+    gridResizeHandleLeft: number[] = [];
+    cellResizingBorderLeft: number[] = [];
+
     protected _destroyed$ = new Subject<void>();
     protected _columnChanges$: Observable<SimpleChanges>;
+    protected _orderedFrozenColumns!: QueryList<UiGridColumnDirective<T>>;
 
     private _fetchStrategy!: 'eager' | 'onOpen';
     private _collapseFiltersCount$!: BehaviorSubject<number>;
@@ -863,6 +893,52 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             ).subscribe(
                 () => this._configure$.next(),
             );
+    }
+
+    ngAfterViewInit(): void {
+        this.updateOffsetsLeft();
+    }
+
+    computeIndex(currentColumnIndex: number) {
+        if (this.singleSelectable || this.selectable) {
+            return currentColumnIndex + 1;
+        }
+
+        return currentColumnIndex;
+    }
+
+    updateOffsetsLeft() {
+        setTimeout(() => {
+            const gridResizeHandleMarginLeft = -3;
+            const gridResizingBorderWidth = 3;
+            const firstRow = this._ref.nativeElement.querySelector('.ui-grid-header-row') as HTMLDivElement;
+            const firstRowCells = firstRow!.querySelectorAll('.ui-grid-header-cell');
+
+            let frozenColumnsCount = this.columns.filter(c => c.isFrozen).length;
+            if (this.selectable || this.singleSelectable) {
+                frozenColumnsCount++;
+            }
+
+            let totalWidth = 0;
+
+            for (let i = 0; i < frozenColumnsCount; i++) {
+                this.columnLeft[i] = totalWidth;
+
+                totalWidth += firstRowCells[i].getBoundingClientRect().width;
+
+                this.gridResizeHandleLeft[i] = totalWidth + gridResizeHandleMarginLeft;
+                this.cellResizingBorderLeft[i] = totalWidth;
+
+                if (i === 0 && (this.selectable || this.singleSelectable)) {
+                    // the first column doesn't have a resizing border
+                    continue;
+                }
+
+                totalWidth += gridResizingBorderWidth;
+            }
+
+            this._cd.detectChanges();
+        }, 0);
     }
 
     /**
@@ -1093,6 +1169,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this.selectionManager.select(row);
     }
 
+    isLastFrozenColumn(columnIndex: number) {
+        return this.columns.get(columnIndex)?.isFrozen
+            && !this.columns.get(columnIndex + 1)?.isFrozen;
+    }
+
     private _announceGridHeaderActions() {
         this._queuedAnnouncer.enqueue(this.intl.gridHeaderActionsNotice);
     }
@@ -1100,6 +1181,11 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     private _initResizeManager() {
         this._resizeSubscription$?.unsubscribe();
         this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
+
+        this.resizeManager.resize$.subscribe(() => {
+            this.updateOffsetsLeft();
+        });
+
         this._resizeSubscription$ = this.resizeManager.resizeEnd$.subscribe((resizeInfo) => {
             if (resizeInfo) {
                 const gridHeaderCellElement = resizeInfo.element;

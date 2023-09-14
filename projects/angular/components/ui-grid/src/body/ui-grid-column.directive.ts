@@ -144,6 +144,13 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     sort: SortDirection = '';
 
     /**
+     * If true, the column will be placed in sticky mode at the left of the grid
+     *
+     */
+    @Input()
+    isFrozen = false;
+
+    /**
      * If the column should be styled as primary.
      *
      */

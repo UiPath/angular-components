@@ -70,8 +70,10 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             },
         };
 
-        this._resize$.next(nextEvent);
+        this.resize$.next(nextEvent);
     }
+
+    resize$ = new Subject<IResizeEvent<T>>();
 
     protected abstract _stateFilter: (state: IResizeEvent<T>) => boolean;
     protected abstract _resizeLeftFilter: (state: IResizeEvent<T>) => boolean;
@@ -86,7 +88,6 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
     private _previous?: IResizeState<T> = {} as IResizeState<T>;
     private _direction?: ResizeDirection;
-    private _resize$ = new Subject<IResizeEvent<T>>();
     private _stopped$ = new Subject<void>();
     private _widthMap = new Map<string, number>();
     private _gridElement: HTMLDivElement;
@@ -235,7 +236,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
         this._startResizeCommon(ev);
 
-        this._resize$
+        this.resize$
             .pipe(
                 filter(resizeFilter),
                 tap((state: IResizeEvent<T>) => {
@@ -258,7 +259,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
     destroy() {
         this._stopped$.complete();
-        this._resize$.complete();
+        this.resize$.complete();
         this._widthMap.clear();
 
         this.current = undefined;
@@ -313,6 +314,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         this._previous = Object.assign(this._previous, {
             offsetPx: 0,
         });
+
         this.current!.dragInitX = ev.clientX;
     }
 

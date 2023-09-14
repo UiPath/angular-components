@@ -5,18 +5,6 @@ $ui-grid-default-transition: 200ms cubic-bezier(0.35, 0, 0.25, 1);
 $ui-grid-background-transition: background-color $ui-grid-default-transition;
 $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
-%resize-handle-default {
-    opacity: 0;
-}
-
-%resize-handle-hover {
-    opacity: 0.4;
-}
-
-%resize-handle-resizing {
-    opacity: 1;
-}
-
 @mixin ui-grid-theme($theme) {
     $is-dark: map-get($theme, "is-dark");
     $foreground: map-get($theme, "foreground");
@@ -41,6 +29,19 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
     $_hover-base: mix($ui-grid-background, invert($ui-grid-background), 97%);
 
     $ui-grid-hover-background: mix($_hover-base, map-get($accent-palette, "default"), if($is-dark, 97, 95));
+
+    %resize-handle-default {
+        background-color: white;
+    }
+
+    %resize-handle-hover {
+        background-color: mix($ui-grid-resize-hover-color, white, 40%);
+    }
+
+    %resize-handle-resizing {
+        background-color: $ui-grid-resize-hover-color;
+    }
+
 
     ui-grid {
         &.ui-grid-elevation-z0 {
@@ -114,8 +115,15 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
             &-cell,
             &-header-cell {
-                background-color: transparent;
                 transition: $ui-grid-background-transition;
+            }
+
+            &-cell-resizing-border-container {
+                transition: $ui-grid-background-transition;
+            }
+
+            &-frozen-boundary {
+                background-color: $primary-color;
             }
 
             &-resize-handle {
@@ -124,8 +132,7 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
                 }
 
                 @extend %resize-handle-default;
-                background: $ui-grid-resize-hover-color;
-                transition: $ui-grid-opacity-transition;
+                transition: $ui-grid-background-transition;
 
                 &:hover {
                     @extend %resize-handle-hover;
@@ -145,7 +152,7 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
             &-header-cell:not(.ui-grid-feature-cell):focus,
             &-header-cell.ui-grid-state-resizing {
-                background-color: rgba($ui-grid-hover-background, 0.5);
+                background-color: mix($ui-grid-hover-background, white, 50%);
                 outline: none;
             }
 
@@ -156,14 +163,14 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
             &-header-cell {
                 &:hover {
-                    + .ui-grid-resize-handle {
+                    + .ui-grid-resize-handle-container .ui-grid-resize-handle {
                         transition-delay: $ui-grid-resize-handle-hover-delay;
                         @extend %resize-handle-hover;
                     }
                 }
 
                 &:focus {
-                    + .ui-grid-resize-handle {
+                    + .ui-grid-resize-handle-container .ui-grid-resize-handle {
                         background: $ui-grid-resize-focus-color;
                         @extend %resize-handle-resizing;
                     }
@@ -196,7 +203,9 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
             &:focus,
             &.cdk-focused {
                 &:not(.ui-grid-row-state-expanded) {
-                    background-color: rgba($ui-grid-hover-background, 0.5);
+                    .ui-grid-header-cell, .ui-grid-cell, .ui-grid-cell-resizing-border-container {
+                        background-color: mix($ui-grid-hover-background, white, 50%);
+                    }
                 }
 
                 outline: none;
@@ -204,7 +213,9 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
             &:hover {
                 &:not(.ui-grid-row-state-expanded) {
-                    background-color: $ui-grid-hover-background;
+                    .ui-grid-header-cell, .ui-grid-cell, .ui-grid-cell-resizing-border-container {
+                        background-color: $ui-grid-hover-background;
+                    }
                 }
 
                 outline: none;

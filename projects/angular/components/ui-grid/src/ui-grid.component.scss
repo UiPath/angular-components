@@ -25,6 +25,15 @@ ui-grid {
     position: relative;
     display: block;
 
+
+    .ui-grid-cell,
+    .ui-grid-header-cell,
+    .ui-grid-cell-resizing-border-container,
+    .ui-grid-resize-handle-container {
+        // FIXME: use color from variable
+        background-color: white;
+    }
+
     &.ui-grid-mode-multi-select {
         .ui-grid-table {
             cdk-virtual-scroll-viewport.ui-grid-viewport {
@@ -137,7 +146,6 @@ ui-grid {
 
     .ui-grid {
 
-
         &-primary,
         &-header-cell {
             font-weight: 500;
@@ -229,7 +237,6 @@ ui-grid {
                 }
             }
 
-
             .ui-grid-header {
 
                 &-row,
@@ -269,7 +276,6 @@ ui-grid {
                     }
                 }
             }
-
         }
 
         &-table-container {
@@ -330,14 +336,14 @@ ui-grid {
         }
 
         &-resize-handle {
-            flex: 0 0 $ui-header-resize-handle-width;
-            margin-left: - $ui-cell-resizing-border-width;
-            position: relative;
-            height: 100%;
-            display: flex;
             cursor: col-resize;
         }
 
+        &-sticky-element {
+            position: sticky !important;
+            left: 0;
+            z-index: 1;
+        }
 
         &-dropdown-filter {
             &-button {
@@ -446,11 +452,48 @@ ui-grid {
                 }
             }
 
-            .ui-grid-cell-resizing-border {
-                flex: 0 0 $ui-cell-resizing-border-width;
-                height: $ui-grid-row-height + $ui-row-border-width;
-                margin-top: -$ui-row-border-width;
+            .ui-grid-resize-handle-container {
                 position: relative;
+                flex: 0 0 $ui-header-resize-handle-width;
+                height: $ui-grid-header-row-height;
+                margin-left: -3px;
+
+                .ui-grid-resize-handle {
+                    position: absolute;
+                    top: 0;
+                    width: $ui-header-resize-handle-width;
+                    height: $ui-grid-header-row-height;
+                }
+
+                .ui-grid-frozen-boundary {
+                    position: absolute;
+                    width: 1px;
+                    height: $ui-grid-header-row-height;
+                    top: 0;
+                    right: 0;
+                    z-index: 1;
+                }
+            }
+
+            .ui-grid-cell-resizing-border-container {
+                position: relative;
+                flex: 0 0 $ui-cell-resizing-border-width;
+                height: $ui-grid-row-height + $ui-row-border-width - 2;
+
+                .ui-grid-cell-resizing-border {
+                    width: $ui-cell-resizing-border-width;
+                    height: $ui-grid-row-height + $ui-row-border-width;
+                    top: -1px;
+                    position: absolute;
+                }
+
+                .ui-grid-frozen-boundary {
+                    width: 1px;
+                    height: $ui-grid-row-height + $ui-row-border-width;
+                    top: -1px;
+                    right: 0;
+                    position: absolute;
+                }
             }
 
             .ui-grid-header-cell {
@@ -507,6 +550,10 @@ ui-grid {
                     width: 0;
                     padding: 0;
                     overflow: visible;
+
+                    &.ui-grid-sticky-element {
+                        right: 0;
+                    }
 
                     >div {
                         display: inline-flex;
@@ -589,4 +636,9 @@ ui-grid {
             }
         }
     }
+}
+
+.ui-grid-table-container {
+    overflow-x: auto;
+    overflow-y: hidden;
 }
