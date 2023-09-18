@@ -17,7 +17,8 @@
          [isScrollable]="inputs.isScrollable"
          [expandMode]="'preserve'"
          [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []"
-         width="1800px">
+         [resizeStrategy]="inputs.isScrollable ? scrollableGridStrategy : null"
+         minWidth="1800px">
 
     <ui-grid-header [search]="header.searchable">
         <ui-header-button *ngFor="let button of generateButtons(header.main)"
@@ -55,7 +56,7 @@
                     [sortable]="true"
                     [isFrozen]="true"
                     title="Id"
-                    width="10%">
+                    width="5%">
         <ui-grid-dropdown-filter [visible]="header.showFilter"
                                  [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
         </ui-grid-dropdown-filter>
@@ -65,11 +66,18 @@
                     [isFrozen]="true"
                     method="eq"
                     title="Name"
-                    width="34%">
+                    width="10%">
         <ui-grid-search-filter [visible]="header.showFilter"
                                [searchSourceFactory]="searchSourceFactory"
                                [multiple]="true">
         </ui-grid-search-filter>
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="33%">
+        <ui-grid-dropdown-filter [visible]="header.showFilter"
+                                 [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
+        </ui-grid-dropdown-filter>
     </ui-grid-column>
     <ui-grid-column [property]="'parity'"
                     title="Parity"

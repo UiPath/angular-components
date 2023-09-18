@@ -64,7 +64,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
                 neighbour: this._getResizedPairAt(this.current.index + direction + this._neighbourIndexOffset),
                 oppositeNeighbour: this._getResizedPairAt(this.current.index + -direction),
                 offsetPx: value,
-                offsetPercent: Math.round(value / this._table!.clientWidth * 1000),
+                offsetPercent: Math.round(value / this._uiGridTable!.clientWidth * 1000),
                 direction,
                 event: ev,
             },
@@ -84,12 +84,13 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
     protected _headers?: HTMLDivElement[];
     protected _table?: HTMLTableElement | null;
+    protected _uiGridTable?: HTMLDivElement | null;
     protected _definitions?: UiGridColumnDirective<T>[];
+    protected _widthMap = new Map<string, number>();
 
     private _previous?: IResizeState<T> = {} as IResizeState<T>;
     private _direction?: ResizeDirection;
     private _stopped$ = new Subject<void>();
-    private _widthMap = new Map<string, number>();
     private _gridElement: HTMLDivElement;
 
     constructor(
@@ -105,6 +106,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         ).pipe(
             map(() => {
                 this._table = this._gridElement.querySelector<HTMLTableElement>('.ui-grid-container');
+                this._uiGridTable = this._gridElement.querySelector<HTMLDivElement>('.ui-grid-table');
                 this._definitions = _grid.columns.filter(c => c.resizeable && c.visible);
 
                 return this._headers = toArray<HTMLDivElement>(this._gridElement.querySelectorAll('.ui-grid-resizeable'));

@@ -455,14 +455,14 @@ ui-grid {
             .ui-grid-resize-handle-container {
                 position: relative;
                 flex: 0 0 $ui-header-resize-handle-width;
-                height: $ui-grid-header-row-height;
+                height: $ui-grid-header-row-height - 1;
                 margin-left: -3px;
 
                 .ui-grid-resize-handle {
                     position: absolute;
                     top: 0;
                     width: $ui-header-resize-handle-width;
-                    height: $ui-grid-header-row-height;
+                    height: $ui-grid-header-row-height - 1;
                 }
 
                 .ui-grid-frozen-boundary {

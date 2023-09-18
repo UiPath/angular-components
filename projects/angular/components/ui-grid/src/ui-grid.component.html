@@ -111,11 +111,11 @@
 
     <div class="ui-grid-table-container">
         <div [class.ui-grid-table-refreshable]="refreshable"
+             [style.minWidth]="isScrollable ? minWidth : ''"
              class="ui-grid-table"
              role="grid">
             <div class="ui-grid-header">
                 <div *ngIf="showHeaderRow"
-                     [style.width]="isScrollable ? width : ''"
                      class="ui-grid-header-row"
                      role="row">
                     <div *ngIf="selectable && !singleSelectable"
@@ -200,7 +200,7 @@
                         <div [class.ui-grid-sticky-element]="isScrollable && column.isFrozen"
                              [style.left.px]="isScrollable && column.isFrozen ? gridResizeHandleLeft[computeIndex(columnIndex)] : ''"
                              class="ui-grid-resize-handle-container">
-                            <div *ngIf="isScrollable && isLastFrozenColumn(columnIndex)"
+                            <div *ngIf="isScrollable && isLastFrozenColumn(columnIndex) && isOverflown"
                                  class="ui-grid-frozen-boundary"></div>
                             <div *ngIf="!isProjected && column.resizeable && !last && !useCardView"
                                  [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
@@ -340,7 +340,6 @@
          [ngClass]="rowConfig?.ngClassFn(row) ?? ''"
          [tabIndex]="0"
          [attr.data-row-index]="index"
-         [style.width]="isScrollable ? width : ''"
          (click)="onRowClick($event, row)"
          (keyup.enter)="onRowClick($event, row)"
          role="row">
@@ -439,7 +438,7 @@
             <div [class.ui-grid-sticky-element]="isScrollable && column.directive.isFrozen"
                  [style.left.px]="isScrollable && column.directive.isFrozen ? cellResizingBorderLeft[computeIndex(columnIndex)] : ''"
                  class="ui-grid-cell-resizing-border-container">
-                <div *ngIf="isScrollable && isLastFrozenColumn(columnIndex)"
+                <div *ngIf="isScrollable && isLastFrozenColumn(columnIndex) && isOverflown"
                      class="ui-grid-frozen-boundary"></div>
                 <div *ngIf="!isProjected && column.directive.resizeable && !lastColumn && !useCardView"
                      [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"

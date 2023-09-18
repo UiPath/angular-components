@@ -31,6 +31,7 @@ import {
     trigger,
 } from '@angular/animations';
 import { FocusOrigin } from '@angular/cdk/a11y';
+import { ViewportRuler } from '@angular/cdk/scrolling';
 import {
     AfterContentInit,
     AfterViewInit,
@@ -195,16 +196,18 @@ export class UiGridComponent<T extends IGridDataEntry>
      *
      */
     @Input()
-    set resizeStrategy(value: ResizeStrategy) {
+    set resizeStrategy(value: ResizeStrategy | null) {
         if (value === this._resizeStrategy) { return; }
 
-        this._resizeStrategy = value;
+        if (value != null) {
+            this._resizeStrategy = value;
 
-        if (this.resizeManager != null) {
-            this.resizeManager.destroy();
+            if (this.resizeManager != null) {
+                this.resizeManager.destroy();
+            }
+
+            this._initResizeManager();
         }
-
-        this._initResizeManager();
     }
 
     /**
@@ -405,7 +408,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     isScrollable = false;
 
     @Input()
-    width = '';
+    minWidth = '';
 
     /**
      * Emits an event with the sort model when a column sort changes.
@@ -661,6 +664,13 @@ export class UiGridComponent<T extends IGridDataEntry>
      */
     focusedColumnHeader = false;
 
+    get isOverflown() {
+        const uiGridTableWidth = this._ref.nativeElement.querySelector('.ui-grid-table').clientWidth;
+        const uiGridTableContainerWidth = this._ref.nativeElement.querySelector('.ui-grid-table-container').clientWidth;
+
+        return uiGridTableWidth > uiGridTableContainerWidth;
+    }
+
     /**
      * @internal
      * @ignore
@@ -730,6 +740,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     private _lastCheckboxIdx = 0;
     private _resizeSubscription$: null | Subscription = null;
     private _expandedEntries: T[] = [];
+
     /**
      * @ignore
      */
@@ -740,6 +751,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         protected _cd: ChangeDetectorRef,
         private _zone: NgZone,
         private _queuedAnnouncer: QueuedAnnouncer,
+        private _viewPortRuler: ViewportRuler,
         @Inject(UI_GRID_OPTIONS)
         @Optional()
         private _gridOptions?: GridOptions<T>,
@@ -842,6 +854,12 @@ export class UiGridComponent<T extends IGridDataEntry>
         ).subscribe(() => this.selectAvailableRowsCheckbox!.checked = false);
 
         this._initDisplayToggleColumnsDivider();
+
+        // run detectChanges on window resize
+        this._viewPortRuler
+            .change(200)
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(() => this._cd.detectChanges());
     }
 
     /**
