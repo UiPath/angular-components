@@ -339,12 +339,6 @@ ui-grid {
             cursor: col-resize;
         }
 
-        &-sticky-element {
-            position: sticky !important;
-            left: 0;
-            z-index: 1;
-        }
-
         &-dropdown-filter {
             &-button {
                 text-transform: none !important;
@@ -494,6 +488,12 @@ ui-grid {
                     right: 0;
                     position: absolute;
                 }
+            }
+
+            .ui-grid-sticky-element {
+                position: sticky;
+                left: 0;
+                z-index: 1;
             }
 
             .ui-grid-header-cell {
