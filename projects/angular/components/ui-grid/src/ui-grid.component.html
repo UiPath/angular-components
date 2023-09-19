@@ -411,7 +411,8 @@
         </ng-container>
 
         <ng-container *ngFor="let column of renderedColumns$ | async; let lastColumn = last; let columnIndex = index">
-            <div [class.ui-grid-primary]="column.directive.primary"
+            <div #gridCell
+                 [class.ui-grid-primary]="column.directive.primary"
                  [class.ui-grid-secondary]="!column.directive.primary"
                  [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
                  [attr.data-property]="column.directive.property"
@@ -420,6 +421,7 @@
                  [style.left.px]="isScrollable && column.directive.isFrozen ? columnLeft[computeIndex(columnIndex)] : ''"
                  [attr.role]="column.role"
                  [class.ui-grid-sticky-element]="isScrollable && column.directive.isFrozen"
+                 [class.ui-grid-covered-element]="isScrollable && !column.directive.isFrozen && isBehindOtherElement(gridCell)"
                  class="ui-grid-cell">
                 <div *ngIf="isProjected"
                      [matTooltip]="column.directive.title ?? ''"

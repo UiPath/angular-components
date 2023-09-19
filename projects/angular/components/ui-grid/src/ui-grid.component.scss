@@ -567,6 +567,11 @@ ui-grid {
                         bottom: 0;
                     }
                 }
+
+                &.ui-grid-covered-element + .ui-grid-cell-resizing-border-container .ui-grid-cell-resizing-border {
+                    // hide resizing border when the column being resized is behind frozen columns
+                    display: none;
+                }
             }
 
             .ui-grid-sort {

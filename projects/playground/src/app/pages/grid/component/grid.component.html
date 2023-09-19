@@ -14,6 +14,175 @@
          [showHeaderRow]="inputs.showHeaderRow"
          [expandedEntries]="editedEntity"
          [useCardView]="inputs.useCardView"
+         [expandMode]="'preserve'"
+         [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []">
+
+    <ui-grid-header [search]="header.searchable">
+        <ui-header-button *ngFor="let button of generateButtons(header.main)"
+                          type="main">
+            <ng-template>
+                <button mat-icon-button
+                        color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </ng-template>
+        </ui-header-button>
+
+        <ui-header-button *ngFor="let button of generateButtons(header.action)"
+                          type="action">
+            <ng-template>
+                <button mat-icon-button
+                        color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </ng-template>
+        </ui-header-button>
+
+        <ui-header-button *ngFor="let button of generateButtons(header.inline)"
+                          type="inline">
+            <ng-template>
+                <button mat-icon-button
+                        color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </ng-template>
+        </ui-header-button>
+    </ui-grid-header>
+
+    <ui-grid-column [property]="'id'"
+                    [sortable]="true"
+                    [isFrozen]="true"
+                    title="Id"
+                    width="5%">
+        <ui-grid-dropdown-filter [visible]="header.showFilter"
+                                 [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
+        </ui-grid-dropdown-filter>
+    </ui-grid-column>
+    <ui-grid-column [property]="'name'"
+                    [searchable]="true"
+                    [isFrozen]="true"
+                    method="eq"
+                    title="Name"
+                    width="10%">
+        <ui-grid-search-filter [visible]="header.showFilter"
+                               [searchSourceFactory]="searchSourceFactory"
+                               [multiple]="true">
+        </ui-grid-search-filter>
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="15%">
+        <ui-grid-dropdown-filter [visible]="header.showFilter"
+                                 [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
+        </ui-grid-dropdown-filter>
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="15%">
+        <ui-grid-dropdown-filter [visible]="header.showFilter"
+                                 [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
+        </ui-grid-dropdown-filter>
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="15%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="15%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="15%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="15%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="15%">
+    </ui-grid-column>
+
+
+    <ui-grid-row-action>
+        <ng-template let-entry="data">
+            <button (click)="editedEntity = editedEntity?.id === entry.id ? undefined : entry"
+                    mat-icon-button
+                    type="button">
+                <mat-icon>{{editedEntity?.id === entry.id ? 'close' : 'edit'}}</mat-icon>
+            </button>
+        </ng-template>
+    </ui-grid-row-action>
+    <ui-grid-footer [length]="total"
+                    [pageSize]="footer.pageSize"
+                    [pageSizes]="pageSizes"
+                    [hidePageSize]="footer.hidePageSize"
+                    [hideTotalCount]="footer.hideTotalCount ?? false"
+                    [showFirstLastButtons]="footer.showFirstLastButtons ?? true"
+                    (pageChange)="onPageChange($event)">
+    </ui-grid-footer>
+
+    <ui-grid-expanded-row>
+        <ng-template let-entry="data">
+            <div class="expanded-row">
+                <h2>Expanded row with ID: {{ entry.id }}</h2>
+                <div>Name is {{ entry.name }}</div>
+                <div>Parity is {{ entry.parity }}</div>
+
+                <button (click)="editedEntity = undefined"
+                        mat-button
+                        type="button"
+                        color="primary">
+                    Close
+                </button>
+            </div>
+        </ng-template>
+    </ui-grid-expanded-row>
+
+    <ui-grid-row-card-view>
+        <ng-template let-data="data"
+                     let-expanded="expanded"
+                     let-last="last"
+                     let-index="index">
+            <div class="card"
+                 role="gridcell"
+                 tabindex="0">
+                <h2>{{data.name}}</h2>
+                <p>parity: <b>{{data.parity}}</b></p>
+
+                <ui-grid-row-action>
+                    <ng-template let-entry="data">
+                        <button (click)="editedEntity = editedEntity?.id === entry.id ? undefined : entry"
+                                mat-icon-button
+                                type="button">
+                            <mat-icon>{{editedEntity?.id === entry.id ? 'close' : 'edit'}}</mat-icon>
+                        </button>
+                    </ng-template>
+                </ui-grid-row-action>
+            </div>
+
+        </ng-template>
+    </ui-grid-row-card-view>
+</ui-grid>
+
+
+<ui-grid [data]="data$ | async"
+         [collapsibleFilters]="inputs.collapsibleFilters ?? false"
+         [collapseFiltersCount]="inputs.collapseFiltersCount"
+         [isProjected]="inputs.isProjected"
+         [loading]="inputs.loading"
+         [disabled]="inputs.disabled"
+         [selectable]="inputs.selectable"
+         [singleSelectable]="inputs.singleSelectable"
+         [toggleColumns]="inputs.toggleColumns"
+         [multiPageSelect]="inputs.multiPageSelect"
+         [refreshable]="inputs.refreshable"
+         [virtualScroll]="inputs.virtualScroll"
+         [showPaintTime]="inputs.showPaintTime"
+         [showHeaderRow]="inputs.showHeaderRow"
+         [expandedEntries]="editedEntity"
+         [useCardView]="inputs.useCardView"
          [isScrollable]="inputs.isScrollable"
          [expandMode]="'preserve'"
          [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []"
@@ -74,17 +243,58 @@
     </ui-grid-column>
     <ui-grid-column [property]="'parity'"
                     title="Parity"
-                    width="33%">
+                    width="5%">
         <ui-grid-dropdown-filter [visible]="header.showFilter"
                                  [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
         </ui-grid-dropdown-filter>
     </ui-grid-column>
     <ui-grid-column [property]="'parity'"
                     title="Parity"
-                    width="33%">
-        <ui-grid-dropdown-filter [visible]="header.showFilter"
-                                 [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
-        </ui-grid-dropdown-filter>
+                    width="5%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="5%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="5%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="5%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="5%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="5%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="5%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="5%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="5%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="5%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="5%">
+    </ui-grid-column>
+    <ui-grid-column [property]="'parity'"
+                    title="Parity"
+                    width="5%">
     </ui-grid-column>
 
     <ui-grid-row-action>

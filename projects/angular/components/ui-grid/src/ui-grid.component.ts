@@ -1192,6 +1192,19 @@ export class UiGridComponent<T extends IGridDataEntry>
             && !this.columns.get(columnIndex + 1)?.isFrozen;
     }
 
+    isBehindOtherElement(element: Element) {
+        const boundingRect = element.getBoundingClientRect();
+        const top = boundingRect.top + 1;
+        const right = boundingRect.right - 1;
+        const bottom = boundingRect.bottom - 1;
+        const left = boundingRect.left + 1;
+
+        return document.elementFromPoint(left, top) !== element
+            && document.elementFromPoint(right, top) !== element
+            && document.elementFromPoint(left, bottom) !== element
+            && document.elementFromPoint(right, bottom) !== element;
+    }
+
     private _announceGridHeaderActions() {
         this._queuedAnnouncer.enqueue(this.intl.gridHeaderActionsNotice);
     }
