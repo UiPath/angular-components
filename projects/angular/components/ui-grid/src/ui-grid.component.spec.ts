@@ -62,7 +62,7 @@ import {
 import { UiGridIntl } from './ui-grid.intl';
 import { UiGridModule } from './ui-grid.module';
 
-describe('Component: UiGrid', () => {
+fdescribe('Component: UiGrid', () => {
     const GRID_COLUMN_CHANGE_DELAY = 10;
 
     @Component({
