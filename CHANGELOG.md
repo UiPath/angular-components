@@ -1,3 +1,6 @@
+# v14.8.12 (2023-09-20)
+* **grid** show border for column resize
+
 # v14.8.11 (2023-09-06)
 * **suggest** reduce height when no results found
 
