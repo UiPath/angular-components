@@ -93,6 +93,13 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
         }
 
         .ui-grid {
+            &-cell,
+            &-header-cell,
+            &-cell-resizing-border-container,
+            &-resize-handle-container {
+                background: $ui-grid-background;
+            }
+
             &-container {
                 background: $ui-grid-background;
             }

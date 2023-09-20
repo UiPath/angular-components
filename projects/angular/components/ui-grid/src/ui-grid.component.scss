@@ -25,15 +25,6 @@ ui-grid {
     position: relative;
     display: block;
 
-
-    .ui-grid-cell,
-    .ui-grid-header-cell,
-    .ui-grid-cell-resizing-border-container,
-    .ui-grid-resize-handle-container {
-        // FIXME: use color from variable
-        background-color: white;
-    }
-
     &.ui-grid-mode-multi-select {
         .ui-grid-table {
             cdk-virtual-scroll-viewport.ui-grid-viewport {
