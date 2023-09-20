@@ -328,7 +328,8 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         this.current!.dragInitX = ev.clientX;
     }
 
-    private _endResizeCommon(...entries: (IResizeInfo<T> | undefined)[]) {
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    protected _endResizeCommon(...entries: (IResizeInfo<T> | undefined)[]) {
         entries.forEach(entry => {
             if (!entry) { return; }
 

@@ -92,8 +92,7 @@ export class ScrollableGridResizer<T extends IGridDataEntry> extends ResizeManag
     };
 
     private _getColumnWidth(column: UiGridColumnDirective<T>) {
-        return parseInt(column.width.toString(), 10);
-        // return column.width as number;
+        return this._widthMap.get(column.identifier) ?? parseInt(column.width.toString(), 10);
     }
 
     private _isMaxWidthForLastFrozenColumn(state: IResizeEvent<T>) {
@@ -124,6 +123,7 @@ export class ScrollableGridResizer<T extends IGridDataEntry> extends ResizeManag
 
         let lastFrozenColumn: UiGridColumnDirective<T>;
         let lastFrozenColumnIndex: number;
+        // let firstFreeColumn: UiGridColumnDirective<T>;
         let firstFreeColumnIndex: number;
 
         if (!this._definitions!.length || !this._definitions![0].isFrozen) {
@@ -142,6 +142,7 @@ export class ScrollableGridResizer<T extends IGridDataEntry> extends ResizeManag
                 lastFrozenColumnIndex = i;
 
                 if (i + 1 < this._definitions!.length) {
+                    // firstFreeColumn = this._definitions![i + 1];
                     firstFreeColumnIndex = i + 1;
                 }
             }
@@ -161,10 +162,15 @@ export class ScrollableGridResizer<T extends IGridDataEntry> extends ResizeManag
 
             const lastFrozenColumnResizeInfo = this._getResizedPairAt(lastFrozenColumnIndex!);
             this._applyWidthFor(lastFrozenColumnResizeInfo, lastFrozenColumnNecessaryWidthPercent);
+            // lastFrozenColumn!.width = lastFrozenColumnNecessaryWidthPercent;
+            this._endResizeCommon(lastFrozenColumnResizeInfo);
 
             const firstFreeColumnResizeInfo = this._getResizedPairAt(firstFreeColumnIndex!);
-            this._applyOffsetFor(firstFreeColumnResizeInfo,
-                lastFrozenColumnInitialWidthPercent! - lastFrozenColumnNecessaryWidthPercent!);
+            const offset = lastFrozenColumnInitialWidthPercent! - lastFrozenColumnNecessaryWidthPercent!;
+            // const width = this._getColumnWidth(firstFreeColumn!);
+            this._applyOffsetFor(firstFreeColumnResizeInfo, offset);
+            // firstFreeColumn!.width = width + offset;
+            this._endResizeCommon(firstFreeColumnResizeInfo);
 
             this.programmaticalResize$.next(true);
         }
