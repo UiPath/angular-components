@@ -1,5 +1,4 @@
-import { UiGridColumnDirective } from '@uipath/angular/components/ui-grid';
-
+import { UiGridColumnDirective } from '../../../body/ui-grid-column.directive';
 import { IGridDataEntry } from '../../../models';
 import { ResizeManager } from '../resize-manager';
 import {
