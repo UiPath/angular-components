@@ -15,6 +15,9 @@ import {
  * @ignore
  */
 export class ImmediateNeighbourHaltResizer<T extends IGridDataEntry> extends ResizeManager<T> {
+
+    initialize = () => {};
+
     protected _stateFilter = (state: IResizeEvent<T>) => {
         if (isDirectionChanged(state)) {
             // if the direction has changed while actively resizing

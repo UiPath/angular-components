@@ -726,6 +726,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     columnLeft: number[] = [];
     gridResizeHandleLeft: number[] = [];
     cellResizingBorderLeft: number[] = [];
+    windowResize$: Observable<Event>;
 
     protected _destroyed$ = new Subject<void>();
     protected _columnChanges$: Observable<SimpleChanges>;
@@ -844,7 +845,13 @@ export class UiGridComponent<T extends IGridDataEntry>
             takeUntil(this._destroyed$),
         ).subscribe();
 
+        this.windowResize$ = this._viewPortRuler
+            .change(16)
+            .pipe(takeUntil(this._destroyed$));
+        this.windowResize$.subscribe(() => this._cd.detectChanges());
+
         this._initResizeManager();
+
         this._performanceMonitor = new PerformanceMonitor(_ref.nativeElement);
         this.paintTime$ = this._performanceMonitor.paintTime$;
 
@@ -855,11 +862,6 @@ export class UiGridComponent<T extends IGridDataEntry>
 
         this._initDisplayToggleColumnsDivider();
 
-        // run detectChanges on window resize
-        this._viewPortRuler
-            .change(200)
-            .pipe(takeUntil(this._destroyed$))
-            .subscribe(() => this._cd.detectChanges());
     }
 
     /**
@@ -1213,7 +1215,13 @@ export class UiGridComponent<T extends IGridDataEntry>
         this._resizeSubscription$?.unsubscribe();
         this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
 
+        this.resizeManager.initialize();
+
         this.resizeManager.resize$.subscribe(() => {
+            this.updateOffsetsLeft();
+        });
+
+        this.resizeManager.programmaticalResize$.subscribe(() => {
             this.updateOffsetsLeft();
         });
 

@@ -74,7 +74,9 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     }
 
     resize$ = new Subject<IResizeEvent<T>>();
+    programmaticalResize$ = new Subject();
 
+    abstract initialize: () => void;
     protected abstract _stateFilter: (state: IResizeEvent<T>) => boolean;
     protected abstract _resizeLeftFilter: (state: IResizeEvent<T>) => boolean;
     protected abstract _resizeRightFilter: (state: IResizeEvent<T>) => boolean;
@@ -94,7 +96,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     private _gridElement: HTMLDivElement;
 
     constructor(
-        private _grid: ResizableGrid<T>,
+        protected _grid: ResizableGrid<T>,
     ) {
         // eslint-disable-next-line no-underscore-dangle
         this._gridElement = (_grid as any)._ref.nativeElement;
@@ -298,6 +300,12 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         if (!entry) { return; }
 
         const width = entry.column.width as number + offset;
+        this._applyWidthFor(entry, width);
+    }
+
+    protected _applyWidthFor(entry: IResizeInfo<T> | undefined, width: number) {
+        if (!entry) { return; }
+
         this._widthMap.set(entry.column.identifier, width);
         entry.element.style.width = toPercentageStyle(width);
 

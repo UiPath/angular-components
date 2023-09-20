@@ -21,6 +21,7 @@ export abstract class ResizableGrid<T> {
     abstract columns: QueryList<UiGridColumnDirective<T>>;
     abstract rendered: EventEmitter<void>;
     abstract toggleColumns: boolean;
+    abstract windowResize$: Observable<Event>;
 
     protected abstract _ref: ElementRef;
     protected abstract _cd: ChangeDetectorRef;

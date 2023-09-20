@@ -23,6 +23,8 @@ export class AggresiveNeighbourPushResizer<T extends IGridDataEntry> extends Res
         this._isWidthLimitReached = false;
     }
 
+    initialize = () => { };
+
     protected _stateFilter = (state: IResizeEvent<T>) => {
         if (isDirectionChanged(state)) {
             // if the direction has changed while actively resizing
