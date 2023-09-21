@@ -1,3 +1,4 @@
+import faker from 'faker';
 import {
     IFooter,
     IHeader,
@@ -111,7 +112,7 @@ export class GridPageComponent implements AfterViewInit {
                 showPaintTime: [false],
                 showHeaderRow: [true],
                 customFilter: [false],
-                useCardView: [true],
+                useCardView: [false],
             }),
             header: this._fb.group({
                 searchable: [true],
@@ -138,7 +139,7 @@ export class GridPageComponent implements AfterViewInit {
     generateData({ totalData, pageSize }: { totalData: number; pageSize: number }) {
         this.allData = new Array(totalData).fill(0).map((_, i) => ({
             id: i,
-            name: `name-${i}`,
+            name: `name-${i}-` + faker.random.alphaNumeric(5 + Math.random() * 50),
             parity: i % 2 === 0 ? 'even' : 'odd',
         }));
         this.footer.total = totalData;
