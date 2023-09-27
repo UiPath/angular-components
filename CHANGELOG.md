@@ -1,3 +1,6 @@
+# v14.8.13 (2023-09-27)
+* **grid** emit empty filters on filterManager clear fixing grid reset not re-rendering filters
+
 # v14.8.12 (2023-09-20)
 * **grid** show border for column resize
 
