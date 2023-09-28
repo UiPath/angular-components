@@ -829,8 +829,8 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         if (this.header) {
             this.header.searchValue = '';
         }
-        this.filterManager.clear();
         this.sortManager.clear();
+        this.filterManager.clear();
         return of(true);
     };
 
