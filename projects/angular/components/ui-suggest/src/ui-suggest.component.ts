@@ -1221,7 +1221,9 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             if (!this.multiple) {
                 this._clearSelection();
             } else if (!this.compact) {
-                this.inputControl.setValue('');
+                if (this.inputControl.value) {
+                    this.inputControl.setValue('');
+                }
                 this._focusChipInput();
             }
             this._pushEntry(value);
