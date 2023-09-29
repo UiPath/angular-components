@@ -1,3 +1,6 @@
+# v14.8.14 (2023-09-29)
+* **suggest** input clear on multiple selection
+
 # v14.8.13 (2023-09-27)
 * **grid** emit empty filters on filterManager clear fixing grid reset not re-rendering filters
 
