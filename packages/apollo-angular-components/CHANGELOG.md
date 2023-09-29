@@ -1,3 +1,8 @@
+# v15.0.2-rc.2 (2023-09-29)
+* **suggest** input clear on multiple selection
+* **suggest** reduce height when no results found
+* **grid** remove tooltip on selected radio btn
+
 # v15.0.2-rc.1 (2023-08-22)
 * **grid** display action buttons on one row
 * **grid** styles specificity for empty grid
