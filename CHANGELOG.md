@@ -1,3 +1,6 @@
+# v14.8.15 (2023-10-02)
+* **grid** improve performance using trackBy
+
 # v14.8.14 (2023-09-29)
 * **suggest** input clear on multiple selection
 
