@@ -127,6 +127,7 @@ export class FilterManager<T> {
             if (!dropdown) { return; }
             dropdown.value = undefined;
         });
+        this.filter$.next([]);
     }
 
     private _updateFilterValue = (
