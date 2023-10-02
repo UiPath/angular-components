@@ -1,3 +1,6 @@
+# v15.0.2-rc.4 (2023-10-02)
+* **grid** improve performance using trackBy
+
 # v15.0.2-rc.3 (2023-10-02)
 * **grid** don't replace main action buttons
 * **feat** emit filter change to render on grid filter reset [AUOPS-2567]
