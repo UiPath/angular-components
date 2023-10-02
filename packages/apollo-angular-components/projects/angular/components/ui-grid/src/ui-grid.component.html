@@ -258,7 +258,8 @@
                         <div class="ui-grid-cards-container">
                             <ng-container *ngFor="let row of dataManager.data$ | async;
                                               let index = index;
-                                              let last = last;">
+                                              let last = last;
+                                              trackBy: dataManager.hashTrack">
                                 <ng-container *ngTemplateOutlet="rowCardTemplate; context: {
                                         data: row,
                                         index: index,
@@ -272,7 +273,8 @@
                     <ng-container *ngIf="!useCardView">
                         <ng-container *ngFor="let row of dataManager.data$ | async;
                                           let index = index;
-                                          let last = last;">
+                                          let last = last;
+                                          trackBy: dataManager.hashTrack">
                             <ng-container *ngTemplateOutlet="rowTemplate; context: {
                                     data: row,
                                     index: index,

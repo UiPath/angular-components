@@ -167,7 +167,10 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
         this.data$.complete();
     }
 
-    hashTrack = (_: number | undefined | null, entry: T) => this._hashMap.get(`${entry[this.idProperty]}`);
+    hashTrack = (_: number | undefined | null, entry: T) =>
+        this.useCache
+            ? this._hashMap.get(`${entry[this.idProperty]}`)
+            : entry[this.idProperty];
 
     private _hash = (entry: T) =>
         this._hashMap.set(`${entry[this.idProperty]}`, hash.MD5(entry));
