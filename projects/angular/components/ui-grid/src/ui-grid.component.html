@@ -81,21 +81,9 @@
     <div class="ui-grid-filter-container-rhs-group"
          *ngLet="(hasSelection$ | async) as hasSelections">
         <div class="ui-grid-action-buttons ui-grid-action-buttons-main">
-            <div #gridActionButtons
-                 *ngIf="hasSelections">
-                <ng-container *ngFor="let button of header?.actionButtons">
-                    <ng-container *ngIf="button.visible">
-                        <ng-container *ngTemplateOutlet="button.html?? null">
-                        </ng-container>
-                    </ng-container>
-                </ng-container>
-            </div>
-
-            <ng-container *ngIf="!hasSelections">
-                <ng-container *ngFor="let button of header?.mainButtons">
-                    <ng-container *ngIf="button.visible">
-                        <ng-container *ngTemplateOutlet="button.html ?? null">
-                        </ng-container>
+            <ng-container *ngFor="let button of header?.mainButtons">
+                <ng-container *ngIf="button.visible">
+                    <ng-container *ngTemplateOutlet="button.html ?? null">
                     </ng-container>
                 </ng-container>
             </ng-container>
