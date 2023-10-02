@@ -1,3 +1,7 @@
+# v15.0.2-rc.3 (2023-10-02)
+* **grid** don't replace main action buttons
+* **feat** emit filter change to render on grid filter reset [AUOPS-2567]
+
 # v15.0.2-rc.2 (2023-09-29)
 * **suggest** input clear on multiple selection
 * **suggest** reduce height when no results found
