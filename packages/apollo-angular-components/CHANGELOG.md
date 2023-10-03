@@ -1,3 +1,6 @@
+# v15.0.2-rc.5 (2023-10-03)
+* **suggest** add role for aria attrs in multiple selection scenario
+
 # v15.0.2-rc.4 (2023-10-02)
 * **grid** improve performance using trackBy
 

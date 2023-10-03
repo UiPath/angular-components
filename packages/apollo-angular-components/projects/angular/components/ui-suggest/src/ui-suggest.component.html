@@ -82,9 +82,7 @@
                            [attr.tabindex]="!disabled && !readonly ? 0 : null"
                            [attr.aria-label]="ariaLabel ?? placeholder"
                            [attr.aria-describedby]="describedBy"
-                           [attr.aria-required]="required"
                            [attr.aria-disabled]="disabled || readonly"
-                           [attr.aria-expanded]="isOpen"
                            [style.width]="isFormControl ? null : width"
                            [disabled]="disabled"
                            (click)="open()"
@@ -135,9 +133,12 @@
                            [matChipInputFor]="chipList"
                            [attr.maxlength]="maxLength"
                            [attr.aria-label]="ariaLabel ?? placeholder"
+                           [attr.aria-required]="required"
+                           [attr.aria-expanded]="isOpen"
                            selectionLocation="end"
                            autocomplete="off"
                            aria-autocomplete="list"
+                           role="combobox"
                            matInput>
 
             </mat-chip-grid>
