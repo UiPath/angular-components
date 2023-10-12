@@ -1,3 +1,6 @@
+# v15.0.2-rc.6 (2023-10-12)
+* **fix** focus chip input after selection
+
 # v15.0.2-rc.5 (2023-10-03)
 * **suggest** add role for aria attrs in multiple selection scenario
 
