@@ -84,7 +84,7 @@ import {
 
 export const DEFAULT_SUGGEST_DEBOUNCE_TIME = 300;
 export const DEFAULT_SUGGEST_DRILLDOWN_CHARACTER = ':';
-export const MAT_CHIP_INPUT_SELECTOR = '.mat-chip-list input';
+export const MAT_CHIP_INPUT_SELECTOR = '.mat-mdc-chip-grid input';
 
 /**
  * A form compatible `dropdown` packing `lazy-loading` and `virtual-scroll`.
