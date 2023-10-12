@@ -111,7 +111,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
     shouldHideTitle = false;
 
     /**
-     * Sets aria-label on input or mat-chip-list element.
+     * Sets aria-label on input or mat-chip-grid element.
      *
      */
     @Input('aria-label')
