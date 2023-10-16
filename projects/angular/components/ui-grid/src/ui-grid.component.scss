@@ -1,4 +1,5 @@
 @import "../../styles/ellipse";
+@import "./ui-grid-variables";
 
 .preserve-whitespace {
     word-wrap: break-word;
@@ -13,8 +14,8 @@ ui-grid {
     $ui-grid-row-horizontal-padding: 24px;
     $ui-feature-cell-width: 50px;
     $ui-row-border-width: 1px;
-    $ui-header-resize-handle-width: 6px;
-    $ui-cell-resizing-border-width: 3px;
+    $ui-header-resize-handle-width: 18px;
+    $ui-handle-size-width: 6px;
     $ui-grid-default-spacing: 5px;
     $ui-border-radius: 4px;
     $ui-grid-button-size: 40px;
@@ -136,8 +137,6 @@ ui-grid {
     }
 
     .ui-grid {
-
-
         &-primary,
         &-header-cell {
             font-weight: 500;
@@ -272,12 +271,15 @@ ui-grid {
                         padding: 0.4375em 0;
                     }
                 }
+
+                .ui-grid-resize-handle-container {
+                    height: $ui-grid-header-alternate-row-height;
+
+                    .ui-grid-resize-handle {
+                        height: $ui-grid-header-alternate-row-height;
+                    }
+                }
             }
-
-        }
-
-        &-table-container {
-            position: relative;
         }
 
         &-no-data-container {
@@ -292,6 +294,20 @@ ui-grid {
 
             p {
                 margin-left: $ui-grid-default-spacing;
+            }
+        }
+
+        &-table-container {
+            position: relative;
+
+            &.scrollable {
+                overflow-x: auto;
+                overflow-y: hidden;
+
+                .ui-grid-no-data-container p {
+                    position: sticky;
+                    left: 2 * $ui-grid-default-spacing;
+                }
             }
         }
 
@@ -334,14 +350,8 @@ ui-grid {
         }
 
         &-resize-handle {
-            flex: 0 0 $ui-header-resize-handle-width;
-            margin-left: - $ui-cell-resizing-border-width;
-            position: relative;
-            height: 100%;
-            display: flex;
             cursor: col-resize;
         }
-
 
         &-dropdown-filter {
             &-button {
@@ -392,6 +402,8 @@ ui-grid {
             }
 
             .ui-grid-cell-content {
+                width: 100%;
+
                 @extend %ellipse;
 
                 >* {
@@ -405,12 +417,48 @@ ui-grid {
                 text-transform: uppercase;
                 height: $ui-grid-header-row-height;
                 position: relative;
+                overflow: clip;
+
+                :first-child.sticky-columns-header-container {
+                    padding-left: 0;
+
+                    .ui-grid-header-cell[role="columnheader"] {
+                        padding-left: $ui-grid-row-horizontal-padding;
+                    }
+                }
+
+                .sticky-columns-header-container {
+                    position: sticky;
+                    z-index: 1;
+                    height: 100%;
+                    display: flex;
+                    overflow: hidden;
+
+                    .ui-grid-header-cell[role="columnheader"] {
+                        padding: 0 0 0 $ui-grid-default-spacing;
+                    }
+                }
             }
 
             .ui-grid-header {
+                background-color: $header-background-color;
+
                 mat-progress-bar {
                     position: absolute;
                     right: 0;
+                    z-index: 1;
+                }
+
+                .ui-grid-resize-handle-container {
+                    background-color: transparent;
+                }
+
+                .ui-grid-header-cell {
+                    background-color: $header-background-color;
+
+                    &.ui-grid-state-resizing, &:focus, &.cdk-focused {
+                        background-color: $ui-grid-row-hover-color;
+                    }
                 }
             }
 
@@ -428,6 +476,38 @@ ui-grid {
                 &.ui-grid-row-state-expanded {
                     height: auto;
                 }
+
+                &:hover,
+                &:focus,
+                &.cdk-focused {
+                    .ui-grid-action-cell {
+                        > div {
+                            box-shadow: -16px 0px 16px -4px $ui-grid-row-hover-color;
+                        }
+                    }
+                }
+
+                :first-child.sticky-columns-cell-container {
+                    padding-left: 0;
+
+                    .ui-grid-cell {
+                        padding-left: $ui-grid-row-horizontal-padding;
+                    }
+                }
+
+                &.highlighted-row {
+                    .ui-grid-action-cell-container {
+                        background-color: $ui-grid-row-hover-color;
+                    }
+
+                    .ui-grid-cell, .ui-grid-cell-resizing-border-container {
+                        background-color: $ui-grid-row-hover-color;
+                    }
+
+                    > div.ui-grid-cell:first-of-type {
+                        box-shadow: inset 4px 0px 0px $highlighted-entity-color;
+                    }
+                }
             }
 
             .ui-grid-header-row,
@@ -444,17 +524,41 @@ ui-grid {
                 }
             }
 
+            .ui-grid-header-row:not(.ui-grid-border-none) {
+                border-bottom: $ui-grid-cell-bottom-border;
+            }
+
             &:not(.ui-grid-table-refreshable) {
                 .ui-grid-action-cell {
                     min-width: $ui-feature-cell-width;
                 }
             }
 
-            .ui-grid-cell-resizing-border {
-                flex: 0 0 $ui-cell-resizing-border-width;
-                height: $ui-grid-row-height + $ui-row-border-width;
-                margin-top: -$ui-row-border-width;
+            .ui-grid-resize-handle-container {
                 position: relative;
+                flex: 0 0 $ui-header-resize-handle-width;
+                height: $ui-grid-header-row-height + 1;
+
+                &.last-sticky-handle-container {
+                    flex: 0 0 $ui-header-resize-handle-width;
+                }
+
+                .ui-grid-resize-handle {
+                    position: absolute;
+                    top: 0;
+                    width: $ui-header-resize-handle-width;
+                    height: $ui-grid-header-row-height + 1;
+                }
+            }
+
+            .ui-grid-cell-resizing-border-container {
+                position: relative;
+                height: $ui-grid-row-height + $ui-row-border-width;
+
+                .ui-grid-cell-resizing-border {
+                    width: $ui-header-resize-handle-width;
+                    height: $ui-grid-row-height;
+                }
             }
 
             .ui-grid-header-cell {
@@ -463,8 +567,42 @@ ui-grid {
                 }
             }
 
-            .ui-grid-header-cell {
-                justify-content: space-between;
+            .sticky-columns-header-container, .sticky-columns-cell-container {
+                border-right: 1px solid $ui-grid-border-color;
+            }
+
+                .ui-grid-header-cell:not(.ui-grid-checkbox-cell, .ui-grid-refresh-cell) {
+                    position: relative;
+                }
+
+                .ui-grid-resize-handle-container {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: $ui-header-resize-handle-width;
+                    padding-left: $ui-header-resize-handle-width - $ui-handle-size-width;
+                    box-sizing: border-box;
+                    left: unset !important;
+                    background-color: transparent;
+
+                    cursor: col-resize;
+
+                    .ui-grid-resize-handle {
+                        width: $ui-handle-size-width;
+                    }
+                }
+
+            .ui-grid-cell-resizing-border-container {
+                position: relative;
+                width: $ui-header-resize-handle-width;
+                padding-left: $ui-header-resize-handle-width - ($ui-handle-size-width / 2);
+                box-sizing: border-box;
+                background-color: transparent;
+
+                .ui-grid-cell-resizing-border {
+                    width: $ui-handle-size-width / 2;
+                    min-width: $ui-handle-size-width / 2;
+                }
             }
 
             .ui-grid-cell,
@@ -476,7 +614,7 @@ ui-grid {
                 overflow: hidden;
                 word-wrap: break-word;
 
-                &:not(.ui-grid-feature-cell):not(:first-child) {
+                &:not(.ui-grid-feature-cell):not(:first-child, .sticky-columns-cell-container) {
                     box-sizing: border-box;
                     padding: 0 0 0 $ui-grid-default-spacing;
                 }
@@ -512,7 +650,12 @@ ui-grid {
                     padding: 0;
                     overflow: visible;
 
-                    >div {
+                    &.ui-grid-sticky-element {
+                        right: 0;
+                        position: sticky;
+                    }
+
+                    > div {
                         display: inline-flex;
                         justify-content: flex-end;
                         align-items: center;
@@ -524,6 +667,19 @@ ui-grid {
                         bottom: 0;
                     }
                 }
+            }
+
+            .ui-grid-sticky-element {
+                position: sticky;
+                left: 0;
+                z-index: 1;
+            }
+
+            .sticky-refresh {
+                position: sticky;
+                right: 0;
+                z-index: 1;
+                box-shadow: -16px 0px 16px -4px $header-background-color;
             }
 
             .ui-grid-sort {
@@ -558,6 +714,23 @@ ui-grid {
 
             .ui-grid-cell {
                 height: $ui-grid-row-height - $ui-row-border-width;
+                background: $ui-grid-cell-background-color;
+
+                &.ui-grid-state-resizing {
+                    background: $ui-grid-row-hover-color;
+                }
+            }
+
+            .sticky-columns-cell-container.ui-grid-cell {
+                position: sticky;
+                z-index: 10;
+                padding-left: 0px;
+                display: flex;
+                height: $ui-grid-row-height - 1;
+
+                .ui-grid-cell {
+                    padding: 0 0 0 $ui-grid-default-spacing !important;
+                }
             }
 
             .ui-grid-header-cell-sortable {
