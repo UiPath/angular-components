@@ -1,7 +1,3 @@
-import { GridModule } from 'projects/playground/src/app/pages/grid/grid.page.module';
-import { HomeModule } from 'projects/playground/src/app/pages/home/home.page.module';
-import { SnackbarModule } from 'projects/playground/src/app/pages/snackbar/snackbar.module';
-
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,7 +6,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SnackbarModule } from './pages/snackbar/snackbar.module';
+import { HomeModule } from './pages/home/home.page.module';
+import { GridModule } from './pages/grid/grid.page.module';
 
+import { FilePickerModule } from './pages/file-picker/file-picker.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -26,6 +26,7 @@ import { AppComponent } from './app.component';
         GridModule,
         HomeModule,
         SnackbarModule,
+        FilePickerModule,
         MatSidenavModule,
         MatButtonModule,
         MatIconModule,

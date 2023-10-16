@@ -1,0 +1,105 @@
+:host {
+    $font-weight-semibold: 600;
+    $font-weight-default: 400;
+    $font-s-size: 12px;
+
+    display: flex;
+    overflow: auto;
+    width: 100%;
+    position: relative;
+    margin-bottom: 15px;
+
+    .upload-wrapper {
+        $input-height: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 3px;
+        border-style: dashed;
+        border-width: 2px;
+        width: 100%;
+        height: 100%;
+
+        &.disabled {
+            cursor: not-allowed;
+            opacity: 0.75;
+            filter: grayscale(0.75);
+            > * {
+                pointer-events: none;
+            }
+        }
+
+        .grid-wrapper {
+            position: relative;
+            overflow: auto;
+            ui-grid {
+                margin-top: -2px;
+            }
+
+            .delete-all-button {
+                position: absolute;
+                right: 5px;
+                top: 10px;
+                z-index: 1;
+            }
+        }
+
+        .upload-input-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            position: relative;
+            height: $input-height;
+            font-weight: $font-weight-semibold;
+            padding: 15px;
+            border-top-width: 1px;
+            border-top-style: solid;
+
+            .message {
+                text-align: center;
+
+                .mat-icon-button {
+                    margin: 0 6px;
+                    $size: 46px;
+                    $icon-size: 36px;
+                    line-height: $size;
+                    font-size: $size;
+                    height: $size;
+                    width: $size;
+                    mat-icon {
+                        font-size: $icon-size;
+                        width: $icon-size;
+                        height: 32px;
+                    }
+                }
+
+                .placeholder {
+                    margin: 6px;
+                    font-weight: $font-weight-default;
+                    font-size: $font-s-size;
+                }
+            }
+            &:not(.large) .message {
+                display: flex;
+                align-items: center;
+            }
+            &.large {
+                height: 100%;
+                flex-grow: 1;
+                border: 0;
+            }
+        }
+
+        .spinner-container {
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            display: flex;
+            box-sizing: border-box;
+            padding: 15px;
+            justify-content: center;
+        }
+    }
+}

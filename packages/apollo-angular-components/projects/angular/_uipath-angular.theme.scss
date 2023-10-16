@@ -3,11 +3,13 @@
 @import "./components/ui-grid/src/ui-grid.theme";
 @import "./components/ui-snackbar/src/ui-snackbar.theme";
 @import "./components/ui-password-indicator/src/ui-password-indicator.theme";
+@import "./components/ui-file-picker/src/ui-file-picker.theme";
 
 @mixin uipath-angular-theme($theme) {
     @include ui-suggest-theme($theme);
     @include ui-grid-theme($theme);
     @include ui-password-indicator-theme($theme);
+    @include ui-file-picker-theme($theme);
 }
 
 @mixin uipath-snackbar-theme($theme, $snackbar-theme: null) {

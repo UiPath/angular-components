@@ -1,0 +1,13 @@
+.custom-drop-zone {
+    display: flex;
+    flex-direction: column;
+    max-height: 100px;
+    border: 1px solid;
+    position: relative;
+    overflow: auto;
+
+    div {
+        display: flex;
+        justify-content: center;
+    }
+}
