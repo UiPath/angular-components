@@ -27,6 +27,10 @@ export class AppComponent {
             link: '/suggest',
         },
         {
+            name: 'Progress button',
+            link: '/progress-button',
+        },
+        {
             name: 'Tree select',
             link: '/tree',
         },

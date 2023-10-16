@@ -1,0 +1,70 @@
+<button mat-flat-button
+color="primary"
+(click)="toggle()">
+<mat-icon>radio_button_partial</mat-icon>
+Toggle loading state</button>
+
+<div class="group">
+    <button mat-button
+            ui-progress-button
+            [progressButtonLoading]="isLoading">test</button>
+    <button mat-button
+    ui-progress-button
+    [progressButtonLoading]="isLoading"
+    color="primary">test</button>
+    <button mat-button
+    ui-progress-button
+    [progressButtonLoading]="isLoading"
+    color="warn">test</button>
+    <button mat-button
+    ui-progress-button
+    [progressButtonLoading]="isLoading"
+    color="accent">test</button>
+
+</div>
+
+<div class="group">
+    <button mat-flat-button
+            ui-progress-button
+            [progressButtonLoading]="isLoading">test</button>
+    <button mat-flat-button
+    ui-progress-button
+    [progressButtonLoading]="isLoading"
+    color="primary">test</button>
+    <button mat-flat-button
+    ui-progress-button
+    [progressButtonLoading]="isLoading"
+    color="warn">test</button>
+    <button mat-flat-button
+    ui-progress-button
+    [progressButtonLoading]="isLoading"
+    color="accent">test</button>
+
+</div>
+
+<div class="group">
+    <button mat-flat-button
+            ui-progress-button
+            [progressButtonLoading]="isLoading">
+            <mat-icon>home</mat-icon>
+            test</button>
+    <button mat-flat-button
+    ui-progress-button
+    [progressButtonLoading]="isLoading"
+    color="primary">
+    <mat-icon>home</mat-icon>
+    test</button>
+    <button mat-flat-button
+    ui-progress-button
+    [progressButtonLoading]="isLoading"
+    color="warn">
+    <mat-icon>home</mat-icon>
+    test</button>
+    <button mat-flat-button
+    ui-progress-button
+    [progressButtonLoading]="isLoading"
+    color="accent">
+    <mat-icon>home</mat-icon>
+    test</button>
+
+</div>

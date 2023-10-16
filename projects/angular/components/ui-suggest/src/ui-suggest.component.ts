@@ -84,7 +84,7 @@ import {
 
 export const DEFAULT_SUGGEST_DEBOUNCE_TIME = 300;
 export const DEFAULT_SUGGEST_DRILLDOWN_CHARACTER = ':';
-export const MAT_CHIP_INPUT_SELECTOR = '.mat-chip-list input';
+export const MAT_CHIP_INPUT_SELECTOR = '.mat-mdc-chip-grid input';
 
 /**
  * A form compatible `dropdown` packing `lazy-loading` and `virtual-scroll`.
@@ -331,7 +331,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             !this.isOpen &&
             this._hasValue
         ) {
-            return this._getValueSummary();
+            return this._getValueSummary(true);
         }
 
         return null;
@@ -439,13 +439,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             return this._height$.value;
         }
 
-        const actualCount = Math.max(
-            this.renderItems.filter(Boolean).length + (this.enableCustomValue ?
-                (Number(this.isCustomValueVisible)) : (this.headerItems!.length)),
-            1,
-        );
-        const displayedCount = Math.min(this.displayCount, actualCount);
+        const actualCount = this.renderItems.filter(Boolean).length + (this.enableCustomValue ?
+            (Number(this.isCustomValueVisible)) : (this.headerItems!.length));
 
+        if (actualCount === 0) {
+            return this.baseSize + Number(!!this.headerItems!.length);
+        }
+
+        const displayedCount = Math.min(this.displayCount, Math.max(actualCount, 1));
         return this.itemSize * displayedCount + Number(!!this.headerItems!.length);
     }
 
@@ -1220,7 +1221,9 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             if (!this.multiple) {
                 this._clearSelection();
             } else if (!this.compact) {
-                this.inputControl.setValue('');
+                if (this.inputControl.value) {
+                    this.inputControl.setValue('');
+                }
                 this._focusChipInput();
             }
             this._pushEntry(value);
@@ -1719,11 +1722,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         });
     }
 
-    private _getValueSummary() {
-        return (this.displayValueFactory ?? this._defaultDisplayValueFactory)(this.value);
+    private _getValueSummary(fromTooltip = false) {
+        return (this.displayValueFactory ?? this._defaultDisplayValueFactory)(this.value, fromTooltip);
     }
 
-    private _defaultDisplayValueFactory = (value?: ISuggestValue[]) => (value ?? []).map(v => this.intl.translateLabel(v.text)).join(', ');
+    private _defaultDisplayValueFactory = (value?: ISuggestValue[], fromTooltip = false) =>
+        (value ?? []).map(v => this.intl.translateLabel((fromTooltip && v.tooltip) || v.text)).join(', ');
 
     private _cantNavigate(increment: number) {
         return (!this.items.length &&

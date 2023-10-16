@@ -13,7 +13,8 @@ ui-grid {
     $ui-grid-row-horizontal-padding: 24px;
     $ui-feature-cell-width: 50px;
     $ui-row-border-width: 1px;
-    $ui-header-resize-handle-width: 15px;
+    $ui-header-resize-handle-width: 6px;
+    $ui-cell-resizing-border-width: 3px;
     $ui-grid-default-spacing: 5px;
     $ui-border-radius: 4px;
     $ui-grid-button-size: 40px;
@@ -136,6 +137,7 @@ ui-grid {
 
     .ui-grid {
 
+
         &-primary,
         &-header-cell {
             font-weight: 500;
@@ -158,6 +160,10 @@ ui-grid {
                     display: flex;
                     flex-wrap: wrap;
                     align-items: center;
+
+                    .ui-grid-action-buttons-selection {
+                        display: flex;
+                    }
                 }
 
                 &-filters {
@@ -242,7 +248,7 @@ ui-grid {
                 }
             }
 
-            .ui-grid-no-data-container {
+            .ui-grid-row.ui-grid-no-data-container {
                 height: 4 * $ui-grid-row-height;
                 align-items: flex-start;
 
@@ -327,15 +333,15 @@ ui-grid {
             }
         }
 
-        &-resize-anchor {
+        &-resize-handle {
+            flex: 0 0 $ui-header-resize-handle-width;
+            margin-left: - $ui-cell-resizing-border-width;
+            position: relative;
             height: 100%;
-            width: $ui-header-resize-handle-width + $ui-grid-default-spacing;
-            cursor: col-resize;
-            justify-content: center;
             display: flex;
-            align-items: center;
-            margin-right: $ui-grid-default-spacing;
+            cursor: col-resize;
         }
+
 
         &-dropdown-filter {
             &-button {
@@ -370,10 +376,11 @@ ui-grid {
             display: block;
 
             .ui-grid-header-title {
-                width: calc(100% - #{$ui-header-resize-handle-width + $ui-grid-default-spacing});
+                width: 100%;
                 height: 100%;
                 display: inline-flex;
                 align-items: center;
+                position: relative;
 
                 p {
                     @extend %ellipse;
@@ -443,6 +450,23 @@ ui-grid {
                 }
             }
 
+            .ui-grid-cell-resizing-border {
+                flex: 0 0 $ui-cell-resizing-border-width;
+                height: $ui-grid-row-height + $ui-row-border-width;
+                margin-top: -$ui-row-border-width;
+                position: relative;
+            }
+
+            .ui-grid-header-cell {
+                &.ui-grid-spacer-cell {
+                    min-width: $ui-feature-cell-width;
+                }
+            }
+
+            .ui-grid-header-cell {
+                justify-content: space-between;
+            }
+
             .ui-grid-cell,
             .ui-grid-header-cell {
                 flex: 1;
@@ -479,6 +503,7 @@ ui-grid {
                 &.ui-grid-checkbox-cell {
                     min-width: $ui-feature-cell-width;
                     justify-content: center;
+                    box-sizing: border-box;
                 }
 
                 &.ui-grid-action-cell {

@@ -1,3 +1,38 @@
+# v15.0.2-rc.6 (2023-10-12)
+* **fix** focus chip input after selection
+
+# v15.0.2-rc.5 (2023-10-03)
+* **suggest** add role for aria attrs in multiple selection scenario
+
+# v15.0.2-rc.4 (2023-10-02)
+* **grid** improve performance using trackBy
+
+# v15.0.2-rc.3 (2023-10-02)
+* **grid** don't replace main action buttons
+* **feat** emit filter change to render on grid filter reset [AUOPS-2567]
+
+# v15.0.2-rc.2 (2023-09-29)
+* **suggest** input clear on multiple selection
+* **suggest** reduce height when no results found
+* **grid** remove tooltip on selected radio btn
+
+# v15.0.2-rc.1 (2023-08-22)
+* **grid** display action buttons on one row
+* **grid** styles specificity for empty grid
+
+# v15.0.2-rc.0 (2023-08-16)
+* **progress-button** fix styling & add playground page
+
+# v15.0.1-rc.0 (2023-08-11)
+* **suggest** add custom tooltip
+* **grid** show border for column resize
+* **grid** drop useLegacy in grid tests
+* **grid** drop legacy mode in ui-grid
+* **grid** drop legacy mode in playground
+* **playground** implement settings store for grid page
+* **playground** implement settings store
+* **a11y** make columns reset button focusable
+
 # 15.0.0-rc.0 (2023-06-07)
 * ng update to 15
 
