@@ -10,6 +10,7 @@ import {
 } from '@angular/router';
 import { FilePickerPageComponent } from 'projects/playground/src/app/pages/file-picker/file-picker.page';
 import { TreeSelectPageComponent } from 'projects/playground/src/app/pages/tree-select/tree-select.page';
+import { ProgressButtonPageComponent } from 'projects/playground/src/app/pages/progress-button/progress-button.page';
 
 const routes: Routes = [
     {
@@ -35,6 +36,10 @@ const routes: Routes = [
     {
         path: 'file-picker',
         component: FilePickerPageComponent,
+    },
+    {
+        path: 'progress-button',
+        component: ProgressButtonPageComponent,
     },
     {
         path: '**',

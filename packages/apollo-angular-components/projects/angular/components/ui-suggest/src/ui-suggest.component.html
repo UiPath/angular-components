@@ -82,9 +82,7 @@
                            [attr.tabindex]="!disabled && !readonly ? 0 : null"
                            [attr.aria-label]="ariaLabel ?? placeholder"
                            [attr.aria-describedby]="describedBy"
-                           [attr.aria-required]="required"
                            [attr.aria-disabled]="disabled || readonly"
-                           [attr.aria-expanded]="isOpen"
                            [style.width]="isFormControl ? null : width"
                            [disabled]="disabled"
                            (click)="open()"
@@ -100,28 +98,31 @@
                            (keydown.esc)="preventDefault($event)"
                            (keydown.tab)="close(false)"
                            (keydown.shift.tab)="close()">
-                <mat-chip-row *ngFor="let option of value; let i = index"
-                          [removable]="canRemoveChip(option)"
-                          [matTooltip]="intl.translateLabel(option.text)"
-                          (removed)="deselectItem(option)"
-                          class="chip-selectable">
-                    <mat-icon *ngIf="!!option?.icon?.svgIcon"
-                              [svgIcon]="option!.icon!.svgIcon!"
-                              class="chip-selectable-icon">
-                    </mat-icon>
-                    <mat-icon *ngIf="!!option?.icon?.matIcon"
-                              class="chip-selectable-icon">
-                        {{option?.icon?.matIcon}}
-                    </mat-icon>
-                    <span>
-                        {{ intl.translateLabel(option.text) }}
-                    </span>
-                    <button [attr.aria-hidden]="true"
-                            matChipRemove
-                            tabindex="-1">
-                        <mat-icon>close</mat-icon>
-                    </button>
-                </mat-chip-row>
+                <ng-container *ngFor="let option of value; let i = index">
+                    <mat-chip-row *ngLet="canRemoveChip(option) as canRemoveChip"
+                                   [removable]="canRemoveChip"
+                                   [matTooltip]="intl.translateLabel(option.tooltip ?? option.text)"
+                                   (removed)="deselectItem(option)"
+                                   class="chip-selectable">
+                        <mat-icon *ngIf="!!option?.icon?.svgIcon"
+                                   [svgIcon]="option!.icon!.svgIcon!"
+                                   class="chip-selectable-icon">
+                        </mat-icon>
+                        <mat-icon *ngIf="!!option?.icon?.matIcon"
+                                   class="chip-selectable-icon">
+                            {{option?.icon?.matIcon}}
+                        </mat-icon>
+                        <span>
+                            {{ intl.translateLabel(option.text) }}
+                        </span>
+                        <button *ngIf="canRemoveChip"
+                                [attr.aria-hidden]="true"
+                                matChipRemove
+                                tabindex="-1">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-chip-row>
+                </ng-container>
 
                 <input #searchInput
                            [uiAutofocus]="isOpen"
@@ -132,9 +133,12 @@
                            [matChipInputFor]="chipList"
                            [attr.maxlength]="maxLength"
                            [attr.aria-label]="ariaLabel ?? placeholder"
+                           [attr.aria-required]="required"
+                           [attr.aria-expanded]="isOpen"
                            selectionLocation="end"
                            autocomplete="off"
                            aria-autocomplete="list"
+                           role="combobox"
                            matInput>
 
             </mat-chip-grid>
@@ -298,7 +302,7 @@
             </ng-container>
 
             <mat-list-item *ngIf="loading$ | async"
-                           [style.height.px]="itemSize">
+                           [style.height.px]="baseSize">
                 <mat-progress-spinner color="primary"
                                       mode="indeterminate"
                                       diameter="20"
@@ -408,7 +412,7 @@
             </ng-container>
         </ng-container>
         <ng-template #defaultItem>
-            <div [matTooltip]="disableTooltip ? '' : intl.translateLabel(item.text)"
+            <div [matTooltip]="disableTooltip ? '' : intl.translateLabel(item.tooltip ?? item.text)"
                  [attr.data-item-id]="item.id"
                  matTooltipPosition="right"
                  class="ui-suggest-item">

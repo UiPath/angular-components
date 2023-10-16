@@ -39,7 +39,7 @@ import {
 export abstract class ResizeManager<T extends IGridDataEntry> {
     isResizing = false;
     current?: IResizeInfo<T>;
-    resizeEnd$ = new Subject<void>();
+    resizeEnd$ = new Subject<IResizeInfo<T> | undefined>();
     resizeStart$ = new Subject<{ columnIndex: number; mouseEvent?: MouseEvent; direction?: 'left' | 'right' }>();
     protected set _resizeEvent(ev: MouseEvent) {
         if (!this.current) { return; }
@@ -211,16 +211,17 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
     stop() {
         this._stopped$.next();
+        const current = this.current;
         this.endResize();
         this.isResizing = false;
         // it's added after the `endResize` call to ensure new width values upon emission
-        this.resizeEnd$.next();
+        this.resizeEnd$.next(current);
 
         // detection is required in order to update cell resize state
         // eslint-disable-next-line no-underscore-dangle
         (this._grid as any)._cd.reattach();
         // eslint-disable-next-line no-underscore-dangle
-        (this._grid as any)._cd.detectChanges();
+        (this._grid as any)._cd.markForCheck();
     }
 
     setupState(ev: MouseEvent, column: UiGridColumnDirective<T>) {

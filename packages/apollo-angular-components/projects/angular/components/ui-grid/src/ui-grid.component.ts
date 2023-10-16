@@ -822,8 +822,8 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         if (this.header) {
             this.header.searchValue = '';
         }
-        this.filterManager.clear();
         this.sortManager.clear();
+        this.filterManager.clear();
         return of(true);
     };
 
@@ -990,6 +990,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         if (!row) {
             return this.intl.checkboxTooltip(this.isEveryVisibleRowChecked);
         }
+        if (this.singleSelectable && this.selectionManager.isSelected(row)) { return ''; }
 
         return this.intl.checkboxTooltip(this.selectionManager.isSelected(row), this.dataManager.indexOf(row));
     }
@@ -1100,7 +1101,14 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     private _initResizeManager() {
         this._resizeSubscription$?.unsubscribe();
         this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
-        this._resizeSubscription$ = this.resizeManager.resizeEnd$.subscribe(() => this.resizeEnd.emit());
+        this._resizeSubscription$ = this.resizeManager.resizeEnd$.subscribe((resizeInfo) => {
+            if (resizeInfo) {
+                const gridHeaderCellElement = resizeInfo.element;
+                gridHeaderCellElement.focus();
+            }
+
+            this.resizeEnd.emit();
+        });
     }
 
     private _initDisplayToggleColumnsDivider() {
@@ -1108,5 +1116,4 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             map(([hasAnyFilterVisible, hasCustomFilters]) => hasAnyFilterVisible || hasCustomFilters),
         );
     }
-
 }

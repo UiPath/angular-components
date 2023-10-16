@@ -111,7 +111,7 @@ export abstract class UiSuggestMatFormFieldDirective implements
     shouldHideTitle = false;
 
     /**
-     * Sets aria-label on input or mat-chip-list element.
+     * Sets aria-label on input or mat-chip-grid element.
      *
      */
     @Input('aria-label')
@@ -131,6 +131,10 @@ export abstract class UiSuggestMatFormFieldDirective implements
     get itemSize() {
         if (this.customItemSize) { return this.customItemSize; }
 
+        return this.baseSize;
+    }
+
+    get baseSize() {
         return this.isFormControl ? 32 : 40;
     }
 
