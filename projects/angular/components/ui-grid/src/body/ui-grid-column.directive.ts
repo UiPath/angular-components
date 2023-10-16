@@ -27,6 +27,8 @@ const ARIA_SORT_MAP: Record<SortDirection, string> = {
     desc: 'descending',
 };
 
+const STICKY_MIN_WIDTH_FRACTION = 0.25;
+
 /**
  * @ignore
  */
@@ -61,6 +63,11 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
         if (isNaN(width)) { return; }
 
         this._width = width * 10;
+
+        if (this.isSticky && !this._alreadySetMinWidth) {
+            this._alreadySetMinWidth = true;
+            this.minWidth = this._width * STICKY_MIN_WIDTH_FRACTION;
+        }
     }
 
     /**
@@ -144,6 +151,24 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     sort: SortDirection = '';
 
     /**
+     * If true and ui-grid has scrollable resize strategy, then the column will be placed in sticky mode
+     *
+     */
+    @Input()
+    set isSticky(value: boolean) {
+        this._isSticky = value;
+        this.disableToggle = this.disableToggle || value;
+        if (value) {
+            this.visible = true;
+            this._alreadySetMinWidth = true;
+            this.minWidth = this._width * STICKY_MIN_WIDTH_FRACTION;
+        }
+    }
+    get isSticky() {
+        return this._isSticky;
+    }
+
+    /**
      * If the column should be styled as primary.
      *
      */
@@ -153,6 +178,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     }
     set primary(primary: boolean) {
         if (primary === this._primary) { return; }
+        if (primary) {this.isSticky = true;}
         this._primary = !!primary;
 
         this.change$.next({
@@ -165,7 +191,12 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      *
      */
     @Input()
-    disableToggle = false;
+    set disableToggle(value: boolean) {
+        this._disableToggle = value || this.isSticky;
+    }
+    get disableToggle() {
+        return this._disableToggle;
+    }
 
     /**
      * If the column should be rendered, used as default state if toggle columns is turned on.
@@ -240,7 +271,9 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     private _width = NaN;
     private _visible = true;
     private _primary = false;
-
+    private _isSticky = false;
+    private _disableToggle = false;
+    private _alreadySetMinWidth = false;
     /**
      * @ignore
      */

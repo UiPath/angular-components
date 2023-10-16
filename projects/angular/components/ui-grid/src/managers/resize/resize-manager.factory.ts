@@ -4,6 +4,7 @@ import {
     AggresiveNeighbourPushResizer,
     ImmediateNeighbourHaltResizer,
 } from './strategies';
+import { ScrollableGridResizer } from './strategies/scrollable-grid-resizer';
 import {
     ResizableGrid,
     ResizeStrategy,
@@ -25,5 +26,7 @@ export const ResizeManagerFactory =
                 return new AggresiveNeighbourPushResizer(grid);
             case ResizeStrategy.ImmediateNeighbourHalt:
                 return new ImmediateNeighbourHaltResizer(grid);
+            case ResizeStrategy.ScrollableGrid:
+                return new ScrollableGridResizer(grid);
         }
     };

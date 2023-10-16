@@ -4130,6 +4130,10 @@ describe('Component: UiGrid', () => {
             `,
         })
         class TestFixtureCustomFilterGridComponent {
+
+            @ViewChild(UiGridComponent)
+            grid!: UiGridComponent<ITestEntity>;
+
             columnDescription = 'some column description';
             sortable = false;
         }
@@ -4182,6 +4186,7 @@ describe('Component: UiGrid', () => {
         it('should not show info icon if description is missing', fakeAsync(() => {
             fixture.componentInstance.columnDescription = '';
             fixture.detectChanges();
+            (fixture.componentInstance.grid as any)._cd.detectChanges();
             expect(document.querySelector('.ui-grid-info-icon ')).toBeNull();
             const colTitleParagraphElement = document.querySelector('.ui-grid-header-title p');
             expect(colTitleParagraphElement!.getAttribute('aria-label')).toEqual('Number Header');
@@ -4190,6 +4195,7 @@ describe('Component: UiGrid', () => {
         it('should not add sortable label if column is sortable but does not have message', fakeAsync(() => {
             fixture.componentInstance.columnDescription = '';
             fixture.detectChanges();
+            (fixture.componentInstance.grid as any)._cd.detectChanges();
             expect(document.querySelector('.ui-grid-info-icon ')).toBeNull();
             const colTitleParagraphElement = document.querySelector('.ui-grid-header-title p');
             expect(colTitleParagraphElement!.getAttribute('aria-label')).toEqual('Number Header');
@@ -4200,6 +4206,7 @@ describe('Component: UiGrid', () => {
             fixture.componentInstance.columnDescription = '';
             fixture.componentInstance.sortable = true;
             fixture.detectChanges();
+            (fixture.componentInstance.grid as any)._cd.detectChanges();
             expect(document.querySelector('.ui-grid-info-icon ')).toBeNull();
             const colTitleParagraphElement = document.querySelector('.ui-grid-header-title p');
             expect(colTitleParagraphElement!.getAttribute('aria-label')).toEqual('Number Header. This is sortable');

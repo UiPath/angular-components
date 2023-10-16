@@ -56,6 +56,7 @@ export class GridPageComponent implements AfterViewInit {
         'showHeaderRow',
         'customFilter',
         'useCardView',
+        'isScrollable',
     ];
 
     buttonKeys = [
@@ -105,7 +106,7 @@ export class GridPageComponent implements AfterViewInit {
                 disabled: [false],
                 selectable: [true],
                 singleSelectable: [false],
-                toggleColumns: [false],
+                toggleColumns: [true],
                 multiPageSelect: [false],
                 refreshable: [true],
                 virtualScroll: [false],
@@ -113,6 +114,7 @@ export class GridPageComponent implements AfterViewInit {
                 showHeaderRow: [true],
                 customFilter: [false],
                 useCardView: [false],
+                isScrollable: [false],
             }),
             header: this._fb.group({
                 searchable: [true],

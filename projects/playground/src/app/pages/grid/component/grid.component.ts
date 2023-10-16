@@ -7,13 +7,17 @@ import {
 import { MockData } from 'projects/playground/src/app/pages/grid/grid.page';
 import {
     BehaviorSubject,
-    combineLatest, Observable, of,
+    combineLatest,
+    Observable,
+    of,
     Subject,
 } from 'rxjs';
 import {
     delay,
-    startWith, switchMap,
-    takeUntil, tap,
+    startWith,
+    switchMap,
+    takeUntil,
+    tap,
 } from 'rxjs/operators';
 
 import {
@@ -29,6 +33,7 @@ import {
 import {
     IFilterModel,
     PageChangeEvent,
+    ResizeStrategy,
     UiGridComponent,
 } from '@uipath/angular/components/ui-grid';
 import { ISuggestValues } from '@uipath/angular/components/ui-suggest';
@@ -66,6 +71,9 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
 
     editedEntity?: any;
     editedIndex?: number;
+
+    scrollableGridStrategy = ResizeStrategy.ScrollableGrid;
+    immediateNeighbourHalt = ResizeStrategy.ImmediateNeighbourHalt;
 
     @ViewChild(UiGridComponent)
     private _grid!: UiGridComponent<MockData>;

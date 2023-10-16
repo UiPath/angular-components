@@ -7,6 +7,7 @@ import {
     Subject,
 } from 'rxjs';
 import {
+    debounceTime,
     filter,
     map,
     take,
@@ -21,6 +22,7 @@ import {
     cellSelector,
     findHeaderIndexFor,
     getProperty,
+    isSticky,
     resizeFilter,
     toPercentageStyle,
 } from './resize-manager.constants';
@@ -41,6 +43,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     current?: IResizeInfo<T>;
     resizeEnd$ = new Subject<IResizeInfo<T> | undefined>();
     resizeStart$ = new Subject<{ columnIndex: number; mouseEvent?: MouseEvent; direction?: 'left' | 'right' }>();
+    resize$ = new Subject<Map<string, number>>();
     protected set _resizeEvent(ev: MouseEvent) {
         if (!this.current) { return; }
 
@@ -73,6 +76,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             },
         };
         this._resize$.next(nextEvent);
+        this.resize$.next(this._widthMap);
     }
 
     protected abstract _stateFilter: (state: IResizeEvent<T>) => boolean;
@@ -85,13 +89,19 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     protected _headers?: HTMLDivElement[];
     protected _table?: HTMLTableElement | null;
     protected _definitions?: UiGridColumnDirective<T>[];
-
     private _previous?: IResizeState<T> = {} as IResizeState<T>;
     private _direction?: ResizeDirection;
     private _resize$ = new Subject<IResizeEvent<T>>();
     private _stopped$ = new Subject<void>();
     private _widthMap = new Map<string, number>();
     private _gridElement: HTMLDivElement;
+    private _gridResizeObserver?: ResizeObserver;
+    private _widthChange$: Subject<number> = new Subject();
+
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    widthChange$ = this._widthChange$.pipe(
+        debounceTime(50),
+    );
 
     constructor(
         private _grid: ResizableGrid<T>,
@@ -128,6 +138,14 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             // eslint-disable-next-line no-underscore-dangle
             takeUntil((_grid as any)._destroyed$),
         ).subscribe();
+
+        this._gridResizeObserver = new ResizeObserver(entries => {
+            if (entries.length) {
+                this._widthChange$.next(entries[0].contentRect.width);
+            }
+        });
+
+        this._gridResizeObserver.observe(this._gridElement);
     }
 
     handleResize = (ev: MouseEvent) => this._resizeEvent = ev;
@@ -260,6 +278,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     }
 
     destroy() {
+        this._gridResizeObserver?.disconnect();
         this._stopped$.complete();
         this._resize$.complete();
         this._widthMap.clear();
@@ -299,9 +318,11 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
         const width = entry.column.width as number + offset;
         this._widthMap.set(entry.column.identifier, width);
-        entry.element.style.width = toPercentageStyle(width);
 
-        entry.cells.forEach(cell => cell.style.width = toPercentageStyle(width));
+        if (!isSticky(entry.element)) {
+            entry.element.style.width = toPercentageStyle(width);
+            entry.cells.forEach(cell => cell.style.width = toPercentageStyle(width));
+        }
     }
 
     private _getCellsFor = (property: string) => toArray<HTMLDivElement>(
@@ -325,7 +346,10 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
             const width = this._widthMap.get(entry.column.identifier)!;
             entry.column.width = width / 10;
-            entry.element.style.width = toPercentageStyle(width);
+
+            if (!isSticky(entry.element)) {
+                entry.element.style.width = toPercentageStyle(width);
+            }
         });
         this._previous = {} as IResizeState<T>;
     }

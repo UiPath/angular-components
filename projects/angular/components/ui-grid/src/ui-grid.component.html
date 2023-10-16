@@ -104,7 +104,8 @@
      (keydown.shift.alt.arrowup)="focusRowHeader()"
      class="ui-grid-container">
 
-    <div class="ui-grid-table-container">
+    <div [class.scrollable]="isScrollable"
+         class="ui-grid-table-container">
         <div *ngIf="useLegacyDesign && header?.mainButtons?.length === 1"
              class="ui-grid-action-button">
             <ng-container *ngIf="header!.mainButtons![0] as mainBtn">
@@ -116,6 +117,8 @@
         </div>
 
         <div [class.ui-grid-table-refreshable]="refreshable"
+             [style.minWidth.px]="isScrollable ? (minWidth$ | async) : undefined"
+             [style.overflow]="isScrollable ? (tableOverflowStyle$ | async) : 'visible'"
              class="ui-grid-table"
              role="grid">
             <div class="ui-grid-header">
@@ -123,6 +126,7 @@
                      class="ui-grid-header-row"
                      role="row">
                     <div *ngIf="selectable && !singleSelectable"
+                         [class.ui-grid-sticky-element]="isScrollable"
                          class="ui-grid-header-cell ui-grid-checkbox-cell ui-grid-feature-cell"
                          role="columnheader">
                         <mat-checkbox #selectAvailableRowsCheckbox
@@ -144,65 +148,138 @@
                     <ng-container *ngIf="multiPageSelect then multiPageSelectionProjectedHeaderCell">
                     </ng-container>
 
-                    <ng-container *ngFor="let column of visible$ | async; let last = last; let columnIndex = index">
-                        <div [class.ui-grid-header-cell-sortable]="column.sortable"
-                             [class.ui-grid-resizeable]="column.resizeable"
-                             [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
-                             [attr.aria-sort]="column.ariaSort"
-                             [attr.data-property]="column.property"
-                             [attr.data-identifier]="column.identifier"
-                             [style.width.%]="column.width"
-                             (cdkFocusChange)="triggerColumnHeaderTooltip($event, columnTooltip)"
-                             (focusout)="hideColumnHeaderTooltip(columnTooltip)"
-                             (keyup.enter)="sortManager.changeSort(column)"
-                             (keyup.space)="sortManager.changeSort(column)"
-                             (keydown.ArrowLeft)="!last && resizeManager.startKeyboardResize('left', column, columnIndex)"
-                             (keydown.ArrowRight)="!last && resizeManager.startKeyboardResize('right', column, columnIndex)"
-                             cdkMonitorElementFocus
-                             class="ui-grid-header-cell"
-                             role="columnheader"
-                             tabindex="0">
-                            <div (click)="sortManager.changeSort(column)"
-                                 class="ui-grid-header-title">
-                                <p #columnTooltip="matTooltip"
-                                   [class.ui-grid-header-title-filtered]="isFilterApplied(column)"
-                                   [matTooltip]="column.title + (focusedColumnHeader ? ('\n' + column.description) : '')"
-                                   [matTooltipDisabled]="resizeManager.isResizing"
-                                   [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')"
-                                   matTooltipClass="preserve-whitespace"
-                                   class="ui-grid-header-text">
-                                    {{ column.title }}
-                                </p>
+                    <ng-container *ngLet="partitionedVisibleColumns$ | async as columns">
+                            <div *ngIf="stickyColumnsWidths$ | async as columnWidths"
+                                 [style.width.%]="columnWidths.sum"
+                                 [style.left.px]="(selectable || singleSelectable) ? selectionColumnWidth : 0"
+                                 class="sticky-columns-header-container">
+                                <ng-container *ngFor="let column of columns.stickyColumns; let last = last; let columnIndex = index">
+                                    <div [class.ui-grid-header-cell-sortable]="column.sortable"
+                                         [class.ui-grid-resizeable]="column.resizeable"
+                                         [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
+                                         [attr.aria-sort]="column.ariaSort"
+                                         [attr.data-property]="column.property"
+                                         [attr.data-identifier]="column.identifier"
+                                         [style.width.%]="(columnWidths.widthMap[column.identifier] / columnWidths.sum) * 100"
+                                         (cdkFocusChange)="triggerColumnHeaderTooltip($event, columnTooltip)"
+                                         (focusout)="hideColumnHeaderTooltip(columnTooltip)"
+                                         (keyup.enter)="sortManager.changeSort(column)"
+                                         (keyup.space)="sortManager.changeSort(column)"
+                                         (keydown.ArrowLeft)="!last && resizeManager.startKeyboardResize('left', column, columnIndex)"
+                                         (keydown.ArrowRight)="!last && resizeManager.startKeyboardResize('right', column, columnIndex)"
+                                         cdkMonitorElementFocus
+                                         class="ui-grid-header-cell ui-grid-sticky-element"
+                                         role="columnheader"
+                                         tabindex="0">
+                                        <div (click)="sortManager.changeSort(column)"
+                                             class="ui-grid-header-title">
+                                            <p #columnTooltip="matTooltip"
+                                               [class.ui-grid-header-title-filtered]="isFilterApplied(column)"
+                                               [matTooltip]="column.title + (focusedColumnHeader ? ('\n' + column.description) : '')"
+                                               [matTooltipDisabled]="resizeManager.isResizing"
+                                               [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')"
+                                               matTooltipClass="preserve-whitespace"
+                                               class="ui-grid-header-text">
+                                                {{ column.title }}
+                                            </p>
 
-                                <mat-icon *ngIf="column.description"
-                                          [matTooltip]="column.description"
-                                          class="ui-grid-info-icon material-icons-outlined">info</mat-icon>
+                                            <mat-icon *ngIf="column.description"
+                                                      [matTooltip]="column.description"
+                                                      class="ui-grid-info-icon material-icons-outlined">info</mat-icon>
 
-                                <div *ngIf="column.sortable"
-                                     [class.ui-grid-sort-indicator-asc]="column.sort === 'asc'"
-                                     [class.ui-grid-sort-indicator-desc]="column.sort === 'desc'"
-                                     class="ui-grid-sort-indicator">
-                                    <mat-icon class="ui-grid-sort-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                             viewBox="0 0 24 24">
-                                            <path [attr.transform]="column.sort === '' ? 'translate(0 -3)': ''"
-                                                  class="path-asc"
-                                                  d="M12 11.8l2.5 2.5 1.1-1.1L12 9.7l-3.6 3.5 1.1 1.1z" />
-                                            <path [attr.transform]="column.sort === '' ? 'translate(0 3)': ''"
-                                                  class="path-desc"
-                                                  d="M12 12.2L9.5 9.7l-1.1 1.1 3.6 3.5 3.6-3.5-1.1-1.1z" />
-                                        </svg>
-                                    </mat-icon>
-                                </div>
+                                            <div *ngIf="column.sortable"
+                                                 [class.ui-grid-sort-indicator-asc]="column.sort === 'asc'"
+                                                 [class.ui-grid-sort-indicator-desc]="column.sort === 'desc'"
+                                                 class="ui-grid-sort-indicator">
+                                                <mat-icon class="ui-grid-sort-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                         viewBox="0 0 24 24">
+                                                        <path [attr.transform]="column.sort === '' ? 'translate(0 -3)': ''"
+                                                              class="path-asc"
+                                                              d="M12 11.8l2.5 2.5 1.1-1.1L12 9.7l-3.6 3.5 1.1 1.1z" />
+                                                        <path [attr.transform]="column.sort === '' ? 'translate(0 3)': ''"
+                                                              class="path-desc"
+                                                              d="M12 12.2L9.5 9.7l-1.1 1.1 3.6 3.5 3.6-3.5-1.1-1.1z" />
+                                                    </svg>
+                                                </mat-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="!isProjected && column.resizeable && !useCardView && (!last || columns.freeColumns.length > 0)"
+                                         class="ui-grid-resize-handle-container ui-grid-sticky-element">
+                                        <div *ngIf="isScrollable && last && columns.freeColumns.length > 0"
+                                             class="ui-grid-sticky-boundary"></div>
+                                        <div [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
+                                             (mousedown)="resizeManager.startResize($event, column, columnIndex)"
+                                             class="ui-grid-resize-handle">
+                                        </div>
+                                    </div>
+                                </ng-container>
                             </div>
 
-                        </div>
+                        <ng-container *ngFor="let column of columns.freeColumns; let last = last; let columnIndex = index">
+                            <div [class.ui-grid-header-cell-sortable]="column.sortable"
+                                 [class.ui-grid-resizeable]="column.resizeable"
+                                 [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
+                                 [attr.aria-sort]="column.ariaSort"
+                                 [attr.data-property]="column.property"
+                                 [attr.data-identifier]="column.identifier"
+                                 [style.width.%]="column.width"
+                                 (cdkFocusChange)="triggerColumnHeaderTooltip($event, columnTooltip)"
+                                 (focusout)="hideColumnHeaderTooltip(columnTooltip)"
+                                 (keyup.enter)="sortManager.changeSort(column)"
+                                 (keyup.space)="sortManager.changeSort(column)"
+                                 (keydown.ArrowLeft)="!last && resizeManager.startKeyboardResize('left', column, columnIndex)"
+                                 (keydown.ArrowRight)="!last && resizeManager.startKeyboardResize('right', column, columnIndex)"
+                                 cdkMonitorElementFocus
+                                 class="ui-grid-header-cell"
+                                 role="columnheader"
+                                 tabindex="0">
+                                <div (click)="sortManager.changeSort(column)"
+                                     class="ui-grid-header-title">
+                                    <p #columnTooltip="matTooltip"
+                                       [class.ui-grid-header-title-filtered]="isFilterApplied(column)"
+                                       [matTooltip]="column.title + (focusedColumnHeader ? ('\n' + column.description) : '')"
+                                       [matTooltipDisabled]="resizeManager.isResizing"
+                                       [attr.aria-label]="column.title + (column.description ? ('. ' + column.description) : '') + (column.sortable && intl.sortableMessage ? '. ' + intl.sortableMessage : '')"
+                                       matTooltipClass="preserve-whitespace"
+                                       class="ui-grid-header-text">
+                                        {{ column.title }}
+                                    </p>
 
-                        <div *ngIf="!isProjected && column.resizeable && !last && !useCardView"
-                             [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
-                             (mousedown)="resizeManager.startResize($event, column, columnIndex)"
-                             class="ui-grid-resize-handle">
-                        </div>
+                                    <mat-icon *ngIf="column.description"
+                                              [matTooltip]="column.description"
+                                              class="ui-grid-info-icon material-icons-outlined">info</mat-icon>
+
+                                    <div *ngIf="column.sortable"
+                                         [class.ui-grid-sort-indicator-asc]="column.sort === 'asc'"
+                                         [class.ui-grid-sort-indicator-desc]="column.sort === 'desc'"
+                                         class="ui-grid-sort-indicator">
+                                        <mat-icon class="ui-grid-sort-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 24 24">
+                                                <path [attr.transform]="column.sort === '' ? 'translate(0 -3)': ''"
+                                                      class="path-asc"
+                                                      d="M12 11.8l2.5 2.5 1.1-1.1L12 9.7l-3.6 3.5 1.1 1.1z" />
+                                                <path [attr.transform]="column.sort === '' ? 'translate(0 3)': ''"
+                                                      class="path-desc"
+                                                      d="M12 12.2L9.5 9.7l-1.1 1.1 3.6 3.5 3.6-3.5-1.1-1.1z" />
+                                            </svg>
+                                        </mat-icon>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="!isProjected && column.resizeable && !last && !useCardView"
+                                 class="ui-grid-resize-handle-container">
+                                <div [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
+                                     (mousedown)="resizeManager.startResize($event, column, columnIndex)"
+                                     class="ui-grid-resize-handle">
+                                </div>
+                            </div>
+                        </ng-container>
                     </ng-container>
 
                     <div *ngIf="virtualScroll"
@@ -210,6 +287,7 @@
                          class="ui-grid-header-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">
                     </div>
                     <div *ngIf="refreshable"
+                         [class.sticky-refresh]="isScrollable"
                          class="ui-grid-header-cell ui-grid-refresh-cell ui-grid-feature-cell"
                          role="columnheader">
                         <button [matTooltip]="intl.refreshTooltip"
@@ -227,6 +305,7 @@
                     </div>
                 </div>
                 <mat-progress-bar *ngIf="loading && !loadingState"
+                                  [style.minWidth.px]="isScrollable ? (minWidth$ | async) : undefined"
                                   mode="query"
                                   class="ui-grid-loader">
                 </mat-progress-bar>
@@ -375,6 +454,7 @@
         </div>
 
         <div *ngIf="!isProjected && (selectable || singleSelectable)"
+             [class.ui-grid-sticky-element]="isScrollable"
              class="ui-grid-cell ui-grid-checkbox-cell ui-grid-feature-cell"
              role="gridcell">
             <ng-container *ngLet="disableSelectionByEntry(row) as disabledReason">
@@ -402,36 +482,79 @@
             </ng-container>
         </div>
 
-        <ng-container *ngFor="let column of renderedColumns$ | async; let lastColumn = last">
-            <div [class.ui-grid-primary]="column.directive.primary"
-                 [class.ui-grid-secondary]="!column.directive.primary"
-                 [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
-                 [attr.data-property]="column.directive.property"
-                 [attr.data-identifier]="column.directive.identifier"
-                 [style.width.%]="column.directive.width"
-                 [attr.role]="column.role"
-                 class="ui-grid-cell">
-                <div *ngIf="isProjected"
-                     [matTooltip]="column.directive.title ?? ''"
-                     [matTooltipDisabled]="resizeManager.isResizing"
-                     class="ui-grid-cell-mobile-title">{{column.directive.title}}</div>
+        <ng-container *ngLet="renderedColumns$ | async as renderedColumns">
+                <div *ngIf="stickyColumnsWidths$ | async as columnWidths"
+                     [style.width.%]="columnWidths.sum"
+                     [style.left.px]="(selectable || singleSelectable) ? selectionColumnWidth : 0"
+                     class="sticky-columns-cell-container ui-grid-cell">
+                    <ng-container *ngFor="let column of renderedColumns.stickyColumns let lastColumn = last;">
+                        <div [class.ui-grid-primary]="column.directive.primary"
+                             [class.ui-grid-secondary]="!column.directive.primary"
+                             [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
+                             [attr.data-property]="column.directive.property"
+                             [attr.data-identifier]="column.directive.identifier"
+                             [style.width.%]="(columnWidths.widthMap[column.directive.identifier] / columnWidths.sum) * 100"
+                             [attr.role]="column.role"
+                             class="ui-grid-cell ui-grid-sticky-element">
+                            <div *ngIf="isProjected"
+                                 [matTooltip]="column.directive.title ?? ''"
+                                 [matTooltipDisabled]="resizeManager.isResizing"
+                                 class="ui-grid-cell-mobile-title">{{column.directive.title}}</div>
 
-                <div class="ui-grid-cell-content">
-                    <ng-container *ngTemplateOutlet="column.directive.html || textCellTemplate; context: {
-                                    data: row,
-                                    index: index,
-                                    property: column.directive.property
-                                }">
+                            <div class="ui-grid-cell-content">
+                                <ng-container *ngTemplateOutlet="column.directive.html || textCellTemplate; context: {
+                                                    data: row,
+                                                    index: index,
+                                                    property: column.directive.property
+                                                }">
+                                </ng-container>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-cell-resizing-border-container ui-grid-sticky-element"
+                        [class.ui-grid-last-resize-handle-container]="lastColumn && renderedColumns.freeColumns.length > 0">
+                            <div *ngIf="lastColumn && renderedColumns.freeColumns.length > 0"
+                                 class="ui-grid-sticky-boundary"></div>
+                            <div *ngIf="!isProjected && column.directive.resizeable && !useCardView"
+                                 [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
+                                 class="ui-grid-cell-resizing-border">
+                            </div>
+                        </div>
                     </ng-container>
                 </div>
 
+            <ng-container *ngFor="let column of renderedColumns.freeColumns; let lastColumn = last; let columnIndex = index">
+                <div [class.ui-grid-primary]="column.directive.primary"
+                     [class.ui-grid-secondary]="!column.directive.primary"
+                     [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
+                     [attr.data-property]="column.directive.property"
+                     [attr.data-identifier]="column.directive.identifier"
+                     [style.width.%]="column.directive.width"
+                     [attr.role]="column.role"
+                     class="ui-grid-cell">
+                    <div *ngIf="isProjected"
+                         [matTooltip]="column.directive.title ?? ''"
+                         [matTooltipDisabled]="resizeManager.isResizing"
+                         class="ui-grid-cell-mobile-title">{{column.directive.title}}</div>
 
-            </div>
-            <div *ngIf="!isProjected && column.directive.resizeable && !lastColumn && !useCardView"
-                 [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
-                 class="ui-grid-cell-resizing-border"></div>
+                    <div class="ui-grid-cell-content">
+                        <ng-container *ngTemplateOutlet="column.directive.html || textCellTemplate; context: {
+                                        data: row,
+                                        index: index,
+                                        property: column.directive.property
+                                    }">
+                        </ng-container>
+                    </div>
+                </div>
+                <div *ngIf="!lastColumn"
+                     class="ui-grid-cell-resizing-border-container">
+                    <div *ngIf="!isProjected && column.directive.resizeable && !lastColumn && !useCardView"
+                         [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
+                         class="ui-grid-cell-resizing-border">
+                    </div>
+                </div>
+            </ng-container>
         </ng-container>
-
         <div *ngIf="virtualScroll"
              class="ui-grid-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">
         </div>
@@ -443,6 +566,7 @@
 
         <div *ngIf="!isProjected &&
                     !!actions"
+             [class.ui-grid-sticky-element]="isScrollable"
              role="gridcell"
              class="ui-grid-cell ui-grid-action-cell ui-grid-feature-cell">
             <div class="ui-grid-action-cell-container">
@@ -501,11 +625,10 @@
 <ng-template #defaultCardTemplate
              let-row="data"
              let-index="index">
-    <div
-         class="ui-grid-card-default"
+    <div class="ui-grid-card-default"
          role="gridcell"
          tabindex="0">
-        <ng-container *ngFor="let column of renderedColumns$ | async">
+        <ng-container *ngFor="let column of (renderedColumns$ | async)!.freeColumns">
             <div [class.ui-grid-primary]="column.directive.primary"
                  [class.ui-grid-secondary]="!column.directive.primary"
                  [attr.data-property]="column.directive.property"
