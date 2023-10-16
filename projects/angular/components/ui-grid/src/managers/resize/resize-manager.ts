@@ -44,7 +44,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     protected set _resizeEvent(ev: MouseEvent) {
         if (!this.current) { return; }
 
-        const value = Math.round(ev.clientX - this.current.dragInitX!);
+        const value = ev.clientX - this.current.dragInitX!;
 
         // compute the current direction and determine if it has changed
         const direction = value > this._previous!.offsetPx ? ResizeDirection.Right : ResizeDirection.Left;
@@ -57,6 +57,9 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             this._neighbourIndexOffset = 0;
         }
 
+        const pixelsToPercentRatio = this._computePixelsToPercentRatio();
+        const offsetPercent = value * pixelsToPercentRatio;
+
         const nextEvent: IResizeEvent<T> = {
             previous: this._previous!,
             current: {
@@ -64,12 +67,11 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
                 neighbour: this._getResizedPairAt(this.current.index + direction + this._neighbourIndexOffset),
                 oppositeNeighbour: this._getResizedPairAt(this.current.index + -direction),
                 offsetPx: value,
-                offsetPercent: Math.round(value / this._table!.clientWidth * 1000),
+                offsetPercent,
                 direction,
                 event: ev,
             },
         };
-
         this._resize$.next(nextEvent);
     }
 
@@ -246,6 +248,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
                 filter(this._stateFilter),
                 filter(this._resizeRightFilter),
                 filter(this._resizeLeftFilter),
+                takeUntil(this._stopped$),
             )
             .subscribe(this._stateUpdate);
     }
@@ -325,5 +328,15 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             entry.element.style.width = toPercentageStyle(width);
         });
         this._previous = {} as IResizeState<T>;
+    }
+
+    private _computePixelsToPercentRatio() {
+        if (!this._definitions?.length) {
+            return 0;
+        }
+        const totalColumnWidths = this._definitions.reduce((acc, curr) => acc + +curr.width, 0);
+        const totalHeaderWidths = this._headers!.reduce((acc, curr) => acc + curr.getBoundingClientRect().width, 0);
+
+        return totalColumnWidths / totalHeaderWidths;
     }
 }
