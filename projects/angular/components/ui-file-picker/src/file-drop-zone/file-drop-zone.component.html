@@ -1,0 +1,11 @@
+<ng-content></ng-content>
+<input #uploadInput
+       data-testid="file-input"
+       type="file"
+       [tabindex]="ariaLabel ? 0 : -1"
+       [attr.aria-hidden]="ariaLabel === undefined"
+       [attr.aria-label]="ariaLabel"
+       [multiple]="!single"
+       [accept]="accept"
+       [disabled]="disabled"
+       (change)="onBrowseFiles($event)" />

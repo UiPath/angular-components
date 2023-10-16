@@ -1,0 +1,31 @@
+File Picker with max-height, secondary message and accepting only jpg and png files
+<ui-file-picker style="max-height: 500px"
+                accept=".jpg,.png"
+                secondaryMessage="Secondary message"></ui-file-picker>
+
+File Picker with max-height and descending sort by name
+<ui-file-picker style="max-height: 250px"
+                sortBy="-name"></ui-file-picker>
+
+File Picker with hideSummaryAfterFilesSelection = true (will emit files but will not show grid of files)
+<div>{{hiddenSummaryFiles$ | ngrxPush}}</div>
+<ui-file-picker (filesChanged)="onFilesChanged($event)"
+                [hideSummaryAfterFilesSelection]="true"></ui-file-picker>
+
+File Picker disabled
+<ui-file-picker [disabled]="true"></ui-file-picker>
+
+Drop zone with custom wrapper
+<div #uploadWrapper
+     class="custom-drop-zone">
+    <div>
+        Click to upload or drag and drop
+    </div>
+    <ui-file-drop-zone (filesReceived)="addFiles($event)"
+                       [customDropZone]="uploadWrapper"
+                       ariaLabel="'Click to upload or drag and drop">
+    </ui-file-drop-zone>
+    <div *ngIf="customDropZoneFiles$ | async as files">
+        Dropped files: {{files}}
+    </div>
+</div>

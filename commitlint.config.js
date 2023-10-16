@@ -11,6 +11,7 @@ module.exports = {
                 'dateformat',
                 'deps',
                 'drag-and-drop-file',
+                'file-picker',
                 'grid',
                 'ng-let',
                 'nl2br',
