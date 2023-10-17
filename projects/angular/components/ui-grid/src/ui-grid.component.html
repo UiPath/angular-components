@@ -165,8 +165,8 @@
                                          (focusout)="hideColumnHeaderTooltip(columnTooltip)"
                                          (keyup.enter)="sortManager.changeSort(column)"
                                          (keyup.space)="sortManager.changeSort(column)"
-                                         (keydown.ArrowLeft)="!last && resizeManager.startKeyboardResize('left', column, columnIndex)"
-                                         (keydown.ArrowRight)="!last && resizeManager.startKeyboardResize('right', column, columnIndex)"
+                                         (keydown.ArrowLeft)="(!last || columns.freeColumns.length) && resizeManager.startKeyboardResize('left', column, columnIndex); $event.preventDefault()"
+                                         (keydown.ArrowRight)="(!last || columns.freeColumns.length) && resizeManager.startKeyboardResize('right', column, columnIndex); $event.preventDefault()"
                                          cdkMonitorElementFocus
                                          class="ui-grid-header-cell ui-grid-sticky-element"
                                          role="columnheader"
@@ -230,8 +230,8 @@
                                  (focusout)="hideColumnHeaderTooltip(columnTooltip)"
                                  (keyup.enter)="sortManager.changeSort(column)"
                                  (keyup.space)="sortManager.changeSort(column)"
-                                 (keydown.ArrowLeft)="!last && resizeManager.startKeyboardResize('left', column, columnIndex)"
-                                 (keydown.ArrowRight)="!last && resizeManager.startKeyboardResize('right', column, columnIndex)"
+                                 (keydown.ArrowLeft)="!last && resizeManager.startKeyboardResize('left', column, columnIndex); $event.preventDefault()"
+                                 (keydown.ArrowRight)="!last && resizeManager.startKeyboardResize('right', column, columnIndex); $event.preventDefault()"
                                  cdkMonitorElementFocus
                                  class="ui-grid-header-cell"
                                  role="columnheader"
