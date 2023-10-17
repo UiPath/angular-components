@@ -100,7 +100,6 @@ const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
 const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), textarea, select, details, [tabindex]:not([tabindex="-1"])';
 const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'select'];
 const MIN_WIDTH_MULTIPLICATION_FACTOR = 1;
-export const ADJACENT_GRID_ELEMENTS_WIDTH = 250;
 
 @Component({
     selector: 'ui-grid',
@@ -769,7 +768,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         ? merge(
             this.resizeManager.resize$.pipe(
                 map(widths => {
-                    this.stickyColumnsWidths = this._computestickyColumnsWidths(widths);
+                    this.stickyColumnsWidths = this._computeStickyColumnsWidths(widths);
                     return this.stickyColumnsWidths!;
                 }),
                 startWith(this.stickyColumnsWidths!),
@@ -819,7 +818,6 @@ export class UiGridComponent<T extends IGridDataEntry>
         this._collapseFiltersCount$ = new BehaviorSubject(
             _gridOptions?.collapseFiltersCount ?? (_gridOptions?.collapsibleFilters === true ? 0 : Number.POSITIVE_INFINITY),
         );
-        this.resizeStrategy = _gridOptions?.resizeStrategy ?? ResizeStrategy.ImmediateNeighbourHalt;
 
         this.isProjected = this._ref.nativeElement.classList.contains('ui-grid-state-responsive');
 
@@ -901,6 +899,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         ).subscribe();
 
         this._initResizeManager();
+        this.resizeStrategy = _gridOptions?.resizeStrategy ?? ResizeStrategy.ImmediateNeighbourHalt;
         this._performanceMonitor = new PerformanceMonitor(_ref.nativeElement);
         this.paintTime$ = this._performanceMonitor.paintTime$;
 
@@ -930,7 +929,7 @@ export class UiGridComponent<T extends IGridDataEntry>
      */
     ngAfterContentInit() {
         this.selectionManager.disableSelectionByEntry = this.disableSelectionByEntry;
-        this.stickyColumnsWidths = this._computestickyColumnsWidths();
+        this.stickyColumnsWidths = this._computeStickyColumnsWidths();
 
         this.liveAnnouncerManager = new LiveAnnouncerManager(
             msg => this._queuedAnnouncer.enqueue(msg),
@@ -1221,7 +1220,7 @@ export class UiGridComponent<T extends IGridDataEntry>
 
         // the window width was used instead of the container's width because we need an absolute unit of measure
         // This way it persists on page refresh
-        return (window.innerWidth - ADJACENT_GRID_ELEMENTS_WIDTH) * (minWidth / 1000) * MIN_WIDTH_MULTIPLICATION_FACTOR;
+        return window.innerWidth * (minWidth / 1000) * MIN_WIDTH_MULTIPLICATION_FACTOR;
     }
 
     private _isOverflown(minWidth: number) {
@@ -1229,7 +1228,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         return minWidth > gridWidth;
     }
 
-    private _computestickyColumnsWidths(widths?: Map<string, number>) {
+    private _computeStickyColumnsWidths(widths?: Map<string, number>) {
         const stickyCols = this.columns.toArray().filter(c => c.isSticky && c.visible);
 
         const widthMap = stickyCols.reduce((acc, curr) => {
