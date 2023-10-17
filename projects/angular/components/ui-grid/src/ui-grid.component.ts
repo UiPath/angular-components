@@ -201,7 +201,7 @@ export class UiGridComponent<T extends IGridDataEntry>
 
         if (value != null) {
             this._resizeStrategy = value;
-            this.isScrollable = value === ResizeStrategy.ScrollableGrid;
+            this.isScrollable = value === ResizeStrategy.ScrollableGrid && !this.virtualScroll;
 
             if (this.resizeManager != null) {
                 this.resizeManager.destroy();
@@ -316,11 +316,17 @@ export class UiGridComponent<T extends IGridDataEntry>
     refreshable = true;
 
     /**
-     * Configure if `virtualScroll` is enabled.
+     * Configure if `virtualScroll` is enabled. Incompatible with scrollable resize strategy.
      *
      */
     @Input()
-    virtualScroll = false;
+    set virtualScroll(value: boolean) {
+        this._virtualScroll = value;
+        this.isScrollable = this.isScrollable && !value;
+    }
+    get virtualScroll() {
+        return this._virtualScroll;
+    }
 
     /**
      * Configure the row item size for virtualScroll
@@ -795,6 +801,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     private _expandedEntries: T[] = [];
     private _columns!: QueryList<UiGridColumnDirective<T>>;
     private _stickyColumns: UiGridColumnDirective<T>[] = [];
+    private _virtualScroll = false;
     /**
      * @ignore
      */
