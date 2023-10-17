@@ -1,3 +1,7 @@
+# v15.0.2-rc.7 (2023-10-17)
+* **fix** clear and focus suggest input on deselection
+* **file-picker** create component
+
 # v15.0.2-rc.6 (2023-10-12)
 * **fix** focus chip input after selection
 
