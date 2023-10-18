@@ -201,7 +201,6 @@ export class UiGridComponent<T extends IGridDataEntry>
 
         if (value != null) {
             this._resizeStrategy = value;
-            this.isScrollable = value === ResizeStrategy.ScrollableGrid && !this.virtualScroll;
 
             if (this.resizeManager != null) {
                 this.resizeManager.destroy();
@@ -325,7 +324,6 @@ export class UiGridComponent<T extends IGridDataEntry>
     @Input()
     set virtualScroll(value: boolean) {
         this._virtualScroll = value;
-        this.isScrollable = this.isScrollable && !value;
     }
     get virtualScroll() {
         return this._virtualScroll;
@@ -417,12 +415,12 @@ export class UiGridComponent<T extends IGridDataEntry>
     useCardView = false;
 
     /**
-     * Id of the entity that should be previewed
+     * Id of the entity that should be highlighted
      *
      */
     @Input()
-    set previewSelectionId(value: string) {
-        this.previewSelected$.next(value);
+    set highlightedEntityId(value: string) {
+        this.highlightedEntityId$.next(value);
     }
 
     /**
@@ -683,7 +681,9 @@ export class UiGridComponent<T extends IGridDataEntry>
      * Whether the grid allows horizontal scroll or not.
      *
      */
-    isScrollable = false;
+    get isScrollable() {
+        return this.resizeStrategy === ResizeStrategy.ScrollableGrid && !this.virtualScroll;
+    }
 
     /**
      * The width of selectable column.
@@ -709,10 +709,10 @@ export class UiGridComponent<T extends IGridDataEntry>
     );
 
     /**
-     * Emits the id of the entity that should be previewed.
+     * Emits the id of the entity that should be highlighted.
      *
      */
-    previewSelected$ = new BehaviorSubject<string | number>('');
+    highlightedEntityId$ = new BehaviorSubject<string | number>('');
 
     /**
      * @internal
@@ -775,6 +775,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         ),
         this.resizeManager.widthChange$.pipe(
             map(() => this._computeMinWidth()),
+            distinctUntilChanged(),
         ),
     ).pipe(
         tap(() => { this._cd.detectChanges(); }),
@@ -782,6 +783,7 @@ export class UiGridComponent<T extends IGridDataEntry>
 
     isOverflown$ = this.minWidth$.pipe(
         map(minWidth => this._isOverflown(minWidth)),
+        distinctUntilChanged(),
     );
 
     tableOverflowStyle$ = this.isOverflown$.pipe(
@@ -796,6 +798,7 @@ export class UiGridComponent<T extends IGridDataEntry>
                     return this.stickyColumnsWidths!;
                 }),
                 startWith(this.stickyColumnsWidths!),
+                distinctUntilChanged(),
                 tap(() => queueMicrotask(() => this._cd.detectChanges())),
             ),
             ((this.footer
@@ -1147,17 +1150,17 @@ export class UiGridComponent<T extends IGridDataEntry>
     onRowClick(event: Event, row: T) {
         if ((event.target instanceof Element) &&
             !EXCLUDED_ROW_SELECTION_ELEMENTS.find(el => (event.target as Element).closest(el))) {
-                if (this.resizeStrategy === ResizeStrategy.ScrollableGrid) {
-                    this.previewSelected$.next(row.id);
-                }
+            if (this.isScrollable) {
+                this.highlightedEntityId$.next(row.id);
+            }
 
-                if (this.shouldSelectOnRowClick) {
-                    if (this.singleSelectable) {
-                        this.rowSelected(row);
-                    } else {
-                        this.selectionManager.toggle(row);
-                    }
+            if (this.shouldSelectOnRowClick) {
+                if (this.singleSelectable) {
+                    this.rowSelected(row);
+                } else {
+                    this.selectionManager.toggle(row);
                 }
+            }
         }
         this.rowClick.emit({
             event,

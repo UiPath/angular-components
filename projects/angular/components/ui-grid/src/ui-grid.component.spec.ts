@@ -4540,6 +4540,8 @@ describe('Component: UiGrid', () => {
                 });
 
                 fixture = TestBed.createComponent(TestFixtureHorizontalScrollGridComponent);
+                const data = generateListFactory(generateEntity)(6);
+                fixture.componentInstance.data = data;
 
                 tick(100);
                 fixture.detectChanges();
@@ -4640,6 +4642,14 @@ describe('Component: UiGrid', () => {
                     expect(gridTable.styles.overflow).toEqual('hidden');
                 }));
             });
+
+            it(`should apply highlighted-row class on row click`, fakeAsync(() => {
+                const row = fixture.debugElement.query(By.css('.ui-grid-row'));
+                row.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+                tick(100);
+                expect(row.classes['highlighted-row']).toBeTruthy();
+            }));
         });
     });
 });

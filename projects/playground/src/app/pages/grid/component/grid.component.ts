@@ -73,7 +73,7 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
     editedIndex?: number;
 
     scrollableGridStrategy = ResizeStrategy.ScrollableGrid;
-    immediateNeighbourHalt = ResizeStrategy.ImmediateNeighbourHalt;
+    immediateNeighbourHaltStrategy = ResizeStrategy.ImmediateNeighbourHalt;
 
     @ViewChild(UiGridComponent)
     private _grid!: UiGridComponent<MockData>;

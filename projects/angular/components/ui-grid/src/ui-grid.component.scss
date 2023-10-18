@@ -464,7 +464,7 @@ ui-grid {
                     }
                 }
 
-                &.selected-preview {
+                &.highlighted-row {
                     > div:first-of-type {
                         box-shadow: inset 4px 0px 0px $preview-selection-color;
                     }

@@ -16,7 +16,7 @@
          [expandedEntries]="editedEntity"
          [useCardView]="inputs.useCardView"
          [expandMode]="'preserve'"
-         [resizeStrategy]="inputs.isScrollable ? scrollableGridStrategy : immediateNeighbourHalt"
+         [resizeStrategy]="inputs.isScrollable ? scrollableGridStrategy : immediateNeighbourHaltStrategy"
          [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []">
 
     <ui-grid-header [search]="header.searchable">
@@ -53,7 +53,7 @@
 
     <ui-grid-column [property]="'id'"
                     [sortable]="true"
-                    [isFrozen]="inputs.isScrollable"
+                    [isSticky]="inputs.isScrollable"
                     title="Id"
                     width="33%">
         <ui-grid-dropdown-filter [visible]="header.showFilter"

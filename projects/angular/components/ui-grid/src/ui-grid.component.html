@@ -104,7 +104,7 @@
          (keydown.shift.alt.arrowup)="focusRowHeader()"
          class="ui-grid-container">
 
-        <div [class.scrollable]="isScrollable"
+        <div [class.scrollable]="isScrollable && !dataManager.pristine"
              class="ui-grid-table-container">
             <div *ngIf="useLegacyDesign && header?.mainButtons?.length === 1"
                  class="ui-grid-action-button">
@@ -117,7 +117,7 @@
             </div>
 
             <div [class.ui-grid-table-refreshable]="refreshable"
-                 [style.minWidth.px]="isScrollable ? (minWidth$ | async) : undefined"
+                 [style.minWidth.px]="isScrollable && dataManager.length ? (minWidth$ | async) : undefined"
                  [style.overflow]="isScrollable ? (tableOverflowStyle$ | async) : 'visible'"
                  class="ui-grid-table"
                  role="grid">
@@ -379,7 +379,7 @@
                                     expanded: expandedEntries,
                                     last: last,
                                     columnWidths: columnWidths,
-                                    previewSelectedEntityId: (previewSelected$ | async)
+                                    highlightedEntityId: (highlightedEntityId$ | async)
                                 }">
                                 </ng-container>
                             </ng-container>
@@ -403,13 +403,13 @@
              let-last="last"
              let-index="index"
              let-columnWidths="columnWidths"
-             let-previewSelectedEntityId="previewSelectedEntityId">
+             let-highlightedEntityId="highlightedEntityId">
     <div cdkMonitorSubtreeFocus
          class="ui-grid-row"
          *ngIf="!isRowExpanded(row?.id) || expandMode === 'preserve'"
          [class.ui-grid-row-state-expanded]="isRowExpanded(row?.id)"
          [class.ui-grid-border-none]="!footer && last"
-         [class.selected-preview]="previewSelectedEntityId === row?.id"
+         [class.highlighted-row]="highlightedEntityId === row?.id"
          [ngClass]="rowConfig?.ngClassFn(row) ?? ''"
          [tabIndex]="0"
          [attr.data-row-index]="index"

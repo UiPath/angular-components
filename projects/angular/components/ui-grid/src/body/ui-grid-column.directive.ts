@@ -169,7 +169,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     }
 
     /**
-     * If the column should be styled as primary. Has the side-effect of setting column to sticky.
+     * If the column should be styled as primary.
      *
      */
     @Input()
@@ -178,7 +178,6 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     }
     set primary(primary: boolean) {
         if (primary === this._primary) { return; }
-        if (primary) {this.isSticky = true;}
         this._primary = !!primary;
 
         this.change$.next({
@@ -192,7 +191,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      */
     @Input()
     set disableToggle(value: boolean) {
-        this._disableToggle = value || this.isSticky;
+        this._disableToggle = value;
     }
     get disableToggle() {
         return this._disableToggle;
