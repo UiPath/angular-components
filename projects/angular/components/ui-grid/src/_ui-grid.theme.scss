@@ -89,12 +89,9 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
         }
 
         .ui-grid-action-cell-container {
-            background: $ui-grid-row-hover-color;
-            visibility: hidden;
-
-            :hover, :focus {
-                visibility: visible;
-            }
+            background-color: $ui-grid-cell-background-color;
+            transition: box-shadow $ui-grid-default-transition, $ui-grid-background-transition !important;
+            opacity: 0;
         }
 
         .ui-grid {
@@ -232,7 +229,8 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
                 outline: none;
 
                 .ui-grid-action-cell-container {
-                    visibility: visible;
+                    opacity: 1;
+                    background-color: $ui-grid-row-hover-color;
                 }
             }
 
@@ -250,7 +248,8 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
                 outline: none;
 
                 .ui-grid-action-cell-container {
-                    visibility: visible;
+                    opacity: 1;
+                    background-color: $ui-grid-row-hover-color;
                 }
             }
         }
