@@ -209,6 +209,9 @@ export class UiGridComponent<T extends IGridDataEntry>
             this._initResizeManager();
         }
     }
+    get resizeStrategy() {
+        return this._resizeStrategy;
+    }
 
     /**
      * Marks the grid loading state.
@@ -412,6 +415,15 @@ export class UiGridComponent<T extends IGridDataEntry>
      */
     @Input()
     useCardView = false;
+
+    /**
+     * Id of the entity that should be previewed
+     *
+     */
+    @Input()
+    set previewSelectionId(value: string) {
+        this.previewSelected$.next(value);
+    }
 
     /**
      * Emits an event with the sort model when a column sort changes.
@@ -695,6 +707,12 @@ export class UiGridComponent<T extends IGridDataEntry>
             freeColumns: columns.filter(c => !c.isSticky || !this.isScrollable),
         })),
     );
+
+    /**
+     * Emits the id of the entity that should be previewed.
+     *
+     */
+    previewSelected$ = new BehaviorSubject<string | number>('');
 
     /**
      * @internal
@@ -1127,13 +1145,19 @@ export class UiGridComponent<T extends IGridDataEntry>
     }
 
     onRowClick(event: Event, row: T) {
-        if (this.shouldSelectOnRowClick && (event.target instanceof Element) &&
+        if ((event.target instanceof Element) &&
             !EXCLUDED_ROW_SELECTION_ELEMENTS.find(el => (event.target as Element).closest(el))) {
-            if (this.singleSelectable) {
-                this.rowSelected(row);
-            } else {
-                this.selectionManager.toggle(row);
-            }
+                if (this.resizeStrategy === ResizeStrategy.ScrollableGrid) {
+                    this.previewSelected$.next(row.id);
+                }
+
+                if (this.shouldSelectOnRowClick) {
+                    if (this.singleSelectable) {
+                        this.rowSelected(row);
+                    } else {
+                        this.selectionManager.toggle(row);
+                    }
+                }
         }
         this.rowClick.emit({
             event,

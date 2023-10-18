@@ -169,7 +169,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     }
 
     /**
-     * If the column should be styled as primary.
+     * If the column should be styled as primary. Has the side-effect of setting column to sticky.
      *
      */
     @Input()

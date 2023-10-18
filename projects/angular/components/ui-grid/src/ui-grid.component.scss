@@ -463,6 +463,12 @@ ui-grid {
                         }
                     }
                 }
+
+                &.selected-preview {
+                    > div:first-of-type {
+                        box-shadow: inset 4px 0px 0px $preview-selection-color;
+                    }
+                }
             }
 
             .ui-grid-header-row,
@@ -602,7 +608,6 @@ ui-grid {
                         padding-right: $ui-grid-default-spacing;
                         right: 0;
                         bottom: 0;
-                        box-shadow: -16px 0px 16px -4px $ui-grid-row-hover-color;
                     }
                 }
             }

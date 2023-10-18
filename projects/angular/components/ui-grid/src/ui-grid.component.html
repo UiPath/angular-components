@@ -378,7 +378,8 @@
                                     index: index,
                                     expanded: expandedEntries,
                                     last: last,
-                                    columnWidths: columnWidths
+                                    columnWidths: columnWidths,
+                                    previewSelectedEntityId: (previewSelected$ | async)
                                 }">
                                 </ng-container>
                             </ng-container>
@@ -401,12 +402,14 @@
              let-expanded="expanded"
              let-last="last"
              let-index="index"
-             let-columnWidths="columnWidths">
+             let-columnWidths="columnWidths"
+             let-previewSelectedEntityId="previewSelectedEntityId">
     <div cdkMonitorSubtreeFocus
          class="ui-grid-row"
          *ngIf="!isRowExpanded(row?.id) || expandMode === 'preserve'"
          [class.ui-grid-row-state-expanded]="isRowExpanded(row?.id)"
          [class.ui-grid-border-none]="!footer && last"
+         [class.selected-preview]="previewSelectedEntityId === row?.id"
          [ngClass]="rowConfig?.ngClassFn(row) ?? ''"
          [tabIndex]="0"
          [attr.data-row-index]="index"
