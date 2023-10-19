@@ -1,3 +1,14 @@
+# v14.9.0 (2023-10-19)
+* **grid** increase target area for resize-handle
+* **grid** correct empty state on scrollable strategy
+* **grid** add class for previewed selection
+* **grid** sync transition for action btns
+* **grid** restrict scrollable strategy
+* **grid** add tests for horizontal scenario
+* **grid** prevent scrolling on keyboard resize
+* **grid** add scrollable resize strategy
+* **grid** resize according to mouse traveled distance
+
 # v14.8.15 (2023-10-02)
 * **grid** improve performance using trackBy
 
