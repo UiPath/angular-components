@@ -4130,6 +4130,10 @@ describe('Component: UiGrid', () => {
             `,
         })
         class TestFixtureCustomFilterGridComponent {
+
+            @ViewChild(UiGridComponent)
+            grid!: UiGridComponent<ITestEntity>;
+
             columnDescription = 'some column description';
             sortable = false;
         }
@@ -4182,6 +4186,7 @@ describe('Component: UiGrid', () => {
         it('should not show info icon if description is missing', fakeAsync(() => {
             fixture.componentInstance.columnDescription = '';
             fixture.detectChanges();
+            (fixture.componentInstance.grid as any)._cd.detectChanges();
             expect(document.querySelector('.ui-grid-info-icon ')).toBeNull();
             const colTitleParagraphElement = document.querySelector('.ui-grid-header-title p');
             expect(colTitleParagraphElement!.getAttribute('aria-label')).toEqual('Number Header');
@@ -4190,6 +4195,7 @@ describe('Component: UiGrid', () => {
         it('should not add sortable label if column is sortable but does not have message', fakeAsync(() => {
             fixture.componentInstance.columnDescription = '';
             fixture.detectChanges();
+            (fixture.componentInstance.grid as any)._cd.detectChanges();
             expect(document.querySelector('.ui-grid-info-icon ')).toBeNull();
             const colTitleParagraphElement = document.querySelector('.ui-grid-header-title p');
             expect(colTitleParagraphElement!.getAttribute('aria-label')).toEqual('Number Header');
@@ -4200,6 +4206,7 @@ describe('Component: UiGrid', () => {
             fixture.componentInstance.columnDescription = '';
             fixture.componentInstance.sortable = true;
             fixture.detectChanges();
+            (fixture.componentInstance.grid as any)._cd.detectChanges();
             expect(document.querySelector('.ui-grid-info-icon ')).toBeNull();
             const colTitleParagraphElement = document.querySelector('.ui-grid-header-title p');
             expect(colTitleParagraphElement!.getAttribute('aria-label')).toEqual('Number Header. This is sortable');
@@ -4473,4 +4480,176 @@ describe('Component: UiGrid', () => {
 
     });
 
+    describe('Horizontal scroll grid', () => {
+        @Component({
+            template: `
+                <ui-grid [data]="data"
+                [toggleColumns]="true"
+                         [resizeStrategy]="scrollableStrategy"
+                         [refreshable]="true"
+                             [selectable]="false"
+                             [virtualScroll]="virtualScroll">
+                    <ui-grid-column [property]="'myNumber'"
+                                    [isSticky]="true"
+                                    title="Number Header"
+                                    width="50%">
+                    </ui-grid-column>
+
+                    <ui-grid-column [property]="'myBool1'"
+                                    [isSticky]="true"
+                                    title="Boolean Header"
+                                    width="25%">
+                    </ui-grid-column>
+
+                    <ui-grid-column [property]="'myBool2'"
+                                    title="Boolean Header"
+                                    width="50%">
+                    </ui-grid-column>
+
+                    <ui-grid-column [property]="'myBool3'"
+                                    title="Boolean Header"
+                                    width="50%">
+                    </ui-grid-column>
+
+                    <ui-grid-column [property]="'myBool4'"
+                                    title="Boolean Header"
+                                    width="50%">
+                    </ui-grid-column>
+                </ui-grid>
+            `,
+        })
+        class TestFixtureHorizontalScrollGridComponent {
+            @ViewChild(UiGridComponent, {
+                static: true,
+            })
+            grid!: UiGridComponent<ITestEntity>;
+
+            data: ITestEntity[] = [];
+            scrollableStrategy = ResizeStrategy.ScrollableGrid;
+        }
+        describe('Behavior: horizontal scrollable grid', () => {
+            let fixture: ComponentFixture<TestFixtureHorizontalScrollGridComponent>;
+
+            beforeEach(fakeAsync(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        UiGridModule,
+                        NoopAnimationsModule,
+                    ],
+                    declarations: [TestFixtureHorizontalScrollGridComponent],
+                });
+
+                fixture = TestBed.createComponent(TestFixtureHorizontalScrollGridComponent);
+                const data = generateListFactory(generateEntity)(6);
+                fixture.componentInstance.data = data;
+
+                tick(100);
+                fixture.detectChanges();
+            }));
+
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should set a min-width on grid-table', () => {
+                const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
+                const columnWidthSum = fixture.componentInstance.grid.columns.reduce((acc, curr) => acc + +curr.width, 0);
+                const expectedWidth = window.innerWidth * (columnWidthSum / 1000);
+                expect(gridTable.nativeElement.style.minWidth).toBe(expectedWidth + 'px');
+            });
+
+            it('should preserve width of sticky container when performing a resize inside it (on a sticky column)', fakeAsync(() => {
+                const col = document.querySelectorAll('div[role="columnheader"]')[0]!;
+                const stickyContainer = document.querySelector('.sticky-columns-header-container');
+                const initialContainerWidth = stickyContainer!.getBoundingClientRect().width;
+                const initialColumnWidth = col!.getBoundingClientRect()!.width;
+                col.dispatchEvent(EventGenerator.keyDown(Key.ArrowRight));
+                fixture.detectChanges();
+                tick(50);
+
+                const newColumnWidth = col!.getBoundingClientRect()!.width;
+                const newContainerWidth = stickyContainer!.getBoundingClientRect().width;
+                expect(newColumnWidth).toBeGreaterThan(initialColumnWidth);
+                expect(newContainerWidth).toEqual(initialContainerWidth);
+                discardPeriodicTasks();
+            }));
+
+            it(`should increase sticky container's width when performing resize-right on last sticky column`, fakeAsync(() => {
+                const col = document.querySelectorAll('div[role="columnheader"]')[1]!;
+                const stickyContainer = document.querySelector('.sticky-columns-header-container');
+                const initialContainerWidth = stickyContainer!.getBoundingClientRect().width;
+                const initialColumnWidth = col!.getBoundingClientRect()!.width;
+                col.dispatchEvent(EventGenerator.keyDown(Key.ArrowRight));
+                fixture.detectChanges();
+                tick(50);
+
+                const newColumnWidth = col!.getBoundingClientRect()!.width;
+                const newContainerWidth = stickyContainer!.getBoundingClientRect().width;
+                expect(newColumnWidth).toBeGreaterThan(initialColumnWidth);
+                expect(newContainerWidth).toBeGreaterThan(initialContainerWidth);
+                discardPeriodicTasks();
+            }));
+
+            describe('Scenario toggle columns', () => {
+                beforeEach(async () => {
+                    fixture.detectChanges();
+
+                    const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
+                    buttonToggle.dispatchEvent(EventGenerator.click);
+
+                    await fixture.whenStable();
+                    fixture.detectChanges();
+                });
+
+                it(`should see sticky columns as disabled when trying to toggle`, fakeAsync(() => {
+                    const stickyColumnsIndexes = [0, 1];
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option'));
+
+                    options.forEach((o, i) => {
+                        expect(o.nativeElement.classList.contains('mat-option-disabled'))
+                            .toBe(stickyColumnsIndexes.includes(i));
+                    });
+                }));
+
+                it(`should decrease min-width when toggling off a column`, fakeAsync(() => {
+                    const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
+                    const startingMinWidth = gridTable.nativeElement.style.minWidth;
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option'));
+                    const checkbox = options[3].query(By.css('.mat-pseudo-checkbox'));
+
+                    checkbox.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+                    tick(100);
+
+                    const newMinWidth = gridTable.nativeElement.style.minWidth;
+                    expect(+newMinWidth.replace('px', '')).toBeLessThan(+startingMinWidth.replace('px', ''));
+                }));
+
+                it(`should set overflow to visible if total width of columns does not exceeded container width`, fakeAsync(() => {
+                    const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option:not(.mat-option-disabled)'));
+
+                    expect(gridTable.styles.overflow).toEqual('visible');
+
+                    options.forEach(o => {
+                        const checkbox = o.query(By.css('.mat-pseudo-checkbox'));
+                        checkbox.nativeElement.dispatchEvent(EventGenerator.click);
+                    });
+                    fixture.detectChanges();
+                    tick(100);
+                    fixture.detectChanges();
+
+                    expect(gridTable.styles.overflow).toEqual('hidden');
+                }));
+            });
+
+            it(`should apply highlighted-row class on row click`, fakeAsync(() => {
+                const row = fixture.debugElement.query(By.css('.ui-grid-row'));
+                row.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+                tick(100);
+                expect(row.classes['highlighted-row']).toBeTruthy();
+            }));
+        });
+    });
 });

@@ -3,6 +3,8 @@ import {
     animationFrameScheduler,
     BehaviorSubject,
     combineLatest,
+    defer,
+    EMPTY,
     merge,
     Observable,
     of,
@@ -97,6 +99,7 @@ export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid 
 const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
 const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), textarea, select, details, [tabindex]:not([tabindex="-1"])';
 const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'select'];
+const MIN_WIDTH_MULTIPLICATION_FACTOR = 1;
 
 @Component({
     selector: 'ui-grid',
@@ -135,7 +138,9 @@ const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'se
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> implements AfterContentInit, OnChanges, OnDestroy {
+export class UiGridComponent<T extends IGridDataEntry>
+    extends ResizableGrid<T>
+    implements AfterContentInit, OnChanges, OnDestroy {
     /**
      * The data list that needs to be rendered within the grid.
      *
@@ -191,16 +196,20 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      *
      */
     @Input()
-    set resizeStrategy(value: ResizeStrategy) {
+    set resizeStrategy(value: ResizeStrategy | null) {
         if (value === this._resizeStrategy) { return; }
 
-        this._resizeStrategy = value;
+        if (value != null) {
+            this._resizeStrategy = value;
 
-        if (this.resizeManager != null) {
-            this.resizeManager.destroy();
+            if (this.resizeManager != null) {
+                this.resizeManager.destroy();
+            }
+            this._initResizeManager();
         }
-
-        this._initResizeManager();
+    }
+    get resizeStrategy() {
+        return this._resizeStrategy;
     }
 
     /**
@@ -309,11 +318,16 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     refreshable = true;
 
     /**
-     * Configure if `virtualScroll` is enabled.
+     * Configure if `virtualScroll` is enabled. Incompatible with scrollable resize strategy.
      *
      */
     @Input()
-    virtualScroll = false;
+    set virtualScroll(value: boolean) {
+        this._virtualScroll = value;
+    }
+    get virtualScroll() {
+        return this._virtualScroll;
+    }
 
     /**
      * Configure the row item size for virtualScroll
@@ -399,6 +413,15 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     @Input()
     useCardView = false;
+
+    /**
+     * Id of the entity that should be highlighted
+     *
+     */
+    @Input()
+    set highlightedEntityId(value: string) {
+        this.highlightedEntityId$.next(value);
+    }
 
     /**
      * Emits an event with the sort model when a column sort changes.
@@ -490,7 +513,18 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      * @ignore
      */
     @ContentChildren(UiGridColumnDirective)
-    columns!: QueryList<UiGridColumnDirective<T>>;
+    get columns() {
+        return this._columns;
+    }
+    set columns(value: QueryList<UiGridColumnDirective<T>>) {
+        this._columns = value;
+
+        if (this.isScrollable) {
+            const stickyColumns = value.filter(c => c.isSticky);
+            const freeColumns = value.filter(c => !c.isSticky);
+            this._columns.reset([...stickyColumns, ...freeColumns]);
+        }
+    }
 
     /**
      * Expanded row template reference.
@@ -644,6 +678,43 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     focusedColumnHeader = false;
 
     /**
+     * Whether the grid allows horizontal scroll or not.
+     *
+     */
+    get isScrollable() {
+        return this.resizeStrategy === ResizeStrategy.ScrollableGrid && !this.virtualScroll;
+    }
+
+    /**
+     * The width of selectable column.
+     *
+     */
+    selectionColumnWidth = 50;
+
+    /**
+     * Value for first emission of the stream used to compute the widths of sticky columns and their container.
+     * Also used when the footer page changes.
+     */
+    stickyColumnsWidths?: { sum: number; widthMap: Record<string, number> };
+
+    /**
+     * Visibile columns emissions partitioned in sticky and free columns.
+     *
+     */
+    partitionedVisibleColumns$ = this.visible$.pipe(
+        map(columns => ({
+            stickyColumns: columns.filter(c => c.isSticky && this.isScrollable),
+            freeColumns: columns.filter(c => !c.isSticky || !this.isScrollable),
+        })),
+    );
+
+    /**
+     * Emits the id of the entity that should be highlighted.
+     *
+     */
+    highlightedEntityId$ = new BehaviorSubject<string | number>('');
+
+    /**
      * @internal
      * @ignore
      */
@@ -672,10 +743,14 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             const firstIndex = columns.findIndex(c => c.primary);
             const rowHeaderIndex = firstIndex > -1 ? firstIndex : 0;
 
-            return columns.map((directive, index) => ({
+            const mappedColumns = columns.map((directive, index) => ({
                 directive,
                 role: index === rowHeaderIndex ? 'rowheader' : 'gridcell',
             }));
+            return {
+                stickyColumns: mappedColumns.filter(c => c.directive.isSticky && this.isScrollable),
+                freeColumns: mappedColumns.filter(c => !c.directive.isSticky || !this.isScrollable),
+            };
         }),
     );
 
@@ -694,6 +769,44 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
             );
     }
 
+    minWidth$ = defer(() => merge(
+        this.visible$.pipe(
+            map(columns => this._computeMinWidth(columns)),
+        ),
+        this.resizeManager.widthChange$.pipe(
+            map(() => this._computeMinWidth()),
+            distinctUntilChanged(),
+        ),
+    ).pipe(
+        tap(() => { this._cd.detectChanges(); }),
+    ));
+
+    isOverflown$ = this.minWidth$.pipe(
+        map(minWidth => this._isOverflown(minWidth)),
+        distinctUntilChanged(),
+    );
+
+    tableOverflowStyle$ = this.isOverflown$.pipe(
+        map(value => value ? 'visible' : 'hidden'),
+    );
+
+    stickyColumnsWidths$ = defer(() => this.isScrollable
+        ? merge(
+            this.resizeManager.resize$.pipe(
+                map(widths => {
+                    this.stickyColumnsWidths = this._computeStickyColumnsWidths(widths);
+                    return this.stickyColumnsWidths!;
+                }),
+                startWith(this.stickyColumnsWidths!),
+                distinctUntilChanged(),
+                tap(() => queueMicrotask(() => this._cd.detectChanges())),
+            ),
+            defer(() => this.footer
+                ? this.footer.pageChange
+                : EMPTY).pipe(map(() => this.stickyColumnsWidths!)),
+        )
+        : EMPTY);
+
     protected _destroyed$ = new Subject<void>();
     protected _columnChanges$: Observable<SimpleChanges>;
 
@@ -706,6 +819,8 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     private _lastCheckboxIdx = 0;
     private _resizeSubscription$: null | Subscription = null;
     private _expandedEntries: T[] = [];
+    private _columns!: QueryList<UiGridColumnDirective<T>>;
+    private _virtualScroll = false;
     /**
      * @ignore
      */
@@ -810,6 +925,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         ).subscribe();
 
         this._initResizeManager();
+        this.resizeStrategy = _gridOptions?.resizeStrategy ?? ResizeStrategy.ImmediateNeighbourHalt;
         this._performanceMonitor = new PerformanceMonitor(_ref.nativeElement);
         this.paintTime$ = this._performanceMonitor.paintTime$;
 
@@ -839,6 +955,7 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
      */
     ngAfterContentInit() {
         this.selectionManager.disableSelectionByEntry = this.disableSelectionByEntry;
+        this.stickyColumnsWidths = this._computeStickyColumnsWidths();
 
         this.liveAnnouncerManager = new LiveAnnouncerManager(
             msg => this._queuedAnnouncer.enqueue(msg),
@@ -1029,12 +1146,16 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
     }
 
     onRowClick(event: Event, row: T) {
-        if (this.shouldSelectOnRowClick && (event.target instanceof Element) &&
+        if ((event.target instanceof Element) &&
             !EXCLUDED_ROW_SELECTION_ELEMENTS.find(el => (event.target as Element).closest(el))) {
-            if (this.singleSelectable) {
-                this.rowSelected(row);
-            } else {
-                this.selectionManager.toggle(row);
+            this.highlightedEntityId$.next(row.id);
+
+            if (this.shouldSelectOnRowClick) {
+                if (this.singleSelectable) {
+                    this.rowSelected(row);
+                } else {
+                    this.selectionManager.toggle(row);
+                }
             }
         }
         this.rowClick.emit({
@@ -1118,5 +1239,37 @@ export class UiGridComponent<T extends IGridDataEntry> extends ResizableGrid<T> 
         this.displayToggleColumnsDivider$ = combineLatest([this.hasAnyFiltersVisible$, this.filterManager.hasCustomFilter$]).pipe(
             map(([hasAnyFilterVisible, hasCustomFilters]) => hasAnyFilterVisible || hasCustomFilters),
         );
+    }
+
+    private _computeMinWidth(columns?: UiGridColumnDirective<T>[]) {
+        const cols = (columns ?? this.columns?.toArray() ?? []).filter(c => c.visible);
+        const minWidth = cols.reduce((acc, column) => {
+            acc += +column.width ?? 0;
+            return acc;
+        }, 0);
+
+        // the window width was used instead of the container's width because we need an absolute unit of measure
+        // This way it persists on page refresh
+        return window.innerWidth * (minWidth / 1000) * MIN_WIDTH_MULTIPLICATION_FACTOR;
+    }
+
+    private _isOverflown(minWidth: number) {
+        const gridWidth = this._ref.nativeElement.getBoundingClientRect().width;
+        return minWidth > gridWidth;
+    }
+
+    private _computeStickyColumnsWidths(widths?: Map<string, number>) {
+        const stickyCols = this.columns.toArray().filter(c => c.isSticky && c.visible);
+
+        const widthMap = stickyCols.reduce((acc, curr) => {
+            acc[curr.identifier] = widths?.get(curr.identifier) ?? +curr.width;
+            return acc;
+        }, {} as Record<string, number>);
+        const sum = Object.values(widthMap).reduce((acc, curr) => acc + curr, 0);
+
+        return {
+            sum,
+            widthMap,
+        };
     }
 }

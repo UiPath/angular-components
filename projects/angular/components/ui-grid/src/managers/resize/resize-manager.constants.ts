@@ -122,3 +122,9 @@ export const findHeaderIndexFor = (headers: HTMLDivElement[], value: string) =>
  */
 export const getProperty = (element: HTMLDivElement) =>
     element.dataset[HEADER_DATA_KEY]!;
+
+/**
+ * @param element The element which should be checked if it's sticky
+ */
+export const isSticky = (element: HTMLDivElement) =>
+    element.classList.contains('ui-grid-sticky-element');

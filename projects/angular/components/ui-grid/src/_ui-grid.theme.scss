@@ -1,21 +1,10 @@
 @import "./components/ui-grid-search/ui-grid-search.theme";
+@import "./ui-grid-variables";
 
 /* https://github.com/angular/material2/blob/master/src/lib/button/_button-base.scss */
 $ui-grid-default-transition: 200ms cubic-bezier(0.35, 0, 0.25, 1);
 $ui-grid-background-transition: background-color $ui-grid-default-transition;
 $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
-
-%resize-handle-default {
-    opacity: 0;
-}
-
-%resize-handle-hover {
-    opacity: 0.4;
-}
-
-%resize-handle-resizing {
-    opacity: 1;
-}
 
 @mixin ui-grid-theme($theme) {
     $is-dark: map-get($theme, "is-dark");
@@ -31,16 +20,30 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
     $ui-grid-primary-text-color: map-get($foreground, "text");
     $ui-grid-secondary-text-color: map-get($foreground, "secondary-text");
+    $ui-grid-scrollbar-color: map-get($foreground, "text");
 
     $ui-grid-accent-color: map-get($accent-palette, "default");
 
     $ui-grid-background: map-get($background, "card");
-    $ui-grid-border-color: mat.get-color-from-palette($foreground, "divider");
     $ui-grid-elevation-color: rgb(0, 0, 0);
 
     $_hover-base: mix($ui-grid-background, invert($ui-grid-background), 97%);
+    $resize-handle-hover-color: mix($ui-grid-resize-hover-color, $ui-grid-background, 40%);
+    %resize-handle-default {
+        background-color: $header-background-color;
+    }
 
-    $ui-grid-hover-background: mix($_hover-base, map-get($accent-palette, "default"), if($is-dark, 97, 95));
+    %resize-handle-hover {
+        background: linear-gradient(to right, $header-background-color 0%, $header-background-color 66.67%, $resize-handle-hover-color 66.67%, $resize-handle-hover-color 100%);
+    }
+
+    %resize-handle-focus {
+        background: linear-gradient(to right, $ui-grid-row-hover-color 0%, $ui-grid-row-hover-color 66.67%, $resize-handle-hover-color 66.67%, $resize-handle-hover-color 100%);
+    }
+
+    %resize-handle-resizing {
+        background: linear-gradient(to right, $ui-grid-row-hover-color 0%,  $ui-grid-row-hover-color 66.67%, $ui-grid-resize-hover-color 66.67%, $ui-grid-resize-hover-color 100%);
+    }
 
     ui-grid {
         &.ui-grid-elevation-z0 {
@@ -89,9 +92,28 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
             }
         }
 
+        .ui-grid-action-cell-container {
+            background-color: $ui-grid-cell-background-color;
+            transition: $ui-grid-background-transition;
+
+            &.sticky-grid-action-cell-container {
+                opacity: 0;
+            }
+        }
+
         .ui-grid {
+            &-cell,
+            &-cell-resizing-border-container,
+            &-resize-handle-container {
+                background: $ui-grid-cell-background-color;
+
+                &:hover {
+                    background-color: $ui-grid-row-hover-color;
+                }
+            }
+
             &-container {
-                background: $ui-grid-background;
+                background: $ui-grid-cell-background-color;
             }
 
             &-container mat-paginator.mat-paginator {
@@ -114,8 +136,15 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
             &-cell,
             &-header-cell {
-                background-color: transparent;
                 transition: $ui-grid-background-transition;
+            }
+
+            &-cell-resizing-border-container {
+                transition: $ui-grid-background-transition;
+            }
+
+            &-sticky-boundary {
+                background-color: $ui-grid-border-color;
             }
 
             &-resize-handle {
@@ -124,8 +153,6 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
                 }
 
                 @extend %resize-handle-default;
-                background: $ui-grid-resize-hover-color;
-                transition: $ui-grid-opacity-transition;
 
                 &:hover {
                     @extend %resize-handle-hover;
@@ -134,38 +161,35 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
             &-cell-resizing-border {
                 transition: $ui-grid-opacity-transition;
-                background: $ui-grid-resize-hover-color;
                 opacity: 0;
 
                 &.ui-grid-state-resizing {
                     opacity: 1;
-                    background: $ui-grid-resize-hover-color;
+                    background: linear-gradient(to right, $ui-grid-row-hover-color 0%, $ui-grid-row-hover-color 83.33%, $ui-grid-resize-hover-color 83.33%, $ui-grid-resize-hover-color 100%);
                 }
             }
 
             &-header-cell:not(.ui-grid-feature-cell):focus,
             &-header-cell.ui-grid-state-resizing {
-                background-color: rgba($ui-grid-hover-background, 0.5);
+                background-color: $ui-grid-row-hover-color;
                 outline: none;
             }
 
             &-state-resizing {
-                background-color: $ui-grid-hover-background;
+                background-color: $ui-grid-row-hover-color;
                 outline: none;
             }
 
             &-header-cell {
                 &:hover {
-                    + .ui-grid-resize-handle {
-                        transition-delay: $ui-grid-resize-handle-hover-delay;
+                    + .ui-grid-resize-handle-container .ui-grid-resize-handle:not(.ui-grid-state-resizing) {
                         @extend %resize-handle-hover;
                     }
                 }
 
                 &:focus {
-                    + .ui-grid-resize-handle {
-                        background: $ui-grid-resize-focus-color;
-                        @extend %resize-handle-resizing;
+                    + .ui-grid-resize-handle-container .ui-grid-resize-handle:not(.ui-grid-state-resizing) {
+                        @extend %resize-handle-focus;
                     }
                 }
             }
@@ -195,19 +219,43 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
         .ui-grid-row {
             &:focus,
             &.cdk-focused {
+                background-color: $ui-grid-row-hover-color;
+
                 &:not(.ui-grid-row-state-expanded) {
-                    background-color: rgba($ui-grid-hover-background, 0.5);
+                    .ui-grid-header-cell,
+                    .ui-grid-cell,
+                    .ui-grid-cell-resizing-border,
+                    .ui-grid-cell-resizing-border-container {
+                        background-color: $ui-grid-row-hover-color;
+                    }
                 }
 
                 outline: none;
+
+                .ui-grid-action-cell-container {
+                    opacity: 1;
+                    background-color: $ui-grid-row-hover-color;
+                }
             }
 
             &:hover {
+                background-color: $ui-grid-row-hover-color;
                 &:not(.ui-grid-row-state-expanded) {
-                    background-color: $ui-grid-hover-background;
+                    .ui-grid-header-cell,
+                    .ui-grid-cell,
+                    .ui-grid-cell-resizing-border,
+                    .ui-grid-cell-resizing-border-container {
+                        background-color: $ui-grid-row-hover-color;
+                    }
                 }
 
                 outline: none;
+
+                .ui-grid-action-cell-container {
+                    opacity: 1;
+                    background-color: $ui-grid-row-hover-color;
+                    transition: box-shadow 0.2s 0.2s, $ui-grid-background-transition;
+                }
             }
         }
 

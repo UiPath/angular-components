@@ -33,4 +33,5 @@ export interface IInputs {
     customFilter: boolean;
     useCardView: boolean;
     hideTotalCount: boolean;
+    isScrollable: boolean;
 }
