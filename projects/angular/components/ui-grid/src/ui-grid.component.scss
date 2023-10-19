@@ -14,8 +14,7 @@ ui-grid {
     $ui-grid-row-horizontal-padding: 24px;
     $ui-feature-cell-width: 50px;
     $ui-row-border-width: 1px;
-    $ui-header-resize-handle-width: 6px; //TODO: set handle target area to 18px
-    $ui-cell-resizing-border-width: 6px;
+    $ui-header-resize-handle-width: 18px;
     $ui-grid-default-spacing: 5px;
     $ui-border-radius: 4px;
     $ui-grid-button-size: 40px;
@@ -431,11 +430,15 @@ ui-grid {
                 }
 
                 .ui-grid-resize-handle-container {
-                    background: $header-background-color;
+                    background-color: $header-background-color;
                 }
 
                 .ui-grid-header-cell {
                     background-color: $header-background-color;
+
+                    &.ui-grid-state-resizing, &:focus, &.cdk-focused {
+                        background-color: $ui-grid-row-hover-color;
+                    }
                 }
             }
 
@@ -466,7 +469,7 @@ ui-grid {
 
                 &.highlighted-row {
                     > div:first-of-type {
-                        box-shadow: inset 4px 0px 0px $preview-selection-color;
+                        box-shadow: inset 4px 0px 0px $highlighted-entity-color;
                     }
                 }
             }
@@ -500,6 +503,10 @@ ui-grid {
                 flex: 0 0 $ui-header-resize-handle-width;
                 height: $ui-grid-header-row-height + 1;
 
+                &.last-sticky-handle-container {
+                flex: 0 0 ($ui-header-resize-handle-width + 1);
+                }
+
                 .ui-grid-resize-handle {
                     position: absolute;
                     top: 0;
@@ -517,17 +524,17 @@ ui-grid {
                 }
             }
 
-            .ui-grid-last-resize-handle-container {
-                flex: 0 0 $ui-header-resize-handle-width + $sticky-boundary-width;
-            }
-
             .ui-grid-cell-resizing-border-container {
                 position: relative;
-                flex: 0 0 $ui-cell-resizing-border-width;
+                flex: 0 0 $ui-header-resize-handle-width;
                 height: $ui-grid-row-height + $ui-row-border-width - 2;
 
+                &.ui-grid-last-resize-handle-container {
+                    flex: 0 0 $ui-header-resize-handle-width + $sticky-boundary-width;
+                }
+
                 .ui-grid-cell-resizing-border {
-                    width: $ui-cell-resizing-border-width;
+                    width: $ui-header-resize-handle-width;
                     height: $ui-grid-row-height;
                 }
 
@@ -655,6 +662,10 @@ ui-grid {
             .ui-grid-cell {
                 height: $ui-grid-row-height - $ui-row-border-width;
                 background: $ui-grid-cell-background-color;
+
+                &.ui-grid-state-resizing {
+                    background: $ui-grid-row-hover-color;
+                }
             }
 
             .sticky-columns-cell-container {

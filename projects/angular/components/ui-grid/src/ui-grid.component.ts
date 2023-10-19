@@ -520,9 +520,9 @@ export class UiGridComponent<T extends IGridDataEntry>
         this._columns = value;
 
         if (this.isScrollable) {
-            this._stickyColumns = value.filter(c => c.isSticky);
+            const stickyColumns = value.filter(c => c.isSticky);
             const freeColumns = value.filter(c => !c.isSticky);
-            this._columns.reset([...this._stickyColumns, ...freeColumns]);
+            this._columns.reset([...stickyColumns, ...freeColumns]);
         }
     }
 
@@ -801,10 +801,9 @@ export class UiGridComponent<T extends IGridDataEntry>
                 distinctUntilChanged(),
                 tap(() => queueMicrotask(() => this._cd.detectChanges())),
             ),
-            ((this.footer
+            defer(() => this.footer
                 ? this.footer.pageChange
-                : EMPTY) as Observable<{ sum: number; widthMap: Record<string, number> }>
-            ).pipe(map(() => this.stickyColumnsWidths!)),
+                : EMPTY).pipe(map(() => this.stickyColumnsWidths!)),
         )
         : EMPTY);
 
@@ -821,7 +820,6 @@ export class UiGridComponent<T extends IGridDataEntry>
     private _resizeSubscription$: null | Subscription = null;
     private _expandedEntries: T[] = [];
     private _columns!: QueryList<UiGridColumnDirective<T>>;
-    private _stickyColumns: UiGridColumnDirective<T>[] = [];
     private _virtualScroll = false;
     /**
      * @ignore
@@ -1150,9 +1148,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     onRowClick(event: Event, row: T) {
         if ((event.target instanceof Element) &&
             !EXCLUDED_ROW_SELECTION_ELEMENTS.find(el => (event.target as Element).closest(el))) {
-            if (this.isScrollable) {
-                this.highlightedEntityId$.next(row.id);
-            }
+            this.highlightedEntityId$.next(row.id);
 
             if (this.shouldSelectOnRowClick) {
                 if (this.singleSelectable) {

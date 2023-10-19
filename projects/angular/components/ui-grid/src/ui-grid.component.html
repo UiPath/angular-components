@@ -207,13 +207,15 @@
                                     </div>
 
                                     <div *ngIf="!isProjected && column.resizeable && !useCardView && (!last || columns.freeColumns.length > 0)"
+                                        [class.last-sticky-handle-container]="last && columns.freeColumns.length > 0"
                                          class="ui-grid-resize-handle-container ui-grid-sticky-element">
-                                        <div *ngIf="isScrollable && last && columns.freeColumns.length > 0"
-                                             class="ui-grid-sticky-boundary"></div>
+
                                         <div [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
                                              (mousedown)="resizeManager.startResize($event, column, columnIndex)"
                                              class="ui-grid-resize-handle">
                                         </div>
+                                        <div *ngIf="isScrollable && last && columns.freeColumns.length > 0"
+                                             class="ui-grid-sticky-boundary"></div>
                                     </div>
                                 </ng-container>
                             </div>
@@ -518,12 +520,12 @@
 
                     <div class="ui-grid-cell-resizing-border-container ui-grid-sticky-element"
                          [class.ui-grid-last-resize-handle-container]="lastColumn && renderedColumns.freeColumns.length > 0">
-                        <div *ngIf="lastColumn && renderedColumns.freeColumns.length > 0"
-                             class="ui-grid-sticky-boundary"></div>
                         <div *ngIf="!isProjected && column.directive.resizeable && !useCardView"
                              [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
                              class="ui-grid-cell-resizing-border">
                         </div>
+                        <div *ngIf="lastColumn && renderedColumns.freeColumns.length > 0"
+                             class="ui-grid-sticky-boundary"></div>
                     </div>
                 </ng-container>
             </div>
@@ -574,7 +576,8 @@
              [class.ui-grid-sticky-element]="isScrollable"
              role="gridcell"
              class="ui-grid-cell ui-grid-action-cell ui-grid-feature-cell">
-            <div class="ui-grid-action-cell-container">
+            <div [class.sticky-grid-action-cell-container]="isScrollable"
+                 class="ui-grid-action-cell-container">
                 <ng-container *ngTemplateOutlet="actions.html ?? null; context: {
                         data: row,
                         index: index

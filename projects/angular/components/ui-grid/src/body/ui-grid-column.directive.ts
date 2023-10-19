@@ -63,11 +63,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
         if (isNaN(width)) { return; }
 
         this._width = width * 10;
-
-        if (this.isSticky && !this._alreadySetMinWidth) {
-            this._alreadySetMinWidth = true;
-            this.minWidth = this._width * STICKY_MIN_WIDTH_FRACTION;
-        }
+        this.minWidth = this._width * STICKY_MIN_WIDTH_FRACTION;
     }
 
     /**
@@ -160,7 +156,6 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
         this.disableToggle = this.disableToggle || value;
         if (value) {
             this.visible = true;
-            this._alreadySetMinWidth = true;
             this.minWidth = this._width * STICKY_MIN_WIDTH_FRACTION;
         }
     }
@@ -272,7 +267,6 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     private _primary = false;
     private _isSticky = false;
     private _disableToggle = false;
-    private _alreadySetMinWidth = false;
     /**
      * @ignore
      */
