@@ -775,7 +775,6 @@ export class UiGridComponent<T extends IGridDataEntry>
         ),
         this.resizeManager.widthChange$.pipe(
             map(() => this._computeMinWidth()),
-            distinctUntilChanged(),
         ),
     ).pipe(
         tap(() => { this._cd.detectChanges(); }),
