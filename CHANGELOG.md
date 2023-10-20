@@ -1,3 +1,7 @@
+# v14.9.1 (2023-10-20)
+* **grid** fix(grid): remove background transitions
+* **grid** fix(grid): reemit min-width value on resize
+
 # v14.9.0 (2023-10-19)
 * **grid** increase target area for resize-handle
 * **grid** correct empty state on scrollable strategy
