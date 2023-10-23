@@ -468,6 +468,10 @@ ui-grid {
                 }
 
                 &.highlighted-row {
+                    .ui-grid-cell, .ui-grid-cell-resizing-border-container {
+                        background-color:$ui-grid-row-hover-color;
+                    }
+
                     > div:first-of-type {
                         box-shadow: inset 4px 0px 0px $highlighted-entity-color;
                     }
