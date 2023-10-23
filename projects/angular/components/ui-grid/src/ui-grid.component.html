@@ -411,7 +411,7 @@
          *ngIf="!isRowExpanded(row?.id) || expandMode === 'preserve'"
          [class.ui-grid-row-state-expanded]="isRowExpanded(row?.id)"
          [class.ui-grid-border-none]="!footer && last"
-         [class.highlighted-row]="highlightedEntityId === row?.id"
+         [class.highlighted-row]="highlightedEntityId.toString() === row?.id?.toString()"
          [ngClass]="rowConfig?.ngClassFn(row) ?? ''"
          [tabIndex]="0"
          [attr.data-row-index]="index"
