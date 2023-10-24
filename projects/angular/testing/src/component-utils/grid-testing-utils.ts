@@ -6,7 +6,12 @@ import {
     tick,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { EventGenerator } from '@uipath/angular/testing';
+
+import { EventGenerator } from '../utilities/event-generator';
+import {
+    FixtureTestingUtils,
+    IStubEndpoint,
+} from '../utilities/fixture-testing-utils';
 
 const selectors = {
     grid: 'ui-grid',
@@ -15,7 +20,7 @@ const selectors = {
 
 export class GridUtils<T> {
     constructor(
-        private _utils: IntegrationUtils<T>,
+        private _utils: FixtureTestingUtils<T>,
     ) { }
 
     flush = (stub: IStubEndpoint, httpClient: HttpTestingController) => {
@@ -71,9 +76,11 @@ export class GridUtils<T> {
         .filter(el => this._utils.getDebugElement('.ui-grid-header-title', el))
         .map(el => el.attributes['data-property']);
 
-    getHeaderCell = (property: string, debugEl = this._utils.fixture.debugElement) => this._utils.getDebugElement(`.ui-grid-header-cell[data-property="${property}"]`, debugEl);
+    getHeaderCell = (property: string, debugEl = this._utils.fixture.debugElement) =>
+        this._utils.getDebugElement(`.ui-grid-header-cell[data-property="${property}"]`, debugEl);
 
-    getHeaderTitle = (property: string, debugEl = this._utils.fixture.debugElement) => this.getHeaderCell(property, debugEl).query(By.css('.ui-grid-header-title'));
+    getHeaderTitle = (property: string, debugEl = this._utils.fixture.debugElement) =>
+        this.getHeaderCell(property, debugEl).query(By.css('.ui-grid-header-title'));
 
     isSortable = (property: string, debugEl = this._utils.fixture.debugElement) => {
         const headerCell = this.getHeaderCell(property, debugEl);
@@ -153,7 +160,7 @@ export class GridUtils<T> {
 
         this.clickRowItem(rowIndex, inlineMenuSelector, {
             gridSelector,
-            debugEl
+            debugEl,
         });
         this._utils.fixture.detectChanges();
 
@@ -172,7 +179,7 @@ export class GridUtils<T> {
             debugEl?: DebugElement;
         } = {}) => this.getRowItem(rowNumber, selector, {
             debugEl,
-            gridSelector
+            gridSelector,
         }).nativeElement
             .dispatchEvent(EventGenerator.click);
 
@@ -202,7 +209,6 @@ export class GridUtils<T> {
     }) => {
         const selector = `[data-cy="ui-grid-search-filter-${columnName}"] [role="combobox"]`;
         const button = this._utils.fixture.debugElement.query(By.css(selector));
-        expect(button).toBeTruthy();
 
         button.nativeElement.dispatchEvent(EventGenerator.click);
         this._utils.fixture.detectChanges();

@@ -9,22 +9,22 @@ import {
     flush,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-    EventGenerator,
-    Key,
-} from '@uipath/angular/testing';
+
+import { EventGenerator } from './event-generator';
+import { HtmlTestingUtils } from './html-testing-utils';
+import { Key } from './key';
 
 export interface IStubEndpoint {
     url: string;
     response: any;
 }
 
-export class IntegrationUtils<T> {
+export class FixtureTestingUtils<T> {
     get component() {
         return this.fixture.componentInstance;
     }
 
-    uiUtils = new UIUtils(this.fixture.nativeElement);
+    htmlTestingUtils = new HtmlTestingUtils(this.fixture.nativeElement);
 
     constructor(
         public fixture: ComponentFixture<T>,
@@ -57,8 +57,8 @@ export class IntegrationUtils<T> {
         return debugElement ? debugElement.componentInstance : null;
     };
 
-    switchToTab = async (number: number, debugEl = this.fixture.debugElement) => {
-        const tab = this.getDebugElement(`.mat-tab-label:nth-of-type(${number}) .mat-tab-label-content`, debugEl);
+    switchToTab = async (tabNumber: number, debugEl = this.fixture.debugElement) => {
+        const tab = this.getDebugElement(`.mat-tab-label:nth-of-type(${tabNumber}) .mat-tab-label-content`, debugEl);
         tab.nativeElement.dispatchEvent(EventGenerator.click);
         this.fixture.detectChanges();
         await this.fixture.whenRenderingDone();
@@ -103,69 +103,60 @@ export class IntegrationUtils<T> {
     };
 
     setInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
-        const input = this.uiUtils.setInput(selector, value, debugEl.nativeElement);
+        const input = this.htmlTestingUtils.setInput(selector, value, debugEl.nativeElement);
         this.fixture.detectChanges();
         return input;
     };
 
-    changeInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
-        const input = this.uiUtils.changeInput(selector, value, debugEl.nativeElement);
-        this.fixture.detectChanges();
-        return input;
-    };
-
-    isCheckboxChecked = (selector: string, debugEl = this.fixture.debugElement) =>
+    elementContainsClass = (className: string) => (selector: string, debugEl = this.fixture.debugElement) =>
         this.getDebugElement(selector, debugEl)
-            .nativeElement
-            .classList
-            .contains('mat-checkbox-checked');
+        .nativeElement
+        .classList
+        .contains(className);
 
-    isCheckboxIndeterminate = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.getDebugElement(selector, debugEl)
-            .nativeElement
-            .classList
-            .contains('mat-checkbox-indeterminate');
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    isCheckboxChecked = this.elementContainsClass('mat-checkbox-checked');
+
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    isCheckboxIndeterminate = this.elementContainsClass('mat-checkbox-indeterminate');
 
     toggleCheckbox = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.getDebugElement(selector, debugEl)
-            .query(By.css('.mat-checkbox-label'))
-            .nativeElement
-            .dispatchEvent(EventGenerator.click);
+    this.getDebugElement(selector, debugEl)
+    .query(By.css('.mat-checkbox-label'))
+    .nativeElement
+    .dispatchEvent(EventGenerator.click);
 
     setCheckboxState = (selector: string, state: boolean, debugEl = this.fixture.debugElement) => {
         const isChecked = this.isCheckboxChecked(selector, debugEl);
         if (
             !isChecked && state ||
             isChecked && !state
-        ) {
-            this.toggleCheckbox(selector);
-        }
-    };
+            ) {
+                this.toggleCheckbox(selector);
+            }
+        };
 
-    toggleSlider = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.uiUtils.toggleSlider(selector, debugEl.nativeElement);
+        toggleSlider = (selector: string, debugEl = this.fixture.debugElement) =>
+        this.htmlTestingUtils.toggleSlider(selector, debugEl.nativeElement);
 
-    setSliderState(selector: string, state: boolean, debugEl = this.fixture.debugElement) {
-        const isToggled = this.isToggleChecked(selector, debugEl);
-        if (
-            isToggled && !state ||
-            !isToggled && state
-        ) {
-            debugEl.query(By.css(`${selector} input[type=checkbox]`)).nativeElement.click();
-        }
-    }
+        setSliderState(selector: string, state: boolean, debugEl = this.fixture.debugElement) {
+            const isToggled = this.isToggleChecked(selector, debugEl);
+            if (
+                isToggled && !state ||
+                !isToggled && state
+                ) {
+                    debugEl.query(By.css(`${selector} input[type=checkbox]`)).nativeElement.click();
+                }
+            }
 
-    isToggleChecked = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.uiUtils.isToggleChecked(selector, debugEl.nativeElement);
+            isToggleChecked = (selector: string, debugEl = this.fixture.debugElement) =>
+            this.htmlTestingUtils.isToggleChecked(selector, debugEl.nativeElement);
 
-    isRadioButtonChecked = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.getDebugElement(selector, debugEl)
-            .nativeElement
-            .classList
-            .contains('mat-radio-checked');
+            // eslint-disable-next-line @typescript-eslint/member-ordering
+            isRadioButtonChecked = this.elementContainsClass('mat-radio-checked');
 
-    isRadioGroupDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.getDebugElement(selector, debugEl)
+            isRadioGroupDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
+            this.getDebugElement(selector, debugEl)
             .queryAll(By.css('mat-radio-button'))
             .every((elem) => this._elementHasClass('mat-radio-button', elem, 'mat-radio-disabled'));
 
