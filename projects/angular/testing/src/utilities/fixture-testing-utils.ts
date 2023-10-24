@@ -305,24 +305,16 @@ class GridUtils<T> {
             .map(getter);
     };
 
-    getHeaders = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
-        return this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
+    getHeaders = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
             .filter(el => this._utils.getDebugElement('.ui-grid-header-title:not(ui-grid ui-grid .ui-grid-header-title)', el));
-    };
 
-    getColumnsProperties = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
-        return this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
+    getColumnsProperties = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
             .filter(el => this._utils.getDebugElement('.ui-grid-header-title', el))
             .map(el => el.attributes['data-property']);
-    };
 
-    getHeaderCell = (property: string, debugEl = this._utils.fixture.debugElement) => {
-        return this._utils.getDebugElement(`.ui-grid-header-cell[data-property="${property}"]`, debugEl);
-    };
+    getHeaderCell = (property: string, debugEl = this._utils.fixture.debugElement) => this._utils.getDebugElement(`.ui-grid-header-cell[data-property="${property}"]`, debugEl);
 
-    getHeaderTitle = (property: string, debugEl = this._utils.fixture.debugElement) => {
-        return this.getHeaderCell(property, debugEl).query(By.css('.ui-grid-header-title'));
-    };
+    getHeaderTitle = (property: string, debugEl = this._utils.fixture.debugElement) => this.getHeaderCell(property, debugEl).query(By.css('.ui-grid-header-title'));
 
     isSortable = (property: string, debugEl = this._utils.fixture.debugElement) => {
         const headerCell = this.getHeaderCell(property, debugEl);
@@ -339,12 +331,10 @@ class GridUtils<T> {
         }: {
             gridSelector?: string;
             debugEl?: DebugElement;
-        } = {}) => {
-        return this._utils.getDebugElement(
+        } = {}) => this._utils.getDebugElement(
             `${gridSelector ?? selectors.grid} [data-row-index="${rowNumber}"] ${selector}`,
             debugEl ?? this._utils.fixture.debugElement,
         );
-    };
 
     getMenuDictionary = (
         rowNumber: number,
@@ -355,12 +345,10 @@ class GridUtils<T> {
         } = {},
     ) => {
         const menuItems = this.getMenuItems(rowNumber, cfg);
-        return menuItems.reduce((acc, step) => {
-            return {
+        return menuItems.reduce((acc, step) => ({
                 ...acc,
                 [step.text]: step,
-            };
-        }, {} as Record<string, { text: string; href: string | undefined }>);
+            }), {} as Record<string, { text: string; href: string | undefined }>);
     };
 
     getMenuItems = (
@@ -404,7 +392,8 @@ class GridUtils<T> {
     ) => {
         inlineMenuSelector = inlineMenuSelector ?? selectors.inlineMenu;
 
-        this.clickRowItem(rowIndex, inlineMenuSelector, { gridSelector, debugEl });
+        this.clickRowItem(rowIndex, inlineMenuSelector, { gridSelector,
+debugEl });
         this._utils.fixture.detectChanges();
 
         this._utils.click(actionSelector, debugEl);
@@ -420,10 +409,9 @@ class GridUtils<T> {
         }: {
             gridSelector?: string;
             debugEl?: DebugElement;
-        } = {}) => {
-        return this.getRowItem(rowNumber, selector, { debugEl, gridSelector }).nativeElement
+        } = {}) => this.getRowItem(rowNumber, selector, { debugEl,
+gridSelector }).nativeElement
             .dispatchEvent(EventGenerator.click);
-    };
 
     getRowCheckbox = (rowNumber: number, gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => {
         const rowEl = this._utils.getDebugElement(`${gridSelector} [data-row-index="${rowNumber - 1}"]`, debugEl);
@@ -564,7 +552,7 @@ class SuggestUtils<T> {
     getFetchStrategy = (selector: string, debugEl?: DebugElement) => {
         const suggest = this._utils.getDebugElement(selector, debugEl);
         // maybe add a getter along the setter for fetchStrategy ?
-        return (suggest.componentInstance as UiSuggestComponent)['_fetchStrategy$']?.value ?? 'eager';
+        return (suggest.componentInstance as UiSuggestComponent)._fetchStrategy$?.value ?? 'eager';
     };
 
     selectNthItem = (selector: string, nth = 0, config?: {
@@ -608,13 +596,9 @@ class SuggestUtils<T> {
         return listItem;
     };
 
-    isMultiple = (selector: string, debugEl?: DebugElement) => {
-        return !!this._utils.getNativeElement(`${selector} mat-chip-list`, debugEl);
-    };
+    isMultiple = (selector: string, debugEl?: DebugElement) => !!this._utils.getNativeElement(`${selector} mat-chip-list`, debugEl);
 
-    isOpen = (selector: string, debugEl?: DebugElement) => {
-        return !!this._utils.getNativeElement(`${selector} [aria-expanded="true"]`, debugEl);
-    };
+    isOpen = (selector: string, debugEl?: DebugElement) => !!this._utils.getNativeElement(`${selector} [aria-expanded="true"]`, debugEl);
 
     getValue = (selector: string, debugEl = this._utils.fixture.debugElement) => {
         if (this.isMultiple(selector)) {
