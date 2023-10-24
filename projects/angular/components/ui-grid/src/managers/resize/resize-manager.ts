@@ -330,8 +330,8 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         if (!this._definitions?.length) {
             return 0;
         }
-        const totalColumnWidths = this._definitions.reduce((acc, curr) => acc + +curr.width, 0);
-        const totalHeaderWidths = this._headers!.reduce((acc, curr) => acc + curr.getBoundingClientRect().width, 0);
+        const totalColumnWidths = this._definitions.reduce((acc, curr) => acc + Number(curr.width), 0);
+        const totalHeaderWidths = this._headers!.reduce((acc, curr) => acc + curr.getBoundingClientRect().width, 0) || 1;
 
         return totalColumnWidths / totalHeaderWidths;
     }

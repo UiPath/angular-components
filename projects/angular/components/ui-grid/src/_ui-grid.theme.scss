@@ -209,9 +209,7 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
                 &:not(.ui-grid-row-state-expanded) {
                     .ui-grid-header-cell,
-                    .ui-grid-cell,
-                    .ui-grid-cell-resizing-border,
-                    .ui-grid-cell-resizing-border-container {
+                    .ui-grid-cell {
                         background-color: $ui-grid-row-hover-color;
                     }
                 }
@@ -226,10 +224,10 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
             &:hover {
                 background-color: $ui-grid-row-hover-color;
+
                 &:not(.ui-grid-row-state-expanded) {
                     .ui-grid-header-cell,
-                    .ui-grid-cell,
-                    .ui-grid-cell-resizing-border-container {
+                    .ui-grid-cell {
                         background-color: $ui-grid-row-hover-color;
                     }
                 }
