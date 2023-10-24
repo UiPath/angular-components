@@ -3,21 +3,32 @@ import { DebugElement } from '@angular/core';
 import { tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { UiSuggestComponent } from '@uipath/angular/components/ui-suggest';
-import {
-    EventGenerator,
-    Key,
-} from '@uipath/angular/testing';
 
-import { SUGGEST_DEBOUNCE } from './constants';
+import { EventGenerator } from '../utilities/event-generator';
+import {
+    FixtureTestingUtils,
+    IStubEndpoint,
+} from '../utilities/fixture-testing-utils';
+import { Key } from '../utilities/key';
+
+export interface ISuggestTestingOptions {
+    debounce?: number;
+}
+
+const DEFAULT_SUGGEST_TESTING_OPTIONS: ISuggestTestingOptions = {
+    debounce: 300,
+};
 
 export class SuggestUtils<T> {
     dropdownSelector = '.ui-suggest-dropdown-item-list-container';
 
     constructor(
-        private _utils: IntegrationUtils<T>,
-    ) { }
+        private _utils: FixtureTestingUtils<T>,
+        private _options = DEFAULT_SUGGEST_TESTING_OPTIONS,
+    ) {
+    }
 
-    openAndFlush = (selector: string, httpRequest: Function) => {
+    openAndFlush = (selector: string, httpRequest: () => void) => {
         this._utils.click('.display', this._utils.getDebugElement(selector));
         this._utils.fixture.detectChanges();
         httpRequest();
@@ -25,7 +36,7 @@ export class SuggestUtils<T> {
     };
 
     // eslint-disable-next-line complexity
-    searchAndSelect = (selector: string, httpRequest?: Function, searchStr = '', nth = 0, debugEl?: DebugElement) => {
+    searchAndSelect = (selector: string, httpRequest?: () => void, searchStr = '', nth = 0, debugEl?: DebugElement) => {
         const suggest = this._utils.getDebugElement(selector, debugEl);
         const multiple = this.isMultiple(selector);
         const strategy = this.getFetchStrategy(selector, debugEl);
@@ -66,7 +77,7 @@ export class SuggestUtils<T> {
             }
 
             this._utils.setInput('input', searchStr, parentContainer);
-            tick(SUGGEST_DEBOUNCE);
+            tick(this._options.debounce);
             this._utils.fixture.detectChanges();
 
             if (httpRequest) { httpRequest(); }
@@ -93,7 +104,8 @@ export class SuggestUtils<T> {
     getFetchStrategy = (selector: string, debugEl?: DebugElement) => {
         const suggest = this._utils.getDebugElement(selector, debugEl);
         // maybe add a getter along the setter for fetchStrategy ?
-        return (suggest.componentInstance as UiSuggestComponent)._fetchStrategy$?.value ?? 'eager';
+        const fetchStrategyKey = '_fetchStrategy$';
+        return (suggest.componentInstance as UiSuggestComponent)[fetchStrategyKey]?.value ?? 'eager';
     };
 
     selectNthItem = (selector: string, nth = 0, config?: {
@@ -155,88 +167,4 @@ export class SuggestUtils<T> {
 
     clear = (selector: string) =>
         this._utils.getNativeElement(`${selector} [role=button].mat-icon`)?.dispatchEvent(EventGenerator.click);
-}
-
-class KVPUtils<T> {
-    constructor(
-        private _utils: IntegrationUtils<T>,
-    ) { }
-
-    /**
-     * Creates a new key value pair and populates it with the specified values
-     *
-     * @param keySearchText key suggest text to be selected
-     * @param valueSearchText value suggest text to be selected
-     */
-    addAndPopulateKVPInput = (keySearchText: string, valueSearchText: string, keyHttpRequest?: Function, valueHttpRequest?: Function) => {
-        this._utils.click('[data-cy=ui-kvp-add-new-entry]');
-        this._utils.fixture.detectChanges();
-
-        this._utils.suggest.searchAndSelect(this._nthKeySuggestSelector(0), keyHttpRequest, keySearchText);
-        this._utils.fixture.detectChanges();
-        tick(1000);
-        this._utils.fixture.detectChanges();
-
-        this._utils.suggest.searchAndSelect(this._nthValueSuggestSelector(0), valueHttpRequest, valueSearchText);
-        this._utils.fixture.detectChanges();
-        tick(1);
-        this._utils.fixture.detectChanges();
-
-        tick(1000);
-        this._utils.fixture.detectChanges();
-    };
-
-    /**
-     * Existing number of key value pairs.
-     *
-     * @param debugEl
-     * @returns
-     */
-    currentKVPCount(debugEl = this._utils.fixture.debugElement) {
-        const selector = 'ui-key-value-input';
-        return this._utils.getAllDebugElements(selector, debugEl).length;
-    }
-
-    /**
-     * Retrive a reference to the nth key suggest.
-     * Index starts at 1.
-     *
-     * @param debugEl
-     * @returns
-     */
-    nthKeySuggest(index: number, debugEl = this._utils.fixture.debugElement) {
-        const selector = this._nthKeySuggestSelector(index);
-        return this._utils.getDebugElement(selector, debugEl);
-    }
-
-    /**
-     * Retrive a reference to the nth value suggest.
-     * Index starts at 1.
-     *
-     * @param debugEl
-     * @returns
-     */
-    nthValueSuggest(index: number, debugEl = this._utils.fixture.debugElement) {
-        const selector = this._nthValueSuggestSelector(index);
-        return this._utils.getDebugElement(selector, debugEl);
-    }
-
-    /**
-     * Removes the nth key value pair.
-     * Index starts at 1.
-     *
-     * @param debugEl
-     * @returns
-     */
-    removeNthKVP(index: number, debugEl = this._utils.fixture.debugElement) {
-        const selector = this._nthRemoveButtonSelector(index);
-        this._utils.click(selector, debugEl);
-
-        tick(1000);
-        this._utils.fixture.detectChanges();
-    }
-
-    private _nthKeySuggestSelector(index: number) { return `[data-cy=ui-kvp-input-nr-${index}] [data-cy=ui-kvp-key-suggest]`; }
-    private _nthValueSuggestSelector(index: number) { return `[data-cy=ui-kvp-input-nr-${index}] [data-cy=ui-kvp-value-suggest]`; }
-    private _nthRemoveButtonSelector(index: number) { return `[data-cy=ui-kvp-input-nr-${index}] [data-cy=ui-kvp-remove-button]`; }
 }
