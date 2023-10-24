@@ -14,6 +14,8 @@ import {
     Key,
 } from '@uipath/angular/testing';
 
+import { HTMLTestingUtils } from './html-testing-utils';
+
 export interface IStubEndpoint {
     url: string;
     response: any;
@@ -24,7 +26,7 @@ export class FixtureTestingUtils<T> {
         return this.fixture.componentInstance;
     }
 
-    uiUtils = new UIUtils(this.fixture.nativeElement);
+    uiUtils = new HTMLTestingUtils(this.fixture.nativeElement);
 
     constructor(
         public fixture: ComponentFixture<T>,
