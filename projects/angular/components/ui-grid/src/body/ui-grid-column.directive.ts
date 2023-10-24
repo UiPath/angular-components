@@ -63,7 +63,6 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
         if (isNaN(width)) { return; }
 
         this._width = width * 10;
-        this.minWidth = this._width * STICKY_MIN_WIDTH_FRACTION;
     }
 
     /**
