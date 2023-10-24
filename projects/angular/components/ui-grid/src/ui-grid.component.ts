@@ -86,6 +86,7 @@ import {
     SortManager,
     VisibilityManger,
 } from './managers';
+import { ScrollableGridResizer } from './managers/resize/strategies/scrollable-grid-resizer';
 import { ResizableGrid } from './managers/resize/types';
 import {
     GridOptions,
@@ -774,6 +775,9 @@ export class UiGridComponent<T extends IGridDataEntry>
             map(columns => this._computeMinWidth(columns)),
         ),
         this.resizeManager.widthChange$.pipe(
+            tap(width => {
+                (this.resizeManager as ScrollableGridResizer<T>).limitStickyWidthCoverage(width);
+            }),
             map(() => this._computeMinWidth()),
         ),
     ).pipe(

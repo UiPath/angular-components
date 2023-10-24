@@ -89,13 +89,14 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     protected _headers?: HTMLDivElement[];
     protected _table?: HTMLTableElement | null;
     protected _definitions?: UiGridColumnDirective<T>[];
+    protected _gridElement: HTMLDivElement;
+    protected _gridResizeObserver?: ResizeObserver;
+    protected _widthMap = new Map<string, number>();
+
     private _previous?: IResizeState<T> = {} as IResizeState<T>;
     private _direction?: ResizeDirection;
     private _resize$ = new Subject<IResizeEvent<T>>();
     private _stopped$ = new Subject<void>();
-    private _widthMap = new Map<string, number>();
-    private _gridElement: HTMLDivElement;
-    private _gridResizeObserver?: ResizeObserver;
     private _widthChange$: Subject<number> = new Subject();
 
     // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -104,7 +105,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     );
 
     constructor(
-        private _grid: ResizableGrid<T>,
+        protected _grid: ResizableGrid<T>,
     ) {
         // eslint-disable-next-line no-underscore-dangle
         this._gridElement = (_grid as any)._ref.nativeElement;
@@ -325,6 +326,16 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         }
     }
 
+    protected _computePixelsToPercentRatio() {
+        if (!this._definitions?.length) {
+            return 0;
+        }
+        const totalColumnWidths = this._definitions.reduce((acc, curr) => acc + +curr.width, 0);
+        const totalHeaderWidths = this._headers!.reduce((acc, curr) => acc + curr.getBoundingClientRect().width, 0);
+
+        return totalColumnWidths / totalHeaderWidths;
+    }
+
     private _getCellsFor = (property: string) => toArray<HTMLDivElement>(
         this._gridElement
             .querySelectorAll(cellSelector(property)),
@@ -352,15 +363,5 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             }
         });
         this._previous = {} as IResizeState<T>;
-    }
-
-    private _computePixelsToPercentRatio() {
-        if (!this._definitions?.length) {
-            return 0;
-        }
-        const totalColumnWidths = this._definitions.reduce((acc, curr) => acc + +curr.width, 0);
-        const totalHeaderWidths = this._headers!.reduce((acc, curr) => acc + curr.getBoundingClientRect().width, 0);
-
-        return totalColumnWidths / totalHeaderWidths;
     }
 }
