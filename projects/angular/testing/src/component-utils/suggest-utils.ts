@@ -1,8 +1,3 @@
-import {
-    FixtureTestingUtils,
-    IStubEndpoint,
-} from 'projects/angular/testing/src/utilities/fixture-testing-utils';
-
 import { HttpTestingController } from '@angular/common/http/testing';
 import { DebugElement } from '@angular/core';
 import { tick } from '@angular/core/testing';
@@ -12,6 +7,11 @@ import {
     EventGenerator,
     Key,
 } from '@uipath/angular/testing';
+
+import {
+    FixtureTestingUtils,
+    IStubEndpoint,
+} from '../utilities/fixture-testing-utils';
 
 export const SUGGEST_DEBOUNCE = 400;
 

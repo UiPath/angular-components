@@ -12,7 +12,6 @@ import { By } from '@angular/platform-browser';
 import {
     EventGenerator,
     Key,
-    SuggestUtils,
 } from '@uipath/angular/testing';
 
 import { HTMLTestingUtils } from './html-testing-utils';
@@ -27,7 +26,6 @@ export class FixtureTestingUtils<T> {
         return this.fixture.componentInstance;
     }
 
-    suggest = new SuggestUtils<T>(this);
     uiUtils = new HTMLTestingUtils(this.fixture.nativeElement);
 
     constructor(
