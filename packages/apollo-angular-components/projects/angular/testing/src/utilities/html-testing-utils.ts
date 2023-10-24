@@ -1,6 +1,6 @@
-import { EventGenerator } from '@uipath/angular/testing';
+import { EventGenerator } from './event-generator';
 
-export class UIUtils {
+export class HtmlTestingUtils {
     private _rootEl: HTMLElement;
 
     constructor(element: HTMLElement) {
@@ -13,11 +13,14 @@ export class UIUtils {
     isToggleChecked = (selector: string, element: HTMLElement = this._rootEl) =>
         this.getElement(selector, element)?.classList.contains('mat-checked');
 
-    toggleCheckbox = (selector: string, element: HTMLElement = this._rootEl) =>
-        this.getElement(`${selector} .mat-checkbox-label`, element)?.dispatchEvent(EventGenerator.click);
+    toggleElement = (className: string) => (selector: string, element: HTMLElement = this._rootEl) =>
+        this.getElement(`${selector} .${className}`, element)?.dispatchEvent(EventGenerator.click);
 
-    toggleSlider = (selector: string, element: HTMLElement = this._rootEl) =>
-        this.getElement(`${selector} .mat-slide-toggle-label`, element)?.dispatchEvent(EventGenerator.click);
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    toggleCheckbox = this.toggleElement('mat-checkbox-label');
+
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    toggleSlider = this.toggleElement('mat-slide-toggle-label');
 
     setInput = (selector: string, value: any, element: HTMLElement = this._rootEl) => {
         const input = this.getElement<HTMLInputElement>(selector, element)!;
