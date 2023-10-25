@@ -126,5 +126,11 @@ export const getProperty = (element: HTMLDivElement) =>
 /**
  * @param element The element which should be checked if it's sticky
  */
-export const isSticky = (element: HTMLDivElement) =>
-    element.classList.contains('ui-grid-sticky-element');
+export const isSticky = (element?: HTMLDivElement) =>
+    element?.classList.contains('ui-grid-sticky-element');
+
+/**
+ * @param element Returns the exact element width
+ */
+export const elementWidth = (selector: string, root?: HTMLElement) =>
+    (root ?? document).querySelector(selector)!.getBoundingClientRect().width;

@@ -15,13 +15,13 @@ ui-grid {
     $ui-feature-cell-width: 50px;
     $ui-row-border-width: 1px;
     $ui-header-resize-handle-width: 18px;
+    $ui-handle-size-width: 6px;
     $ui-grid-default-spacing: 5px;
     $ui-border-radius: 4px;
     $ui-grid-button-size: 40px;
     $ui-grid-main-font-size: 13.5px;
     $ui-grid-secondary-font-size: 12px;
     $ui-grid-action-buttons-spacing: 16px;
-    $sticky-boundary-width: 1px;
 
     position: relative;
     display: block;
@@ -394,6 +394,8 @@ ui-grid {
             }
 
             .ui-grid-cell-content {
+                width: 100%;
+
                 @extend %ellipse;
 
                 > * {
@@ -412,7 +414,7 @@ ui-grid {
                 .sticky-columns-header-container {
                     position: sticky;
                     z-index: 1;
-                    height: $ui-grid-header-row-height - 1;
+                    height: 100%;
                     display: flex;
                     overflow: hidden;
 
@@ -430,7 +432,7 @@ ui-grid {
                 }
 
                 .ui-grid-resize-handle-container {
-                    background-color: $header-background-color;
+                    background-color: transparent;
                 }
 
                 .ui-grid-header-cell {
@@ -468,6 +470,10 @@ ui-grid {
                 }
 
                 &.highlighted-row {
+                    .ui-grid-cell, .ui-grid-cell-resizing-border-container {
+                        background-color: $ui-grid-row-hover-color;
+                    }
+
                     > div:first-of-type {
                         box-shadow: inset 4px 0px 0px $highlighted-entity-color;
                     }
@@ -504,7 +510,7 @@ ui-grid {
                 height: $ui-grid-header-row-height + 1;
 
                 &.last-sticky-handle-container {
-                flex: 0 0 ($ui-header-resize-handle-width + 1);
+                    flex: 0 0 $ui-header-resize-handle-width;
                 }
 
                 .ui-grid-resize-handle {
@@ -513,37 +519,15 @@ ui-grid {
                     width: $ui-header-resize-handle-width;
                     height: $ui-grid-header-row-height + 1;
                 }
-
-                .ui-grid-sticky-boundary {
-                    position: absolute;
-                    width: $sticky-boundary-width;
-                    height: $ui-grid-header-row-height;
-                    top: 0;
-                    right: 0;
-                    z-index: 1;
-                }
             }
 
             .ui-grid-cell-resizing-border-container {
                 position: relative;
-                flex: 0 0 $ui-header-resize-handle-width;
-                height: $ui-grid-row-height + $ui-row-border-width - 2;
-
-                &.ui-grid-last-resize-handle-container {
-                    flex: 0 0 $ui-header-resize-handle-width + $sticky-boundary-width;
-                }
+                height: $ui-grid-row-height + $ui-row-border-width;
 
                 .ui-grid-cell-resizing-border {
                     width: $ui-header-resize-handle-width;
                     height: $ui-grid-row-height;
-                }
-
-                .ui-grid-sticky-boundary {
-                    width: 1px;
-                    height: $ui-grid-row-height + $ui-row-border-width;
-                    top: -1 * $ui-row-border-width;
-                    right: 0;
-                    position: absolute;
                 }
             }
 
@@ -552,6 +536,44 @@ ui-grid {
 
                 &.ui-grid-spacer-cell {
                     min-width: $ui-feature-cell-width;
+                }
+            }
+
+            .sticky-columns-header-container, .sticky-columns-cell-container {
+                border-right: 1px solid $ui-grid-border-color;
+            }
+
+                .ui-grid-header-cell:not(.ui-grid-checkbox-cell) {
+                    position: relative !important;
+                }
+
+                .ui-grid-resize-handle-container {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: $ui-header-resize-handle-width;
+                    padding-left: $ui-header-resize-handle-width - $ui-handle-size-width;
+                    box-sizing: border-box;
+                    left: unset !important;
+                    background-color: transparent;
+
+                    cursor: col-resize;
+
+                    .ui-grid-resize-handle {
+                        width: $ui-handle-size-width;
+                    }
+                }
+
+            .ui-grid-cell-resizing-border-container {
+                position: relative;
+                width: $ui-header-resize-handle-width;
+                padding-left: $ui-header-resize-handle-width - ($ui-handle-size-width / 2);
+                box-sizing: border-box;
+                background-color: transparent;
+
+                .ui-grid-cell-resizing-border {
+                    width: $ui-handle-size-width / 2;
+                    min-width: $ui-handle-size-width / 2;
                 }
             }
 

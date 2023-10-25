@@ -204,18 +204,16 @@
                                                 </mat-icon>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div *ngIf="!isProjected && column.resizeable && !useCardView && (!last || columns.freeColumns.length > 0)"
-                                        [class.last-sticky-handle-container]="last && columns.freeColumns.length > 0"
-                                         class="ui-grid-resize-handle-container ui-grid-sticky-element">
-
-                                        <div [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
+                                        <div *ngIf="!isProjected && column.resizeable && !useCardView && (!last || columns.freeColumns.length > 0)"
                                              (mousedown)="resizeManager.startResize($event, column, columnIndex)"
-                                             class="ui-grid-resize-handle">
+                                             [class.last-sticky-handle-container]="last && columns.freeColumns.length > 0"
+                                             class="ui-grid-resize-handle-container ui-grid-sticky-element">
+
+                                            <div [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
+                                                 class="ui-grid-resize-handle">
+                                            </div>
                                         </div>
-                                        <div *ngIf="isScrollable && last && columns.freeColumns.length > 0"
-                                             class="ui-grid-sticky-boundary"></div>
                                     </div>
                                 </ng-container>
                             </div>
@@ -272,13 +270,12 @@
                                         </div>
                                     </div>
 
-                                </div>
-
-                                <div *ngIf="!isProjected && column.resizeable && !last && !useCardView"
-                                     class="ui-grid-resize-handle-container">
-                                    <div [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
+                                    <div *ngIf="!isProjected && column.resizeable && !last && !useCardView"
                                          (mousedown)="resizeManager.startResize($event, column, columnIndex)"
-                                         class="ui-grid-resize-handle">
+                                         class="ui-grid-resize-handle-container">
+                                        <div [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
+                                             class="ui-grid-resize-handle">
+                                        </div>
                                     </div>
                                 </div>
                             </ng-container>
@@ -411,7 +408,7 @@
          *ngIf="!isRowExpanded(row?.id) || expandMode === 'preserve'"
          [class.ui-grid-row-state-expanded]="isRowExpanded(row?.id)"
          [class.ui-grid-border-none]="!footer && last"
-         [class.highlighted-row]="highlightedEntityId === row?.id"
+         [class.highlighted-row]="highlightedEntityId != null && highlightedEntityId.toString() === row.id.toString()"
          [ngClass]="rowConfig?.ngClassFn(row) ?? ''"
          [tabIndex]="0"
          [attr.data-row-index]="index"
@@ -516,16 +513,14 @@
                                                 }">
                             </ng-container>
                         </div>
-                    </div>
 
-                    <div class="ui-grid-cell-resizing-border-container ui-grid-sticky-element"
-                         [class.ui-grid-last-resize-handle-container]="lastColumn && renderedColumns.freeColumns.length > 0">
-                        <div *ngIf="!isProjected && column.directive.resizeable && !useCardView"
-                             [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
-                             class="ui-grid-cell-resizing-border">
+                        <div class="ui-grid-cell-resizing-border-container ui-grid-sticky-element"
+                             [class.ui-grid-last-resize-handle-container]="lastColumn && renderedColumns.freeColumns.length > 0">
+                            <div *ngIf="!isProjected && column.directive.resizeable && !useCardView"
+                                 [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
+                                 class="ui-grid-cell-resizing-border">
+                            </div>
                         </div>
-                        <div *ngIf="lastColumn && renderedColumns.freeColumns.length > 0"
-                             class="ui-grid-sticky-boundary"></div>
                     </div>
                 </ng-container>
             </div>
@@ -552,12 +547,12 @@
                                     }">
                         </ng-container>
                     </div>
-                </div>
-                <div *ngIf="!lastColumn"
-                     class="ui-grid-cell-resizing-border-container">
-                    <div *ngIf="!isProjected && column.directive.resizeable && !lastColumn && !useCardView"
-                         [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
-                         class="ui-grid-cell-resizing-border">
+                    <div *ngIf="!lastColumn"
+                         class="ui-grid-cell-resizing-border-container">
+                        <div *ngIf="!isProjected && column.directive.resizeable && !lastColumn && !useCardView"
+                             [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
+                             class="ui-grid-cell-resizing-border">
+                        </div>
                     </div>
                 </div>
             </ng-container>

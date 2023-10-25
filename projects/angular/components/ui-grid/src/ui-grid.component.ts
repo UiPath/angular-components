@@ -86,6 +86,7 @@ import {
     SortManager,
     VisibilityManger,
 } from './managers';
+import { ScrollableGridResizer } from './managers/resize/strategies/scrollable-grid-resizer';
 import { ResizableGrid } from './managers/resize/types';
 import {
     GridOptions,
@@ -817,6 +818,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     private _isShiftPressed = false;
     private _lastCheckboxIdx = 0;
     private _resizeSubscription$: null | Subscription = null;
+    private _containerWidthChangeSubscription$: null | Subscription = null;
     private _expandedEntries: T[] = [];
     private _columns!: QueryList<UiGridColumnDirective<T>>;
     private _virtualScroll = false;
@@ -1223,6 +1225,7 @@ export class UiGridComponent<T extends IGridDataEntry>
 
     private _initResizeManager() {
         this._resizeSubscription$?.unsubscribe();
+        this._containerWidthChangeSubscription$?.unsubscribe();
         this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
         this._resizeSubscription$ = this.resizeManager.resizeEnd$.subscribe((resizeInfo) => {
             if (resizeInfo) {
@@ -1232,6 +1235,16 @@ export class UiGridComponent<T extends IGridDataEntry>
 
             this.resizeEnd.emit();
         });
+
+        if (this.isScrollable) {
+            this._containerWidthChangeSubscription$ = this.resizeManager.widthChange$.pipe(
+                distinctUntilChanged(),
+                tap(width => {
+                    (this.resizeManager as ScrollableGridResizer<T>).limitStickyWidthCoverage(width);
+                }),
+                takeUntil(this._destroyed$),
+            ).subscribe();
+        }
     }
 
     private _initDisplayToggleColumnsDivider() {
