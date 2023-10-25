@@ -1,3 +1,76 @@
+# v14.9.2 (2023-10-25)
+* **refactor** extract testing utility files
+* **refactor** isolate suggest testing utils
+* **chore** extract suggest testing utils
+* **refactor** isolate grid testing utils
+* **chore** extract grid testing utils
+* **refactor** isolate html testing utils
+* **chore** extract html testing utils
+* **refactor** isolate fixture testing utils
+* **chore** extract fixture testing utils
+* **utils** add method for checking disabled toggles
+* **improvement** sort packages by published date
+* **fix** ui-suggest tests
+* **auto-stop** show knobs for feature
+* **ui-utils** exclude nested grids
+* **retention-policy** create retention policy component
+* **Settings** Expose MSI available configs FE OR-61137
+* **ui-utils** verify indeterminate state for checkbox
+* **queue-retention** create form controls for retention policy
+* **tags** improve coverage
+* **kvp** update tests & testing utils
+* **process** rollback & process version change tags modal
+* **tags** add tests for tags validators
+* **triggers** fix & add session deletion tests
+* **utils** add kvp testing utilities and general improvements
+* **fix** failing tests
+* **transaction-items** change query for modern context
+* **tests** async to fakeasync
+* **ad-search** make search reactive to filters
+* **job-allocation** add validations for start job and trigger
+* **processes** disable explore button for processes
+* **feat** implement ui utils for native elements
+* **FE** Execution target for portable process
+* **utils** add getMenuDictionaty for grid menus
+* **folders** manage pw machines
+* **users** robot accounts user upsert refactor
+* **propagate-machines** add unit tests
+* **asset-upsert** add tests
+* **chore** bump rx and angular components
+* **chore** add tests for skipped days component
+* **eslint** format files
+* **eslint** auto-fixed rest of the files
+* **test** extract grid and suggest utils
+* **tests** clean up grid method arguments
+* **test** refactor grid row utils
+* **test** add util for menu item state
+* **a11y** add test setup
+* **robots** add basic page tests for robots module
+* **machines** folder machine-users mappings
+* **process-upsert** add unit tests for process-upsert compoennt
+* **chore** define util for checking state of mat-checkbox
+* **chore** refactor tests for redesign
+* **ng-update** bump to 10.2.2
+* **jobs** change default strategy to onOpen
+* **packages** add feedId for nested forms
+* **folder-tree** init filter; avoid duplicate requests
+* **triggers** define triggers page spec file
+* **specs** add getGridColumnsProperties method
+* **monitoring** add client-side filtering to runtimes-per-machine
+* **utils** add slider and checkbox helpers
+* **tests** define methods for mat-slider
+* **utils** add getAllDebugElements, getGridHeaders
+* **CredentialStores** add unit tests
+* **Jobs** define modal test specifications for classic job creation
+* **folders** assign machines to folders
+* **tests** add type info to getNativeElement
+* **folders** add AD users directly
+* **Folders Page** implement AssignUserModalComponent unit tests
+* **Folders Page** implement UpsertFolderComponent unit tests
+* **Folders Page** implement unit tests
+* **Fix** add e2e test for Queue SLA monitoring page [OR-14159]
+* **Triggers** upsert time & queue trigger
+
 # v14.9.1 (2023-10-20)
 * **grid** fix(grid): remove background transitions
 * **grid** fix(grid): reemit min-width value on resize
