@@ -267,10 +267,10 @@ ui-grid {
                 }
 
                 .ui-grid-resize-handle-container {
-                    height: $ui-grid-header-alternate-row-height - 1;
+                    height: $ui-grid-header-alternate-row-height;
 
                     .ui-grid-resize-handle {
-                        height: $ui-grid-header-alternate-row-height - 1;
+                        height: $ui-grid-header-alternate-row-height;
                     }
                 }
             }
@@ -411,6 +411,14 @@ ui-grid {
                 position: relative;
                 overflow: clip;
 
+                :first-child.sticky-columns-header-container {
+                    padding-left: 0;
+
+                    .ui-grid-header-cell[role="columnheader"] {
+                        padding-left: $ui-grid-row-horizontal-padding;
+                    }
+                }
+
                 .sticky-columns-header-container {
                     position: sticky;
                     z-index: 1;
@@ -425,6 +433,8 @@ ui-grid {
             }
 
             .ui-grid-header {
+                background-color: $header-background-color;
+
                 mat-progress-bar {
                     position: absolute;
                     right: 0;
@@ -469,12 +479,24 @@ ui-grid {
                     }
                 }
 
+                :first-child.sticky-columns-cell-container {
+                    padding-left: 0;
+
+                    .ui-grid-cell {
+                        padding-left: $ui-grid-row-horizontal-padding;
+                    }
+                }
+
                 &.highlighted-row {
+                    .ui-grid-action-cell-container {
+                        background-color: $ui-grid-row-hover-color;
+                    }
+
                     .ui-grid-cell, .ui-grid-cell-resizing-border-container {
                         background-color: $ui-grid-row-hover-color;
                     }
 
-                    > div:first-of-type {
+                    > div.ui-grid-cell:first-of-type {
                         box-shadow: inset 4px 0px 0px $highlighted-entity-color;
                     }
                 }
@@ -543,8 +565,8 @@ ui-grid {
                 border-right: 1px solid $ui-grid-border-color;
             }
 
-                .ui-grid-header-cell:not(.ui-grid-checkbox-cell) {
-                    position: relative !important;
+                .ui-grid-header-cell:not(.ui-grid-checkbox-cell, .ui-grid-refresh-cell) {
+                    position: relative;
                 }
 
                 .ui-grid-resize-handle-container {
@@ -586,7 +608,7 @@ ui-grid {
                 overflow: hidden;
                 word-wrap: break-word;
 
-                &:not(.ui-grid-feature-cell):not(:first-child) {
+                &:not(.ui-grid-feature-cell):not(:first-child, .sticky-columns-cell-container) {
                     box-sizing: border-box;
                     padding: 0 0 0 $ui-grid-default-spacing;
                 }
@@ -690,10 +712,10 @@ ui-grid {
                 }
             }
 
-            .sticky-columns-cell-container {
+            .sticky-columns-cell-container.ui-grid-cell {
                 position: sticky;
                 z-index: 10;
-                padding-left: 0px !important;
+                padding-left: 0px;
                 display: flex;
                 height: $ui-grid-row-height - 1;
 
