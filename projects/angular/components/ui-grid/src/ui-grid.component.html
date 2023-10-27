@@ -149,7 +149,7 @@
                         </ng-container>
 
                         <ng-container *ngLet="partitionedVisibleColumns$ | async as columns">
-                            <div *ngIf="columnWidths"
+                            <div *ngIf="columnWidths && columns.stickyColumns.length"
                                  [style.width.%]="columnWidths.sum"
                                  [style.left.px]="(selectable || singleSelectable) ? selectionColumnWidth : 0"
                                  class="sticky-columns-header-container">
@@ -342,7 +342,8 @@
                                         data: row,
                                         index: index,
                                         expanded: expandedEntries,
-                                        last: last
+                                        last: last,
+                                        highlightedEntityId: (highlightedEntityId$ | async)
                                     }">
                                     </ng-container>
                                 </ng-container>
@@ -487,7 +488,7 @@
         </div>
 
         <ng-container *ngLet="renderedColumns$ | async as renderedColumns">
-            <div *ngIf="columnWidths"
+            <div *ngIf="columnWidths && renderedColumns.stickyColumns.length"
                  [style.width.%]="columnWidths.sum"
                  [style.left.px]="(selectable || singleSelectable) ? selectionColumnWidth : 0"
                  class="sticky-columns-cell-container ui-grid-cell">
