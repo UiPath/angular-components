@@ -1,3 +1,9 @@
+# v14.9.4 (2023-10-27)
+* **grid** repair scrollable grid styling issues
+* **grid** dont render sticky-container if 0 sticky
+* **chore** bump version to v14.9.3
+* **grid** test sticky columns resize
+
 # v14.9.3 (2023-10-25)
 * **grid** test sticky columns resize
 * **grid** move handlers inside grid-cells
