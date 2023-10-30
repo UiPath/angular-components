@@ -295,7 +295,7 @@ describe('Component: UiGrid', () => {
                     const event = new KeyboardEvent('keydown', { key: 'Tab' });
                     const focusEvent = new FocusEvent('focus', { bubbles: true });
                     const focusOutEvent = new FocusEvent('focusout', { bubbles: true });
-                    const [columnHeader1, columnHeader2 ] = document.querySelectorAll('div[role="columnheader"]')!;
+                    const [columnHeader1, columnHeader2] = document.querySelectorAll('div[role="columnheader"]')!;
 
                     columnHeader1.dispatchEvent(event);
                     fixture.detectChanges();
@@ -4483,12 +4483,14 @@ describe('Component: UiGrid', () => {
     describe('Horizontal scroll grid', () => {
         @Component({
             template: `
-                <ui-grid [data]="data"
-                [toggleColumns]="true"
+                <ui-grid
+                         [data]="data"
+                         [toggleColumns]="true"
                          [resizeStrategy]="scrollableStrategy"
                          [refreshable]="true"
-                             [selectable]="false"
-                             [virtualScroll]="virtualScroll">
+                         [selectable]="false"
+                         [virtualScroll]="virtualScroll"
+                         [minWidth]="minWidth">
                     <ui-grid-column [property]="'myNumber'"
                                     [isSticky]="true"
                                     width="5%"
@@ -4533,11 +4535,18 @@ describe('Component: UiGrid', () => {
             data: ITestEntity[] = [];
             scrollableStrategy = ResizeStrategy.ScrollableGrid;
             displayLargeColumn = false;
+            minWidth = 0;
         }
         describe('Behavior: horizontal scrollable grid', () => {
             let fixture: ComponentFixture<TestFixtureHorizontalScrollGridComponent>;
 
-            const beforeConfig = (displayLargeColumn = false) => {
+            const beforeConfig = (config: {
+                displayLargeColumn?: boolean;
+                minWidth?: number;
+            } = {
+                displayLargeColumn: false,
+                minWidth: 0,
+            }) => {
                 TestBed.configureTestingModule({
                     imports: [
                         UiGridModule,
@@ -4549,7 +4558,8 @@ describe('Component: UiGrid', () => {
                 fixture = TestBed.createComponent(TestFixtureHorizontalScrollGridComponent);
                 const data = generateListFactory(generateEntity)(6);
                 fixture.componentInstance.data = data;
-                fixture.componentInstance.displayLargeColumn = displayLargeColumn;
+                fixture.componentInstance.displayLargeColumn = config.displayLargeColumn!;
+                fixture.componentInstance.minWidth = config.minWidth!;
                 tick(100);
                 fixture.detectChanges();
             };
@@ -4558,11 +4568,22 @@ describe('Component: UiGrid', () => {
                 fixture.destroy();
             });
 
-            it('should set a min-width on grid-table', fakeAsync(() => {
+            it('should set a min-width according to window innerWidth on grid-table', fakeAsync(() => {
                 beforeConfig();
                 const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
                 const columnWidthSum = fixture.componentInstance.grid.columns.reduce((acc, curr) => acc + +curr.width, 0);
                 const expectedWidth = Math.round((window.innerWidth * (columnWidthSum / 1000)) * 100) / 100;
+                expect(gridTable.nativeElement.style.minWidth).toBe(expectedWidth + 'px');
+            }));
+
+            it('should set a min-width according to minWidth input on grid-table', fakeAsync(() => {
+                const minWidth = 1000;
+                beforeConfig({ minWidth });
+                fixture.componentInstance.minWidth = minWidth;
+                const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
+                const columnWidthSum = fixture.componentInstance.grid.columns.reduce((acc, curr) => acc + +curr.width, 0);
+
+                const expectedWidth = Math.round((minWidth * (columnWidthSum / 1000)) * 100) / 100;
                 expect(gridTable.nativeElement.style.minWidth).toBe(expectedWidth + 'px');
             }));
 
@@ -4640,27 +4661,27 @@ describe('Component: UiGrid', () => {
             [false, true].forEach(displayLargeColumn => {
                 it(`should ${displayLargeColumn ? 'NOT' : ''} restrict sticky container's width when performing resize-right on last sticky column
                     and current sticky width is ${displayLargeColumn ? 'equal to' : 'less than'} container's width`, fakeAsync(() => {
-                    beforeConfig(displayLargeColumn);
+                    beforeConfig({ displayLargeColumn });
                     tick(100);
                     const col = document.querySelectorAll('div[role="columnheader"]')[displayLargeColumn ? 2 : 1]!;
                     const stickyContainer = document.querySelector('.sticky-columns-header-container');
                     const initialContainerWidth = stickyContainer!.getBoundingClientRect().width;
                     const initialColumnWidth = col!.getBoundingClientRect()!.width;
-                        col.dispatchEvent(EventGenerator.keyDown(Key.ArrowRight));
-                        fixture.detectChanges();
-                        tick(50);
+                    col.dispatchEvent(EventGenerator.keyDown(Key.ArrowRight));
+                    fixture.detectChanges();
+                    tick(50);
 
-                        const newColumnWidth = col!.getBoundingClientRect()!.width;
-                        const newContainerWidth = stickyContainer!.getBoundingClientRect().width;
-                        if (displayLargeColumn) {
-                            expect(newColumnWidth).toEqual(initialColumnWidth);
-                            expect(newContainerWidth).toEqual(initialContainerWidth);
-                        } else {
-                            expect(newColumnWidth).toBeGreaterThan(initialColumnWidth);
-                            expect(newContainerWidth).toBeGreaterThan(initialContainerWidth);
-                        }
-                        discardPeriodicTasks();
-                    }));
+                    const newColumnWidth = col!.getBoundingClientRect()!.width;
+                    const newContainerWidth = stickyContainer!.getBoundingClientRect().width;
+                    if (displayLargeColumn) {
+                        expect(newColumnWidth).toEqual(initialColumnWidth);
+                        expect(newContainerWidth).toEqual(initialContainerWidth);
+                    } else {
+                        expect(newColumnWidth).toBeGreaterThan(initialColumnWidth);
+                        expect(newContainerWidth).toBeGreaterThan(initialContainerWidth);
+                    }
+                    discardPeriodicTasks();
+                }));
             });
 
             describe('Scenario toggle columns', () => {
