@@ -101,7 +101,6 @@ export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid 
 const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
 const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), textarea, select, details, [tabindex]:not([tabindex="-1"])';
 const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'select'];
-const MIN_WIDTH_MULTIPLICATION_FACTOR = 1;
 
 @Component({
     selector: 'ui-grid',
@@ -417,6 +416,13 @@ export class UiGridComponent<T extends IGridDataEntry>
     set highlightedEntityId(value: string) {
         this.highlightedEntityId$.next(value);
     }
+
+    /**
+     * Configure if the grid has a specified minWidth (window.innerWidth as fallback) for scrollable resize strategy
+     *
+     */
+    @Input()
+    minWidth = 0;
 
     /**
      * Emits an event with the sort model when a column sort changes.
@@ -1251,14 +1257,13 @@ export class UiGridComponent<T extends IGridDataEntry>
 
     private _computeMinWidth(columns?: UiGridColumnDirective<T>[]) {
         const cols = (columns ?? this.columns?.toArray() ?? []).filter(c => c.visible);
-        const minWidth = cols.reduce((acc, column) => {
+        const percentagesSum = cols.reduce((acc, column) => {
             acc += +column.width ?? 0;
             return acc;
         }, 0);
 
-        // the window width was used instead of the container's width because we need an absolute unit of measure
-        // This way it persists on page refresh
-        return window.innerWidth * (minWidth / 1000) * MIN_WIDTH_MULTIPLICATION_FACTOR;
+        const minWidth = this.minWidth || window.innerWidth;
+        return minWidth * (percentagesSum / 1000);
     }
 
     private _isOverflown(minWidth: number) {
