@@ -4632,8 +4632,7 @@ describe('Component: UiGrid', () => {
                     beforeConfig();
                     tick(100);
                     fixture.detectChanges();
-
-                    const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns .mat-button')).nativeElement;
+                    const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns button')).nativeElement;
                     buttonToggle.dispatchEvent(EventGenerator.click);
 
                     tick(100);
@@ -4642,10 +4641,10 @@ describe('Component: UiGrid', () => {
 
                 it(`should see sticky columns as disabled when trying to toggle`, fakeAsync(() => {
                     const stickyColumnsIndexes = [0, 1];
-                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option'));
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-mdc-option'));
 
                     options.forEach((o, i) => {
-                        expect(o.nativeElement.classList.contains('mat-option-disabled'))
+                        expect(o.nativeElement.classList.contains('mdc-list-item--disabled'))
                             .toBe(stickyColumnsIndexes.includes(i));
                     });
                 }));
@@ -4653,7 +4652,7 @@ describe('Component: UiGrid', () => {
                 it(`should decrease min-width when toggling off a column`, fakeAsync(() => {
                     const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
                     const startingMinWidth = gridTable.nativeElement.style.minWidth;
-                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option'));
+                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-mdc-option'));
                     const checkbox = options[3].query(By.css('.mat-pseudo-checkbox'));
 
                     checkbox.nativeElement.dispatchEvent(EventGenerator.click);
@@ -4666,7 +4665,8 @@ describe('Component: UiGrid', () => {
 
                 it(`should set overflow to visible if total width of columns does not exceeded container width`, fakeAsync(() => {
                     const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
-                    const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-option:not(.mat-option-disabled)'));
+                    const options = fixture.debugElement
+                        .queryAll(By.css('.ui-grid-toggle-panel .mat-mdc-option:not(.mdc-list-item--disabled)'));
 
                     expect(gridTable.styles.overflow).toEqual('visible');
 
