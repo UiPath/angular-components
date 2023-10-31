@@ -1,3 +1,7 @@
+# v14.9.5 (2023-10-31)
+* **grid** set correct padding for sticky container
+* **grid** add input for min table width
+
 # v14.9.4 (2023-10-27)
 * **grid** repair scrollable grid styling issues
 * **grid** dont render sticky-container if 0 sticky

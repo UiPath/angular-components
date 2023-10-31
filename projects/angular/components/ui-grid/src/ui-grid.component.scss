@@ -561,30 +561,30 @@ ui-grid {
                 }
             }
 
-            .sticky-columns-header-container, .sticky-columns-cell-container {
+            .sticky-container-border-right {
                 border-right: 1px solid $ui-grid-border-color;
             }
 
-                .ui-grid-header-cell:not(.ui-grid-checkbox-cell, .ui-grid-refresh-cell) {
-                    position: relative;
+            .ui-grid-header-cell:not(.ui-grid-checkbox-cell, .ui-grid-refresh-cell) {
+                position: relative;
+            }
+
+            .ui-grid-resize-handle-container {
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: $ui-header-resize-handle-width;
+                padding-left: $ui-header-resize-handle-width - $ui-handle-size-width;
+                box-sizing: border-box;
+                left: unset !important;
+                background-color: transparent;
+
+                cursor: col-resize;
+
+                .ui-grid-resize-handle {
+                    width: $ui-handle-size-width;
                 }
-
-                .ui-grid-resize-handle-container {
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                    width: $ui-header-resize-handle-width;
-                    padding-left: $ui-header-resize-handle-width - $ui-handle-size-width;
-                    box-sizing: border-box;
-                    left: unset !important;
-                    background-color: transparent;
-
-                    cursor: col-resize;
-
-                    .ui-grid-resize-handle {
-                        width: $ui-handle-size-width;
-                    }
-                }
+            }
 
             .ui-grid-cell-resizing-border-container {
                 position: relative;
@@ -613,7 +613,7 @@ ui-grid {
                     padding: 0 0 0 $ui-grid-default-spacing;
                 }
 
-                &:not(.ui-grid-feature-cell):first-of-type {
+                &:not(.ui-grid-feature-cell, .sticky-columns-cell-container):first-of-type {
                     padding-left: $ui-grid-row-horizontal-padding;
 
                     [dir="rtl"] & {
@@ -720,7 +720,7 @@ ui-grid {
                 height: $ui-grid-row-height - 1;
 
                 .ui-grid-cell {
-                    padding: 0 0 0 $ui-grid-default-spacing !important;
+                    padding: 0 0 0 $ui-grid-default-spacing;
                 }
             }
 

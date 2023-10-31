@@ -152,6 +152,7 @@
                             <div *ngIf="columnWidths && columns.stickyColumns.length"
                                  [style.width.%]="columnWidths.sum"
                                  [style.left.px]="(selectable || singleSelectable) ? selectionColumnWidth : 0"
+                                 [class.sticky-container-border-right]="(isOverflown$ | async) && columns.freeColumns.length"
                                  class="sticky-columns-header-container">
                                 <ng-container *ngFor="let column of columns.stickyColumns; let last = last; let columnIndex = index">
                                     <div [class.ui-grid-header-cell-sortable]="column.sortable"
@@ -491,6 +492,7 @@
             <div *ngIf="columnWidths && renderedColumns.stickyColumns.length"
                  [style.width.%]="columnWidths.sum"
                  [style.left.px]="(selectable || singleSelectable) ? selectionColumnWidth : 0"
+                 [class.sticky-container-border-right]="(isOverflown$ | async) && renderedColumns.freeColumns.length"
                  class="sticky-columns-cell-container ui-grid-cell">
                 <ng-container *ngFor="let column of renderedColumns.stickyColumns let lastColumn = last;">
                     <div [class.ui-grid-primary]="column.directive.primary"
