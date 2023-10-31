@@ -1,3 +1,6 @@
+# v15.0.3-rc.0 (2023-10-27)
+* **refactor** extract ui-utils
+
 # v15.0.2-rc.7 (2023-10-17)
 * **fix** clear and focus suggest input on deselection
 * **file-picker** create component
