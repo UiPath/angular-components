@@ -613,7 +613,7 @@ ui-grid {
                     padding: 0 0 0 $ui-grid-default-spacing;
                 }
 
-                &:not(.ui-grid-feature-cell):first-of-type {
+                &:not(.ui-grid-feature-cell, .sticky-columns-cell-container):first-of-type {
                     padding-left: $ui-grid-row-horizontal-padding;
 
                     [dir="rtl"] & {
@@ -720,7 +720,7 @@ ui-grid {
                 height: $ui-grid-row-height - 1;
 
                 .ui-grid-cell {
-                    padding: 0 0 0 $ui-grid-default-spacing !important;
+                    padding: 0 0 0 $ui-grid-default-spacing;
                 }
             }
 
