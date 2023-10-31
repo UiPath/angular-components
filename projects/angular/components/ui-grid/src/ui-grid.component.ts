@@ -1144,8 +1144,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     }
 
     onRowClick(event: Event, row: T) {
-        if ((event.target instanceof Element) &&
-            !EXCLUDED_ROW_SELECTION_ELEMENTS.find(el => (event.target as Element).closest(el))) {
+        if (this._isNonInteractiveElementClick(event)) {
             this.highlightedEntityId$.next(row.id);
 
             if (this.shouldSelectOnRowClick) {
@@ -1280,5 +1279,10 @@ export class UiGridComponent<T extends IGridDataEntry>
             sum,
             widthMap,
         };
+    }
+
+    private _isNonInteractiveElementClick(event: Event) {
+        return (event.target instanceof Element) &&
+            !EXCLUDED_ROW_SELECTION_ELEMENTS.find(el => (event.target as Element).closest(el));
     }
 }
