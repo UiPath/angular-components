@@ -133,4 +133,4 @@ export const isSticky = (element?: HTMLDivElement) =>
  * @param element Returns the exact element width
  */
 export const elementWidth = (selector: string, root?: HTMLElement) =>
-    (root ?? document).querySelector(selector)!.getBoundingClientRect().width;
+    (root ?? document).querySelector(selector)?.getBoundingClientRect().width ?? 0;
