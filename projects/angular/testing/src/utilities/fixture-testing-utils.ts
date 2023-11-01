@@ -58,7 +58,7 @@ export class FixtureTestingUtils<T> {
     };
 
     switchToTab = async (tabNumber: number, debugEl = this.fixture.debugElement) => {
-        const tab = this.getDebugElement(`.mat-tab-label:nth-of-type(${tabNumber}) .mat-tab-label-content`, debugEl);
+        const tab = this.getDebugElement(`.mat-mdc-tab:nth-of-type(${tabNumber}) .mdc-tab__content`, debugEl);
         tab.nativeElement.dispatchEvent(EventGenerator.click);
         this.fixture.detectChanges();
         await this.fixture.whenRenderingDone();
@@ -70,7 +70,7 @@ export class FixtureTestingUtils<T> {
             .dispatchEvent(EventGenerator.click);
 
     clickRadioButton = (selector: string, debugEl = this.fixture.debugElement) =>
-        this.click(`${selector} .mat-radio-label`, debugEl);
+        this.click(`${selector} label`, debugEl);
 
     enter = (selector: string, debugEl = this.fixture.debugElement) =>
         this.getNativeElement(selector, debugEl)!
@@ -96,10 +96,10 @@ export class FixtureTestingUtils<T> {
 
     flushDiscardAndDetect = (times = 1) => {
         new Array(times).fill(0).forEach(() => {
-            flush();
-            discardPeriodicTasks();
-            this.fixture.detectChanges();
-        });
+                flush();
+                discardPeriodicTasks();
+                this.fixture.detectChanges();
+            });
     };
 
     setInput = (selector: string, value: any, debugEl = this.fixture.debugElement) => {
@@ -115,66 +115,68 @@ export class FixtureTestingUtils<T> {
         .contains(className);
 
     // eslint-disable-next-line @typescript-eslint/member-ordering
-    isCheckboxChecked = this.elementContainsClass('mat-checkbox-checked');
+    isCheckboxChecked = this.elementContainsClass('mat-mdc-checkbox-checked');
 
-    // eslint-disable-next-line @typescript-eslint/member-ordering
-    isCheckboxIndeterminate = this.elementContainsClass('mat-checkbox-indeterminate');
+    isCheckboxIndeterminate = (selector: string, debugEl = this.fixture.debugElement) =>
+        !!this.getDebugElement(selector, debugEl)
+            .query(By.css('.mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background'))
+            .nativeElement;
 
     toggleCheckbox = (selector: string, debugEl = this.fixture.debugElement) =>
-    this.getDebugElement(selector, debugEl)
-    .query(By.css('.mat-checkbox-label'))
-    .nativeElement
-    .dispatchEvent(EventGenerator.click);
+        this.getDebugElement(selector, debugEl)
+            .query(By.css('label'))
+            .nativeElement
+            .dispatchEvent(EventGenerator.click);
 
     setCheckboxState = (selector: string, state: boolean, debugEl = this.fixture.debugElement) => {
         const isChecked = this.isCheckboxChecked(selector, debugEl);
         if (
             !isChecked && state ||
             isChecked && !state
-            ) {
-                this.toggleCheckbox(selector);
-            }
-        };
+        ) {
+            this.toggleCheckbox(selector);
+        }
+    };
 
-        toggleSlider = (selector: string, debugEl = this.fixture.debugElement) =>
+    toggleSlider = (selector: string, debugEl = this.fixture.debugElement) =>
         this.htmlTestingUtils.toggleSlider(selector, debugEl.nativeElement);
 
-        setSliderState(selector: string, state: boolean, debugEl = this.fixture.debugElement) {
-            const isToggled = this.isToggleChecked(selector, debugEl);
-            if (
-                isToggled && !state ||
-                !isToggled && state
-                ) {
-                    debugEl.query(By.css(`${selector} input[type=checkbox]`)).nativeElement.click();
-                }
-            }
+    setSliderState(selector: string, state: boolean, debugEl = this.fixture.debugElement) {
+        const isToggled = this.isToggleChecked(selector, debugEl);
+        if (
+            isToggled && !state ||
+            !isToggled && state
+        ) {
+            debugEl.query(By.css(`${selector} button[role=switch]`)).nativeElement.click();
+        }
+    }
 
-            isToggleChecked = (selector: string, debugEl = this.fixture.debugElement) =>
-            this.htmlTestingUtils.isToggleChecked(selector, debugEl.nativeElement);
+    isToggleChecked = (selector: string, debugEl = this.fixture.debugElement) =>
+        this.htmlTestingUtils.isToggleChecked(selector, debugEl.nativeElement);
 
-            // eslint-disable-next-line @typescript-eslint/member-ordering
-            isRadioButtonChecked = this.elementContainsClass('mat-radio-checked');
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    isRadioButtonChecked = this.elementContainsClass('mat-mdc-radio-checked');
 
-            isRadioGroupDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
-            this.getDebugElement(selector, debugEl)
+    isRadioGroupDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
+        this.getDebugElement(selector, debugEl)
             .queryAll(By.css('mat-radio-button'))
-            .every((elem) => this._elementHasClass('mat-radio-button', elem, 'mat-radio-disabled'));
+            .every((elem) => this._elementHasClass('mat-radio-button .mdc-radio', elem, 'mdc-radio--disabled'));
 
     isRadioButtonDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
         this._elementHasClass(
-            selector, debugEl, 'mat-radio-disabled',
+            `${selector} .mdc-radio`, debugEl, 'mdc-radio--disabled',
         );
     isCheckBoxDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
         this._elementHasClass(
-            selector, debugEl, 'mat-checkbox-disabled',
+            selector, debugEl, 'mat-mdc-checkbox-disabled',
         );
     isMatSelectDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
         this._elementHasClass(
-            selector, debugEl, 'mat-select-disabled',
+            selector, debugEl, 'mat-mdc-select-disabled',
         );
     isSlideToggleDisabled = (selector: string, debugEl = this.fixture.debugElement) =>
         this._elementHasClass(
-            selector, debugEl, 'mat-disabled',
+            `${selector} button[role="switch"]`, debugEl, 'mdc-switch--disabled',
         );
 
     changeTheme = (theme: 'light' | 'dark') => {

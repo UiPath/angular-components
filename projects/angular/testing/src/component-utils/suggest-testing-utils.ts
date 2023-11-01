@@ -80,13 +80,15 @@ export class SuggestUtils<T> {
             tick(this._options.debounce);
             this._utils.fixture.detectChanges();
 
-            if (httpRequest) { httpRequest(); }
+            if (httpRequest) {
+                httpRequest();
+            }
         }
 
         tick(100);
         this._utils.fixture.detectChanges();
 
-        const listItems = parentContainer.queryAll(By.css('.mat-list-item'));
+        const listItems = parentContainer.queryAll(By.css('.mat-mdc-list-item'));
 
         const reverseOrder = !!parentContainer.query(By.css('mat-list:first-child:not(:only-child)'));
 
@@ -95,7 +97,7 @@ export class SuggestUtils<T> {
         this._utils.fixture.detectChanges();
 
         if (multiple) {
-            this._utils.getNativeElement(`.mat-chip-list`, suggest)!
+            this._utils.getNativeElement(`.mat-mdc-chip-grid`, suggest)!
                 .dispatchEvent(EventGenerator.keyUp(Key.Escape));
             this._utils.fixture.detectChanges();
         }
@@ -132,7 +134,7 @@ export class SuggestUtils<T> {
 
         const suggestDropdown = this._utils.getDebugElement(this.dropdownSelector, debugEl);
 
-        const listItems = suggestDropdown.queryAll(By.css('.mat-list-item'));
+        const listItems = suggestDropdown.queryAll(By.css('.mat-mdc-list-item'));
 
         const reverseOrder = !!suggestDropdown.query(By.css('mat-list:first-child:not(:only-child)'));
 
@@ -153,16 +155,17 @@ export class SuggestUtils<T> {
         !!this._utils.getNativeElement(`${selector} ${suffix}`, debugEl);
 
     // eslint-disable-next-line @typescript-eslint/member-ordering
-    isMultiple = this.elementContains('mat-chip-list');
+    isMultiple = this.elementContains('mat-chip-grid');
 
     // eslint-disable-next-line @typescript-eslint/member-ordering
     isOpen = this.elementContains('[aria-expanded="true"]');
 
     getValue = (selector: string, debugEl = this._utils.fixture.debugElement) => {
         if (this.isMultiple(selector)) {
-            return this._utils.getAllNativeElements(`${selector} .mat-chip span`, debugEl)
-                .map(el => el.innerText.trim())
-                .join(',');
+            return this._utils.getAllNativeElements(
+                `${selector} .mat-mdc-chip .mat-mdc-chip-action-label span:not(.mat-mdc-focus-indicator)`,
+                debugEl,
+            );
         }
 
         return this._utils.getNativeElement(`${selector} .display-value`, debugEl)!
