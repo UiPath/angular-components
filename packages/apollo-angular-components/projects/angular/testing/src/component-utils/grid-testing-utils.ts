@@ -69,12 +69,14 @@ export class GridUtils<T> {
             .map(getter);
     };
 
-    getHeaders = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
-        .filter(el => this._utils.getDebugElement('.ui-grid-header-title:not(ui-grid ui-grid .ui-grid-header-title)', el));
+    getHeaders = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) =>
+        this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
+            .filter(el => this._utils.getDebugElement('.ui-grid-header-title:not(ui-grid ui-grid .ui-grid-header-title)', el));
 
-    getColumnsProperties = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) => this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
-        .filter(el => this._utils.getDebugElement('.ui-grid-header-title', el))
-        .map(el => el.attributes['data-property']);
+    getColumnsProperties = (gridSelector = selectors.grid, debugEl = this._utils.fixture.debugElement) =>
+        this._utils.getAllDebugElements(`${gridSelector} .ui-grid-header-cell`, debugEl)
+            .filter(el => this._utils.getDebugElement('.ui-grid-header-title', el))
+            .map(el => el.attributes['data-property']);
 
     getHeaderCell = (property: string, debugEl = this._utils.fixture.debugElement) =>
         this._utils.getDebugElement(`.ui-grid-header-cell[data-property="${property}"]`, debugEl);
@@ -134,7 +136,7 @@ export class GridUtils<T> {
 
         this._utils.click(`${gridSelector} [data-row-index="${rowNumber}"] ${menu}`, debugEl);
         this._utils.fixture.detectChanges();
-        const nodes = this._utils.getAllDebugElements('.cdk-overlay-container .mat-menu-item', debugEl);
+        const nodes = this._utils.getAllDebugElements('.cdk-overlay-container .mat-mdc-menu-item', debugEl);
 
         return nodes.map(item => ({
             text: item.query(By.css('span')).nativeElement.innerText,
@@ -229,7 +231,7 @@ export class GridUtils<T> {
         button.nativeElement.dispatchEvent(EventGenerator.click);
         this._utils.fixture.detectChanges();
 
-        const labelButton = overlayContainerElement.querySelectorAll('button.mat-menu-item');
+        const labelButton = overlayContainerElement.querySelectorAll('button.mat-mdc-menu-item');
         labelButton[nth].dispatchEvent(EventGenerator.click);
 
         this._utils.fixture.detectChanges();
