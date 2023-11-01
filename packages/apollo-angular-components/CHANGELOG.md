@@ -1,3 +1,7 @@
+# v15.0.3-rc.1 (2023-11-01)
+* **testing** use mdc selectors and classes
+* **deps-dev** bump crypto-js from 4.1.1 to 4.2.0
+
 # v15.0.3-rc.0 (2023-10-27)
 * **refactor** extract ui-utils
 
