@@ -1,3 +1,12 @@
+# v15.1.0 (2023-11-02)
+* **grid** set border-right on sticky container
+* **grid** early return if element not rendered
+* **grid** set correct padding for sticky container
+* **grid** add input for min table width
+* **grid** update tests
+* **grid** add scrollable resize strategy
+* **grid** resize according to mouse traveled distance
+
 # v15.0.3-rc.1 (2023-11-01)
 * **testing** use mdc selectors and classes
 * **deps-dev** bump crypto-js from 4.1.1 to 4.2.0

@@ -1152,15 +1152,9 @@ export class UiGridComponent<T extends IGridDataEntry>
     onRowClick(event: Event, row: T) {
         if (this._isNonInteractiveElementClick(event)) {
             this.highlightedEntityId$.next(row.id);
-
-            if (this.shouldSelectOnRowClick) {
-                if (this.singleSelectable) {
-                    this.rowSelected(row);
-                } else {
-                    this.selectionManager.toggle(row);
-                }
-            }
+            this._selectRowOnClick(row);
         }
+
         this.rowClick.emit({
             event,
             row,
@@ -1289,5 +1283,15 @@ export class UiGridComponent<T extends IGridDataEntry>
     private _isNonInteractiveElementClick(event: Event) {
         return (event.target instanceof Element) &&
             !EXCLUDED_ROW_SELECTION_ELEMENTS.find(el => (event.target as Element).closest(el));
+    }
+
+    private _selectRowOnClick(row: T) {
+        if (this.shouldSelectOnRowClick) {
+            if (this.singleSelectable) {
+                this.rowSelected(row);
+            } else {
+                this.selectionManager.toggle(row);
+            }
+        }
     }
 }
