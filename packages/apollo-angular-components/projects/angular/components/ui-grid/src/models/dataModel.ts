@@ -1,3 +1,5 @@
+import { ResizeStrategy } from '../managers';
+
 /**
  * The grid entry schema.
  *
@@ -26,4 +28,5 @@ export interface GridOptions<T> {
     collapseFiltersCount?: number;
     idProperty?: keyof T;
     rowSize?: number;
+    resizeStrategy?: ResizeStrategy;
 }
