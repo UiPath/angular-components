@@ -1114,7 +1114,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         if (!row) {
             return this.intl.checkboxTooltip(this.isEveryVisibleRowChecked);
         }
-        if (this.singleSelectable && this.selectionManager.isSelected(row)) { return ''; }
+        if (this.singleSelectable && this.selectionManager.isSelected(row)) { return this.intl.radioButtonSelectedRowMessage; }
 
         return this.intl.checkboxTooltip(this.selectionManager.isSelected(row), this.dataManager.indexOf(row));
     }
