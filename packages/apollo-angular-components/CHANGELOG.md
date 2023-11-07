@@ -1,3 +1,8 @@
+# v15.0.4 (2023-11-07)
+* **fix** grid toggle columns dropdown header
+* **fix** snackbar background color
+* **chore** run npm audit
+
 # v15.1.0 (2023-11-02)
 * **grid** set border-right on sticky container
 * **grid** early return if element not rendered
