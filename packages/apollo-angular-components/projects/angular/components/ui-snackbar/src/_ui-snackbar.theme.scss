@@ -58,22 +58,34 @@ $default-snackbar-theme: (
 
         &-success {
             color: $success-text-color;
-            background-color: $success-background-color;
+
+            .mdc-snackbar__surface {
+                background-color: $success-background-color;
+            }
         }
 
         &-warning {
             color: $warning-text-color;
-            background-color: $warning-background-color;
+
+            .mdc-snackbar__surface {
+                background-color: $warning-background-color;
+            }
         }
 
         &-error {
             color: $error-text-color;
-            background-color: $error-background-color;
+
+            .mdc-snackbar__surface {
+                background-color: $error-background-color;
+            }
         }
 
         &-info {
             color: $info-text-color;
-            background-color: $info-background-color;
+
+            .mdc-snackbar__surface {
+                background-color: $info-background-color;
+            }
         }
 
         &-dismiss {
