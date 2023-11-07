@@ -36,6 +36,19 @@ $toggle-col-width: 10em;
 
         .mat-icon {
             margin-right: 0;
+            flex-shrink: 0;
+        }
+
+        .mdc-list-item__primary-text {
+            display: flex;
+            align-items: center;
+            max-width: 100%;
+        }
+
+        .ui-grid-toggle-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 }

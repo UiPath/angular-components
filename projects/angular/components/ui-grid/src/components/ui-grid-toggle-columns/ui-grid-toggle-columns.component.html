@@ -18,9 +18,10 @@
                 tabIndex="-1"
                 multiple>
         <mat-optgroup>
-            <span>
-                <mat-icon class="material-icons-outlined">view_column</mat-icon> {{ toggleTitle }}
-            </span>
+            <mat-icon class="material-icons-outlined">view_column</mat-icon>
+            <span *ngIf="toggleTitle"
+                  [matTooltip]="toggleTitle"
+                  class="ui-grid-toggle-title">{{ toggleTitle }}</span>
 
             <button #resetBtn
                     *ngIf="dirty"
