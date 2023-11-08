@@ -7,6 +7,7 @@ import {
 } from '../resize-manager.constants';
 import {
     IResizeEvent,
+    IResizeInfo,
     ResizeDirection,
 } from '../types';
 
@@ -71,4 +72,14 @@ export class ImmediateNeighbourHaltResizer<T extends IGridDataEntry> extends Res
             this._applyOffsetFor(state.current.resized, offset);
         }
     };
+
+    protected _endResizeCommon(...entries: (IResizeInfo<T> | undefined)[]) {
+        entries.forEach(entry => {
+            if (!entry) { return; }
+
+            const width = this._widthMap.get(entry.column.identifier)!;
+            entry.column.width = width / 10;
+        });
+        super._endResizeCommon(...entries);
+    }
 }
