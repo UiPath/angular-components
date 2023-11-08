@@ -124,6 +124,11 @@ export class UiGridIntl implements OnDestroy {
      */
     menuExpanded = 'expanded';
     /**
+     * Single selection message for selected row.
+     *
+     */
+    radioButtonSelectedRowMessage = 'The row is selected';
+    /**
      * No data row message alternative function.
      *
      */
