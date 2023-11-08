@@ -102,8 +102,12 @@
             <div [class.ui-grid-table-refreshable]="refreshable"
                  [style.minWidth.px]="isScrollable && dataManager.length ? (minWidth$ | async) : undefined"
                  [style.overflow]="isScrollable ? (tableOverflowStyle$ | async) : 'visible'"
-                class="ui-grid-table"
-                role="grid">
+                 class="ui-grid-table"
+                 role="grid">
+                <mat-progress-bar *ngIf="loading && !loadingState"
+                                  mode="query"
+                                  class="ui-grid-loader">
+                </mat-progress-bar>
                 <div class="ui-grid-header">
                     <div *ngIf="showHeaderRow"
                         class="ui-grid-header-row"
@@ -151,8 +155,8 @@
                                          (focusout)="hideColumnHeaderTooltip(columnTooltip)"
                                          (keyup.enter)="sortManager.changeSort(column)"
                                          (keyup.space)="sortManager.changeSort(column)"
-                                         (keydown.ArrowLeft)="(!last || columns.freeColumns.length) && resizeManager.startKeyboardResize('left', column, columnIndex); $event.preventDefault()"
-                                         (keydown.ArrowRight)="(!last || columns.freeColumns.length) && resizeManager.startKeyboardResize('right', column, columnIndex); $event.preventDefault()"
+                                         (keydown.ArrowLeft)="columns.freeColumns.length && resizeManager.startKeyboardResize('left', column, columnIndex); $event.preventDefault()"
+                                         (keydown.ArrowRight)="columns.freeColumns.length && resizeManager.startKeyboardResize('right', column, columnIndex); $event.preventDefault()"
                                          cdkMonitorElementFocus
                                          class="ui-grid-header-cell ui-grid-sticky-element"
                                          role="columnheader"
@@ -218,8 +222,8 @@
                                      (focusout)="hideColumnHeaderTooltip(columnTooltip)"
                                      (keyup.enter)="sortManager.changeSort(column)"
                                      (keyup.space)="sortManager.changeSort(column)"
-                                     (keydown.ArrowLeft)="!last && resizeManager.startKeyboardResize('left', column, columnIndex); $event.preventDefault()"
-                                     (keydown.ArrowRight)="!last && resizeManager.startKeyboardResize('right', column, columnIndex); $event.preventDefault()"
+                                     (keydown.ArrowLeft)="resizeManager.startKeyboardResize('left', column, columnIndex); $event.preventDefault()"
+                                     (keydown.ArrowRight)="resizeManager.startKeyboardResize('right', column, columnIndex); $event.preventDefault()"
                                      cdkMonitorElementFocus
                                      class="ui-grid-header-cell"
                                      role="columnheader"
@@ -289,10 +293,6 @@
                             class="ui-grid-header-cell ui-grid-action-cell ui-grid-feature-cell">
                         </div>
                     </div>
-                    <mat-progress-bar *ngIf="loading && !loadingState"
-                                    mode="query"
-                                    class="ui-grid-loader">
-                    </mat-progress-bar>
                 </div>
 
                 <ng-container *ngIf="dataManager?.length; else noData">
