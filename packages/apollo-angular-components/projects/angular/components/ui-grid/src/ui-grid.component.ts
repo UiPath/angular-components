@@ -101,6 +101,8 @@ export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid 
 const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
 const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), textarea, select, details, [tabindex]:not([tabindex="-1"])';
 const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'select'];
+const RESIZE_HANDLE_WIDTH = 18;
+const REFRESH_WIDTH = 50;
 
 @Component({
     selector: 'ui-grid',
@@ -756,6 +758,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     );
 
     areFilersCollapsed$: Observable<boolean>;
+    columnWidthPercentToPxRatio = 0;
 
     /**
      * Determines if the multi-page selection row should be displayed.
@@ -770,16 +773,22 @@ export class UiGridComponent<T extends IGridDataEntry>
             );
     }
 
+    deficit$ = new BehaviorSubject(0);
+
     minWidth$ = defer(() => merge(
-        this.visible$.pipe(
-            map(columns => this._computeMinWidth(columns)),
-        ),
-        this.resizeManager.widthChange$.pipe(
-            map(() => this._computeMinWidth()),
-        ),
+        this.visible$,
+        this.resizeManager.widthChange$,
+        this.resizeManager.resize$,
     ).pipe(
+        map(() => this._computeMinWidth()),
+        tap(minWidth => {
+            const containerWidth = this._ref.nativeElement.getBoundingClientRect().width;
+            this.deficit$.next(Math.max(0, containerWidth - minWidth));
+        }),
         tap(() => { this._cd.detectChanges(); }),
-    ));
+    )).pipe(
+        shareReplay(1),
+    );
 
     isOverflown$ = this.minWidth$.pipe(
         map(minWidth => this._isOverflown(minWidth)),
@@ -1114,7 +1123,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         if (!row) {
             return this.intl.checkboxTooltip(this.isEveryVisibleRowChecked);
         }
-        if (this.singleSelectable && this.selectionManager.isSelected(row)) { return ''; }
+        if (this.singleSelectable && this.selectionManager.isSelected(row)) { return this.intl.radioButtonSelectedRowMessage; }
 
         return this.intl.checkboxTooltip(this.selectionManager.isSelected(row), this.dataManager.indexOf(row));
     }
@@ -1215,6 +1224,14 @@ export class UiGridComponent<T extends IGridDataEntry>
         this.selectionManager.select(row);
     }
 
+    sumColumnPxWidths(columns: UiGridColumnDirective<T>[]) {
+        return (columns.reduce((acc, curr) => acc + Number(curr.widthPx$.value), 0) + this._stickyHandlesWidth) + 'px';
+    }
+
+    mapDirectivesToColumns(directives: { directive: UiGridColumnDirective<T> }[]) {
+        return directives.map(d => d.directive);
+    }
+
     private _announceGridHeaderActions() {
         this._queuedAnnouncer.enqueue(this.intl.gridHeaderActionsNotice);
     }
@@ -1256,8 +1273,26 @@ export class UiGridComponent<T extends IGridDataEntry>
             return acc;
         }, 0);
 
-        const minWidth = this.minWidth || window.innerWidth;
-        return minWidth * (percentagesSum / 1000);
+        const widthsPxSum = cols.reduce((acc, column) => {
+            acc += column.widthPx$.value;
+            return acc;
+        }, 0);
+        if (widthsPxSum) {
+            return widthsPxSum + this._otherActionsWidth + this._stickyHandlesWidth;
+        }
+
+        const minWidth = (this.minWidth || window.innerWidth) * (percentagesSum / 1000);
+        this._initColumnsPxWidths(minWidth);
+        return minWidth ;
+    }
+
+    private get _otherActionsWidth() {
+        return (this.selectable || this.singleSelectable ? this.selectionColumnWidth : 0) +
+            (this.refreshable ? REFRESH_WIDTH : 0);
+    }
+
+    private get _stickyHandlesWidth() {
+        return this.columns.filter(c => c.isSticky).length * RESIZE_HANDLE_WIDTH;
     }
 
     private _isOverflown(minWidth: number) {
@@ -1292,6 +1327,22 @@ export class UiGridComponent<T extends IGridDataEntry>
             } else {
                 this.selectionManager.toggle(row);
             }
+        }
+    }
+
+    private _initColumnsPxWidths(minWidth: number) {
+        if (!this.columnWidthPercentToPxRatio) {
+
+            const containerWidth = this._ref.nativeElement.getBoundingClientRect().width;
+            if (containerWidth > minWidth) {minWidth = containerWidth;}
+
+            const totalColumnWidths = this.columns.filter(c => c.visible).reduce((acc, curr) => acc + Number(curr.width), 0);
+            this.columnWidthPercentToPxRatio = (minWidth - this._otherActionsWidth) / totalColumnWidths;
+
+            this.columns.forEach(c => {
+                const value = (+c.width * this.columnWidthPercentToPxRatio);
+                c.widthPx$.next(value);
+            });
         }
     }
 }

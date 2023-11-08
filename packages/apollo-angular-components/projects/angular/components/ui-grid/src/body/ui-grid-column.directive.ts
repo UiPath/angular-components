@@ -1,4 +1,7 @@
-import { Subject } from 'rxjs';
+import {
+    BehaviorSubject,
+    Subject,
+} from 'rxjs';
 
 import {
     ContentChild,
@@ -260,6 +263,12 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      *
      */
     change$ = new Subject<SimpleChanges>();
+
+    /**
+     * Source of truth for column's width expressed in pixels when grid has Scrollable resize strategy.
+     *
+     */
+    widthPx$ = new BehaviorSubject(0);
 
     private _width = NaN;
     private _visible = true;
