@@ -1,3 +1,8 @@
+# v15.0.5 (2023-11-08)
+* **grid** move progress bar to parent container
+* **grid** rethink scrollable strategy
+* **grid** add tooltip to radio btn
+
 # v15.0.4 (2023-11-07)
 * **fix** grid toggle columns dropdown header
 * **fix** snackbar background color
