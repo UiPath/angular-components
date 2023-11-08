@@ -1,3 +1,7 @@
+# v14.9.6 (2023-11-08)
+* **grid** move progress bar to parent container
+* **grid** rethink scrollable strategy
+
 # v14.9.5 (2023-10-31)
 * **grid** set correct padding for sticky container
 * **grid** add input for min table width
