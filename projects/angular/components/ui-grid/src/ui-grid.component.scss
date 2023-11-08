@@ -472,7 +472,7 @@ ui-grid {
                 &:focus,
                 &.cdk-focused {
                     .ui-grid-action-cell {
-                        > div:has(button) {
+                        > div:has(*) {
                             box-shadow: -16px 0px 16px -4px $ui-grid-row-hover-color;
                         }
                     }
