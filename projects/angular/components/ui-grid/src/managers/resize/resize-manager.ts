@@ -22,7 +22,6 @@ import {
     cellSelector,
     findHeaderIndexFor,
     getProperty,
-    isSticky,
     resizeFilter,
     toPercentageStyle,
 } from './resize-manager.constants';
@@ -44,11 +43,16 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     resizeEnd$ = new Subject<IResizeInfo<T> | undefined>();
     resizeStart$ = new Subject<{ columnIndex: number; mouseEvent?: MouseEvent; direction?: 'left' | 'right' }>();
     resize$ = new Subject<Map<string, number>>();
+    previousClientX = 0;
+
     protected set _resizeEvent(ev: MouseEvent) {
         if (!this.current) { return; }
 
         const value = ev.clientX - this.current.dragInitX!;
-
+        if (!this.previousClientX) {
+            // TODO: move this to startResize
+            this.previousClientX = ev.clientX;
+        }
         // compute the current direction and determine if it has changed
         const direction = value > this._previous!.offsetPx ? ResizeDirection.Right : ResizeDirection.Left;
         const isDirectionChanged = this._direction !== direction;
@@ -74,9 +78,11 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
                 direction,
                 event: ev,
             },
+            deltaPx: ev.clientX - this.previousClientX,
         };
         this._resize$.next(nextEvent);
         this.resize$.next(this._widthMap);
+        this.previousClientX = ev.clientX;
     }
 
     protected abstract _stateFilter: (state: IResizeEvent<T>) => boolean;
@@ -319,11 +325,8 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
         const width = entry.column.width as number + offset;
         this._widthMap.set(entry.column.identifier, width);
-
-        if (!isSticky(entry.element)) {
-            entry.element.style.width = toPercentageStyle(width);
-            entry.cells.forEach(cell => cell.style.width = toPercentageStyle(width));
-        }
+        entry.element.style.width = toPercentageStyle(width);
+        entry.cells.forEach(cell => cell.style.width = toPercentageStyle(width));
     }
 
     protected _computePixelsToPercentRatio() {
@@ -334,6 +337,12 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         const totalHeaderWidths = this._headers!.reduce((acc, curr) => acc + curr.getBoundingClientRect().width, 0) || 1;
 
         return totalColumnWidths / totalHeaderWidths;
+    }
+
+    protected _endResizeCommon(..._entries: (IResizeInfo<T> | undefined)[]) {
+        this.previousClientX = 0;
+
+        this._previous = {} as IResizeState<T>;
     }
 
     private _getCellsFor = (property: string) => toArray<HTMLDivElement>(
@@ -351,17 +360,4 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         this.current!.dragInitX = ev.clientX;
     }
 
-    private _endResizeCommon(...entries: (IResizeInfo<T> | undefined)[]) {
-        entries.forEach(entry => {
-            if (!entry) { return; }
-
-            const width = this._widthMap.get(entry.column.identifier)!;
-            entry.column.width = width / 10;
-
-            if (!isSticky(entry.element)) {
-                entry.element.style.width = toPercentageStyle(width);
-            }
-        });
-        this._previous = {} as IResizeState<T>;
-    }
 }
