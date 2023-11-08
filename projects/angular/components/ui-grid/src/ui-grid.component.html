@@ -150,18 +150,20 @@
 
                         <ng-container *ngLet="partitionedVisibleColumns$ | async as columns">
                             <div *ngIf="columnWidths && columns.stickyColumns.length"
-                                 [style.width.%]="columnWidths.sum"
                                  [style.left.px]="(selectable || singleSelectable) ? selectionColumnWidth : 0"
                                  [class.sticky-container-border-right]="(isOverflown$ | async) && columns.freeColumns.length"
+                                 [style.minWidth]="sumColumnPxWidths(columns.stickyColumns)"
                                  class="sticky-columns-header-container">
                                 <ng-container *ngFor="let column of columns.stickyColumns; let last = last; let columnIndex = index">
-                                    <div [class.ui-grid-header-cell-sortable]="column.sortable"
+                                    <div *ngLet="(column.widthPx$ | async) as widthPx"
+                                         [class.ui-grid-header-cell-sortable]="column.sortable"
                                          [class.ui-grid-resizeable]="column.resizeable"
                                          [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
                                          [attr.aria-sort]="column.ariaSort"
                                          [attr.data-property]="column.property"
                                          [attr.data-identifier]="column.identifier"
-                                         [style.width.%]="(columnWidths.widthMap[column.identifier] / columnWidths.sum) * 100"
+                                         [style.width]="widthPx ? (widthPx + 'px') : (column.width + '%')"
+                                         [style.minWidth.px]="widthPx"
                                          (cdkFocusChange)="triggerColumnHeaderTooltip($event, columnTooltip)"
                                          (focusout)="hideColumnHeaderTooltip(columnTooltip)"
                                          (keyup.enter)="sortManager.changeSort(column)"
@@ -220,13 +222,15 @@
                             </div>
 
                             <ng-container *ngFor="let column of columns.freeColumns; let last = last; let columnIndex = index">
-                                <div [class.ui-grid-header-cell-sortable]="column.sortable"
+                                <div *ngLet="(+(column.widthPx$ | async)! + (last ? (+(deficit$ | async)!) : 0)) as widthPx"
+                                     [class.ui-grid-header-cell-sortable]="column.sortable"
                                      [class.ui-grid-resizeable]="column.resizeable"
                                      [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
                                      [attr.aria-sort]="column.ariaSort"
                                      [attr.data-property]="column.property"
                                      [attr.data-identifier]="column.identifier"
-                                     [style.width.%]="column.width"
+                                     [style.width]="widthPx ? (widthPx + 'px') : (column.width + '%')"
+                                     [style.minWidth.px]="widthPx"
                                      (cdkFocusChange)="triggerColumnHeaderTooltip($event, columnTooltip)"
                                      (focusout)="hideColumnHeaderTooltip(columnTooltip)"
                                      (keyup.enter)="sortManager.changeSort(column)"
@@ -271,7 +275,7 @@
                                         </div>
                                     </div>
 
-                                    <div *ngIf="!isProjected && column.resizeable && !last && !useCardView"
+                                    <div *ngIf="!isProjected && column.resizeable && !useCardView"
                                          (mousedown)="resizeManager.startResize($event, column, columnIndex)"
                                          class="ui-grid-resize-handle-container">
                                         <div [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
@@ -490,17 +494,19 @@
 
         <ng-container *ngLet="renderedColumns$ | async as renderedColumns">
             <div *ngIf="columnWidths && renderedColumns.stickyColumns.length"
-                 [style.width.%]="columnWidths.sum"
                  [style.left.px]="(selectable || singleSelectable) ? selectionColumnWidth : 0"
+                 [style.minWidth]="sumColumnPxWidths(mapDirectivesToColumns(renderedColumns.stickyColumns))"
                  [class.sticky-container-border-right]="(isOverflown$ | async) && renderedColumns.freeColumns.length"
                  class="sticky-columns-cell-container ui-grid-cell">
                 <ng-container *ngFor="let column of renderedColumns.stickyColumns let lastColumn = last;">
-                    <div [class.ui-grid-primary]="column.directive.primary"
+                    <div *ngLet="(column.directive.widthPx$ | async) as widthPx"
+                         [class.ui-grid-primary]="column.directive.primary"
                          [class.ui-grid-secondary]="!column.directive.primary"
                          [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
                          [attr.data-property]="column.directive.property"
                          [attr.data-identifier]="column.directive.identifier"
-                         [style.width.%]="(columnWidths.widthMap[column.directive.identifier] / columnWidths.sum) * 100"
+                         [style.width]="(widthPx) ? (widthPx + 'px') : (column.directive.width + '%')"
+                         [style.minWidth.px]="widthPx"
                          [attr.role]="column.role"
                          class="ui-grid-cell ui-grid-sticky-element">
                         <div *ngIf="isProjected"
@@ -529,12 +535,14 @@
             </div>
 
             <ng-container *ngFor="let column of renderedColumns.freeColumns; let lastColumn = last; let columnIndex = index">
-                <div [class.ui-grid-primary]="column.directive.primary"
+                <div *ngLet="(+(column.directive.widthPx$ | async)! + (lastColumn ? (+(deficit$ | async)!) : 0)) as widthPx"
+                     [class.ui-grid-primary]="column.directive.primary"
                      [class.ui-grid-secondary]="!column.directive.primary"
                      [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
                      [attr.data-property]="column.directive.property"
                      [attr.data-identifier]="column.directive.identifier"
-                     [style.width.%]="column.directive.width"
+                     [style.width]="widthPx ? (widthPx + 'px') : (column.directive.width + '%')"
+                     [style.minWidth.px]="widthPx"
                      [attr.role]="column.role"
                      class="ui-grid-cell">
                     <div *ngIf="isProjected"
