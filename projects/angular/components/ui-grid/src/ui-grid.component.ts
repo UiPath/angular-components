@@ -780,7 +780,6 @@ export class UiGridComponent<T extends IGridDataEntry>
     }
 
     deficit$ = new BehaviorSubject(0);
-    isOverflown$ = new BehaviorSubject(false);
 
     minWidth$ = defer(() => merge(
         this.visible$,
@@ -791,11 +790,16 @@ export class UiGridComponent<T extends IGridDataEntry>
         tap(minWidth => {
             const containerWidth = this._ref.nativeElement.getBoundingClientRect().width;
             this.deficit$.next(Math.max(0, containerWidth - minWidth));
-
-            this.isOverflown$.next(this._isOverflown(minWidth));
         }),
         tap(() => { this._cd.detectChanges(); }),
-    ));
+    )).pipe(
+        shareReplay(1),
+    );
+
+    isOverflown$ = this.minWidth$.pipe(
+        map(minWidth => this._isOverflown(minWidth)),
+        distinctUntilChanged(),
+    );
 
     tableOverflowStyle$ = this.isOverflown$.pipe(
         map(value => value ? 'visible' : 'hidden'),

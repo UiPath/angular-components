@@ -293,6 +293,7 @@ ui-grid {
 
         &-table-container {
             position: relative;
+            z-index: 2;
 
             &.scrollable {
                 overflow-x: auto;
@@ -432,14 +433,12 @@ ui-grid {
                 }
             }
 
+            mat-progress-bar {
+                z-index: 2;
+            }
+
             .ui-grid-header {
                 background-color: $header-background-color;
-
-                mat-progress-bar {
-                    position: absolute;
-                    right: 0;
-                    z-index: 1;
-                }
 
                 .ui-grid-resize-handle-container {
                     background-color: transparent;
@@ -473,7 +472,7 @@ ui-grid {
                 &:focus,
                 &.cdk-focused {
                     .ui-grid-action-cell {
-                        > div {
+                        > div:has(button) {
                             box-shadow: -16px 0px 16px -4px $ui-grid-row-hover-color;
                         }
                     }
