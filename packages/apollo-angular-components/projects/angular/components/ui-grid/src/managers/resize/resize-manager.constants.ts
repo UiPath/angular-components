@@ -48,10 +48,12 @@ export function isDirectionChanged<T>(state: IResizeEvent<T>) {
 export function clampOffset<T>(entry: IResizeInfo<T> | undefined, offset: number) {
     if (!entry) { return offset; }
 
-    const width = entry.column.width as number + offset;
+    return clampColumnOffset(Number(entry.column.width), entry.column.minWidth, offset);
+}
 
-    if (width < entry.column.minWidth) {
-        return entry.column.minWidth - (entry.column.width as number);
+export function clampColumnOffset(width: number, minWidth: number, offset: number) {
+    if (width + offset < minWidth) {
+        return minWidth - width;
     }
 
     return offset;

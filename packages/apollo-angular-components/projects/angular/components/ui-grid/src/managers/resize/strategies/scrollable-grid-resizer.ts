@@ -1,15 +1,15 @@
 import { IGridDataEntry } from '../../../models';
+import { IResizeInfo } from '../../resize/types';
 import { ResizeDirection } from '../../resize/types/resizeDirection';
 import { IResizeEvent } from '../../resize/types/resizeEvent';
 import {
-    clampOffset,
+    clampColumnOffset,
     elementWidth,
-    isMinWidth,
-    isSticky,
 } from '../resize-manager.constants';
 import { ImmediateNeighbourHaltResizer } from './immediate-neighbour-halt-resizer';
 
 export const MAXIMUM_STICKY_COVERAGE = 0.7;
+export const MIN_WIDTH_SCALING_FACTOR = 1.25;
 export class ScrollableGridResizer<T extends IGridDataEntry> extends ImmediateNeighbourHaltResizer<T> {
     limitStickyWidthCoverage(tableContainerWidth: number) {
         const stickyContainerWidth = elementWidth('.sticky-columns-header-container', this._gridElement);
@@ -29,19 +29,9 @@ export class ScrollableGridResizer<T extends IGridDataEntry> extends ImmediateNe
 
     protected _resizeLeftFilter = (state: IResizeEvent<T>) => {
         if (state.current.direction !== ResizeDirection.Left) { return true; }
+        const columnMinWidth = state.current.resized.column.minWidth;
 
-        let stickyColumnReachedMinWidth = false;
-        if (isSticky(state.current.resized.element)) {
-            const currentWidth = this._widthMap.get(state.current.resized.column.identifier)!;
-            const minWidth = state.current.resized.column.minWidth;
-            if (currentWidth <= minWidth) {
-                stickyColumnReachedMinWidth = true;
-            }
-        }
-
-        if ((!isSticky(state.current.resized.element) && isMinWidth(state.current.resized))
-            || stickyColumnReachedMinWidth) {
-            this._simulateStopFor(state.current.event, state.current.resized, state.current.oppositeNeighbour);
+        if (state.current.resized.column.widthPx$.value <= columnMinWidth) {
             return false;
         }
 
@@ -52,12 +42,8 @@ export class ScrollableGridResizer<T extends IGridDataEntry> extends ImmediateNe
         if (state.current.direction !== ResizeDirection.Right) { return true; }
 
         const exceedingStickyCoverageLimit = this._isLastStickyColumn(state) && this._isExceedingStickyCoverageLimit();
-        const stickyColumnReachedMinWidth = this._stickyColumnReachedMin(state);
 
-        if (!state.current.neighbour ||
-            (!isSticky(state.current.neighbour.element) && isMinWidth(state.current.neighbour)) ||
-            stickyColumnReachedMinWidth ||
-            exceedingStickyCoverageLimit) {
+        if (exceedingStickyCoverageLimit) {
             this._simulateStopFor(state.current.event, state.current.resized, state.current.neighbour);
             return false;
         }
@@ -65,42 +51,25 @@ export class ScrollableGridResizer<T extends IGridDataEntry> extends ImmediateNe
     };
 
     protected _stateUpdate = (state: IResizeEvent<T>) => {
-        if (state.current.direction === ResizeDirection.Left) {
-            const offset = clampOffset(state.current.resized, state.current.offsetPercent);
-            this._applyOffsetFor(state.current.resized, offset);
-            this._applyOffsetFor(state.current.oppositeNeighbour, -offset);
-        }
+        const deltaPx = clampColumnOffset(
+            state.current.resized.column.widthPx$.value,
+            state.current.resized.column.minWidth * MIN_WIDTH_SCALING_FACTOR,
+            state.deltaPx,
+        );
 
-        if (state.current.direction === ResizeDirection.Right) {
-            let offset = -clampOffset(state.current.neighbour, -state.current.offsetPercent);
-
-            if (this._isLastStickyColumn(state)) {
-                offset = this._limitOffsetForStickyContainer(offset);
-            }
-
-            this._applyOffsetFor(state.current.neighbour, -offset);
-            this._applyOffsetFor(state.current.resized, offset);
-        }
+        this._applyOffsetFor(state.current.resized, deltaPx);
     };
+
+    protected _applyOffsetFor(entry: IResizeInfo<T> | undefined, offset: number) {
+        if (!entry) { return; }
+
+        const widthPx = entry.column.widthPx$.value + offset;
+        entry.column.widthPx$.next(widthPx);
+    }
 
     private _isLastStickyColumn(state: IResizeEvent<T>) {
         return state.current.resized.element.classList.contains('ui-grid-sticky-element') &&
             !state.current.neighbour?.element.classList.contains('ui-grid-sticky-element');
-    }
-
-    private _limitOffsetForStickyContainer(offset: number) {
-        const ratio = this._computePixelsToPercentRatio();
-        const stickyColumnsPercentageSum = this._grid.columns.filter(column => column.isSticky)
-            .map(c => Number(c.width))
-            .reduce((sum, columnWidth) => sum + columnWidth, 0);
-        const stickyContainerWidth = stickyColumnsPercentageSum / ratio;
-        const offsetPx = offset / ratio;
-        const tableWidth = this._table!.getBoundingClientRect().width;
-
-        if ((stickyContainerWidth + offsetPx) / tableWidth > MAXIMUM_STICKY_COVERAGE) {
-            offset = Math.max((tableWidth * MAXIMUM_STICKY_COVERAGE - stickyContainerWidth) * ratio, 0);
-        }
-        return offset;
     }
 
     private _isExceedingStickyCoverageLimit() {
@@ -108,15 +77,6 @@ export class ScrollableGridResizer<T extends IGridDataEntry> extends ImmediateNe
         const tableContainerWidth = this._table!.getBoundingClientRect().width;
 
         return (stickyContainerWidth / tableContainerWidth) > MAXIMUM_STICKY_COVERAGE;
-    }
-
-    private _stickyColumnReachedMin(state: IResizeEvent<T>) {
-        if (!isSticky(state.current.resized.element) || !state.current.neighbour) {
-            return false;
-        }
-        const currentWidth = this._widthMap.get(state.current.neighbour.column.identifier)!;
-        const minWidth = state.current.neighbour.column.minWidth;
-        return currentWidth <= minWidth;
     }
 }
 
