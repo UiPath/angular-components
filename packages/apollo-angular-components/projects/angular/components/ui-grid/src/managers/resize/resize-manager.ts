@@ -31,6 +31,7 @@ import {
     IResizeState,
     ResizableGrid,
     ResizeDirection,
+    ResizeEmission,
 } from './types';
 
 /**
@@ -44,6 +45,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     resizeStart$ = new Subject<{ columnIndex: number; mouseEvent?: MouseEvent; direction?: 'left' | 'right' }>();
     resize$ = new Subject<Map<string, number>>();
     previousClientX = 0;
+    resizeEmissions$ = new Subject<ResizeEmission>();
 
     protected set _resizeEvent(ev: MouseEvent) {
         if (!this.current) { return; }
@@ -279,7 +281,10 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     }
 
     endResize() {
-        this._endResizeCommon(this.current!, this._previous!.neighbour, this._previous!.oppositeNeighbour);
+        const entries = [this.current!, this._previous!.neighbour, this._previous!.oppositeNeighbour];
+        this._emitNewColumnPercentages(entries.filter(e => e != null) as IResizeInfo<T>[]);
+        this._endResizeCommon(...entries);
+
         this.current = undefined;
         this._direction = NaN;
     }
@@ -343,6 +348,17 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         this.previousClientX = 0;
 
         this._previous = {} as IResizeState<T>;
+    }
+
+    protected _emitNewColumnPercentages(entries: IResizeInfo<T>[]) {
+        const resizeEmissions = entries.reduce((acc, curr) => {
+            acc[curr.column.property!.toString()] = {
+                initialPercentage: +curr.column.width / 10,
+                finalPercentage: +this._widthMap.get(curr.column.identifier)! / 10,
+            };
+            return acc;
+        }, {} as ResizeEmission);
+        this.resizeEmissions$.next(resizeEmissions);
     }
 
     private _getCellsFor = (property: string) => toArray<HTMLDivElement>(

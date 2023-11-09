@@ -88,7 +88,10 @@ import {
     VisibilityManger,
 } from './managers';
 import { ScrollableGridResizer } from './managers/resize/strategies/scrollable-grid-resizer';
-import { ResizableGrid } from './managers/resize/types';
+import {
+    ResizableGrid,
+    ResizeEmission,
+} from './managers/resize/types';
 import {
     GridOptions,
     IFilterModel,
@@ -463,6 +466,13 @@ export class UiGridComponent<T extends IGridDataEntry>
      */
     @Output()
     rowClick = new EventEmitter<{ event: Event; row: T }>();
+
+    /**
+     * Emits the resize initial & final percentage widths of the resized columns
+     *
+     */
+    @Output()
+    resizeEmissions = new EventEmitter<ResizeEmission>();
 
     /**
      * Emits the column definitions when their definition changes.
@@ -984,7 +994,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         ).subscribe(() => {
             // ensure everything is painted once initial rendering is done
             // a lot of templates loaded lazily, this is required
-            // to ensure everything is drawn once the grid is initalized
+            // to ensure everything is drawn once the grid is initialized
             this._cd.markForCheck();
 
             this.rendered.next();
@@ -996,6 +1006,10 @@ export class UiGridComponent<T extends IGridDataEntry>
             ).subscribe(
                 () => this._configure$.next(),
             );
+
+        this.resizeManager.resizeEmissions$.pipe(
+            takeUntil(this._destroyed$),
+        ).subscribe(resizeEmissions => this.resizeEmissions.next(resizeEmissions));
     }
 
     /**
