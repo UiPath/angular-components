@@ -643,6 +643,11 @@ ui-grid {
                     box-sizing: border-box;
                 }
 
+                &.ui-grid-refresh-cell {
+                    position: sticky;
+                    right: 0;
+                }
+
                 &.ui-grid-action-cell {
                     position: relative;
                     width: 0;
