@@ -1,5 +1,8 @@
 import { IGridDataEntry } from '../../../models';
-import { IResizeInfo } from '../../resize/types';
+import {
+    IResizeInfo,
+    ResizeEmission,
+} from '../../resize/types';
 import { ResizeDirection } from '../../resize/types/resizeDirection';
 import { IResizeEvent } from '../../resize/types/resizeEvent';
 import {
@@ -65,6 +68,26 @@ export class ScrollableGridResizer<T extends IGridDataEntry> extends ImmediateNe
 
         const widthPx = entry.column.widthPx$.value + offset;
         entry.column.widthPx$.next(widthPx);
+    }
+
+    protected _emitNewColumnPercentages(entries: (IResizeInfo<T>)[]) {
+        const resizeEmissions: ResizeEmission = {};
+        entries.forEach(entry => {
+            const columnWidth = (entry.column.widthPx$.value / this._grid.columnWidthPercentToPxRatio);
+            const initialPercentage = +entry!.column.width / 10;
+            const finalPercentage = columnWidth / 10;
+
+            if (initialPercentage !== finalPercentage) {
+                resizeEmissions[entry.column.property!.toString()] = {
+                    initialPercentage,
+                    finalPercentage,
+                };
+            }
+
+            entry!.column.width = columnWidth / 10;
+        });
+
+        this.resizeEmissions$.next(resizeEmissions);
     }
 
     private _isLastStickyColumn(state: IResizeEvent<T>) {
