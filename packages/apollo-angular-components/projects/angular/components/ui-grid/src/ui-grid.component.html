@@ -155,8 +155,8 @@
                                          (focusout)="hideColumnHeaderTooltip(columnTooltip)"
                                          (keyup.enter)="sortManager.changeSort(column)"
                                          (keyup.space)="sortManager.changeSort(column)"
-                                         (keydown.ArrowLeft)="columns.freeColumns.length && resizeManager.startKeyboardResize('left', column, columnIndex); $event.preventDefault()"
-                                         (keydown.ArrowRight)="columns.freeColumns.length && resizeManager.startKeyboardResize('right', column, columnIndex); $event.preventDefault()"
+                                         (keydown.ArrowLeft)="(!last || isScrollable) && columns.freeColumns.length && resizeManager.startKeyboardResize('left', column, columnIndex); $event.preventDefault()"
+                                         (keydown.ArrowRight)="(!last || isScrollable) && columns.freeColumns.length && resizeManager.startKeyboardResize('right', column, columnIndex); $event.preventDefault()"
                                          cdkMonitorElementFocus
                                          class="ui-grid-header-cell ui-grid-sticky-element"
                                          role="columnheader"
@@ -222,8 +222,8 @@
                                      (focusout)="hideColumnHeaderTooltip(columnTooltip)"
                                      (keyup.enter)="sortManager.changeSort(column)"
                                      (keyup.space)="sortManager.changeSort(column)"
-                                     (keydown.ArrowLeft)="resizeManager.startKeyboardResize('left', column, columnIndex); $event.preventDefault()"
-                                     (keydown.ArrowRight)="resizeManager.startKeyboardResize('right', column, columnIndex); $event.preventDefault()"
+                                     (keydown.ArrowLeft)="(!last || isScrollable) && resizeManager.startKeyboardResize('left', column, columnIndex); $event.preventDefault()"
+                                     (keydown.ArrowRight)="(!last || isScrollable) && resizeManager.startKeyboardResize('right', column, columnIndex); $event.preventDefault()"
                                      cdkMonitorElementFocus
                                      class="ui-grid-header-cell"
                                      role="columnheader"
@@ -262,7 +262,7 @@
                                         </div>
                                     </div>
 
-                                    <div *ngIf="!isProjected && column.resizeable && !useCardView"
+                                    <div *ngIf="!isProjected && column.resizeable && !useCardView && (!last || isScrollable)"
                                          (mousedown)="resizeManager.startResize($event, column, columnIndex)"
                                          class="ui-grid-resize-handle-container">
                                         <div [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
