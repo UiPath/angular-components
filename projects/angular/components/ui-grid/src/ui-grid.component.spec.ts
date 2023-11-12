@@ -4455,6 +4455,7 @@ describe('Component: UiGrid', () => {
                          [refreshable]="true"
                          [selectable]="false"
                          [virtualScroll]="virtualScroll"
+                         [allowHighlight]="true"
                          [minWidth]="minWidth"
                          (resizeEmissions)="resizeEmissions = $event">
                     <ui-grid-column [property]="'myNumber'"
