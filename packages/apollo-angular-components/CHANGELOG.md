@@ -1,3 +1,9 @@
+# v15.0.6 (2023-11-09)
+* **grid** adjust min-width for sticky container
+* **grid** condition last resize handle
+* **grid** emit column percentage changes
+* **grid** set refresh btn as sticky
+
 # v15.0.5 (2023-11-08)
 * **grid** move progress bar to parent container
 * **grid** rethink scrollable strategy

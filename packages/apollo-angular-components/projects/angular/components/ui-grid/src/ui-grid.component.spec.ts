@@ -47,6 +47,7 @@ import {
     Key,
 } from '@uipath/angular/testing';
 
+import { ResizeEmission } from '../src/managers/resize/types/resizableGrid';
 import { UiMatPaginatorIntl } from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.component';
 import { UiGridCustomPaginatorModule } from './components/ui-grid-custom-paginator/ui-grid-custom-paginator.module';
 import { IDropdownOption } from './filters/ui-grid-dropdown-filter.directive';
@@ -4454,7 +4455,9 @@ describe('Component: UiGrid', () => {
                          [refreshable]="true"
                          [selectable]="false"
                          [virtualScroll]="virtualScroll"
-                         [minWidth]="minWidth">
+                         [allowHighlight]="true"
+                         [minWidth]="minWidth"
+                         (resizeEmissions)="resizeEmissions = $event">
                     <ui-grid-column [property]="'myNumber'"
                                     [isSticky]="true"
                                     width="5%"
@@ -4500,6 +4503,7 @@ describe('Component: UiGrid', () => {
             scrollableStrategy = ResizeStrategy.ScrollableGrid;
             displayLargeColumn = false;
             minWidth = 0;
+            resizeEmissions?: ResizeEmission;
         }
         describe('Behavior: horizontal scrollable grid', () => {
             let fixture: ComponentFixture<TestFixtureHorizontalScrollGridComponent>;
@@ -4586,6 +4590,25 @@ describe('Component: UiGrid', () => {
                 const newContainerWidth = stickyContainer!.getBoundingClientRect().width;
                 expect(newColumnWidth).toBeLessThan(initialColumnWidth);
                 expect(newContainerWidth).toBeLessThan(initialContainerWidth);
+                discardPeriodicTasks();
+            }));
+
+            it(`should emit resize emissions when finishing the resize of a column`, fakeAsync(() => {
+                beforeConfig();
+                tick(100);
+
+                const col = document.querySelectorAll('div[role="columnheader"]')[1]!;
+
+                col.dispatchEvent(EventGenerator.keyDown(Key.ArrowRight));
+                fixture.detectChanges();
+                tick(5000);
+
+                fixture.componentInstance.grid.resizeManager.stop();
+                fixture.detectChanges();
+
+                expect((fixture.componentInstance.resizeEmissions as any).myNumber.initialPercentage).toEqual(5);
+                expect((fixture.componentInstance.resizeEmissions as any).myNumber.finalPercentage).toBeGreaterThan(50);
+                flush();
                 discardPeriodicTasks();
             }));
 

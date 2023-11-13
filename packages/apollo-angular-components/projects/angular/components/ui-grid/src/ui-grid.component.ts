@@ -88,7 +88,10 @@ import {
     VisibilityManger,
 } from './managers';
 import { ScrollableGridResizer } from './managers/resize/strategies/scrollable-grid-resizer';
-import { ResizableGrid } from './managers/resize/types';
+import {
+    ResizableGrid,
+    ResizeEmission,
+} from './managers/resize/types';
 import {
     GridOptions,
     IFilterModel,
@@ -101,7 +104,6 @@ export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid 
 const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
 const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), textarea, select, details, [tabindex]:not([tabindex="-1"])';
 const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'select'];
-const RESIZE_HANDLE_WIDTH = 18;
 const REFRESH_WIDTH = 50;
 
 @Component({
@@ -411,6 +413,13 @@ export class UiGridComponent<T extends IGridDataEntry>
     useCardView = false;
 
     /**
+     * If the grid allows highlighting of a row
+     *
+     */
+    @Input()
+    allowHighlight = false;
+
+    /**
      * Id of the entity that should be highlighted
      *
      */
@@ -463,6 +472,13 @@ export class UiGridComponent<T extends IGridDataEntry>
      */
     @Output()
     rowClick = new EventEmitter<{ event: Event; row: T }>();
+
+    /**
+     * Emits the resize initial & final percentage widths of the resized columns
+     *
+     */
+    @Output()
+    resizeEmissions = new EventEmitter<ResizeEmission>();
 
     /**
      * Emits the column definitions when their definition changes.
@@ -984,7 +1000,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         ).subscribe(() => {
             // ensure everything is painted once initial rendering is done
             // a lot of templates loaded lazily, this is required
-            // to ensure everything is drawn once the grid is initalized
+            // to ensure everything is drawn once the grid is initialized
             this._cd.markForCheck();
 
             this.rendered.next();
@@ -996,6 +1012,10 @@ export class UiGridComponent<T extends IGridDataEntry>
             ).subscribe(
                 () => this._configure$.next(),
             );
+
+        this.resizeManager.resizeEmissions$.pipe(
+            takeUntil(this._destroyed$),
+        ).subscribe(resizeEmissions => this.resizeEmissions.next(resizeEmissions));
     }
 
     /**
@@ -1225,7 +1245,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     }
 
     sumColumnPxWidths(columns: UiGridColumnDirective<T>[]) {
-        return (columns.reduce((acc, curr) => acc + Number(curr.widthPx$.value), 0) + this._stickyHandlesWidth) + 'px';
+        return (columns.reduce((acc, curr) => acc + Number(curr.widthPx$.value), 0)) + 'px';
     }
 
     mapDirectivesToColumns(directives: { directive: UiGridColumnDirective<T> }[]) {
@@ -1277,8 +1297,9 @@ export class UiGridComponent<T extends IGridDataEntry>
             acc += column.widthPx$.value;
             return acc;
         }, 0);
+
         if (widthsPxSum) {
-            return widthsPxSum + this._otherActionsWidth + this._stickyHandlesWidth;
+            return widthsPxSum + this._otherActionsWidth;
         }
 
         const minWidth = (this.minWidth || window.innerWidth) * (percentagesSum / 1000);
@@ -1287,12 +1308,9 @@ export class UiGridComponent<T extends IGridDataEntry>
     }
 
     private get _otherActionsWidth() {
-        return (this.selectable || this.singleSelectable ? this.selectionColumnWidth : 0) +
-            (this.refreshable ? REFRESH_WIDTH : 0);
-    }
-
-    private get _stickyHandlesWidth() {
-        return this.columns.filter(c => c.isSticky).length * RESIZE_HANDLE_WIDTH;
+        return (this.selectable || this.singleSelectable
+            ? this.selectionColumnWidth
+            : 0) + REFRESH_WIDTH;
     }
 
     private _isOverflown(minWidth: number) {
