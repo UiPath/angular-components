@@ -232,9 +232,7 @@ ui-grid {
                 }
             }
 
-
             .ui-grid-header {
-
                 &-row,
                 &-cell {
                     height: $ui-grid-header-alternate-row-height;
@@ -407,7 +405,7 @@ ui-grid {
 
                 @extend %ellipse;
 
-                >* {
+                > * {
                     @extend %ellipse;
                 }
             }
@@ -455,7 +453,9 @@ ui-grid {
                 .ui-grid-header-cell {
                     background-color: $header-background-color;
 
-                    &.ui-grid-state-resizing, &:focus, &.cdk-focused {
+                    &.ui-grid-state-resizing,
+                    &:focus,
+                    &.cdk-focused {
                         background-color: $ui-grid-row-hover-color;
                     }
                 }
@@ -499,7 +499,8 @@ ui-grid {
                         background-color: $ui-grid-row-hover-color;
                     }
 
-                    .ui-grid-cell, .ui-grid-cell-resizing-border-container {
+                    .ui-grid-cell,
+                    .ui-grid-cell-resizing-border-container {
                         background-color: $ui-grid-row-hover-color;
                     }
 
@@ -643,6 +644,11 @@ ui-grid {
                     box-sizing: border-box;
                 }
 
+                &.ui-grid-refresh-cell {
+                    position: sticky;
+                    right: 0;
+                }
+
                 &.ui-grid-action-cell {
                     position: relative;
                     width: 0;
@@ -688,7 +694,6 @@ ui-grid {
 
                     //sorted asc
                     &-asc {
-
                         // desc path
                         .path-desc {
                             opacity: 0;
@@ -696,7 +701,6 @@ ui-grid {
                     }
 
                     &-desc {
-
                         //sorted desc
                         .path-asc {
                             // asc path
@@ -704,6 +708,13 @@ ui-grid {
                         }
                     }
                 }
+            }
+
+            .ui-grid-header-cell,
+            .ui-grid-cell,
+            .sticky-columns-header-container,
+            .sticky-columns-cell-container {
+                box-sizing: border-box;
             }
 
             .ui-grid-header-cell {
