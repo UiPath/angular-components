@@ -413,6 +413,13 @@ export class UiGridComponent<T extends IGridDataEntry>
     useCardView = false;
 
     /**
+     * If the grid allows highlighting of a row
+     *
+     */
+    @Input()
+    allowHighlight = false;
+
+    /**
      * Id of the entity that should be highlighted
      *
      */
