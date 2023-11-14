@@ -1,3 +1,6 @@
+# v15.0.7 (2023-11-14)
+* **grid** add responsive styles for filter and pagination
+
 # v15.0.6 (2023-11-09)
 * **grid** adjust min-width for sticky container
 * **grid** condition last resize handle
