@@ -474,6 +474,10 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         return itemsLength + (this._hasCustomValue$.value && !this.isDown ? 0 : -1);
     }
 
+    private get _fetchCount() {
+        return this._isLazyMode ? this.displayCount * 2 : this.displayCount;
+    }
+
     /**
      * A search stream factory, generally used to retrieve data from the server when a user searches.
      * By `default`, a search factory is generated that does an `in-memory` lookup if `searchable` is set to `true`.
@@ -719,13 +723,6 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                 takeUntil(this._destroyed$),
             )
             .subscribe(start => {
-                if (this._isLazyMode
-                    && this.isDown
-                    && this._items[start + this.displayCount]?.loading === VirtualScrollItemStatus.initial) {
-
-                    this._loadMore();
-
-                }
                 this._visibleRange = {
                     start,
                     end: start + this.displayCount,
@@ -1275,8 +1272,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
         this.loading$.next(true);
 
         if (this._searchSub) { this._searchSub.unsubscribe(); }
-
-        this._searchSub = this.searchSourceFactory(searchValue, this.displayCount)
+        this._searchSub = this.searchSourceFactory(searchValue, this._fetchCount)
             .pipe(
                 tap(this._setInitialItems),
                 map(this._findItemIndex(searchValue)),
@@ -1614,8 +1610,8 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             throw new Error('searchSourceFactory is not defined');
         }
 
-        const fetchStart = this._isLazyMode ? end : start;
-        const fetchCount = this._isLazyMode ? this.displayCount : end - start + 1;
+        const fetchStart = start;
+        const fetchCount = this._isLazyMode ? this._fetchCount : end - start + 1;
 
         const newArguments = [this.inputControl.value.trim(), fetchCount, fetchStart];
 
@@ -1629,14 +1625,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         this._lazyLoadLastArgument = newArguments;
 
-        const mappedStart = this.isDown ?
-            this._isLazyMode ? this._items.length - 1 : start :
-            this._isLazyMode ? -1 : this._items.length - end - 1;
-        const mappedEnd = this.isDown ?
-            this._isLazyMode ? this._items.length - 1 : end :
-            this._isLazyMode ? 0 : this._items.length - start - 1;
+        const mappedStart = this.isDown ? start : this._items.length - end - 1;
+        const mappedEnd = this.isDown ? end : this._items.length - start - 1;
 
-        setPendingState(this._items, mappedStart, mappedEnd);
+        if (this._isLazyMode) {
+            setPendingState(this._items, 0, this._items.length);
+        } else {
+            setPendingState(this._items, mappedStart, mappedEnd);
+        }
 
         this.searchSourceFactory(...newArguments)
             .pipe(
@@ -1655,7 +1651,9 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                     ),
                 ),
                 finalize(
-                    () => resetUnloadedState(this._items, mappedStart, mappedEnd),
+                    () => this._isLazyMode ?
+                        resetUnloadedState(this._items, 0, this._items.length) :
+                        resetUnloadedState(this._items, mappedStart, mappedEnd),
                 ),
             )
             .subscribe(({ data = [] }) => {
@@ -1752,16 +1750,17 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _shouldAddLoadingElementInLazyMode(currentResponse: ISuggestValue[]) {
-        return this._isLazyMode && currentResponse.length >= this.displayCount;
+                return this._isLazyMode && currentResponse.length >= this.displayCount;
     }
 
     private _addLoadingElementInLazyMode() {
-        const loadingElement = generateLoadingInitialCollection(this.intl.loadingLabel, 1)[0];
+        const totalLoadingElements = Math.floor(this.displayCount / 2);
+        const loadingElements = generateLoadingInitialCollection(this.intl.loadingLabel, totalLoadingElements);
 
         if (this.isDown) {
-            this._items.push(loadingElement);
+            this._items.push(...loadingElements);
         } else {
-            this._items.unshift(loadingElement);
+            this._items.unshift(...loadingElements);
         }
 
     }
