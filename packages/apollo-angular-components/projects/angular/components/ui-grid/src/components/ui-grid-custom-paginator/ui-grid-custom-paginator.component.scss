@@ -34,9 +34,11 @@ ui-grid-custom-paginator {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: $mat-paginator-padding;
         flex-wrap: wrap-reverse;
+        padding: $mat-paginator-padding;
         width: 100%;
+
+        container: footerContainer / inline-size;
     }
 
     .mat-mdc-paginator-page-size {
@@ -87,6 +89,25 @@ ui-grid-custom-paginator {
 
         [dir="rtl"] & {
             transform: rotate(180deg);
+        }
+    }
+}
+
+// the layout breaks at screen widths below 600 pixels
+@container footerContainer (max-width: 600px) {
+    ui-grid-custom-paginator  {
+        .mat-mdc-paginator-range-label {
+            order: 1;
+        }
+
+        .mat-mdc-paginator-range-actions {
+            order: 3;
+            inline-size: 100%;
+            justify-content: center;
+        }
+
+        .mat-mdc-paginator-page-size {
+            order: 2;
         }
     }
 }
