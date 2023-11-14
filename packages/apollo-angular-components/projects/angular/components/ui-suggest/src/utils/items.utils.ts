@@ -252,24 +252,25 @@ export function toSuggestValue(inputValue: ISuggestValue | string, isCustom: boo
         inputValue;
 }
 
-/**
- * @ignore
- */
-export function resetUnloadedState(items: ISuggestValue[], mappedStart: number, mappedEnd: number) {
+function toggleState(items: ISuggestValue[], mappedStart: number, mappedEnd: number, isPending: boolean) {
+
     items.slice(mappedStart, mappedEnd)
-        .filter(item => item.loading === VirtualScrollItemStatus.pending)
+        .filter(item => item.loading === (isPending ? VirtualScrollItemStatus.initial : VirtualScrollItemStatus.pending))
         .forEach((item) => {
-            item.loading = VirtualScrollItemStatus.initial;
+            item.loading = isPending ? VirtualScrollItemStatus.pending : VirtualScrollItemStatus.initial;
         });
 }
 
 /**
  * @ignore
  */
+export function resetUnloadedState(items: ISuggestValue[], mappedStart: number, mappedEnd: number) {
+    toggleState(items, mappedStart, mappedEnd, false);
+}
+
+/**
+ * @ignore
+ */
 export function setPendingState(items: ISuggestValue[], mappedStart: number, mappedEnd: number) {
-    items.slice(mappedStart, mappedEnd)
-        .filter(item => item.loading === VirtualScrollItemStatus.initial)
-        .forEach((item) => {
-            item.loading = VirtualScrollItemStatus.pending;
-        });
+    toggleState(items, mappedStart, mappedEnd, true);
 }

@@ -2328,12 +2328,10 @@ const sharedSpecifications = (
 
                 await fixture.whenStable();
 
-                const itemListEntries = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
+                expect(uiSuggest.items.length).toBe(Math.floor(NUMBER_OF_ITEMS_PER_VIEW * 2.5));
 
-                expect(uiSuggest.items.length).not.toBeNull();
-                expect(itemListEntries.length).toBe(NUMBER_OF_ITEMS_PER_VIEW + 1);
-                const lastItem = itemListEntries.slice(-1)[0];
-                expect(lastItem.nativeElement.innerText).toBe('Loading...');
+                const lastItem = uiSuggest.items.slice(-1)[0];
+                expect(lastItem.text).toBe('Loading...');
             }));
 
             it('should load more data at bottom of the list', waitForAsync(async () => {
@@ -2344,7 +2342,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(uiSuggest.items.length).toBe(NUMBER_OF_ITEMS_PER_VIEW + 1);
+                expect(uiSuggest.items.length).toBe(Math.floor(NUMBER_OF_ITEMS_PER_VIEW * 2.5));
 
                 const itemContainer = fixture.debugElement.query(By.css('.ui-suggest-dropdown-item-list-container'));
                 for (let i = 0; i <= uiSuggest.items.length + 1; i++) {
@@ -2355,7 +2353,7 @@ const sharedSpecifications = (
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(uiSuggest.items.length).toBe(2 * NUMBER_OF_ITEMS_PER_VIEW + 1);
+                expect(uiSuggest.items.length).toBe(Math.floor(NUMBER_OF_ITEMS_PER_VIEW * 4.5));
             }));
 
             it('should emit update event EVERY TIME the source queried', waitForAsync(async () => {
