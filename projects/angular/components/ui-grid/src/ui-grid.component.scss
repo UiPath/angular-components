@@ -150,6 +150,10 @@ ui-grid {
             flex-wrap: wrap;
             align-items: flex-start;
 
+
+            container: filterContainer / inline-size;
+            width: 100%;
+
             &-lhs-group {
                 display: flex;
                 flex-direction: column;
@@ -773,6 +777,28 @@ ui-grid {
                 align-items: center;
                 gap: 8px;
             }
+        }
+    }
+}
+
+// the layout breaks at screen widths below 500 pixels
+@container filterContainer (max-inline-size: 500px) {
+    $column-filter-inline-size: 94px;
+    .ui-grid-search {
+        inline-size: calc(100% - $column-filter-inline-size) !important;
+    }
+
+    .ui-grid-filter-container .mat-mdc-form-field {
+        inline-size: 100% !important;
+    }
+
+    .ui-grid-toggle-columns .mdc-button__label{
+        display: none;
+    }
+
+    .ui-grid-filter-container-lhs-group-actions {
+        .mat-divider {
+            display: none;
         }
     }
 }
