@@ -719,13 +719,6 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
                 takeUntil(this._destroyed$),
             )
             .subscribe(start => {
-                if (this._isLazyMode
-                    && this.isDown
-                    && this._items[start + this.displayCount]?.loading === VirtualScrollItemStatus.initial) {
-
-                    this._loadMore();
-
-                }
                 this._visibleRange = {
                     start,
                     end: start + this.displayCount,
@@ -1612,7 +1605,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
             throw new Error('searchSourceFactory is not defined');
         }
 
-        const fetchStart = this._isLazyMode ? end : start;
+        const fetchStart = start;
         const fetchCount = this._isLazyMode ? this.displayCount : end - start + 1;
 
         const newArguments = [this.inputControl.value.trim(), fetchCount, fetchStart];
@@ -1627,11 +1620,9 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
 
         this._lazyLoadLastArgument = newArguments;
 
-        const mappedStart = this.isDown ?
-            this._isLazyMode ? this._items.length - 1 : start :
+        const mappedStart = this.isDown ? start :
             this._isLazyMode ? -1 : this._items.length - end - 1;
-        const mappedEnd = this.isDown ?
-            this._isLazyMode ? this._items.length - 1 : end :
+        const mappedEnd = this.isDown ? end :
             this._isLazyMode ? 0 : this._items.length - start - 1;
 
         setPendingState(this._items, mappedStart, mappedEnd);
@@ -1754,12 +1745,12 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _addLoadingElementInLazyMode() {
-        const loadingElement = generateLoadingInitialCollection(this.intl.loadingLabel, 1)[0];
+        const loadingElement = generateLoadingInitialCollection(this.intl.loadingLabel, this.displayCount - 1);
 
         if (this.isDown) {
-            this._items.push(loadingElement);
+            this._items = [...this._items, ...loadingElement];
         } else {
-            this._items.unshift(loadingElement);
+            this._items = [ ...loadingElement, ...this._items];
         }
 
     }
