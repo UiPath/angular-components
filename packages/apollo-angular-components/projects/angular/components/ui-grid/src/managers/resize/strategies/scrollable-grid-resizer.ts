@@ -13,6 +13,8 @@ import { ImmediateNeighbourHaltResizer } from './immediate-neighbour-halt-resize
 
 export const MAXIMUM_STICKY_COVERAGE = 0.7;
 export const MIN_WIDTH_SCALING_FACTOR = 1.25;
+export const MAX_COLUMN_WIDTH = 1000;
+
 export class ScrollableGridResizer<T extends IGridDataEntry> extends ImmediateNeighbourHaltResizer<T> {
     limitStickyWidthCoverage(tableContainerWidth: number) {
         const stickyContainerWidth = elementWidth('.sticky-columns-header-container', this._gridElement);
@@ -45,8 +47,8 @@ export class ScrollableGridResizer<T extends IGridDataEntry> extends ImmediateNe
         if (state.current.direction !== ResizeDirection.Right) { return true; }
 
         const exceedingStickyCoverageLimit = this._isLastStickyColumn(state) && this._isExceedingStickyCoverageLimit();
-
-        if (exceedingStickyCoverageLimit) {
+        const isColumnTooLarge = state.current.resized.column.widthPx$.value >= MAX_COLUMN_WIDTH;
+        if (exceedingStickyCoverageLimit || isColumnTooLarge) {
             this._simulateStopFor(state.current.event, state.current.resized, state.current.neighbour);
             return false;
         }
