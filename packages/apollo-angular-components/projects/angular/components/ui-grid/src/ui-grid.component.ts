@@ -799,7 +799,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         map(() => this._computeMinWidth()),
         tap(minWidth => {
             const containerWidth = this._ref.nativeElement.getBoundingClientRect().width;
-            this.deficit$.next(Math.max(0, containerWidth - minWidth));
+            this.deficit$.next(Math.round((containerWidth - minWidth)));
         }),
         tap(() => { this._cd.detectChanges(); }),
     )).pipe(
