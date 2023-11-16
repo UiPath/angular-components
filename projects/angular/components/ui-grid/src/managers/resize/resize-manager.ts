@@ -8,6 +8,7 @@ import {
 } from 'rxjs';
 import {
     debounceTime,
+    distinctUntilChanged,
     filter,
     map,
     take,
@@ -33,6 +34,8 @@ import {
     ResizeDirection,
     ResizeEmission,
 } from './types';
+
+const MINIMUM_WIDTH_CHANGE = 3;
 
 /**
  * @internal
@@ -110,6 +113,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     // eslint-disable-next-line @typescript-eslint/member-ordering
     widthChange$ = this._widthChange$.pipe(
         debounceTime(50),
+        distinctUntilChanged((prev, curr) => Math.abs(prev - curr) < MINIMUM_WIDTH_CHANGE),
     );
 
     constructor(
