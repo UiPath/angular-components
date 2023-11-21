@@ -557,6 +557,7 @@
 
         <div *ngIf="!isProjected &&
                     refreshable"
+                    [class.invisible-refresh]="isScrollable"
              class="ui-grid-cell ui-grid-refresh-cell ui-grid-feature-cell">
         </div>
 

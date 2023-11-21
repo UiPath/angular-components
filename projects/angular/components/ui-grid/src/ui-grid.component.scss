@@ -511,6 +511,10 @@ ui-grid {
                         box-shadow: inset 4px 0px 0px $highlighted-entity-color;
                     }
                 }
+
+                .invisible-refresh {
+                    opacity: 0;
+                }
             }
 
             .ui-grid-header-row,
