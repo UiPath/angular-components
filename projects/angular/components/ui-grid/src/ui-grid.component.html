@@ -138,7 +138,7 @@
                         <div *ngIf="columns.stickyColumns.length"
                              [style.left.px]="(selectable || singleSelectable) ? selectionColumnWidth : 0"
                              [class.sticky-container-border-right]="(isOverflown$ | async) && columns.freeColumns.length"
-                             [style.minWidth]="stickyColumnsSum$ | async"
+                             [style.minWidth.px]="stickyColumnsSum$ | async"
                              class="sticky-columns-header-container">
                             <ng-container *ngFor="let column of columns.stickyColumns; let last = last; let columnIndex = index">
                                 <div *ngLet="(column.widthPx$ | async) as widthPx"
@@ -473,7 +473,7 @@
         <ng-container *ngLet="renderedColumns$ | async as renderedColumns">
             <div *ngIf="renderedColumns.stickyColumns.length"
                  [style.left.px]="(selectable || singleSelectable) ? selectionColumnWidth : 0"
-                 [style.minWidth]="stickyColumnsSum$ | async"
+                 [style.minWidth.px]="stickyColumnsSum$ | async"
                  [class.sticky-container-border-right]="(isOverflown$ | async) && renderedColumns.freeColumns.length"
                  class="sticky-columns-cell-container ui-grid-cell">
                 <ng-container *ngFor="let column of renderedColumns.stickyColumns let lastColumn = last;">
