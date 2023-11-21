@@ -6,11 +6,11 @@ import {
 import {
     ContentChild,
     Directive,
-    inject,
     Input,
     isDevMode,
     OnChanges,
     OnDestroy,
+    Optional,
     SimpleChange,
     SimpleChanges,
     TemplateRef,
@@ -56,11 +56,6 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      */
     @Input()
     set width(value: number | string) {
-        if (this._stateManager.resizeStrategy === ResizeStrategy.ScrollableGrid && typeof value === 'number') {
-            this._width = value;
-            this.widthPx$.next(value);
-            return;
-        }
 
         if (
             isDevMode() &&
@@ -71,8 +66,12 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
         }
 
         const width = typeof value === 'string' ? Number(parseFloat(value).toFixed(1)) : value;
-
         if (isNaN(width)) { return; }
+        if (this._options?.resizeStrategy === ResizeStrategy.ScrollableGrid) {
+            this._width = typeof value === 'string' ? width * 10 : width;
+            this.widthPx$.next(this._width);
+            return;
+        }
 
         this._width = width * 10;
     }
@@ -283,7 +282,8 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     private _primary = false;
     private _isSticky = false;
     private _disableToggle = false;
-    private _stateManager = inject(GridOptionsManager);
+
+    constructor(@Optional() private _options: GridOptionsManager<any>) {}
     /**
      * @ignore
      */

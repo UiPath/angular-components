@@ -7,6 +7,7 @@ import {
     merge,
     Observable,
     of,
+    ReplaySubject,
     Subject,
     Subscription,
 } from 'rxjs';
@@ -77,6 +78,7 @@ import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 import {
     DataManager,
+    DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE,
     FilterManager,
     GridOptionsManager,
     LiveAnnouncerManager,
@@ -102,7 +104,6 @@ import {
 import { UiGridIntl } from './ui-grid.intl';
 
 export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid DataManager options.');
-const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
 const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), textarea, select, details, [tabindex]:not([tabindex="-1"])';
 const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'select'];
 const REFRESH_WIDTH = 50;
@@ -425,16 +426,11 @@ export class UiGridComponent<T extends IGridDataEntry>
      *
      */
     @Input()
-    set highlightedEntityId(value: string) {
-        this.highlightedEntityId$.next(value);
+    set highlightedEntityId(value: string | null) {
+        if (value != null) {
+            this.highlightedEntityId$.next(value);
+        }
     }
-
-    /**
-     * Configure if the grid has a specified minWidth (window.innerWidth as fallback) for scrollable resize strategy
-     *
-     */
-    @Input()
-    minWidth = 0;
 
     /**
      * Emits an event with the sort model when a column sort changes.
@@ -726,7 +722,7 @@ export class UiGridComponent<T extends IGridDataEntry>
      * Emits the id of the entity that should be highlighted.
      *
      */
-    highlightedEntityId$ = new BehaviorSubject<string | number>('');
+    highlightedEntityId$ = new ReplaySubject<string | number>(1);
 
     /**
      * @internal
@@ -772,6 +768,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         switchMap(columns => combineLatest(columns.filter(c => c.isSticky).map(c => c.widthPx$)).pipe(
             map(widths => widths.reduce((acc, curr) => acc + curr, 0)),
         )),
+        shareReplay(1),
     );
 
     areFilersCollapsed$: Observable<boolean>;
@@ -849,6 +846,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         super();
 
         this.disableSelectionByEntry = () => null;
+        Object.assign(this._optionsManager, _gridOptions);
         this._optionsManager.fetchStrategy = _gridOptions?.fetchStrategy ?? 'onOpen';
         this.rowSize = _gridOptions?.rowSize ?? DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
         this._collapseFiltersCount$ = new BehaviorSubject(
