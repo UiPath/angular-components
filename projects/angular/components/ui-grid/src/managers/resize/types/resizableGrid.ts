@@ -27,7 +27,6 @@ export abstract class ResizableGrid<T> {
 
     protected abstract _destroyed$: Subject<void>;
     protected abstract _columnChanges$: Observable<SimpleChanges>;
-    abstract columnWidthPercentToPxRatio: number;
 }
 
-export type ResizeEmission = Record<string, { initialPercentage: number; finalPercentage: number }>;
+export type ResizeEmission = Record<string, { initialValue: number; finalValue: number }>;

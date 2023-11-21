@@ -4606,8 +4606,8 @@ describe('Component: UiGrid', () => {
                 fixture.componentInstance.grid.resizeManager.stop();
                 fixture.detectChanges();
 
-                expect((fixture.componentInstance.resizeEmissions as any).myNumber.initialPercentage).toEqual(5);
-                expect((fixture.componentInstance.resizeEmissions as any).myNumber.finalPercentage).toBeGreaterThan(50);
+                expect((fixture.componentInstance.resizeEmissions as any).myNumber.initialValue).toEqual(5);
+                expect((fixture.componentInstance.resizeEmissions as any).myNumber.finalValue).toBeGreaterThan(50);
                 flush();
                 discardPeriodicTasks();
             }));

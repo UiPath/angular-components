@@ -6,3 +6,4 @@ export * from './resize';
 export * from './performance';
 export * from './live-announcer-manager';
 export * from './visibility-manager';
+export * from './grid-options-state';

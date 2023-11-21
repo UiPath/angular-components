@@ -6,6 +6,7 @@ import {
 import {
     ContentChild,
     Directive,
+    inject,
     Input,
     isDevMode,
     OnChanges,
@@ -19,6 +20,10 @@ import { identifier } from '@uipath/angular/utilities';
 
 import { UiGridDropdownFilterDirective } from '../filters/ui-grid-dropdown-filter.directive';
 import { UiGridSearchFilterDirective } from '../filters/ui-grid-search-filter.directive';
+import {
+    GridOptionsManager,
+    ResizeStrategy,
+} from '../managers';
 
 /**
  * @ignore
@@ -29,8 +34,6 @@ const ARIA_SORT_MAP: Record<SortDirection, string> = {
     asc: 'ascending',
     desc: 'descending',
 };
-
-const STICKY_MIN_WIDTH_FRACTION = 0.25;
 
 /**
  * @ignore
@@ -53,6 +56,12 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      */
     @Input()
     set width(value: number | string) {
+        if (this._stateManager.resizeStrategy === ResizeStrategy.ScrollableGrid && typeof value === 'number') {
+            this._width = value;
+            this.widthPx$.next(value);
+            return;
+        }
+
         if (
             isDevMode() &&
             typeof value === 'string' &&
@@ -158,7 +167,6 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
         this.disableToggle = this.disableToggle || value;
         if (value) {
             this.visible = true;
-            this.minWidth = this._width * STICKY_MIN_WIDTH_FRACTION;
         }
     }
     get isSticky() {
@@ -275,6 +283,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     private _primary = false;
     private _isSticky = false;
     private _disableToggle = false;
+    private _stateManager = inject(GridOptionsManager);
     /**
      * @ignore
      */

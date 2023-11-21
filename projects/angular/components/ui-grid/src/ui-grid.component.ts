@@ -4,7 +4,6 @@ import {
     BehaviorSubject,
     combineLatest,
     defer,
-    EMPTY,
     merge,
     Observable,
     of,
@@ -44,6 +43,7 @@ import {
     EventEmitter,
     HostBinding,
     HostListener,
+    inject,
     Inject,
     InjectionToken,
     Input,
@@ -78,6 +78,7 @@ import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 import {
     DataManager,
     FilterManager,
+    GridOptionsManager,
     LiveAnnouncerManager,
     PerformanceMonitor,
     ResizeManager,
@@ -202,10 +203,10 @@ export class UiGridComponent<T extends IGridDataEntry>
      */
     @Input()
     set resizeStrategy(value: ResizeStrategy | null) {
-        if (value === this._resizeStrategy) { return; }
+        if (value === this._optionsManager.resizeStrategy) { return; }
 
         if (value != null) {
-            this._resizeStrategy = value;
+            this._optionsManager.resizeStrategy = value;
 
             if (this.resizeManager != null) {
                 this.resizeManager.destroy();
@@ -214,7 +215,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         }
     }
     get resizeStrategy() {
-        return this._resizeStrategy;
+        return this._optionsManager.resizeStrategy;
     }
 
     /**
@@ -253,10 +254,10 @@ export class UiGridComponent<T extends IGridDataEntry>
     @Input()
     set fetchStrategy(fetchStrategy: 'eager' | 'onOpen') {
         if (fetchStrategy === this.fetchStrategy) { return; }
-        this._fetchStrategy = fetchStrategy;
+        this._optionsManager.fetchStrategy = fetchStrategy;
     }
     get fetchStrategy() {
-        return this._fetchStrategy;
+        return this._optionsManager.fetchStrategy;
     }
 
     /**
@@ -711,12 +712,6 @@ export class UiGridComponent<T extends IGridDataEntry>
     selectionColumnWidth = 50;
 
     /**
-     * Value for first emission of the stream used to compute the widths of sticky columns and their container.
-     * Also used when the footer page changes.
-     */
-    stickyColumnsWidths?: { sum: number; widthMap: Record<string, number> };
-
-    /**
      * Visibile columns emissions partitioned in sticky and free columns.
      *
      */
@@ -773,8 +768,13 @@ export class UiGridComponent<T extends IGridDataEntry>
         }),
     );
 
+    stickyColumnsSum$ = this.visible$.pipe(
+        switchMap(columns => combineLatest(columns.filter(c => c.isSticky).map(c => c.widthPx$)).pipe(
+            map(widths => widths.reduce((acc, curr) => acc + curr, 0)),
+        )),
+    );
+
     areFilersCollapsed$: Observable<boolean>;
-    columnWidthPercentToPxRatio = 0;
 
     /**
      * Determines if the multi-page selection row should be displayed.
@@ -794,7 +794,9 @@ export class UiGridComponent<T extends IGridDataEntry>
     minWidth$ = defer(() => merge(
         this.visible$,
         this.resizeManager.widthChange$,
-        this.resizeManager.resize$,
+        this.resizeManager.resize$.pipe(
+            tap(() => queueMicrotask(() => this._cd.detectChanges())),
+        ),
     ).pipe(
         map(() => this._computeMinWidth()),
         tap(minWidth => {
@@ -815,29 +817,10 @@ export class UiGridComponent<T extends IGridDataEntry>
         map(value => value ? 'visible' : 'hidden'),
     );
 
-    stickyColumnsWidths$ = defer(() => this.isScrollable
-        ? merge(
-            this.resizeManager.resize$.pipe(
-                map(widths => {
-                    this.stickyColumnsWidths = this._computeStickyColumnsWidths(widths);
-                    return this.stickyColumnsWidths!;
-                }),
-                startWith(this.stickyColumnsWidths!),
-                distinctUntilChanged(),
-                tap(() => queueMicrotask(() => this._cd.detectChanges())),
-            ),
-            defer(() => this.footer
-                ? this.footer.pageChange
-                : EMPTY).pipe(map(() => this.stickyColumnsWidths!)),
-        )
-        : EMPTY);
-
     protected _destroyed$ = new Subject<void>();
     protected _columnChanges$: Observable<SimpleChanges>;
 
-    private _fetchStrategy!: 'eager' | 'onOpen';
     private _collapseFiltersCount$!: BehaviorSubject<number>;
-    private _resizeStrategy = ResizeStrategy.ImmediateNeighbourHalt;
     private _performanceMonitor: PerformanceMonitor;
     private _configure$ = new Subject<void>();
     private _isShiftPressed = false;
@@ -847,6 +830,8 @@ export class UiGridComponent<T extends IGridDataEntry>
     private _expandedEntries: T[] = [];
     private _columns!: QueryList<UiGridColumnDirective<T>>;
     private _virtualScroll = false;
+    // TODO: migrate some of the logic to this manager
+    private _optionsManager: GridOptionsManager<T> = inject(GridOptionsManager);
     /**
      * @ignore
      */
@@ -864,7 +849,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         super();
 
         this.disableSelectionByEntry = () => null;
-        this._fetchStrategy = _gridOptions?.fetchStrategy ?? 'onOpen';
+        this._optionsManager.fetchStrategy = _gridOptions?.fetchStrategy ?? 'onOpen';
         this.rowSize = _gridOptions?.rowSize ?? DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
         this._collapseFiltersCount$ = new BehaviorSubject(
             _gridOptions?.collapseFiltersCount ?? (_gridOptions?.collapsibleFilters === true ? 0 : Number.POSITIVE_INFINITY),
@@ -980,7 +965,6 @@ export class UiGridComponent<T extends IGridDataEntry>
      */
     ngAfterContentInit() {
         this.selectionManager.disableSelectionByEntry = this.disableSelectionByEntry;
-        this.stickyColumnsWidths = this._computeStickyColumnsWidths();
 
         this.liveAnnouncerManager = new LiveAnnouncerManager(
             msg => this._queuedAnnouncer.enqueue(msg),
@@ -1259,7 +1243,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     private _initResizeManager() {
         this._resizeSubscription$?.unsubscribe();
         this._containerWidthChangeSubscription$?.unsubscribe();
-        this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
+        this.resizeManager = ResizeManagerFactory(this._optionsManager.resizeStrategy, this);
         this._resizeSubscription$ = this.resizeManager.resizeEnd$.subscribe((resizeInfo) => {
             if (resizeInfo) {
                 const gridHeaderCellElement = resizeInfo.element;
@@ -1288,23 +1272,14 @@ export class UiGridComponent<T extends IGridDataEntry>
 
     private _computeMinWidth(columns?: UiGridColumnDirective<T>[]) {
         const cols = (columns ?? this.columns?.toArray() ?? []).filter(c => c.visible);
-        const percentagesSum = cols.reduce((acc, column) => {
-            acc += +column.width ?? 0;
-            return acc;
-        }, 0);
 
         const widthsPxSum = cols.reduce((acc, column) => {
             acc += column.widthPx$.value;
             return acc;
         }, 0);
 
-        if (widthsPxSum) {
-            return widthsPxSum + this._otherActionsWidth;
-        }
+        return widthsPxSum + this._otherActionsWidth;
 
-        const minWidth = (this.minWidth || window.innerWidth) * (percentagesSum / 1000);
-        this._initColumnsPxWidths(minWidth);
-        return minWidth ;
     }
 
     private get _otherActionsWidth() {
@@ -1316,21 +1291,6 @@ export class UiGridComponent<T extends IGridDataEntry>
     private _isOverflown(minWidth: number) {
         const gridWidth = this._ref.nativeElement.getBoundingClientRect().width;
         return minWidth > gridWidth;
-    }
-
-    private _computeStickyColumnsWidths(widths?: Map<string, number>) {
-        const stickyCols = this.columns.toArray().filter(c => c.isSticky && c.visible);
-
-        const widthMap = stickyCols.reduce((acc, curr) => {
-            acc[curr.identifier] = widths?.get(curr.identifier) ?? +curr.width;
-            return acc;
-        }, {} as Record<string, number>);
-        const sum = Object.values(widthMap).reduce((acc, curr) => acc + curr, 0);
-
-        return {
-            sum,
-            widthMap,
-        };
     }
 
     private _isNonInteractiveElementClick(event: Event) {
@@ -1345,22 +1305,6 @@ export class UiGridComponent<T extends IGridDataEntry>
             } else {
                 this.selectionManager.toggle(row);
             }
-        }
-    }
-
-    private _initColumnsPxWidths(minWidth: number) {
-        if (!this.columnWidthPercentToPxRatio) {
-
-            const containerWidth = this._ref.nativeElement.getBoundingClientRect().width;
-            if (containerWidth > minWidth) {minWidth = containerWidth;}
-
-            const totalColumnWidths = this.columns.filter(c => c.visible).reduce((acc, curr) => acc + Number(curr.width), 0);
-            this.columnWidthPercentToPxRatio = (minWidth - this._otherActionsWidth) / totalColumnWidths;
-
-            this.columns.forEach(c => {
-                const value = (+c.width * this.columnWidthPercentToPxRatio);
-                c.widthPx$.next(value);
-            });
         }
     }
 }
