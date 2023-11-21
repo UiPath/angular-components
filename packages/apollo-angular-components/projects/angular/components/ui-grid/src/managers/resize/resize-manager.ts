@@ -46,7 +46,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     current?: IResizeInfo<T>;
     resizeEnd$ = new Subject<IResizeInfo<T> | undefined>();
     resizeStart$ = new Subject<{ columnIndex: number; mouseEvent?: MouseEvent; direction?: 'left' | 'right' }>();
-    resize$ = new Subject<Map<string, number>>();
+    resize$ = new Subject<void>();
     previousClientX = 0;
     resizeEmissions$ = new Subject<ResizeEmission>();
 
@@ -86,7 +86,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
             deltaPx: ev.clientX - this.previousClientX,
         };
         this._resize$.next(nextEvent);
-        this.resize$.next(this._widthMap);
+        this.resize$.next();
         this.previousClientX = ev.clientX;
     }
 
@@ -103,8 +103,8 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     protected _gridElement: HTMLDivElement;
     protected _gridResizeObserver?: ResizeObserver;
     protected _widthMap = new Map<string, number>();
+    protected _previous?: IResizeState<T> = {} as IResizeState<T>;
 
-    private _previous?: IResizeState<T> = {} as IResizeState<T>;
     private _direction?: ResizeDirection;
     private _resize$ = new Subject<IResizeEvent<T>>();
     private _stopped$ = new Subject<void>();
@@ -348,17 +348,23 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
         return totalColumnWidths / totalHeaderWidths;
     }
 
-    protected _endResizeCommon(..._entries: (IResizeInfo<T> | undefined)[]) {
-        this.previousClientX = 0;
+    protected _endResizeCommon(...entries: (IResizeInfo<T> | undefined)[]) {
+        entries.forEach(entry => {
+            if (!entry?.column?.identifier) { return; }
 
+            const width = this._widthMap.get(entry.column.identifier)!;
+            entry.column.width = width / 10;
+        });
+
+        this.previousClientX = 0;
         this._previous = {} as IResizeState<T>;
     }
 
     protected _emitNewColumnPercentages(entries: IResizeInfo<T>[]) {
         const resizeEmissions = entries.reduce((acc, curr) => {
-            acc[curr.column.property!.toString()] = {
-                initialPercentage: +curr.column.width / 10,
-                finalPercentage: +this._widthMap.get(curr.column.identifier)! / 10,
+            acc[(curr.column?.property ?? '').toString()] = {
+                initialValue: +curr.column.width / 10,
+                finalValue: +this._widthMap.get(curr.column.identifier)! / 10,
             };
             return acc;
         }, {} as ResizeEmission);
