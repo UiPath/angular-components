@@ -301,6 +301,7 @@ ui-grid {
 
         &-table-container {
             position: relative;
+            overflow: hidden;
 
             &.scrollable {
                 overflow-x: auto;
@@ -500,6 +501,7 @@ ui-grid {
                 &.highlighted-row {
                     .ui-grid-action-cell-container {
                         background-color: $ui-grid-row-hover-color;
+                        opacity: 1;
                     }
 
                     .ui-grid-cell,

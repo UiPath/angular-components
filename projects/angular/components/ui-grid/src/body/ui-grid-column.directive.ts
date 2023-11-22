@@ -283,7 +283,7 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     private _isSticky = false;
     private _disableToggle = false;
 
-    constructor(@Optional() private _options: GridOptionsManager<any>) {}
+    constructor(@Optional() private _options: GridOptionsManager<T>) { }
     /**
      * @ignore
      */

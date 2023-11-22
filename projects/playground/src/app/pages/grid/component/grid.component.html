@@ -16,7 +16,8 @@
          [useCardView]="inputs.useCardView"
          [expandMode]="'preserve'"
          [resizeStrategy]="inputs.isScrollable ? scrollableGridStrategy : immediateNeighbourHaltStrategy"
-         [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []">
+         [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []"
+         [allowHighlight]="inputs.allowHighlight">
 
     <ui-grid-header [search]="header.searchable">
         <ui-header-button *ngFor="let button of generateButtons(header.main)"

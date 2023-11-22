@@ -712,10 +712,14 @@ export class UiGridComponent<T extends IGridDataEntry>
      *
      */
     partitionedVisibleColumns$ = this.visible$.pipe(
-        map(columns => ({
-            stickyColumns: columns.filter(c => c.isSticky && this.isScrollable),
-            freeColumns: columns.filter(c => !c.isSticky || !this.isScrollable),
-        })),
+        map(columns => {
+            const free = columns.filter(c => !c.isSticky || !this.isScrollable);
+            const sticky = columns.filter(c => c.isSticky && this.isScrollable);
+            return ({
+                stickyColumns: free.length ? sticky : [],
+                freeColumns: free.length ? free : sticky,
+            });
+        }),
     );
 
     /**
@@ -757,10 +761,13 @@ export class UiGridComponent<T extends IGridDataEntry>
                 directive,
                 role: index === rowHeaderIndex ? 'rowheader' : 'gridcell',
             }));
-            return {
-                stickyColumns: mappedColumns.filter(c => c.directive.isSticky && this.isScrollable),
-                freeColumns: mappedColumns.filter(c => !c.directive.isSticky || !this.isScrollable),
-            };
+
+            const free = mappedColumns.filter(c => !c.directive.isSticky || !this.isScrollable);
+            const sticky = mappedColumns.filter(c => c.directive.isSticky && this.isScrollable);
+            return ({
+                stickyColumns: free.length ? sticky : [],
+                freeColumns: free.length ? free : sticky,
+            });
         }),
     );
 
