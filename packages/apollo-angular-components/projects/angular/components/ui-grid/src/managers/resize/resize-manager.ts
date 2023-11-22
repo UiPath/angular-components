@@ -330,7 +330,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     }
 
     protected _applyOffsetFor(entry: IResizeInfo<T> | undefined, offset: number) {
-        if (!entry) { return; }
+        if (!entry?.column?.identifier) { return; }
 
         const width = entry.column.width as number + offset;
         this._widthMap.set(entry.column.identifier, width);

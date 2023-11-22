@@ -42,7 +42,7 @@
 
                         <ng-container *ngTemplateOutlet="filtersTmpl">
                         </ng-container>
-                        </ng-container>
+                    </ng-container>
 
                     <div *ngIf="!(hasSelection$ | async)"
                          class="ui-grid-action-buttons ui-grid-action-buttons-inline">
@@ -53,8 +53,8 @@
                             </ng-container>
                         </ng-container>
                     </div>
-                    </ng-container>
-                    </ng-template>
+                </ng-container>
+                </ng-template>
 
             <div #gridActionButtons
                  *ngIf="hasSelection$ | async"
@@ -66,8 +66,8 @@
                     </ng-container>
                 </ng-container>
             </div>
-            </div>
-            <div *ngIf="showFilters &&
+        </div>
+        <div *ngIf="showFilters &&
                 (hasAnyFiltersVisible$ | async) &&
                 (filterManager.hasCustomFilter$ | async) === false &&
                 !(hasSelection$ | async)"
@@ -88,7 +88,7 @@
             </ng-container>
         </div>
     </div>
-    </div>
+</div>
 
 <ng-container *ngIf="multiPageSelect then multiPageSelectionRow">
 </ng-container>
@@ -99,7 +99,7 @@
     <div [class.scrollable]="isScrollable && !dataManager.pristine"
          class="ui-grid-table-container">
         <div [class.ui-grid-table-refreshable]="refreshable"
-             [style.minWidth.px]="isScrollable && dataManager.length ? (minWidth$ | async) : undefined"
+             [style.minWidth.px]="isScrollable ? (minWidth$ | async) : undefined"
              [style.overflow]="isScrollable ? (tableOverflowStyle$ | async) : 'visible'"
              class="ui-grid-table"
              role="grid">
@@ -192,7 +192,7 @@
                                                 </svg>
                                             </mat-icon>
                                         </div>
-                                        </div>
+                                    </div>
 
                                     <div *ngIf="!isProjected && column.resizeable && !useCardView && (!last || columns.freeColumns.length > 0)"
                                          (mousedown)="resizeManager.startResize($event, column, columnIndex)"
@@ -202,10 +202,10 @@
                                         <div [class.ui-grid-state-resizing]="column === resizeManager.current?.column"
                                              class="ui-grid-resize-handle">
                                         </div>
-                                        </div>
-                                        </div>
-                                        </ng-container>
-                                        </div>
+                                    </div>
+                                    </div>
+                                    </ng-container>
+                                    </div>
 
                         <ng-container *ngFor="let column of columns.freeColumns; let last = last; let columnIndex = index">
                             <div *ngLet="(+(column.widthPx$ | async)! + (last ? (+(deficit$ | async)!) : 0)) as widthPx"
@@ -259,7 +259,7 @@
                                             </svg>
                                         </mat-icon>
                                     </div>
-                                    </div>
+                                </div>
 
                                 <div *ngIf="!isProjected && column.resizeable && !useCardView && (!last || isScrollable)"
                                      (mousedown)="resizeManager.startResize($event, column, columnIndex)"
@@ -268,31 +268,31 @@
                                          class="ui-grid-resize-handle">
                                     </div>
                                 </div>
-                                </div>
-                                </ng-container>
-                                </ng-container>
-                                <div *ngIf="virtualScroll"
-                                     [style.marginLeft.px]="scrollCompensationWidth$ | async"
-                                     class="ui-grid-header-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">
-                                </div>
-                                <div *ngIf="refreshable"
-                                     class="ui-grid-header-cell ui-grid-refresh-cell ui-grid-feature-cell"
-                                     role="columnheader">
-                                    <button [matTooltip]="intl.refreshTooltip"
-                                            [matTooltipDisabled]="resizeManager.isResizing"
-                                            [disabled]="disabled"
-                                            (click)="refresh.emit()"
-                                            mat-icon-button
-                                            type="button"
-                                            class="grid-refresh-button">
-                                        <mat-icon>refresh</mat-icon>
-                                    </button>
-                                </div>
-                                <div *ngIf="!!actions"
-                                     class="ui-grid-header-cell ui-grid-action-cell ui-grid-feature-cell">
-                                </div>
-                                </div>
-                                </div>
+                            </div>
+                            </ng-container>
+                            </ng-container>
+                            <div *ngIf="virtualScroll"
+                                 [style.marginLeft.px]="scrollCompensationWidth$ | async"
+                                 class="ui-grid-header-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">
+                            </div>
+                            <div *ngIf="refreshable"
+                                 class="ui-grid-header-cell ui-grid-refresh-cell ui-grid-feature-cell"
+                                 role="columnheader">
+                                <button [matTooltip]="intl.refreshTooltip"
+                                        [matTooltipDisabled]="resizeManager.isResizing"
+                                        [disabled]="disabled"
+                                        (click)="refresh.emit()"
+                                        mat-icon-button
+                                        type="button"
+                                        class="grid-refresh-button">
+                                    <mat-icon>refresh</mat-icon>
+                                </button>
+                            </div>
+                            <div *ngIf="!!actions"
+                                 class="ui-grid-header-cell ui-grid-action-cell ui-grid-feature-cell">
+                            </div>
+                            </div>
+                            </div>
 
             <ng-container *ngIf="dataManager?.length; else noData">
                 <ng-container *ngIf="virtualScroll">
@@ -313,10 +313,10 @@
                                             last: last
                                         }"></ng-container>
                                 </ng-container>
-                                </div>
-                                </ng-container>
-                                <ng-container *ngIf="!useCardView">
-                                    <ng-container *cdkVirtualFor="let row of dataManager.data$ | async;
+                            </div>
+                            </ng-container>
+                            <ng-container *ngIf="!useCardView">
+                                <ng-container *cdkVirtualFor="let row of dataManager.data$ | async;
                                                         let last = last;
                                                         let index = index;
                                                         trackBy: dataManager.hashTrack">
@@ -328,10 +328,10 @@
                                         highlightedEntityId: (highlightedEntityId$ | async)
                                     }">
                                 </ng-container>
-                                </ng-container>
-                                </ng-container>
-                                </cdk-virtual-scroll-viewport>
-                                </ng-container>
+                            </ng-container>
+                            </ng-container>
+                            </cdk-virtual-scroll-viewport>
+                            </ng-container>
 
                 <ng-container *ngIf="!virtualScroll">
                     <ng-container *ngIf="useCardView">
@@ -347,11 +347,11 @@
                                             last: last
                                         }">
                                 </ng-container>
-                                </ng-container>
-                                </div>
-                                </ng-container>
-                                <ng-container *ngIf="!useCardView">
-                                    <ng-container *ngFor="let row of dataManager.data$ | async;
+                            </ng-container>
+                            </div>
+                            </ng-container>
+                            <ng-container *ngIf="!useCardView">
+                                <ng-container *ngFor="let row of dataManager.data$ | async;
                                             let index = index;
                                             let last = last;
                                             trackBy: dataManager.hashTrack">
@@ -363,30 +363,30 @@
                                         highlightedEntityId: (highlightedEntityId$ | async)
                                     }">
                             </ng-container>
-                            </ng-container>
-                            </ng-container>
-                            </ng-container>
-                            </ng-container>
+                        </ng-container>
+                        </ng-container>
+                        </ng-container>
+                        </ng-container>
 
             <ng-container *ngIf="loading && !!loadingState">
                 <ng-container *ngTemplateOutlet="loadingState.html ?? null"></ng-container>
             </ng-container>
-            </div>
-            </div>
-            <div class="ui-grid-footer-container">
-                <ui-grid-custom-paginator *ngIf="!!footer && !footer.hidden"
-                                          [pageIndex]="footer.state.pageIndex"
-                                          [pageSize]="footer.state.pageSize"
-                                          [pageSizeOptions]="footer.pageSizes"
-                                          [length]="footer.length"
-                                          [disabled]="disabled"
-                                          [showFirstLastButtons]="footer.showFirstLastButtons"
-                                          [hidePageSize]="footer.hidePageSize"
-                                          [hideTotalCount]="footer.hideTotalCount"
-                                          (page)="footer.pageChange.next($event)">
-                </ui-grid-custom-paginator>
-            </div>
-            </div>
+        </div>
+        </div>
+        <div class="ui-grid-footer-container">
+            <ui-grid-custom-paginator *ngIf="!!footer && !footer.hidden"
+                                      [pageIndex]="footer.state.pageIndex"
+                                      [pageSize]="footer.state.pageSize"
+                                      [pageSizeOptions]="footer.pageSizes"
+                                      [length]="footer.length"
+                                      [disabled]="disabled"
+                                      [showFirstLastButtons]="footer.showFirstLastButtons"
+                                      [hidePageSize]="footer.hidePageSize"
+                                      [hideTotalCount]="footer.hideTotalCount"
+                                      (page)="footer.pageChange.next($event)">
+            </ui-grid-custom-paginator>
+        </div>
+        </div>
 <ng-template #rowTemplate
              let-row="data"
              let-expanded="expanded"
@@ -553,7 +553,7 @@
 
         <div *ngIf="!isProjected &&
                     refreshable"
-                    [class.invisible-refresh]="isScrollable"
+             [class.invisible-refresh]="isScrollable"
              class="ui-grid-cell ui-grid-refresh-cell ui-grid-feature-cell">
         </div>
 
