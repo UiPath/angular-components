@@ -443,8 +443,9 @@ ui-grid {
                 }
             }
 
-            mat-progress-bar {
+            mat-progress-bar.ui-grid-loader {
                 z-index: 2;
+                position: relative;
             }
 
             .ui-grid-header {

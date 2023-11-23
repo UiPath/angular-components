@@ -4618,17 +4618,12 @@ describe('Component: UiGrid', () => {
 
             [100, 500].forEach(reducedGridWidth => {
                 const msgNegation = 100 === reducedGridWidth ? '' : 'NOT';
-                xit(`should ${msgNegation} limit sticky columns on grid resize if it is ${msgNegation} exceeding 0.7 of grid container`, fakeAsync(() => {
+                it(`should ${msgNegation} limit sticky columns on grid resize if it is ${msgNegation} exceeding 0.7 of grid container`, fakeAsync(() => {
+                // sticky container is 350, for a grid of 500, the sticky container stay the same
                     beforeConfig();
                     tick(100);
                     const gridElement = fixture.debugElement.query(By.css('ui-grid'));
 
-                    const observer = new ResizeObserver(entries => {
-                        const width = entries[0].contentRect.width;
-                        console.log(width);
-                    });
-
-                    observer.observe(gridElement.nativeElement);
                     const stickyContainer = document.querySelector('.sticky-columns-header-container');
                     const initialContainerWidth = stickyContainer!.getBoundingClientRect().width;
 

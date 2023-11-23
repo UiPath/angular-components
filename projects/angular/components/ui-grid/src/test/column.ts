@@ -6,11 +6,10 @@ import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import { UiGridDropdownFilterDirective } from '../filters/ui-grid-dropdown-filter.directive';
 import { UiGridSearchFilterDirective } from '../filters/ui-grid-search-filter.directive';
-import { GridOptionsManager } from '../managers';
 import { ITestEntity } from '../test/testEntity';
 
 export const generateColumn = () => {
-    const column = new UiGridColumnDirective<ITestEntity>({} as GridOptionsManager<any>);
+    const column = new UiGridColumnDirective<ITestEntity>();
 
     column.title = faker.company.bsAdjective();
     column.searchable = faker.random.boolean();
