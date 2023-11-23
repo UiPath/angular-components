@@ -44,7 +44,6 @@ import {
     EventEmitter,
     HostBinding,
     HostListener,
-    inject,
     Inject,
     InjectionToken,
     Input,
@@ -78,9 +77,7 @@ import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
 import {
     DataManager,
-    DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE,
     FilterManager,
-    GridOptionsManager,
     LiveAnnouncerManager,
     PerformanceMonitor,
     ResizeManager,
@@ -88,6 +85,7 @@ import {
     ResizeStrategy,
     SelectionManager,
     SortManager,
+    UI_GRID_RESIZE_STRATEGY_STREAM,
     VisibilityManger,
 } from './managers';
 import { ScrollableGridResizer } from './managers/resize/strategies/scrollable-grid-resizer';
@@ -107,6 +105,7 @@ export const UI_GRID_OPTIONS = new InjectionToken<GridOptions<unknown>>('UiGrid 
 const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), textarea, select, details, [tabindex]:not([tabindex="-1"])';
 const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'select'];
 const REFRESH_WIDTH = 50;
+const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
 
 @Component({
     selector: 'ui-grid',
@@ -141,6 +140,12 @@ const REFRESH_WIDTH = 50;
                 })),
             ]),
         ]),
+    ],
+    providers: [
+        {
+            provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+            useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+        },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
@@ -204,19 +209,20 @@ export class UiGridComponent<T extends IGridDataEntry>
      */
     @Input()
     set resizeStrategy(value: ResizeStrategy | null) {
-        if (value === this._optionsManager.resizeStrategy) { return; }
+        if (value === this._resizeStrategy) { return; }
 
         if (value != null) {
-            this._optionsManager.resizeStrategy = value;
+            this._resizeStrategy = value;
 
-            if (this.resizeManager != null) {
+            this._resizeStrategyStream$.next(value);
+            if (this._resizeStrategy != null) {
                 this.resizeManager.destroy();
             }
             this._initResizeManager();
         }
     }
     get resizeStrategy() {
-        return this._optionsManager.resizeStrategy;
+        return this._resizeStrategy;
     }
 
     /**
@@ -255,10 +261,10 @@ export class UiGridComponent<T extends IGridDataEntry>
     @Input()
     set fetchStrategy(fetchStrategy: 'eager' | 'onOpen') {
         if (fetchStrategy === this.fetchStrategy) { return; }
-        this._optionsManager.fetchStrategy = fetchStrategy;
+        this._fetchStrategy = fetchStrategy;
     }
     get fetchStrategy() {
-        return this._optionsManager.fetchStrategy;
+        return this._fetchStrategy;
     }
 
     /**
@@ -824,7 +830,9 @@ export class UiGridComponent<T extends IGridDataEntry>
     protected _destroyed$ = new Subject<void>();
     protected _columnChanges$: Observable<SimpleChanges>;
 
+    private _fetchStrategy!: 'eager' | 'onOpen';
     private _collapseFiltersCount$!: BehaviorSubject<number>;
+    private _resizeStrategy = ResizeStrategy.ImmediateNeighbourHalt;
     private _performanceMonitor: PerformanceMonitor;
     private _configure$ = new Subject<void>();
     private _isShiftPressed = false;
@@ -834,8 +842,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     private _expandedEntries: T[] = [];
     private _columns!: QueryList<UiGridColumnDirective<T>>;
     private _virtualScroll = false;
-    // TODO: migrate some of the logic to this manager
-    private _optionsManager: GridOptionsManager<T> = inject(GridOptionsManager);
+
     /**
      * @ignore
      */
@@ -846,6 +853,8 @@ export class UiGridComponent<T extends IGridDataEntry>
         protected _cd: ChangeDetectorRef,
         private _zone: NgZone,
         private _queuedAnnouncer: QueuedAnnouncer,
+        @Inject(UI_GRID_RESIZE_STRATEGY_STREAM)
+        private _resizeStrategyStream$: BehaviorSubject<ResizeStrategy>,
         @Inject(UI_GRID_OPTIONS)
         @Optional()
         private _gridOptions?: GridOptions<T>,
@@ -853,8 +862,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         super();
 
         this.disableSelectionByEntry = () => null;
-        Object.assign(this._optionsManager, _gridOptions);
-        this._optionsManager.fetchStrategy = _gridOptions?.fetchStrategy ?? 'onOpen';
+        this._fetchStrategy = _gridOptions?.fetchStrategy ?? 'onOpen';
         this.rowSize = _gridOptions?.rowSize ?? DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
         this._collapseFiltersCount$ = new BehaviorSubject(
             _gridOptions?.collapseFiltersCount ?? (_gridOptions?.collapsibleFilters === true ? 0 : Number.POSITIVE_INFINITY),
@@ -1248,7 +1256,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     private _initResizeManager() {
         this._resizeSubscription$?.unsubscribe();
         this._containerWidthChangeSubscription$?.unsubscribe();
-        this.resizeManager = ResizeManagerFactory(this._optionsManager.resizeStrategy, this);
+        this.resizeManager = ResizeManagerFactory(this._resizeStrategy, this);
         this._resizeSubscription$ = this.resizeManager.resizeEnd$.subscribe((resizeInfo) => {
             if (resizeInfo) {
                 const gridHeaderCellElement = resizeInfo.element;

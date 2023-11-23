@@ -483,7 +483,7 @@
                          [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
                          [attr.data-property]="column.directive.property"
                          [attr.data-identifier]="column.directive.identifier"
-                         [style.width]="(widthPx) ? (widthPx + 'px') : (column.directive.width + '%')"
+                         [style.width]="widthPx ? (widthPx + 'px') : (column.directive.width + '%')"
                          [style.minWidth.px]="widthPx"
                          [attr.role]="column.role"
                          class="ui-grid-cell ui-grid-sticky-element">

@@ -32,7 +32,6 @@ import { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.dir
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderButtonDirective } from './header/ui-grid-header-button.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
-import { GridOptionsManager } from './managers';
 import { UiGridComponent } from './ui-grid.component';
 
 @NgModule({
@@ -87,9 +86,6 @@ import { UiGridComponent } from './ui-grid.component';
         UiGridNoContentDirective,
         UiGridLoadingDirective,
         UiGridRowCardViewDirective,
-    ],
-    providers: [
-        GridOptionsManager,
     ],
 })
 export class UiGridModule { }

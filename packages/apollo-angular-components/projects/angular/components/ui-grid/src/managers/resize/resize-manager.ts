@@ -363,8 +363,8 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     protected _emitNewColumnPercentages(entries: IResizeInfo<T>[]) {
         const resizeEmissions = entries.reduce((acc, curr) => {
             acc[(curr.column?.property ?? '').toString()] = {
-                initialValue: +curr.column.width / 10,
-                finalValue: +this._widthMap.get(curr.column.identifier)! / 10,
+                initialValue: Number(curr.column.width) / 10,
+                finalValue: Number(this._widthMap.get(curr.column.identifier)) / 10,
             };
             return acc;
         }, {} as ResizeEmission);
