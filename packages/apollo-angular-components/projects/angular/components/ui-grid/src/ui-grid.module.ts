@@ -16,6 +16,7 @@ import { UiSuggestModule } from '@uipath/angular/components/ui-suggest';
 import { UiNgLetModule } from '@uipath/angular/directives/ui-ng-let';
 import { UiVirtualScrollViewportResizeModule } from '@uipath/angular/directives/ui-virtual-scroll-viewport-resize';
 
+import { UiGridCustomSearchDirective } from './components/ui-grid-search/ui-grid-custom-search.directive';
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
 import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
@@ -69,6 +70,7 @@ import { UiGridComponent } from './ui-grid.component';
         UiGridNoContentDirective,
         UiGridLoadingDirective,
         UiGridRowCardViewDirective,
+        UiGridCustomSearchDirective,
     ],
     exports: [
         UiGridComponent,
@@ -84,6 +86,7 @@ import { UiGridComponent } from './ui-grid.component';
         UiGridNoContentDirective,
         UiGridLoadingDirective,
         UiGridRowCardViewDirective,
+        UiGridCustomSearchDirective,
     ],
 })
 export class UiGridModule { }
