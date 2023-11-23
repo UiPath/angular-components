@@ -19,6 +19,7 @@ export { UiGridRowCardViewDirective } from './body/ui-grid-row-card-view.directi
 export { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
 export { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 export { UiGridSearchComponent } from './components/ui-grid-search/ui-grid-search.component';
+export { UiGridCustomSearchDirective } from './components/ui-grid-search/ui-grid-custom-search.directive';
 export { UiGridSearchModule } from './components/ui-grid-search/ui-grid-search.module';
 export { UiGridToggleColumnsModule } from './components/ui-grid-toggle-columns/ui-grid-toggle-columns.module';
 export { UiGridToggleColumnsComponent } from './components/ui-grid-toggle-columns/ui-grid-toggle-columns.component';
