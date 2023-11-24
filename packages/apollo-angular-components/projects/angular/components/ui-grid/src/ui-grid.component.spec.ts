@@ -3,8 +3,10 @@ import {
     a11y,
     axe,
 } from 'projects/angular/axe-helper';
+import { UI_GRID_RESIZE_STRATEGY_STREAM } from 'projects/angular/components/ui-grid/src/managers';
 import {
     animationFrameScheduler,
+    BehaviorSubject,
     firstValueFrom,
     Observable,
     of,
@@ -322,7 +324,7 @@ describe('Component: UiGrid', () => {
                 let data: ITestEntity[];
 
                 beforeEach(() => {
-                    data = generateListFactory(generateEntity)(50);
+                    data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(50);
 
                     component.data = data;
                     fixture.detectChanges();
@@ -450,7 +452,7 @@ describe('Component: UiGrid', () => {
                 let data: ITestEntity[];
 
                 beforeEach(() => {
-                    data = generateListFactory(generateEntity)(50);
+                    data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(50);
 
                     component.data = data;
                     fixture.detectChanges();
@@ -881,7 +883,7 @@ describe('Component: UiGrid', () => {
                         checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
                         fixture.detectChanges();
 
-                        const newData = generateListFactory(generateEntity)(50);
+                        const newData = generateListFactory(generateEntity, TestBed.runInInjectionContext)(50);
                         component.data = newData;
 
                         fixture.detectChanges();
@@ -960,7 +962,7 @@ describe('Component: UiGrid', () => {
                 let data: ITestEntity[];
 
                 beforeEach(() => {
-                    data = generateListFactory(generateEntity)(50);
+                    data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(50);
 
                     component.data = data;
                     fixture.detectChanges();
@@ -1029,7 +1031,7 @@ describe('Component: UiGrid', () => {
             }
 
             it('should NOT add a scrollbar spacer when scrollbar is not present', fakeAsync(() => {
-                component.data = generateListFactory(generateEntity)(1);
+                component.data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(1);
                 finishInit(fixture);
 
                 const compensationWidthPx = fixture.debugElement.query(compensationCellSelector).nativeElement.style.marginLeft;
@@ -1038,7 +1040,7 @@ describe('Component: UiGrid', () => {
             }));
 
             it('should add a scrollbar spacer equal to the scrollbar width', fakeAsync(() => {
-                component.data = generateListFactory(generateEntity)(50);
+                component.data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(50);
                 fixture.detectChanges();
 
                 finishInit(fixture);
@@ -1109,7 +1111,7 @@ describe('Component: UiGrid', () => {
 
             component = fixture.componentInstance;
             grid = component.grid;
-            grid.data = generateListFactory(generateEntity)();
+            grid.data = generateListFactory(generateEntity, TestBed.runInInjectionContext)();
         });
 
         afterEach(() => {
@@ -1179,7 +1181,7 @@ describe('Component: UiGrid', () => {
                 expect(headerSelectionAction).toBeDefined();
                 expect((grid.selectionManager as any)._hasValue$.getValue()).toBe(true);
 
-                component.data = generateListFactory(generateEntity)();
+                component.data = generateListFactory(generateEntity, TestBed.runInInjectionContext)();
                 fixture.detectChanges();
 
                 headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
@@ -1375,7 +1377,7 @@ describe('Component: UiGrid', () => {
             fixture = TestBed.createComponent(TestFixtureGridHeaderWithFilterComponent);
             component = fixture.componentInstance;
             grid = component.grid;
-            component.data = generateListFactory(generateEntity)();
+            component.data = generateListFactory(generateEntity, TestBed.runInInjectionContext)();
         });
 
         afterEach(() => {
@@ -1948,7 +1950,7 @@ describe('Component: UiGrid', () => {
 
             fixture = TestBed.createComponent(TestFixtureGridFooterComponent);
             component = fixture.componentInstance;
-            data = generateListFactory(generateEntity)(6);
+            data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
             component.data = data;
             component.total = data.length;
             fixture.detectChanges();
@@ -2139,7 +2141,7 @@ describe('Component: UiGrid', () => {
 
                 fixture = TestBed.createComponent(TestFixtureGridToggleComponent);
                 component = fixture.componentInstance;
-                data = generateListFactory(generateEntity)(6);
+                data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
                 component.data = data;
                 fixture.detectChanges();
             });
@@ -2581,7 +2583,7 @@ describe('Component: UiGrid', () => {
 
                 fixture = TestBed.createComponent(TestFixtureGridToggleHiddenComponent);
                 component = fixture.componentInstance;
-                data = generateListFactory(generateEntity)(6);
+                data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
                 component.data = data;
                 fixture.detectChanges();
             });
@@ -2660,6 +2662,10 @@ describe('Component: UiGrid', () => {
                         NoopAnimationsModule,
                     ],
                     providers: [
+                        {
+                            provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                            useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                        },
                         UiMatPaginatorIntl,
                     ],
                     declarations: [
@@ -2728,6 +2734,10 @@ describe('Component: UiGrid', () => {
                         NoopAnimationsModule,
                     ],
                     providers: [
+                        {
+                            provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                            useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                        },
                         {
                             provide: UiGridIntl,
                             useValue: intl,
@@ -2846,6 +2856,10 @@ describe('Component: UiGrid', () => {
                         UiGridCustomPaginatorModule,
                     ],
                     providers: [
+                        {
+                            provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                            useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                        },
                         UiMatPaginatorIntl,
                         {
                             provide: UI_GRID_OPTIONS,
@@ -2926,6 +2940,10 @@ describe('Component: UiGrid', () => {
                         NoopAnimationsModule,
                     ],
                     providers: [
+                        {
+                            provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                            useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                        },
                         UiMatPaginatorIntl,
                     ],
                     declarations: [
@@ -2934,7 +2952,7 @@ describe('Component: UiGrid', () => {
                 });
 
                 fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
-                data = generateListFactory(generateEntity)(6);
+                data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
                 fixture.componentInstance.data = data;
 
                 fixture.detectChanges();
@@ -3025,6 +3043,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3097,6 +3119,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3203,6 +3229,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3322,6 +3352,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3415,6 +3449,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3487,6 +3525,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3601,6 +3643,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3876,6 +3922,10 @@ describe('Component: UiGrid', () => {
                     NoopAnimationsModule,
                 ],
                 providers: [
+                    {
+                        provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                        useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                    },
                     UiMatPaginatorIntl,
                 ],
                 declarations: [
@@ -3884,7 +3934,7 @@ describe('Component: UiGrid', () => {
             });
 
             fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
-            data = generateListFactory(generateEntity)(6);
+            data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
             fixture.componentInstance.data = data;
 
             fixture.detectChanges();
@@ -3949,7 +3999,7 @@ describe('Component: UiGrid', () => {
                 value: '777',
                 label: 'the label',
             };
-            data: ITestEntity[] = generateListFactory(generateEntity)(50);
+            data: ITestEntity[] = generateListFactory(generateEntity, TestBed.runInInjectionContext)(50);
         }
 
         let fixture: ComponentFixture<TestFixtureCustomFilterGridComponent>;
@@ -3962,6 +4012,10 @@ describe('Component: UiGrid', () => {
                     NoopAnimationsModule,
                 ],
                 providers: [
+                    {
+                        provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                        useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                    },
                     UiMatPaginatorIntl,
                     {
                         provide: UI_GRID_OPTIONS,
@@ -4120,6 +4174,10 @@ describe('Component: UiGrid', () => {
                     NoopAnimationsModule,
                 ],
                 providers: [
+                    {
+                        provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                        useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                    },
                     UiMatPaginatorIntl,
                     {
                         provide: UiGridIntl,
@@ -4229,7 +4287,7 @@ describe('Component: UiGrid', () => {
 
             fixture = TestBed.createComponent(TestFixtureExpandedGridComponent);
             component = fixture.componentInstance;
-            data = generateListFactory(generateEntity)(6);
+            data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
             component.data = data;
             grid = component.grid;
             fixture.detectChanges();
@@ -4350,7 +4408,7 @@ describe('Component: UiGrid', () => {
 
                 fixture = TestBed.createComponent(TextFixtureGridCardViewComponent);
                 component = fixture.componentInstance;
-                data = generateListFactory(generateEntity)(6);
+                data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
                 component.data = data;
                 fixture.detectChanges();
             });
@@ -4419,7 +4477,7 @@ describe('Component: UiGrid', () => {
 
                 fixture = TestBed.createComponent(TextFixtureGridCardViewComponent);
                 component = fixture.componentInstance;
-                data = generateListFactory(generateEntity)(6);
+                data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
                 component.data = data;
                 fixture.detectChanges();
             });
@@ -4512,9 +4570,9 @@ describe('Component: UiGrid', () => {
                 displayLargeColumn?: boolean;
                 widths?: number[];
             } = {
-                displayLargeColumn: false,
-                widths: [250, 100, 700, 100, 100, 100],
-            }) => {
+                    displayLargeColumn: false,
+                    widths: [250, 100, 700, 100, 100, 100],
+                }) => {
                 TestBed.configureTestingModule({
                     imports: [
                         UiGridModule,
@@ -4523,7 +4581,7 @@ describe('Component: UiGrid', () => {
                     declarations: [TestFixtureHorizontalScrollGridComponent],
                 });
                 fixture = TestBed.createComponent(TestFixtureHorizontalScrollGridComponent);
-                const data = generateListFactory(generateEntity)(6);
+                const data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
                 fixture.componentInstance.data = data;
                 fixture.componentInstance.displayLargeColumn = config.displayLargeColumn!;
                 fixture.componentInstance.widths = config.widths!;
@@ -4550,7 +4608,7 @@ describe('Component: UiGrid', () => {
                 const columnHeaders = document.querySelectorAll('div[role="columnheader"]');
                 columnHeaders.forEach((header, idx) => {
                     if (idx === lastColumnIdx) {
-                    expect(header.getBoundingClientRect().width).toBeGreaterThan(50);
+                        expect(header.getBoundingClientRect().width).toBeGreaterThan(50);
                     } else {
                         expect(Math.round(header.getBoundingClientRect().width)).toBe(50);
                     }
@@ -4619,7 +4677,7 @@ describe('Component: UiGrid', () => {
             [100, 500].forEach(reducedGridWidth => {
                 const msgNegation = 100 === reducedGridWidth ? '' : 'NOT';
                 it(`should ${msgNegation} limit sticky columns on grid resize if it is ${msgNegation} exceeding 0.7 of grid container`, fakeAsync(() => {
-                // sticky container is 350, for a grid of 500, the sticky container stay the same
+                    // sticky container is 350, for a grid of 500, the sticky container stay the same
                     beforeConfig();
                     tick(100);
                     const gridElement = fixture.debugElement.query(By.css('ui-grid'));
@@ -4647,11 +4705,11 @@ describe('Component: UiGrid', () => {
             [false, true].forEach(displayLargeColumn => {
                 it(`should ${displayLargeColumn ? 'NOT' : ''} restrict sticky container's width when performing resize-right on last sticky column
                     and current sticky width is ${displayLargeColumn ? 'equal to' : 'less than'} container's width`, fakeAsync(() => {
-                        const widths = [250, 150, 700, 100, 100, 100];
-                        beforeConfig({
-                            widths,
-                            displayLargeColumn,
-                        });
+                    const widths = [250, 150, 700, 100, 100, 100];
+                    beforeConfig({
+                        widths,
+                        displayLargeColumn,
+                    });
                     tick(100);
                     const col = document.querySelectorAll('div[role="columnheader"]')[displayLargeColumn ? 2 : 1]!;
                     const stickyContainer = document.querySelector('.sticky-columns-header-container');
