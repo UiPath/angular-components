@@ -3,8 +3,10 @@ import {
     a11y,
     axe,
 } from 'projects/angular/axe-helper';
+import { UI_GRID_RESIZE_STRATEGY_STREAM } from 'projects/angular/components/ui-grid/src/managers';
 import {
     animationFrameScheduler,
+    BehaviorSubject,
     firstValueFrom,
     Observable,
     of,
@@ -322,7 +324,7 @@ describe('Component: UiGrid', () => {
                 let data: ITestEntity[];
 
                 beforeEach(() => {
-                    data = generateListFactory(generateEntity)(50);
+                    data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(50);
 
                     component.data = data;
                     fixture.detectChanges();
@@ -450,7 +452,7 @@ describe('Component: UiGrid', () => {
                 let data: ITestEntity[];
 
                 beforeEach(() => {
-                    data = generateListFactory(generateEntity)(50);
+                    data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(50);
 
                     component.data = data;
                     fixture.detectChanges();
@@ -881,7 +883,7 @@ describe('Component: UiGrid', () => {
                         checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
                         fixture.detectChanges();
 
-                        const newData = generateListFactory(generateEntity)(50);
+                        const newData = generateListFactory(generateEntity, TestBed.runInInjectionContext)(50);
                         component.data = newData;
 
                         fixture.detectChanges();
@@ -960,7 +962,7 @@ describe('Component: UiGrid', () => {
                 let data: ITestEntity[];
 
                 beforeEach(() => {
-                    data = generateListFactory(generateEntity)(50);
+                    data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(50);
 
                     component.data = data;
                     fixture.detectChanges();
@@ -1029,7 +1031,7 @@ describe('Component: UiGrid', () => {
             }
 
             it('should NOT add a scrollbar spacer when scrollbar is not present', fakeAsync(() => {
-                component.data = generateListFactory(generateEntity)(1);
+                component.data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(1);
                 finishInit(fixture);
 
                 const compensationWidthPx = fixture.debugElement.query(compensationCellSelector).nativeElement.style.marginLeft;
@@ -1038,7 +1040,7 @@ describe('Component: UiGrid', () => {
             }));
 
             it('should add a scrollbar spacer equal to the scrollbar width', fakeAsync(() => {
-                component.data = generateListFactory(generateEntity)(50);
+                component.data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(50);
                 fixture.detectChanges();
 
                 finishInit(fixture);
@@ -1109,7 +1111,7 @@ describe('Component: UiGrid', () => {
 
             component = fixture.componentInstance;
             grid = component.grid;
-            grid.data = generateListFactory(generateEntity)();
+            grid.data = generateListFactory(generateEntity, TestBed.runInInjectionContext)();
         });
 
         afterEach(() => {
@@ -1179,7 +1181,7 @@ describe('Component: UiGrid', () => {
                 expect(headerSelectionAction).toBeDefined();
                 expect((grid.selectionManager as any)._hasValue$.getValue()).toBe(true);
 
-                component.data = generateListFactory(generateEntity)();
+                component.data = generateListFactory(generateEntity, TestBed.runInInjectionContext)();
                 fixture.detectChanges();
 
                 headerSelectionAction = fixture.debugElement.query(By.css('.selection-action-button'));
@@ -1375,7 +1377,7 @@ describe('Component: UiGrid', () => {
             fixture = TestBed.createComponent(TestFixtureGridHeaderWithFilterComponent);
             component = fixture.componentInstance;
             grid = component.grid;
-            component.data = generateListFactory(generateEntity)();
+            component.data = generateListFactory(generateEntity, TestBed.runInInjectionContext)();
         });
 
         afterEach(() => {
@@ -1948,7 +1950,7 @@ describe('Component: UiGrid', () => {
 
             fixture = TestBed.createComponent(TestFixtureGridFooterComponent);
             component = fixture.componentInstance;
-            data = generateListFactory(generateEntity)(6);
+            data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
             component.data = data;
             component.total = data.length;
             fixture.detectChanges();
@@ -2139,7 +2141,7 @@ describe('Component: UiGrid', () => {
 
                 fixture = TestBed.createComponent(TestFixtureGridToggleComponent);
                 component = fixture.componentInstance;
-                data = generateListFactory(generateEntity)(6);
+                data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
                 component.data = data;
                 fixture.detectChanges();
             });
@@ -2581,7 +2583,7 @@ describe('Component: UiGrid', () => {
 
                 fixture = TestBed.createComponent(TestFixtureGridToggleHiddenComponent);
                 component = fixture.componentInstance;
-                data = generateListFactory(generateEntity)(6);
+                data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
                 component.data = data;
                 fixture.detectChanges();
             });
@@ -2660,6 +2662,10 @@ describe('Component: UiGrid', () => {
                         NoopAnimationsModule,
                     ],
                     providers: [
+                        {
+                            provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                            useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                        },
                         UiMatPaginatorIntl,
                     ],
                     declarations: [
@@ -2728,6 +2734,10 @@ describe('Component: UiGrid', () => {
                         NoopAnimationsModule,
                     ],
                     providers: [
+                        {
+                            provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                            useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                        },
                         {
                             provide: UiGridIntl,
                             useValue: intl,
@@ -2846,6 +2856,10 @@ describe('Component: UiGrid', () => {
                         UiGridCustomPaginatorModule,
                     ],
                     providers: [
+                        {
+                            provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                            useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                        },
                         UiMatPaginatorIntl,
                         {
                             provide: UI_GRID_OPTIONS,
@@ -2926,6 +2940,10 @@ describe('Component: UiGrid', () => {
                         NoopAnimationsModule,
                     ],
                     providers: [
+                        {
+                            provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                            useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                        },
                         UiMatPaginatorIntl,
                     ],
                     declarations: [
@@ -2934,7 +2952,7 @@ describe('Component: UiGrid', () => {
                 });
 
                 fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
-                data = generateListFactory(generateEntity)(6);
+                data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
                 fixture.componentInstance.data = data;
 
                 fixture.detectChanges();
@@ -3025,6 +3043,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3097,6 +3119,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3203,6 +3229,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3322,6 +3352,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3415,6 +3449,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3487,6 +3525,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3601,6 +3643,10 @@ describe('Component: UiGrid', () => {
                             NoopAnimationsModule,
                         ],
                         providers: [
+                            {
+                                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                            },
                             UiMatPaginatorIntl,
                             {
                                 provide: UI_GRID_OPTIONS,
@@ -3876,6 +3922,10 @@ describe('Component: UiGrid', () => {
                     NoopAnimationsModule,
                 ],
                 providers: [
+                    {
+                        provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                        useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                    },
                     UiMatPaginatorIntl,
                 ],
                 declarations: [
@@ -3884,7 +3934,7 @@ describe('Component: UiGrid', () => {
             });
 
             fixture = TestBed.createComponent(TestFixtureAlternateDesignGridComponent);
-            data = generateListFactory(generateEntity)(6);
+            data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
             fixture.componentInstance.data = data;
 
             fixture.detectChanges();
@@ -3949,7 +3999,7 @@ describe('Component: UiGrid', () => {
                 value: '777',
                 label: 'the label',
             };
-            data: ITestEntity[] = generateListFactory(generateEntity)(50);
+            data: ITestEntity[] = generateListFactory(generateEntity, TestBed.runInInjectionContext)(50);
         }
 
         let fixture: ComponentFixture<TestFixtureCustomFilterGridComponent>;
@@ -3962,6 +4012,10 @@ describe('Component: UiGrid', () => {
                     NoopAnimationsModule,
                 ],
                 providers: [
+                    {
+                        provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                        useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                    },
                     UiMatPaginatorIntl,
                     {
                         provide: UI_GRID_OPTIONS,
@@ -4120,6 +4174,10 @@ describe('Component: UiGrid', () => {
                     NoopAnimationsModule,
                 ],
                 providers: [
+                    {
+                        provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                        useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                    },
                     UiMatPaginatorIntl,
                     {
                         provide: UiGridIntl,
@@ -4229,7 +4287,7 @@ describe('Component: UiGrid', () => {
 
             fixture = TestBed.createComponent(TestFixtureExpandedGridComponent);
             component = fixture.componentInstance;
-            data = generateListFactory(generateEntity)(6);
+            data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
             component.data = data;
             grid = component.grid;
             fixture.detectChanges();
@@ -4350,7 +4408,7 @@ describe('Component: UiGrid', () => {
 
                 fixture = TestBed.createComponent(TextFixtureGridCardViewComponent);
                 component = fixture.componentInstance;
-                data = generateListFactory(generateEntity)(6);
+                data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
                 component.data = data;
                 fixture.detectChanges();
             });
@@ -4419,7 +4477,7 @@ describe('Component: UiGrid', () => {
 
                 fixture = TestBed.createComponent(TextFixtureGridCardViewComponent);
                 component = fixture.componentInstance;
-                data = generateListFactory(generateEntity)(6);
+                data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
                 component.data = data;
                 fixture.detectChanges();
             });
@@ -4456,39 +4514,38 @@ describe('Component: UiGrid', () => {
                          [selectable]="false"
                          [virtualScroll]="virtualScroll"
                          [allowHighlight]="true"
-                         [minWidth]="minWidth"
                          (resizeEmissions)="resizeEmissions = $event">
                     <ui-grid-column [property]="'myNumber'"
                                     [isSticky]="true"
-                                    width="5%"
+                                    [width]="widths[0]"
                                     title="Number Header">
                     </ui-grid-column>
                     <ui-grid-column [property]="'myNumber'"
                                     [isSticky]="true"
-                                    width="5%"
+                                    [width]="widths[1]"
                                     title="Number Header">
                     </ui-grid-column>
 
                     <ui-grid-column *ngIf="displayLargeColumn"
                                     [property]="'myNumber'"
                                     [isSticky]="true"
-                                    width="150%"
+                                    [width]="widths[2]"
                                     title="Large column">
                     </ui-grid-column>
 
                     <ui-grid-column [property]="'myBool2'"
                                     title="Boolean Header"
-                                    width="50%">
+                                    [width]="widths[3]">
                     </ui-grid-column>
 
                     <ui-grid-column [property]="'myBool3'"
                                     title="Boolean Header"
-                                    width="50%">
+                                    [width]="widths[4]">
                     </ui-grid-column>
 
                     <ui-grid-column [property]="'myBool4'"
                                     title="Boolean Header"
-                                    width="50%">
+                                    [width]="widths[5]">
                     </ui-grid-column>
                 </ui-grid>
             `,
@@ -4502,19 +4559,20 @@ describe('Component: UiGrid', () => {
             data: ITestEntity[] = [];
             scrollableStrategy = ResizeStrategy.ScrollableGrid;
             displayLargeColumn = false;
-            minWidth = 0;
+            widths = [250, 100, 700, 100, 100, 100];
             resizeEmissions?: ResizeEmission;
         }
         describe('Behavior: horizontal scrollable grid', () => {
             let fixture: ComponentFixture<TestFixtureHorizontalScrollGridComponent>;
+            const otherActionsWidth = 50;
 
             const beforeConfig = (config: {
                 displayLargeColumn?: boolean;
-                minWidth?: number;
+                widths?: number[];
             } = {
-                displayLargeColumn: false,
-                minWidth: 0,
-            }) => {
+                    displayLargeColumn: false,
+                    widths: [250, 100, 700, 100, 100, 100],
+                }) => {
                 TestBed.configureTestingModule({
                     imports: [
                         UiGridModule,
@@ -4522,12 +4580,11 @@ describe('Component: UiGrid', () => {
                     ],
                     declarations: [TestFixtureHorizontalScrollGridComponent],
                 });
-
                 fixture = TestBed.createComponent(TestFixtureHorizontalScrollGridComponent);
-                const data = generateListFactory(generateEntity)(6);
+                const data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(6);
                 fixture.componentInstance.data = data;
                 fixture.componentInstance.displayLargeColumn = config.displayLargeColumn!;
-                fixture.componentInstance.minWidth = config.minWidth!;
+                fixture.componentInstance.widths = config.widths!;
                 tick(100);
                 fixture.detectChanges();
             };
@@ -4536,26 +4593,31 @@ describe('Component: UiGrid', () => {
                 fixture.destroy();
             });
 
-            it('should set a min-width according to window innerWidth on grid-table', fakeAsync(() => {
-                beforeConfig();
+            it('should set a min-width according to column sum', fakeAsync(() => {
+                const widths = [250, 100, 0, 100, 100, 100];
+                beforeConfig({ widths });
                 const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
-                const columnWidthSum = fixture.componentInstance.grid.columns.reduce((acc, curr) => acc + +curr.width, 0);
-                const expectedWidth = Math.round((window.innerWidth * (columnWidthSum / 1000)) * 100) / 100;
-                expect(gridTable.nativeElement.style.minWidth).toBe(expectedWidth + 'px');
+                const columnWidthSum = widths.reduce((acc, curr) => acc + curr, 0) + otherActionsWidth;
+                expect(gridTable.nativeElement.style.minWidth).toBe(columnWidthSum + 'px');
             }));
 
-            it('should set a min-width according to minWidth input on grid-table', fakeAsync(() => {
-                const minWidth = 1000;
-                beforeConfig({ minWidth });
-                fixture.componentInstance.minWidth = minWidth;
-                const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
-                const columnWidthSum = fixture.componentInstance.grid.columns.reduce((acc, curr) => acc + +curr.width, 0);
-
-                const expectedWidth = Math.round((minWidth * (columnWidthSum / 1000)) * 100) / 100;
-                expect(gridTable.nativeElement.style.minWidth).toBe(expectedWidth + 'px');
+            it('should increase the width of last column if default column width sum does not fill the table', fakeAsync(() => {
+                const widths = [50, 50, 0, 50, 50, 50];
+                const lastColumnIdx = 4; // refresh btn & 1 missing column
+                beforeConfig({ widths });
+                const columnHeaders = document.querySelectorAll('div[role="columnheader"]');
+                columnHeaders.forEach((header, idx) => {
+                    if (idx === lastColumnIdx) {
+                        expect(header.getBoundingClientRect().width).toBeGreaterThan(50);
+                    } else {
+                        expect(Math.round(header.getBoundingClientRect().width)).toBe(50);
+                    }
+                });
+                const gridWidth = fixture.debugElement.query(By.css('.ui-grid-table')).nativeElement.getBoundingClientRect().width;
+                expect(Math.round(gridWidth - 250)).toEqual(Math.round(columnHeaders[lastColumnIdx].getBoundingClientRect().width));
             }));
 
-            xit('should preserve width of sticky container when performing a resize inside it (on a sticky column)', fakeAsync(() => {
+            it('should increase width of sticky container when performing a resize inside it (on a sticky column)', fakeAsync(() => {
                 beforeConfig();
                 tick(100);
 
@@ -4570,11 +4632,11 @@ describe('Component: UiGrid', () => {
                 const newColumnWidth = col!.getBoundingClientRect()!.width;
                 const newContainerWidth = stickyContainer!.getBoundingClientRect().width;
                 expect(newColumnWidth).toBeGreaterThan(initialColumnWidth);
-                expect(newContainerWidth).toEqual(initialContainerWidth);
+                expect(newContainerWidth).toBeGreaterThan(initialContainerWidth);
                 discardPeriodicTasks();
             }));
 
-            it(`should decrease sticky container's width when performing resize-right on last sticky column`, fakeAsync(() => {
+            it(`should decrease sticky container's width when performing resize-left on last sticky column`, fakeAsync(() => {
                 beforeConfig();
                 tick(100);
 
@@ -4594,37 +4656,32 @@ describe('Component: UiGrid', () => {
             }));
 
             it(`should emit resize emissions when finishing the resize of a column`, fakeAsync(() => {
-                beforeConfig();
+                const widths = [250, 150, 0, 100, 100, 100];
+                beforeConfig({ widths });
                 tick(100);
-
                 const col = document.querySelectorAll('div[role="columnheader"]')[1]!;
 
-                col.dispatchEvent(EventGenerator.keyDown(Key.ArrowRight));
+                col.dispatchEvent(EventGenerator.keyDown(Key.ArrowLeft));
                 fixture.detectChanges();
                 tick(5000);
 
                 fixture.componentInstance.grid.resizeManager.stop();
                 fixture.detectChanges();
 
-                expect((fixture.componentInstance.resizeEmissions as any).myNumber.initialPercentage).toEqual(5);
-                expect((fixture.componentInstance.resizeEmissions as any).myNumber.finalPercentage).toBeGreaterThan(50);
+                expect((fixture.componentInstance.resizeEmissions as any).myNumber.initialValue).toEqual(150);
+                expect((fixture.componentInstance.resizeEmissions as any).myNumber.finalValue).toBeLessThan(150);
                 flush();
                 discardPeriodicTasks();
             }));
 
             [100, 500].forEach(reducedGridWidth => {
                 const msgNegation = 100 === reducedGridWidth ? '' : 'NOT';
-                xit(`should ${msgNegation} limit sticky columns on grid resize if it is ${msgNegation} exceeding 0.7 of grid container`, fakeAsync(() => {
+                it(`should ${msgNegation} limit sticky columns on grid resize if it is ${msgNegation} exceeding 0.7 of grid container`, fakeAsync(() => {
+                    // sticky container is 350, for a grid of 500, the sticky container stay the same
                     beforeConfig();
                     tick(100);
                     const gridElement = fixture.debugElement.query(By.css('ui-grid'));
 
-                    const observer = new ResizeObserver(entries => {
-                        const width = entries[0].contentRect.width;
-                        console.log(width);
-                    });
-
-                    observer.observe(gridElement.nativeElement);
                     const stickyContainer = document.querySelector('.sticky-columns-header-container');
                     const initialContainerWidth = stickyContainer!.getBoundingClientRect().width;
 
@@ -4648,7 +4705,11 @@ describe('Component: UiGrid', () => {
             [false, true].forEach(displayLargeColumn => {
                 it(`should ${displayLargeColumn ? 'NOT' : ''} restrict sticky container's width when performing resize-right on last sticky column
                     and current sticky width is ${displayLargeColumn ? 'equal to' : 'less than'} container's width`, fakeAsync(() => {
-                    beforeConfig({ displayLargeColumn });
+                    const widths = [250, 150, 700, 100, 100, 100];
+                    beforeConfig({
+                        widths,
+                        displayLargeColumn,
+                    });
                     tick(100);
                     const col = document.querySelectorAll('div[role="columnheader"]')[displayLargeColumn ? 2 : 1]!;
                     const stickyContainer = document.querySelector('.sticky-columns-header-container');
@@ -4673,7 +4734,11 @@ describe('Component: UiGrid', () => {
 
             describe('Scenario toggle columns', () => {
                 beforeEach(fakeAsync(() => {
-                    beforeConfig();
+
+                    const widths = [100, 100, 100, 100, 700, 700];
+                    beforeConfig({
+                        widths,
+                    });
                     tick(100);
                     fixture.detectChanges();
                     const buttonToggle = fixture.debugElement.query(By.css('.ui-grid-toggle-columns button')).nativeElement;
@@ -4693,7 +4758,7 @@ describe('Component: UiGrid', () => {
                     });
                 }));
 
-                xit(`should decrease min-width when toggling off a column`, fakeAsync(() => {
+                it(`should decrease min-width when toggling off a column`, fakeAsync(() => {
                     const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
                     const startingMinWidth = gridTable.nativeElement.style.minWidth;
                     const options = fixture.debugElement.queryAll(By.css('.ui-grid-toggle-panel .mat-mdc-option'));
@@ -4702,12 +4767,13 @@ describe('Component: UiGrid', () => {
                     checkbox.nativeElement.dispatchEvent(EventGenerator.click);
                     fixture.detectChanges();
                     tick(100);
+                    fixture.detectChanges();
 
                     const newMinWidth = gridTable.nativeElement.style.minWidth;
                     expect(+newMinWidth.replace('px', '')).toBeLessThan(+startingMinWidth.replace('px', ''));
                 }));
 
-                it(`should set overflow to visible if total width of columns does not exceeded container width`, fakeAsync(() => {
+                it(`should set overflow to visible if total width of columns does not exceed container width`, fakeAsync(() => {
                     const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
                     const options = fixture.debugElement
                         .queryAll(By.css('.ui-grid-toggle-panel .mat-mdc-option:not(.mdc-list-item--disabled)'));
