@@ -1,3 +1,15 @@
+# v15.0.9 (2023-11-24)
+* **grid** column width reacts on resize strategy changes
+* **grid** handle single sticky column case
+* **grid** update tests for scrollable resize strategy
+* **grid** dont emit empty on highlight string
+* **grid** update resize strategy
+* **grid** hide feature-cell on scrollable strategy
+
+# v15.0.8 (2023-11-14)
+* **grid** drop z-index stlying on table-container
+* **grid** approximate additional width to last column
+
 # v15.0.7 (2023-11-14)
 * **grid** add responsive styles for filter and pagination
 
