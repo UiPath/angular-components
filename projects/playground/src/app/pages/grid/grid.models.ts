@@ -33,6 +33,7 @@ export interface IInputs {
     useCardView: boolean;
     hideTotalCount: boolean;
     isScrollable: boolean;
+    allowHighlight: boolean;
 }
 
 export interface IGridSettings {

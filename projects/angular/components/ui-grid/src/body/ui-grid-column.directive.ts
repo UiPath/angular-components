@@ -2,10 +2,12 @@ import {
     BehaviorSubject,
     Subject,
 } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 import {
     ContentChild,
     Directive,
+    inject,
     Input,
     isDevMode,
     OnChanges,
@@ -19,6 +21,10 @@ import { identifier } from '@uipath/angular/utilities';
 
 import { UiGridDropdownFilterDirective } from '../filters/ui-grid-dropdown-filter.directive';
 import { UiGridSearchFilterDirective } from '../filters/ui-grid-search-filter.directive';
+import {
+    ResizeStrategy,
+    UI_GRID_RESIZE_STRATEGY_STREAM,
+} from '../managers';
 
 /**
  * @ignore
@@ -29,8 +35,6 @@ const ARIA_SORT_MAP: Record<SortDirection, string> = {
     asc: 'ascending',
     desc: 'descending',
 };
-
-const STICKY_MIN_WIDTH_FRACTION = 0.25;
 
 /**
  * @ignore
@@ -53,17 +57,16 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      */
     @Input()
     set width(value: number | string) {
-        if (
-            isDevMode() &&
-            typeof value === 'string' &&
-            !value.endsWith('%')
-        ) {
-            console.error(`Width should be percentual for '${this.title}' column.`);
-        }
+        this._validateUnits(value);
 
         const width = typeof value === 'string' ? Number(parseFloat(value).toFixed(1)) : value;
-
         if (isNaN(width)) { return; }
+        if (this._resizeStrategyStream$.value === ResizeStrategy.ScrollableGrid) {
+            // preserving compatibility with previous implementation where width was expressed in %
+            this._width = typeof value === 'string' ? width * 10 : width;
+            this.widthPx$.next(this._width);
+            return;
+        }
 
         this._width = width * 10;
     }
@@ -158,7 +161,6 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
         this.disableToggle = this.disableToggle || value;
         if (value) {
             this.visible = true;
-            this.minWidth = this._width * STICKY_MIN_WIDTH_FRACTION;
         }
     }
     get isSticky() {
@@ -275,6 +277,18 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     private _primary = false;
     private _isSticky = false;
     private _disableToggle = false;
+
+    private _resizeStrategyStream$ = inject(UI_GRID_RESIZE_STRATEGY_STREAM, { host: false });
+    constructor() {
+        this._resizeStrategyStream$.pipe(
+            distinctUntilChanged(),
+        ).subscribe(resizeStrategy => {
+            this.width = this._width / 10;
+            if (resizeStrategy !== ResizeStrategy.ScrollableGrid) {
+                this.widthPx$.next(0);
+            }
+        });
+    }
     /**
      * @ignore
      */
@@ -296,5 +310,15 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
      */
     ngOnDestroy() {
         this.change$.complete();
+    }
+
+    private _validateUnits(value: string | number) {
+        if (
+            isDevMode() &&
+            typeof value === 'string' &&
+            !value.endsWith('%')
+        ) {
+            console.error(`Width should be percentual for '${this.title}' column.`);
+        }
     }
 }

@@ -16,7 +16,8 @@
          [useCardView]="inputs.useCardView"
          [expandMode]="'preserve'"
          [resizeStrategy]="inputs.isScrollable ? scrollableGridStrategy : immediateNeighbourHaltStrategy"
-         [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []">
+         [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []"
+         [allowHighlight]="inputs.allowHighlight">
 
     <ui-grid-header [search]="header.searchable">
         <ui-header-button *ngFor="let button of generateButtons(header.main)"
@@ -54,16 +55,18 @@
                     [sortable]="true"
                     [isSticky]="inputs.isScrollable"
                     title="Id"
-                    width="33%">
+                    [width]="inputs.isScrollable ? 330 : '33%'">
         <ui-grid-dropdown-filter [visible]="header.showFilter"
                                  [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
         </ui-grid-dropdown-filter>
     </ui-grid-column>
+
     <ui-grid-column [property]="'name'"
                     [searchable]="true"
+                    [isSticky]="false"
                     method="eq"
                     title="Name"
-                    width="34%">
+                    [width]="inputs.isScrollable ? 330 : '33%'">
         <ui-grid-search-filter [visible]="header.showFilter"
                                [searchSourceFactory]="searchSourceFactory"
                                [multiple]="true">
@@ -71,7 +74,7 @@
     </ui-grid-column>
     <ui-grid-column [property]="'parity'"
                     title="Parity"
-                    width="33%">
+                    [width]="inputs.isScrollable ? 330 : '33%'">
         <ui-grid-dropdown-filter [visible]="header.showFilter"
                                  [items]="[{ value: 'even', label: 'Even' }, {value: 'odd', label: 'Odd'}]">
         </ui-grid-dropdown-filter>

@@ -301,6 +301,7 @@ ui-grid {
 
         &-table-container {
             position: relative;
+            overflow: hidden;
 
             &.scrollable {
                 overflow-x: auto;
@@ -442,8 +443,9 @@ ui-grid {
                 }
             }
 
-            mat-progress-bar {
+            mat-progress-bar.ui-grid-loader {
                 z-index: 2;
+                position: relative;
             }
 
             .ui-grid-header {
@@ -500,6 +502,7 @@ ui-grid {
                 &.highlighted-row {
                     .ui-grid-action-cell-container {
                         background-color: $ui-grid-row-hover-color;
+                        opacity: 1;
                     }
 
                     .ui-grid-cell,
@@ -510,6 +513,10 @@ ui-grid {
                     > div.ui-grid-cell:first-of-type {
                         box-shadow: inset 4px 0px 0px $highlighted-entity-color;
                     }
+                }
+
+                .invisible-refresh {
+                    opacity: 0;
                 }
             }
 

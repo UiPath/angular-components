@@ -1,5 +1,10 @@
 import * as faker from 'faker';
 import {
+    ResizeStrategy,
+    UI_GRID_RESIZE_STRATEGY_STREAM,
+} from 'projects/angular/components/ui-grid/src/managers';
+import { BehaviorSubject } from 'rxjs';
+import {
     finalize,
     take,
 } from 'rxjs/operators';
@@ -75,6 +80,10 @@ describe('Component: UiGridColumn', () => {
             TestBed.configureTestingModule({
                 imports: [UiGridModule],
                 declarations: [TestFixtureComponent],
+                providers: [{
+                    provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                    useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+                }],
             });
 
             fixture = TestBed.createComponent(TestFixtureComponent);
