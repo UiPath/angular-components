@@ -6,8 +6,14 @@ import {
     take,
 } from 'rxjs/operators';
 
+import { TestBed } from '@angular/core/testing';
+
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
-import { SortManager } from '../managers';
+import {
+    ResizeStrategy,
+    SortManager,
+    UI_GRID_RESIZE_STRATEGY_STREAM,
+} from '../managers';
 import {
     generateColumn,
     generateListFactory,
@@ -15,7 +21,16 @@ import {
 } from '../test';
 
 describe('Component: UiGrid', () => {
-    const generateColumnList = generateListFactory(generateColumn);
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [{
+                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+            }],
+        });
+    });
+
+    const generateColumnList = generateListFactory(generateColumn, TestBed.runInInjectionContext);
 
     describe('Manager: SortManager', () => {
         let manager: SortManager<ITestEntity>;

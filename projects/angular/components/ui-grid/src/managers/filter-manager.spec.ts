@@ -9,13 +9,18 @@ import {
     toArray,
 } from 'rxjs/operators';
 
+import { TestBed } from '@angular/core/testing';
 import { UiGridFooterDirective } from '@uipath/angular/components/ui-grid';
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import { IDropdownOption } from '../filters/ui-grid-dropdown-filter.directive';
 import { UiGridHeaderDirective } from '../header/ui-grid-header.directive';
-import { FilterManager } from '../managers';
+import {
+    FilterManager,
+    ResizeStrategy,
+    UI_GRID_RESIZE_STRATEGY_STREAM,
+} from '../managers';
 import {
     generateColumn,
     generateDropdownFilter,
@@ -49,7 +54,16 @@ const searchableDropdownToFilterOptionDefinition = <T>(
 });
 
 describe('Component: UiGrid', () => {
-    const generateColumnList = generateListFactory(generateColumn);
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [{
+                provide: UI_GRID_RESIZE_STRATEGY_STREAM,
+                useFactory: () => new BehaviorSubject(ResizeStrategy.ImmediateNeighbourHalt),
+            }],
+        });
+    });
+
+    const generateColumnList = generateListFactory(generateColumn, TestBed.runInInjectionContext);
 
     describe('Manager: FilterManager', () => {
         let manager: FilterManager<ITestEntity>;
@@ -139,8 +153,8 @@ describe('Component: UiGrid', () => {
                 });
 
                 it('should not set page index to 0 for same search term', () => {
-                const footer = new UiGridFooterDirective();
-                const footerEmitSpy = spyOn(footer.pageChange, 'emit');
+                    const footer = new UiGridFooterDirective();
+                    const footerEmitSpy = spyOn(footer.pageChange, 'emit');
                     manager.searchChange('d', header, footer);
                     expect(footerEmitSpy).toHaveBeenCalledTimes(0);
                 });
@@ -150,16 +164,16 @@ describe('Component: UiGrid', () => {
                     footer.state.pageIndex = 2;
                     const footerEmitSpy = spyOn(footer.pageChange, 'emit').and.callThrough();
 
-                        footer.pageChange
-                            .pipe(
-                                first(),
-                                finalize(done),
-                            )
-                            .subscribe((pageChange) => expect(pageChange.pageIndex).toEqual(0));
+                    footer.pageChange
+                        .pipe(
+                            first(),
+                            finalize(done),
+                        )
+                        .subscribe((pageChange) => expect(pageChange.pageIndex).toEqual(0));
 
-                        manager.searchChange('e', header, footer);
-                        expect(footerEmitSpy).toHaveBeenCalledTimes(1);
-                    });
+                    manager.searchChange('e', header, footer);
+                    expect(footerEmitSpy).toHaveBeenCalledTimes(1);
+                });
             });
 
             describe('Event: filter change', () => {
