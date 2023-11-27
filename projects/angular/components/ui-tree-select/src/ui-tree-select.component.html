@@ -4,12 +4,12 @@
                  [ngTemplateOutlet]="headerTemplate">
     </ng-template>
 
-    <cdk-virtual-scroll-viewport (keydown)="onKeydown($event)"
+    <cdk-virtual-scroll-viewport *uiContentLoading="loading"
+                                 (keydown)="onKeydown($event)"
                                  [itemSize]="itemSize"
                                  class="virtual-scroll-container"
                                  tabindex="0">
-        <mat-list *uiContentLoading="loading"
-                  role="tree"
+        <mat-list role="tree"
                   class="tree-container">
             <ng-container *ngIf="dataSource.data.length == 0">
                 <ng-content select="[noDataMessage]"></ng-content>
