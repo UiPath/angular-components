@@ -35,6 +35,8 @@ const DROP_ZONE_HIGHLIGHT_CLASS = 'file-drop-zone-highlight';
 })
 export class UiFileDropZoneComponent implements OnInit, AfterViewInit, OnDestroy {
 
+    // whether the component template should include a clickable input element
+    @Input() useInputElement = true;
     @Input() disabled?: boolean;
     // key of File and '-' prefix for descending sort
     @Input() sortBy?: string;
@@ -62,8 +64,8 @@ export class UiFileDropZoneComponent implements OnInit, AfterViewInit, OnDestroy
 
     @ViewChild('uploadInput', {
         read: ElementRef,
-        static: true,
-    }) defaultDropZone!: ElementRef;
+        static: false,
+    }) defaultDropZone?: ElementRef;
 
     private _accept: string[] = [];
     private _destroyed$ = new Subject<void>();
@@ -102,7 +104,7 @@ export class UiFileDropZoneComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     click() {
-        this.defaultDropZone.nativeElement.click();
+        this.defaultDropZone?.nativeElement.click();
     }
 
     ngOnInit(): void {
@@ -121,8 +123,8 @@ export class UiFileDropZoneComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     ngAfterViewInit(): void {
-        if (!this._dropZone) {
-            this._dropZone = this.defaultDropZone.nativeElement;
+        if (!this._dropZone && this.defaultDropZone) {
+            this._dropZone = this.defaultDropZone?.nativeElement;
         }
     }
 
@@ -159,7 +161,9 @@ export class UiFileDropZoneComponent implements OnInit, AfterViewInit, OnDestroy
         this.filesLoading.emit(false);
         // force change callback on input to get called
         // for consecutive selections of the same files
-        this.defaultDropZone.nativeElement.value = null;
+        if (this.defaultDropZone) {
+            this.defaultDropZone.nativeElement.value = null;
+        }
     }
 
     private _sortAndFilter(files: File[]) {
