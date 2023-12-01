@@ -439,6 +439,13 @@ export class UiGridComponent<T extends IGridDataEntry>
     }
 
     /**
+     * Configure if the pagination should be selectable
+     *
+     */
+    @Input()
+    selectablePageIndex: boolean;
+
+    /**
      * Emits an event with the sort model when a column sort changes.
      *
      */
@@ -867,6 +874,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         this._collapseFiltersCount$ = new BehaviorSubject(
             _gridOptions?.collapseFiltersCount ?? (_gridOptions?.collapsibleFilters === true ? 0 : Number.POSITIVE_INFINITY),
         );
+        this.selectablePageIndex = _gridOptions?.selectablePageIndex ?? false;
 
         this.isProjected = this._ref.nativeElement.classList.contains('ui-grid-state-responsive');
 

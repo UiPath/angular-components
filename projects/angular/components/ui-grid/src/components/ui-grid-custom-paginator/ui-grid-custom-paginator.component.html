@@ -43,7 +43,27 @@
             </button>
             <div class="mat-mdc-paginator-page-label">
                 <ng-container *ngIf="!hideTotalCount">
-                    {{_intl.getPageLabel(pageIndex+1, pageCount)}}
+                    <ng-container *ngIf="selectablePageIndex && pageCount > 1; else defaultPageLabel">
+                        {{ _intl.getPageOnlyLabel() }}
+                        <mat-form-field [appearance]="_formFieldAppearance!"
+                                        [color]="color ?? 'primary'"
+                                        class="mat-mdc-paginator-page-index-select">
+                            <mat-select (selectionChange)="changePage($event.value)"
+                                        [value]="pageIndex"
+                                        [aria-label]="_intl.pageSelectLabel"
+                                        data-cy="page-index-select">
+                                <mat-option *ngFor="let possiblePage of possiblePages"
+                                            [value]="possiblePage.value">
+                                    {{ possiblePage.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        {{ _intl.getTotalPages(pageCount) }}
+                    </ng-container>
+
+                    <ng-template #defaultPageLabel>
+                        {{_intl.getPageLabel(pageIndex+1, pageCount)}}
+                    </ng-template>
                 </ng-container>
                 <ng-container *ngIf="hideTotalCount">
                     {{ pageIndex + 1 }}
