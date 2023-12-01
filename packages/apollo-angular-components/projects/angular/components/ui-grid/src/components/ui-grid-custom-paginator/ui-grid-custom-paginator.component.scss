@@ -8,6 +8,8 @@ $mat-paginator-selector-trigger-width: 56px;
 $mat-paginator-selector-trigger-outline-width: 64px;
 $mat-paginator-selector-trigger-fill-width: 64px;
 
+$mat-paginator-index-selector-width: 48px;
+
 $mat-paginator-page-label-margin: 0 32px 0 24px;
 $mat-paginator-button-icon-size: 14px;
 $mat-paginator-button-size: 32px;
@@ -54,6 +56,11 @@ ui-grid-custom-paginator {
     .mat-mdc-paginator-page-size-label {
         margin: $mat-paginator-items-per-page-label-margin;
     }
+    .mat-mdc-paginator-page-index-select {
+        margin: $mat-paginator-selector-margin;
+        width: $mat-paginator-index-selector-width;
+    }
+
     .mat-mdc-paginator-page-size-select {
         margin: $mat-paginator-selector-margin;
         width: $mat-paginator-selector-trigger-width;

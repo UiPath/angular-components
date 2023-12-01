@@ -29,4 +29,5 @@ export interface GridOptions<T> {
     idProperty?: keyof T;
     rowSize?: number;
     resizeStrategy?: ResizeStrategy;
+    selectablePageIndex?: boolean;
 }
