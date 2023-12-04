@@ -7,6 +7,7 @@ import {
     TestBed,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EventGenerator } from '@uipath/angular/testing';
 
 import {
@@ -20,7 +21,8 @@ import { UiGridCustomPaginatorModule } from './ui-grid-custom-paginator.module';
     <ui-grid-custom-paginator [pageIndex]="pageIndex"
                               [pageSize]="pageSize"
                               [length]="length"
-                              [showFirstLastButtons]="true">
+                              [showFirstLastButtons]="true"
+                              [selectablePageIndex]="selectablePageIndex">
     </ui-grid-custom-paginator>
     `,
 })
@@ -32,6 +34,7 @@ class TestFixtureComponent {
     pageIndex = 0;
     pageSize = 10;
     length = 120;
+    selectablePageIndex = false;
 }
 
 describe('Component: UiGrid', () => {
@@ -40,10 +43,11 @@ describe('Component: UiGrid', () => {
         let component: TestFixtureComponent;
         let intl: UiMatPaginatorIntl;
 
-        beforeEach(() => {
+        const setup = (selectablePageIndex = false, length = 120) => {
             TestBed.configureTestingModule({
                 imports: [
                     UiGridCustomPaginatorModule,
+                    NoopAnimationsModule,
                 ],
                 providers: [
                     UiMatPaginatorIntl,
@@ -55,22 +59,26 @@ describe('Component: UiGrid', () => {
 
             intl = TestBed.inject(UiMatPaginatorIntl);
             fixture = TestBed.createComponent(TestFixtureComponent);
+            component = fixture.componentInstance;
+
+            component.selectablePageIndex = selectablePageIndex;
+            component.length = length;
 
             fixture.detectChanges();
-
-            component = fixture.componentInstance;
-        });
+        };
 
         afterEach(() => {
             fixture.destroy();
         });
 
         it('should display correct page label', () => {
+            setup();
             const label = fixture.debugElement.query(By.css('.mat-mdc-paginator-page-label'));
             expect(label.nativeElement.innerText).toEqual(intl.getPageLabel(1, 12));
         });
 
         it('should update page label on page change', () => {
+            setup();
             const nextButton = fixture.debugElement.query(By.css('.mat-mdc-paginator-navigation-next'));
             const label = fixture.debugElement.query(By.css('.mat-mdc-paginator-page-label'));
 
@@ -80,6 +88,47 @@ describe('Component: UiGrid', () => {
             fixture.detectChanges();
 
             expect(label.nativeElement.innerText).toEqual(intl.getPageLabel(2, 12));
+        });
+
+        it('should be able to change page index if selectablePageIndex is true and length is greater than pageSize', async () => {
+            setup(true);
+            const SELECTED_PAGE = 2;
+
+            const pageIndexInputDebugEl = fixture.debugElement.query(By.css('[data-cy="page-index-select"]'));
+            const pageIndexInput: HTMLInputElement = pageIndexInputDebugEl.nativeElement;
+
+            pageIndexInput.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const secondOption: HTMLElement = fixture.debugElement.queryAll(By.css('.mat-mdc-option'))[SELECTED_PAGE].nativeElement;
+            secondOption.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const pageRangeLabel = fixture.debugElement.query(By.css('.mat-mdc-paginator-range-label'));
+
+            expect(pageRangeLabel.nativeElement.innerText).toEqual(
+                component.paginator._intl.getRangeLabel(SELECTED_PAGE, component.pageSize, component.length),
+            );
+         });
+
+        it('should not display page index select if selectablePageIndex is true and length is less than pageSize', () => {
+            setup(true, 9);
+            const pageIndexInput = fixture.debugElement.query(By.css('[data-cy="page-index-select"]'));
+
+            expect(pageIndexInput).toBeNull();
+        });
+
+        it('should not display page index select if selectablePageIndex is false', () => {
+            setup();
+            const pageIndexInput = fixture.debugElement.query(By.css('[data-cy="page-index-select"]'));
+
+            expect(pageIndexInput).toBeNull();
         });
     });
 

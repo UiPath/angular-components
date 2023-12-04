@@ -17,7 +17,8 @@
          [expandMode]="'preserve'"
          [resizeStrategy]="inputs.isScrollable ? scrollableGridStrategy : immediateNeighbourHaltStrategy"
          [customFilterValue]="inputs.customFilter ? [{property: 'parity', method: 'eq', value: 'odd'}] : []"
-         [allowHighlight]="inputs.allowHighlight">
+         [allowHighlight]="inputs.allowHighlight"
+         [selectablePageIndex]="inputs.selectablePageIndex">
 
     <ui-grid-header [search]="header.searchable">
         <ui-header-button *ngFor="let button of generateButtons(header.main)"
