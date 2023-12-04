@@ -34,6 +34,7 @@ export interface IInputs {
     hideTotalCount: boolean;
     isScrollable: boolean;
     allowHighlight: boolean;
+    selectablePageIndex: boolean;
 }
 
 export interface IGridSettings {
