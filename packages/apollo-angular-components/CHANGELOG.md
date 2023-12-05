@@ -1,3 +1,7 @@
+# v15.0.11 (2023-12-05)
+* **grid** selectable index react to pageSize
+* **file-picker** make input optional in file-drop-zone
+
 # v15.0.10 (2023-12-04)
 * **grid** add selectable page index
 * **fix** increase loading buffer size
