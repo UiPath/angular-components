@@ -19,11 +19,21 @@ import {
 
 @Injectable()
 export class UiMatPaginatorIntl extends MatPaginatorIntl {
+    pageSelectLabel = 'Select page';
+
     getPageLabel(currentPage: number, pageCount?: number): string {
         if (!pageCount) {
             return `Page ${currentPage}`;
         }
         return `Page ${currentPage} / ${pageCount}`;
+    }
+
+    getPageOnlyLabel(): string {
+        return 'Page';
+    }
+
+    getTotalPages(pageCount: number): string {
+        return `/ ${pageCount}`;
     }
 }
 
@@ -46,8 +56,12 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginat
      * Whether to show total count in custom paginator
      *
      */
-    @Input()
-        hideTotalCount = false;
+    @Input() hideTotalCount = false;
+
+    /**
+     * Whether to be able to select the page index
+     */
+    @Input() selectablePageIndex = false;
 
     @HostBinding('class')
     hostClass = 'mat-mdc-paginator';
@@ -59,6 +73,20 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginat
     get totalCount(): number {
         return Math.min(this.length, (this.pageIndex + 1) * this.pageSize);
     }
+
+    set length(value: number) {
+        super.length = value;
+
+        this.possiblePages = Array.from({ length: this.pageCount }, (_, i) => ({
+            label: i + 1,
+            value: i,
+        }));
+    }
+    get length() {
+        return super.length;
+    }
+
+    possiblePages: { label: number; value: number }[] = [];
 
     constructor(
         changeDetectorRef: ChangeDetectorRef,
@@ -73,5 +101,18 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginat
         if (defaults?.formFieldAppearance != null) {
             this._formFieldAppearance = defaults.formFieldAppearance;
         }
+    }
+
+    changePage(pageIndex: number) {
+        const prevIndex = this.pageIndex;
+
+        this.pageIndex = pageIndex;
+
+        this.page.emit({
+            pageIndex,
+            previousPageIndex: prevIndex,
+            pageSize: this.pageSize,
+            length: this.length,
+        });
     }
 }

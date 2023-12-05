@@ -1,3 +1,7 @@
+# v15.0.10 (2023-12-04)
+* **grid** add selectable page index
+* **fix** increase loading buffer size
+
 # v15.0.9 (2023-11-24)
 * **grid** column width reacts on resize strategy changes
 * **grid** handle single sticky column case
