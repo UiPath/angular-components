@@ -74,13 +74,19 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginat
         return Math.min(this.length, (this.pageIndex + 1) * this.pageSize);
     }
 
+    set pageSize(value: number) {
+        super.pageSize = value;
+
+        this._generatePossiblePages();
+    }
+    get pageSize(): number {
+        return super.pageSize;
+    }
+
     set length(value: number) {
         super.length = value;
 
-        this.possiblePages = Array.from({ length: this.pageCount }, (_, i) => ({
-            label: i + 1,
-            value: i,
-        }));
+        this._generatePossiblePages();
     }
     get length() {
         return super.length;
@@ -114,5 +120,12 @@ export class UiGridCustomPaginatorComponent extends _MatPaginatorBase<MatPaginat
             pageSize: this.pageSize,
             length: this.length,
         });
+    }
+
+    private _generatePossiblePages() {
+        this.possiblePages = Array.from({ length: this.pageCount }, (_, i) => ({
+            label: i + 1,
+            value: i,
+        }));
     }
 }
