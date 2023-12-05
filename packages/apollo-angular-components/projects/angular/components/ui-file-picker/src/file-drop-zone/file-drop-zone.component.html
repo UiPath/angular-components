@@ -1,5 +1,6 @@
 <ng-content></ng-content>
-<input #uploadInput
+<input *ngIf="useInputElement"
+       #uploadInput
        data-testid="file-input"
        type="file"
        [tabindex]="ariaLabel ? 0 : -1"
