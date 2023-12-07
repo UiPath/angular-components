@@ -1,3 +1,9 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .custom-drop-zone {
     display: flex;
     flex-direction: column;
@@ -9,5 +15,15 @@
     div {
         display: flex;
         justify-content: center;
+    }
+}
+
+.drop-zone {
+    border-radius: 3px;
+    border-width: 2px;
+    border-style: dashed;
+
+    &.ui-file-drop-zone-highlight {
+        border-style: solid;
     }
 }
