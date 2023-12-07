@@ -11,7 +11,7 @@
     .ui-file-picker {
         .upload-wrapper {
             border-color: $border-color;
-            &.file-drop-zone-highlight {
+            &.ui-file-drop-zone-highlight {
                 border-color: $color-primary;
             }
             .upload-input-wrapper {

@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { FilePickerPageComponent } from 'projects/playground/src/app/pages/file-picker/file-picker.page';
-import { UiFilePickerModule } from 'projects/angular/components/ui-file-picker/src/ui-file-picker.module';
 import { PushModule } from '@ngrx/component';
+import {
+    UiFilePickerComponent, UiInputFileDropZoneComponent,
+} from '@uipath/angular/components/ui-file-picker';
+import { UiFileDropZoneDirective } from '@uipath/angular/directives/ui-file-drop-zone';
+
+import { FilePickerPageComponent } from './file-picker.page';
 
 @NgModule({
   declarations: [
@@ -11,8 +15,11 @@ import { PushModule } from '@ngrx/component';
   ],
   imports: [
     CommonModule,
-    UiFilePickerModule,
     PushModule,
+
+    UiFileDropZoneDirective,
+    UiFilePickerComponent,
+    UiInputFileDropZoneComponent,
   ],
 })
 export class FilePickerModule { }

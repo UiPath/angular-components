@@ -17,7 +17,8 @@ import {
     a11y,
     axe,
 } from 'projects/angular/axe-helper';
-import { UiFileDropZoneComponent } from './file-drop-zone/file-drop-zone.component';
+import { FileReaderError } from '@uipath/angular/directives/ui-file-drop-zone';
+import { UiInputFileDropZoneComponent } from './ui-input-file-drop-zone/ui-input-file-drop-zone.component';
 import { UiFilePickerComponent as SuT } from './ui-file-picker.component';
 
 describe('UiFilePickerComponent:', () => {
@@ -48,7 +49,6 @@ describe('UiFilePickerComponent:', () => {
             MatFormFieldModule,
             MatTooltipModule,
         ],
-        declarations: [ UiFileDropZoneComponent ],
     });
 
     beforeEach(() => {
@@ -100,7 +100,7 @@ describe('UiFilePickerComponent:', () => {
         });
 
         it('should display spinner when files are loading', () => {
-            const fileDropZone = spectator.query<UiFileDropZoneComponent>(UiFileDropZoneComponent);
+            const fileDropZone = spectator.query<UiInputFileDropZoneComponent>(UiInputFileDropZoneComponent);
             fileDropZone?.filesLoading.next(true);
             spectator.detectChanges();
 
@@ -109,19 +109,23 @@ describe('UiFilePickerComponent:', () => {
         });
 
         it('should display error from file reader service', () => {
-            const testError = 'test error';
+            const testError: FileReaderError = {
+                entryName: 'dir-1',
+                error: 'test error',
+                errorMessage: 'test error message',
+            };
 
-            const fileDropZone = spectator.query<UiFileDropZoneComponent>(UiFileDropZoneComponent);
+            const fileDropZone = spectator.query<UiInputFileDropZoneComponent>(UiInputFileDropZoneComponent);
             fileDropZone?.fileError.next(testError);
             spectator.detectChanges();
 
             const errorElement = spectator.query('mat-error');
             expect(errorElement).toBeTruthy();
-            expect(errorElement).toHaveText(testError);
+            expect(errorElement).toHaveText('Error reading directory: dir-1. test error: test error message');
         });
 
         it('should not display large input', () => {
-            const fileDropZone = spectator.query<UiFileDropZoneComponent>(UiFileDropZoneComponent);
+            const fileDropZone = spectator.query<UiInputFileDropZoneComponent>(UiInputFileDropZoneComponent);
             fileDropZone?.filesReceived.next(createMockFiles());
             spectator.detectChanges();
             const inputWrapper = spectator.query('.upload-input-wrapper');
@@ -130,7 +134,7 @@ describe('UiFilePickerComponent:', () => {
         });
 
         it('should display and emit all files from the drop zone in the grid', () => {
-            const fileDropZone = spectator.query<UiFileDropZoneComponent>(UiFileDropZoneComponent);
+            const fileDropZone = spectator.query<UiInputFileDropZoneComponent>(UiInputFileDropZoneComponent);
             fileDropZone?.filesReceived.next(createMockFiles());
             spectator.detectChanges();
             const gridRows = spectator.queryAll('.ui-grid-row');
@@ -141,7 +145,7 @@ describe('UiFilePickerComponent:', () => {
         });
 
         it('should add newly dropped files to the grid and emit the new file list', () => {
-            const fileDropZone = spectator.query<UiFileDropZoneComponent>(UiFileDropZoneComponent);
+            const fileDropZone = spectator.query<UiInputFileDropZoneComponent>(UiInputFileDropZoneComponent);
             fileDropZone?.filesReceived.next(createMockFiles());
             spectator.detectChanges();
 
@@ -156,7 +160,7 @@ describe('UiFilePickerComponent:', () => {
         });
 
         it('should not add a file if it is a duplicate', () => {
-            const fileDropZone = spectator.query<UiFileDropZoneComponent>(UiFileDropZoneComponent);
+            const fileDropZone = spectator.query<UiInputFileDropZoneComponent>(UiInputFileDropZoneComponent);
             fileDropZone?.filesReceived.next(createMockFiles());
             spectator.detectChanges();
 
@@ -171,7 +175,7 @@ describe('UiFilePickerComponent:', () => {
 
     describe('deleting files', () => {
         it('should remove the grid, return to the "large" state, and emit an empty file list when clicking Delete All', () => {
-            const fileDropZone = spectator.query<UiFileDropZoneComponent>(UiFileDropZoneComponent);
+            const fileDropZone = spectator.query<UiInputFileDropZoneComponent>(UiInputFileDropZoneComponent);
             fileDropZone?.filesReceived.next(createMockFiles());
             spectator.detectChanges();
 
@@ -189,7 +193,7 @@ describe('UiFilePickerComponent:', () => {
         });
 
         it('should remove the correct row and emit the new file list when clicking its delete button', () => {
-            const fileDropZone = spectator.query<UiFileDropZoneComponent>(UiFileDropZoneComponent);
+            const fileDropZone = spectator.query<UiInputFileDropZoneComponent>(UiInputFileDropZoneComponent);
             fileDropZone?.filesReceived.next(createMockFiles());
             spectator.detectChanges();
 
@@ -232,7 +236,7 @@ describe('UiFilePickerComponent:', () => {
             const sortedFiles = [ '1', '2', '3', '4', '5' ].map(n => new File([], n));
 
             spectator.setInput({ sortBy });
-            const fileDropZone = spectator.query<UiFileDropZoneComponent>(UiFileDropZoneComponent);
+            const fileDropZone = spectator.query<UiInputFileDropZoneComponent>(UiInputFileDropZoneComponent);
             fileDropZone?.filesReceived.next(files);
 
             spectator.detectChanges();
@@ -241,15 +245,19 @@ describe('UiFilePickerComponent:', () => {
         });
 
         it('should display the error returned from the service', () => {
-            const errorText = 'Test error';
+            const testError: FileReaderError = {
+                entryName: 'dir-1',
+                error: 'test error',
+                errorMessage: 'test error message',
+            };
             const errorSubscription = jasmine.createSpy();
             sut.fileError$.subscribe(errorSubscription);
 
-            const fileDropZone = spectator.query<UiFileDropZoneComponent>(UiFileDropZoneComponent);
-            fileDropZone?.fileError.next(errorText);
+            const fileDropZone = spectator.query<UiInputFileDropZoneComponent>(UiInputFileDropZoneComponent);
+            fileDropZone?.fileError.next(testError);
             spectator.detectChanges();
 
-            expect(errorSubscription).toHaveBeenCalledWith(errorText);
+            expect(errorSubscription).toHaveBeenCalledWith('Error reading directory: dir-1. test error: test error message');
         });
 
     });

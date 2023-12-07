@@ -15,17 +15,21 @@ File Picker with hideSummaryAfterFilesSelection = true (will emit files but will
 File Picker disabled
 <ui-file-picker [disabled]="true"></ui-file-picker>
 
-Drop zone with custom wrapper
-<div #uploadWrapper
-     class="custom-drop-zone">
-    <div>
-        Click to upload or drag and drop
-    </div>
-    <ui-file-drop-zone (filesReceived)="addFiles($event)"
-                       [customDropZone]="uploadWrapper"
-                       ariaLabel="'Click to upload or drag and drop">
-    </ui-file-drop-zone>
-    <div *ngIf="customDropZoneFiles$ | async as files">
-        Dropped files: {{files}}
-    </div>
+Input File Drop Zone
+<ui-input-file-drop-zone (filesReceived)="addFiles($event)"
+                         class="drop-zone"
+                         ariaLabel="'Click to upload or drag and drop">
+    Click to upload or drag and drop
+</ui-input-file-drop-zone>
+
+<div #dropzone
+     class="drop-zone"
+     uiFileDropZone
+     (filesReceived)="addFiles($event)">
+    <div>Drop zone without input</div>
+    <button>Button to test flicker</button>
+</div>
+
+<div *ngIf="customDropZoneFiles$ | async as files">
+    Dropped files: {{files}}
 </div>
