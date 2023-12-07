@@ -1,3 +1,6 @@
+# v15.0.12 (2023-12-07)
+* **tree-select** tree nodes disappears after loading
+
 # v15.0.11 (2023-12-05)
 * **grid** selectable index react to pageSize
 * **file-picker** make input optional in file-drop-zone
