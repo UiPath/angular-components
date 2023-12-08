@@ -204,32 +204,13 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
         .ui-grid-row {
             &:focus,
+            &:hover,
             &.cdk-focused {
                 background-color: $ui-grid-row-hover-color;
 
-                &:not(.ui-grid-row-state-expanded) {
-                    .ui-grid-header-cell,
-                    .ui-grid-cell {
-                        background-color: $ui-grid-row-hover-color;
-                    }
-                }
-
-                outline: none;
-
-                .ui-grid-action-cell-container {
-                    opacity: 1;
+                .ui-grid-header-cell,
+                .ui-grid-cell {
                     background-color: $ui-grid-row-hover-color;
-                }
-            }
-
-            &:hover {
-                background-color: $ui-grid-row-hover-color;
-
-                &:not(.ui-grid-row-state-expanded) {
-                    .ui-grid-header-cell,
-                    .ui-grid-cell {
-                        background-color: $ui-grid-row-hover-color;
-                    }
                 }
 
                 outline: none;
