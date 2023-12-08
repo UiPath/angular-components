@@ -1,3 +1,6 @@
+# v15.0.13 (2023-12-08)
+* **grid** modify hover color
+
 # v15.0.12 (2023-12-07)
 * **tree-select** tree nodes disappears after loading
 
