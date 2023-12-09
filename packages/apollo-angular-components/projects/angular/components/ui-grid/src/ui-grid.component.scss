@@ -461,7 +461,7 @@ ui-grid {
                     &.ui-grid-state-resizing,
                     &:focus,
                     &.cdk-focused {
-                        background-color: $ui-grid-row-hover-color;
+                        background-color: $ui-grid-header-pressed-color;
                     }
                 }
             }
@@ -734,10 +734,6 @@ ui-grid {
             .ui-grid-cell {
                 height: $ui-grid-row-height - $ui-row-border-width;
                 background: $ui-grid-cell-background-color;
-
-                &.ui-grid-state-resizing {
-                    background: $ui-grid-row-hover-color;
-                }
             }
 
             .sticky-columns-cell-container.ui-grid-cell {
