@@ -1,3 +1,6 @@
+# v15.0.14 (2023-12-11)
+* **grid** page select styling
+
 # v15.0.13 (2023-12-08)
 * **grid** modify hover color
 
