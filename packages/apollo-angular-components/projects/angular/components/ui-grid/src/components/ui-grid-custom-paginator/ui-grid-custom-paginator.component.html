@@ -41,13 +41,14 @@
                     <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
                 </svg>
             </button>
-            <div class="mat-mdc-paginator-page-label">
+            <div [class.mat-mdc-paginator-page-size]="selectablePageIndex && pageCount > 1"
+                 class="mat-mdc-paginator-page-label">
                 <ng-container *ngIf="!hideTotalCount">
                     <ng-container *ngIf="selectablePageIndex && pageCount > 1; else defaultPageLabel">
                         {{ _intl.getPageOnlyLabel() }}
                         <mat-form-field [appearance]="_formFieldAppearance!"
                                         [color]="color ?? 'primary'"
-                                        class="mat-mdc-paginator-page-index-select">
+                                        class="mat-mdc-paginator-page-size-select">
                             <mat-select (selectionChange)="changePage($event.value)"
                                         [value]="pageIndex"
                                         [aria-label]="_intl.pageSelectLabel"
