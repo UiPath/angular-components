@@ -157,12 +157,7 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
 
             &-header-cell:not(.ui-grid-feature-cell):focus,
             &-header-cell.ui-grid-state-resizing {
-                background-color: $ui-grid-row-hover-color;
-                outline: none;
-            }
-
-            &-state-resizing {
-                background-color: $ui-grid-row-hover-color;
+                background-color: $ui-grid-header-pressed-color;
                 outline: none;
             }
 
