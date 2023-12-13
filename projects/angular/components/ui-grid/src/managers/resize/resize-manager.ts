@@ -286,7 +286,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
     endResize() {
         const entries = [this.current!, this._previous!.neighbour, this._previous!.oppositeNeighbour];
-        this._emitNewColumnPercentages(entries.filter(e => e != null) as IResizeInfo<T>[]);
+        this._emitNewColumnPercentages(entries.filter(e => !!e?.column) as IResizeInfo<T>[]);
         this._endResizeCommon(...entries);
 
         this.current = undefined;
