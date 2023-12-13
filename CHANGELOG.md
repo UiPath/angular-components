@@ -1,3 +1,6 @@
+# v15.0.15 (2023-12-12)
+* **grid** remove cell resize color change
+
 # v15.0.14 (2023-12-11)
 * **grid** page select styling
 
