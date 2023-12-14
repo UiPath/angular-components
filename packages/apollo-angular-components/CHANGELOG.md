@@ -1,3 +1,6 @@
+# v15.0.16 (2023-12-14)
+* **file-picker** file dropzone directive
+
 # v15.0.15 (2023-12-12)
 * **grid** remove cell resize color change
 
