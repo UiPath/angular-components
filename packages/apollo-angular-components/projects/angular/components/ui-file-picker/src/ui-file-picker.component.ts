@@ -15,20 +15,59 @@ import {
     ReplaySubject,
     Subject,
 } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {
+ take, takeUntil,
+} from 'rxjs/operators';
 
 import {
     getFileExtension,
     sort,
 } from '@uipath/angular/utilities';
-import { UiFileDropZoneComponent } from './file-drop-zone/file-drop-zone.component';
+import { CommonModule } from '@angular/common';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { UiGridModule } from '@uipath/angular/components/ui-grid';
+
+import {
+    LetModule,
+    PushModule,
+} from '@ngrx/component';
+import { UiPipeModule } from '@uipath/angular/pipes';
+import {
+    UiFileDropZoneDirective,
+    FileReaderError,
+} from '@uipath/angular/directives/ui-file-drop-zone';
 import { UiFilePickerIntl } from './ui-file-picker.intl';
+import { UiInputFileDropZoneComponent } from './ui-input-file-drop-zone/ui-input-file-drop-zone.component';
 
 @Component({
     selector: 'ui-file-picker',
     templateUrl: './ui-file-picker.component.html',
     styleUrls: [ './ui-file-picker.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatTooltipModule,
+
+        UiGridModule,
+        UiPipeModule,
+
+        LetModule,
+        PushModule,
+
+        UiFileDropZoneDirective,
+        UiInputFileDropZoneComponent,
+    ],
 })
 export class UiFilePickerComponent implements OnInit, OnDestroy {
 
@@ -51,7 +90,7 @@ export class UiFilePickerComponent implements OnInit, OnDestroy {
 
     @HostBinding('class.ui-file-picker') cls = true;
 
-    @ViewChild('fileDropzone', { read: UiFileDropZoneComponent }) fileDropZone?: UiFileDropZoneComponent;
+    @ViewChild('fileDropzone', { read: UiInputFileDropZoneComponent }) fileDropZone?: UiInputFileDropZoneComponent;
     @ViewChild('deleteAll', { read: ElementRef }) deleteAllButton!: ElementRef;
 
     files$ = new ReplaySubject<File[]>(1);
@@ -116,8 +155,15 @@ export class UiFilePickerComponent implements OnInit, OnDestroy {
         this.filesLoading$.next(loading);
     }
 
-    handleFileError(error: string | null) {
-        this.fileError$.next(error);
+    handleFileError(error: FileReaderError | null) {
+        if (error) {
+            this.intl.errorReadingFiles$(error.entryName, error.error, error.errorMessage)
+                .pipe(
+                    take(1),
+                ).subscribe(errorMessage => this.fileError$.next(errorMessage));
+        } else {
+            this.fileError$.next(null);
+        }
     }
 
     private _sortFiles(files: File[]) {

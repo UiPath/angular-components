@@ -3,7 +3,12 @@
     filesLoading: filesLoading$ | ngrxPush,
     fileError: fileError$ | ngrxPush
 } as state">
-    <div #uploadWrapper
+    <div uiFileDropZone
+         [accept]="accept"
+         [disabled]="disabled"
+         (filesReceived)="addFiles($event)"
+         (filesLoading)="displayLoadingIndicator($event)"
+         (fileError)="handleFileError($event)"
          class="upload-wrapper"
          [class.disabled]="!!disabled">
         <div *ngIf="!state.filesLoading && state.files.length > 0 && !hideSummaryAfterFilesSelection"
@@ -56,43 +61,42 @@
                 </ui-grid-row-action>
             </ui-grid>
         </div>
-        <div class="upload-input-wrapper"
-             [class.large]="state.filesLoading || state.files.length === 0 || hideSummaryAfterFilesSelection">
-            <ui-file-drop-zone #fileDropzone
-                               [single]="single"
-                               [accept]="accept"
-                               [customDropZone]="uploadWrapper"
-                               [disabled]="disabled"
-                               (filesReceived)="addFiles($event)"
-                               (filesLoading)="displayLoadingIndicator($event)"
-                               (fileError)="handleFileError($event)">
-                <div *ngIf="state.filesLoading"
-                     class="spinner-container">
-                    <mat-progress-spinner color="primary"
-                                          mode="indeterminate"
-                                          diameter="32">
-                    </mat-progress-spinner>
-                </div>
-                <div *ngIf="!state.filesLoading"
-                     class="message">
-                    <button mat-icon-button
-                            color="primary"
-                            data-testid="browse-files-button"
-                            [attr.aria-label]="intl.clickUploadDragDrop$ | ngrxPush"
-                            [disabled]="disabled"
-                            (click)="onBrowseFilesClick()">
-                        <mat-icon>cloud_upload</mat-icon>
-                    </button>
-                    <div class="primary">
-                        <div translate>
-                            {{intl.clickUploadDragDrop$ | ngrxPush}}
-                        </div>
-                        <span *ngIf="secondaryMessage"
-                              class="placeholder">{{secondaryMessage}}</span>
+        <ui-input-file-drop-zone #fileDropzone
+                                 class="upload-input-wrapper"
+                                 [class.large]="state.filesLoading || state.files.length === 0 || hideSummaryAfterFilesSelection"
+                                 [disableDropZone]="true"
+                                 [single]="single"
+                                 [accept]="accept"
+                                 [disabled]="disabled"
+                                 (filesReceived)="addFiles($event)"
+                                 (filesLoading)="displayLoadingIndicator($event)"
+                                 (fileError)="handleFileError($event)">
+            <div *ngIf="state.filesLoading"
+                 class="spinner-container">
+                <mat-progress-spinner color="primary"
+                                      mode="indeterminate"
+                                      diameter="32">
+                </mat-progress-spinner>
+            </div>
+            <div *ngIf="!state.filesLoading"
+                 class="message">
+                <button mat-icon-button
+                        color="primary"
+                        data-testid="browse-files-button"
+                        [attr.aria-label]="intl.clickUploadDragDrop$ | ngrxPush"
+                        [disabled]="disabled"
+                        (click)="onBrowseFilesClick()">
+                    <mat-icon>cloud_upload</mat-icon>
+                </button>
+                <div class="primary">
+                    <div translate>
+                        {{intl.clickUploadDragDrop$ | ngrxPush}}
                     </div>
+                    <span *ngIf="secondaryMessage"
+                          class="placeholder">{{secondaryMessage}}</span>
                 </div>
-            </ui-file-drop-zone>
-        </div>
+            </div>
+        </ui-input-file-drop-zone>
     </div>
     <mat-error *ngIf="state.fileError">{{ state.fileError }}</mat-error>
 </ng-container>

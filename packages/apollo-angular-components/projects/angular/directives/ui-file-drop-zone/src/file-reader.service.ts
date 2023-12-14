@@ -3,7 +3,6 @@ import {
     NgZone,
     OnDestroy,
 } from '@angular/core';
-import { flatten } from 'lodash-es';
 import {
     Observable,
     ReplaySubject,
@@ -17,17 +16,21 @@ import {
     take,
     takeUntil,
 } from 'rxjs/operators';
-import { UiFilePickerIntl } from '../ui-file-picker.intl';
+
+export interface FileReaderError {
+    entryName: string;
+    error: string;
+    errorMessage: string;
+}
 
 @Injectable()
 export class FileReaderService implements OnDestroy {
 
-    private readonly _fileError$ = new Subject<string>();
+    private readonly _fileError$ = new Subject<FileReaderError>();
     private readonly _files$ = new ReplaySubject<File[]>(1);
     private readonly _destroyed$ = new Subject<void>();
 
     constructor(
-        private readonly _intl: UiFilePickerIntl,
         private readonly _ngZone: NgZone,
     ) { }
 
@@ -93,11 +96,11 @@ export class FileReaderService implements OnDestroy {
         forkJoin(fileObservables).pipe(
             catchError((err) => {
                 this._fileError$.next(err);
-                return of([]);
+                return of([] as File[][]);
             }),
             takeUntil(this._destroyed$),
         )
-            .subscribe(files => this._ngZone.run(() => this._files$.next(flatten(files))));
+            .subscribe(files => this._ngZone.run(() => this._files$.next(files.reduce((acc, current) => acc.concat(current), []))));
     }
 
     private _isFolderUploadSupported(items: DataTransferItemList) {
@@ -149,9 +152,11 @@ export class FileReaderService implements OnDestroy {
                         readEntries();
                     }
                 }, (err) => {
-                    this._intl.errorReadingFiles$(entry.name, err.name, err.message)
-                        .pipe(take(1))
-                        .subscribe(error => emitter.error(error));
+                    emitter.error({
+                        entryName: entry.name,
+                        error: err.name,
+                        errorMessage: err.message,
+                    });
                 });
             };
             readEntries();
@@ -161,7 +166,7 @@ export class FileReaderService implements OnDestroy {
     private _readAndEmitEntries(entries: FileSystemEntry[]) {
         const entryObservables = entries.map(entry => this._traverseFileTree(entry));
         return forkJoin(entryObservables).pipe(
-            map(filesMatrix => flatten(filesMatrix)),
+            map(filesMatrix => filesMatrix.reduce((acc, current) => acc.concat(current), [])),
             takeUntil(this._destroyed$),
         );
     }

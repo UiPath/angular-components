@@ -28,6 +28,9 @@
         "@uipath/angular/a11y": [
           "./projects/angular/a11y/src/public_api.ts"
         ],
+        "@uipath/angular/components/ui-file-picker": [
+            "./projects/angular/components/ui-file-picker/src/public_api.ts"
+        ],
         "@uipath/angular/components/ui-grid": [
           "./projects/angular/components/ui-grid/src/public_api.ts"
         ],
@@ -75,6 +78,9 @@
         ],
         "@uipath/angular/directives/ui-drag-and-drop-file": [
           "projects/angular/directives/ui-drag-and-drop-file/src/public_api.ts"
+        ],
+        "@uipath/angular/directives/ui-file-drop-zone": [
+          "projects/angular/directives/ui-file-drop-zone/src/public_api.ts"
         ],
         "@uipath/angular/directives/ui-matformfield-required": [
           "projects/angular/directives/ui-matformfield-required/src/public_api.ts"
