@@ -1,7 +1,7 @@
-<ng-container *ngrxLet="{
-    files: (displayedFiles$ | ngrxPush) ?? [],
-    filesLoading: filesLoading$ | ngrxPush,
-    fileError: fileError$ | ngrxPush
+<ng-container *ngLet="{
+    files: (displayedFiles$ | async) ?? [],
+    filesLoading: filesLoading$ | async,
+    fileError: fileError$ | async
 } as state">
     <div uiFileDropZone
          [accept]="accept"
@@ -21,7 +21,7 @@
                     type="button"
                     data-testid="delete-all-button">
                 <mat-icon>delete_outline</mat-icon>
-                {{intl.deleteAll$ | ngrxPush}}
+                {{intl.deleteAll$ | async}}
             </button>
             <ui-grid #filesGrid
                      [data]="state.files"
@@ -30,13 +30,13 @@
                      (rendered)="detectDeleteButtonSize()">
                 <ui-grid-column width="40%"
                                 property="name"
-                                [title]="intl.fileName$ | ngrxPush"
+                                [title]="(intl.fileName$ | async) ?? 'File name'"
                                 [disableToggle]="true">
                     <ng-template let-entry="data">{{entry.name}}</ng-template>
                 </ui-grid-column>
                 <ui-grid-column width="20%"
                                 property="type"
-                                [title]="intl.type$ | ngrxPush">
+                                [title]="(intl.type$ | async) ?? 'Type'">
                     <ng-template let-entry="data">
                         {{getFileExtension(entry.name)}}
                     </ng-template>
@@ -44,16 +44,16 @@
                 <ui-grid-column property="pages"
                                 width="40%"
                                 [minWidth]="deleteButtonSize"
-                                [title]="intl.size$ | ngrxPush">
-                    <ng-template let-entry="data">{{entry.size | uiFileSize | ngrxPush}}
+                                [title]="(intl.size$ | async) ?? 'Title'">
+                    <ng-template let-entry="data">{{entry.size | uiFileSize | async}}
                     </ng-template>
                 </ui-grid-column>
                 <ui-grid-row-action>
                     <ng-template let-entry="data">
                         <button mat-button
                                 data-testid="delete-file-button"
-                                [attr.aria-label]="intl.deleteFile$(entry.name) | ngrxPush"
-                                [matTooltip]="(intl.deleteFile$(entry.name) | ngrxPush) ?? ''"
+                                [attr.aria-label]="intl.deleteFile$(entry.name) | async"
+                                [matTooltip]="(intl.deleteFile$(entry.name) | async) ?? 'Delete file'"
                                 (click)="removeFile(entry)">
                             <mat-icon class="remove-file">delete_outline</mat-icon>
                         </button>
@@ -83,14 +83,14 @@
                 <button mat-icon-button
                         color="primary"
                         data-testid="browse-files-button"
-                        [attr.aria-label]="intl.clickUploadDragDrop$ | ngrxPush"
+                        [attr.aria-label]="intl.clickUploadDragDrop$ | async"
                         [disabled]="disabled"
                         (click)="onBrowseFilesClick()">
                     <mat-icon>cloud_upload</mat-icon>
                 </button>
                 <div class="primary">
                     <div translate>
-                        {{intl.clickUploadDragDrop$ | ngrxPush}}
+                        {{intl.clickUploadDragDrop$ | async}}
                     </div>
                     <span *ngIf="secondaryMessage"
                           class="placeholder">{{secondaryMessage}}</span>

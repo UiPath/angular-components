@@ -7,10 +7,6 @@ import {
     byTestId,
     createComponentFactory,
 } from '@ngneat/spectator';
-import {
-    LetModule,
-    PushModule,
-} from '@ngrx/component';
 import { UiGridModule } from '@uipath/angular/components/ui-grid';
 import { UiPipeModule } from '@uipath/angular/pipes';
 import {
@@ -42,8 +38,7 @@ describe('UiFilePickerComponent:', () => {
         imports: [
             UiGridModule,
             UiPipeModule,
-            LetModule,
-            PushModule,
+
             MatIconModule,
             MatProgressSpinnerModule,
             MatFormFieldModule,
