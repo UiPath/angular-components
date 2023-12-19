@@ -58,9 +58,6 @@
         "@uipath/angular/directives/keyboard-shortcut": [
           "projects/angular/directives/keyboard-shortcut/src/public_api.ts"
         ],
-        "@uipath/angular/directives/custom-mat-menu-trigger": [
-          "projects/angular/directives/custom-mat-menu-trigger/src/public_api.ts"
-        ],
         "@uipath/angular/directives/ui-autofocus": [
           "projects/angular/directives/ui-autofocus/src/public_api.ts"
         ],
