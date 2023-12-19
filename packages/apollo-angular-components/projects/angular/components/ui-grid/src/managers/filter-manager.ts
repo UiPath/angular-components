@@ -69,11 +69,15 @@ export class FilterManager<T> {
         this.filter$,
     ]).pipe(
         map(([activeCount, filters]) => {
-            const activeFilterValueCount = activeCount + filters.filter(f => isArray(f?.value))
-                .map(f => (f.value as FilterMultiValue).length - 1)
-                .reduce((acc, cur) => acc + cur, 0);
+            const activeFilterValueCount = activeCount + filters.reduce((acc, filterModel) => {
+                const filterValue = filterModel?.value;
+                if (isArray(filterValue) && filterValue.length > 1) {
+                    return acc + filterValue.length - 1;
+                }
+                return acc;
+            }, 0);
 
-            return Math.max(0, activeFilterValueCount);
+            return activeFilterValueCount;
         }),
     );
 
