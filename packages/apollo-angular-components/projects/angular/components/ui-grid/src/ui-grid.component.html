@@ -54,7 +54,7 @@
                         </ng-container>
                     </div>
                 </ng-container>
-                </ng-template>
+            </ng-template>
 
             <div #gridActionButtons
                  *ngIf="hasSelection$ | async"
@@ -203,11 +203,12 @@
                                              class="ui-grid-resize-handle">
                                         </div>
                                     </div>
-                                    </div>
-                                    </ng-container>
-                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
 
-                        <ng-container *ngFor="let column of columns.freeColumns; let last = last; let columnIndex = index">
+                        <ng-container
+                                      *ngFor="let column of columns.freeColumns; let last = last; let columnIndex = index">
                             <div *ngLet="(+(column.widthPx$ | async)! + (last ? (+(deficit$ | async)!) : 0)) as widthPx"
                                  [class.ui-grid-header-cell-sortable]="column.sortable"
                                  [class.ui-grid-resizeable]="column.resizeable"
@@ -269,30 +270,30 @@
                                     </div>
                                 </div>
                             </div>
-                            </ng-container>
-                            </ng-container>
-                            <div *ngIf="virtualScroll"
-                                 [style.marginLeft.px]="scrollCompensationWidth$ | async"
-                                 class="ui-grid-header-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">
-                            </div>
-                            <div *ngIf="refreshable"
-                                 class="ui-grid-header-cell ui-grid-refresh-cell ui-grid-feature-cell"
-                                 role="columnheader">
-                                <button [matTooltip]="intl.refreshTooltip"
-                                        [matTooltipDisabled]="resizeManager.isResizing"
-                                        [disabled]="disabled"
-                                        (click)="refresh.emit()"
-                                        mat-icon-button
-                                        type="button"
-                                        class="grid-refresh-button">
-                                    <mat-icon>refresh</mat-icon>
-                                </button>
-                            </div>
-                            <div *ngIf="!!actions"
-                                 class="ui-grid-header-cell ui-grid-action-cell ui-grid-feature-cell">
-                            </div>
-                            </div>
-                            </div>
+                        </ng-container>
+                    </ng-container>
+                    <div *ngIf="virtualScroll"
+                         [style.marginLeft.px]="scrollCompensationWidth$ | async"
+                         class="ui-grid-header-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">
+                    </div>
+                    <div *ngIf="refreshable"
+                         class="ui-grid-header-cell ui-grid-refresh-cell ui-grid-feature-cell"
+                         role="columnheader">
+                        <button [matTooltip]="intl.refreshTooltip"
+                                [matTooltipDisabled]="resizeManager.isResizing"
+                                [disabled]="disabled"
+                                (click)="refresh.emit()"
+                                mat-icon-button
+                                type="button"
+                                class="grid-refresh-button">
+                            <mat-icon>refresh</mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="!!actions"
+                         class="ui-grid-header-cell ui-grid-action-cell ui-grid-feature-cell">
+                    </div>
+                </div>
+            </div>
 
             <ng-container *ngIf="dataManager?.length; else noData">
                 <ng-container *ngIf="virtualScroll">
@@ -314,9 +315,9 @@
                                         }"></ng-container>
                                 </ng-container>
                             </div>
-                            </ng-container>
-                            <ng-container *ngIf="!useCardView">
-                                <ng-container *cdkVirtualFor="let row of dataManager.data$ | async;
+                        </ng-container>
+                        <ng-container *ngIf="!useCardView">
+                            <ng-container *cdkVirtualFor="let row of dataManager.data$ | async;
                                                         let last = last;
                                                         let index = index;
                                                         trackBy: dataManager.hashTrack">
@@ -329,9 +330,9 @@
                                     }">
                                 </ng-container>
                             </ng-container>
-                            </ng-container>
-                            </cdk-virtual-scroll-viewport>
-                            </ng-container>
+                        </ng-container>
+                    </cdk-virtual-scroll-viewport>
+                </ng-container>
 
                 <ng-container *ngIf="!virtualScroll">
                     <ng-container *ngIf="useCardView">
@@ -348,10 +349,10 @@
                                         }">
                                 </ng-container>
                             </ng-container>
-                            </div>
-                            </ng-container>
-                            <ng-container *ngIf="!useCardView">
-                                <ng-container *ngFor="let row of dataManager.data$ | async;
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="!useCardView">
+                        <ng-container *ngFor="let row of dataManager.data$ | async;
                                             let index = index;
                                             let last = last;
                                             trackBy: dataManager.hashTrack">
@@ -364,30 +365,30 @@
                                     }">
                             </ng-container>
                         </ng-container>
-                        </ng-container>
-                        </ng-container>
-                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
 
             <ng-container *ngIf="loading && !!loadingState">
                 <ng-container *ngTemplateOutlet="loadingState.html ?? null"></ng-container>
             </ng-container>
         </div>
-        </div>
-        <div class="ui-grid-footer-container">
-            <ui-grid-custom-paginator *ngIf="!!footer && !footer.hidden"
-                                      [pageIndex]="footer.state.pageIndex"
-                                      [pageSize]="footer.state.pageSize"
-                                      [pageSizeOptions]="footer.pageSizes"
-                                      [length]="footer.length"
-                                      [disabled]="disabled"
-                                      [showFirstLastButtons]="footer.showFirstLastButtons"
-                                      [hidePageSize]="footer.hidePageSize"
-                                      [hideTotalCount]="footer.hideTotalCount"
-                                      [selectablePageIndex]="selectablePageIndex"
-                                      (page)="footer.pageChange.next($event)">
-            </ui-grid-custom-paginator>
-        </div>
-        </div>
+    </div>
+    <div class="ui-grid-footer-container">
+        <ui-grid-custom-paginator *ngIf="!!footer && !footer.hidden"
+                                  [pageIndex]="footer.state.pageIndex"
+                                  [pageSize]="footer.state.pageSize"
+                                  [pageSizeOptions]="footer.pageSizes"
+                                  [length]="footer.length"
+                                  [disabled]="disabled"
+                                  [showFirstLastButtons]="footer.showFirstLastButtons"
+                                  [hidePageSize]="footer.hidePageSize"
+                                  [hideTotalCount]="footer.hideTotalCount"
+                                  [selectablePageIndex]="selectablePageIndex"
+                                  (page)="footer.pageChange.next($event)">
+        </ui-grid-custom-paginator>
+    </div>
+</div>
 <ng-template #rowTemplate
              let-row="data"
              let-expanded="expanded"
@@ -732,49 +733,47 @@
         <div *ngIf="column.dropdown?.visible$ | async"
              [attr.data-collapsed]="!collapseFiltersCount || null"
              class="ui-grid-dropdown-filter-container ui-grid-filter-option">
-            <button [matMenuTriggerFor]="filterOptions"
-                    [disabled]="column.dropdown?.disabled || disabled"
-                    [attr.data-column-name]="getColumnName(column)"
-                    [expandedTranslation]="intl.menuExpanded"
-                    (menuOpened)="focusActiveFilterItem()"
-                    uiCustomMatMenuTriggerFor
-                    mat-button
-                    type="button"
-                    class="ui-grid-dropdown-filter-button">
-                <span class="ui-grid-dropdown-filter-title">{{ column.title }}: </span>
-                <span class="ui-grid-dropdown-filter-value">
-                    {{ !!column.dropdown?.value ? intl.translateDropdownOption(column.dropdown!.value!) :
-                    intl.noFilterPlaceholder }}
-                </span>
-                <mat-icon iconPositionEnd>keyboard_arrow_down</mat-icon>
-            </button>
-            <mat-menu #filterOptions="matMenu"
-                      [overlapTrigger]="true">
-                <button *ngIf="column.dropdown?.showAllOption"
-                        [class.active]="column.dropdown?.value == null"
-                        [matTooltip]="intl.noFilterPlaceholder"
-                        (click)="filterManager.dropdownUpdate(column!, undefined)"
-                        type="button"
-                        mat-menu-item>
-                    {{ intl.noFilterPlaceholder }}
-                </button>
-                <button *ngFor="let dropdownItem of column.dropdown?.items"
-                        [class.active]="column.dropdown?.value?.label === dropdownItem.label"
-                        [matTooltip]="intl.translateDropdownOption(dropdownItem)"
-                        (click)="filterManager.dropdownUpdate(column, dropdownItem)"
-                        type="button"
-                        mat-menu-item>
-                    {{ intl.translateDropdownOption(dropdownItem) }}
-                </button>
-            </mat-menu>
+            <ng-container *ngLet="column.dropdown!.selectedFilters$ | async as selectedFilters">
+                <ui-suggest *ngLet="((column.dropdown!.suggestValue$ | async) ?? []) as suggestValue"
+                            [disabled]="false"
+                            [compact]="true"
+                            [multiple]="column.dropdown!.multi"
+                            [clearable]="column.dropdown!.multi"
+                            [searchable]="false"
+                            [value]="suggestValue"
+                            [placeholder]="column.title ?? ''"
+                            [items]="addAllFilterOption(column.dropdown!.suggestItems, column)"
+                            [compactSummaryTemplate]="displayedFilterName"
+                            [maxSelectionConfig]="{
+                                count: (disableFilterSelection$ | async) && (column.dropdown!.multi || selectedFilters === undefined) ? suggestValue.length : 1 / 0,
+                                footerMessage: intl.maxSelectedFilterValuesWarning,
+                                itemTooltip: intl.filterItemWarningTooltip
+                                }"
+                            (itemSelected)="filterManager.selectFilters(column, $event)"
+                            (selected)="$event === undefined && filterManager.selectFilters(column, undefined)"
+                            class="ui-grid-filter-suggest"
+                            width="230px">
+                </ui-suggest>
+
+                <ng-template #displayedFilterName
+                             let-value>
+                    <div class="flex">
+                        <span class="text-ellipsis">
+                            {{ (column.dropdown!.multi && selectedFilters?.length > 1)
+                            ? intl.translateMultiDropdownOptions(value?.[0]?.text, selectedFilters.length)
+                            : value?.[0]?.text ?? intl.noFilterPlaceholder }}</span>
+                    </div>
+                </ng-template>
+            </ng-container>
         </div>
 
         <ng-container *ngIf="column.searchableDropdown?.visible$ | async">
-            <ui-suggest #suggest
+            <ui-suggest *ngLet="searchableDropdownValue(column.searchableDropdown!) as dropdownValue"
+                        #suggest
                         [placeholder]="column.title ?? ''"
                         [defaultValue]="column.searchableDropdown!.noFilterPlaceholder || intl.noFilterPlaceholder"
                         [searchSourceFactory]="column.searchableDropdown!.searchSourceFactory"
-                        [value]="searchableDropdownValue(column.searchableDropdown!)"
+                        [value]="dropdownValue"
                         [disabled]="column.searchableDropdown!.disabled || disabled"
                         [drillDown]="column.searchableDropdown!.drillDown"
                         [maxLength]="64"
@@ -784,6 +783,11 @@
                         [compact]="column.searchableDropdown!.multiple"
                         [displayCount]="column.searchableDropdown!.displayCount"
                         [minChars]="column.searchableDropdown?.minChars ?? 0"
+                        [maxSelectionConfig]="{
+                            count: (disableFilterSelection$ | async) ? dropdownValue.length : 1 / 0,
+                            footerMessage: intl.maxSelectedFilterValuesWarning,
+                            itemTooltip: intl.filterItemWarningTooltip
+                             }"
                         (selected)="filterManager.searchableDropdownUpdate(column, $event, true)"
                         (deselected)="filterManager.searchableDropdownUpdate(column, $event, false)"
                         (opened)="column.refetch && suggest.fetch()"
