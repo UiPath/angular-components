@@ -1241,7 +1241,7 @@ export class UiGridComponent<T extends IGridDataEntry>
 
     isFilterApplied(column: UiGridColumnDirective<T>) {
         const searchableHasValue = column.searchableDropdown?.value != null &&
-            (column.searchableDropdown.value as []).length !== 0;
+            (!column.searchableDropdown.multiple || (column.searchableDropdown.value as []).length > 0);
 
         const dropdownHasValue = (column.dropdown?.value != null &&
             column.dropdown!.value!.value !== column.dropdown!.emptyStateValue) &&
