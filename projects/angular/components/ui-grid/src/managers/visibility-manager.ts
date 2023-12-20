@@ -37,7 +37,7 @@ export class VisibilityManger<T extends IGridDataEntry> {
     isDirty$ = this.options$.pipe(
         filter(() => !!this._initial),
         map(o => ([o.map(this._mapToVisibleDiff), this._initial])),
-        map(([current, initial]) => !isEqual(current, initial)),
+        map(([current, initial]) => !isEqual(current?.filter(v => v.checked), initial?.filter(v => v.checked))),
     );
 
     set columns(columns: UiGridColumnDirective<T>[]) {

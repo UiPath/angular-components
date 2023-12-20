@@ -1,3 +1,6 @@
+# v15.0.19 (2023-12-20)
+* **grid** change visibility-manager isDirty$
+
 # v15.0.18 (2023-12-20)
 * **file-picker** rm nrgx/component dependency
 * **chore** bump version to v15.0.17
