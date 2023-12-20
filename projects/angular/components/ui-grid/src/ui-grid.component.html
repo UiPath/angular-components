@@ -663,6 +663,8 @@
         <div *ngIf="!dataManager.pristine"
              class="ui-grid-row ui-grid-no-data-container"
              [class.ui-grid-no-content-available]="!header?.searchValue && !activeFilterCount"
+             [class.sticky-no-data]="isScrollable"
+             [style.width]="isScrollable ? containerWidth + 'px' : undefined"
              [class.ui-grid-border-none]="!footer">
             <mat-icon *ngIf="!header?.searchValue && !activeFilterCount">visibility_off</mat-icon>
             <p>{{ noDataMessage || intl.noDataMessageAlternative(header?.searchValue, activeFilterCount) }}</p>
