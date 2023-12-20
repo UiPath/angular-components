@@ -807,6 +807,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     }
 
     deficit$ = new BehaviorSubject(0);
+    containerWidth = 0;
 
     minWidth$ = defer(() => merge(
         this.visible$,
@@ -817,8 +818,8 @@ export class UiGridComponent<T extends IGridDataEntry>
     ).pipe(
         map(() => this._computeMinWidth()),
         tap(minWidth => {
-            const containerWidth = this._ref.nativeElement.getBoundingClientRect().width;
-            this.deficit$.next(Math.round(Math.max(0, containerWidth - minWidth)));
+            this.containerWidth = this._ref.nativeElement.getBoundingClientRect().width;
+            this.deficit$.next(Math.round(Math.max(0, this.containerWidth - minWidth)));
         }),
         tap(() => { this._cd.detectChanges(); }),
     )).pipe(

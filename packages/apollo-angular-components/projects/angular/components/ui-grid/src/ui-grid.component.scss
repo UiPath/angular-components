@@ -260,6 +260,12 @@ ui-grid {
                 }
             }
 
+            .sticky-no-data {
+                position: sticky;
+                left: 0;
+                top: 0;
+            }
+
             ui-grid-custom-paginator {
                 .mat-mdc-paginator-page-label {
                     font-size: $ui-grid-secondary-font-size;
@@ -446,6 +452,7 @@ ui-grid {
             mat-progress-bar.ui-grid-loader {
                 z-index: 2;
                 position: relative;
+                margin-bottom: -4px !important;
             }
 
             .ui-grid-header {
