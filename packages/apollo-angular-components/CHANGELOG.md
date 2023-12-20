@@ -1,3 +1,10 @@
+# v15.0.18 (2023-12-20)
+* **file-picker** rm nrgx/component dependency
+* **chore** bump version to v15.0.17
+* **grid** make empty state sticky for scrollable grid
+* **grid** remove jitter caused by scrollbar
+* **grid** emit resize changes iff column exists
+
 # v15.0.17 (2023-12-14)
 * **grid** add input for deficit receiving column
 * **grid** remove jitter caused by scrollbar
