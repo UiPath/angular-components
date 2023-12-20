@@ -8,7 +8,7 @@ File Picker with max-height and descending sort by name
                 sortBy="-name"></ui-file-picker>
 
 File Picker with hideSummaryAfterFilesSelection = true (will emit files but will not show grid of files)
-<div>{{hiddenSummaryFiles$ | ngrxPush}}</div>
+<div>{{hiddenSummaryFiles$ | async}}</div>
 <ui-file-picker (filesChanged)="onFilesChanged($event)"
                 [hideSummaryAfterFilesSelection]="true"></ui-file-picker>
 
