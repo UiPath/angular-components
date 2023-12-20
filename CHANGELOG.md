@@ -1,3 +1,6 @@
+# v15.0.18 (2023-12-20)
+* **grid** change visibility-manager isDirty$
+
 # v15.0.17 (2023-12-14)
 * **grid** add input for deficit receiving column
 * **grid** remove jitter caused by scrollbar
