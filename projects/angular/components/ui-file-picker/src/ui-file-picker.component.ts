@@ -16,7 +16,8 @@ import {
     Subject,
 } from 'rxjs';
 import {
- take, takeUntil,
+    take,
+    takeUntil,
 } from 'rxjs/operators';
 
 import {
@@ -33,15 +34,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { UiGridModule } from '@uipath/angular/components/ui-grid';
 
-import {
-    LetModule,
-    PushModule,
-} from '@ngrx/component';
 import { UiPipeModule } from '@uipath/angular/pipes';
 import {
     UiFileDropZoneDirective,
     FileReaderError,
 } from '@uipath/angular/directives/ui-file-drop-zone';
+import { UiNgLetModule } from '@uipath/angular/directives/ui-ng-let';
 import { UiFilePickerIntl } from './ui-file-picker.intl';
 import { UiInputFileDropZoneComponent } from './ui-input-file-drop-zone/ui-input-file-drop-zone.component';
 
@@ -61,9 +59,7 @@ import { UiInputFileDropZoneComponent } from './ui-input-file-drop-zone/ui-input
 
         UiGridModule,
         UiPipeModule,
-
-        LetModule,
-        PushModule,
+        UiNgLetModule,
 
         UiFileDropZoneDirective,
         UiInputFileDropZoneComponent,
