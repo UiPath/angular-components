@@ -290,4 +290,17 @@ $componentName: "ui-suggest";
             overflow: hidden;
         }
     }
+
+    .no-more-options-footer {
+        padding: 6px 16px;
+
+        span {
+            font-size: 14px
+        }
+
+        mat-icon {
+            vertical-align: middle;
+            padding: 0 8px;
+        }
+    }
 }

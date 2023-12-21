@@ -67,6 +67,7 @@ import {
     ISuggestValue,
     ISuggestValues,
     SuggestDirection,
+    SuggestMaxSelectionConfig,
 } from './models';
 import { UI_SUGGEST_ANIMATIONS } from './ui-suggest.animations';
 import { UiSuggestIntl } from './ui-suggest.intl';
@@ -605,6 +606,16 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     @Input()
     compactSummaryTemplate?: TemplateRef<any>;
 
+    /**
+     * The config used to describe suggest when the maximum number of selected items is reached.
+     *
+     */
+    @Input()
+    maxSelectionConfig: SuggestMaxSelectionConfig = {
+        count: Infinity,
+        itemTooltip: '',
+        footerMessage: '',
+    };
     /**
      * Emits `once` when `data` is retrieved for the `first time`.
      *
@@ -1194,6 +1205,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     // eslint-disable-next-line complexity
     updateValue(inputValue: ISuggestValue | string, closeAfterSelect = true, refocus = true) {
         let value = toSuggestValue(inputValue, this._isOnCustomValueIndex);
+        if (this.maxSelectionConfig.count <= this.value.length && !this.isItemSelected(value)) { return; }
         if (value.loading !== VirtualScrollItemStatus.loaded || value.disabled === true) { return; }
 
         this.itemSelected.emit(value);

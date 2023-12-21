@@ -227,6 +227,10 @@ export class UiGridColumnDirective<T> implements OnChanges, OnDestroy {
     @Input()
     refetch = false;
 
+    /**
+     * Determines the message which appears in the tooltip of an info icon inside the column header.
+     *
+     */
     @Input()
     description = '';
 

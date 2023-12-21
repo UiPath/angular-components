@@ -104,7 +104,11 @@ class UiSuggestFixtureDirective {
     searchSourceStrategy: 'default' | 'lazy' = 'default';
     minChars = 0;
     shouldHideTitle = false;
-
+    maxSelectionConfig = {
+        count: Infinity,
+        itemTooltip: '',
+        footerMessage: '',
+    };
     displayValueFactory?: (value: ISuggestValue[]) => string;
 
     set value(value: ISuggestValue[] | undefined) {
@@ -1861,6 +1865,23 @@ const sharedSpecifications = (
                 .forEach(valueText => expect(displayValue.nativeElement.innerText.trim()).toContain(valueText));
         });
 
+        it('should have the checkbox disabled next to disabled item entry', waitForAsync(async () => {
+            component.items![0].disabled = true;
+            fixture.detectChanges();
+
+            const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
+            display.nativeElement.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const itemList = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
+
+            const itemEntry = itemList[0];
+            expect(itemEntry.nativeElement).toHaveClass('disabled');
+        }));
+
         it('should have a checkbox next to each item entry', waitForAsync(async () => {
             fixture.detectChanges();
 
@@ -1879,23 +1900,6 @@ const sharedSpecifications = (
                 expect(checkbox).not.toBeNull();
                 expect(checkbox.nativeElement.nextElementSibling).toBe(label.nativeElement);
             }
-        }));
-
-        it('should have the checkbox disabled next to disabled item entry', waitForAsync(async () => {
-            component.items![0].disabled = true;
-            fixture.detectChanges();
-
-            const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
-            display.nativeElement.dispatchEvent(EventGenerator.click);
-            fixture.detectChanges();
-
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const itemList = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
-
-            const itemEntry = itemList[0];
-            expect(itemEntry.nativeElement).toHaveClass('disabled');
         }));
 
         it('should have the chechbox checked for selected items', waitForAsync(async () => {
@@ -1923,6 +1927,39 @@ const sharedSpecifications = (
 
             const checkedCheckboxes = fixture.debugElement.queryAll(By.css('input:checked'));
             expect(checkedCheckboxes.length).toBe(selectedValues.length);
+        }));
+
+        it('should display footer warning message if max selection count is reached', waitForAsync(async () => {
+            const maxSelectionConfig = {
+                count: 5,
+                footerMessage: 'No more than 5',
+                itemTooltip: 'Pas possible',
+            };
+            const selectedValues = component.items!.slice(0, 5);
+            component.value = selectedValues;
+            component.maxSelectionConfig = maxSelectionConfig;
+            fixture.detectChanges();
+
+            const display = fixture.debugElement.query(By.css(SELECTORS.chipGrid));
+            display.nativeElement.dispatchEvent(EventGenerator.click);
+            fixture.detectChanges();
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const itemList = fixture.debugElement.queryAll(By.css(SELECTORS.listItem));
+
+            for (const itemEntry of itemList) {
+                const label = itemEntry.query(By.css('.text-label'));
+                const labelText = label.nativeElement.innerText.trim();
+                if (selectedValues.find(value => value.text === labelText)) {
+                    const checkbox = itemEntry.query(By.css('input:checked'));
+                    expect(checkbox).not.toBeNull();
+                }
+            }
+
+            const footerMsg = fixture.debugElement.query(By.css('.no-more-options-footer span')).nativeElement.innerText;
+            expect(footerMsg).toEqual(maxSelectionConfig.footerMessage);
         }));
 
         it('should remove a selected item if clicked', waitForAsync(async () => {
@@ -2759,7 +2796,8 @@ describe('Component: UiSuggest', () => {
                         [drillDown]="drillDown"
                         [readonly]="readonly"
                         [compact]="compact"
-                        [shouldHideTitle]="shouldHideTitle">
+                        [shouldHideTitle]="shouldHideTitle"
+                        [maxSelectionConfig]=maxSelectionConfig>
             </ui-suggest>
         `,
     })
@@ -2842,6 +2880,7 @@ describe('Component: UiSuggest', () => {
                             [minChars]="minChars"
                             [drillDown]="drillDown"
                             [compact]="compact"
+                            [maxSelectionConfig]=maxSelectionConfig
                             formControlName="test">
                 </ui-suggest>
             </mat-form-field>
