@@ -65,6 +65,12 @@ import {
 import { UiGridIntl } from './ui-grid.intl';
 import { UiGridModule } from './ui-grid.module';
 
+const selectors = {
+    filterDropdown: '.ui-grid-filter-suggest span',
+    filterOption: 'mat-list .text-label-rendered',
+    notSelectedFilterOption: 'mat-list [aria-selected="false"] .text-label-rendered',
+};
+
 describe('Component: UiGrid', () => {
     const GRID_COLUMN_CHANGE_DELAY = 10;
 
@@ -1314,7 +1320,8 @@ describe('Component: UiGrid', () => {
 
     @Component({
         template: `
-            <ui-grid [data]="data">
+            <ui-grid [data]="data"
+                     [maxSelectedFilterValues]="maxSelectedFilterValues$ | async">
                 <ui-grid-header [search]="search">
                 </ui-grid-header>
                 <ui-grid-column [property]="'myNumber'"
@@ -1323,7 +1330,9 @@ describe('Component: UiGrid', () => {
                                 title="Number Header"
                                 width="50%">
                     <ui-grid-dropdown-filter [items]="dropdownItemList"
-                                             [showAllOption]="showAllOption"></ui-grid-dropdown-filter>
+                                             [multi]="multiDropdown"
+                                             [showAllOption]="showAllOption">
+                    </ui-grid-dropdown-filter>
                 </ui-grid-column>
                 <ui-grid-column [property]="'myString'"
                                 [searchable]="true"
@@ -1347,6 +1356,8 @@ describe('Component: UiGrid', () => {
 
         value?: ISuggestValueData<ITestEntity>[];
         multiple = false;
+        multiDropdown = false;
+        maxSelectedFilterValues$ = new BehaviorSubject(Infinity);
 
         searchFactory = (): Observable<ISuggestValues<any>> => of({
             data: this.dropdownItemList
@@ -1384,6 +1395,93 @@ describe('Component: UiGrid', () => {
             fixture.destroy();
         });
 
+        describe('Configuration: with multi dropdown', () => {
+            let dropdownItemList: {label: string; value: number}[];
+            beforeEach(() => {
+                component.search = false;
+                component.multiDropdown = true;
+                dropdownItemList = generateListFactory(() => ({
+                    label: faker.random.word(),
+                    value: faker.random.number(),
+                }))();
+                component.dropdownItemList = dropdownItemList;
+                fixture.detectChanges();
+            });
+
+            it('should emit all selected filter options', fakeAsync(() => {
+                const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
+                const filterButton = filterContainer.query(By.css(selectors.filterDropdown));
+                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+                tick(1000);
+                fixture.detectChanges();
+
+                const filterCheckboxes = fixture.debugElement.queryAll(By.css('mat-list-item mat-checkbox'));
+
+                grid.filterManager.filter$
+                .pipe(
+                    skip(2),
+                    take(1),
+                ).subscribe(([filter]) => {
+                    expect(filter.value as number[]).toEqual([dropdownItemList[0].value, dropdownItemList[1].value]);
+                });
+
+                filterCheckboxes[0].nativeElement.dispatchEvent(EventGenerator.click);
+                filterCheckboxes[1].nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                flush();
+            }));
+
+            it('should have options checked if dropdown was updated', fakeAsync(() => {
+                const [column] = grid.columns.toArray();
+                console.log('columns=', grid.columns.toArray());
+                grid.filterManager.dropdownUpdate(column, { value: [dropdownItemList[0].value, dropdownItemList[1].value] } as any);
+                fixture.detectChanges();
+
+                const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
+                const filterButton = filterContainer.query(By.css(selectors.filterDropdown));
+                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+                tick(1000);
+                fixture.detectChanges();
+                const filterCheckboxes = fixture.debugElement.queryAll(By.css('mat-list-item mat-checkbox'));
+                expect(filterCheckboxes[0].componentInstance.checked).toBe(true);
+                expect(filterCheckboxes[1].componentInstance.checked).toBe(true);
+
+                flush();
+            }));
+
+            it('should display suggest warning when maximum number of options was reached', fakeAsync(() => {
+                component.maxSelectedFilterValues$.next(2);
+                fixture.detectChanges();
+
+                const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
+                const filterButton = filterContainer.query(By.css(selectors.filterDropdown));
+                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+                tick(1000);
+                fixture.detectChanges();
+                const filterCheckboxes = fixture.debugElement.queryAll(By.css('mat-list-item mat-checkbox'));
+
+                filterCheckboxes[0].nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                filterCheckboxes[1].nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                tick(1000);
+
+                expect(filterCheckboxes[0].componentInstance.checked).toBe(true);
+                expect(filterCheckboxes[1].componentInstance.checked).toBe(true);
+
+                const suggestFooterMsg = (document.querySelector('.no-more-options-footer span')! as HTMLSpanElement).innerText;
+                expect(suggestFooterMsg).toEqual('The maximum number of selected filters has been reached.');
+                flush();
+            }));
+
+        });
+
         describe('Configuration: without search', () => {
             beforeEach(() => {
                 component.search = false;
@@ -1402,7 +1500,7 @@ describe('Component: UiGrid', () => {
 
             it('should render the filter button', () => {
                 const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
-                const filterButton = filterContainer.query(By.css('.ui-grid-dropdown-filter-button'));
+                const filterButton = filterContainer.query(By.css(selectors.filterDropdown));
 
                 expect(filterButton).toBeDefined();
                 expect(filterButton.nativeElement).toBeDefined();
@@ -1491,7 +1589,7 @@ describe('Component: UiGrid', () => {
 
             it('should render the filter button', () => {
                 const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
-                const filterButton = filterContainer.query(By.css('.ui-grid-dropdown-filter-button'));
+                const filterButton = filterContainer.query(By.css(selectors.filterDropdown));
 
                 expect(filterButton).toBeDefined();
                 expect(filterButton.nativeElement).toBeDefined();
@@ -1499,26 +1597,24 @@ describe('Component: UiGrid', () => {
         });
 
         describe('Filter: dropdown', () => {
-            it(`should have only the 'All' option available`, () => {
+            it(`should have only the 'All' option available`, fakeAsync(() => {
                 component.showAllOption = true;
                 fixture.detectChanges();
 
-                const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
-                const filterButton = filterContainer.query(By.css('.ui-grid-dropdown-filter-button'));
+                const filterSuggest = fixture.debugElement.query(By.css(selectors.filterDropdown));
 
-                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                filterSuggest.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
+                tick(1000);
 
-                const matMenuItems = filterContainer.queryAll(By.directive(MatMenuItem))
-                    .map(item => item.componentInstance as MatMenuItem);
+                const suggestItems = fixture.debugElement.queryAll(By.css(selectors.filterOption))
+                    .map(item => item.nativeElement.innerText);
 
-                expect(matMenuItems.length).toEqual(1);
-                const [firstMenutItem] = matMenuItems;
+                expect(suggestItems.length).toEqual(1);
+                expect(suggestItems[0]).toEqual('All');
+            }));
 
-                expect(firstMenutItem.getLabel()).toEqual('All');
-            });
-
-            it(`should display the 'All' option and the custom value list`, () => {
+            it(`should display the 'All' option and the custom value list`, fakeAsync(() => {
                 component.showAllOption = true;
                 fixture.detectChanges();
 
@@ -1531,26 +1627,26 @@ describe('Component: UiGrid', () => {
                 fixture.detectChanges();
 
                 const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
-                const filterButton = filterContainer.query(By.css('.ui-grid-dropdown-filter-button'));
+                const filterButton = filterContainer.query(By.css(selectors.filterDropdown));
 
                 filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
+                tick(1000);
+                fixture.detectChanges();
 
-                const matMenuItems = filterContainer.queryAll(By.directive(MatMenuItem)).map(item => item.componentInstance as MatMenuItem);
-
-                expect(matMenuItems.length).toEqual(items.length + 1);
-                const [firstMenutItem, ...rest] = matMenuItems;
-
-                expect(firstMenutItem.getLabel()).toEqual('All');
-                rest.forEach((menuItem, idx) => expect(menuItem.getLabel()).toEqual(items[idx].label));
-            });
+                const suggestItems = fixture.debugElement.queryAll(By.css(selectors.filterOption))
+                    .map(item => item.nativeElement.innerText);
+                expect(suggestItems.length).toEqual(items.length + 1);
+                expect(suggestItems[0]).toEqual('All');
+                expect(suggestItems.slice(1)).toEqual(items.map(item => item.label));
+            }));
 
             it(`should NOT have any filter options`, () => {
                 component.showAllOption = false;
                 fixture.detectChanges();
 
                 const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
-                const filterButton = filterContainer.query(By.css('.ui-grid-dropdown-filter-button'));
+                const filterButton = filterContainer.query(By.css(selectors.filterDropdown));
 
                 filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
@@ -1560,7 +1656,7 @@ describe('Component: UiGrid', () => {
                 expect(matMenuItems.length).toEqual(0);
             });
 
-            it(`should display the custom value list`, () => {
+            it(`should display the custom value list`, fakeAsync(() => {
                 component.showAllOption = false;
                 fixture.detectChanges();
 
@@ -1573,17 +1669,18 @@ describe('Component: UiGrid', () => {
                 fixture.detectChanges();
 
                 const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
-                const filterButton = filterContainer.query(By.css('.ui-grid-dropdown-filter-button'));
+                const filterButton = filterContainer.query(By.css(selectors.filterDropdown));
 
                 filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
+                tick(1000);
+                fixture.detectChanges();
 
-                const matMenuItems = filterContainer.queryAll(By.directive(MatMenuItem)).map(item => item.componentInstance as MatMenuItem);
-
-                expect(matMenuItems.length).toEqual(items.length);
-
-                matMenuItems.forEach((menuItem, idx) => expect(menuItem.getLabel()).toEqual(items[idx].label));
-            });
+                const suggestItems = fixture.debugElement.queryAll(By.css(selectors.filterOption))
+                    .map(item => item.nativeElement.innerText);
+                expect(suggestItems.length).toEqual(items.length);
+                expect(suggestItems).toEqual(items.map(item => item.label));
+            }));
         });
 
         describe('Filter: search', () => {
@@ -1647,7 +1744,7 @@ describe('Component: UiGrid', () => {
                 fixture.detectChanges();
             });
 
-            it('should display the selected filter value', () => {
+            it('should display the selected filter value', fakeAsync(() => {
                 const items = generateListFactory(() => ({
                     label: faker.random.word(),
                     value: faker.random.number(),
@@ -1657,23 +1754,25 @@ describe('Component: UiGrid', () => {
                 fixture.detectChanges();
 
                 const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
-                const filterButton = filterContainer.query(By.css('.ui-grid-dropdown-filter-button'));
+                const filterButton = filterContainer.query(By.css(selectors.filterDropdown));
 
                 filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
-
-                const matMenuItems = filterContainer.queryAll(By.directive(MatMenuItem));
-
-                const menuItem = faker.helpers.randomize(matMenuItems);
-
-                menuItem.nativeElement.dispatchEvent(EventGenerator.click);
+                tick(1000);
                 fixture.detectChanges();
 
-                const filterValue = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-value'));
-                expect(filterValue.nativeElement.innerText.trim()).toEqual((menuItem.componentInstance as MatMenuItem).getLabel());
-            });
+                const suggestItems = fixture.debugElement.queryAll(By.css(selectors.filterOption));
+                const selectedItem = faker.helpers.randomize(suggestItems);
+                selectedItem.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
 
-            it('should trigger an event emission when the filter changes', (done) => {
+                const selectedFilterValue = filterContainer.query(By.css('.flex .text-ellipsis')).nativeElement.innerText;
+                expect(selectedFilterValue).toEqual(selectedItem.nativeElement.innerText);
+
+                flush();
+            }));
+
+            it('should trigger an event emission when the filter changes', fakeAsync(() => {
                 const items = generateListFactory(() => ({
                     label: faker.random.word(),
                     value: faker.random.number(),
@@ -1683,29 +1782,29 @@ describe('Component: UiGrid', () => {
                 fixture.detectChanges();
 
                 const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
-                const filterButton = filterContainer.query(By.css('.ui-grid-dropdown-filter-button'));
+                const filterButton = filterContainer.query(By.css(selectors.filterDropdown));
 
                 filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
+                tick(1000);
+                fixture.detectChanges();
 
-                const matMenuItems = filterContainer.queryAll(By.directive(MatMenuItem));
-
-                const menuItem = faker.helpers.randomize(matMenuItems);
-                const menuItemLabel = (menuItem.componentInstance as MatMenuItem).getLabel();
+                const suggestItems = fixture.debugElement.queryAll(By.css(selectors.filterOption));
+                const selectedItem = faker.helpers.randomize(suggestItems);
 
                 grid.filterManager.filter$
                     .pipe(
                         skip(1),
                         take(1),
-                        finalize(done),
                     ).subscribe(([filter]) => {
                         expect(filter.property).toEqual('myNumber');
-                        expect(filter.value).toEqual(items.find(i => i.label === menuItemLabel)!.value);
+                        expect(filter.value).toEqual(items.find(i => i.label === selectedItem.nativeElement.innerText)!.value);
                     });
 
-                menuItem.nativeElement.dispatchEvent(EventGenerator.click);
+                selectedItem.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
-            });
+                flush();
+            }));
         });
 
         describe('Event: search filter change', () => {
@@ -2783,12 +2882,13 @@ describe('Component: UiGrid', () => {
                 discardPeriodicTasks();
             }));
 
-            it('should use proper template when no data with filters', () => {
-                const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+            it('should use proper template when no data with filters', fakeAsync(() => {
+                const filterButton = fixture.debugElement.query(By.css(selectors.filterDropdown));
                 filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
-
-                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-mdc-menu-item:not(.active)'));
+                tick(1000);
+                fixture.detectChanges();
+                const filterFirstOptionButton = fixture.debugElement.queryAll(By.css(selectors.notSelectedFilterOption))[1];
                 filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
 
@@ -2796,15 +2896,17 @@ describe('Component: UiGrid', () => {
                 expect(noDataContent).toBeTruthy();
                 expect(noDataContent.classes['ui-grid-no-content-available']).toBeFalsy();
                 expect(noDataContent.nativeElement.innerText).toContain('table_no_data_filters');
-            });
+                flush();
+            }));
 
             it('should use proper template when no data with filters and search', fakeAsync(() => {
-
-                const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+                const filterButton = fixture.debugElement.query(By.css(selectors.filterDropdown));
                 filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
+                tick(1000);
+                fixture.detectChanges();
 
-                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-mdc-menu-item:not(.active)'));
+                const filterFirstOptionButton = fixture.debugElement.queryAll(By.css(selectors.notSelectedFilterOption))[1];
                 filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
 
@@ -3159,23 +3261,30 @@ describe('Component: UiGrid', () => {
                     expect(collapisbleFiltersToggle).toBeFalsy();
                 });
 
-                it('should display the correct filter label', () => {
+                it('should display the correct filter label', fakeAsync(() => {
                     const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
                     const collapisbleFiltersToggleText = fixture.debugElement
                         .query(By.css('.ui-grid-collapsible-filters-toggle span span'));
                     collapisbleFiltersToggle.nativeElement.dispatchEvent(EventGenerator.click);
                     fixture.detectChanges();
-
-                    const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
-                    filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                    tick(1000);
                     fixture.detectChanges();
 
-                    const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-mdc-menu-item:not(.active)'));
+                    const filterButton = fixture.debugElement.query(By.css(selectors.filterDropdown));
+                    filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+                    tick(1000);
+                    fixture.detectChanges();
+
+                    const filterFirstOptionButton = fixture.debugElement.queryAll(By.css(selectors.notSelectedFilterOption))[1];
                     filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+                    tick(1000);
                     fixture.detectChanges();
 
                     expect(collapisbleFiltersToggleText.nativeElement.innerText).toBe('Filters (1)');
-                });
+                    flush();
+                }));
 
                 it('should toggle filters', () => {
                     const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
@@ -3564,23 +3673,26 @@ describe('Component: UiGrid', () => {
                     expect(collapisbleFiltersToggle).toBeFalsy();
                 });
 
-                it('should display the correct filter label', () => {
+                it('should display the correct filter label', fakeAsync(() => {
                     const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
                     const collapisbleFiltersToggleText = fixture.debugElement
                         .query(By.css('.ui-grid-collapsible-filters-toggle span span'));
                     collapisbleFiltersToggle.nativeElement.dispatchEvent(EventGenerator.click);
                     fixture.detectChanges();
 
-                    const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+                    const filterButton = fixture.debugElement.query(By.css(selectors.filterDropdown));
                     filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                     fixture.detectChanges();
-
-                    const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-mdc-menu-item:not(.active)'));
-                    filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                    tick(1000);
                     fixture.detectChanges();
 
+                    const filterFirstOptionButton = fixture.debugElement.queryAll(By.css(selectors.notSelectedFilterOption))[1];
+                    filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                    fixture.detectChanges();
+                    tick(1000);
+
                     expect(collapisbleFiltersToggleText.nativeElement.innerText).toBe('Filters (1)');
-                });
+                }));
 
                 it('should toggle filters', () => {
                     const collapisbleFiltersToggle = fixture.debugElement.query(By.css('.ui-grid-collapsible-filters-toggle'));
@@ -3782,20 +3894,25 @@ describe('Component: UiGrid', () => {
                 expect(loadingElement).toBeFalsy();
             });
 
-            it('should provide correct number of filters', () => {
+            it('should provide correct number of filters', fakeAsync(() => {
                 const activeFiltersCount = fixture.debugElement.query(By.css('#active-count'));
                 expect(activeFiltersCount.nativeElement.innerText).toBe('0');
 
-                const filterButton = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-button'));
+                const filterButton = fixture.debugElement.query(By.css(selectors.filterDropdown));
                 filterButton.nativeElement.dispatchEvent(EventGenerator.click);
                 fixture.detectChanges();
+                tick(1000);
+                fixture.detectChanges();
 
-                const filterFirstOptionButton = fixture.debugElement.query(By.css('button.mat-mdc-menu-item:not(.active)'));
+                const filterFirstOptionButton = fixture.debugElement.queryAll(By.css(selectors.notSelectedFilterOption))[1];
                 filterFirstOptionButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+                tick(1000);
                 fixture.detectChanges();
 
                 expect(activeFiltersCount.nativeElement.innerText).toBe('1');
-            });
+                flush();
+            }));
 
             it('should provide search context', fakeAsync(() => {
                 const debounceTime = 500;
@@ -4075,14 +4192,13 @@ describe('Component: UiGrid', () => {
 
         it('should NOT display expanded filters when grid has custom filter', fakeAsync(() => {
             fixture.detectChanges();
-
             const toggleFiltersButton = document.querySelector<HTMLButtonElement>('.ui-grid-collapsible-filters-toggle');
             expect(toggleFiltersButton).toBeTruthy();
 
             toggleFiltersButton?.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
 
-            expect(document.querySelectorAll('.ui-grid-dropdown-filter-button').length).toBe(2);
+            expect(document.querySelectorAll('.ui-grid-filter-suggest').length).toBe(2);
 
             fixture.componentInstance.customFilter = [{
                 property: 'myNumber2',
@@ -4094,12 +4210,14 @@ describe('Component: UiGrid', () => {
             tick(500);
             fixture.detectChanges();
 
-            expect(document.querySelectorAll('.ui-grid-dropdown-filter-button').length).toBe(0);
+            expect(document.querySelectorAll('.ui-grid-filter-suggest').length).toBe(0);
 
             const clearCustomFilterButton = fixture.debugElement.query(By.css('[data-cy="clear-custom-filter"]'));
             clearCustomFilterButton.nativeElement.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
-            expect(document.querySelectorAll('.ui-grid-dropdown-filter-button').length).toBe(2);
+            expect(document.querySelectorAll('.ui-grid-filter-suggest').length).toBe(2);
+            flush();
+            discardPeriodicTasks();
         }));
 
         it('should NOT display custom filter button if there are selected rows', fakeAsync(() => {
@@ -4128,15 +4246,14 @@ describe('Component: UiGrid', () => {
             const toggleFiltersButton = document.querySelector<HTMLButtonElement>('.ui-grid-collapsible-filters-toggle');
             toggleFiltersButton!.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
-
-            expect(document.querySelectorAll('.ui-grid-dropdown-filter-button').length).toBe(2);
+            expect(document.querySelectorAll('.ui-grid-filter-suggest').length).toBe(2);
 
             const checkboxInput = fixture.debugElement.query(By.css('.ui-grid-header-cell.ui-grid-checkbox-cell input'));
             checkboxInput.nativeElement.dispatchEvent(EventGenerator.click);
             fixture.detectChanges();
             tick(500);
 
-            expect(document.querySelectorAll('.ui-grid-dropdown-filter-button').length).toBe(0);
+            expect(document.querySelectorAll('.ui-grid-filter-suggest').length).toBe(0);
         }));
     });
 
@@ -4372,8 +4489,7 @@ describe('Component: UiGrid', () => {
                                 [sortable]="true"
                                 title="Number Header"
                                 width="50%">
-                                <ui-grid-dropdown-filter [items]="dropdownItemList"
-                                                        [showAllOption]="showAllOption"></ui-grid-dropdown-filter>
+                                <ui-grid-dropdown-filter [showAllOption]="showAllOption"></ui-grid-dropdown-filter>
                             </ui-grid-column>
                             <ui-grid-column [property]="'myString'"
                                             [searchable]="true"
@@ -4389,7 +4505,6 @@ describe('Component: UiGrid', () => {
                     static: true,
                 })
                 grid!: UiGridComponent<ITestEntity>;
-
                 data: ITestEntity[] = [];
             }
 
@@ -4425,7 +4540,6 @@ describe('Component: UiGrid', () => {
             });
 
             it('should render properties defined in the column section', () => {
-
                 const cells = fixture.debugElement.queryAll(By.css('.ui-grid-cards-container .ui-grid-card-default-cell-content'));
 
                 expect((cells[0].nativeElement as HTMLElement).innerHTML).toContain('Number Header');

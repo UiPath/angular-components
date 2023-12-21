@@ -1,3 +1,4 @@
+import { isArray } from 'lodash-es';
 import range from 'lodash-es/range';
 import {
     animationFrameScheduler,
@@ -63,7 +64,10 @@ import {
 } from '@angular/material/checkbox';
 import { MatTooltip } from '@angular/material/tooltip';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
-import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
+import {
+    ISuggestValue,
+    ISuggestValueData,
+} from '@uipath/angular/components/ui-suggest';
 
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
@@ -72,6 +76,7 @@ import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowCardViewDirective } from './body/ui-grid-row-card-view.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
+import { ISuggestDropdownValueData } from './filters/ui-grid-dropdown-filter.directive';
 import { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
@@ -437,6 +442,13 @@ export class UiGridComponent<T extends IGridDataEntry>
             this.highlightedEntityId$.next(value);
         }
     }
+
+    /**
+     * Maximum number of active filter values before the filter selection is disabled
+     *
+     */
+    @Input()
+    maxSelectedFilterValues = Infinity;
 
     /**
      * Configure if the pagination should be selectable
@@ -835,6 +847,10 @@ export class UiGridComponent<T extends IGridDataEntry>
         map(value => value ? 'visible' : 'hidden'),
     );
 
+    disableFilterSelection$ = defer(() => this.filterManager.activeFilterValueCount$.pipe(
+        map(count => count >= this.maxSelectedFilterValues)),
+    ).pipe(shareReplay(1));
+
     protected _destroyed$ = new Subject<void>();
     protected _columnChanges$: Observable<SimpleChanges>;
 
@@ -1224,8 +1240,24 @@ export class UiGridComponent<T extends IGridDataEntry>
     }
 
     isFilterApplied(column: UiGridColumnDirective<T>) {
-        return (column.dropdown?.value != null && column.dropdown!.value!.value !== column.dropdown!.emptyStateValue)
-            || (column.searchableDropdown?.value != null && (column.searchableDropdown?.value as ISuggestValue[])?.length !== 0);
+        const searchableHasValue = column.searchableDropdown?.value != null &&
+            (!column.searchableDropdown.multiple || (column.searchableDropdown.value as []).length > 0);
+
+        const dropdownHasValue = (column.dropdown?.value != null &&
+            column.dropdown!.value!.value !== column.dropdown!.emptyStateValue) &&
+            (!isArray(column.dropdown.value?.value) || column.dropdown.value.value.length > 0);
+
+        return dropdownHasValue || searchableHasValue;
+    }
+
+    addAllFilterOption(items: ISuggestDropdownValueData[], column: UiGridColumnDirective<T>) {
+        if (column.dropdown?.multi || !column.dropdown?.showAllOption) { return items; }
+
+        const allOption: ISuggestValueData<undefined> = {
+            id: -1,
+            text: this.intl.noFilterPlaceholder,
+        };
+        return items.some(v => v.data === undefined) ? items : [allOption, ...items];
     }
 
     triggerColumnHeaderTooltip(event: FocusOrigin, tooltip: MatTooltip) {
@@ -1240,22 +1272,9 @@ export class UiGridComponent<T extends IGridDataEntry>
         this.focusedColumnHeader = false;
     }
 
-    focusActiveFilterItem() {
-        const activeItem: HTMLElement | null = document.querySelector('.cdk-overlay-container .active[role="menuitem"]');
-        activeItem?.focus();
-    }
-
     rowSelected(row: T) {
         this.selectionManager.clear();
         this.selectionManager.select(row);
-    }
-
-    sumColumnPxWidths(columns: UiGridColumnDirective<T>[]) {
-        return (columns.reduce((acc, curr) => acc + Number(curr.widthPx$.value), 0)) + 'px';
-    }
-
-    mapDirectivesToColumns(directives: { directive: UiGridColumnDirective<T> }[]) {
-        return directives.map(d => d.directive);
     }
 
     private _announceGridHeaderActions() {

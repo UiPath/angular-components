@@ -1,3 +1,8 @@
+# v15.1.0 (2023-12-15)
+* **grid** drop unused customMenu directive
+* **grid** use suggest for multi filter dropdown
+* **suggest** add config input for max selection count
+
 # v15.0.19 (2023-12-20)
 * **grid** change visibility-manager isDirty$
 

@@ -129,6 +129,16 @@ export class UiGridIntl implements OnDestroy {
      */
     radioButtonSelectedRowMessage = 'The row is selected';
     /**
+     * Warning message displayed when the maximum number of selected filters has been reached.
+     *
+     */
+    maxSelectedFilterValuesWarning = 'The maximum number of selected filters has been reached.';
+    /**
+     * Filter item tooltip displayed when maximum number of options were selected.
+     *
+     */
+    filterItemWarningTooltip = 'Current combination of filters does not allow selecting additional filters.';
+    /**
      * No data row message alternative function.
      *
      */
@@ -189,6 +199,12 @@ export class UiGridIntl implements OnDestroy {
      */
     translateDropdownOption =
         (option: IDropdownOption) => option.label;
+
+    translateMultiDropdownOptions = (label: string, count: number) => `${label} ` + (count <= 1
+        ? ''
+        : count === 2
+            ? '(+1 other)'
+            : `(+${count - 1} others)`);
 
     /**
      * Live announcer sort ascending notification.

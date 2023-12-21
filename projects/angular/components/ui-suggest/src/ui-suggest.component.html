@@ -100,16 +100,16 @@
                            (keydown.shift.tab)="close()">
                 <ng-container *ngFor="let option of value; let i = index">
                     <mat-chip-row *ngLet="canRemoveChip(option) as canRemoveChip"
-                                   [removable]="canRemoveChip"
-                                   [matTooltip]="intl.translateLabel(option.tooltip ?? option.text)"
-                                   (removed)="deselectItem(option)"
-                                   class="chip-selectable">
+                                  [removable]="canRemoveChip"
+                                  [matTooltip]="intl.translateLabel(option.tooltip ?? option.text)"
+                                  (removed)="deselectItem(option)"
+                                  class="chip-selectable">
                         <mat-icon *ngIf="!!option?.icon?.svgIcon"
-                                   [svgIcon]="option!.icon!.svgIcon!"
-                                   class="chip-selectable-icon">
+                                  [svgIcon]="option!.icon!.svgIcon!"
+                                  class="chip-selectable-icon">
                         </mat-icon>
                         <mat-icon *ngIf="!!option?.icon?.matIcon"
-                                   class="chip-selectable-icon">
+                                  class="chip-selectable-icon">
                             {{option?.icon?.matIcon}}
                         </mat-icon>
                         <span>
@@ -125,21 +125,21 @@
                 </ng-container>
 
                 <input #searchInput
-                           [uiAutofocus]="isOpen"
-                           [refocus]="isOpen"
-                           [placeholder]="(isFormControl && !empty) ? '' : defaultValue"
-                           [readonly]="readonly || !searchable"
-                           [formControl]="inputControl"
-                           [matChipInputFor]="chipList"
-                           [attr.maxlength]="maxLength"
-                           [attr.aria-label]="ariaLabel ?? placeholder"
-                           [attr.aria-required]="required"
-                           [attr.aria-expanded]="isOpen"
-                           selectionLocation="end"
-                           autocomplete="off"
-                           aria-autocomplete="list"
-                           role="combobox"
-                           matInput>
+                       [uiAutofocus]="isOpen"
+                       [refocus]="isOpen"
+                       [placeholder]="(isFormControl && !empty) ? '' : defaultValue"
+                       [readonly]="readonly || !searchable"
+                       [formControl]="inputControl"
+                       [matChipInputFor]="chipList"
+                       [attr.maxlength]="maxLength"
+                       [attr.aria-label]="ariaLabel ?? placeholder"
+                       [attr.aria-required]="required"
+                       [attr.aria-expanded]="isOpen"
+                       selectionLocation="end"
+                       autocomplete="off"
+                       aria-autocomplete="list"
+                       role="combobox"
+                       matInput>
 
             </mat-chip-grid>
         </ng-template>
@@ -327,6 +327,12 @@
                 </mat-list-item>
             </ng-container>
         </cdk-virtual-scroll-viewport>
+        <mat-divider></mat-divider>
+        <div *ngIf="maxSelectionConfig.count <= value.length"
+             class="no-more-options-footer">
+            <mat-icon>warning</mat-icon>
+            <span>{{maxSelectionConfig.footerMessage}}</span>
+        </div>
     </mat-list>
 </ng-template>
 
@@ -395,9 +401,9 @@
                                                 !multiple &&
                                                 isItemSelected(item)"
                    [class.is-expandable]="itemExpandable"
-                   [class.disabled]="item.disabled"
+                   [class.disabled]="item.disabled || (maxSelectionConfig.count <= value.length && !isItemSelected(item))"
                    [style.height.px]="!!item ? itemSize : 0"
-                   [disabled]="item.disabled"
+                   [disabled]="item.disabled || (maxSelectionConfig.count <= value.length && !isItemSelected(item))"
                    (click)="preventDefault($event);
                                         updateValue(item, !multiple, true);"
                    [attr.role]="'option'"
@@ -412,12 +418,14 @@
             </ng-container>
         </ng-container>
         <ng-template #defaultItem>
-            <div [matTooltip]="disableTooltip ? '' : intl.translateLabel(item.tooltip ?? item.text)"
+            <div [matTooltip]="(maxSelectionConfig.count <= value.length && !isItemSelected(item) || !maxSelectionConfig.itemTooltip)
+                                ? maxSelectionConfig.itemTooltip
+                                : disableTooltip ? '' : intl.translateLabel(item.tooltip ?? item.text)"
                  [attr.data-item-id]="item.id"
                  matTooltipPosition="right"
                  class="ui-suggest-item">
                 <mat-checkbox *ngIf="multiple"
-                              [disabled]="item.disabled"
+                              [disabled]="item.disabled || (maxSelectionConfig.count <= value.length && !isItemSelected(item))"
                               [checked]="isItemSelected(item)"
                               [indeterminate]="false">
                 </mat-checkbox>

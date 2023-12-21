@@ -10,11 +10,13 @@ import {
 } from 'rxjs/operators';
 
 import { TestBed } from '@angular/core/testing';
-import { UiGridFooterDirective } from '@uipath/angular/components/ui-grid';
+import {
+    IDropdownOption,
+    UiGridFooterDirective,
+} from '@uipath/angular/components/ui-grid';
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
-import { IDropdownOption } from '../filters/ui-grid-dropdown-filter.directive';
 import { UiGridHeaderDirective } from '../header/ui-grid-header.directive';
 import {
     FilterManager,
@@ -200,7 +202,7 @@ describe('Component: UiGrid', () => {
                             )
                             .subscribe(filter => {
                                 expect(filter).toBeDefined();
-                                expect(filter!.value).toEqual(columnOptionDefinition.option.value);
+                                expect(filter!.value as IDropdownOption['value']).toEqual(columnOptionDefinition.option.value);
                                 expect(filter!.method).toBe(columnOptionDefinition.column.dropdown!.method!);
                             });
 
@@ -218,7 +220,7 @@ describe('Component: UiGrid', () => {
                             const [filter] = filters;
 
                             expect(filter).toBeDefined();
-                            expect(filter.value).toEqual(columnOptionDefinition.option.value);
+                            expect(filter.value as IDropdownOption['value']).toEqual(columnOptionDefinition.option.value);
                             expect(filter.method).toBe(columnOptionDefinition.column.dropdown!.method!);
                         });
 
@@ -245,7 +247,7 @@ describe('Component: UiGrid', () => {
                                     const columnOptionDefinition = columnOptionDefinitionList[idx];
 
                                     expect(filter).toBeDefined();
-                                    expect(filter.value).toEqual(columnOptionDefinition.option.value);
+                                    expect(filter.value as IDropdownOption['value']).toEqual(columnOptionDefinition.option.value);
                                     expect(filter.method).toBe(columnOptionDefinition.column.dropdown!.method!);
                                 });
                             });
