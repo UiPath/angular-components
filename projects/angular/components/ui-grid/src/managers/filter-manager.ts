@@ -132,7 +132,7 @@ export class FilterManager<T> {
 
     dropdownUpdate = (column?: UiGridColumnDirective<T>, dropdownOption?: IDropdownOption) => {
         if (column?.dropdown) {
-            const selectedFilterValue = ((dropdownOption == null || isArray(dropdownOption.value))
+            const selectedFilterValue = (dropdownOption == null || isArray(dropdownOption.value)
                 ? dropdownOption?.value
                 : [dropdownOption.value]) as IDropdownOption['value'] | undefined;
             column.dropdown.selectedFilters$.next(selectedFilterValue);

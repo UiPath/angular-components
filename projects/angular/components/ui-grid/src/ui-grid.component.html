@@ -745,10 +745,11 @@
                             [items]="addAllFilterOption(column.dropdown!.suggestItems, column)"
                             [compactSummaryTemplate]="displayedFilterName"
                             [maxSelectionConfig]="{
-                                count: (disableFilterSelection$ | async) && (column.dropdown!.multi || selectedFilters === undefined) ? suggestValue.length : 1 / 0,
+                                count: (disableFilterSelection$ | async) && (column.dropdown!.multi || selectedFilters === undefined) ? suggestValue.length : Infinity,
                                 footerMessage: intl.maxSelectedFilterValuesWarning,
                                 itemTooltip: intl.filterItemWarningTooltip
                                 }"
+                            [attr.data-column-name]="getColumnName(column)"
                             (itemSelected)="filterManager.selectFilters(column, $event)"
                             (selected)="$event === undefined && filterManager.selectFilters(column, undefined)"
                             class="ui-grid-filter-suggest"
@@ -784,7 +785,7 @@
                         [displayCount]="column.searchableDropdown!.displayCount"
                         [minChars]="column.searchableDropdown?.minChars ?? 0"
                         [maxSelectionConfig]="{
-                            count: (disableFilterSelection$ | async) ? dropdownValue.length : 1 / 0,
+                            count: (disableFilterSelection$ | async) ? dropdownValue.length : Infinity,
                             footerMessage: intl.maxSelectedFilterValuesWarning,
                             itemTooltip: intl.filterItemWarningTooltip
                              }"
