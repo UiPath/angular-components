@@ -851,6 +851,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         map(count => count >= this.maxSelectedFilterValues)),
     ).pipe(shareReplay(1));
 
+    readonly Infinity = Infinity;
     protected _destroyed$ = new Subject<void>();
     protected _columnChanges$: Observable<SimpleChanges>;
 
