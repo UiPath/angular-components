@@ -1,3 +1,6 @@
+# v15.1.1 (2023-12-28)
+* **snackbar** apply icon-color
+
 # v15.1.0 (2023-12-15)
 * **grid** drop unused customMenu directive
 * **grid** use suggest for multi filter dropdown
