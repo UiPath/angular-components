@@ -162,6 +162,7 @@ interface ISnackBarOptions extends Partial<Exclude<ISnackBarAlert, 'closeAriaLab
     type?: SnackBarType;
 }
 
+const DEFAULT_PANEL_CLASS = 'ui-snackbar';
 export const panelClass = (type: SnackBarType) =>
     `ui-snackbar-${type}`;
 
@@ -280,7 +281,7 @@ export class UiSnackBarService {
                 ...options,
             },
             duration: options.duration,
-            panelClass: [panelClass(type), ...extraPanelClasses],
+            panelClass: [DEFAULT_PANEL_CLASS, panelClass(type), ...extraPanelClasses],
         });
 
         return this._ref;

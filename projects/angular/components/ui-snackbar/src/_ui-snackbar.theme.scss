@@ -39,53 +39,40 @@ $default-snackbar-theme: (
 
     $success-text-color: map-get($success, "text");
     $success-background-color: map-get($success, "background");
+    $success-icon-color: map-get($success, "icon-color");
     $warning-text-color: map-get($warning, "text");
     $warning-background-color: map-get($warning, "background");
+    $warning-icon-color: map-get($warning, "icon-color");
     $error-text-color: map-get($error, "text");
     $error-background-color: map-get($error, "background");
+    $error-icon-color: map-get($error, "icon-color");
     $info-text-color: map-get($info, "text");
     $info-background-color: map-get($info, "background");
+    $info-icon-color: map-get($info, "icon-color");
 
     .ui-snackbar {
-        &-success,
-        &-warning,
-        &-error,
-        &-info {
-            mat-icon {
-                color: inherit;
-            }
-        }
-
         &-success {
-            color: $success-text-color;
-
-            .mdc-snackbar__surface {
-                background-color: $success-background-color;
-            }
+            --snackbar-text-color: #{$success-text-color};
+            --snackbar-background-color: #{$success-background-color};
+            --snackbar-icon-color: #{$success-icon-color};
         }
 
         &-warning {
-            color: $warning-text-color;
-
-            .mdc-snackbar__surface {
-                background-color: $warning-background-color;
-            }
+            --snackbar-text-color: #{$warning-text-color};
+            --snackbar-background-color: #{$warning-background-color};
+            --snackbar-icon-color: #{$warning-icon-color};
         }
 
         &-error {
-            color: $error-text-color;
-
-            .mdc-snackbar__surface {
-                background-color: $error-background-color;
-            }
+            --snackbar-text-color: #{$error-text-color};
+            --snackbar-background-color: #{$error-background-color};
+            --snackbar-icon-color: #{$error-icon-color};
         }
 
         &-info {
-            color: $info-text-color;
-
-            .mdc-snackbar__surface {
-                background-color: $info-background-color;
-            }
+            --snackbar-text-color: #{$info-text-color};
+            --snackbar-background-color: #{$info-background-color};
+            --snackbar-icon-color: #{$info-icon-color};
         }
 
         &-dismiss {

@@ -2,6 +2,7 @@
     &-container {
         display: flex;
         justify-content: space-between;
+        color: var(--snackbar-text-color);
     }
 
     &-message,
@@ -17,6 +18,7 @@
     &-message {
         mat-icon {
             margin-right: 10px;
+            color: var(--snackbar-icon-color);
         }
         span {
             overflow-y: auto;
@@ -25,5 +27,9 @@
             line-height: 1.35em;
             word-break: break-word;
         }
+    }
+
+    .mdc-snackbar__surface {
+        background-color: var(--snackbar-background-color);
     }
 }
