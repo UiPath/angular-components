@@ -1,4 +1,3 @@
-import { isArray } from 'lodash-es';
 import range from 'lodash-es/range';
 import {
     animationFrameScheduler,
@@ -69,6 +68,7 @@ import {
     ISuggestValueData,
 } from '@uipath/angular/components/ui-suggest';
 
+import { isArray } from 'lodash-es';
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
 import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
@@ -1244,9 +1244,8 @@ export class UiGridComponent<T extends IGridDataEntry>
         const searchableHasValue = column.searchableDropdown?.value != null &&
             (!column.searchableDropdown.multiple || (column.searchableDropdown.value as []).length > 0);
 
-        const dropdownHasValue = (column.dropdown?.value != null &&
-            column.dropdown!.value!.value !== column.dropdown!.emptyStateValue) &&
-            (!isArray(column.dropdown.value?.value) || column.dropdown.value.value.length > 0);
+        const dropdownHasValue = column.dropdown?.value != null && column.dropdown.hasValue &&
+            (isArray(column.dropdown.value) || column.dropdown!.value!.value !== column.dropdown!.emptyStateValue);
 
         return dropdownHasValue || searchableHasValue;
     }

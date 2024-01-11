@@ -1423,7 +1423,7 @@ describe('Component: UiGrid', () => {
                     skip(2),
                     take(1),
                 ).subscribe(([filter]) => {
-                    expect(filter.value as number[]).toEqual([dropdownItemList[0].value, dropdownItemList[1].value]);
+                    expect(filter.value as any).toEqual([dropdownItemList[0], dropdownItemList[1]]);
                 });
 
                 filterCheckboxes[0].nativeElement.dispatchEvent(EventGenerator.click);
@@ -1435,8 +1435,7 @@ describe('Component: UiGrid', () => {
 
             it('should have options checked if dropdown was updated', fakeAsync(() => {
                 const [column] = grid.columns.toArray();
-                console.log('columns=', grid.columns.toArray());
-                grid.filterManager.dropdownUpdate(column, { value: [dropdownItemList[0].value, dropdownItemList[1].value] } as any);
+                grid.filterManager.dropdownUpdate(column, [dropdownItemList[0], dropdownItemList[1]] as any);
                 fixture.detectChanges();
 
                 const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
