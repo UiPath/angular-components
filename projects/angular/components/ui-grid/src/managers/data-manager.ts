@@ -5,7 +5,7 @@ import get from 'lodash-es/get';
 import isArray from 'lodash-es/isArray';
 import isDate from 'lodash-es/isDate';
 import isObject from 'lodash-es/isObject';
-import * as hash from 'object-hash';
+import objectHash from 'object-hash';
 import { BehaviorSubject } from 'rxjs';
 
 import { isDevMode } from '@angular/core';
@@ -173,7 +173,11 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
             : entry[this.idProperty];
 
     private _hash = (entry: T) =>
-        this._hashMap.set(`${entry[this.idProperty]}`, hash.MD5(entry));
+        this._hashMap.set(`${entry[this.idProperty]}`, objectHash(entry, {
+            algorithm: 'md5',
+            encoding: 'hex',
+            ignoreUnknown: true,
+        }));
 
     private _emit(data?: T[]) {
         this.data$.next([...(data ?? this.data$.value)]);
