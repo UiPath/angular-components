@@ -742,7 +742,7 @@
                             [searchable]="false"
                             [value]="suggestValue"
                             [placeholder]="column.title ?? ''"
-                            [items]="addAllFilterOption(column.dropdown!.suggestItems, column)"
+                            [items]="mapFilterOptions(column.dropdown!.suggestItems, column)"
                             [compactSummaryTemplate]="displayedFilterName"
                             [maxSelectionConfig]="{
                                 count: (disableFilterSelection$ | async) && (column.dropdown!.multi || selectedFilters === undefined) ? suggestValue.length : Infinity,
