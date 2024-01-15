@@ -1250,7 +1250,17 @@ export class UiGridComponent<T extends IGridDataEntry>
         return dropdownHasValue || searchableHasValue;
     }
 
-    addAllFilterOption(items: ISuggestDropdownValueData[], column: UiGridColumnDirective<T>) {
+    mapFilterOptions(items: ISuggestDropdownValueData[], column: UiGridColumnDirective<T>) {
+        items = items
+            .filter(item => !!column.dropdown!.findDropDownOptionBySuggestValue(item))
+            .map(item => {
+                const translatedText = this.intl.translateDropdownOption(column.dropdown!.findDropDownOptionBySuggestValue(item)!);
+                return {
+                    ...item,
+                    text: translatedText,
+                };
+            });
+
         if (column.dropdown?.multi || !column.dropdown?.showAllOption) { return items; }
 
         const allOption: ISuggestValueData<undefined> = {
