@@ -109,7 +109,7 @@ export class FilterManager<T> {
 
         if (isArray(currentValue)) {
             const valueAlreadySelected = currentValue.some(v => v.value === selectedDropdownOption.value);
-            const filterSelection: FilterDropdownPossibleOption = (valueAlreadySelected
+            const filterSelection = (valueAlreadySelected
                 ? currentValue.filter(v => v.value !== selectedDropdownOption?.value)
                 : [...currentValue, selectedDropdownOption]);
 

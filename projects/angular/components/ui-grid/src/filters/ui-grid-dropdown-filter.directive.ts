@@ -1,4 +1,6 @@
-import { isArray } from 'lodash-es';
+import {
+    isArray, isEqual,
+} from 'lodash-es';
 import { BehaviorSubject } from 'rxjs';
 
 import {
@@ -135,13 +137,13 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
     }
 
     updateSuggestValue(value?: FilterDropdownPossibleOption) {
-        if (value === undefined) {
+        if (value == null) {
             this.suggestValue = [];
             return;
         }
 
         this.suggestValue = this.suggestItems.filter(item => isArray(value) && value.some(s => s.value === item?.data)
-            || (!isArray(value) && value!.value === item?.data));
+            || (!isArray(value) && value.value === item?.data));
     }
 
     /**
@@ -153,7 +155,7 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
     }
 
     findDropDownOptionBySuggestValue(suggestValue: ISuggestDropdownValueData) {
-        return this.items.find(item => item.value === suggestValue.data);
+        return this.items.find(item => isEqual(item.value, suggestValue.data));
     }
 
     get hasValue() {

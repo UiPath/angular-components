@@ -1245,7 +1245,7 @@ export class UiGridComponent<T extends IGridDataEntry>
             (!column.searchableDropdown.multiple || (column.searchableDropdown.value as []).length > 0);
 
         const dropdownHasValue = column.dropdown?.value != null && column.dropdown.hasValue &&
-            (isArray(column.dropdown.value) || column.dropdown!.value!.value !== column.dropdown!.emptyStateValue);
+            (isArray(column.dropdown.value) || column.dropdown!.value.value !== column.dropdown.emptyStateValue);
 
         return dropdownHasValue || searchableHasValue;
     }
