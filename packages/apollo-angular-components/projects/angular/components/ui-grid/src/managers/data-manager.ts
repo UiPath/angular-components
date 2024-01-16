@@ -175,7 +175,6 @@ export class DataManager<T extends IGridDataEntry, K extends StringOrNumberKeyOf
     private _hash = (entry: T) =>
         this._hashMap.set(`${entry[this.idProperty]}`, objectHash(entry, {
             algorithm: 'md5',
-            encoding: 'hex',
             ignoreUnknown: true,
         }));
 
