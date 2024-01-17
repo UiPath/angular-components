@@ -733,8 +733,8 @@
         <div *ngIf="column.dropdown?.visible$ | async"
              [attr.data-collapsed]="!collapseFiltersCount || null"
              class="ui-grid-dropdown-filter-container ui-grid-filter-option">
-            <ng-container *ngLet="column.dropdown!.selectedFilters$ | async as selectedFilters">
-                <ui-suggest *ngLet="((column.dropdown!.suggestValue$ | async) ?? []) as suggestValue"
+            <ng-container *ngLet="column.dropdown!.value as selectedFilters">
+                <ui-suggest *ngLet="(column.dropdown!.suggestValue ?? []) as suggestValue"
                             [disabled]="false"
                             [compact]="true"
                             [multiple]="column.dropdown!.multi"
@@ -742,13 +742,14 @@
                             [searchable]="false"
                             [value]="suggestValue"
                             [placeholder]="column.title ?? ''"
-                            [items]="addAllFilterOption(column.dropdown!.suggestItems, column)"
+                            [items]="mapFilterOptions(column.dropdown!.suggestItems, column)"
                             [compactSummaryTemplate]="displayedFilterName"
                             [maxSelectionConfig]="{
-                                count: (disableFilterSelection$ | async) && (column.dropdown!.multi || selectedFilters === undefined) ? suggestValue.length : 1 / 0,
+                                count: (disableFilterSelection$ | async) && (column.dropdown!.multi || selectedFilters === undefined) ? suggestValue.length : Infinity,
                                 footerMessage: intl.maxSelectedFilterValuesWarning,
                                 itemTooltip: intl.filterItemWarningTooltip
                                 }"
+                            [attr.data-column-name]="getColumnName(column)"
                             (itemSelected)="filterManager.selectFilters(column, $event)"
                             (selected)="$event === undefined && filterManager.selectFilters(column, undefined)"
                             class="ui-grid-filter-suggest"
@@ -761,7 +762,9 @@
                         <span class="text-ellipsis">
                             {{ (column.dropdown!.multi && selectedFilters?.length > 1)
                             ? intl.translateMultiDropdownOptions(value?.[0]?.text, selectedFilters.length)
-                            : value?.[0]?.text ?? intl.noFilterPlaceholder }}</span>
+                                : value?.[0]
+                                ? intl.translateDropdownOption(column.dropdown!.findDropDownOptionBySuggestValue(value[0])!)
+                            : intl.noFilterPlaceholder }}</span>
                     </div>
                 </ng-template>
             </ng-container>
@@ -784,7 +787,7 @@
                         [displayCount]="column.searchableDropdown!.displayCount"
                         [minChars]="column.searchableDropdown?.minChars ?? 0"
                         [maxSelectionConfig]="{
-                            count: (disableFilterSelection$ | async) ? dropdownValue.length : 1 / 0,
+                            count: (disableFilterSelection$ | async) ? dropdownValue.length : Infinity,
                             footerMessage: intl.maxSelectedFilterValuesWarning,
                             itemTooltip: intl.filterItemWarningTooltip
                              }"

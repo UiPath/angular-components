@@ -1,8 +1,7 @@
-import { isArray } from 'lodash-es';
 import {
-    BehaviorSubject,
-    map,
-} from 'rxjs';
+    isArray, isEqual,
+} from 'lodash-es';
+import { BehaviorSubject } from 'rxjs';
 
 import {
     Directive,
@@ -12,11 +11,6 @@ import {
 import { ISuggestValueData } from '@uipath/angular/components/ui-suggest';
 
 import { UiGridFilterDirective } from './ui-grid-filter';
-
-type Arrayify <T> = T extends T ? T[] : never;
-
-export type FilterSingleValue = string | number | boolean;
-export type FilterMultiValue = Arrayify<FilterSingleValue>;
 
 /**
  * Dropdown option schema.
@@ -28,7 +22,7 @@ export interface IDropdownOption {
      * The current dropdown value.
      *
      */
-    value: FilterSingleValue | FilterMultiValue;
+    value: string | number | boolean;
     /**
      * The dropdown option label.
      *
@@ -41,6 +35,7 @@ export interface IDropdownOption {
     translationKey?: string;
 }
 
+export type FilterDropdownPossibleOption = IDropdownOption | IDropdownOption[] | undefined;
 export type ISuggestDropdownValueData = ISuggestValueData<IDropdownOption['value']>;
 
 /**
@@ -74,9 +69,7 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
     @Input()
     set multi(value: boolean) {
         this._multi = value;
-        if (value) {
-            this.selectedFilters$.next([]);
-        }
+        this.updateValue(this.value);
     }
     get multi() {
         return this._multi;
@@ -94,7 +87,12 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
      *
      */
     @Input()
-    value?: IDropdownOption;
+    set value(v: FilterDropdownPossibleOption) {
+        this.updateValue(v);
+    }
+    get value() {
+        return this._value!;
+    }
 
     /**
      * The empty dropdown state.
@@ -114,23 +112,7 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
      * @ignore
      */
     visible$ = new BehaviorSubject(true);
-    /**
-     * Current filter value selection.
-     *
-     */
-    selectedFilters$ = new BehaviorSubject<IDropdownOption['value'] | undefined>(undefined);
-
-    /**
-     * Current filter selection expressed as ISuggestValue.
-     *
-     */
-    suggestValue$ = this.selectedFilters$.pipe(
-        map(selection => {
-            const value = this.suggestItems?.filter(item =>
-                (isArray(selection) && selection?.some(s => s === item?.data) || selection === item?.data));
-            return value as ISuggestDropdownValueData[];
-        }),
-    );
+    suggestValue: ISuggestDropdownValueData[] = [];
 
     /**
      * Dropdown items expressed as ISuggestDropdownValueData
@@ -138,14 +120,30 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
     suggestItems: ISuggestDropdownValueData[] = [];
 
     private _items?: IDropdownOption[];
+    private _value: FilterDropdownPossibleOption;
     private _multi = false;
 
     /**
      * Updates the dropdown value.
      *
      */
-    updateValue(value?: IDropdownOption) {
-        this.value = value;
+    updateValue(value?: FilterDropdownPossibleOption) {
+        if (this.multi && !isArray(value) && !!value) {
+            value = [value];
+        }
+
+        this._value = value;
+        this.updateSuggestValue(value);
+    }
+
+    updateSuggestValue(value?: FilterDropdownPossibleOption) {
+        if (value == null) {
+            this.suggestValue = [];
+            return;
+        }
+
+        this.suggestValue = this.suggestItems.filter(item => isArray(value) && value.some(s => s.value === item?.data)
+            || (!isArray(value) && value.value === item?.data));
     }
 
     /**
@@ -154,5 +152,14 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
     ngOnDestroy() {
         super.ngOnDestroy();
         this.filterChange.complete();
+    }
+
+    findDropDownOptionBySuggestValue(suggestValue: ISuggestDropdownValueData) {
+        return this.items.find(item => isEqual(item.value, suggestValue.data));
+    }
+
+    get hasValue() {
+        return this.value != null && ((!isArray(this.value) && this.value?.value !== undefined) ||
+            (isArray(this.value) && this.value.length));
     }
 }

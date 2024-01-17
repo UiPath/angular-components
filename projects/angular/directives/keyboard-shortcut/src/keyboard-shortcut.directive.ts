@@ -18,7 +18,7 @@ import {
 })
 export class KeyboardShortcutDirective {
     @Input()
-    shortcutKeys!: string[][];
+    shortcutKeys: string[][] = [];
 
     @Output()
     shortcutPressed = new EventEmitter<void>();
