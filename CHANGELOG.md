@@ -1,3 +1,11 @@
+# v15.1.1 (2024-01-16)
+* **keyboard-shortcut** initialize shortcut keys input
+* **grid** translate filter options
+* **grid** ignore unkown types for entry hashing
+* **grid** use dropdown value as SSOT
+* **suggest** change condition for overlay positioning
+* **grid** add data-cy to suggest
+
 # v15.1.0 (2023-12-15)
 * **grid** drop unused customMenu directive
 * **grid** use suggest for multi filter dropdown
