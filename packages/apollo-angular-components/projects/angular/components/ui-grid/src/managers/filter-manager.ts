@@ -13,8 +13,7 @@ import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
 import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import {
-    FilterMultiValue,
-    IDropdownOption,
+    FilterDropdownPossibleOption,
     ISuggestDropdownValueData,
     UiGridDropdownFilterDirective,
 } from '../filters/ui-grid-dropdown-filter.directive';
@@ -103,17 +102,22 @@ export class FilterManager<T> {
     selectFilters(column: UiGridColumnDirective<T>, selection?: ISuggestDropdownValueData) {
         if (selection?.data === undefined) { return this.dropdownUpdate(column, undefined); }
 
-        let value = selection.data;
-        const currentValue = column.dropdown?.selectedFilters$.value;
+        const selectedDropdownOption = column.dropdown!.findDropDownOptionBySuggestValue(selection);
+        if (!selectedDropdownOption) { return; }
 
-        if (column.dropdown?.multi && isArray(currentValue)) {
-            const valueAlreadySelected = currentValue.some(v => v === value);
-            value = (valueAlreadySelected
-                ? (currentValue as []).filter(v => v !== value)
-                : [...currentValue, value]) as FilterMultiValue;
+        const currentValue = column.dropdown?.value;
+
+        if (isArray(currentValue)) {
+            const valueAlreadySelected = currentValue.some(v => v.value === selectedDropdownOption.value);
+            const filterSelection = (valueAlreadySelected
+                ? currentValue.filter(v => v.value !== selectedDropdownOption?.value)
+                : [...currentValue, selectedDropdownOption]);
+
+            this.dropdownUpdate(column, filterSelection);
+            return;
         }
 
-        this.dropdownUpdate(column, { value } as IDropdownOption);
+        this.dropdownUpdate(column, selectedDropdownOption);
     }
 
     searchableDropdownUpdate = (column?: UiGridColumnDirective<T>, value?: ISuggestValue | ISuggestValue[], selected?: boolean) => {
@@ -130,19 +134,8 @@ export class FilterManager<T> {
         this._updateFilterValue(column, value, selected, this._mapSearchableDropdownItem);
     };
 
-    dropdownUpdate = (column?: UiGridColumnDirective<T>, dropdownOption?: IDropdownOption) => {
-        if (column?.dropdown) {
-            const selectedFilterValue = ((dropdownOption == null || isArray(dropdownOption.value))
-                ? dropdownOption?.value
-                : [dropdownOption.value]) as IDropdownOption['value'] | undefined;
-            column.dropdown.selectedFilters$.next(selectedFilterValue);
-        }
-
-        const updateValue = (dropdownOption == null)
-            ? undefined
-            : dropdownOption;
-        return this._updateFilterValue(column, updateValue, false, this._mapDropdownItem);
-    };
+    dropdownUpdate = (column?: UiGridColumnDirective<T>, dropdownOption?: FilterDropdownPossibleOption) =>
+        this._updateFilterValue(column, dropdownOption, false, this._mapDropdownItem);
 
     searchChange(term: string | undefined, header: UiGridHeaderDirective<T>, footer?: UiGridFooterDirective) {
         if (term === header.searchValue) { return; }
@@ -190,7 +183,7 @@ export class FilterManager<T> {
 
     private _updateFilterValue = (
         column: UiGridColumnDirective<T> | undefined,
-        value: ISuggestValue | IDropdownOption | undefined,
+        value: ISuggestValue | FilterDropdownPossibleOption | undefined,
         selected: boolean | undefined,
         mapper: (column: UiGridColumnDirective<T>) => IFilterModel<T>,
     ): void => {
@@ -201,7 +194,7 @@ export class FilterManager<T> {
         if (!dropdown) { return; }
 
         (dropdown as {
-            updateValue: (value: ISuggestValue | IDropdownOption | undefined, selected: boolean | undefined) => void;
+            updateValue: (value: ISuggestValue | FilterDropdownPossibleOption | undefined, selected: boolean | undefined) => void;
         }).updateValue(value, selected);
         dropdown.filterChange.emit(value ? mapper(column) : null);
 
@@ -210,7 +203,7 @@ export class FilterManager<T> {
 
     private _emitFilterOptions = () => {
         this.defaultValueDropdownFilters = this._columns
-            .filter(({ dropdown }) => this._hasFilterValue(dropdown) && this._dropdownFilterDirectiveHasValue(dropdown!))
+            .filter(({ dropdown }) => this._hasFilterValue(dropdown) && dropdown!.hasValue)
             .map(this._mapDropdownItem);
 
         const emptyStateDropdownFilters = this._columns
@@ -233,10 +226,6 @@ export class FilterManager<T> {
         );
     };
 
-    private _dropdownFilterDirectiveHasValue = (dropdown: UiGridDropdownFilterDirective<T>) =>
-        dropdown.value?.value !== undefined &&
-        (!isArray(dropdown.value.value) || dropdown.value.value.length);
-
     private _hasFilterValue = (dropdown?: UiGridSearchFilterDirective<T> | UiGridDropdownFilterDirective<T>) =>
         !!dropdown &&
         dropdown.value;
@@ -244,7 +233,9 @@ export class FilterManager<T> {
     private _mapDropdownItem = (column: UiGridColumnDirective<T>) => ({
         method: column.dropdown!.method,
         property: column.property,
-        value: column.dropdown!.value!.value,
+        value: isArray(column.dropdown!.value)
+            ? column.dropdown!.value
+            : column.dropdown!.value!.value,
     }) as IFilterModel<T>;
 
     private _mapDropdownEmptyStateItem = (column: UiGridColumnDirective<T>) => ({

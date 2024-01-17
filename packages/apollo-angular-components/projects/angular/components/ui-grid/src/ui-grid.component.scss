@@ -154,6 +154,10 @@ ui-grid {
             width: 100%;
 
             .ui-grid-filter-suggest {
+                .display-title {
+                    white-space: pre;
+                }
+
                 .display-container {
                     display: flex;
                 }

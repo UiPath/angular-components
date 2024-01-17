@@ -1,4 +1,3 @@
-import { isArray } from 'lodash-es';
 import range from 'lodash-es/range';
 import {
     animationFrameScheduler,
@@ -69,6 +68,7 @@ import {
     ISuggestValueData,
 } from '@uipath/angular/components/ui-suggest';
 
+import { isArray } from 'lodash-es';
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
 import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
@@ -851,6 +851,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         map(count => count >= this.maxSelectedFilterValues)),
     ).pipe(shareReplay(1));
 
+    readonly Infinity = Infinity;
     protected _destroyed$ = new Subject<void>();
     protected _columnChanges$: Observable<SimpleChanges>;
 
@@ -1243,14 +1244,23 @@ export class UiGridComponent<T extends IGridDataEntry>
         const searchableHasValue = column.searchableDropdown?.value != null &&
             (!column.searchableDropdown.multiple || (column.searchableDropdown.value as []).length > 0);
 
-        const dropdownHasValue = (column.dropdown?.value != null &&
-            column.dropdown!.value!.value !== column.dropdown!.emptyStateValue) &&
-            (!isArray(column.dropdown.value?.value) || column.dropdown.value.value.length > 0);
+        const dropdownHasValue = column.dropdown?.value != null && column.dropdown.hasValue &&
+            (isArray(column.dropdown.value) || column.dropdown!.value.value !== column.dropdown.emptyStateValue);
 
         return dropdownHasValue || searchableHasValue;
     }
 
-    addAllFilterOption(items: ISuggestDropdownValueData[], column: UiGridColumnDirective<T>) {
+    mapFilterOptions(items: ISuggestDropdownValueData[], column: UiGridColumnDirective<T>) {
+        items = items
+            .filter(item => !!column.dropdown!.findDropDownOptionBySuggestValue(item))
+            .map(item => {
+                const translatedText = this.intl.translateDropdownOption(column.dropdown!.findDropDownOptionBySuggestValue(item)!);
+                return {
+                    ...item,
+                    text: translatedText,
+                };
+            });
+
         if (column.dropdown?.multi || !column.dropdown?.showAllOption) { return items; }
 
         const allOption: ISuggestValueData<undefined> = {

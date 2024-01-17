@@ -1343,14 +1343,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     private _initOverlayPositions() {
-        const mustBePlacedBesideTheInput = !this.forceDisplayDropdownOverInput && this.multiple;
+        const mustBePlacedBelowTheInput = !this.forceDisplayDropdownOverInput || this.multiple;
 
         // We need this because we want to show the dropdown below the mat-form-field and not below the ui-suggest component
         if (this.isFormControl) {
-            this._setDropdownOffset(mustBePlacedBesideTheInput);
+            this._setDropdownOffset(mustBePlacedBelowTheInput);
         }
 
-        if (mustBePlacedBesideTheInput) {
+        if (mustBePlacedBelowTheInput) {
             this._setDropdownOrigin();
         }
     }
