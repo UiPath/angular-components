@@ -49,4 +49,9 @@ export class UiNgLetDirective<T = unknown> {
             this._context,
         );
     }
+
+    static ngTemplateContextGuard<T>(_dir: UiNgLetDirective<T>, _ctx: unknown): _ctx is NgLetContext<T> {
+        return true;
+    }
+
 }
