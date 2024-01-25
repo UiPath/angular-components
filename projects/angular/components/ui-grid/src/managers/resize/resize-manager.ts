@@ -332,10 +332,15 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     protected _applyOffsetFor(entry: IResizeInfo<T> | undefined, offset: number) {
         if (!entry?.column?.identifier) { return; }
 
-        const width = entry.column.width as number + offset;
-        this._widthMap.set(entry.column.identifier, width);
-        entry.element.style.width = toPercentageStyle(width);
-        entry.cells.forEach(cell => cell.style.width = toPercentageStyle(width));
+        // in some cases `entry.element` is null
+        try {
+            const width = entry.column.width as number + offset;
+            this._widthMap.set(entry.column.identifier, width);
+            entry.element.style.width = toPercentageStyle(width);
+            entry.cells.forEach(cell => cell.style.width = toPercentageStyle(width));
+        } catch (e) {
+
+        }
     }
 
     protected _computePixelsToPercentRatio() {
