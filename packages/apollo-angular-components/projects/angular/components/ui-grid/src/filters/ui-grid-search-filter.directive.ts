@@ -132,7 +132,12 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> imp
     }
 
     private handleMultiple(value?: ISuggestValue, isSelected?: boolean) {
-        if (!value || this.checkAlreadyExisting(value, isSelected)) {
+        if (!value) {
+            this.value = [];
+            return;
+        }
+
+        if (this.checkAlreadyExisting(value, isSelected)) {
             return;
         }
 
