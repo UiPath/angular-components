@@ -1,3 +1,6 @@
+# v15.1.2 (2024-01-29)
+* **grid** allow resetting searchable directive's value
+
 # v15.1.1 (2024-01-16)
 * **keyboard-shortcut** initialize shortcut keys input
 * **grid** translate filter options
