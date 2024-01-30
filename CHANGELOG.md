@@ -1,3 +1,6 @@
+# v15.1.3 (2024-01-30)
+* **grid** exclude emtpy array from filter value
+
 # v15.1.2 (2024-01-29)
 * **grid** allow resetting searchable directive's value
 
