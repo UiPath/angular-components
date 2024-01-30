@@ -15,9 +15,7 @@ import { UiGridColumnDirective } from '../body/ui-grid-column.directive';
 import {
     FilterDropdownPossibleOption,
     ISuggestDropdownValueData,
-    UiGridDropdownFilterDirective,
 } from '../filters/ui-grid-dropdown-filter.directive';
-import { UiGridSearchFilterDirective } from '../filters/ui-grid-search-filter.directive';
 import { UiGridFooterDirective } from '../footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from '../header/ui-grid-header.directive';
 import { IFilterModel } from '../models';
@@ -203,14 +201,14 @@ export class FilterManager<T> {
 
     private _emitFilterOptions = () => {
         this.defaultValueDropdownFilters = this._columns
-            .filter(({ dropdown }) => this._hasFilterValue(dropdown) && dropdown!.hasValue)
+            .filter(({ dropdown }) => dropdown?.hasValue)
             .map(this._mapDropdownItem);
 
         const emptyStateDropdownFilters = this._columns
             .filter(col => col.dropdown?.emptyStateValue)
             .map(this._mapDropdownEmptyStateItem);
         const searchableFilters = this._columns
-            .filter(({ searchableDropdown }) => this._hasFilterValue(searchableDropdown))
+            .filter(({ searchableDropdown }) => searchableDropdown?.hasValue)
             .map(this._mapSearchableDropdownItem);
 
         const updatedFilters = [...this.defaultValueDropdownFilters, ...searchableFilters];
@@ -225,10 +223,6 @@ export class FilterManager<T> {
                 : updatedFilters,
         );
     };
-
-    private _hasFilterValue = (dropdown?: UiGridSearchFilterDirective<T> | UiGridDropdownFilterDirective<T>) =>
-        !!dropdown &&
-        dropdown.value;
 
     private _mapDropdownItem = (column: UiGridColumnDirective<T>) => ({
         method: column.dropdown!.method,
