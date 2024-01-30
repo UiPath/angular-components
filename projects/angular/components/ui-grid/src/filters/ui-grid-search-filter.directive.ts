@@ -123,6 +123,12 @@ export class UiGridSearchFilterDirective<T> extends UiGridFilterDirective<T> imp
         this.filterChange.complete();
     }
 
+    get hasValue() {
+        return this.multiple
+            ? (this.value as ISuggestValue[] ?? []).length > 0
+            : this.value != null;
+    }
+
     private checkAlreadyExisting(value: ISuggestValue, isSelected?: boolean) {
         if (this.multiple) {
             return (isSelected && (this.value as ISuggestValue[] ?? []).find(item => item.id === value.id));
