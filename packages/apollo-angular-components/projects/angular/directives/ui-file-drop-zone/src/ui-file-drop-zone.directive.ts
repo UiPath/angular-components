@@ -63,22 +63,28 @@ export class UiFileDropZoneDirective implements OnInit, AfterViewInit, OnDestroy
         e.stopPropagation();
         e.preventDefault();
         this._dragCount -= 1;
-        this._clearDropZoneHighlight();
-        this.filesLoading.next(true);
-        this._fileReaderService.processDroppedItems(e);
+        const dragDataContainsFiles = this._dragEventContainsFiles(e);
+        if (dragDataContainsFiles) {
+            this._clearDropZoneHighlight();
+            this.filesLoading.next(true);
+            this._fileReaderService.processDroppedItems(e);
+        }
     }
 
     @HostListener('dragover', ['$event'])
     dragover(e: DragEvent) {
         // preventDefault is needed to enable drop event
         e.preventDefault();
+        const dragDataContainsFiles = this._dragEventContainsFiles(e);
+        if (this._dragCount > 0 && dragDataContainsFiles) {
+            this._highlightDropZone();
+        }
     }
 
     @HostListener('dragenter')
     dragenter() {
         if (!this.disabled) {
             this._dragCount += 1;
-            this._highlightDropZone();
         }
     }
 
@@ -135,5 +141,9 @@ export class UiFileDropZoneDirective implements OnInit, AfterViewInit, OnDestroy
             return;
         }
         this._dropZone.classList.remove(DROP_ZONE_HIGHLIGHT_CLASS);
+    }
+
+    private _dragEventContainsFiles(e: DragEvent) {
+        return e.dataTransfer?.types.includes('Files');
     }
 }
