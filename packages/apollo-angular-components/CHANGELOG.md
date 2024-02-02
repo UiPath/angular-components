@@ -1,3 +1,6 @@
+# v15.1.4 (2024-02-02)
+* **file-picker** dropzone should only highlight when dragging files
+
 # v15.1.3 (2024-01-30)
 * **grid** exclude emtpy array from filter value
 

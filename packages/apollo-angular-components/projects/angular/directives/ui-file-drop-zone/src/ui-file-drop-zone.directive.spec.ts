@@ -72,15 +72,24 @@ describe('UiFileDropZoneDirective', () => {
     });
 
     describe('dragging and dropping files', () => {
-        it('should add class to drop zone when dragging over', () => {
-            spectator.dispatchMouseEvent(byTestId('custom-drop-zone'), 'dragenter');
+        it('should not add class to drop zone when entering the drag zone', () => {
+            spectator.dispatchMouseEvent(byTestId('custom-drop-zone'), 'dragenter', 0, 0, getDragEventWithDataTransfer('dragover'));
             spectator.detectChanges();
 
-            expect(spectator.query(byTestId('custom-drop-zone'))).toHaveClass('ui-file-drop-zone-highlight');
+            expect(spectator.query(byTestId('custom-drop-zone'))).not.toHaveClass('ui-file-drop-zone-highlight');
+        });
+
+        it('should not add class to drop zone when entering the drag zone with data that does not include files', () => {
+            spectator.dispatchMouseEvent(byTestId('custom-drop-zone'), 'dragenter');
+            spectator.dispatchMouseEvent(byTestId('custom-drop-zone'), 'dragover', 0, 0, getDragEventWithDataTransfer('dragover', false));
+            spectator.detectChanges();
+
+            expect(spectator.query(byTestId('custom-drop-zone'))).not.toHaveClass('ui-file-drop-zone-highlight');
         });
 
         it('should not remove highlight class when dragging over an element inside the dropzone', () => {
             spectator.dispatchMouseEvent(byTestId('custom-drop-zone'), 'dragenter');
+            spectator.dispatchMouseEvent(byTestId('custom-drop-zone'), 'dragover', 0, 0, getDragEventWithDataTransfer('dragover'));
             spectator.dispatchMouseEvent('button', 'dragenter');
             spectator.dispatchMouseEvent(byTestId('custom-drop-zone'), 'dragleave');
             spectator.detectChanges();
@@ -90,14 +99,17 @@ describe('UiFileDropZoneDirective', () => {
 
         it('should remove highlight when dropping files', () => {
             spectator.dispatchMouseEvent(byTestId('custom-drop-zone'), 'dragenter');
-            spectator.dispatchMouseEvent(byTestId('custom-drop-zone'), 'drop');
+            spectator.dispatchMouseEvent(byTestId('custom-drop-zone'), 'dragover', 0, 0, getDragEventWithDataTransfer('dragover'));
+            expect(spectator.query(byTestId('custom-drop-zone'))).toHaveClass('ui-file-drop-zone-highlight');
+
+            spectator.dispatchMouseEvent(byTestId('custom-drop-zone'), 'drop', 0, 0, getDragEventWithDataTransfer('drop'));
             spectator.detectChanges();
 
             expect(spectator.query(byTestId('custom-drop-zone'))).not.toHaveClass('ui-file-drop-zone-highlight');
         });
 
         it('should call service with files that were dropped', () => {
-            const mouseEvent = createMouseEvent('drop');
+            const mouseEvent = getDragEventWithDataTransfer('drop');
 
             spectator.dispatchMouseEvent(byTestId('custom-drop-zone'), 'drop', undefined, undefined, mouseEvent);
             spectator.detectChanges();
@@ -155,3 +167,12 @@ describe('UiFileDropZoneDirective', () => {
         });
     });
 });
+
+const getDragEventWithDataTransfer = (type: 'dragover' | 'drop', containsFiles = true) => {
+    const dataTransfer = new DataTransfer();
+    if (containsFiles) {
+        const file = new File([''], 'file.jog');
+        dataTransfer.items.add(file);
+    }
+    return new DragEvent(type, { dataTransfer });
+};
