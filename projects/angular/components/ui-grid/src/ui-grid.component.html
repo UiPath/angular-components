@@ -26,17 +26,23 @@
                 <ng-container>
                     <ng-container *ngIf="!(hasSelection$ | async) ||
                                 !header?.actionButtons?.length">
-                        <ui-grid-search *ngIf="header?.search"
-                                        [debounce]="header!.searchDebounce"
-                                        [maxLength]="header!.searchMaxLength"
-                                        [placeholder]="intl.searchPlaceholder"
-                                        [searchTooltip]="intl.searchTooltip"
-                                        [clearTooltip]="intl.clearTooltip"
-                                        [tooltipDisabled]="resizeManager.isResizing"
-                                        [value]="header!.searchValue!"
-                                        (searchChange)="filterManager.searchChange($event, header!, footer)"
-                                        class="ui-grid-search ui-grid-filter-option">
-                        </ui-grid-search>
+                        <ng-container *ngIf="!!search; else defaultSearch">
+                            <ng-container *ngTemplateOutlet="search.html ?? null"></ng-container>
+                        </ng-container>
+
+                        <ng-template #defaultSearch>
+                            <ui-grid-search *ngIf="header?.search"
+                                            [debounce]="header!.searchDebounce"
+                                            [maxLength]="header!.searchMaxLength"
+                                            [placeholder]="intl.searchPlaceholder"
+                                            [searchTooltip]="intl.searchTooltip"
+                                            [clearTooltip]="intl.clearTooltip"
+                                            [tooltipDisabled]="resizeManager.isResizing"
+                                            [value]="header!.searchValue!"
+                                            (searchChange)="filterManager.searchChange($event, header!, footer)"
+                                            class="ui-grid-search ui-grid-filter-option">
+                            </ui-grid-search>
+                        </ng-template>
 
                         <ng-container *ngTemplateOutlet="toggleColumnsTmpl"></ng-container>
 
