@@ -1,3 +1,6 @@
+# v15.1.5 (2024-05-02)
+* **grid** allow adding a custom search component via a template
+
 # v15.1.4 (2024-02-02)
 * **file-picker** dropzone should only highlight when dragging files
 
