@@ -76,6 +76,7 @@ import { UiGridNoContentDirective } from './body/ui-grid-no-content.directive';
 import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowCardViewDirective } from './body/ui-grid-row-card-view.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
+import { UiGridCustomSearchDirective } from './components/ui-grid-search/ui-grid-custom-search.directive';
 import { ISuggestDropdownValueData } from './filters/ui-grid-dropdown-filter.directive';
 import { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
@@ -547,6 +548,16 @@ export class UiGridComponent<T extends IGridDataEntry>
         static: true,
     })
     header?: UiGridHeaderDirective<T>;
+
+    /**
+     * Custom search directive reference.
+     *
+     * @ignore
+     */
+    @ContentChild(UiGridCustomSearchDirective, {
+        static: true,
+    })
+    search?: UiGridCustomSearchDirective;
 
     /**
      * Column directive reference list.
