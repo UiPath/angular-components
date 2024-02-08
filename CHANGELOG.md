@@ -1,3 +1,6 @@
+# v15.1.6 (2024-07-02)
+* **grid** react on max filters count changes
+
 # v15.1.5 (2024-05-02)
 * **grid** allow adding a custom search component via a template
 

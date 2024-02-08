@@ -449,8 +449,9 @@ export class UiGridComponent<T extends IGridDataEntry>
      *
      */
     @Input()
-    maxSelectedFilterValues = Infinity;
-
+    set maxSelectedFilterValues(value: number) {
+        this.maxSelectedFilterValues$.next(value);
+    }
     /**
      * Configure if the pagination should be selectable
      *
@@ -759,6 +760,12 @@ export class UiGridComponent<T extends IGridDataEntry>
     );
 
     /**
+     * Emits current max selected filter values count
+     *
+     */
+    maxSelectedFilterValues$ = new BehaviorSubject(Infinity);
+
+    /**
      * Emits the id of the entity that should be highlighted.
      *
      */
@@ -859,8 +866,12 @@ export class UiGridComponent<T extends IGridDataEntry>
     );
 
     disableFilterSelection$ = defer(() => this.filterManager.activeFilterValueCount$.pipe(
-        map(count => count >= this.maxSelectedFilterValues)),
-    ).pipe(shareReplay(1));
+        switchMap(count => this.maxSelectedFilterValues$
+            .pipe(
+                map(max => count >= max),
+        )),
+        distinctUntilChanged(),
+    )).pipe(shareReplay(1));
 
     readonly Infinity = Infinity;
     protected _destroyed$ = new Subject<void>();
