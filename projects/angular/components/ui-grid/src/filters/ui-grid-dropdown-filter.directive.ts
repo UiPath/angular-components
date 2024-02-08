@@ -52,9 +52,9 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
      *
      */
     @Input()
-    set items(value: IDropdownOption[]) {
-        this._items = value;
-        this.suggestItems = value.map((item, idx) => ({
+    set items(value: IDropdownOption[] | null) {
+        this._items = value ?? [];
+        this.suggestItems = this._items.map((item, idx) => ({
             id: idx + 1,
             text: item.label,
             data: item.value,
@@ -119,7 +119,7 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
      */
     suggestItems: ISuggestDropdownValueData[] = [];
 
-    private _items?: IDropdownOption[];
+    private _items: IDropdownOption[] = [];
     private _value: FilterDropdownPossibleOption;
     private _multi = false;
 
@@ -155,7 +155,7 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
     }
 
     findDropDownOptionBySuggestValue(suggestValue: ISuggestDropdownValueData) {
-        return this.items.find(item => isEqual(item.value, suggestValue.data));
+        return this._items.find(item => isEqual(item.value, suggestValue.data));
     }
 
     get hasValue() {
