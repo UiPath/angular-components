@@ -91,6 +91,9 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
         this.total = this.footer.total;
         this.filteredData = cloneDeep(this.allData);
         this.paginateData(this.filteredData, this.pageIndex, this.footer.pageSize);
+        if (this.inputs.hasHighDensity) {
+            this.pageSizes = [10, 25, 50, 100];
+        }
     }
 
     ngAfterViewInit() {

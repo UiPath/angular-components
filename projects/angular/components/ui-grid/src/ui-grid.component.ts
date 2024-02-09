@@ -1,3 +1,4 @@
+import isArray from 'lodash-es/isArray';
 import range from 'lodash-es/range';
 import {
     animationFrameScheduler,
@@ -50,6 +51,7 @@ import {
     NgZone,
     OnChanges,
     OnDestroy,
+    OnInit,
     Optional,
     Output,
     QueryList,
@@ -68,7 +70,6 @@ import {
     ISuggestValueData,
 } from '@uipath/angular/components/ui-suggest';
 
-import { isArray } from 'lodash-es';
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
 import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
@@ -112,6 +113,7 @@ const FOCUSABLE_ELEMENTS_QUERY = 'a, button:not([hidden]), input:not([hidden]), 
 const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'select'];
 const REFRESH_WIDTH = 50;
 const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
+const DEFAULT_VIRTUAL_SCROLL_HIGH_DENSITY_ITEM_SIZE = 32;
 
 @Component({
     selector: 'ui-grid',
@@ -158,7 +160,7 @@ const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
 })
 export class UiGridComponent<T extends IGridDataEntry>
     extends ResizableGrid<T>
-    implements AfterContentInit, OnChanges, OnDestroy {
+    implements AfterContentInit, OnChanges, OnDestroy, OnInit {
     /**
      * The data list that needs to be rendered within the grid.
      *
@@ -189,6 +191,14 @@ export class UiGridComponent<T extends IGridDataEntry>
     @HostBinding('class.ui-grid-state-projected')
     @Input()
     isProjected: boolean;
+
+    /**
+     * Set the grid in high density state.
+     *
+     */
+    @HostBinding('class.ui-grid-state-high-density')
+    @Input()
+    hasHighDensity = false;
 
     /**
      * Determines if all of the items are currently checked.
@@ -910,7 +920,8 @@ export class UiGridComponent<T extends IGridDataEntry>
 
         this.disableSelectionByEntry = () => null;
         this._fetchStrategy = _gridOptions?.fetchStrategy ?? 'onOpen';
-        this.rowSize = _gridOptions?.rowSize ?? DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
+        this.rowSize = _gridOptions?.rowSize ?? -1;
+        this.hasHighDensity = this._gridOptions?.hasHighDensity ?? false;
         this._collapseFiltersCount$ = new BehaviorSubject(
             _gridOptions?.collapseFiltersCount ?? (_gridOptions?.collapsibleFilters === true ? 0 : Number.POSITIVE_INFINITY),
         );
@@ -1021,6 +1032,10 @@ export class UiGridComponent<T extends IGridDataEntry>
         return of(true);
     };
 
+    ngOnInit(): void {
+        this._setInitialRowSize();
+    }
+
     /**
      * @ignore
      */
@@ -1078,7 +1093,6 @@ export class UiGridComponent<T extends IGridDataEntry>
         }
 
         const dataChange = changes.data;
-
         if (
             dataChange &&
             !dataChange.firstChange &&
@@ -1378,6 +1392,14 @@ export class UiGridComponent<T extends IGridDataEntry>
             } else {
                 this.selectionManager.toggle(row);
             }
+        }
+    }
+
+    private _setInitialRowSize() {
+        if (this.rowSize === -1) {
+            this.rowSize = this.hasHighDensity ?
+                DEFAULT_VIRTUAL_SCROLL_HIGH_DENSITY_ITEM_SIZE :
+                DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
         }
     }
 }

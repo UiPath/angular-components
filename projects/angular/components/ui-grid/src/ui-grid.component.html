@@ -743,6 +743,7 @@
                 <ui-suggest *ngLet="(column.dropdown!.suggestValue ?? []) as suggestValue"
                             [disabled]="false"
                             [compact]="true"
+                            [hasHighDensity]="hasHighDensity"
                             [multiple]="column.dropdown!.multi"
                             [clearable]="column.dropdown!.multi"
                             [searchable]="false"
@@ -790,6 +791,7 @@
                         [attr.data-cy]="getColumnName(column, 'ui-grid-search-filter')"
                         [multiple]="column.searchableDropdown!.multiple"
                         [compact]="column.searchableDropdown!.multiple"
+                        [hasHighDensity]="hasHighDensity"
                         [displayCount]="column.searchableDropdown!.displayCount"
                         [minChars]="column.searchableDropdown?.minChars ?? 0"
                         [maxSelectionConfig]="{

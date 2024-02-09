@@ -20,6 +20,7 @@ export interface IInputs {
     collapsibleFilters?: boolean;
     loading: boolean;
     isProjected: boolean;
+    hasHighDensity: boolean;
     disabled: boolean;
     selectable: boolean;
     singleSelectable: boolean;

@@ -30,4 +30,5 @@ export interface GridOptions<T> {
     rowSize?: number;
     resizeStrategy?: ResizeStrategy;
     selectablePageIndex?: boolean;
+    hasHighDensity?: boolean;
 }
