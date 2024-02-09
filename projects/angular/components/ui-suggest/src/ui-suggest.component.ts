@@ -185,6 +185,14 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
     }
 
     /**
+     * Set the element in high density state.
+     *
+     */
+    @HostBinding('class.ui-suggest-state-high-density')
+    @Input()
+    hasHighDensity = false;
+
+    /**
      * By default the onOpen fetchStrategy prevents additional requests if closed.
      * This allows you to bypass that check and update even if closed.
      */
