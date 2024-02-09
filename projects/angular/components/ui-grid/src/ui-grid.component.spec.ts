@@ -19,6 +19,7 @@ import {
 
 import {
     Component,
+    Input,
     ViewChild,
 } from '@angular/core';
 import {
@@ -1056,6 +1057,118 @@ describe('Component: UiGrid', () => {
 
                 expect(parseInt(compensationWidthPx, 10)).toBe(virtualScrollViewport.offsetWidth - virtualScrollViewport.clientWidth);
             }));
+        });
+    });
+
+    @Component({
+        template: `
+            <ui-grid *ngIf="hasHighDensity !== null; else withoutHasHighDensity"
+                     [data]="data"
+                     [hasHighDensity]="hasHighDensity">
+                <ui-grid-column [property]="'num'"
+                                title="Number Header"
+                                width="25%">
+                </ui-grid-column>
+            </ui-grid>
+            <ng-template #withoutHasHighDensity>
+                <ui-grid [data]="data">
+                    <ui-grid-column [property]="'num'"
+                                    title="Number Header"
+                                    width="25%">
+                    </ui-grid-column>
+                </ui-grid>
+            </ng-template>
+        `,
+    })
+    class TestFixtureGridWithHighDensityModeComponent {
+        @Input()
+        hasHighDensity: boolean | null = null;
+
+        data: ITestEntity[] = [];
+
+        @ViewChild(UiGridComponent, {
+            static: false,
+        })
+        grid!: UiGridComponent<ITestEntity>;
+    }
+
+    describe('Scenario: simple grid with high density mode', () => {
+        let fixture: ComponentFixture<TestFixtureGridWithHighDensityModeComponent>;
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should have the default structure when the high density mode is OFF', () => {
+            TestBed.configureTestingModule({
+                imports: [UiGridModule],
+                declarations: [TestFixtureGridWithHighDensityModeComponent],
+            });
+
+            const data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(1);
+            fixture = TestBed.createComponent(TestFixtureGridWithHighDensityModeComponent);
+            fixture.componentInstance.data = data;
+            fixture.detectChanges();
+
+            const grid = fixture.componentInstance.grid;
+
+            expect(Object.keys(fixture.debugElement.classes).includes('ui-grid-state-high-density')).toBeFalsy();
+            expect(grid.rowSize).toBe(48);
+
+            const contentRow = fixture.debugElement.query(By.css('.ui-grid-row')).nativeElement;
+            expect(getComputedStyle(contentRow).height).toBe('48px');
+        });
+
+        it('should have the correct structure when the high density mode is set by the provider', () => {
+            TestBed.configureTestingModule({
+                imports: [UiGridModule],
+                providers: [
+                    {
+                        provide: UI_GRID_OPTIONS,
+                        useValue: { hasHighDensity: true },
+                    },
+                ],
+                declarations: [TestFixtureGridWithHighDensityModeComponent],
+            });
+
+            const data = generateListFactory(generateEntity, TestBed.runInInjectionContext)(1);
+            fixture = TestBed.createComponent(TestFixtureGridWithHighDensityModeComponent);
+            fixture.componentInstance.data = data;
+            fixture.detectChanges();
+
+            const grid = fixture.componentInstance.grid;
+            const gridElement = fixture.debugElement.queryAll(By.css('ui-grid'))[0];
+
+            expect(Object.keys(gridElement.classes).includes('ui-grid-state-high-density')).toBeTruthy();
+            expect(grid.rowSize).toBe(32);
+
+            const headerRow = fixture.debugElement.query(By.css('.ui-grid-header-row')).nativeElement;
+            expect(getComputedStyle(headerRow).height).toBe('32px');
+            const contentRow = fixture.debugElement.query(By.css('.ui-grid-row')).nativeElement;
+            expect(getComputedStyle(contentRow).height).toBe('32px');
+        });
+
+        it('should have the correct structure when the high density mode is set by input', () => {
+            TestBed.configureTestingModule({
+                imports: [UiGridModule],
+                providers: [
+                    {
+                        provide: UI_GRID_OPTIONS,
+                        useValue: { hasHighDensity: true },
+                    },
+                ],
+                declarations: [TestFixtureGridWithHighDensityModeComponent],
+            });
+
+            fixture = TestBed.createComponent(TestFixtureGridWithHighDensityModeComponent);
+            fixture.componentInstance.hasHighDensity = false;
+            fixture.detectChanges();
+
+            const grid = fixture.componentInstance.grid;
+            const gridElement = fixture.debugElement.queryAll(By.css('ui-grid'))[0];
+
+            expect(Object.keys(gridElement.classes).includes('ui-grid-state-high-density')).toBeFalsy();
+            expect(grid.rowSize).toBe(48);
         });
     });
 
