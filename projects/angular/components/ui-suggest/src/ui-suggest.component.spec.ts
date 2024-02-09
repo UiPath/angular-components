@@ -22,6 +22,7 @@ import {
     Component,
     DebugElement,
     Directive,
+    Input,
     ViewChild,
 } from '@angular/core';
 import {
@@ -3309,6 +3310,54 @@ describe('Component: UiSuggest', () => {
                     });
                 });
             });
+        });
+    });
+
+    @Component({
+        template: `
+            <ui-suggest *ngIf="hasHighDensity !== null; else withoutHasHighDensity"
+                        [hasHighDensity]="hasHighDensity">
+            </ui-suggest>
+            <ng-template #withoutHasHighDensity>
+                <ui-suggest></ui-suggest>
+            </ng-template>
+        `,
+    })
+    class UiSuggestFixtureWithHighDensityComponent extends UiSuggestFixtureDirective {
+        @Input()
+        hasHighDensity: boolean | null = null;
+    }
+    describe('Scenario: standalone component with high density mode', () => {
+        it('should have high density mode turned OFF by default', () => {
+            TestBed.configureTestingModule({
+                imports: [UiSuggestModule],
+                declarations: [UiSuggestFixtureWithHighDensityComponent],
+            });
+
+            const fixture = TestBed.createComponent(UiSuggestFixtureWithHighDensityComponent);
+            fixture.detectChanges();
+
+            expect(Object.keys(fixture.debugElement.classes).includes('ui-suggest-state-high-density')).toBeFalsy();
+
+            const container = fixture.debugElement.query(By.css('.ui-suggest-container')).nativeElement;
+            expect(getComputedStyle(container).height).toBe('40px');
+        });
+
+        it('should generate the correct html in high density mode', () => {
+            TestBed.configureTestingModule({
+                imports: [UiSuggestModule],
+                declarations: [UiSuggestFixtureWithHighDensityComponent],
+            });
+
+            const fixture = TestBed.createComponent(UiSuggestFixtureWithHighDensityComponent);
+            fixture.componentInstance.hasHighDensity = true;
+            fixture.detectChanges();
+
+            const appliedClasses = Object.keys(fixture.debugElement.query(By.css('ui-suggest')).classes);
+            expect(appliedClasses.includes('ui-suggest-state-high-density')).toBeTruthy();
+
+            const container = fixture.debugElement.query(By.css('.ui-suggest-container')).nativeElement;
+            expect(getComputedStyle(container).height).toBe('32px');
         });
     });
 });
