@@ -1488,14 +1488,21 @@ describe('Component: UiGrid', () => {
         let fixture: ComponentFixture<TestFixtureGridHeaderWithFilterComponent>;
         let component: TestFixtureGridHeaderWithFilterComponent;
         let grid: UiGridComponent<ITestEntity>;
-
+        let intl: UiGridIntl;
         beforeEach(() => {
+            intl = new UiGridIntl();
             TestBed.configureTestingModule({
                 imports: [
                     UiGridModule,
                     NoopAnimationsModule,
                 ],
                 declarations: [TestFixtureGridHeaderWithFilterComponent],
+                providers: [
+                    {
+                        provide: UiGridIntl,
+                        useValue: intl,
+                    },
+                ],
             });
 
             fixture = TestBed.createComponent(TestFixtureGridHeaderWithFilterComponent);
@@ -1520,6 +1527,28 @@ describe('Component: UiGrid', () => {
                 component.dropdownItemList = dropdownItemList;
                 fixture.detectChanges();
             });
+
+            it('should update translation for filter options when language changes', fakeAsync(() => {
+                intl.translateDropdownOption = () => 'voila la traduction';
+                intl.changes.next();
+                fixture.detectChanges();
+
+                const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
+                const filterButton = filterContainer.query(By.css(selectors.filterDropdown));
+                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+                tick(1000);
+                fixture.detectChanges();
+
+                const filterCheckboxes = fixture.debugElement.queryAll(By.css('mat-list-item mat-checkbox'));
+                filterCheckboxes[0].nativeElement.dispatchEvent(EventGenerator.click);
+                filterCheckboxes[1].nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const filterSpan = fixture.debugElement.query(By.css('.ui-grid-filter-suggest span.text-ellipsis'));
+                expect(filterSpan.nativeElement.innerText).toEqual('voila la traduction (+1 other)');
+                flush();
+            }));
 
             it('should emit all selected filter options', fakeAsync(() => {
                 const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));

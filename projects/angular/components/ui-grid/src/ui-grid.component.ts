@@ -65,10 +65,7 @@ import {
 } from '@angular/material/checkbox';
 import { MatTooltip } from '@angular/material/tooltip';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
-import {
-    ISuggestValue,
-    ISuggestValueData,
-} from '@uipath/angular/components/ui-suggest';
+import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
@@ -78,7 +75,6 @@ import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowCardViewDirective } from './body/ui-grid-row-card-view.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
 import { UiGridCustomSearchDirective } from './components/ui-grid-search/ui-grid-custom-search.directive';
-import { ISuggestDropdownValueData } from './filters/ui-grid-dropdown-filter.directive';
 import { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
@@ -1284,26 +1280,6 @@ export class UiGridComponent<T extends IGridDataEntry>
             (isArray(column.dropdown.value) || column.dropdown!.value.value !== column.dropdown.emptyStateValue);
 
         return dropdownHasValue || searchableHasValue;
-    }
-
-    mapFilterOptions(items: ISuggestDropdownValueData[], column: UiGridColumnDirective<T>) {
-        items = items
-            .filter(item => !!column.dropdown!.findDropDownOptionBySuggestValue(item))
-            .map(item => {
-                const translatedText = this.intl.translateDropdownOption(column.dropdown!.findDropDownOptionBySuggestValue(item)!);
-                return {
-                    ...item,
-                    text: translatedText,
-                };
-            });
-
-        if (column.dropdown?.multi || !column.dropdown?.showAllOption) { return items; }
-
-        const allOption: ISuggestValueData<undefined> = {
-            id: -1,
-            text: this.intl.noFilterPlaceholder,
-        };
-        return items.some(v => v.data === undefined) ? items : [allOption, ...items];
     }
 
     triggerColumnHeaderTooltip(event: FocusOrigin, tooltip: MatTooltip) {

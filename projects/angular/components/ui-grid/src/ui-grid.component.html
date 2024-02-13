@@ -749,7 +749,7 @@
                             [searchable]="false"
                             [value]="suggestValue"
                             [placeholder]="column.title ?? ''"
-                            [items]="mapFilterOptions(column.dropdown!.suggestItems, column)"
+                            [items]="column.dropdown!.suggestItems"
                             [compactSummaryTemplate]="displayedFilterName"
                             [maxSelectionConfig]="{
                                 count: (disableFilterSelection$ | async) && (column.dropdown!.multi || selectedFilters === undefined) ? suggestValue.length : Infinity,
@@ -768,10 +768,9 @@
                     <div class="flex">
                         <span class="text-ellipsis">
                             {{ (column.dropdown!.multi && selectedFilters?.length > 1)
-                            ? intl.translateMultiDropdownOptions(value?.[0]?.text, selectedFilters.length)
-                                : value?.[0]
-                                ? intl.translateDropdownOption(column.dropdown!.findDropDownOptionBySuggestValue(value[0])!)
-                            : intl.noFilterPlaceholder }}</span>
+                                ? intl.translateMultiDropdownOptions(value[0].text!, selectedFilters.length)
+                                : value?.[0]?.text ?? intl.noFilterPlaceholder
+                            }}</span>
                     </div>
                 </ng-template>
             </ng-container>

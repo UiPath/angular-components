@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import * as faker from 'faker';
 import { of } from 'rxjs';
 
@@ -20,7 +21,10 @@ export const generateColumn = () => {
 };
 
 export const generateDropdownFilter = () => {
-    const dropdown = new UiGridDropdownFilterDirective<ITestEntity>();
+    let dropdown!: UiGridDropdownFilterDirective<ITestEntity>;
+    TestBed.runInInjectionContext(() => {
+        dropdown = new UiGridDropdownFilterDirective<ITestEntity>();
+    });
 
     const items = faker.random.words(15)
         .split(' ')
