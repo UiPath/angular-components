@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 @import "../../styles/ellipse";
 @import "./ui-grid-variables";
 
@@ -8,29 +10,76 @@
 }
 
 ui-grid {
-    $ui-grid-header-row-height: 56px;
-    $ui-grid-header-alternate-row-height: 52px;
-    $ui-grid-row-height: 48px;
-    $ui-grid-row-horizontal-padding: 24px;
-    $ui-feature-cell-width: 50px;
-    $ui-row-border-width: 1px;
-    $ui-header-resize-handle-width: 18px;
-    $ui-handle-size-width: 6px;
-    $ui-grid-default-spacing: 5px;
-    $ui-border-radius: 4px;
-    $ui-grid-button-size: 40px;
-    $ui-grid-main-font-size: 13.5px;
-    $ui-grid-secondary-font-size: 12px;
-    $ui-grid-action-buttons-spacing: 16px;
+    --ui-grid-header-row-height: 56px;
+    --ui-grid-row-height: 48px;
+    --ui-grid-filter-container-min-height: var(--ui-grid-header-row-height);
+    --ui-grid-row-horizontal-padding: 24px;
+    --ui-feature-cell-width: 50px;
+    --ui-row-border-width: 1px;
+    --ui-header-resize-handle-width: 18px;
+    --ui-handle-size-width: 6px;
+    --ui-grid-default-spacing: 5px;
+    --ui-border-radius: 4px;
+    --ui-grid-button-size: 40px;
+    --ui-grid-main-font-size: 13.5px;
+    --ui-grid-secondary-font-size: 12px;
+    --ui-grid-action-buttons-spacing: 16px;
+
+    &.ui-grid-state-high-density {
+        --ui-grid-header-row-height: 32px;
+        --ui-grid-row-height: 32px;
+        --ui-grid-filter-container-min-height: 48px;
+        --ui-grid-foother-height: 32px;
+        --ui-grid-button-size: 32px;
+        --ui-grid-main-font-size: 12px;
+
+        @include mat.checkbox-density(-3);
+        @include mat.radio-density(-3);
+        @include mat.button-density(-1);
+        @include mat.icon-button-density(-5);
+
+        .ui-grid-footer-container .mat-mdc-paginator .mat-mdc-paginator-container {
+            min-height: var(--ui-grid-foother-height);
+        }
+
+        .ui-grid-filter-container {
+            padding: 0;
+        }
+
+        .ui-grid-action-cell mat-icon {
+            scale: calc(16 / 24);
+        }
+
+        mat-checkbox .mdc-checkbox__background {
+            scale: calc(16 / 18);
+        }
+
+        mat-radio-button .mdc-radio__background {
+            scale: calc(18 / 20);
+        }
+
+        [mat-icon-button] .mat-mdc-button-touch-target,
+        mat-checkbox .mat-mdc-checkbox-touch-target,
+        mat-radio-button .mat-mdc-radio-touch-target {
+            display: initial !important;
+            width: var(--ui-grid-row-height);
+            height: var(--ui-grid-row-height);
+        }
+    }
 
     position: relative;
     display: block;
 
+    p {
+        margin-block-start: 0;
+        margin-block-end: 0;
+    }
+
     &.ui-grid-mode-multi-select {
         .ui-grid-table {
             cdk-virtual-scroll-viewport.ui-grid-viewport {
-                min-height: $ui-grid-row-height * 3;
-                height: calc(100vh - 300px - #{$ui-grid-row-height});
+                min-height: calc(var(--ui-grid-row-height) * 3);
+                height: calc(100vh - 300px - #{var(--ui-grid-row-height)});
 
                 .cdk-virtual-scroll-content-wrapper {
                     width: 100%;
@@ -41,7 +90,7 @@ ui-grid {
 
     .ui-grid-table {
         cdk-virtual-scroll-viewport.ui-grid-viewport {
-            min-height: $ui-grid-row-height * 3;
+            min-height: calc(var(--ui-grid-row-height) * 3);
             height: calc(100vh - 300px);
 
             .cdk-virtual-scroll-content-wrapper {
@@ -88,7 +137,7 @@ ui-grid {
                     &.ui-grid-checkbox-cell {
                         overflow: visible;
                         justify-content: flex-start;
-                        margin-left: $ui-grid-projected-spacing-lr + $ui-grid-default-spacing;
+                        margin-left: calc($ui-grid-projected-spacing-lr + var(--ui-grid-default-spacing));
                     }
                 }
 
@@ -100,12 +149,12 @@ ui-grid {
                 }
 
                 .ui-grid-cell.ui-grid-mobile-feature-cell {
-                    margin-left: $ui-grid-default-spacing;
+                    margin-left: var(--ui-grid-default-spacing);
                     overflow: visible;
                     justify-content: flex-start;
 
                     .ui-grid-mobile-feature-container {
-                        margin: 0 $ui-grid-default-spacing;
+                        margin: 0 var(--ui-grid-default-spacing);
 
                         &:first-of-type {
                             margin-left: 0;
@@ -127,7 +176,7 @@ ui-grid {
     }
 
     .mat-mdc-paginator-container {
-        padding: 0 $ui-grid-default-spacing;
+        padding: 0 var(--ui-grid-default-spacing);
     }
 
     &.ui-grid-state-resizing {
@@ -143,8 +192,8 @@ ui-grid {
         }
 
         &-filter-container {
-            padding: 0 0 $ui-grid-default-spacing $ui-grid-default-spacing;
-            min-height: $ui-grid-header-row-height;
+            padding: 0 0 var(--ui-grid-default-spacing) var(--ui-grid-default-spacing);
+            min-height: var(--ui-grid-header-row-height);
 
             display: flex;
             flex-wrap: wrap;
@@ -168,7 +217,7 @@ ui-grid {
                 flex-direction: column;
 
                 &-actions {
-                    min-height: $ui-grid-header-row-height;
+                    min-height: var(--ui-grid-filter-container-min-height);
                     display: flex;
                     flex-wrap: wrap;
                     align-items: center;
@@ -179,7 +228,7 @@ ui-grid {
                 }
 
                 &-filters {
-                    min-height: $ui-grid-header-row-height;
+                    min-height: var(--ui-grid-filter-container-min-height);
                     flex-wrap: wrap;
                     align-items: center;
                     display: flex;
@@ -187,14 +236,14 @@ ui-grid {
             }
 
             &-rhs-group {
-                min-height: $ui-grid-header-row-height;
+                min-height: var(--ui-grid-filter-container-min-height);
                 display: flex;
                 margin-left: auto;
                 align-items: center;
 
                 .ui-grid-action-buttons-main {
                     display: flex;
-                    gap: $ui-grid-action-buttons-spacing;
+                    gap: var(--ui-grid-action-buttons-spacing);
                 }
             }
 
@@ -210,7 +259,7 @@ ui-grid {
         // single main button on default design
         &-action-button {
             position: absolute;
-            right: $ui-grid-button-size;
+            right: var(--ui-grid-button-size);
             top: -21px;
             z-index: 2;
         }
@@ -222,18 +271,18 @@ ui-grid {
         }
 
         &-container {
-            border-radius: $ui-border-radius;
+            border-radius: var(--ui-border-radius);
 
             .mat-mdc-paginator {
                 &-container {
-                    min-height: $ui-grid-header-row-height - 1;
+                    min-height: calc(var(--ui-grid-header-row-height) - 1px);
                 }
 
                 .mat-mdc-paginator-page-size-label,
                 .mat-mdc-paginator-range-label,
                 .mat-mdc-select-value {
-                    font-size: $ui-grid-secondary-font-size;
-                    line-height: $ui-grid-secondary-font-size;
+                    font-size: var(--ui-grid-secondary-font-size);
+                    line-height: var(--ui-grid-secondary-font-size);
                 }
 
                 .mat-mdc-form-field-infix {
@@ -245,13 +294,6 @@ ui-grid {
                 }
             }
 
-            .ui-grid-header {
-                &-row,
-                &-cell {
-                    height: $ui-grid-header-alternate-row-height;
-                }
-            }
-
             .ui-grid-selection-info {
                 &-clear-button {
                     order: 1;
@@ -259,7 +301,7 @@ ui-grid {
             }
 
             .ui-grid-row.ui-grid-no-data-container {
-                height: 4 * $ui-grid-row-height;
+                height: calc(4 * var(--ui-grid-row-height));
                 align-items: flex-start;
 
                 &.ui-grid-no-content-available {
@@ -277,7 +319,7 @@ ui-grid {
 
             ui-grid-custom-paginator {
                 .mat-mdc-paginator-page-label {
-                    font-size: $ui-grid-secondary-font-size;
+                    font-size: var(--ui-grid-secondary-font-size);
                 }
 
                 .mat-mdc-paginator-page-size .mat-mdc-form-field {
@@ -288,29 +330,21 @@ ui-grid {
                         padding: 0.4375em 0;
                     }
                 }
-
-                .ui-grid-resize-handle-container {
-                    height: $ui-grid-header-alternate-row-height;
-
-                    .ui-grid-resize-handle {
-                        height: $ui-grid-header-alternate-row-height;
-                    }
-                }
             }
         }
 
         &-no-data-container {
-            padding: $ui-grid-default-spacing;
+            padding: var(--ui-grid-default-spacing);
 
             mat-icon {
                 font-size: 32px;
                 width: 32px;
                 height: 32px;
-                margin-left: $ui-grid-default-spacing;
+                margin-left: var(--ui-grid-default-spacing);
             }
 
             p {
-                margin-left: $ui-grid-default-spacing;
+                margin-left: var(--ui-grid-default-spacing);
             }
         }
 
@@ -324,15 +358,15 @@ ui-grid {
 
                 .ui-grid-no-data-container p {
                     position: sticky;
-                    left: 2 * $ui-grid-default-spacing;
+                    left: calc(2 * var(--ui-grid-default-spacing));
                 }
             }
         }
 
         &-selection-info-container {
             &-alternate {
-                min-height: $ui-grid-button-size;
-                padding: $ui-grid-default-spacing 0;
+                min-height: var(--ui-grid-button-size);
+                padding: var(--ui-grid-default-spacing) 0;
                 display: flex;
                 align-items: center;
 
@@ -349,7 +383,7 @@ ui-grid {
             }
 
             .ui-grid-selection-info-message {
-                margin-left: $ui-grid-default-spacing * 2;
+                margin-left: calc(var(--ui-grid-default-spacing) * 2);
             }
 
             .ui-grid-selection-info-icon {
@@ -363,7 +397,7 @@ ui-grid {
                 display: flex;
                 justify-content: flex-start;
                 flex-direction: row-reverse;
-                margin-right: $ui-grid-button-size + $ui-grid-row-horizontal-padding;
+                margin-right: calc(var(--ui-grid-button-size) + var(--ui-grid-row-horizontal-padding));
             }
         }
 
@@ -372,13 +406,13 @@ ui-grid {
         }
 
         &-filter-option {
-            margin-right: $ui-grid-default-spacing * 2;
+            margin-right: calc(var(--ui-grid-default-spacing) * 2);
 
             &.ui-grid-search {
-                $search-padding: $ui-grid-default-spacing;
+                $search-padding: var(--ui-grid-default-spacing);
                 bottom: $search-padding;
                 position: relative;
-                height: $ui-grid-header-row-height - $search-padding - 1px;
+                height: calc(var(--ui-grid-header-row-height) - $search-padding - 1px);
             }
 
             &:last-child {
@@ -416,10 +450,10 @@ ui-grid {
             }
 
             .ui-grid-header-row {
-                font-size: $ui-grid-secondary-font-size;
-                line-height: $ui-grid-secondary-font-size;
+                font-size: var(--ui-grid-secondary-font-size);
+                line-height: var(--ui-grid-secondary-font-size);
                 text-transform: uppercase;
-                height: $ui-grid-header-row-height;
+                height: var(--ui-grid-header-row-height);
                 position: relative;
                 overflow: clip;
 
@@ -427,7 +461,7 @@ ui-grid {
                     padding-left: 0;
 
                     .ui-grid-header-cell[role="columnheader"] {
-                        padding-left: $ui-grid-row-horizontal-padding;
+                        padding-left: var(--ui-grid-row-horizontal-padding);
                     }
                 }
 
@@ -439,7 +473,7 @@ ui-grid {
                     overflow: hidden;
 
                     .ui-grid-header-cell[role="columnheader"] {
-                        padding: 0 0 0 $ui-grid-default-spacing;
+                        padding: 0 0 0 var(--ui-grid-default-spacing);
                     }
                 }
             }
@@ -471,13 +505,13 @@ ui-grid {
             .ui-grid-expanded-row-container {
                 width: 100%;
                 height: 100%;
-                padding: $ui-grid-default-spacing;
+                padding: var(--ui-grid-default-spacing);
                 box-sizing: border-box;
             }
 
             .ui-grid-row {
-                height: $ui-grid-row-height;
-                font-size: $ui-grid-main-font-size;
+                height: var(--ui-grid-row-height);
+                font-size: var(--ui-grid-main-font-size);
 
                 &.ui-grid-row-state-expanded {
                     height: auto;
@@ -497,7 +531,7 @@ ui-grid {
                     padding-left: 0;
 
                     .ui-grid-cell {
-                        padding-left: $ui-grid-row-horizontal-padding;
+                        padding-left: var(--ui-grid-row-horizontal-padding);
                     }
                 }
 
@@ -542,40 +576,40 @@ ui-grid {
 
             &:not(.ui-grid-table-refreshable) {
                 .ui-grid-action-cell {
-                    min-width: $ui-feature-cell-width;
+                    min-width: var(--ui-feature-cell-width);
                 }
             }
 
             .ui-grid-resize-handle-container {
                 position: relative;
-                flex: 0 0 $ui-header-resize-handle-width;
-                height: $ui-grid-header-row-height + 1;
+                flex: 0 0 var(--ui-header-resize-handle-width);
+                height: calc(var(--ui-grid-header-row-height) + 1px);
 
                 &.last-sticky-handle-container {
-                    flex: 0 0 $ui-header-resize-handle-width;
+                    flex: 0 0 var(--ui-header-resize-handle-width);
                 }
 
                 .ui-grid-resize-handle {
                     position: absolute;
                     top: 0;
-                    width: $ui-header-resize-handle-width;
-                    height: $ui-grid-header-row-height + 1;
+                    width: var(--ui-header-resize-handle-width);
+                    height: calc(var(--ui-grid-header-row-height) + 1px);
                 }
             }
 
             .ui-grid-cell-resizing-border-container {
                 position: relative;
-                height: $ui-grid-row-height + $ui-row-border-width;
+                height: calc(var(--ui-grid-row-height) + var(--ui-row-border-width));
 
                 .ui-grid-cell-resizing-border {
-                    width: $ui-header-resize-handle-width;
-                    height: $ui-grid-row-height;
+                    width: var(--ui-header-resize-handle-width);
+                    height: var(--ui-grid-row-height);
                 }
             }
 
             .ui-grid-header-cell {
                 &.ui-grid-spacer-cell {
-                    min-width: $ui-feature-cell-width;
+                    min-width: var(--ui-feature-cell-width);
                 }
             }
 
@@ -591,8 +625,8 @@ ui-grid {
                 position: absolute;
                 right: 0;
                 top: 0;
-                width: $ui-header-resize-handle-width;
-                padding-left: $ui-header-resize-handle-width - $ui-handle-size-width;
+                width: var(--ui-header-resize-handle-width);
+                padding-left: calc(var(--ui-header-resize-handle-width) - var(--ui-handle-size-width));
                 box-sizing: border-box;
                 left: unset !important;
                 background-color: transparent;
@@ -600,20 +634,20 @@ ui-grid {
                 cursor: col-resize;
 
                 .ui-grid-resize-handle {
-                    width: $ui-handle-size-width;
+                    width: var(--ui-handle-size-width);
                 }
             }
 
             .ui-grid-cell-resizing-border-container {
                 position: relative;
-                width: $ui-header-resize-handle-width;
-                padding-left: $ui-header-resize-handle-width - ($ui-handle-size-width / 2);
+                width: var(--ui-header-resize-handle-width);
+                padding-left: calc(var(--ui-header-resize-handle-width) - (var(--ui-handle-size-width) / 2));
                 box-sizing: border-box;
                 background-color: transparent;
 
                 .ui-grid-cell-resizing-border {
-                    width: $ui-handle-size-width / 2;
-                    min-width: $ui-handle-size-width / 2;
+                    width: calc(var(--ui-handle-size-width) / 2);
+                    min-width: calc(var(--ui-handle-size-width) / 2);
                 }
             }
 
@@ -628,30 +662,30 @@ ui-grid {
 
                 &:not(.ui-grid-feature-cell):not(:first-child, .sticky-columns-cell-container) {
                     box-sizing: border-box;
-                    padding: 0 0 0 $ui-grid-default-spacing;
+                    padding: 0 0 0 var(--ui-grid-default-spacing);
                 }
 
                 &:not(.ui-grid-feature-cell, .sticky-columns-cell-container):first-of-type {
-                    padding-left: $ui-grid-row-horizontal-padding;
+                    padding-left: var(--ui-grid-row-horizontal-padding);
 
                     [dir="rtl"] & {
                         padding-left: 0;
-                        padding-right: $ui-grid-row-horizontal-padding;
+                        padding-right: var(--ui-grid-row-horizontal-padding);
                     }
                 }
 
                 &:not(.ui-grid-feature-cell):last-of-type {
-                    padding-right: $ui-grid-row-horizontal-padding;
+                    padding-right: var(--ui-grid-row-horizontal-padding);
 
                     [dir="rtl"] & {
                         padding-right: 0;
-                        padding-left: $ui-grid-row-horizontal-padding;
+                        padding-left: var(--ui-grid-row-horizontal-padding);
                     }
                 }
 
                 &.ui-grid-refresh-cell,
                 &.ui-grid-checkbox-cell {
-                    min-width: $ui-feature-cell-width;
+                    min-width: var(--ui-feature-cell-width);
                     justify-content: center;
                     box-sizing: border-box;
                 }
@@ -677,9 +711,9 @@ ui-grid {
                         justify-content: flex-end;
                         align-items: center;
                         position: absolute;
-                        height: $ui-grid-row-height - $ui-row-border-width;
-                        min-width: $ui-feature-cell-width;
-                        padding-right: $ui-grid-default-spacing;
+                        height: calc(var(--ui-grid-row-height) - var(--ui-row-border-width));
+                        min-width: var(--ui-feature-cell-width);
+                        padding-right: var(--ui-grid-default-spacing);
                         right: 0;
                         bottom: 0;
                     }
@@ -700,7 +734,7 @@ ui-grid {
 
             .ui-grid-sort {
                 &-indicator {
-                    height: $ui-grid-header-row-height - $ui-row-border-width;
+                    height: calc(var(--ui-grid-header-row-height) - var(--ui-row-border-width));
                     align-items: center;
                     display: flex;
 
@@ -730,11 +764,11 @@ ui-grid {
             }
 
             .ui-grid-header-cell {
-                height: $ui-grid-header-row-height - $ui-row-border-width;
+                height: calc(var(--ui-grid-header-row-height) - var(--ui-row-border-width));
             }
 
             .ui-grid-cell {
-                height: $ui-grid-row-height - $ui-row-border-width;
+                height: calc(var(--ui-grid-row-height) - var(--ui-row-border-width));
                 background: $ui-grid-cell-background-color;
             }
 
@@ -743,10 +777,10 @@ ui-grid {
                 z-index: 10;
                 padding-left: 0px;
                 display: flex;
-                height: $ui-grid-row-height - 1;
+                height: calc(var(--ui-grid-row-height) - 1px);
 
                 .ui-grid-cell {
-                    padding: 0 0 0 $ui-grid-default-spacing;
+                    padding: 0 0 0 var(--ui-grid-default-spacing);
                 }
             }
 

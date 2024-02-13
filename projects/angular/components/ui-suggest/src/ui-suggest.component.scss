@@ -1,6 +1,5 @@
 @import "../../styles/ellipse";
 
-$height: 40px;
 $item-height: 32px;
 $form-control-height: 18px;
 $display-padding: 15px;
@@ -14,6 +13,13 @@ $ui-suggest-focus-transition: background-color 200ms cubic-bezier(0.35, 0, 0.25,
 $componentName: "ui-suggest";
 
 #{$componentName} {
+    --ui-suggest-height: 40px;
+    --ui-suggest-list-item-height: 40px;
+
+    &.ui-suggest-state-high-density {
+        --ui-suggest-height: 32px;
+    }
+
     height: 100%;
     position: relative;
     display: block;
@@ -99,8 +105,8 @@ $componentName: "ui-suggest";
     }
 
     .display {
-        height: $height;
-        line-height: $height;
+        height: var(--ui-suggest-height);
+        line-height: var(--ui-suggest-height);
         transition: $ui-suggest-focus-transition;
         padding: 0 6px 0 16px;
 
@@ -155,9 +161,9 @@ $componentName: "ui-suggest";
     &:not(.is-form-control) {
         .mat-mdc-list {
             &-item {
-                height: $height;
+                height: var(--ui-suggest-list-item-height);
                 &.text-ellipsis .mdc-list-item__content {
-                    line-height: $height;
+                    line-height: var(--ui-suggest-list-item-height);
                 }
                 &.no-results-text .mdc-list-item__content {
                     font-size: 14px;
@@ -193,7 +199,7 @@ $componentName: "ui-suggest";
         padding: 0 $field-padding;
         width: calc(100% - #{$field-padding * 2}) !important;
         margin: 0 !important;
-        height: $height;
+        height: var(--ui-suggest-list-item-height);
         &-infix {
             border: 7px solid transparent;
             border-left: none;
