@@ -35,6 +35,9 @@ export class UiTreeItemComponent implements FocusableOption {
   @Input()
   isSelected = false;
 
+  @Input()
+  isExpanded = false;
+
   @Output()
   expanded = new EventEmitter<void>();
 
