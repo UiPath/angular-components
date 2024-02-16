@@ -1,3 +1,6 @@
+# v15.2.1 (2024-02-16)
+* **tree-select** add accessible props
+
 # v15.1.6 (2024-07-02)
 * **grid** react on max filters count changes
 
