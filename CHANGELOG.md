@@ -1,5 +1,19 @@
+# v15.2.2 (2024-02-16)
+* **grid** display margin shadow if scrollable
+* **suggest** change default forceDisplayDropdownOverInput
+* **grid** update filter options on lang change
+
 # v15.2.1 (2024-02-16)
 * **tree-select** add accessible props
+
+# v15.2.0 (2024-07-02)
+* **grid** add tests for high density mode
+* **grid** add support for high density mode
+* **grid** add tests for high density mode
+* **grid** add support for high density mode
+
+# v15.1.7 (2024-07-02)
+* **grid** add nullish for set items
 
 # v15.1.6 (2024-07-02)
 * **grid** react on max filters count changes
