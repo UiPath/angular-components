@@ -5,6 +5,8 @@ import {
     BehaviorSubject,
     combineLatest,
     defer,
+    fromEvent,
+    iif,
     merge,
     Observable,
     of,
@@ -25,6 +27,7 @@ import {
     take,
     takeUntil,
     tap,
+    throttleTime,
 } from 'rxjs/operators';
 
 import {
@@ -110,6 +113,7 @@ const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'se
 const REFRESH_WIDTH = 50;
 const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
 const DEFAULT_VIRTUAL_SCROLL_HIGH_DENSITY_ITEM_SIZE = 32;
+const SCROLL_LIMIT_FOR_DISPLAYING_SHADOW = 10;
 
 @Component({
     selector: 'ui-grid',
@@ -827,6 +831,20 @@ export class UiGridComponent<T extends IGridDataEntry>
         shareReplay(1),
     );
 
+    shouldDisplayContainerShadow$ = defer(() => merge(
+        fromEvent(this._ref.nativeElement.querySelector('.ui-grid-table-container')!, 'scroll').pipe(
+            throttleTime(50, undefined, { trailing: true }),
+            map((event: any) => {
+                const { scrollWidth, scrollLeft, clientWidth } = event.target;
+                return Math.abs(scrollWidth - clientWidth - scrollLeft) >= SCROLL_LIMIT_FOR_DISPLAYING_SHADOW;
+            }),
+        ),
+        this.isOverflown$,
+    )).pipe(
+        distinctUntilChanged(),
+        shareReplay(),
+    );
+
     areFilersCollapsed$: Observable<boolean>;
 
     /**
@@ -862,10 +880,10 @@ export class UiGridComponent<T extends IGridDataEntry>
         shareReplay(1),
     );
 
-    isOverflown$ = this.minWidth$.pipe(
+    isOverflown$ = iif(() => this.isScrollable, this.minWidth$.pipe(
         map(minWidth => this._isOverflown(minWidth)),
         distinctUntilChanged(),
-    );
+    ), of(false));
 
     tableOverflowStyle$ = this.isOverflown$.pipe(
         map(value => value ? 'visible' : 'hidden'),
@@ -1342,7 +1360,6 @@ export class UiGridComponent<T extends IGridDataEntry>
         }, 0);
 
         return widthsPxSum + this._otherActionsWidth;
-
     }
 
     private get _otherActionsWidth() {

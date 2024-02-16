@@ -215,6 +215,18 @@ $ui-grid-opacity-transition: opacity $ui-grid-default-transition;
                     background-color: $ui-grid-row-hover-color;
                 }
             }
+
+            .grid-margin-shadow {
+                position: sticky;
+                right: 0;
+                height: 100%;
+
+                @if $is-dark {
+                    box-shadow: -7px 20px 20px 4px #000000;
+                } @else {
+                    box-shadow: -3px 5px 20px 1.6px $scroll-margin-shadow-color;
+                }
+            }
         }
 
         .ui-grid-sort-icon {

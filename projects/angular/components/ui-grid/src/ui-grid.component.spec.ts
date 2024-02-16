@@ -4856,6 +4856,13 @@ describe('Component: UiGrid', () => {
                 expect(gridTable.nativeElement.style.minWidth).toBe(columnWidthSum + 'px');
             }));
 
+            it('should display margin shadow when the grid has horizontal scroll', fakeAsync(() => {
+                const widths = [250, 1000, 330, 400, 100, 100]; // large enough too cause overflow
+                beforeConfig({ widths });
+                const tableMarginShadowDivs = fixture.debugElement.queryAll(By.css('.grid-margin-shadow'));
+                expect(tableMarginShadowDivs.length).toBe(widths.length);
+            }));
+
             it('should increase the width of last column if default column width sum does not fill the table', fakeAsync(() => {
                 const widths = [50, 50, 0, 50, 50, 50];
                 const lastColumnIdx = 4; // refresh btn & 1 missing column
@@ -5028,13 +5035,13 @@ describe('Component: UiGrid', () => {
                     expect(+newMinWidth.replace('px', '')).toBeLessThan(+startingMinWidth.replace('px', ''));
                 }));
 
-                it(`should set overflow to visible if total width of columns does not exceed container width`, fakeAsync(() => {
+                it(`should set overflow to visible and hide margin shadow if total width of columns does not exceed container width`, fakeAsync(() => {
                     const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
                     const options = fixture.debugElement
                         .queryAll(By.css('.ui-grid-toggle-panel .mat-mdc-option:not(.mdc-list-item--disabled)'));
 
                     expect(gridTable.styles.overflow).toEqual('visible');
-
+                    expect(fixture.debugElement.queryAll(By.css('.grid-margin-shadow')).length).toBe(6);
                     options.forEach(o => {
                         const checkbox = o.query(By.css('.mat-pseudo-checkbox'));
                         checkbox.nativeElement.dispatchEvent(EventGenerator.click);
@@ -5044,6 +5051,7 @@ describe('Component: UiGrid', () => {
                     fixture.detectChanges();
 
                     expect(gridTable.styles.overflow).toEqual('hidden');
+                    expect(fixture.debugElement.queryAll(By.css('.grid-margin-shadow')).length).toBe(0);
                 }));
             });
 
