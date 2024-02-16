@@ -3,6 +3,9 @@
                [class.selected]="isSelected"
                [ngClass]="'node-level-' + node.level"
                [class.node-type-leaf]="!node.hasChildren"
+               [attr.aria-level]="node.level"
+               [attr.aria-expanded]="isExpanded"
+               [attr.aria-selected]="isSelected"
                matRipple
                tabindex="-1"
                role="treeitem"

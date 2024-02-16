@@ -20,6 +20,7 @@
                               (expanded)="expand(node)"
                               [node]="node"
                               [attr.nodekey]="node.key"
+                              [isExpanded]="isExpanded(node)"
                               [isSelected]="isSelected(node)">
                     <ng-template *ngIf="itemTemplate"
                                  [ngTemplateOutlet]="itemTemplate"
