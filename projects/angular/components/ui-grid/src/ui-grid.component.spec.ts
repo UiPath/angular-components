@@ -1143,7 +1143,7 @@ describe('Component: UiGrid', () => {
             expect(grid.rowSize).toBe(32);
 
             const headerRow = fixture.debugElement.query(By.css('.ui-grid-header-row')).nativeElement;
-            expect(getComputedStyle(headerRow).height).toBe('32px');
+            expect(getComputedStyle(headerRow).height).toBe('40px');
             const contentRow = fixture.debugElement.query(By.css('.ui-grid-row')).nativeElement;
             expect(getComputedStyle(contentRow).height).toBe('32px');
         });
