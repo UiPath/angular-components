@@ -283,6 +283,7 @@
                          class="ui-grid-header-cell ui-grid-scroll-size-compensation-cell ui-grid-feature-cell">
                     </div>
                     <div *ngIf="refreshable"
+                         [class.refresh-shadow]="shouldDisplayContainerShadow$ | async"
                          class="ui-grid-header-cell ui-grid-refresh-cell ui-grid-feature-cell"
                          role="columnheader">
                         <button [matTooltip]="intl.refreshTooltip"
@@ -565,9 +566,13 @@
              class="ui-grid-cell ui-grid-refresh-cell ui-grid-feature-cell">
         </div>
 
+        <div *ngIf="!actions && (shouldDisplayContainerShadow$ | async)"
+             class="grid-margin-shadow ui-grid-feature-cell"></div>
+
         <div *ngIf="!isProjected &&
                     !!actions"
              [class.ui-grid-sticky-element]="isScrollable"
+             [class.grid-margin-shadow]="shouldDisplayContainerShadow$ | async"
              role="gridcell"
              class="ui-grid-cell ui-grid-action-cell ui-grid-feature-cell">
             <div [class.sticky-grid-action-cell-container]="isScrollable"
@@ -749,7 +754,7 @@
                             [searchable]="false"
                             [value]="suggestValue"
                             [placeholder]="column.title ?? ''"
-                            [items]="mapFilterOptions(column.dropdown!.suggestItems, column)"
+                            [items]="column.dropdown!.suggestItems"
                             [compactSummaryTemplate]="displayedFilterName"
                             [maxSelectionConfig]="{
                                 count: (disableFilterSelection$ | async) && (column.dropdown!.multi || selectedFilters === undefined) ? suggestValue.length : Infinity,
@@ -768,10 +773,9 @@
                     <div class="flex">
                         <span class="text-ellipsis">
                             {{ (column.dropdown!.multi && selectedFilters?.length > 1)
-                            ? intl.translateMultiDropdownOptions(value?.[0]?.text, selectedFilters.length)
-                                : value?.[0]
-                                ? intl.translateDropdownOption(column.dropdown!.findDropDownOptionBySuggestValue(value[0])!)
-                            : intl.noFilterPlaceholder }}</span>
+                                ? intl.translateMultiDropdownOptions(value[0].text!, selectedFilters.length)
+                                : value?.[0]?.text ?? intl.noFilterPlaceholder
+                            }}</span>
                     </div>
                 </ng-template>
             </ng-container>

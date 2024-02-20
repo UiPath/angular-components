@@ -1,15 +1,23 @@
 import {
-    isArray, isEqual,
+    isArray,
+    isEqual,
 } from 'lodash-es';
-import { BehaviorSubject } from 'rxjs';
+import {
+    BehaviorSubject,
+    Subject,
+    takeUntil,
+} from 'rxjs';
 
 import {
     Directive,
+    inject,
     Input,
     OnDestroy,
+    OnInit,
 } from '@angular/core';
 import { ISuggestValueData } from '@uipath/angular/components/ui-suggest';
 
+import { UiGridIntl } from '../ui-grid.intl';
 import { UiGridFilterDirective } from './ui-grid-filter';
 
 /**
@@ -46,7 +54,7 @@ export type ISuggestDropdownValueData = ISuggestValueData<IDropdownOption['value
 @Directive({
     selector: '[uiGridDropdownFilter], ui-grid-dropdown-filter',
 })
-export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> implements OnDestroy {
+export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> implements OnDestroy, OnInit {
     /**
      * The dropdown items.
      *
@@ -56,9 +64,10 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
         this._items = value ?? [];
         this.suggestItems = this._items.map((item, idx) => ({
             id: idx + 1,
-            text: item.label,
+            text: this.intl.translateDropdownOption(item),
             data: item.value,
         }));
+        this._addNoFilterOption();
     }
     get items() { return this._items!; }
 
@@ -112,6 +121,7 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
      * @ignore
      */
     visible$ = new BehaviorSubject(true);
+    intl = inject(UiGridIntl, { optional: true }) ?? new UiGridIntl();
     suggestValue: ISuggestDropdownValueData[] = [];
 
     /**
@@ -122,6 +132,21 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
     private _items: IDropdownOption[] = [];
     private _value: FilterDropdownPossibleOption;
     private _multi = false;
+    private _destroy$ = new Subject<void>();
+
+    ngOnInit() {
+        this._addNoFilterOption();
+
+        this.intl.changes.pipe(
+            takeUntil(this._destroy$),
+        ).subscribe(() => {
+            this.items = this._items;
+            this.suggestValue = this.suggestValue.map(suggestValue => ({
+                ...suggestValue,
+                text: this.intl.translateDropdownOption(this.findDropDownOptionBySuggestValue(suggestValue)!),
+            }));
+        });
+    }
 
     /**
      * Updates the dropdown value.
@@ -152,6 +177,8 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
     ngOnDestroy() {
         super.ngOnDestroy();
         this.filterChange.complete();
+        this._destroy$.complete();
+        this._destroy$.next();
     }
 
     findDropDownOptionBySuggestValue(suggestValue: ISuggestDropdownValueData) {
@@ -161,5 +188,19 @@ export class UiGridDropdownFilterDirective<T> extends UiGridFilterDirective<T> i
     get hasValue() {
         return this.value != null && ((!isArray(this.value) && this.value?.value !== undefined) ||
             (isArray(this.value) && this.value.length));
+    }
+
+    private _addNoFilterOption() {
+        const allOption = {
+            id: -1,
+            text: this.intl.noFilterPlaceholder,
+        };
+        if (!this.multi && this.showAllOption) {
+            if (this.suggestItems[0]?.id !== allOption.id) {
+                this.suggestItems = [allOption, ...this.suggestItems];
+            }
+        } else {
+            this.suggestItems = this.suggestItems.filter(item => item.id !== allOption.id);
+        }
     }
 }

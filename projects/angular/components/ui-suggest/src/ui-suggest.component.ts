@@ -244,7 +244,7 @@ export class UiSuggestComponent extends UiSuggestMatFormFieldDirective
      * If true, component wil place the dropdown over the input
      */
     @Input()
-    forceDisplayDropdownOverInput = false;
+    forceDisplayDropdownOverInput = true;
 
     /**
      * Configure if the component allows multi-selection.

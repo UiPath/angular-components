@@ -1488,14 +1488,21 @@ describe('Component: UiGrid', () => {
         let fixture: ComponentFixture<TestFixtureGridHeaderWithFilterComponent>;
         let component: TestFixtureGridHeaderWithFilterComponent;
         let grid: UiGridComponent<ITestEntity>;
-
+        let intl: UiGridIntl;
         beforeEach(() => {
+            intl = new UiGridIntl();
             TestBed.configureTestingModule({
                 imports: [
                     UiGridModule,
                     NoopAnimationsModule,
                 ],
                 declarations: [TestFixtureGridHeaderWithFilterComponent],
+                providers: [
+                    {
+                        provide: UiGridIntl,
+                        useValue: intl,
+                    },
+                ],
             });
 
             fixture = TestBed.createComponent(TestFixtureGridHeaderWithFilterComponent);
@@ -1520,6 +1527,28 @@ describe('Component: UiGrid', () => {
                 component.dropdownItemList = dropdownItemList;
                 fixture.detectChanges();
             });
+
+            it('should update translation for filter options when language changes', fakeAsync(() => {
+                intl.translateDropdownOption = () => 'voila la traduction';
+                intl.changes.next();
+                fixture.detectChanges();
+
+                const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
+                const filterButton = filterContainer.query(By.css(selectors.filterDropdown));
+                filterButton.nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+                tick(1000);
+                fixture.detectChanges();
+
+                const filterCheckboxes = fixture.debugElement.queryAll(By.css('mat-list-item mat-checkbox'));
+                filterCheckboxes[0].nativeElement.dispatchEvent(EventGenerator.click);
+                filterCheckboxes[1].nativeElement.dispatchEvent(EventGenerator.click);
+                fixture.detectChanges();
+
+                const filterSpan = fixture.debugElement.query(By.css('.ui-grid-filter-suggest span.text-ellipsis'));
+                expect(filterSpan.nativeElement.innerText).toEqual('voila la traduction (+1 other)');
+                flush();
+            }));
 
             it('should emit all selected filter options', fakeAsync(() => {
                 const filterContainer = fixture.debugElement.query(By.css('.ui-grid-dropdown-filter-container'));
@@ -4827,6 +4856,13 @@ describe('Component: UiGrid', () => {
                 expect(gridTable.nativeElement.style.minWidth).toBe(columnWidthSum + 'px');
             }));
 
+            it('should display margin shadow when the grid has horizontal scroll', fakeAsync(() => {
+                const widths = [250, 1000, 330, 400, 100, 100]; // large enough too cause overflow
+                beforeConfig({ widths });
+                const tableMarginShadowDivs = fixture.debugElement.queryAll(By.css('.grid-margin-shadow'));
+                expect(tableMarginShadowDivs.length).toBe(widths.length);
+            }));
+
             it('should increase the width of last column if default column width sum does not fill the table', fakeAsync(() => {
                 const widths = [50, 50, 0, 50, 50, 50];
                 const lastColumnIdx = 4; // refresh btn & 1 missing column
@@ -4999,13 +5035,13 @@ describe('Component: UiGrid', () => {
                     expect(+newMinWidth.replace('px', '')).toBeLessThan(+startingMinWidth.replace('px', ''));
                 }));
 
-                it(`should set overflow to visible if total width of columns does not exceed container width`, fakeAsync(() => {
+                it(`should set overflow to visible and hide margin shadow if total width of columns does not exceed container width`, fakeAsync(() => {
                     const gridTable = fixture.debugElement.query(By.css('.ui-grid-table'));
                     const options = fixture.debugElement
                         .queryAll(By.css('.ui-grid-toggle-panel .mat-mdc-option:not(.mdc-list-item--disabled)'));
 
                     expect(gridTable.styles.overflow).toEqual('visible');
-
+                    expect(fixture.debugElement.queryAll(By.css('.grid-margin-shadow')).length).toBe(6);
                     options.forEach(o => {
                         const checkbox = o.query(By.css('.mat-pseudo-checkbox'));
                         checkbox.nativeElement.dispatchEvent(EventGenerator.click);
@@ -5015,6 +5051,7 @@ describe('Component: UiGrid', () => {
                     fixture.detectChanges();
 
                     expect(gridTable.styles.overflow).toEqual('hidden');
+                    expect(fixture.debugElement.queryAll(By.css('.grid-margin-shadow')).length).toBe(0);
                 }));
             });
 

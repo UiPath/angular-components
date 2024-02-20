@@ -5,6 +5,8 @@ import {
     BehaviorSubject,
     combineLatest,
     defer,
+    fromEvent,
+    iif,
     merge,
     Observable,
     of,
@@ -25,6 +27,7 @@ import {
     take,
     takeUntil,
     tap,
+    throttleTime,
 } from 'rxjs/operators';
 
 import {
@@ -65,10 +68,7 @@ import {
 } from '@angular/material/checkbox';
 import { MatTooltip } from '@angular/material/tooltip';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
-import {
-    ISuggestValue,
-    ISuggestValueData,
-} from '@uipath/angular/components/ui-suggest';
+import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
@@ -78,7 +78,6 @@ import { UiGridRowActionDirective } from './body/ui-grid-row-action.directive';
 import { UiGridRowCardViewDirective } from './body/ui-grid-row-card-view.directive';
 import { UiGridRowConfigDirective } from './body/ui-grid-row-config.directive';
 import { UiGridCustomSearchDirective } from './components/ui-grid-search/ui-grid-custom-search.directive';
-import { ISuggestDropdownValueData } from './filters/ui-grid-dropdown-filter.directive';
 import { UiGridSearchFilterDirective } from './filters/ui-grid-search-filter.directive';
 import { UiGridFooterDirective } from './footer/ui-grid-footer.directive';
 import { UiGridHeaderDirective } from './header/ui-grid-header.directive';
@@ -114,6 +113,7 @@ const EXCLUDED_ROW_SELECTION_ELEMENTS = ['a', 'button', 'input', 'textarea', 'se
 const REFRESH_WIDTH = 50;
 const DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE = 48;
 const DEFAULT_VIRTUAL_SCROLL_HIGH_DENSITY_ITEM_SIZE = 32;
+const SCROLL_LIMIT_FOR_DISPLAYING_SHADOW = 10;
 
 @Component({
     selector: 'ui-grid',
@@ -831,6 +831,20 @@ export class UiGridComponent<T extends IGridDataEntry>
         shareReplay(1),
     );
 
+    shouldDisplayContainerShadow$ = defer(() => merge(
+        fromEvent(this._ref.nativeElement.querySelector('.ui-grid-table-container')!, 'scroll').pipe(
+            throttleTime(50, undefined, { trailing: true }),
+            map((event: any) => {
+                const { scrollWidth, scrollLeft, clientWidth } = event.target;
+                return Math.abs(scrollWidth - clientWidth - scrollLeft) >= SCROLL_LIMIT_FOR_DISPLAYING_SHADOW;
+            }),
+        ),
+        this.isOverflown$,
+    )).pipe(
+        distinctUntilChanged(),
+        shareReplay(),
+    );
+
     areFilersCollapsed$: Observable<boolean>;
 
     /**
@@ -866,10 +880,10 @@ export class UiGridComponent<T extends IGridDataEntry>
         shareReplay(1),
     );
 
-    isOverflown$ = this.minWidth$.pipe(
+    isOverflown$ = iif(() => this.isScrollable, this.minWidth$.pipe(
         map(minWidth => this._isOverflown(minWidth)),
         distinctUntilChanged(),
-    );
+    ), of(false));
 
     tableOverflowStyle$ = this.isOverflown$.pipe(
         map(value => value ? 'visible' : 'hidden'),
@@ -1286,26 +1300,6 @@ export class UiGridComponent<T extends IGridDataEntry>
         return dropdownHasValue || searchableHasValue;
     }
 
-    mapFilterOptions(items: ISuggestDropdownValueData[], column: UiGridColumnDirective<T>) {
-        items = items
-            .filter(item => !!column.dropdown!.findDropDownOptionBySuggestValue(item))
-            .map(item => {
-                const translatedText = this.intl.translateDropdownOption(column.dropdown!.findDropDownOptionBySuggestValue(item)!);
-                return {
-                    ...item,
-                    text: translatedText,
-                };
-            });
-
-        if (column.dropdown?.multi || !column.dropdown?.showAllOption) { return items; }
-
-        const allOption: ISuggestValueData<undefined> = {
-            id: -1,
-            text: this.intl.noFilterPlaceholder,
-        };
-        return items.some(v => v.data === undefined) ? items : [allOption, ...items];
-    }
-
     triggerColumnHeaderTooltip(event: FocusOrigin, tooltip: MatTooltip) {
         if (event === 'keyboard') {
             this.focusedColumnHeader = true;
@@ -1366,7 +1360,6 @@ export class UiGridComponent<T extends IGridDataEntry>
         }, 0);
 
         return widthsPxSum + this._otherActionsWidth;
-
     }
 
     private get _otherActionsWidth() {
