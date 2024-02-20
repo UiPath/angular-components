@@ -4,13 +4,13 @@
                  [ngTemplateOutlet]="headerTemplate">
     </ng-template>
 
-    <cdk-virtual-scroll-viewport *uiContentLoading="loading"
+    <mat-list role="tree"
+              class="tree-container">
+        <cdk-virtual-scroll-viewport *uiContentLoading="loading"
                                  (keydown)="onKeydown($event)"
                                  [itemSize]="itemSize"
                                  class="virtual-scroll-container"
                                  tabindex="0">
-        <mat-list role="tree"
-                  class="tree-container">
             <ng-container *ngIf="dataSource.data.length == 0">
                 <ng-content select="[noDataMessage]"></ng-content>
             </ng-container>
@@ -33,6 +33,6 @@
                     </ng-template>
                 </ui-tree-item>
             </ng-container>
-        </mat-list>
-    </cdk-virtual-scroll-viewport>
+        </cdk-virtual-scroll-viewport>
+    </mat-list>
 </div>

@@ -1,3 +1,11 @@
+.mat-mdc-list.mdc-list.tree-container {
+  padding: 0;
+  height: 100%;
+  .virtual-scroll-container {
+    height: 100%;
+  }
+}
+
 .tree-item-container {
   height: 100%;
 
