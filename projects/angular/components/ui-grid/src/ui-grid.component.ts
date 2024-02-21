@@ -883,6 +883,7 @@ export class UiGridComponent<T extends IGridDataEntry>
     isOverflown$ = iif(() => this.isScrollable, this.minWidth$.pipe(
         map(minWidth => this._isOverflown(minWidth)),
         distinctUntilChanged(),
+        shareReplay(1),
     ), of(false));
 
     tableOverflowStyle$ = this.isOverflown$.pipe(
