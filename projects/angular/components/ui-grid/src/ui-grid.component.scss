@@ -31,7 +31,6 @@ ui-grid {
         --ui-grid-filter-container-min-height: 48px;
         --ui-grid-foother-height: 32px;
         --ui-grid-button-size: 32px;
-        --ui-grid-main-font-size: 12px;
 
         @include mat.checkbox-density(-3);
         @include mat.radio-density(-3);
@@ -46,8 +45,11 @@ ui-grid {
             padding: 0;
         }
 
-        .ui-grid-action-cell mat-icon {
-            scale: calc(16 / 24);
+        .ui-grid-refresh-cell,
+        .ui-grid-action-cell {
+            mat-icon {
+                scale: calc(18 / 24);
+            }
         }
 
         mat-checkbox .mdc-checkbox__background {
@@ -55,7 +57,7 @@ ui-grid {
         }
 
         mat-radio-button .mdc-radio__background {
-            scale: calc(18 / 20);
+            scale: calc(16 / 20);
         }
 
         [mat-icon-button] .mat-mdc-button-touch-target,
