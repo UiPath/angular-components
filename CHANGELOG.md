@@ -1,3 +1,10 @@
+# v15.2.4 (2024-02-22)
+* **grid** remove reserved space for actions if scrollable
+* **grid** update font and icon sizes for high density mode
+
+# v15.2.3 (2024-02-20)
+* **tree-select** focus-visible state on ui-tree-select
+
 # v15.2.2 (2024-02-16)
 * **grid** display margin shadow if scrollable
 * **suggest** change default forceDisplayDropdownOverInput
