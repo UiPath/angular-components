@@ -1,3 +1,6 @@
+# v15.2.5 (2024-02-23)
+* **grid** fix the height of the page size select
+
 # v15.2.4 (2024-02-22)
 * **grid** remove reserved space for actions if scrollable
 * **grid** update font and icon sizes for high density mode
