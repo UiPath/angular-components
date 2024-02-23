@@ -39,6 +39,10 @@ ui-grid {
 
         .ui-grid-footer-container .mat-mdc-paginator .mat-mdc-paginator-container {
             min-height: var(--ui-grid-foother-height);
+
+            .mat-mdc-paginator-page-size-select .mat-mdc-form-field-flex {
+                height: 28px !important;
+            }
         }
 
         .ui-grid-filter-container {
