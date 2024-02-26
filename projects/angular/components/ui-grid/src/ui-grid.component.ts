@@ -70,6 +70,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { QueuedAnnouncer } from '@uipath/angular/a11y';
 import { ISuggestValue } from '@uipath/angular/components/ui-suggest';
 
+import isEqual from 'lodash-es/isEqual';
 import { UiGridColumnDirective } from './body/ui-grid-column.directive';
 import { UiGridExpandedRowDirective } from './body/ui-grid-expanded-row.directive';
 import { UiGridLoadingDirective } from './body/ui-grid-loading.directive';
@@ -767,6 +768,8 @@ export class UiGridComponent<T extends IGridDataEntry>
                 freeColumns: free.length ? free : sticky,
             });
         }),
+        distinctUntilChanged(isEqual),
+        shareReplay(1),
     );
 
     /**
@@ -803,25 +806,6 @@ export class UiGridComponent<T extends IGridDataEntry>
             }
         }),
         share(),
-    );
-
-    renderedColumns$ = this.visible$.pipe(
-        map(columns => {
-            const firstIndex = columns.findIndex(c => c.primary);
-            const rowHeaderIndex = firstIndex > -1 ? firstIndex : 0;
-
-            const mappedColumns = columns.map((directive, index) => ({
-                directive,
-                role: index === rowHeaderIndex ? 'rowheader' : 'gridcell',
-            }));
-
-            const free = mappedColumns.filter(c => !c.directive.isSticky || !this.isScrollable);
-            const sticky = mappedColumns.filter(c => c.directive.isSticky && this.isScrollable);
-            return ({
-                stickyColumns: free.length ? sticky : [],
-                freeColumns: free.length ? free : sticky,
-            });
-        }),
     );
 
     stickyColumnsSum$ = this.visible$.pipe(

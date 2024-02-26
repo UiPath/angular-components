@@ -149,8 +149,8 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
                     console.warn(`Table header sum is currently ${headerWidth} ( < 100 ) please update column definitions.`);
                 }
             }),
-            // eslint-disable-next-line no-underscore-dangle
             takeUntil(merge(
+                // eslint-disable-next-line no-underscore-dangle
                 (_grid as any)._destroyed$,
                 this.destroyed$,
             )),

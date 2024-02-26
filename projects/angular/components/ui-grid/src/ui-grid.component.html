@@ -479,40 +479,40 @@
             </ng-container>
         </div>
 
-        <ng-container *ngLet="renderedColumns$ | async as renderedColumns">
-            <div *ngIf="renderedColumns.stickyColumns.length"
+        <ng-container *ngLet="partitionedVisibleColumns$ | async as partitionedColumns">
+            <div *ngIf="partitionedColumns.stickyColumns.length"
                  [style.left.px]="(selectable || singleSelectable) ? selectionColumnWidth : 0"
                  [style.minWidth.px]="stickyColumnsSum$ | async"
-                 [class.sticky-container-border-right]="(isOverflown$ | async) && renderedColumns.freeColumns.length"
+                 [class.sticky-container-border-right]="(isOverflown$ | async) && partitionedColumns.freeColumns.length"
                  class="sticky-columns-cell-container ui-grid-cell">
-                <ng-container *ngFor="let column of renderedColumns.stickyColumns let lastColumn = last;">
-                    <div *ngLet="(column.directive.widthPx$ | async) as widthPx"
-                         [class.ui-grid-primary]="column.directive.primary"
-                         [class.ui-grid-secondary]="!column.directive.primary"
+                <ng-container *ngFor="let column of partitionedColumns.stickyColumns let firstColumn = first; let lastColumn = last;">
+                    <div *ngLet="(column.widthPx$ | async) as widthPx"
+                         [class.ui-grid-primary]="column.primary"
+                         [class.ui-grid-secondary]="!column.primary"
                          [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
-                         [attr.data-property]="column.directive.property"
-                         [attr.data-identifier]="column.directive.identifier"
-                         [style.width]="widthPx ? (widthPx + 'px') : (column.directive.width + '%')"
+                         [attr.data-property]="column.property"
+                         [attr.data-identifier]="column.identifier"
+                         [style.width]="widthPx ? (widthPx + 'px') : (column.width + '%')"
                          [style.minWidth.px]="widthPx"
-                         [attr.role]="column.role"
+                         [attr.role]="firstColumn ? 'rowheader' : 'gridcell'"
                          class="ui-grid-cell ui-grid-sticky-element">
                         <div *ngIf="isProjected"
-                             [matTooltip]="column.directive.title ?? ''"
+                             [matTooltip]="column.title ?? ''"
                              [matTooltipDisabled]="resizeManager.isResizing"
-                             class="ui-grid-cell-mobile-title">{{column.directive.title}}</div>
+                             class="ui-grid-cell-mobile-title">{{column.title}}</div>
 
                         <div class="ui-grid-cell-content">
-                            <ng-container *ngTemplateOutlet="column.directive.html || textCellTemplate; context: {
+                            <ng-container *ngTemplateOutlet="column.html || textCellTemplate; context: {
                                                     data: row,
                                                     index: index,
-                                                    property: column.directive.property
+                                                    property: column.property
                                                 }">
                             </ng-container>
                         </div>
 
                         <div class="ui-grid-cell-resizing-border-container ui-grid-sticky-element"
-                             [class.ui-grid-last-resize-handle-container]="lastColumn && renderedColumns.freeColumns.length > 0">
-                            <div *ngIf="!isProjected && column.directive.resizeable && !useCardView"
+                             [class.ui-grid-last-resize-handle-container]="lastColumn && partitionedColumns.freeColumns.length > 0">
+                            <div *ngIf="!isProjected && column.resizeable && !useCardView"
                                  [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
                                  class="ui-grid-cell-resizing-border">
                             </div>
@@ -521,33 +521,34 @@
                 </ng-container>
             </div>
 
-            <ng-container *ngFor="let column of renderedColumns.freeColumns; let lastColumn = last; let columnIndex = index">
-                <div *ngLet="(+(column.directive.widthPx$ | async)! + (lastColumn ? (+(deficit$ | async)!) : 0) + (lastColumn && isScrollable ? 50 : 0)) as widthPx"
-                     [class.ui-grid-primary]="column.directive.primary"
-                     [class.ui-grid-secondary]="!column.directive.primary"
+            <ng-container
+                          *ngFor="let column of partitionedColumns.freeColumns; let firstColumn = first; let lastColumn = last; let columnIndex = index">
+                <div *ngLet="(+(column.widthPx$ | async)! + (lastColumn ? (+(deficit$ | async)!) : 0) + (lastColumn && isScrollable ? 50 : 0)) as widthPx"
+                     [class.ui-grid-primary]="column.primary"
+                     [class.ui-grid-secondary]="!column.primary"
                      [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
-                     [attr.data-property]="column.directive.property"
-                     [attr.data-identifier]="column.directive.identifier"
-                     [style.width]="widthPx ? (widthPx + 'px') : (column.directive.width + '%')"
+                     [attr.data-property]="column.property"
+                     [attr.data-identifier]="column.identifier"
+                     [style.width]="widthPx ? (widthPx + 'px') : (column.width + '%')"
                      [style.minWidth.px]="widthPx"
-                     [attr.role]="column.role"
+                     [attr.role]="firstColumn ? 'rowheader' : 'gridcell'"
                      class="ui-grid-cell">
                     <div *ngIf="isProjected"
-                         [matTooltip]="column.directive.title ?? ''"
+                         [matTooltip]="column.title ?? ''"
                          [matTooltipDisabled]="resizeManager.isResizing"
-                         class="ui-grid-cell-mobile-title">{{column.directive.title}}</div>
+                         class="ui-grid-cell-mobile-title">{{column.title}}</div>
 
                     <div class="ui-grid-cell-content">
-                        <ng-container *ngTemplateOutlet="column.directive.html || textCellTemplate; context: {
+                        <ng-container *ngTemplateOutlet="column.html || textCellTemplate; context: {
                                         data: row,
                                         index: index,
-                                        property: column.directive.property
+                                        property: column.property
                                     }">
                         </ng-container>
                     </div>
                     <div *ngIf="!lastColumn"
                          class="ui-grid-cell-resizing-border-container">
-                        <div *ngIf="!isProjected && column.directive.resizeable && !lastColumn && !useCardView"
+                        <div *ngIf="!isProjected && column.resizeable && !lastColumn && !useCardView"
                              [class.ui-grid-state-resizing]="column.directive === resizeManager.current?.column"
                              class="ui-grid-cell-resizing-border">
                         </div>
@@ -635,21 +636,22 @@
     <div class="ui-grid-card-default"
          role="gridcell"
          tabindex="0">
-        <ng-container *ngFor="let column of (renderedColumns$ | async)!.freeColumns">
-            <div [class.ui-grid-primary]="column.directive.primary"
-                 [class.ui-grid-secondary]="!column.directive.primary"
-                 [attr.data-property]="column.directive.property"
-                 [attr.data-identifier]="column.directive.identifier"
+        <ng-container *ngFor="let column of (partitionedVisibleColumns$ | async)!.freeColumns">
+            <div [class.ui-grid-primary]="column.primary"
+                 [class.ui-grid-secondary]="!column.primary"
+                 [attr.data-property]="column.property"
+                 [attr.data-identifier]="column.identifier"
                  class="ui-grid-card-default-cell">
                 <div *ngIf="isProjected"
-                     [matTooltip]="column.directive.title ?? ''"
+                     [matTooltip]="column.title ?? ''"
                      [matTooltipDisabled]="resizeManager.isResizing"
-                     class="ui-grid-card-default-cell-mobile-title">{{column.directive.title}}</div>
+                     class="ui-grid-card-default-cell-mobile-title">{{column.title}}</div>
                 <div class="ui-grid-card-default-cell-content">
-                    <b>{{ column.directive.title ?? column.directive.property }}:</b> <ng-container *ngTemplateOutlet="column.directive.html || textCellTemplate; context: {
+                    <b>{{ column.title ?? column.property }}:</b> <ng-container
+                                  *ngTemplateOutlet="column.html || textCellTemplate; context: {
                             data: row,
                             index: index,
-                            property: column.directive.property
+                            property: column.property
                         }">
                     </ng-container>
                 </div>
