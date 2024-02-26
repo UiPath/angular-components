@@ -49,6 +49,7 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
     resize$ = new Subject<void>();
     previousClientX = 0;
     resizeEmissions$ = new Subject<ResizeEmission>();
+    destroyed$ = new Subject<void>();
 
     protected set _resizeEvent(ev: MouseEvent) {
         if (!this.current) { return; }
@@ -149,7 +150,10 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
                 }
             }),
             // eslint-disable-next-line no-underscore-dangle
-            takeUntil((_grid as any)._destroyed$),
+            takeUntil(merge(
+                (_grid as any)._destroyed$,
+                this.destroyed$,
+            )),
         ).subscribe();
 
         this._gridResizeObserver = new ResizeObserver(entries => {
@@ -295,6 +299,9 @@ export abstract class ResizeManager<T extends IGridDataEntry> {
 
     destroy() {
         this._gridResizeObserver?.disconnect();
+        this.destroyed$.next();
+        this.destroyed$.complete();
+
         this._stopped$.complete();
         this._resize$.complete();
         this._widthMap.clear();

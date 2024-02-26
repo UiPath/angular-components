@@ -1341,7 +1341,7 @@ export class UiGridComponent<T extends IGridDataEntry>
                 tap(width => {
                     (this.resizeManager as ScrollableGridResizer<T>).limitStickyWidthCoverage(width);
                 }),
-                takeUntil(this._destroyed$),
+                takeUntil(this.resizeManager.destroyed$),
             ).subscribe();
         }
     }
