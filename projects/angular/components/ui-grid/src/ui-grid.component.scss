@@ -846,3 +846,21 @@ ui-grid {
         }
     }
 }
+
+.ui-grid-sticky-footer-container {
+    position: fixed;
+    bottom: 0;
+    background: $ui-grid-cell-background-color;
+    z-index: 111;
+}
+
+.ui-grid-footer-placeholder {
+    height: 1px;
+    margin: -1px;
+    width: 100%;
+}
+
+.scrollbar-div {
+    height: 17px;
+    overflow: auto;
+}

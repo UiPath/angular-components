@@ -772,6 +772,8 @@ export class UiGridComponent<T extends IGridDataEntry>
         shareReplay(1),
     );
 
+    isFooterSticky$ = new BehaviorSubject(false);
+
     /**
      * Emits current max selected filter values count
      *
@@ -1039,6 +1041,9 @@ export class UiGridComponent<T extends IGridDataEntry>
      * @ignore
      */
     ngAfterContentInit() {
+        this._virtualScrollbarListener();
+        this._scrollListener();
+
         this.selectionManager.disableSelectionByEntry = this.disableSelectionByEntry;
 
         this.liveAnnouncerManager = new LiveAnnouncerManager(
@@ -1075,6 +1080,7 @@ export class UiGridComponent<T extends IGridDataEntry>
         this.resizeManager.resizeEmissions$.pipe(
             takeUntil(this._destroyed$),
         ).subscribe(resizeEmissions => this.resizeEmissions.next(resizeEmissions));
+        // this._observeSentinelVisibility();
     }
 
     /**
@@ -1380,4 +1386,58 @@ export class UiGridComponent<T extends IGridDataEntry>
                 DEFAULT_VIRTUAL_SCROLL_ITEM_SIZE;
         }
     }
+
+    private _scrollListener() {
+        if (!this.footer) {return;}
+        merge(
+            fromEvent(document, 'scroll'),
+        this.footer!.pageChange,
+        )
+        .pipe(
+            throttleTime(5, undefined, { trailing: true }),
+            tap(() => {
+                const bottomSentinel = this._ref.nativeElement.querySelector('.ui-grid-footer-placeholder');
+                const table = this._ref.nativeElement.querySelector('.ui-grid-table');
+                const header = this._ref.nativeElement.querySelector('.ui-grid-header');
+                // const windowYScroll = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const footerHeight = 73;
+                const bottomScrollbarHeight = 17;
+
+                const footerOverHeader = header.getBoundingClientRect().y
+                >= windowHeight - (footerHeight + bottomScrollbarHeight);
+
+                if (isElementXPercentInViewport(bottomSentinel, 100) || !isElementXPercentInViewport(table, 1) || footerOverHeader) {
+                    this.isFooterSticky$.next(false);
+                } else {
+                    if (isElementXPercentInViewport(table, 1) && !this.isFooterSticky$.value) {
+                        this.isFooterSticky$.next(true);
+                    }
+                }
+
+            }),
+        )
+        .subscribe();
+    }
+
+    private _virtualScrollbarListener() {
+        fromEvent(this._ref.nativeElement.querySelector('.scrollbar-div'), 'scroll').pipe(
+            tap(ev => {
+                const { scrollLeft } = (ev as any).target;
+                const table = this._ref.nativeElement.querySelector('.ui-grid-table-container');
+                table.scrollLeft = scrollLeft;
+                // table.scrollBy()
+            }),
+        ).subscribe();
+    }
 }
+
+const isElementXPercentInViewport = function(el: HTMLElement, percentVisible: number) {
+    const rect = el.getBoundingClientRect();
+    const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+
+    return !(
+      Math.floor(100 - (((rect.top >= 0 ? 0 : rect.top) / +-rect.height) * 100)) < percentVisible ||
+      Math.floor(100 - ((rect.bottom - windowHeight) / rect.height) * 100) < percentVisible
+    );
+  };

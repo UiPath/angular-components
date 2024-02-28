@@ -63,7 +63,7 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
     @Output()
     visibleColumnsToggled = new EventEmitter<boolean>();
 
-    pageSizes = [5, 10, 500];
+    pageSizes = [5, 10, 100];
     pageIndex = 0;
     data$ = new BehaviorSubject<MockData[]>([]);
     filteredData: MockData[] = [];
