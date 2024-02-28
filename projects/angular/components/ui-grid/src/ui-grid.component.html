@@ -101,9 +101,8 @@
 
 <div (keydown.shift.alt.arrowup)="focusRowHeader()"
      class="ui-grid-container">
-
-    <div [class.scrollable]="isScrollable && !dataManager.pristine"
-         class="ui-grid-table-container">
+     <div [class.scrollable]="isScrollable && !dataManager.pristine"
+     class="ui-grid-table-container">
         <div [class.ui-grid-table-refreshable]="refreshable"
              [style.minWidth.px]="isScrollable ? (minWidth$ | async) : undefined"
              [style.overflow]="isScrollable ? (tableOverflowStyle$ | async) : 'visible'"
@@ -381,7 +380,19 @@
             </ng-container>
         </div>
     </div>
-    <div class="ui-grid-footer-container">
+    <div [style.height.px]="(isFooterSticky$ | async) ? 74.25 : 1"
+     class="ui-grid-footer-placeholder"></div>
+
+    <div [class.ui-grid-sticky-footer-container]="isFooterSticky$ | async"
+     class="ui-grid-footer-container"
+    [style.minWidth]="isScrollable ? containerWidth + 'px' : undefined"
+    >
+
+    <div [style.display]="((isOverflown$ | async) && (isFooterSticky$ | async)) ? 'block' : 'none'"
+     class="scrollbar-div" [style.maxWidth]="isScrollable ? containerWidth + 'px' : undefined">
+        <div [style.minWidth]="isScrollable ? ((minWidth$ | async) + 'px') : undefined"></div>
+    </div>
+
         <ui-grid-custom-paginator *ngIf="!!footer && !footer.hidden"
                                   [pageIndex]="footer.state.pageIndex"
                                   [pageSize]="footer.state.pageSize"
