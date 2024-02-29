@@ -357,6 +357,7 @@ ui-grid {
             &.scrollable {
                 overflow-x: auto;
                 overflow-y: hidden;
+                overflow: unset;
 
                 .ui-grid-no-data-container p {
                     position: sticky;
@@ -487,6 +488,8 @@ ui-grid {
             }
 
             .ui-grid-header {
+                position: sticky;
+                top: 0;
                 background-color: $header-background-color;
 
                 .ui-grid-resize-handle-container {
@@ -848,7 +851,7 @@ ui-grid {
 }
 
 .ui-grid-sticky-footer-container {
-    position: fixed;
+    position: sticky;
     bottom: 0;
     background: $ui-grid-cell-background-color;
     z-index: 111;
@@ -863,4 +866,21 @@ ui-grid {
 .scrollbar-div {
     height: 17px;
     overflow: auto;
+}
+
+
+ui-grid {
+    margin-bottom:2222px;
+}
+
+.last-div {
+    // background-color: blue;
+    // height: 10px;
+    // width: 100%;
+    // position: sticky;
+}
+
+
+mat-sidenav-content, mat-sidenav, mat-sidenav-container {
+    overflow: unset !important;
 }
