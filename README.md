@@ -2,6 +2,14 @@
 
 # Angular Components Library
 
+**This repo will be used only for support fixes.**
+
+`@uipath/angular` was moved into [apollo-design-system](https://github.com/UiPath/apollo-design-system/tree/master/packages/apollo-angular-components).
+
+New features will move implemented in the new package `@uipath/apollo-angular`.
+
+Steps to migrate to new package can be found [here](https://github.com/UiPath/apollo-design-system/tree/master/packages/apollo-angular-components#migration-from-uipathangular-and-uipathangular-internal-to-uipathapollo-angular).
+
 A great set of reusable `@angular` components, directives and testing utilities.
 
 One of our main goals is to allow easy integration with the great collection of components already provided by the `@angular/material` team and to build everything with the following in mind:
