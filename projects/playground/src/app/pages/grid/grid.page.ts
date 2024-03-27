@@ -67,6 +67,7 @@ export class GridPageComponent implements AfterViewInit, OnDestroy {
         'useCardView',
         'isScrollable',
         'allowHighlight',
+        'swapFilterContainers',
         'selectablePageIndex',
     ];
 
@@ -134,6 +135,7 @@ export class GridPageComponent implements AfterViewInit, OnDestroy {
                 useCardView: [false],
                 isScrollable: [false],
                 allowHighlight: [false],
+                swapFilterContainers: [false],
                 selectablePageIndex: [true],
             }),
             header: this._fb.group({
