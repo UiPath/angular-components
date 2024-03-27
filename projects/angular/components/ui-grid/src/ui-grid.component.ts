@@ -470,6 +470,13 @@ export class UiGridComponent<T extends IGridDataEntry>
     selectablePageIndex: boolean;
 
     /**
+     * Configure if the filter containers should be swapped
+     *
+     */
+    @Input()
+    swapFilterContainers = false;
+
+    /**
      * Emits an event with the sort model when a column sort changes.
      *
      */

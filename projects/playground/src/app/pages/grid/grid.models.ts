@@ -35,6 +35,7 @@ export interface IInputs {
     hideTotalCount: boolean;
     isScrollable: boolean;
     allowHighlight: boolean;
+    swapFilterContainers: boolean;
     selectablePageIndex: boolean;
 }
 
