@@ -1,3 +1,7 @@
+# v15.2.5 (2024-04-09)
+* **grid** allow swapping filter containers
+* **chore** update readme with new package from apollo-design
+
 # v15.2.4 (2024-02-22)
 * **grid** remove reserved space for actions if scrollable
 * **grid** update font and icon sizes for high density mode
