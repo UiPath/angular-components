@@ -134,7 +134,7 @@
     "eslint-plugin-sonarjs": "^0.16.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "faker": "4.1.0",
-    "gh-pages": "2.0.1",
+    "gh-pages": "5.0.0",
     "glob": "^7.1.4",
     "husky": "2.3.0",
     "jasmine_dom_matchers": "^1.4.0",
